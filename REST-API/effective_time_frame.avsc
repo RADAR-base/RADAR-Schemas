@@ -1,0 +1,9 @@
+{"namespace": "org.radarcns.avro",
+  "type": "record",
+  "name": "EffectiveTimeFrame",
+  "doc": "Time window",
+  "fields": [
+    {"name": "start_date_time", "type": "string", "doc": "It is a point in time (ISO8601) with UTC timezone."},
+    {"name": "end_date_time", "type": "string", "doc": "It is a point in time (ISO8601) with UTC timezone."}
+  ]
+}
