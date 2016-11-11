@@ -1,0 +1,9 @@
+{"namespace": "org.radarcns.avro",
+  "type": "record",
+  "name": "HeartRateItem",
+  "doc": "Heart rate item for a dataset",
+  "fields": [
+    {"name": "heart_rate", "type": "double", "default": "0.0"},
+    {"name": "effective_time_frame", "type": "EffectiveTimeFrame", "doc": "Time window associated with the value"}
+  ]
+}

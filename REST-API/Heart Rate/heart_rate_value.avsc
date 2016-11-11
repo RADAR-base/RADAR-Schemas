@@ -1,0 +1,9 @@
+{"namespace": "org.radarcns.avro",
+  "type": "record",
+  "name": "HeartRateValue",
+  "doc": "Heart Rate value",
+  "fields": [
+    {"name": "value", "type": "double", "default": "0.0"},
+    {"name": "unit", "type": "Unit"}
+  ]
+}
