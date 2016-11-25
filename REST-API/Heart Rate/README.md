@@ -7,11 +7,6 @@ in: `/heart-rate.json`
   "header": {
     "id": "123e4567-e89b-12d3-a456-426655440000",
     "creation_date_time": "2013-02-05T07:25:00Z",
-    "schema_id": {
-      "namespace": "omh",
-      "name": "physical-activity",
-      "version": "1.1"
-    },
     "acquisition_provenance": {
       "source_name": "RunKeeper",
       "source_creation_date_time": "2013-02-05T07:25:00Z",
@@ -35,11 +30,6 @@ in: `/heart-rate.json`
   "header": {
     "id": "123e4567-e89b-12d3-a456-426655440000",
     "creation_date_time": "2013-02-05T07:25:00Z",
-    "schema_id": {
-      "namespace": "omh",
-      "name": "physical-activity",
-      "version": "1.1"
-    },
     "acquisition_provenance": {
       "source_name": "RunKeeper",
       "source_creation_date_time": "2013-02-05T07:25:00Z",
