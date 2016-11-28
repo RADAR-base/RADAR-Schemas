@@ -54,9 +54,9 @@
   "content": "...",
   "options": {
     "sampleDuration": 30,
-    "idleDuration": 300,
-    "startHour": 9,
-    "stopHour": 21,
+    "idleDuration": 300, #this is only for passive monitoring
+    "startHour": 9, #this is only for passive monitoring
+    "stopHour": 21, #this is only for passive monitoring
     "configFile": "filename.conf",
     "compressionLevel": 0
   },
