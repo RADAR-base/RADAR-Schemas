@@ -1,0 +1,10 @@
+{"namespace": "org.radarcns.avro",
+  "type": "record",
+  "name": "HeartRate",
+  "doc": "Heart Rate resulting from data aggregation.",
+  "fields": [
+    {"name": "heart_rate", "type": "HeartRateValue"},
+    {"name": "effective_time_frame", "type": "EffectiveTimeFrame"},
+    {"name": "descriptive_statistic", "type": "DescriptiveStatistic"}
+  ]
+}
