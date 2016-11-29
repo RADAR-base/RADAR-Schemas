@@ -54,15 +54,18 @@
   "content": "...",
   "options": {
     "sampleDuration": 30,
-    "idleDuration": 300, #this is only for passive monitoring
-    "startHour": 9, #this is only for passive monitoring
-    "stopHour": 21, #this is only for passive monitoring
     "configFile": "filename.conf",
-    "compressionLevel": 0
+    "compressionLevel": 0,
+    "idleDuration": 300, // passive monitoring only
+    "startHour": 9, // passive monitoring only
+    "stopHour": 21 // passive monitoring only
   },
   "type": "audio"
 }
 ```
 **Notes:**  
 `"compressionLevel"` (0:Raw, 1:LLD, 2:Functional, 3:Class label)
+
+Properties for passive monitoring only:
+`"idleDuration", "startHour", "stopHour"`
 
