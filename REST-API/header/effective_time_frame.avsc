@@ -1,4 +1,4 @@
-{"namespace": "org.radarcns.avro",
+{"namespace": "org.radarcns.avro.restapi.header",
   "type": "record",
   "name": "EffectiveTimeFrame",
   "doc": "Time window",

@@ -1,0 +1,9 @@
+{"namespace": "org.radarcns.avro.restapi.dataset",
+  "type": "record",
+  "name": "Dataset",
+  "doc": "A generic dataset containing aggregated data.",
+  "fields": [
+    {"name": "header", "type": "org.radarcns.avro.restapi.header.Header" },
+    {"name": "dataset", "type": {"type": "array", "items": "Item" } }
+  ]
+}

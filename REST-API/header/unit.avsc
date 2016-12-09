@@ -1,0 +1,6 @@
+{"namespace": "org.radarcns.avro.restapi.header",
+  "type": "enum",
+  "name": "Unit",
+  "doc": "Set of units",
+  "symbols": [ "beats_per_min" , "g"]
+}
