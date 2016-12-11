@@ -1,6 +1,0 @@
-{"namespace": "org.radarcns.avro",
-  "type": "enum",
-  "name": "DescriptiveStatistic",
-  "doc": "Set of available statical value",
-  "symbols": ["average" , "count" , "maximum" , "median" , "minimum" , "sum" , "lower_quartile" , "upper_quartile" , "quartile_deviation"]
-}

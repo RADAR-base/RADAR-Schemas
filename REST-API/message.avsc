@@ -1,0 +1,8 @@
+{"namespace": "org.radarcns.avro.restapi.avro",
+  "type": "record",
+  "name": "Message",
+  "doc": "Message for 204 HTTP Response",
+  "fields": [
+    {"name": "message", "type": "string"}
+  ]
+}

@@ -1,0 +1,10 @@
+{"namespace": "org.radarcns.avro.restapi.header",
+  "type": "record",
+  "name": "Header",
+  "doc": "A generic dataset containing aggregated data.",
+  "fields": [
+    {"name": "descriptive_statistic", "type": "DescriptiveStatistic" },
+    {"name": "unit", "type": "Unit"},
+    {"name": "effective_time_frame", "type": "EffectiveTimeFrame" }
+  ]
+}
