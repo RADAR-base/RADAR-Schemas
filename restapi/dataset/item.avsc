@@ -1,0 +1,18 @@
+{
+  "namespace": "org.radarcns.avro.restapi.dataset",
+  "type": "record",
+  "name": "Item",
+  "doc": "Dataset item",
+  "fields": [
+    {"name": "value", "type": [
+      "org.radarcns.avro.restapi.sensor.HeartRate" ,
+      "org.radarcns.avro.restapi.sensor.Acceleration" ,
+      "org.radarcns.avro.restapi.sensor.Battery" ,
+      "org.radarcns.avro.restapi.sensor.BloodVolumePulse" ,
+      "org.radarcns.avro.restapi.sensor.ElectroDermalActivity" ,
+      "org.radarcns.avro.restapi.sensor.InterBeatInterval" ,
+      "org.radarcns.avro.restapi.sensor.Temperature"
+      ] } ,
+    {"name": "effective_time_frame", "type": "org.radarcns.avro.restapi.header.EffectiveTimeFrame"}
+  ]
+}

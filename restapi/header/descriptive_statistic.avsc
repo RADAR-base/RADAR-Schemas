@@ -1,0 +1,18 @@
+{
+  "namespace": "org.radarcns.avro.restapi.header",
+  "type": "enum",
+  "name": "DescriptiveStatistic",
+  "doc": "Set of available statical value",
+  "symbols": [
+    "average" ,
+    "count" ,
+    "maximum" ,
+    "median" ,
+    "minimum" ,
+    "sum" ,
+    "interquartile_range" ,
+    "lower_quartile" ,
+    "upper_quartile",
+    "quartiles"
+    ]
+}

@@ -1,4 +1,5 @@
-{"namespace": "org.radarcns.avro.restapi.sensor",
+{
+  "namespace": "org.radarcns.avro.restapi.sensor",
   "type": "record",
   "name": "Battery",
   "doc": "The battery level resulting from the data aggregation. It is a double value between 0 and 1",

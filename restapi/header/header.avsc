@@ -1,4 +1,5 @@
-{"namespace": "org.radarcns.avro.restapi.header",
+{
+  "namespace": "org.radarcns.avro.restapi.header",
   "type": "record",
   "name": "Header",
   "doc": "A generic dataset containing aggregated data.",

@@ -1,9 +1,0 @@
-{"namespace": "org.radarcns.avro.restapi.dataset",
-  "type": "record",
-  "name": "Item",
-  "doc": "Daaset item",
-  "fields": [
-    {"name": "value", "type": [ "org.radarcns.avro.restapi.sensor.HeartRate" , "org.radarcns.avro.restapi.sensor.Acceleration" ]},
-    {"name": "effective_time_frame", "type": "org.radarcns.avro.restapi.header.EffectiveTimeFrame"}
-  ]
-}

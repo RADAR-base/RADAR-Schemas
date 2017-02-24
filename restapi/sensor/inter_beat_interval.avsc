@@ -1,4 +1,5 @@
-{"namespace": "org.radarcns.avro.restapi.sensor",
+{
+  "namespace": "org.radarcns.avro.restapi.sensor",
   "type": "record",
   "name": "InterBeatInterval",
   "doc": "Time between individuals heart beats",

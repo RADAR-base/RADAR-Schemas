@@ -1,4 +1,5 @@
-{"namespace": "org.radarcns.avro.restapi.sensor",
+{
+  "namespace": "org.radarcns.avro.restapi.sensor",
   "type": "record",
   "name": "ElectroDermalActivity",
   "doc": "Aggregated data representing electrodermal activity expressed as microsiemens (µS)",
