@@ -8,6 +8,6 @@
     {"name": "timeReceived", "type": "double", "doc": "device receiver timestamp in UTC (s)"},
     {"name": "temperature", "type": "float", "doc": "local temperature (°C)"},
     {"name": "temperatureObject", "type": "float", "doc": "object temperature (°C)"},
-    {"name": "temperatureBaro", "type": "float", "doc": "barometer temperature (°C)"}
+    {"name": "temperatureBarometer", "type": "float", "doc": "barometer temperature (°C)"}
   ]
 }

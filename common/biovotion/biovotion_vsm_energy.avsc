@@ -6,7 +6,7 @@
   "fields": [
     {"name": "time", "type": "double", "doc": "device timestamp in UTC (s)"},
     {"name": "timeReceived", "type": "double", "doc": "device receiver timestamp in UTC (s)"},
-    {"name": "EnergyExpenditureValue", "type": "float", "doc": "Energy expenditure value (cal/s)"},
-    {"name": "EnergyExpenditureQuality", "type": "float", "doc": "Energy expenditure quality (0-1)"}
+    {"name": "energyExpenditure", "type": "float", "doc": "Energy expenditure value (cal/s)"},
+    {"name": "energyExpenditureQuality", "type": "float", "doc": "Energy expenditure quality (0-1)"}
   ]
 }

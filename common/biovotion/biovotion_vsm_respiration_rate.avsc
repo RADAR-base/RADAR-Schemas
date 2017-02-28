@@ -6,7 +6,7 @@
   "fields": [
     {"name": "time", "type": "double", "doc": "device timestamp in UTC (s)"},
     {"name": "timeReceived", "type": "double", "doc": "device receiver timestamp in UTC (s)"},
-    {"name": "RespirationRateValue", "type": "float", "doc": "Respiration rate value (bpm)"},
-    {"name": "RespirationRateQuality", "type": "float", "doc": "Respiration rate quality (0-1)"}
+    {"name": "respirationRate", "type": "float", "doc": "Respiration rate value (bpm)"},
+    {"name": "respirationRateQuality", "type": "float", "doc": "Respiration rate quality (0-1)"}
   ]
 }

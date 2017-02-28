@@ -2,11 +2,11 @@
   "namespace": "org.radarcns.biovotion",
   "type": "record",
   "name": "BiovotionVSMGalvanicSkinResponse",
-  "doc": "Raw gsr data.",
+  "doc": "Raw galvanic skin response data.",
   "fields": [
     {"name": "time", "type": "double", "doc": "device timestamp in UTC (s)"},
     {"name": "timeReceived", "type": "double", "doc": "device receiver timestamp in UTC (s)"},
-    {"name": "GalvanicSkinResponseAmplitude", "type": "float", "doc": "gsr amplitude (kOhm)"},
-    {"name": "GalvanicSkinResponsePhase", "type": "float", "doc": "gsr phase"}
+    {"name": "galvanicSkinResponseAmplitude", "type": "float", "doc": "gsr amplitude (kOhm)"},
+    {"name": "galvanicSkinResponsePhase", "type": "float", "doc": "gsr phase"}
   ]
 }

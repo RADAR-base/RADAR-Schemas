@@ -6,7 +6,7 @@
   "fields": [
     {"name": "time", "type": "double", "doc": "device timestamp in UTC (s)"},
     {"name": "timeReceived", "type": "double", "doc": "device receiver timestamp in UTC (s)"},
-    {"name": "HeartRateVariabilityValue", "type": "float", "doc": "Heart rate variability value (ms / RMSSD)"},
-    {"name": "HeartRateVariabilityQuality", "type": "float", "doc": "Heart rate variability quality (0-1)"}
+    {"name": "heartRateVariability", "type": "float", "doc": "Heart rate variability value (ms / RMSSD)"},
+    {"name": "heartRateVariabilityQuality", "type": "float", "doc": "Heart rate variability quality (0-1)"}
   ]
 }

@@ -6,7 +6,7 @@
   "fields": [
     {"name": "time", "type": "double", "doc": "device timestamp in UTC (s)"},
     {"name": "timeReceived", "type": "double", "doc": "device receiver timestamp in UTC (s)"},
-    {"name": "BloodPulseWaveValue", "type": "float", "doc": "Blood pulse wave value"},
-    {"name": "BloodPulseWaveQuality", "type": "float", "doc": "Blood pulse wave quality (0-1)"}
+    {"name": "bloodPulseWave", "type": "float", "doc": "Blood pulse wave value"},
+    {"name": "bloodPulseWaveQuality", "type": "float", "doc": "Blood pulse wave quality (0-1)"}
   ]
 }
