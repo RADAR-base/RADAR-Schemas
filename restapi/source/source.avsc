@@ -1,0 +1,11 @@
+{
+  "namespace": "org.radarcns.avro.restapi.source",
+  "type": "record",
+  "name": "Source",
+  "doc": "Source details",
+  "fields": [
+    {"name": "id", "type": "string"},
+    {"name": "name", "type": "Sources"},
+    {"name": "summary", "type": ["null", "SourceSummary"], "default": null}
+  ]
+}
