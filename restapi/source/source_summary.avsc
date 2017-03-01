@@ -1,0 +1,12 @@
+{
+  "namespace": "org.radarcns.avro.restapi.source",
+  "type": "record",
+  "name": "SourceSummary",
+  "doc": "Details about the source with details for each sensor",
+  "fields": [
+    {"name": "state", "type": "States", "default": "UNKNOWN"},
+    {"name": "received_message", "type": "int", "default": -1},
+    {"name": "message_loss", "type": "double", "default": -1.0},
+    {"name": "sensors", "type": {"type": "array", "items": "Sensor" } }
+  ]
+}

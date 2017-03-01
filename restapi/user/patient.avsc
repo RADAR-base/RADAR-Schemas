@@ -5,6 +5,6 @@
   "doc": "Patient definition",
   "fields": [
     {"name": "user_id", "type": "string" },
-    {"name": "source_id", "type": {"type": "array", "items": "string" } }
+    {"name": "sources", "type": {"type": "array", "items": "org.radarcns.avro.restapi.source.Source" } }
   ]
 }

@@ -1,5 +1,5 @@
 {
-  "namespace": "org.radarcns.avro.restapi.device",
+  "namespace": "org.radarcns.avro.restapi.source",
   "type": "enum",
   "name": "Sensors",
   "doc": "Set of device status",
