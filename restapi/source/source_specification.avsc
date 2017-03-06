@@ -1,0 +1,10 @@
+{
+  "namespace": "org.radarcns.avro.restapi.source",
+  "type": "record",
+  "name": "SourceSpecification",
+  "doc": "Source specification",
+  "fields": [
+    {"name": "name", "type": "SourceType", "doc": "Source name"},
+    {"name": "sensors", "type": {"type": "array", "items": "org.radarcns.avro.restapi.sensor.SensorSpecification" }, "doc": "Specifications of on board sensors"}
+  ]
+}

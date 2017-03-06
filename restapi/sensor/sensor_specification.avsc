@@ -1,0 +1,11 @@
+{
+  "namespace": "org.radarcns.avro.restapi.sensor",
+  "type": "record",
+  "name": "SensorSpecification",
+  "doc": "Sensor specification",
+  "fields": [
+    {"name": "name", "type": "SensorType", "doc": "Sensor name"},
+    {"name": "frequency", "type": "double", "default": -1.0, "doc": "Sensor frequency"},
+    {"name": "unit", "type": "org.radarcns.avro.restapi.sensor.Unit", "doc": "Measurement unit used by the sensor"}
+  ]
+}

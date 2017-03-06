@@ -1,7 +1,0 @@
-{
-  "namespace": "org.radarcns.avro.restapi.source",
-  "type": "enum",
-  "name": "Sensors",
-  "doc": "Set of device status",
-  "symbols": [ "ACC" , "BAT", "BVP", "EDA", "IBI", "HR", "TEMP"]
-}

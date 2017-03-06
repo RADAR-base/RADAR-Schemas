@@ -3,5 +3,5 @@
   "type": "enum",
   "name": "ServerStatus",
   "doc": "Set of device status",
-  "symbols": [ "CONNECTED" , "DISCONNECTED", "UNKNOWN"]
+  "symbols": [ "CONNECTED" , "DISCONNECTED", "UNKNOWN" ]
 }

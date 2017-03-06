@@ -1,0 +1,17 @@
+{
+  "namespace": "org.radarcns.avro.restapi.sensor",
+  "type": "enum",
+  "name": "Unit",
+  "doc": "Set of measurement units",
+  "symbols": [
+    "BEATS_PER_MIN" ,
+    "CELSIUS",
+    "DIMENSIONLESS",
+    "G",
+    "HZ",
+    "MICROSIEMENS",
+    "SEC",
+    "NW",
+    "PERCENTAGE"
+  ]
+}

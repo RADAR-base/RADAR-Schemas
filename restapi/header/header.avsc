@@ -2,10 +2,10 @@
   "namespace": "org.radarcns.avro.restapi.header",
   "type": "record",
   "name": "Header",
-  "doc": "A generic dataset containing aggregated data.",
+  "doc": "Metadata for Dataset. It is a summary explaining what kind of information are stored in the Dataset.",
   "fields": [
-    {"name": "descriptive_statistic", "type": "DescriptiveStatistic" },
-    {"name": "unit", "type": "Unit"},
-    {"name": "effective_time_frame", "type": "EffectiveTimeFrame" }
+    {"name": "descriptiveStatistic", "type": "DescriptiveStatistic" },
+    {"name": "unit", "type": "org.radarcns.avro.restapi.sensor.Unit"},
+    {"name": "effectiveTimeFrame", "type": "EffectiveTimeFrame" }
   ]
 }

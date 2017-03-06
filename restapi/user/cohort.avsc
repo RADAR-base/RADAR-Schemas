@@ -4,7 +4,7 @@
   "name": "Cohort",
   "doc": "Cohort definition",
   "fields": [
-    {"name": "study_id", "type": "int" },
-    {"name": "patients", "type": {"type": "array", "items": "Patient" } }
+    {"name": "studyId", "type": "int", "doc": "ID related to the study"},
+    {"name": "patients", "type": {"type": "array", "items": "Patient" }, "doc": "List of patients involved in the study"}
   ]
 }

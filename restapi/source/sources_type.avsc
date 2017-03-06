@@ -1,7 +1,7 @@
 {
   "namespace": "org.radarcns.avro.restapi.source",
   "type": "enum",
-  "name": "Sources",
+  "name": "SourceType",
   "doc": "All available sources",
-  "symbols": [ "Android" , "Empatica", "Pebble", "Biovotion", "Unknown"]
+  "symbols": [ "ANDROID" , "EMPATICA", "PEBBLE", "BIOVOTION" ]
 }

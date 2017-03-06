@@ -1,7 +1,7 @@
 {
   "namespace": "org.radarcns.avro.restapi.source",
   "type": "enum",
-  "name": "States",
+  "name": "State",
   "doc": "Set of device status",
-  "symbols": [ "FINE" , "OK", "WARNING", "DISCONNECTED", "UNKNOWN"]
+  "symbols": [ "FINE" , "OK", "WARNING", "DISCONNECTED", "UNKNOWN" ]
 }

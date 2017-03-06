@@ -4,7 +4,7 @@
   "name": "Patient",
   "doc": "Patient definition",
   "fields": [
-    {"name": "user_id", "type": "string" },
-    {"name": "sources", "type": {"type": "array", "items": "org.radarcns.avro.restapi.source.Source" } }
+    {"name": "userId", "type": "string", "doc": "User identifier"},
+    {"name": "sources", "type": {"type": "array", "items": "org.radarcns.avro.restapi.source.Source" }, "doc": "List of all sources used by the Patient"}
   ]
 }

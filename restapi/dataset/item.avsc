@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.avro.restapi.dataset",
   "type": "record",
   "name": "Item",
-  "doc": "Dataset item",
+  "doc": "Dataset item. It contains a value and its related time.",
   "fields": [
     {"name": "value", "type": [
       "org.radarcns.avro.restapi.sensor.HeartRate" ,
@@ -13,6 +13,6 @@
       "org.radarcns.avro.restapi.sensor.InterBeatInterval" ,
       "org.radarcns.avro.restapi.sensor.Temperature"
       ] } ,
-    {"name": "effective_time_frame", "type": "org.radarcns.avro.restapi.header.EffectiveTimeFrame"}
+    {"name": "effectiveTimeFrame", "type": "org.radarcns.avro.restapi.header.EffectiveTimeFrame"}
   ]
 }
