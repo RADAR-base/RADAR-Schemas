@@ -8,10 +8,9 @@
     "CELSIUS",
     "DIMENSIONLESS",
     "G",
-    "HZ",
     "MICROSIEMENS",
-    "SEC",
-    "NW",
+    "SECOND",
+    "NANOWATT",
     "PERCENTAGE"
   ]
 }
