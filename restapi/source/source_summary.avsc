@@ -7,6 +7,6 @@
     {"name": "state", "type": "State", "default": "UNKNOWN", "doc": "Current source state computed using the received data"},
     {"name": "receivedMessage", "type": "int", "default": -1, "doc": "Amount of received messages"},
     {"name": "messageLoss", "type": "double", "default": -1.0, "doc": "Percentage of lost messages"},
-    {"name": "sensors", "type": {"type": "array", "items": "org.radarcns.avro.restapi.sensor.Sensor", "doc": "States of on board sensors"} }
+    {"name": "sensors", "type": {"type": "map", "values": "org.radarcns.avro.restapi.sensor.Sensor", "doc": "States of on board sensors. It is a Map<String, Sensor> where the key is the String conversion of a SensorType"} }
   ]
 }
