@@ -7,6 +7,7 @@ The Avro schemas in the `common` directory adhere to the [Google JSON style](htt
 
 - Try to avoid abbreviations in the field names and write out the field name instead.
 - There should be no need to add `value` at the end of a field name.
+- Enumerator items should be written in uppercase characters separated by underscores.
 - Add documentation (the `doc` property) to each schema and each field. The documentation should show in text what is being measured, how, and what units or ranges are applicable. Abbreviations and acronyms in the documentation should be written out.
 - Prefer a categorical specification (an Avro enum) over a free string. This disambiguates the possible values for analysis.
 - Prefer a flat record over a hierarchical record. This simplifies the organization of the data downstream, for example, when mapping to CSV.
