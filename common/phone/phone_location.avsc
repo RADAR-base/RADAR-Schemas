@@ -1,0 +1,17 @@
+{
+  "namespace": "org.radarcns.phone",
+  "type": "record",
+  "name": "PhoneLocation",
+  "doc": "Data from the gps and network location providers.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "device timestamp in UTC (s)"},
+    {"name": "timeReceived", "type": "double", "doc": "device receiver timestamp in UTC (s)"},
+    {"name": "provider", "type": {"name": "LocationProvider", "type": "enum", "symbols": ["GPS", "NETWORK", "OTHER"]}, "doc": "Android provider of the location data."},
+    {"name": "latitude", "type": "double", "doc": "from a random reference latitude", "default": "NaN"},
+    {"name": "longitude", "type": "double", "doc": "from a random reference longitude", "default": "NaN"},
+    {"name": "altitude", "type": "float", "doc": "height above the WGS 84 (m)", "default": "NaN"},
+    {"name": "accuracy", "type": "float", "doc": "accuracy of location (m)", "default": "NaN"},
+    {"name": "speed", "type": "float", "doc": "speed over ground (m/s)", "default": "NaN"},
+    {"name": "bearing", "type": "float", "doc": "the horizontal direction of travel of this device (degrees)", "default": "NaN"}
+  ]
+}
