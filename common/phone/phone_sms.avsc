@@ -1,0 +1,13 @@
+{
+  "namespace": "org.radarcns.phone",
+  "type": "record",
+  "name": "PhoneSms",
+  "doc": "Data from log sent and received text messages.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "device timestamp in UTC (s)"},
+    {"name": "timeReceived", "type": "double", "doc": "device receiver timestamp in UTC (s)"},
+    {"name": "target", "type": ["null", "bytes"], "doc": "HMAC SHA-256 one-way source/target of the SMS. This hash of a given phone number will be the same unless the app is reinstalled. If the number is unknown or anonymous, this contains null.", "default": null},
+    {"name": "type", "type": {"name": "PhoneSmsType", "type": "enum", "symbols": ["INCOMING", "OUTGOING", "OTHER", "UNKNOWN"]}, "doc": "direction of the SMS", "default": "UNKNOWN"},
+    {"name": "length", "type": "int", "doc": "number of characters in the message (-1 if unknown)", "default": -1}
+  ]
+}

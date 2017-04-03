@@ -1,0 +1,11 @@
+{
+  "namespace": "org.radarcns.phone",
+  "type": "record",
+  "name": "PhoneUserInteraction",
+  "doc": "Logs change of user interaction state: when the phone is unlocked or set to standby.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "device timestamp in UTC (s)"},
+    {"name": "timeReceived", "type": "double", "doc": "device receiver timestamp in UTC (s)"},
+    {"name": "lockState", "type": {"name": "PhoneLockState", "type": "enum", "symbols": ["STANDBY", "UNLOCKED"]}, "doc": "what lock state the phone has"}
+  ]
+}
