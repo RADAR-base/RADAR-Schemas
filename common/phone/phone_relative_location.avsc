@@ -1,7 +1,7 @@
 {
   "namespace": "org.radarcns.phone",
   "type": "record",
-  "name": "PhoneLocation",
+  "name": "PhoneRelativeLocation",
   "doc": "Data from the gps and network location providers. The latitude and longitude are stated with an unspecified reference offset and can thus be treated as relative locations. They cannot be used to infer absolute location. This means accurate distances or angles between locations cannot be calculated since those depend on the absolute location.",
   "fields": [
     {"name": "time", "type": "double", "doc": "device timestamp in UTC (s)"},
