@@ -2,4 +2,4 @@ rootProject.name = 'radar-schemas'
 
 include ':radar-schemas-commons'
 include ':radar-schemas-restapi'
-include ':radar-schemas-questionaire'
+include ':radar-schemas-questionnaire'
