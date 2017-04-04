@@ -5,7 +5,7 @@ ext.description = 'RADAR Schemas Commons SDK'
 // AVRO file manipulation                                                    //
 //---------------------------------------------------------------------------//
 task generateAvro(type: com.commercehub.gradle.plugin.avro.GenerateAvroJavaTask) {
-    source(rootProject.file('commons'))
+    source(rootProject.file('../commons'))
     outputDir avroOutputDir
 }
 
