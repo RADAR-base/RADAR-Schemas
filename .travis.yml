@@ -7,7 +7,7 @@ deploy:
   api_key:
     secure: ${GH_TOKEN}
   file_glob: true
-  file: *-java-sdk/build/libs/*.jar
+  file: '*-java-sdk/build/libs/*.jar'
   skip_cleanup: true
   on:
     tags: true
