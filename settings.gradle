@@ -1,0 +1,5 @@
+rootProject.name = 'radar-schemas'
+
+include ':commons-java-sdk'
+include ':restapi-java-sdk'
+include ':questionaire-java-sdk'
