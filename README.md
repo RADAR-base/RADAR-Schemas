@@ -1,5 +1,8 @@
 # RADAR-Schemas
-Discussion of the schemas for RADAR-CNS
+
+[![Build Status](https://travis-ci.org/RADAR-CNS/RADAR-Schemas.svg?branch=master)](https://travis-ci.org/RADAR-CNS/RADAR-Schemas)
+
+[Avro schemas](https://avro.apache.org/docs/1.8.1/spec.html) used in RADAR-CNS.
 
 ## Contributing
 
