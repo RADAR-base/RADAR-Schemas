@@ -14,6 +14,7 @@ subprojects {
     apply plugin: 'com.commercehub.gradle.plugin.avro-base'
     apply plugin: 'maven-publish'
 
+    // Configuration
     version = '0.1'
     group = 'org.radarcns'
     ext.githubRepo = 'RADAR-CNS/RADAR-Schemas'
@@ -27,15 +28,16 @@ subprojects {
     ext.issueUrl = 'https://github.com/' + githubRepo + '/issues'
     ext.website = 'http://radar-cns.org'
 
+    // dependencies
     repositories {
         jcenter()
-        maven { url 'http://dl.bintray.com/typesafe/maven-releases' }
     }
 
     dependencies {
         api group: 'org.apache.avro', name: 'avro', version: avroVersion
     }
 
+    // publishing
     ext.pomConfig = {
         licenses {
             license {
@@ -103,18 +105,13 @@ subprojects {
         archives sourcesJar, javadocJar
     }
 
+    // Generated avro files
     ext.avroOutputDir = file('src/main/java')
 
     clean {
         delete avroOutputDir
     }
 }
-
-//---------------------------------------------------------------------------//
-// Testing                                                                   //
-//---------------------------------------------------------------------------//
-
-
 
 task wrapper(type: Wrapper) {
     gradleVersion = '3.4.1'
