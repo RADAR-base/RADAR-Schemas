@@ -1,0 +1,21 @@
+language: java
+jdk:
+  - oraclejdk8
+env:
+  - TERM=dumb
+
+deploy:
+  provider: releases
+  api_key:
+    secure: ${GH_TOKEN}
+  file_glob: true
+  file: 'java-sdk/*/build/libs/*.jar'
+  skip_cleanup: true
+  on:
+    tags: true
+
+before_install:
+  - cd java-sdk
+
+after_deploy:
+  - ./gradlew bintrayUpload

@@ -1,0 +1,122 @@
+//---------------------------------------------------------------------------//
+// Configuration                                                             //
+//---------------------------------------------------------------------------//
+
+plugins {
+    id 'com.commercehub.gradle.plugin.avro-base' version '0.9.0'
+    id 'com.jfrog.bintray' version '1.7.3'
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'java-library'
+    apply plugin: 'com.jfrog.bintray'
+    apply plugin: 'com.commercehub.gradle.plugin.avro-base'
+    apply plugin: 'maven-publish'
+
+    version = '0.1-SNAPSHOT'
+    group = 'org.radarcns'
+    ext.githubRepo = 'RADAR-CNS/RADAR-Schemas'
+
+    targetCompatibility = '1.7'
+    sourceCompatibility = '1.7'
+
+    ext.avroVersion = '1.8.1'
+
+    ext.vcsUrl = 'https://github.com/' + githubRepo + '.git'
+    ext.issueUrl = 'https://github.com/' + githubRepo + '/issues'
+    ext.website = 'http://radar-cns.org'
+
+    repositories {
+        jcenter()
+        maven { url 'http://dl.bintray.com/typesafe/maven-releases' }
+    }
+
+    dependencies {
+        api group: 'org.apache.avro', name: 'avro', version: avroVersion
+    }
+
+    ext.pomConfig = {
+        licenses {
+            license {
+                name "The Apache Software License, Version 2.0"
+                url "http://www.apache.org/licenses/LICENSE-2.0.txt"
+                distribution 'repo'
+            }
+        }
+        developers {
+            developer {
+                id 'herkulano'
+                name 'Herculano Campos'
+                email 'herculano@goldenarm.com'
+                organization 'Golden Arm Inc.'
+            }
+            developer {
+                id 'fnobilia'
+                name 'Francesco Nobilia'
+                email 'francesco.nobilia@kcl.ac.uk'
+                organization 'King\'s College London'
+            }
+            developer {
+                id 'blootsvoets'
+                name 'Joris Borgdorff'
+                email 'joris@thehyve.nl'
+                organization 'The Hyve'
+            }
+        }
+        issueManagement {
+            system 'GitHub'
+            url issueUrl
+        }
+        organization {
+            name 'RADAR-CNS'
+            url website
+        }
+        scm {
+            connection 'scm:git:' + vcsUrl
+            url vcsUrl
+        }
+    }
+    ext.sharedManifest = manifest {
+        attributes("Implementation-Title": rootProject.name,
+                "Implementation-Version": version)
+    }
+
+    jar {
+        manifest.from sharedManifest
+    }
+    // custom tasks for creating source/javadoc jars
+    task sourcesJar(type: Jar, dependsOn: classes) {
+        classifier = 'sources'
+        from sourceSets.main.output
+        manifest.from sharedManifest
+    }
+
+    task javadocJar(type: Jar, dependsOn: javadoc) {
+        classifier = 'javadoc'
+        from javadoc.destinationDir
+        manifest.from sharedManifest
+    }
+
+    // add javadoc/source jar tasks as artifacts
+    artifacts {
+        archives sourcesJar, javadocJar
+    }
+
+    ext.avroOutputDir = file('src/main/java')
+
+    clean {
+        delete avroOutputDir
+    }
+}
+
+//---------------------------------------------------------------------------//
+// Testing                                                                   //
+//---------------------------------------------------------------------------//
+
+
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '3.4.1'
+    distributionUrl distributionUrl.replace("bin", "all")
+}
