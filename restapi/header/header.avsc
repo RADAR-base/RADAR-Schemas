@@ -6,6 +6,7 @@
   "fields": [
     {"name": "descriptiveStatistic", "type": "DescriptiveStatistic" },
     {"name": "unit", "type": "org.radarcns.avro.restapi.sensor.Unit"},
+    {"name": "timeFrame", "type": "TimeFrame"},
     {"name": "effectiveTimeFrame", "type": "EffectiveTimeFrame" }
   ]
 }

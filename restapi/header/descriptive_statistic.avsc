@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.avro.restapi.header",
   "type": "enum",
   "name": "DescriptiveStatistic",
-  "doc": "Set of available statical value",
+  "doc": "Statical values",
   "symbols": [
     "AVERAGE" ,
     "COUNT" ,
