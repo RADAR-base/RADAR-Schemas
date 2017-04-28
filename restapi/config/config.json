@@ -1,0 +1,172 @@
+{
+  "sensor": {
+    "ACCELEROMETER": {
+      "key": "acceleration",
+      "doc": "Acceleration item for a dataset with gravitational constant g as unit.",
+      "label": {
+        "EN": "Accelerometer"
+      },
+      "subKeys": [
+        {
+          "key": "x",
+          "doc": "Acceleration x axis with gravitational constant g as unit.",
+          "label": {
+            "EN": "X Coord"
+          }
+        },
+        {
+          "key": "y",
+          "doc": "Acceleration y axis with gravitational constant g as unit.",
+          "label": {
+            "EN": "Y Coord"
+          }
+        },
+        {
+          "key": "z",
+          "doc": "Acceleration z axis with gravitational constant g as unit.",
+          "label": {
+            "EN": "Z Coord"
+          }
+        }
+      ]
+    },
+    "BATTERY": {
+      "doc": "Battery level in percentage as unit.",
+      "label": {
+        "EN": "Battery"
+      }
+    },
+    "BLOOD_VOLUME_PULSE": {
+      "doc": "Blood volumne pulse from photoplethysmograph expressed in light absorption (nW).",
+      "label": {
+        "EN": "Blood Volume Pulse"
+      }
+    },
+    "ELECTRODERMAL_ACTIVITY": {
+      "doc": "Electrodermal activity in microsiemens (µS) as unit.",
+      "label": {
+        "EN": "Electrodermal Activity"
+      }
+    },
+    "INTER_BEAT_INTERVAL": {
+      "doc": "Time between individal heat beats.",
+      "label": {
+        "EN": "Inter Beat Interval"
+      }
+    },
+    "HEART_RATE": {
+      "doc": "Heart Rate resulting from data aggregation. It is computed as (60 / ibi)",
+      "label": {
+        "EN": "Heart Rate"
+      },
+      "key": "heartRate",
+      "subKeys": [
+        {
+          "key": "value",
+          "label": {
+            "EN": "Heart Rate"
+          }
+        }
+      ]
+    },
+    "THERMOMETER": {
+      "doc": "Temperature value expressed in Celsius (°C) scale",
+      "label": {
+        "EN": "Thermometer"
+      }
+    }
+  },
+  "stat": {
+    "AVERAGE": {
+      "doc": "The sum of a list of numbers divided by the number of numbers in the list.",
+      "label": {
+        "EN": "Average"
+      }
+    },
+    "COUNT": {
+      "doc": "The number of occurances within a set of data.",
+      "label": {
+        "EN": "Count"
+      }
+    },
+    "MAXIMUM": {
+      "doc": "The most extreme value in set.",
+      "label": {
+        "EN": "Maximum"
+      }
+    },
+    "MEDIAN": {
+      "doc": "The median is the value separating the higher half of a set of values from the lower half. ",
+      "label": {
+        "EN": "Median"
+      }
+    },
+    "MINIMUM": {
+      "doc": "The least or the smallest value in a set.",
+      "label": {
+        "EN": "Minimum"
+      }
+    },
+    "SUM": {
+      "doc": "The result of the addition of a sequence of numbers.",
+      "label": {
+        "EN": "Sum"
+      }
+    },
+    "INTERQUARTILE_RANGE": {
+      "doc": "A measure of statistical dispersion, being equal to the difference between 75th and 25th percentiles, or between upper and lower quartiles.",
+      "label": {
+        "EN": "Interquartile Range"
+      }
+    },
+    "LOWER_QUARTILE": {
+      "doc": "A point at the 1st quartile or 25th percentile in a ranked set of data values.",
+      "label": {
+        "EN": "Lower Quartile"
+      }
+    },
+    "UPPER_QUARTILE": {
+      "doc": "A point at the 3rd quartile or 75th percentile in a ranked set of data values.",
+      "label": {
+        "EN": "Upper Quartile"
+      }
+    },
+    "QUARTILES": {
+      "doc": "The quartiles of a ranked set of data values are the three points that divide the data set into four equal groups.",
+      "label": {
+        "EN": "Quartiles"
+      }
+    }
+  },
+  "unit": {
+    "doc": "All possible units requested data is returned as.",
+    "BEATS_PER_MIN": {
+      "doc": "Number of events (heart beats) per minute.",
+      "label": {
+        "EN": "Beats per Minute"
+      }
+    },
+    "G": {
+      "doc": "The g-force (with g from gravitational) is a measurement of the type of acceleration that causes a perception of weight",
+      "label": {
+        "EN": "G Force"
+      }
+    },
+    "C": {
+      "doc": "Celsius, also known as centigrade, is a metric scale and unit of measurement for temperature.",
+      "label": {
+        "EN": "°C"
+      }
+    }
+  },
+  "timeInterval": {
+    "doc": "Available time intervals in which requested data is returned.",
+    "TEN_SEC": {
+      "doc": "10 seconds time interval",
+      "value": 10000,
+      "label": {
+        "EN": "10s"
+      }
+    }
+  }
+}
