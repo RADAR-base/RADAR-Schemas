@@ -2,6 +2,10 @@
   "namespace": "org.radarcns.avro.restapi.app",
   "type": "enum",
   "name": "ServerStatus",
-  "doc": "Set of device status",
-  "symbols": [ "CONNECTED" , "DISCONNECTED", "UNKNOWN" ]
+  "doc": "Set of connection status between smartphone app and the RADAR-CNS Platform.",
+  "symbols": [
+    "CONNECTED" ,
+    "DISCONNECTED",
+    "UNKNOWN"
+    ]
 }

@@ -4,8 +4,8 @@
   "name": "Source",
   "doc": "Source details",
   "fields": [
-    {"name": "id", "type": "string", "doc": "Source id"},
-    {"name": "type", "type": "SourceType", "doc": "Source name"},
-    {"name": "summary", "type": ["null", "SourceSummary"], "default": null, "doc": "Source details"}
+    {"name": "id", "type": "string", "doc": "Source identifier" },
+    {"name": "type", "type": "SourceType", "doc": "Source name" },
+    {"name": "summary", "type": ["null", "SourceSummary"], "default": null, "doc": "Source details" }
   ]
 }
