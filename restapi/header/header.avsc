@@ -4,6 +4,10 @@
   "name": "Header",
   "doc": "Metadata for Dataset. It is a summary explaining what kind of information are stored in the Dataset.",
   "fields": [
+    {"name": "patientId", "type": "string", "doc": "User identifier"},
+    {"name": "sourceId", "type": "string", "doc": "Source identifier"},
+    {"name": "source", "type": "org.radarcns.avro.restapi.source.SourceType", "doc": "Source type"},
+    {"name": "sensor", "type": "org.radarcns.avro.restapi.sensor.SensorType", "doc": "Sensor that has generated data"},
     {"name": "descriptiveStatistic", "type": "DescriptiveStatistic", "doc": "Statical value expressed by samples" },
     {"name": "unit", "type": "org.radarcns.avro.restapi.sensor.Unit", "doc": "Measurement unit with which samples are measured" },
     {"name": "timeFrame", "type": "TimeFrame", "doc": "Time interval between two consecutive samples" },
