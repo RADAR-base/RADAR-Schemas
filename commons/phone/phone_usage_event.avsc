@@ -8,6 +8,6 @@
     {"name": "timeReceived", "type": "double", "doc": "device receiver timestamp in UTC (s)"},
     {"name": "packageName", "type": "string", "doc": "package name of the launched app"},
     {"name": "categoryName", "type": "string", "doc": "app category as given by the play store"},
-    {"name": "eventType", "type": {"name": "UsageEventType", "type": "enum", "symbols": ["FOREGROUND", "BACKGROUND", "OTHER"]}, "doc": "whether the event brought app to foreground or background or neither"}
+    {"name": "eventType", "type": {"name": "UsageEventType", "type": "enum", "symbols": ["FOREGROUND", "BACKGROUND", "CONFIG", "SHORTCUT", "INTERACTION", "NONE"]}, "doc": "whether the event brought app to foreground or background or neither"}
   ]
 }
