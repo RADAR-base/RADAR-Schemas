@@ -14,6 +14,6 @@
     "LOWER_QUARTILE" ,
     "UPPER_QUARTILE",
     "QUARTILES",
-    "DELIVERY_RATE"
+    "RECEIVED_MESSAGES"
     ]
 }
