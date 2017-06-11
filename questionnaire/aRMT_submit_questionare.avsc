@@ -12,6 +12,7 @@
 		"type": {
 			"type": "array",
 			"items": {
+              	"name":"Answer",
 				"type": "record",
 				"doc": "Questionnaire answer",
 				"fields": [{
