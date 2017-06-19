@@ -3,7 +3,7 @@
   "version": 1,
   "estimatedCompletionTime" : 7,
   "startText" : "This questionnaire is known as the PHQ8. Clinicians use it to assess current depression in patients. Thank you for taking part in this focus group.",
-  "endText" : "Thank you for partcipating today.",
+  "endText" : "Thank you for participating today.",
   "protocol" : {
     "reminders" : {
       "amount" : 15,
