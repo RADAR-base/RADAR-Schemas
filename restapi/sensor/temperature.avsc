@@ -1,9 +1,0 @@
-{
-  "namespace": "org.radarcns.avro.restapi.sensor",
-  "type": "record",
-  "name": "Temperature",
-  "doc": "Temperature value expressed in Celsius (°C) scale",
-  "fields": [
-    {"name": "value", "type": [ "double" , "org.radarcns.avro.restapi.dataset.Quartiles" ]}
-  ]
-}
