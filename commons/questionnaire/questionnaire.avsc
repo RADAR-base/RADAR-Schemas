@@ -4,7 +4,7 @@
   "name": "Questionnaire",
   "doc": "General schema for questionnaire. Check the specification folder to see how the questionnaire has been defined. For each QuestionnaireType there is a JSON file reporting the questions set and possible answers if available",
   "fields": [
-    { "name": "name", "type": {"name": "QuestionnaireType", "type": "enum", "symbols": ["PHQ8", "ESM", "UNKNOWN"]}, "doc": "Questionnaire names", "default": "UNKNOWN" },
+    { "name": "name", "type": {"name": "QuestionnaireType", "type": "enum", "symbols": ["PHQ8", "ESM", "PDQ5D", "UNKNOWN"]}, "doc": "Questionnaire names", "default": "UNKNOWN" },
     { "name": "version", "type": "string", "doc": "It reports the questionnaire version stated in the JSON specification" },
     { "name": "answers",
       "type": {
