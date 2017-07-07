@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.avro.restapi.sensor",
   "type": "enum",
   "name": "DataType",
-  "doc": "States if the value is provided directly by a sensor or it is computed. Any value different from RAW states who computes the value.",
+  "doc": "States if a sample is recorded directly by a sensor or it is computed. Any value different from RAW states who computes the value.",
   "symbols": [
     "RAW" ,
     "VENDOR",

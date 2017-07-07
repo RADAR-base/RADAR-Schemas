@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.avro.restapi.sensor",
   "type": "enum",
   "name": "Unit",
-  "doc": "Set of measurement units",
+  "doc": "Measurement units",
   "symbols": [
     "BEATS_PER_MIN" ,
     "CELSIUS",

@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.avro.restapi.avro",
   "type": "record",
   "name": "Message",
-  "doc": "Message to describe HTTP Response",
+  "doc": "Message to provide information to the end user in case a function does not provide the expected result",
   "fields": [
     {"name": "message", "type": "string"}
   ]

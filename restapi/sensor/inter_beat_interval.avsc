@@ -1,9 +1,0 @@
-{
-  "namespace": "org.radarcns.avro.restapi.sensor",
-  "type": "record",
-  "name": "InterBeatInterval",
-  "doc": "Time between individuals heart beats",
-  "fields": [
-    {"name": "value", "type": [ "double" , "org.radarcns.avro.restapi.dataset.Quartiles" ]}
-  ]
-}

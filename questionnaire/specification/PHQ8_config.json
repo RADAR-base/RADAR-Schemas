@@ -1,0 +1,149 @@
+{
+  "name" : "PHQ8",
+  "version": 1,
+  "estimatedCompletionTime" : 7,
+  "startText" : "This questionnaire is known as the PHQ8. Clinicians use it to assess current depression in patients. Thank you for taking part in this focus group.",
+  "endText" : "Thank you for participating today.",
+  "protocol" : {
+    "reminders" : {
+      "amount" : 15,
+      "repeat" : 2,
+      "unit" : "min"
+    },
+    "repeatProtocol" : {
+      "amount" : 1,
+      "unit" : "month"
+    },
+    "repeatQuestionnaire" : {
+      "unit" : "min",
+      "unitsFromZero" : [ 600 ]
+    }
+  },
+  "questions" : [ {
+    "content" : "Little interest or pleasure in doing things.",
+    "id" : "PHQ8-0",
+    "lead" : "Over the past two weeks, how often have you been bothered by any of the following problems?",
+    "responses" : [ {
+      "response" : "Not at all",
+      "score" : 0
+    }, {
+      "response" : "Several days",
+      "score" : 1
+    }, {
+      "response" : "More than half the days",
+      "score" : 2
+    }, {
+      "response" : "Nearly every day",
+      "score" : 3
+    } ],
+    "type" : "radio"
+  }, {
+    "content" : "Feeling down, depressed, or hopeless.",
+    "id" : "PHQ8-1",
+    "lead" : "Over the past two weeks, how often have you been bothered by any of the following problems?",
+    "responses" : [ {
+      "response" : "Not at all",
+      "score" : 0
+    }, {
+      "response" : "Several days",
+      "score" : 1
+    }, {
+      "response" : "More than half the days",
+      "score" : 2
+    }, {
+      "response" : "Nearly every day",
+      "score" : 3
+    } ],
+    "type" : "radio"
+  }, {
+    "content" : "Trouble falling asleep or staying asleep, or sleeping too much.",
+    "id" : "PHQ8-2",
+    "lead" : "Over the past two weeks, how often have you been bothered by any of the following problems?",
+    "responses" : [ {
+      "response" : "Not at all",
+      "score" : 0
+    }, {
+      "response" : "Several days",
+      "score" : 1
+    }, {
+      "response" : "More than half the days",
+      "score" : 2
+    }, {
+      "response" : "Nearly every day",
+      "score" : 3
+    } ],
+    "type" : "radio"
+  }, {
+    "content" : "Feeling tired or having little energy.",
+    "id" : "PHQ8-3",
+    "lead" : "Over the past two weeks, how often have you been bothered by any of the following problems?",
+    "responses" : [ {
+      "response" : "Not at all",
+      "score" : 0
+    }, {
+      "response" : "Several days",
+      "score" : 1
+    }, {
+      "response" : "More than half the days",
+      "score" : 2
+    }, {
+      "response" : "Nearly every day",
+      "score" : 3
+    } ],
+    "type" : "radio"
+  }, {
+    "content" : "Feeling bad about yourself – or that you are a failure or have let yourself or your family down.",
+    "id" : "PHQ8-4",
+    "lead" : "Over the past two weeks, how often have you been bothered by any of the following problems?",
+    "responses" : [ {
+      "response" : "Not at all",
+      "score" : 0
+    }, {
+      "response" : "Several days",
+      "score" : 1
+    }, {
+      "response" : "More than half the days",
+      "score" : 2
+    }, {
+      "response" : "Nearly every day",
+      "score" : 3
+    } ],
+    "type" : "radio"
+  }, {
+    "content" : "Trouble concentrating on things such as reading the newspaper of watching television.",
+    "id" : "PHQ8-5",
+    "lead" : "Over the past two weeks, how often have you been bothered by any of the following problems?",
+    "responses" : [ {
+      "response" : "Not at all",
+      "score" : 0
+    }, {
+      "response" : "Several days",
+      "score" : 1
+    }, {
+      "response" : "More than half the days",
+      "score" : 2
+    }, {
+      "response" : "Nearly every day",
+      "score" : 3
+    } ],
+    "type" : "radio"
+  }, {
+    "content" : "Moving or speaking so slowly that other people have noticed. Or the opposite – being so fidgety or restless that you have been moving around a lot more than usual.",
+    "id" : "PHQ8-6",
+    "lead" : "Over the past two weeks, how often have you been bothered by any of the following problems?",
+    "responses" : [ {
+      "response" : "Not at all",
+      "score" : 0
+    }, {
+      "response" : "Several days",
+      "score" : 1
+    }, {
+      "response" : "More than half the days",
+      "score" : 2
+    }, {
+      "response" : "Nearly every day",
+      "score" : 3
+    } ],
+    "type" : "radio"
+  } ]
+}
