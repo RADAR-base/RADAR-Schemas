@@ -6,6 +6,6 @@
   "fields": [
     {"name": "time", "type": "double", "doc": "device timestamp in UTC (s)"},
     {"name": "timeReceived", "type": "double", "doc": "device receiver timestamp in UTC (s)"},
-    {"name": "unreadSMS", "type": "boolean", "doc": "number of unread SMS messages currently in the inbox"}
+    {"name": "unreadSMS", "type": "int", "doc": "number of unread SMS messages currently in the inbox"}
   ]
 }

@@ -6,6 +6,6 @@
   "fields": [
     {"name": "time", "type": "double", "doc": "device timestamp in UTC (s)"},
     {"name": "timeReceived", "type": "double", "doc": "device receiver timestamp in UTC (s)"},
-    {"name": "steps", "type": "float", "doc": "number of steps taken since last reboot"}
+    {"name": "steps", "type": "int", "doc": "number of steps taken between this and the previous record"}
   ]
 }
