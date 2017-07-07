@@ -18,15 +18,18 @@
           "type": "record",
           "doc": "Trial summary for SymbolCheck assessment",
             "fields": [
+              { "name": "quarter", "type": "int", "doc": "Quarter (1,2,3 or 4)." },
               { "name": "correct", "type": "int", "doc": "The amount of correct responses" },
               { "name": "incorrect", "type": "int", "doc": "The amount of incorrect responses" },
-              { "name": "timeouts", "type": "int", "doc": "The amount of time tha a subject failed to input a response within the time limit" },
+              { "name": "timeouts", "type": "int", "doc": "The amount of time that a subject failed to input a response within the time limit" },
               { "name": "inputType", "type": "org.radarcns.thincit.InputType", "doc": "Dominant input type used by the subject to answer" }
             ]
          }
       },
       "doc": "Trial summaries aggregated by 10. First item reports about trial 1-10, second 11-20 and so on"
     },
-    { "name": "time", "type": "double", "doc": "timestamp in UTC (s) when the test is submitted to the subject" }
+    { "name": "time", "type": "double", "doc": "timestamp in UTC (s) when the test is submitted to the subject" },
+	  { "name": "appVersion", "type": "int", "doc": "App version" },
+	  { "name": "RAW", "type": "string", "doc": "Base 64 encoded raw data." }
   ]
 }
