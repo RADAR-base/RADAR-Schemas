@@ -1,0 +1,32 @@
+{
+  "namespace": "org.radarcns.thincit",
+  "type": "record",
+  "name": "CodeBreaker",
+  "doc": "Assessment derived from DSST. As many trials as can be completed within 2 minutes. E ach trial is a symbol/number to be matched.",
+  "fields": [
+    { "name": "score", "type": "int", "doc": "THINC-it index score - out of 4000" },
+    { "name": "completed", "type": "int", "doc": "The amount of completed trials" },
+    { "name": "incorrect", "type": "int", "doc": "The amount of incorrect responses" },
+    { "name": "longestTrial", "type": "double", "doc": "Longest trial completion time expressed in millisecond" },
+    { "name": "iqrCompletion", "type": "int", "doc": "Mean of trial completion times within interquartile range" },
+    { "name": "inputType", "type": "org.radarcns.thincit.InputType", "doc": "Dominant input type used by the subject to answer", "default": "UNKNOWN" },
+    { "name": "details",
+      "type": {
+        "type": "array",
+        "items": {
+          "name": "CodeBreakerSummary",
+          "type": "record",
+          "doc": "Trial summary for CodeBreaker assessment",
+            "fields": [
+              { "name": "longestTime", "type": "double", "doc": "Longest trial completion time expressed in millisecond" },
+              { "name": "meanTime", "type": "double", "doc": "Mean trial completion time expressed in millisecond" },
+              { "name": "correct", "type": "int", "doc": "The amount of correct responses" },
+              { "name": "inputType", "type": "org.radarcns.thincit.InputType", "doc": "Dominant input type used by the subject to answer" }
+            ]
+         }
+      },
+      "doc": "List of trial summaries. First item reports about the first quarter, second about the second quarter and so on"
+    },
+    { "name": "time", "type": "double", "doc": "timestamp in UTC (s) when the test is submitted to the subject" }
+  ]
+}

@@ -1,9 +1,0 @@
-{
-  "namespace": "org.radarcns.avro.restapi.sensor",
-  "type": "record",
-  "name": "BloodVolumePulse",
-  "doc": "Data from photoplethysmograph expressed in light absorption (nW)",
-  "fields": [
-    {"name": "value", "type": [ "double" , "org.radarcns.avro.restapi.dataset.Quartiles" ]}
-  ]
-}

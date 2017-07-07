@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.avro.restapi.sensor",
   "type": "enum",
   "name": "SensorType",
-  "doc": "Set of sensor type",
+  "doc": "Sensor types",
   "symbols": [
     "ACCELEROMETER" ,
     "BATTERY",

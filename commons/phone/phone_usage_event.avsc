@@ -1,0 +1,13 @@
+{
+  "namespace": "org.radarcns.phone",
+  "type": "record",
+  "name": "PhoneUsageEvent",
+  "doc": "Event for closing or opening an app",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "device timestamp in UTC (s)"},
+    {"name": "timeReceived", "type": "double", "doc": "device receiver timestamp in UTC (s)"},
+    {"name": "packageName", "type": "string", "doc": "package name of the launched app"},
+    {"name": "categoryName", "type": "string", "doc": "app category as given by the play store"},
+    {"name": "eventType", "type": {"name": "UsageEventType", "type": "enum", "symbols": ["FOREGROUND", "BACKGROUND", "CONFIG", "SHORTCUT", "INTERACTION", "NONE"]}, "doc": "whether the event brought app to foreground or background or neither"}
+  ]
+}
