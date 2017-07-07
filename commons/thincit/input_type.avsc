@@ -1,0 +1,12 @@
+{
+  "namespace": "org.radarcns.thincit",
+  "type": "enum",
+  "name": "InputType",
+  "doc": "Possible input type that a subject can use to do an assignment",
+  "symbols": [
+    "KEYBOARD",
+    "MOUSE",
+    "TOUCHSCREEN",
+    "UNKNOWN"
+   ]
+}
