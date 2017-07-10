@@ -1,15 +1,17 @@
 {
   "namespace": "org.radarcns.thincit",
   "type": "record",
-  "name": "SymbolCheck",
-  "doc": "Assessment derived from Nback. 40 trials, or 2 minutes max. Each obscured symbol to be recalled is a trial.",
+  "name": "ThincItSymbolCheck",
+  "doc": "THINC-it Assessment derived from Nback. 40 trials, or 2 minutes max. Each obscured symbol to be recalled is a trial.",
   "fields": [
+    { "name": "time", "type": "double", "doc": "timestamp in UTC (s) when the test is submitted to the subject" },
+    { "name": "timeCompleted", "type": "double", "doc": "timestamp in UTC (s) when the subject completes the test" },
     { "name": "score", "type": "int", "doc": "THINC-it index score - out of 4000" },
     { "name": "completed", "type": "int", "doc": "The amount of completed trials" },
     { "name": "correct", "type": "int", "doc": "The amount of correct responses" },
     { "name": "incorrect", "type": "int", "doc": "The amount of incorrect responses" },
     { "name": "timeouts", "type": "int", "doc": "The amount of time tha a subject failed to input a response within the time limit" },
-    { "name": "inputType", "type": "org.radarcns.thincit.InputType", "doc": "Dominant input type used by the subject to answer", "default": "UNKNOWN" },
+    { "name": "inputType", "type": "org.radarcns.thincit.ThincItInputType", "doc": "Dominant input type used by the subject to answer", "default": "UNKNOWN" },
     { "name": "details",
       "type": {
         "type": "array",
@@ -21,12 +23,11 @@
               { "name": "correct", "type": "int", "doc": "The amount of correct responses" },
               { "name": "incorrect", "type": "int", "doc": "The amount of incorrect responses" },
               { "name": "timeouts", "type": "int", "doc": "The amount of time tha a subject failed to input a response within the time limit" },
-              { "name": "inputType", "type": "org.radarcns.thincit.InputType", "doc": "Dominant input type used by the subject to answer" }
+              { "name": "inputType", "type": "org.radarcns.thincit.ThincItInputType", "doc": "Dominant input type used by the subject to answer" }
             ]
          }
       },
       "doc": "Trial summaries aggregated by 10. First item reports about trial 1-10, second 11-20 and so on"
-    },
-    { "name": "time", "type": "double", "doc": "timestamp in UTC (s) when the test is submitted to the subject" }
+    }
   ]
 }

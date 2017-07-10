@@ -1,7 +1,7 @@
 {
   "namespace": "org.radarcns.thincit",
   "type": "enum",
-  "name": "InputType",
+  "name": "ThincItInputType",
   "doc": "Possible input type that a subject can use to do an assignment",
   "symbols": [
     "KEYBOARD",
