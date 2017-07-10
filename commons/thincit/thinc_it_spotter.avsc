@@ -7,7 +7,7 @@
     { "name": "time", "type": "double", "doc": "timestamp in UTC (s) when the test is submitted to the subject" },
     { "name": "timeCompleted", "type": "double", "doc": "timestamp in UTC (s) when the subject completes the test" },
     { "name": "score", "type": "int", "doc": "THINC-it index score - out of 4000" },
-    { "name": "meanLatency", "type": "double", "doc": "Mean latency of correct responses expressed in millisecond" },
+    { "name": "meanLatency", "type": "int", "doc": "Mean latency of correct responses expressed in milliseconds" },
     { "name": "timeouts", "type": "int", "doc": "The amount of time tha a subject failed to input a response within the time limit" },
     { "name": "anticipations", "type": "int", "doc": "The amount of response within 100ms of stimulus presentation" },
     { "name": "incorrect", "type": "int", "doc": "The amount of incorrect responses" },
@@ -20,14 +20,18 @@
           "type": "record",
           "doc": "Trial summary for Spotter assessment",
             "fields": [
-              { "name": "meanLatency", "type": "double", "doc": "Mean latency of correct responses expressed in millisecond" },
+              { "name": "quarter", "type": "int", "doc": "Quarter (1,2,3 or 4)." },
+              { "name": "meanLatency", "type": "double", "doc": "Mean latency of correct responses expressed in milliseconds" },
               { "name": "timeouts", "type": "int", "doc": "The amount of time tha a subject failed to input a response within the time limit" },
               { "name": "anticipations", "type": "int", "doc": "The amount of response within 100ms of stimulus presentation" },
-              { "name": "incorrect", "type": "int", "doc": "The amount of incorrect responses" }
+              { "name": "incorrect", "type": "int", "doc": "The amount of incorrect responses" },
+              { "name": "inputType", "type": "org.radarcns.thincit.ThincItInputType", "doc": "Dominant input type used by the subject to answer", "default": "UNKNOWN" }
             ]
          }
       },
       "doc": "Trial summaries aggregated by 10. First item reports about trial 1-10, second 11-20 and so on"
-    }
+    },
+	  { "name": "appVersion", "type": "int", "doc": "App version" },
+	  { "name": "RAW", "type": "string", "doc": "Base 64 encoded raw data." }
   ]
 }
