@@ -7,7 +7,10 @@
     {"name": "time", "type": "double", "doc": "device timestamp in UTC (s)"},
     {"name": "timeReceived", "type": "double", "doc": "device receiver timestamp in UTC (s)"},
     {"name": "packageName", "type": "string", "doc": "package name of the launched app"},
-    {"name": "categoryName", "type": "string", "doc": "app category as given by the play store"},
-    {"name": "eventType", "type": {"name": "UsageEventType", "type": "enum", "symbols": ["FOREGROUND", "BACKGROUND", "CONFIG", "SHORTCUT", "INTERACTION", "NONE"]}, "doc": "whether the event brought app to foreground or background or neither"}
+    {"name": "categoryName", "type": ["null", "string"], "doc": "app category as given by the play store", "default": null},
+    {"name": "categoryNameFetchTime", "type": ["null", "double"], "doc": "timestamp in UTC when the category was fetched from the play store (s)", "default": null},
+    {"name": "eventType", "type":
+      {"name": "UsageEventType", "type": "enum", "symbols": ["FOREGROUND", "BACKGROUND", "CONFIG", "SHORTCUT", "INTERACTION", "NONE"]},
+      "doc": "whether the event brought app to foreground or background or neither", "default": "NONE"}
   ]
 }
