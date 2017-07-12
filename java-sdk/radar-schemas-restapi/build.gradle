@@ -5,12 +5,15 @@ ext.description = 'RADAR Schemas REST API SDK'
 // AVRO file manipulation                                                    //
 //---------------------------------------------------------------------------//
 task generateAvro(type: com.commercehub.gradle.plugin.avro.GenerateAvroJavaTask) {
+    source rootProject.fileTree('../commons') {
+        include 'questionnaire/questionnaire.avsc'
+        include 'application/application_server_status.avsc'
+    }
     source rootProject.fileTree('../restapi') {
         include '**/*.avsc'
     }
     outputDir avroOutputDir
 }
-
 compileJava.dependsOn generateAvro
 
 //---------------------------------------------------------------------------//
