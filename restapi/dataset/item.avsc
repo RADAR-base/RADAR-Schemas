@@ -6,8 +6,9 @@
   "fields": [
     {"name": "sample", "type": [
       "org.radarcns.avro.restapi.data.DoubleSample" ,
-      "org.radarcns.avro.restapi.data.Acceleration"
-      ], "doc": "Sample value. For more details, check DoubleSample and Acceleration" } ,
+      "org.radarcns.avro.restapi.data.Acceleration",
+      "org.radarcns.questionnaire.Questionnaire"
+      ], "doc": "Sample value. For more details, check org.radarcns.avro.restapi.data.Acceleration, org.radarcns.avro.restapi.data.DoubleSample and org.radarcns.questionnaire.Questionnaire" } ,
     {"name": "startDateTime", "type": "string", "doc": "Point in time (ISO8601) with UTC timezone. It represents the timestamp of the first sample contained inside the aggregated data."}
   ]
 }
