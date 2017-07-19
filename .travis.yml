@@ -8,13 +8,16 @@ deploy:
   provider: releases
   api_key: ${GH_TOKEN}
   file_glob: true
-  file: "${TRAVIS_BUILD_DIR}/java-sdk/build/libs/*.jar"
+  file: "*/build/libs/*.jar"
   skip_cleanup: true
   on:
     tags: true
 
 before_install:
   - cd java-sdk
+
+before_deploy:
+  - pwd
 
 after_deploy:
   - ./gradlew bintrayUpload

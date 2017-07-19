@@ -6,6 +6,6 @@
   "fields": [
     {"name": "time", "type": "double", "doc": "device timestamp in UTC (s)"},
     {"name": "timeReceived", "type": "double", "doc": "device receiver timestamp in UTC (s)"},
-    {"name": "lockState", "type": {"name": "PhoneLockState", "type": "enum", "symbols": ["STANDBY", "UNLOCKED"]}, "doc": "what lock state the phone has"}
+    {"name": "interactionState", "type": {"name": "PhoneInteractionState", "type": "enum", "symbols": ["STANDBY", "UNLOCKED","SHUTDOWN","BOOTED"]}, "doc": "what interaction state the phone has"}
   ]
 }

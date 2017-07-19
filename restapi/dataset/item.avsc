@@ -4,15 +4,11 @@
   "name": "Item",
   "doc": "Dataset item. It contains a value and its related time.",
   "fields": [
-    {"name": "value", "type": [
-      "org.radarcns.avro.restapi.sensor.HeartRate" ,
-      "org.radarcns.avro.restapi.sensor.Acceleration" ,
-      "org.radarcns.avro.restapi.sensor.Battery" ,
-      "org.radarcns.avro.restapi.sensor.BloodVolumePulse" ,
-      "org.radarcns.avro.restapi.sensor.ElectroDermalActivity" ,
-      "org.radarcns.avro.restapi.sensor.InterBeatInterval" ,
-      "org.radarcns.avro.restapi.sensor.Temperature"
-      ] } ,
-    {"name": "effectiveTimeFrame", "type": "org.radarcns.avro.restapi.header.EffectiveTimeFrame"}
+    {"name": "sample", "type": [
+      "org.radarcns.avro.restapi.data.DoubleSample" ,
+      "org.radarcns.avro.restapi.data.Acceleration",
+      "org.radarcns.questionnaire.Questionnaire"
+      ], "doc": "Sample value. For more details, check org.radarcns.avro.restapi.data.Acceleration, org.radarcns.avro.restapi.data.DoubleSample and org.radarcns.questionnaire.Questionnaire" } ,
+    {"name": "startDateTime", "type": "string", "doc": "Point in time (ISO8601) with UTC timezone. It represents the timestamp of the first sample contained inside the aggregated data."}
   ]
 }

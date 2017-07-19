@@ -1,9 +1,0 @@
-{
-  "namespace": "org.radarcns.avro.restapi.sensor",
-  "type": "record",
-  "name": "HeartRate",
-  "doc": "Heart Rate resulting from data aggregation. It is computed as (60 / ibi)",
-  "fields": [
-    {"name": "value", "type": [ "double" , "org.radarcns.avro.restapi.dataset.Quartiles" ]}
-  ]
-}

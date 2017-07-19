@@ -1,7 +1,0 @@
-{
-  "namespace": "org.radarcns.avro.restapi.app",
-  "type": "enum",
-  "name": "ServerStatus",
-  "doc": "Set of device status",
-  "symbols": [ "CONNECTED" , "DISCONNECTED", "UNKNOWN" ]
-}

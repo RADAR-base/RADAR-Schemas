@@ -8,6 +8,9 @@
     {"name": "timeReceived", "type": "double", "doc": "device receiver timestamp in UTC (s)"},
     {"name": "target", "type": ["null", "bytes"], "doc": "HMAC SHA-256 one-way source/target of the SMS. This hash of a given phone number will be the same unless the app is reinstalled. If the number is unknown or anonymous, this contains null.", "default": null},
     {"name": "type", "type": {"name": "PhoneSmsType", "type": "enum", "symbols": ["INCOMING", "OUTGOING", "OTHER", "UNKNOWN"]}, "doc": "direction of the SMS", "default": "UNKNOWN"},
-    {"name": "length", "type": "int", "doc": "number of characters in the message (-1 if unknown)", "default": -1}
+    {"name": "length", "type": ["null","int"], "doc": "number of characters in the message (null if unknown)", "default": null},
+    {"name": "targetIsContact", "type": ["null","boolean"], "doc": "sms sender is a known contact, null if unknown", "default": null},
+    {"name": "targetIsNonNumeric", "type": "boolean", "doc": "sms sender ID is replaced by text, e.g. a company name", "default": false},
+    {"name": "targetLength", "type": "int", "doc": "length of the target phone number, -1 if not collected.", "default": -1}
   ]
 }

@@ -4,9 +4,11 @@
   "name": "Application",
   "doc": "Smartphone application status",
   "fields": [
-    {"name": "ipAddress", "type": ["null", "string"], "doc": "Hardware identifier of client application", "default": null},
+    {"name": "ipAddress", "type": [
+      "null",
+      "string" ], "doc": "Hardware identifier of client application", "default": null},
     {"name": "uptime", "type": "double", "doc": "Time since last app start (s)"},
-    {"name": "serverStatus", "type": "ServerStatus", "doc": "server connection status", "default": "UNKNOWN"},
+    {"name": "serverStatus", "type": "org.radarcns.application.ServerStatus", "doc": "server connection status", "default": "UNKNOWN"},
     {"name": "recordsCached", "type": "int", "doc": "number of records currently being cached", "default": -1},
     {"name": "recordsSent", "type": "int", "doc": "number of records sent since application start"},
     {"name": "recordsUnsent", "type": "int", "doc": "number of unsent records", "default": -1}

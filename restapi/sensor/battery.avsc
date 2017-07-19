@@ -1,9 +1,0 @@
-{
-  "namespace": "org.radarcns.avro.restapi.sensor",
-  "type": "record",
-  "name": "Battery",
-  "doc": "The battery level resulting from the data aggregation. It is a double value between 0 and 1",
-  "fields": [
-    {"name": "value", "type": [ "double" , "org.radarcns.avro.restapi.dataset.Quartiles" ]}
-  ]
-}

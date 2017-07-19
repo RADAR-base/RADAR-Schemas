@@ -1,0 +1,11 @@
+{
+  "namespace": "org.radarcns.avro.restapi.data",
+  "type": "record",
+  "name": "Acceleration",
+  "doc": "Acceleration sample with gravitational constant g as unit.",
+  "fields": [
+    {"name": "x", "type": [ "double" , "org.radarcns.avro.restapi.data.Quartiles" ], "doc": "acceleration in the x-axis (g)"},
+    {"name": "y", "type": [ "double" , "org.radarcns.avro.restapi.data.Quartiles" ], "doc": "acceleration in the y-axis (g)"},
+    {"name": "z", "type": [ "double" , "org.radarcns.avro.restapi.data.Quartiles" ], "doc": "acceleration in the z-axis (g)"}
+  ]
+}

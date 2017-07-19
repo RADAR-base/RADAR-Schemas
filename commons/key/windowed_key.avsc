@@ -3,8 +3,8 @@
   "name": "WindowedKey",
   "doc": "Windowed key in the RADAR-CNS project",
   "fields": [
-    {"name": "userID", "type": "string"},
-    {"name": "sourceID", "type": "string"},
+    {"name": "userId", "type": "string"},
+    {"name": "sourceId", "type": "string"},
     {"name": "start", "type": "long"},
     {"name": "end", "type": "long"}
   ]
