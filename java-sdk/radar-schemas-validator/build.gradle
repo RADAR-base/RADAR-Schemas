@@ -1,0 +1,67 @@
+plugins {
+    id 'idea'
+    id 'checkstyle'
+    id 'pmd'
+}
+
+ext.artifactName = 'radar-schemas-validator'
+ext.description = 'RADAR Schemas Validator. JUnit tests to check schema acceptance.'
+
+idea {
+    module {
+        downloadSources = true
+    }
+}
+
+sourceSets {
+    test {
+        java.srcDir 'src/test/java'
+        resources.srcDir 'src/test/resources'
+    }
+}
+
+ext.junitVersion = '4.12'
+ext.slf4jVersion = '1.7.25'
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: junitVersion
+    testCompile group: 'org.slf4j', name: 'slf4j-simple', version: slf4jVersion
+}
+
+//---------------------------------------------------------------------------//
+// Test definition                                                           //
+//---------------------------------------------------------------------------//
+test {
+    testLogging {
+        events "skipped", "failed"
+        exceptionFormat "full"
+        showExceptions = true
+        showCauses = true
+        showStackTraces = true
+        showStandardStreams = true
+    }
+}
+
+//---------------------------------------------------------------------------//
+// Style checking                                                            //
+//---------------------------------------------------------------------------//
+checkstyle {
+    // codacy version
+    toolVersion '6.16'
+    ignoreFailures false
+
+    configFile = file("$projectDir/config/checkstyle/checkstyle.xml")
+}
+
+pmd {
+    // pmd version
+    toolVersion = '5.5.2'
+    ignoreFailures = false
+
+    consoleOutput = true
+
+    ruleSets = []
+
+    ruleSetFiles = files("$projectDir/config/pmd/ruleset.xml")
+}
+

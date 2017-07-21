@@ -1,7 +1,11 @@
 .DS_Store
 build/
 .idea/
+*.iml
 .gradle/
-*.java
 .gradletasknamecache
 gradle.properties
+*.java
+!java-sdk/radar-schemas-validator/**/*.java
+java-sdk/radar-schemas-validator/build
+java-sdk/radar-schemas-validator/out

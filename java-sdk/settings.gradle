@@ -1,5 +1,6 @@
 rootProject.name = 'radar-schemas'
 
+include ':radar-schemas-validator'
 include ':radar-schemas-commons'
 include ':radar-schemas-restapi'
 include ':radar-schemas-questionnaire'
