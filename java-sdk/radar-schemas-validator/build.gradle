@@ -7,6 +7,9 @@ plugins {
 ext.artifactName = 'radar-schemas-validator'
 ext.description = 'RADAR Schemas Validator. JUnit tests to check schema acceptance.'
 
+targetCompatibility = '1.8'
+sourceCompatibility = '1.8'
+
 idea {
     module {
         downloadSources = true
