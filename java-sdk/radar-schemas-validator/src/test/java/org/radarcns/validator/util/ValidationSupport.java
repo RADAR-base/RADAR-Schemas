@@ -1,4 +1,4 @@
-package org.radarcns.unit;
+package org.radarcns.validator.util;
 
 /*
  * Copyright 2017 King's College London and The Hyve
@@ -16,21 +16,17 @@ package org.radarcns.unit;
  * limitations under the License.
  */
 
-import static junit.framework.TestCase.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.radarcns.validator.AvroValidator.FIELD_NAME_REGEX;
+import java.util.Optional;
 
-import org.junit.Test;
+final class ValidationSupport {
 
-public class AvroValidatorTest {
+    protected static final ValidationResult valid = new ValidationResult(){
+        public boolean isValid(){ return true; }
+        public Optional<String> getReason(){ return Optional.empty(); }
+    };
 
-    @Test
-    public void testRegex() {
-        assertTrue("x".matches(FIELD_NAME_REGEX));
-        assertTrue("time".matches(FIELD_NAME_REGEX));
-        assertTrue("subjectId".matches(FIELD_NAME_REGEX));
-        assertTrue("listOfSeveralThings".matches(FIELD_NAME_REGEX));
-        assertFalse("Time".matches(FIELD_NAME_REGEX));
+    static ValidationResult valid(){
+        return valid;
     }
 
 }

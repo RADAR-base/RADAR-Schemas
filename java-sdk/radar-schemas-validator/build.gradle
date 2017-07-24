@@ -25,10 +25,12 @@ sourceSets {
 
 ext.junitVersion = '4.12'
 ext.slf4jVersion = '1.7.25'
+ext.apacheCommonsVersion = '3.6'
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: junitVersion
     testCompile group: 'org.slf4j', name: 'slf4j-simple', version: slf4jVersion
+    testCompile group: 'org.apache.commons', name: 'commons-lang3', version: apacheCommonsVersion
 }
 
 //---------------------------------------------------------------------------//
