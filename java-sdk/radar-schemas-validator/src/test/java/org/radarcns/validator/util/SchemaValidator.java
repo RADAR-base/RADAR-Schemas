@@ -12,6 +12,7 @@ import static org.radarcns.validator.util.ValidationResult.valid;
 import static org.radarcns.validator.util.ValidationSupport.getRecordName;
 
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -47,6 +48,7 @@ public interface SchemaValidator extends Function<Schema, ValidationResult> {
     String TIME_COMPLETED = "timeCompleted";
 
     String FIELD_NAME_REGEX = "^[a-z][a-zA-Z]*$";
+    String NAMESPACE_REGEX = "^[a-z][a-z.]*$";
 
     /** Field names cannot contain the following values. */
     enum FieldNameNotAllowed {
@@ -66,7 +68,8 @@ public interface SchemaValidator extends Function<Schema, ValidationResult> {
 
     /** Folder names. */
     enum Message {
-        NAME_SPACE("Namespace must be in the form \""),
+        NAME_SPACE("Namespace cannot be null and must fully lowercase dot separated without "
+            + "numeric. In this case the expected value is \""),
         RECORD_NAME("Record name must be the conversion of the .avsc file name in UpperCamelCase. "
             + "The expected value is "),
         TIME_FIELD("Any schema representing collected data must have a \"" + TIME
@@ -111,7 +114,9 @@ public interface SchemaValidator extends Function<Schema, ValidationResult> {
         String expected = NAME_SPACE.concat(".").concat(
                 rootFolder.getName()).concat(".").concat(currentFolder);
 
-        return schema -> schema.getNamespace().equalsIgnoreCase(expected) ? valid() :
+        return schema -> Objects.nonNull(schema.getNamespace())
+                                && schema.getNamespace() .matches(NAMESPACE_REGEX)
+                                && schema.getNamespace().equalsIgnoreCase(expected) ? valid() :
                                 invalid(Message.NAME_SPACE.getMessage().concat(expected).concat(
                                     "\". ").concat(schema.getFullName()).concat(" is invalid."));
     }
@@ -134,7 +139,7 @@ public interface SchemaValidator extends Function<Schema, ValidationResult> {
      * @return TODO
      */
     static SchemaValidator validateTime() {
-        return validate(schema -> schema.getField(TIME) != null
+        return validate(schema -> Objects.nonNull(schema.getField(TIME))
             && schema.getField(TIME).schema().getType().equals(Type.DOUBLE), TIME_FIELD);
     }
 
@@ -143,7 +148,7 @@ public interface SchemaValidator extends Function<Schema, ValidationResult> {
      * @return TODO
      */
     static SchemaValidator validateTimeCompleted() {
-        return validate(schema -> schema.getField(TIME_COMPLETED) != null
+        return validate(schema -> Objects.nonNull(schema.getField(TIME_COMPLETED))
                 && schema.getField(TIME_COMPLETED).schema().getType().equals(Type.DOUBLE),
             TIME_COMPLETED_FIELD);
     }
@@ -153,7 +158,7 @@ public interface SchemaValidator extends Function<Schema, ValidationResult> {
      * @return TODO
      */
     static SchemaValidator validateNotTimeCompleted() {
-        return validate(schema -> schema.getField(TIME_COMPLETED) == null,
+        return validate(schema -> Objects.isNull(schema.getField(TIME_COMPLETED)),
             NOT_TIME_COMPLETED_FIELD);
     }
 
@@ -162,7 +167,7 @@ public interface SchemaValidator extends Function<Schema, ValidationResult> {
      * @return TODO
      */
     static SchemaValidator validateTimeReceived() {
-        return validate(schema -> schema.getField(TIME_RECEIVED) != null
+        return validate(schema -> Objects.nonNull(schema.getField(TIME_RECEIVED))
                 && schema.getField(TIME_RECEIVED).schema().getType().equals(Type.DOUBLE),
             TIME_RECEIVED_FIELD);
     }
@@ -172,7 +177,7 @@ public interface SchemaValidator extends Function<Schema, ValidationResult> {
      * @return TODO
      */
     static SchemaValidator validateNotTimeReceived() {
-        return validate(schema -> schema.getField(TIME_RECEIVED) == null,
+        return validate(schema -> Objects.isNull(schema.getField(TIME_RECEIVED)),
             NOT_TIME_RECEIVED_FIELD);
     }
 
@@ -198,7 +203,20 @@ public interface SchemaValidator extends Function<Schema, ValidationResult> {
                         name.matches(FIELD_NAME_REGEX)
                         && Stream.of(FieldNameNotAllowed.values())
                                 .noneMatch(notAllowed -> name.contains(notAllowed.getName()))
-                        || skip != null && skip.contains(name)),
+                        || Objects.nonNull(skip) && skip.contains(name)),
+          FILED_NAME);
+    }
+
+
+    /**
+     * TODO.
+     * @return TODO
+     */
+    static SchemaValidator validateDocumentation() {
+        return validate(schema ->
+            schema.getFields()
+                .stream()
+                .allMatch(field -> Objects.nonNull(field.doc())),
           FILED_NAME);
     }
 

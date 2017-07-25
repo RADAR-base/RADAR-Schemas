@@ -22,6 +22,7 @@ import static org.junit.Assert.assertTrue;
 import static org.radarcns.validator.AvroValidator.FIELD_NAME_REGEX;
 import static org.radarcns.validator.StructureValidator.NameFolder.ACTIVE;
 import static org.radarcns.validator.StructureValidator.NameFolder.MONITOR;
+import static org.radarcns.validator.util.SchemaValidator.NAMESPACE_REGEX;
 
 import java.util.Collections;
 import java.util.Optional;
@@ -51,6 +52,25 @@ public class SchemaValidatorTest {
     }
 
     @Test
+    public void nameSpaceRegex() {
+        assertTrue("org.radarcns".matches(NAMESPACE_REGEX));
+        assertFalse("Org.radarcns".matches(NAMESPACE_REGEX));
+        assertFalse("org.radarCns".matches(NAMESPACE_REGEX));
+        assertFalse("org.radar-cns".matches(NAMESPACE_REGEX));
+        assertFalse("org.radarcns.empaticaE4".matches(NAMESPACE_REGEX));
+    }
+
+    @Test
+    public void fieldNameRegex() {
+        assertTrue("x".matches(FIELD_NAME_REGEX));
+        assertTrue(SchemaValidator.TIME.matches(FIELD_NAME_REGEX));
+        assertTrue("subjectId".matches(FIELD_NAME_REGEX));
+        assertTrue("listOfSeveralThings".matches(FIELD_NAME_REGEX));
+        assertFalse("Time".matches(FIELD_NAME_REGEX));
+        assertFalse("E4Heart".matches(FIELD_NAME_REGEX));
+    }
+
+    @Test
     public void nameSpaceTest() {
         Schema schema;
         ValidationResult result;
@@ -67,6 +87,22 @@ public class SchemaValidatorTest {
         assertTrue(result.isValid());
 
         schema = SchemaBuilder
+                    .builder("org.radar-cns.monitors.test")
+                    .record(RECORD_NAME_MOCK)
+                    .fields()
+                    .endRecord();
+
+        result = SchemaValidator.validateNameSpace(MONITOR, "test").apply(schema);
+
+        assertFalse(result.isValid());
+
+        assertEquals(Optional.of("Namespace cannot be null and must fully lowercase dot "
+                + "separated without numeric. In this case the expected value is "
+                + "\"org.radarcns.monitor.test\". org.radar-cns.monitors.test."
+                + RECORD_NAME_MOCK + INVALID_TEXT),
+                result.getReason());
+
+        schema = SchemaBuilder
                     .builder("org.radarcns.monitors.test")
                     .record(RECORD_NAME_MOCK)
                     .fields()
@@ -76,8 +112,10 @@ public class SchemaValidatorTest {
 
         assertFalse(result.isValid());
 
-        assertEquals(Optional.of("Namespace must be in the form \"org.radarcns.monitor.test\". "
-                + "org.radarcns.monitors.test." + RECORD_NAME_MOCK + INVALID_TEXT),
+        assertEquals(Optional.of("Namespace cannot be null and must fully lowercase dot "
+                + "separated without numeric. In this case the expected value is "
+                + "\"org.radarcns.monitor.test\". org.radarcns.monitors.test."
+                + RECORD_NAME_MOCK + INVALID_TEXT),
                 result.getReason());
 
         schema = SchemaBuilder
@@ -90,8 +128,10 @@ public class SchemaValidatorTest {
 
         assertFalse(result.isValid());
 
-        assertEquals(Optional.of("Namespace must be in the form \"org.radarcns.monitor.test\". "
-                + getFinalMessage("org.radarcns.monitor.tests", RECORD_NAME_MOCK)),
+        assertEquals(Optional.of("Namespace cannot be null and must fully lowercase dot "
+                + "separated without numeric. In this case the expected value is "
+                + "\"org.radarcns.monitor.test\". org.radarcns.monitor.tests."
+                + RECORD_NAME_MOCK + INVALID_TEXT),
                 result.getReason());
     }
 
@@ -233,16 +273,6 @@ public class SchemaValidatorTest {
         assertEquals(Optional.of("\"timeReceived\" is allow only in PASSIVE schemas. "
                 + getFinalMessage(MONITOR_NAME_SPACE_MOCK, RECORD_NAME_MOCK)),
                 result.getReason());
-    }
-
-    @Test
-    public void testRegex() {
-        assertTrue("x".matches(FIELD_NAME_REGEX));
-        assertTrue(SchemaValidator.TIME.matches(FIELD_NAME_REGEX));
-        assertTrue("subjectId".matches(FIELD_NAME_REGEX));
-        assertTrue("listOfSeveralThings".matches(FIELD_NAME_REGEX));
-        assertFalse("Time".matches(FIELD_NAME_REGEX));
-        assertFalse("E4Heart".matches(FIELD_NAME_REGEX));
     }
 
     @Test
