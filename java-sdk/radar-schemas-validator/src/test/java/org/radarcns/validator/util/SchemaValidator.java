@@ -1,6 +1,6 @@
 package org.radarcns.validator.util;
 
-import static org.radarcns.validator.util.SchemaValidator.Message.NAME_CONVENTION;
+import static org.radarcns.validator.util.SchemaValidator.Message.FILED_NAME;
 import static org.radarcns.validator.util.SchemaValidator.Message.NOT_TIME_COMPLETED_FIELD;
 import static org.radarcns.validator.util.SchemaValidator.Message.NOT_TIME_RECEIVED_FIELD;
 import static org.radarcns.validator.util.SchemaValidator.Message.RECORD_NAME;
@@ -15,6 +15,8 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import org.apache.avro.Schema;
 import org.apache.avro.Schema.Type;
 import org.radarcns.validator.StructureValidator.NameFolder;
@@ -46,6 +48,22 @@ public interface SchemaValidator extends Function<Schema, ValidationResult> {
 
     String FIELD_NAME_REGEX = "^[a-z][a-zA-Z]*$";
 
+    /** Field names cannot contain the following values. */
+    enum FieldNameNotAllowed {
+        LOWER_VALUE("value"),
+        UPPERD_VALUE("Value");
+
+        private final String name;
+
+        FieldNameNotAllowed(String name) {
+            this.name = name;
+        }
+
+        public String getName() {
+            return name;
+        }
+    }
+
     /** Folder names. */
     enum Message {
         NAME_SPACE("Namespace must be in the form \""),
@@ -61,7 +79,12 @@ public interface SchemaValidator extends Function<Schema, ValidationResult> {
             + "\" field formatted in " + Type.DOUBLE.getName().toUpperCase(Locale.ENGLISH) + "."),
         NOT_TIME_RECEIVED_FIELD("\"" + TIME_RECEIVED + "\" is allow only in " + NameFolder.PASSIVE
             + " schemas."),
-        NAME_CONVENTION("Field name does not respect lowerCamelCase name convention.");
+        FILED_NAME("Field name does not respect lowerCamelCase name convention. It cannot contain"
+            + " any of the following values ["
+            + Stream.of(FieldNameNotAllowed.values())
+                  .map(FieldNameNotAllowed::getName)
+                  .collect(Collectors.joining(","))
+            + "].");
 
         private final String message;
 
@@ -171,8 +194,12 @@ public interface SchemaValidator extends Function<Schema, ValidationResult> {
             schema.getFields()
                 .stream()
                 .map(field -> field.name())
-                .allMatch(name -> name.matches(FIELD_NAME_REGEX)
-                        || skip != null && skip.contains(name)), NAME_CONVENTION);
+                .allMatch(name ->
+                        name.matches(FIELD_NAME_REGEX)
+                        && Stream.of(FieldNameNotAllowed.values())
+                                .noneMatch(notAllowed -> name.contains(notAllowed.getName()))
+                        || skip != null && skip.contains(name)),
+          FILED_NAME);
     }
 
     /**

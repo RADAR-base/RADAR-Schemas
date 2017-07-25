@@ -254,12 +254,27 @@ public class SchemaValidatorTest {
                 .builder(MONITOR_NAME_SPACE_MOCK)
                 .record(RECORD_NAME_MOCK)
                 .fields()
+                .requiredString(FIELD_NUMBER_MOCK + "value")
+                .endRecord();
+
+        result = SchemaValidator.validateFieldName().apply(schema);
+        assertFalse(result.isValid());
+        assertEquals(Optional.of("Field name does not respect lowerCamelCase name convention. "
+                + "It cannot contain any of the following values [value,Value]. "
+                + getFinalMessage(MONITOR_NAME_SPACE_MOCK, RECORD_NAME_MOCK)),
+                result.getReason());
+
+        schema = SchemaBuilder
+                .builder(MONITOR_NAME_SPACE_MOCK)
+                .record(RECORD_NAME_MOCK)
+                .fields()
                 .requiredString(FIELD_NUMBER_MOCK)
                 .endRecord();
 
         result = SchemaValidator.validateFieldName().apply(schema);
         assertFalse(result.isValid());
         assertEquals(Optional.of("Field name does not respect lowerCamelCase name convention. "
+                + "It cannot contain any of the following values [value,Value]. "
                 + getFinalMessage(MONITOR_NAME_SPACE_MOCK, RECORD_NAME_MOCK)),
                 result.getReason());
 
@@ -275,6 +290,7 @@ public class SchemaValidatorTest {
                 Collections.singleton(SchemaValidator.TIME)).apply(schema);
         assertFalse(result.isValid());
         assertEquals(Optional.of("Field name does not respect lowerCamelCase name convention. "
+                + "It cannot contain any of the following values [value,Value]. "
                 + getFinalMessage(MONITOR_NAME_SPACE_MOCK,RECORD_NAME_MOCK)),
                 result.getReason());
 
