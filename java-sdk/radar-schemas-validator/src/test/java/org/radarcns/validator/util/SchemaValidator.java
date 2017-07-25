@@ -9,19 +9,16 @@ import static org.radarcns.validator.util.SchemaValidator.Message.TIME_FIELD;
 import static org.radarcns.validator.util.SchemaValidator.Message.TIME_RECEIVED_FIELD;
 import static org.radarcns.validator.util.ValidationResult.invalid;
 import static org.radarcns.validator.util.ValidationResult.valid;
+import static org.radarcns.validator.util.ValidationSupport.getRecordName;
 
-import com.sun.org.apache.regexp.internal.RE;
-import java.util.Arrays;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import org.apache.avro.Schema;
 import org.apache.avro.Schema.Type;
 import org.radarcns.validator.StructureValidator.NameFolder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 
 /*
  * Copyright 2017 King's College London and The Hyve
@@ -73,14 +70,20 @@ public interface SchemaValidator extends Function<Schema, ValidationResult> {
         }
 
         public String getMessage(Schema schema) {
-            return message + " " +schema.getFullName() + " is invalid.";
+            return message.concat(" ").concat(schema.getFullName()).concat(" is invalid.");
         }
 
         public String getMessage() {
-            return message ;
+            return message;
         }
     }
 
+    /**
+     * TODO.
+     * @param rootFolder TODO
+     * @param currentFolder TODO
+     * @return TODO
+     */
     static SchemaValidator validateNameSpace(NameFolder rootFolder, String currentFolder) {
         String expected = NAME_SPACE.concat(".").concat(
                 rootFolder.getName()).concat(".").concat(currentFolder);
@@ -90,6 +93,11 @@ public interface SchemaValidator extends Function<Schema, ValidationResult> {
                                     "\". ").concat(schema.getFullName()).concat(" is invalid."));
     }
 
+    /**
+     * TODO.
+     * @param fileName TODO
+     * @return TODO
+     */
     static SchemaValidator validateRecordName(String fileName) {
         String expected = getRecordName(fileName);
 
@@ -98,73 +106,90 @@ public interface SchemaValidator extends Function<Schema, ValidationResult> {
                     schema.getFullName()).concat(" is invalid."));
     }
 
-    static String getRecordName(String fileName) {
-        Objects.requireNonNull(fileName);
-
-        String recordName = "";
-
-        boolean start = true;
-        for (int i = 0; i < fileName.length(); i++) {
-            switch (fileName.charAt(i)) {
-                case '_' :
-                    start = true;
-                    break;
-                case '.' : return recordName;
-                default:
-                    recordName += start ? Character.toUpperCase(fileName.charAt(i))
-                            : fileName.charAt(i);
-                    start = false;
-            }
-        }
-
-        return recordName;
-    }
-
+    /**
+     * TODO.
+     * @return TODO
+     */
     static SchemaValidator validateTime() {
         return validate(schema -> schema.getField(TIME) != null
             && schema.getField(TIME).schema().getType().equals(Type.DOUBLE), TIME_FIELD);
     }
 
+    /**
+     * TODO.
+     * @return TODO
+     */
     static SchemaValidator validateTimeCompleted() {
         return validate(schema -> schema.getField(TIME_COMPLETED) != null
                 && schema.getField(TIME_COMPLETED).schema().getType().equals(Type.DOUBLE),
             TIME_COMPLETED_FIELD);
     }
 
+    /**
+     * TODO.
+     * @return TODO
+     */
     static SchemaValidator validateNotTimeCompleted() {
         return validate(schema -> schema.getField(TIME_COMPLETED) == null,
             NOT_TIME_COMPLETED_FIELD);
     }
 
+    /**
+     * TODO.
+     * @return TODO
+     */
     static SchemaValidator validateTimeReceived() {
         return validate(schema -> schema.getField(TIME_RECEIVED) != null
                 && schema.getField(TIME_RECEIVED).schema().getType().equals(Type.DOUBLE),
             TIME_RECEIVED_FIELD);
     }
 
+    /**
+     * TODO.
+     * @return TODO
+     */
     static SchemaValidator validateNotTimeReceived() {
         return validate(schema -> schema.getField(TIME_RECEIVED) == null,
             NOT_TIME_RECEIVED_FIELD);
     }
 
+    /**
+     * TODO.
+     * @return TODO
+     */
     static SchemaValidator validateFieldName() {
         return validateFieldName(null);
     }
 
+    /**
+     * TODO.
+     * @param skip TODO
+     * @return TODO
+     */
     static SchemaValidator validateFieldName(Set<String> skip) {
         return validate(schema ->
             schema.getFields()
                 .stream()
                 .map(field -> field.name())
                 .allMatch(name -> name.matches(FIELD_NAME_REGEX)
-                        || (skip != null && skip.contains(name)))
-          , NAME_CONVENTION);
+                        || skip != null && skip.contains(name)), NAME_CONVENTION);
     }
 
-    static SchemaValidator validate(Predicate<Schema> predicate, Message message){
+    /**
+     * TODO.
+     * @param predicate TODO
+     * @param message TODO
+     * @return TODO
+     */
+    static SchemaValidator validate(Predicate<Schema> predicate, Message message) {
         return schema -> predicate.test(schema) ? valid() : invalid(message.getMessage(schema));
     }
 
+    /**
+     * TODO.
+     * @param other TODO
+     * @return TODO
+     */
     default SchemaValidator and(SchemaValidator other) {
         return schema -> {
             final ValidationResult result = this.apply(schema);

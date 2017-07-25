@@ -16,21 +16,21 @@ package org.radarcns.validator.util;
  * limitations under the License.
  */
 
-import static org.radarcns.validator.util.SchemaValidator.validateTimeCompleted;
 import static org.radarcns.validator.util.SchemaValidator.validateTime;
+import static org.radarcns.validator.util.SchemaValidator.validateTimeCompleted;
 import static org.radarcns.validator.util.SchemaValidator.validateTimeReceived;
 
 public final class SchemaValidatorImpl {
 
-    private SchemaValidatorImpl() {
-        //Private constructor
-    }
-
     public static final SchemaValidator ACTIVE_VALIDATION =
-            validateTime().and(validateTimeCompleted());
+                validateTime().and(validateTimeCompleted());
 
     public static final SchemaValidator MONITOR_VALIDATION = validateTime();
 
     public static final SchemaValidator PASSIVE_VALIDATION =
-            validateTime().and(validateTimeReceived());
+                validateTime().and(validateTimeReceived());
+
+    private SchemaValidatorImpl() {
+        //Private constructor
+    }
 }

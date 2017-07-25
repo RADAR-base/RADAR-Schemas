@@ -18,13 +18,13 @@ package org.radarcns.validator.util;
 
 import java.util.Optional;
 
-public interface ValidationResult{
+public interface ValidationResult {
 
-    static ValidationResult valid(){
-        return ValidationSupport.valid();
+    static ValidationResult valid() {
+        return ValidationSupport.getValid();
     }
 
-    static ValidationResult invalid(String reason){
+    static ValidationResult invalid(String reason) {
         return new Invalid(reason);
     }
 

@@ -16,17 +16,56 @@ package org.radarcns.validator.util;
  * limitations under the License.
  */
 
+import java.util.Objects;
 import java.util.Optional;
 
-final class ValidationSupport {
+public final class ValidationSupport {
 
-    protected static final ValidationResult valid = new ValidationResult(){
-        public boolean isValid(){ return true; }
-        public Optional<String> getReason(){ return Optional.empty(); }
+    static final ValidationResult VALID = new ValidationResult() {
+        public boolean isValid() {
+            return true;
+        }
+
+        public Optional<String> getReason() {
+            return Optional.empty();
+        }
     };
 
-    static ValidationResult valid(){
-        return valid;
+
+    private ValidationSupport() {
+        //Static class
+    }
+
+    static ValidationResult getValid() {
+        return VALID;
+    }
+
+    /**
+     * TODO.
+     * @param fileName TODO
+     * @return TODO
+     */
+    @SuppressWarnings("PMD.MissingBreakInSwitch")
+    public static String getRecordName(String fileName) {
+        Objects.requireNonNull(fileName);
+
+        String recordName = "";
+
+        boolean start = true;
+        for (int i = 0; i < fileName.length(); i++) {
+            switch (fileName.charAt(i)) {
+                case '_' :
+                    start = true;
+                    break;
+                case '.' : return recordName;
+                default:
+                    recordName += start ? Character.toUpperCase(fileName.charAt(i))
+                        : fileName.charAt(i);
+                    start = false;
+            }
+        }
+
+        return recordName;
     }
 
 }

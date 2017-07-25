@@ -24,25 +24,30 @@ import static org.radarcns.validator.StructureValidator.NameFolder.ACTIVE;
 import static org.radarcns.validator.StructureValidator.NameFolder.MONITOR;
 
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.Optional;
-import junit.framework.TestCase;
 import org.apache.avro.Schema;
 import org.apache.avro.SchemaBuilder;
 import org.junit.Test;
-import org.radarcns.validator.StructureValidator.NameFolder;
 import org.radarcns.validator.util.SchemaValidator;
 import org.radarcns.validator.util.ValidationResult;
-import org.slf4j.LoggerFactory;
+import org.radarcns.validator.util.ValidationSupport;
 
 public class SchemaValidatorTest {
+
+    private static final String ACTIVE_NAME_SPACE_MOCK = "org.radarcns.active.test";
+    private static final String MONITOR_NAME_SPACE_MOCK = "org.radarcns.monitor.test";
+
+    private static final String RECORD_NAME_MOCK = "RecordName";
+    private static final String FIELD_NUMBER_MOCK = "Field1";
+
+    private static final String INVALID_TEXT = " is invalid.";
 
     @Test
     public void fileNameTest() {
         assertEquals("Questionnaire",
-                SchemaValidator.getRecordName("questionnaire.avsc"));
+                ValidationSupport.getRecordName("questionnaire.avsc"));
         assertEquals("ApplicationExternalTime",
-                SchemaValidator.getRecordName("application_external_time.avsc"));
+                ValidationSupport.getRecordName("application_external_time.avsc"));
     }
 
     @Test
@@ -63,7 +68,7 @@ public class SchemaValidatorTest {
 
         schema = SchemaBuilder
                     .builder("org.radarcns.monitors.test")
-                    .record("RecordTest")
+                    .record(RECORD_NAME_MOCK)
                     .fields()
                     .endRecord();
 
@@ -72,11 +77,12 @@ public class SchemaValidatorTest {
         assertFalse(result.isValid());
 
         assertEquals(Optional.of("Namespace must be in the form \"org.radarcns.monitor.test\". "
-                + "org.radarcns.monitors.test.RecordTest is invalid."), result.getReason());
+                + "org.radarcns.monitors.test." + RECORD_NAME_MOCK + INVALID_TEXT),
+                result.getReason());
 
         schema = SchemaBuilder
                     .builder("org.radarcns.monitor.tests")
-                    .record("RecordTest")
+                    .record(RECORD_NAME_MOCK)
                     .fields()
                     .endRecord();
 
@@ -85,7 +91,8 @@ public class SchemaValidatorTest {
         assertFalse(result.isValid());
 
         assertEquals(Optional.of("Namespace must be in the form \"org.radarcns.monitor.test\". "
-                + "org.radarcns.monitor.tests.RecordTest is invalid."), result.getReason());
+                + getFinalMessage("org.radarcns.monitor.tests", RECORD_NAME_MOCK)),
+                result.getReason());
     }
 
     @Test
@@ -125,8 +132,8 @@ public class SchemaValidatorTest {
         ValidationResult result;
 
         schema = SchemaBuilder
-                    .builder("org.radarcns.monitor.test")
-                    .record("RecordTest")
+                    .builder("org.radarcns.time.test")
+                    .record(RECORD_NAME_MOCK)
                     .fields()
                     .requiredString("field")
                     .endRecord();
@@ -136,14 +143,15 @@ public class SchemaValidatorTest {
         assertFalse(result.isValid());
 
         assertEquals(Optional.of("Any schema representing collected data must have a \"time\" field"
-          + " formatted in DOUBLE. org.radarcns.monitor.test.RecordTest is invalid."),
-              result.getReason());
+                + " formatted in DOUBLE. org.radarcns.time.test." + RECORD_NAME_MOCK
+                + INVALID_TEXT),
+                result.getReason());
 
         schema = SchemaBuilder
-                    .builder("org.radarcns.monitor.test")
-                    .record("RecordTest")
+                    .builder("org.radarcns.time.test")
+                    .record(RECORD_NAME_MOCK)
                     .fields()
-                    .requiredDouble("time")
+                    .requiredDouble(SchemaValidator.TIME)
                     .endRecord();
 
         result = SchemaValidator.validateTime().apply(schema);
@@ -157,8 +165,8 @@ public class SchemaValidatorTest {
         ValidationResult result;
 
         schema = SchemaBuilder
-                    .builder("org.radarcns.monitor.test")
-                    .record("RecordTest")
+                    .builder(ACTIVE_NAME_SPACE_MOCK)
+                    .record(RECORD_NAME_MOCK)
                     .fields()
                     .requiredString("field")
                     .endRecord();
@@ -166,14 +174,15 @@ public class SchemaValidatorTest {
         result = SchemaValidator.validateTimeCompleted().apply(schema);
         assertFalse(result.isValid());
         assertEquals(Optional.of("Any ACTIVE schema must have a \"timeCompleted\" field formatted "
-              + "in DOUBLE. org.radarcns.monitor.test.RecordTest is invalid."), result.getReason());
+                + "in DOUBLE. org.radarcns.active.test." + RECORD_NAME_MOCK + INVALID_TEXT),
+                result.getReason());
 
         result = SchemaValidator.validateNotTimeCompleted().apply(schema);
         assertTrue(result.isValid());
 
         schema = SchemaBuilder
-                      .builder("org.radarcns.monitor.test")
-                      .record("RecordTest")
+                      .builder(ACTIVE_NAME_SPACE_MOCK)
+                      .record(RECORD_NAME_MOCK)
                       .fields()
                       .requiredDouble("timeCompleted")
                       .endRecord();
@@ -184,7 +193,8 @@ public class SchemaValidatorTest {
         result = SchemaValidator.validateNotTimeCompleted().apply(schema);
         assertFalse(result.isValid());
         assertEquals(Optional.of("\"timeCompleted\" is allow only in ACTIVE schemas. "
-              + "org.radarcns.monitor.test.RecordTest is invalid."), result.getReason());
+                + getFinalMessage(ACTIVE_NAME_SPACE_MOCK, RECORD_NAME_MOCK)),
+                result.getReason());
     }
 
     @Test
@@ -193,8 +203,8 @@ public class SchemaValidatorTest {
         ValidationResult result;
 
         schema = SchemaBuilder
-                    .builder("org.radarcns.monitor.test")
-                    .record("RecordTest")
+                    .builder(MONITOR_NAME_SPACE_MOCK)
+                    .record(RECORD_NAME_MOCK)
                     .fields()
                     .requiredString("field")
                     .endRecord();
@@ -202,14 +212,15 @@ public class SchemaValidatorTest {
         result = SchemaValidator.validateTimeReceived().apply(schema);
         assertFalse(result.isValid());
         assertEquals(Optional.of("Any PASSIVE schema must have a \"timeReceived\" field formatted "
-            + "in DOUBLE. org.radarcns.monitor.test.RecordTest is invalid."), result.getReason());
+                + "in DOUBLE. org.radarcns.monitor.test." + RECORD_NAME_MOCK + INVALID_TEXT),
+                result.getReason());
 
         result = SchemaValidator.validateNotTimeReceived().apply(schema);
         assertTrue(result.isValid());
 
         schema = SchemaBuilder
-                    .builder("org.radarcns.monitor.test")
-                    .record("RecordTest")
+                    .builder(MONITOR_NAME_SPACE_MOCK)
+                    .record(RECORD_NAME_MOCK)
                     .fields()
                     .requiredDouble("timeReceived")
                     .endRecord();
@@ -220,13 +231,14 @@ public class SchemaValidatorTest {
         result = SchemaValidator.validateNotTimeReceived().apply(schema);
         assertFalse(result.isValid());
         assertEquals(Optional.of("\"timeReceived\" is allow only in PASSIVE schemas. "
-              + "org.radarcns.monitor.test.RecordTest is invalid."), result.getReason());
+                + getFinalMessage(MONITOR_NAME_SPACE_MOCK, RECORD_NAME_MOCK)),
+                result.getReason());
     }
 
     @Test
     public void testRegex() {
         assertTrue("x".matches(FIELD_NAME_REGEX));
-        assertTrue("time".matches(FIELD_NAME_REGEX));
+        assertTrue(SchemaValidator.TIME.matches(FIELD_NAME_REGEX));
         assertTrue("subjectId".matches(FIELD_NAME_REGEX));
         assertTrue("listOfSeveralThings".matches(FIELD_NAME_REGEX));
         assertFalse("Time".matches(FIELD_NAME_REGEX));
@@ -239,33 +251,36 @@ public class SchemaValidatorTest {
         ValidationResult result;
 
         schema = SchemaBuilder
-                .builder("org.radarcns.monitor.test")
-                .record("RecordTest")
+                .builder(MONITOR_NAME_SPACE_MOCK)
+                .record(RECORD_NAME_MOCK)
                 .fields()
-                .requiredString("Formula1")
+                .requiredString(FIELD_NUMBER_MOCK)
                 .endRecord();
 
         result = SchemaValidator.validateFieldName().apply(schema);
         assertFalse(result.isValid());
         assertEquals(Optional.of("Field name does not respect lowerCamelCase name convention. "
-              + "org.radarcns.monitor.test.RecordTest is invalid."), result.getReason());
+                + getFinalMessage(MONITOR_NAME_SPACE_MOCK, RECORD_NAME_MOCK)),
+                result.getReason());
 
         schema = SchemaBuilder
-          .builder("org.radarcns.monitor.test")
-          .record("RecordTest")
+          .builder(MONITOR_NAME_SPACE_MOCK)
+          .record(RECORD_NAME_MOCK)
           .fields()
-          .requiredString("Formula1")
-          .requiredString("time")
+          .requiredString(FIELD_NUMBER_MOCK)
+          .requiredString(SchemaValidator.TIME)
           .endRecord();
 
-        result = SchemaValidator.validateFieldName(Collections.singleton("time")).apply(schema);
+        result = SchemaValidator.validateFieldName(
+                Collections.singleton(SchemaValidator.TIME)).apply(schema);
         assertFalse(result.isValid());
         assertEquals(Optional.of("Field name does not respect lowerCamelCase name convention. "
-              + "org.radarcns.monitor.test.RecordTest is invalid."), result.getReason());
+                + getFinalMessage(MONITOR_NAME_SPACE_MOCK,RECORD_NAME_MOCK)),
+                result.getReason());
 
         schema = SchemaBuilder
-              .builder("org.radarcns.monitor.test")
-              .record("RecordTest")
+              .builder(MONITOR_NAME_SPACE_MOCK)
+              .record(RECORD_NAME_MOCK)
               .fields()
               .requiredDouble("timeReceived")
               .endRecord();
@@ -274,15 +289,20 @@ public class SchemaValidatorTest {
         assertTrue(result.isValid());
 
         schema = SchemaBuilder
-              .builder("org.radarcns.monitor.test")
-              .record("RecordTest")
+              .builder(MONITOR_NAME_SPACE_MOCK)
+              .record(RECORD_NAME_MOCK)
               .fields()
-              .requiredString("Formula1")
-              .requiredString("time")
+              .requiredString(FIELD_NUMBER_MOCK)
+              .requiredString(SchemaValidator.TIME)
               .endRecord();
 
-        result = SchemaValidator.validateFieldName(Collections.singleton("Formula1")).apply(schema);
+        result = SchemaValidator.validateFieldName(
+                Collections.singleton(FIELD_NUMBER_MOCK)).apply(schema);
         assertTrue(result.isValid());
+    }
+
+    private static String getFinalMessage(String nameSpace, String recordName) {
+        return nameSpace.concat(".").concat(recordName).concat(INVALID_TEXT);
     }
 
 }
