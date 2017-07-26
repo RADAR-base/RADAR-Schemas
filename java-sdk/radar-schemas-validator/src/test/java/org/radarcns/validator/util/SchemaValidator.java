@@ -16,6 +16,9 @@ package org.radarcns.validator.util;
  * limitations under the License.
  */
 
+import static org.radarcns.validator.util.SchemaValidatorRole.TIME;
+import static org.radarcns.validator.util.SchemaValidatorRole.TIME_COMPLETED;
+import static org.radarcns.validator.util.SchemaValidatorRole.TIME_RECEIVED;
 import static org.radarcns.validator.util.SchemaValidatorRole.getActiveValidator;
 import static org.radarcns.validator.util.SchemaValidatorRole.getGeneralValidator;
 import static org.radarcns.validator.util.SchemaValidatorRole.getMonitorValidator;
@@ -23,8 +26,9 @@ import static org.radarcns.validator.util.SchemaValidatorRole.getPassiveValidato
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -44,6 +48,14 @@ public final class SchemaValidator {
     private static final Logger LOGGER = LoggerFactory.getLogger(SchemaValidator.class);
 
     private static final Map<String, List<Schema>> COLLISIONS = new HashMap<>();
+
+    private static final Set<String> AVOID_COLLISION_CHECK = new HashSet<>();
+
+    static {
+        AVOID_COLLISION_CHECK.add(TIME);
+        AVOID_COLLISION_CHECK.add(TIME_COMPLETED);
+        AVOID_COLLISION_CHECK.add(TIME_RECEIVED);
+    }
 
     private SchemaValidator() {
         //Static class
@@ -141,26 +153,38 @@ public final class SchemaValidator {
 
         computeCollision(schema);
 
-        if (!result.isValid()) {
-            LOGGER.error("{} is invalid.", getPath(pathToSchema));
-        }
-
         return result;
     }
 
+    /**
+     * TODO.
+     * @param path TODO
+     * @return TODO
+     */
     public static String getPath(Path path) {
         return path.toString().substring(path.toString().indexOf("/RADAR-Schemas/"));
     }
 
+    /**
+     * TODO.
+     * @param schema TODO.
+     */
     private static void computeCollision(Schema schema) {
         if (!schema.getType().equals(Type.RECORD)) {
             return;
         }
 
         for (Field field : schema.getFields()) {
+
+            if (AVOID_COLLISION_CHECK.contains(field.name())) {
+                continue;
+            }
+
             List<Schema> list = COLLISIONS.get(field.name());
-            if (schema == null) {
-                COLLISIONS.put(field.name(), Collections.singletonList(schema));
+            if (list == null) {
+                list = new LinkedList<>();
+                list.add(schema);
+                COLLISIONS.put(field.name(), list);
             } else {
                 list.add(schema);
             }
@@ -170,19 +194,32 @@ public final class SchemaValidator {
 
     /**
      * TODO.
+     * @return TODO
      */
-    public static void analyseCollision() {
+    public static StringBuilder analyseCollision() {
+        int capacity = 100 * COLLISIONS.values().stream().mapToInt(List::size).sum()
+                + COLLISIONS.size() * 120 + 100;
+
+        StringBuilder messageBuilder = new StringBuilder(capacity);
         COLLISIONS.entrySet().stream()
                   .filter(entry -> entry.getValue().size() > 1)
                   .forEach(entry -> {
-                      String message = entry.getKey() + " appears in: \n";
-                      for (Schema schema : entry.getValue()) {
-                          message += "\t - " + schema.getFullName() + " as "
-                                  + schema.getField(
-                                        entry.getKey()).schema().getType().getName().toUpperCase();
-                      }
+                      messageBuilder.append(entry.getKey().concat(" appears in:\n"));
+                      entry.getValue().stream().forEach(
+                              schema -> messageBuilder.append("\t - "
+                                                      .concat(schema.getFullName())
+                                                      .concat(" as ")
+                                                      .concat(schema.getField(entry.getKey())
+                                                                    .schema()
+                                                                    .getType()
+                                                                    .getName()
+                                                                    .toUpperCase())
+                                                      .concat("\n")));
 
-                      LOGGER.warn(message, entry.getKey());
+                      messageBuilder.append("In case they have different use-cases, please modify "
+                              + "the name field accordingly.\n");
                   });
+
+        return messageBuilder;
     }
 }

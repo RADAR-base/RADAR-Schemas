@@ -85,7 +85,7 @@ interface SchemaValidatorRole extends Function<Schema, ValidationResult> {
         NAME_SPACE("Namespace cannot be null and must fully lowercase dot separated without "
             + "numeric. In this case the expected value is \""),
         RECORD_NAME("Record name must be the conversion of the .avsc file name in UpperCamelCase "
-            + "and name the device explicitly. The expected value is "),
+            + "and must explicitly contain the device name. The expected value is "),
         TIME_FIELD("Any schema representing collected data must have a \"" + TIME
             + "\" field formatted in " + Type.DOUBLE.getName().toUpperCase(Locale.ENGLISH) + "."),
         TIME_COMPLETED_FIELD("Any " + NameFolder.ACTIVE + " schema must have a \"" + TIME_COMPLETED

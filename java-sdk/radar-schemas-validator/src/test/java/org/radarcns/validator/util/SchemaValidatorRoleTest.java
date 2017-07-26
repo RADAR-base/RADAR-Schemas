@@ -201,8 +201,8 @@ public class SchemaValidatorRoleTest {
         assertFalse(result.isValid());
 
         assertEquals(Optional.of("Record name must be the conversion of the .avsc file name in "
-                + "UpperCamelCase and name the device explicitly. The expected value is "
-                + "EmpaticaE4Acceleration\". org.radarcns.passive.empatica."
+                + "UpperCamelCase and must explicitly contain the device name. "
+                + "The expected value is EmpaticaE4Acceleration\". org.radarcns.passive.empatica."
                 + fieldName + " is invalid."),
                 result.getReason());
 
