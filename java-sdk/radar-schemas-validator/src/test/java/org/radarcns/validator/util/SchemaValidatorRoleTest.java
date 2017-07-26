@@ -1,4 +1,4 @@
-package org.radarcns.validator.util.unit;
+package org.radarcns.validator.util;
 
 /*
  * Copyright 2017 King's College London and The Hyve
@@ -22,21 +22,20 @@ import static org.junit.Assert.assertTrue;
 import static org.radarcns.validator.AvroValidator.FIELD_NAME_REGEX;
 import static org.radarcns.validator.StructureValidator.NameFolder.ACTIVE;
 import static org.radarcns.validator.StructureValidator.NameFolder.MONITOR;
-import static org.radarcns.validator.util.SchemaValidator.ENUMERATION_SYMBOL_REGEX;
-import static org.radarcns.validator.util.SchemaValidator.NAMESPACE_REGEX;
-import static org.radarcns.validator.util.SchemaValidator.RECORD_NAME_REGEX;
+import static org.radarcns.validator.util.SchemaValidatorRole.ENUMERATION_SYMBOL_REGEX;
+import static org.radarcns.validator.util.SchemaValidatorRole.NAMESPACE_REGEX;
+import static org.radarcns.validator.util.SchemaValidatorRole.RECORD_NAME_REGEX;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.Optional;
 import org.apache.avro.Schema;
 import org.apache.avro.Schema.Parser;
 import org.apache.avro.SchemaBuilder;
 import org.junit.Test;
-import org.radarcns.validator.util.SchemaValidator;
-import org.radarcns.validator.util.ValidationResult;
-import org.radarcns.validator.util.ValidationSupport;
 
-public class SchemaValidatorTest {
+public class SchemaValidatorRoleTest {
 
     private static final String ACTIVE_NAME_SPACE_MOCK = "org.radarcns.active.test";
     private static final String MONITOR_NAME_SPACE_MOCK = "org.radarcns.monitor.test";
@@ -49,9 +48,10 @@ public class SchemaValidatorTest {
     @Test
     public void fileNameTest() {
         assertEquals("Questionnaire",
-                ValidationSupport.getRecordName("questionnaire.avsc"));
+                ValidationSupport.getRecordName(Paths.get("/path/to/questionnaire.avsc")));
         assertEquals("ApplicationExternalTime",
-                ValidationSupport.getRecordName("application_external_time.avsc"));
+                ValidationSupport.getRecordName(
+                        Paths.get("/path/to/application_external_time.avsc")));
     }
 
     @Test
@@ -87,7 +87,7 @@ public class SchemaValidatorTest {
     @Test
     public void fieldNameRegex() {
         assertTrue("x".matches(FIELD_NAME_REGEX));
-        assertTrue(SchemaValidator.TIME.matches(FIELD_NAME_REGEX));
+        assertTrue(SchemaValidatorRole.TIME.matches(FIELD_NAME_REGEX));
         assertTrue("subjectId".matches(FIELD_NAME_REGEX));
         assertTrue("listOfSeveralThings".matches(FIELD_NAME_REGEX));
         assertFalse("Time".matches(FIELD_NAME_REGEX));
@@ -117,7 +117,7 @@ public class SchemaValidatorTest {
                     .fields()
                     .endRecord();
 
-        result = SchemaValidator.validateNameSpace(ACTIVE,
+        result = SchemaValidatorRole.validateNameSpace(ACTIVE,
                 "questionnaire").apply(schema);
 
         assertTrue(result.isValid());
@@ -128,7 +128,7 @@ public class SchemaValidatorTest {
                     .fields()
                     .endRecord();
 
-        result = SchemaValidator.validateNameSpace(MONITOR, "test").apply(schema);
+        result = SchemaValidatorRole.validateNameSpace(MONITOR, "test").apply(schema);
 
         assertFalse(result.isValid());
 
@@ -144,7 +144,7 @@ public class SchemaValidatorTest {
                     .fields()
                     .endRecord();
 
-        result = SchemaValidator.validateNameSpace(MONITOR, "test").apply(schema);
+        result = SchemaValidatorRole.validateNameSpace(MONITOR, "test").apply(schema);
 
         assertFalse(result.isValid());
 
@@ -160,7 +160,7 @@ public class SchemaValidatorTest {
                     .fields()
                     .endRecord();
 
-        result = SchemaValidator.validateNameSpace(MONITOR, "test").apply(schema);
+        result = SchemaValidatorRole.validateNameSpace(MONITOR, "test").apply(schema);
 
         assertFalse(result.isValid());
 
@@ -182,12 +182,13 @@ public class SchemaValidatorTest {
                     .fields()
                     .endRecord();
 
-        result = SchemaValidator.validateRecordName("schema.avsc").apply(schema);
+        result = SchemaValidatorRole.validateRecordName(
+                Paths.get("/path/to/schema.avsc")).apply(schema);
 
         assertTrue(result.isValid());
 
         String fieldName = "EmpaticaE4Aceleration";
-        String fileName = "empatica_e4_acceleration.avsc";
+        Path filePath = Paths.get("/path/to/empatica_e4_acceleration.avsc");
 
         schema = SchemaBuilder
                     .builder("org.radarcns.passive.empatica")
@@ -195,7 +196,7 @@ public class SchemaValidatorTest {
                     .fields()
                     .endRecord();
 
-        result = SchemaValidator.validateRecordName(fileName).apply(schema);
+        result = SchemaValidatorRole.validateRecordName(filePath).apply(schema);
 
         assertFalse(result.isValid());
 
@@ -205,8 +206,8 @@ public class SchemaValidatorTest {
                 + fieldName + " is invalid."),
                 result.getReason());
 
-        result = SchemaValidator.validateRecordName(
-                fileName, Collections.singleton(fieldName)).apply(schema);
+        result = SchemaValidatorRole.validateRecordName(filePath,
+                Collections.singleton(fieldName)).apply(schema);
 
         assertTrue(result.isValid());
     }
@@ -222,7 +223,7 @@ public class SchemaValidatorTest {
                 .fields()
                 .endRecord();
 
-        result = SchemaValidator.validateFields().apply(schema);
+        result = SchemaValidatorRole.validateFields().apply(schema);
 
         assertFalse(result.isValid());
         assertEquals(Optional.of("Avro Record must have field list. "
@@ -235,7 +236,7 @@ public class SchemaValidatorTest {
           .optionalBoolean("optional")
           .endRecord();
 
-        result = SchemaValidator.validateFields().apply(schema);
+        result = SchemaValidatorRole.validateFields().apply(schema);
 
         assertTrue(result.isValid());
     }
@@ -252,7 +253,7 @@ public class SchemaValidatorTest {
                     .requiredString("string")
                     .endRecord();
 
-        result = SchemaValidator.validateTime().apply(schema);
+        result = SchemaValidatorRole.validateTime().apply(schema);
 
         assertFalse(result.isValid());
 
@@ -265,10 +266,10 @@ public class SchemaValidatorTest {
                     .builder("org.radarcns.time.test")
                     .record(RECORD_NAME_MOCK)
                     .fields()
-                    .requiredDouble(SchemaValidator.TIME)
+                    .requiredDouble(SchemaValidatorRole.TIME)
                     .endRecord();
 
-        result = SchemaValidator.validateTime().apply(schema);
+        result = SchemaValidatorRole.validateTime().apply(schema);
 
         assertTrue(result.isValid());
     }
@@ -285,13 +286,13 @@ public class SchemaValidatorTest {
                     .requiredString("field")
                     .endRecord();
 
-        result = SchemaValidator.validateTimeCompleted().apply(schema);
+        result = SchemaValidatorRole.validateTimeCompleted().apply(schema);
         assertFalse(result.isValid());
         assertEquals(Optional.of("Any ACTIVE schema must have a \"timeCompleted\" field formatted "
                 + "in DOUBLE. org.radarcns.active.test." + RECORD_NAME_MOCK + INVALID_TEXT),
                 result.getReason());
 
-        result = SchemaValidator.validateNotTimeCompleted().apply(schema);
+        result = SchemaValidatorRole.validateNotTimeCompleted().apply(schema);
         assertTrue(result.isValid());
 
         schema = SchemaBuilder
@@ -301,10 +302,10 @@ public class SchemaValidatorTest {
                       .requiredDouble("timeCompleted")
                       .endRecord();
 
-        result = SchemaValidator.validateTimeCompleted().apply(schema);
+        result = SchemaValidatorRole.validateTimeCompleted().apply(schema);
         assertTrue(result.isValid());
 
-        result = SchemaValidator.validateNotTimeCompleted().apply(schema);
+        result = SchemaValidatorRole.validateNotTimeCompleted().apply(schema);
         assertFalse(result.isValid());
         assertEquals(Optional.of("\"timeCompleted\" is allow only in ACTIVE schemas. "
                 + getFinalMessage(ACTIVE_NAME_SPACE_MOCK, RECORD_NAME_MOCK)),
@@ -323,13 +324,13 @@ public class SchemaValidatorTest {
                     .requiredString("field")
                     .endRecord();
 
-        result = SchemaValidator.validateTimeReceived().apply(schema);
+        result = SchemaValidatorRole.validateTimeReceived().apply(schema);
         assertFalse(result.isValid());
         assertEquals(Optional.of("Any PASSIVE schema must have a \"timeReceived\" field formatted "
                 + "in DOUBLE. org.radarcns.monitor.test." + RECORD_NAME_MOCK + INVALID_TEXT),
                 result.getReason());
 
-        result = SchemaValidator.validateNotTimeReceived().apply(schema);
+        result = SchemaValidatorRole.validateNotTimeReceived().apply(schema);
         assertTrue(result.isValid());
 
         schema = SchemaBuilder
@@ -339,10 +340,10 @@ public class SchemaValidatorTest {
                     .requiredDouble("timeReceived")
                     .endRecord();
 
-        result = SchemaValidator.validateTimeReceived().apply(schema);
+        result = SchemaValidatorRole.validateTimeReceived().apply(schema);
         assertTrue(result.isValid());
 
-        result = SchemaValidator.validateNotTimeReceived().apply(schema);
+        result = SchemaValidatorRole.validateNotTimeReceived().apply(schema);
         assertFalse(result.isValid());
         assertEquals(Optional.of("\"timeReceived\" is allow only in PASSIVE schemas. "
                 + getFinalMessage(MONITOR_NAME_SPACE_MOCK, RECORD_NAME_MOCK)),
@@ -361,7 +362,7 @@ public class SchemaValidatorTest {
                 .requiredString(FIELD_NUMBER_MOCK + "value")
                 .endRecord();
 
-        result = SchemaValidator.validateFieldName().apply(schema);
+        result = SchemaValidatorRole.validateFieldName().apply(schema);
         assertFalse(result.isValid());
         assertEquals(Optional.of("Field name does not respect lowerCamelCase name convention. "
                 + "It cannot contain any of the following values [value,Value]. "
@@ -376,7 +377,7 @@ public class SchemaValidatorTest {
                 .requiredString(FIELD_NUMBER_MOCK)
                 .endRecord();
 
-        result = SchemaValidator.validateFieldName().apply(schema);
+        result = SchemaValidatorRole.validateFieldName().apply(schema);
         assertFalse(result.isValid());
         assertEquals(Optional.of("Field name does not respect lowerCamelCase name convention. "
                 + "It cannot contain any of the following values [value,Value]. "
@@ -389,11 +390,11 @@ public class SchemaValidatorTest {
           .record(RECORD_NAME_MOCK)
           .fields()
           .requiredString(FIELD_NUMBER_MOCK)
-          .requiredString(SchemaValidator.TIME)
+          .requiredString(SchemaValidatorRole.TIME)
           .endRecord();
 
-        result = SchemaValidator.validateFieldName(
-                Collections.singleton(SchemaValidator.TIME)).apply(schema);
+        result = SchemaValidatorRole.validateFieldName(
+                Collections.singleton(SchemaValidatorRole.TIME)).apply(schema);
         assertFalse(result.isValid());
         assertEquals(Optional.of("Field name does not respect lowerCamelCase name convention. "
                 + "It cannot contain any of the following values [value,Value]. "
@@ -408,7 +409,7 @@ public class SchemaValidatorTest {
               .requiredDouble("timeReceived")
               .endRecord();
 
-        result = SchemaValidator.validateFieldName().apply(schema);
+        result = SchemaValidatorRole.validateFieldName().apply(schema);
         assertTrue(result.isValid());
 
         schema = SchemaBuilder
@@ -416,10 +417,10 @@ public class SchemaValidatorTest {
               .record(RECORD_NAME_MOCK)
               .fields()
               .requiredString(FIELD_NUMBER_MOCK)
-              .requiredString(SchemaValidator.TIME)
+              .requiredString(SchemaValidatorRole.TIME)
               .endRecord();
 
-        result = SchemaValidator.validateFieldName(
+        result = SchemaValidatorRole.validateFieldName(
                 Collections.singleton(FIELD_NUMBER_MOCK)).apply(schema);
         assertTrue(result.isValid());
     }
@@ -435,7 +436,7 @@ public class SchemaValidatorTest {
                 + "{\"name\": \"userId\", \"type\": \"string\" , \"doc\": \"Documentation\"},"
                 + "{\"name\": \"sourceId\", \"type\": \"string\"} ]}");
 
-        result = SchemaValidator.validateFieldDocumentation().apply(schema);
+        result = SchemaValidatorRole.validateFieldDocumentation().apply(schema);
 
         assertFalse(result.isValid());
         assertEquals(Optional.of("Documentation is mandatory for any schema and field. The "
@@ -449,7 +450,7 @@ public class SchemaValidatorTest {
                 + "\"type\": \"record\", \"name\": \"key\", \"type\": \"record\", \"fields\": ["
                 + "{\"name\": \"userId\", \"type\": \"string\" , \"doc\": \"Documentation.\"}]}");
 
-        result = SchemaValidator.validateFieldDocumentation().apply(schema);
+        result = SchemaValidatorRole.validateFieldDocumentation().apply(schema);
         assertTrue(result.isValid());
     }
 
@@ -464,7 +465,7 @@ public class SchemaValidatorTest {
               .fields()
               .endRecord();
 
-        result = SchemaValidator.validateSchemaDocumentation().apply(schema);
+        result = SchemaValidatorRole.validateSchemaDocumentation().apply(schema);
 
         assertFalse(result.isValid());
         assertEquals(Optional.of("Documentation is mandatory for any schema and field. The "
@@ -482,7 +483,7 @@ public class SchemaValidatorTest {
               .fields()
               .endRecord();
 
-        result = SchemaValidator.validateSchemaDocumentation().apply(schema);
+        result = SchemaValidatorRole.validateSchemaDocumentation().apply(schema);
 
         assertTrue(result.isValid());
     }
@@ -500,7 +501,7 @@ public class SchemaValidatorTest {
               .enumeration(enumName)
               .symbols(connected, "DISCONNECTED", unknown);
 
-        result = SchemaValidator.validateEnumeration().apply(schema);
+        result = SchemaValidatorRole.validateEnumeration().apply(schema);
 
         assertTrue(result.isValid());
 
@@ -509,7 +510,7 @@ public class SchemaValidatorTest {
               + "[ {\"name\": \"serverStatus\", \"type\": {\"name\": \"ServerStatus\", \"type\": "
               + "\"enum\", \"symbols\": [\"CONNECTED\", \"NOT_CONNECTED\", \"UNKNOWN\"] } } ] }");
 
-        result = SchemaValidator.validateEnumeration().apply(schema);
+        result = SchemaValidatorRole.validateEnumeration().apply(schema);
 
         assertTrue(result.isValid());
 
@@ -517,7 +518,7 @@ public class SchemaValidatorTest {
               .enumeration(enumName)
               .symbols(connected, "disconnected", unknown);
 
-        result = SchemaValidator.validateEnumeration().apply(schema);
+        result = SchemaValidatorRole.validateEnumeration().apply(schema);
 
         String invalidMessage = "Enumerator items should be written in uppercase characters "
                 + "separated by underscores. "
@@ -530,7 +531,7 @@ public class SchemaValidatorTest {
               .enumeration(enumName)
               .symbols(connected, "Not_Connected", unknown);
 
-        result = SchemaValidator.validateEnumeration().apply(schema);
+        result = SchemaValidatorRole.validateEnumeration().apply(schema);
 
         assertFalse(result.isValid());
         assertEquals(Optional.of(invalidMessage), result.getReason());
@@ -539,7 +540,7 @@ public class SchemaValidatorTest {
               .enumeration(enumName)
               .symbols(connected, "NotConnected", unknown);
 
-        result = SchemaValidator.validateEnumeration().apply(schema);
+        result = SchemaValidatorRole.validateEnumeration().apply(schema);
 
         assertFalse(result.isValid());
         assertEquals(Optional.of(invalidMessage), result.getReason());
@@ -549,7 +550,7 @@ public class SchemaValidatorTest {
               + "[ {\"name\": \"serverStatus\", \"type\": {\"name\": \"ServerStatus\", \"type\": "
               + "\"enum\", \"symbols\": [\"CONNECTED\", \"Not_Connected\", \"UNKNOWN\"] } } ] }");
 
-        result = SchemaValidator.validateEnumeration().apply(schema);
+        result = SchemaValidatorRole.validateEnumeration().apply(schema);
 
         assertFalse(result.isValid());
         assertEquals(Optional.of(invalidMessage), result.getReason());
@@ -559,7 +560,7 @@ public class SchemaValidatorTest {
               + "[ {\"name\": \"serverStatus\", \"type\": {\"name\": \"ServerStatus\", \"type\": "
               + "\"enum\", \"symbols\": [\"Connected\", \"NotConnected\", \"UNKNOWN\"] } } ] }");
 
-        result = SchemaValidator.validateEnumeration().apply(schema);
+        result = SchemaValidatorRole.validateEnumeration().apply(schema);
 
         assertFalse(result.isValid());
         assertEquals(Optional.of(invalidMessage), result.getReason());

@@ -16,6 +16,7 @@ package org.radarcns.validator.util;
  * limitations under the License.
  */
 
+import java.nio.file.Path;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
@@ -23,6 +24,9 @@ import java.util.Optional;
 import org.apache.avro.Schema;
 import org.apache.avro.Schema.Type;
 
+/**
+ * TODO.
+ */
 public final class ValidationSupport {
 
     static final ValidationResult VALID = new ValidationResult() {
@@ -46,14 +50,15 @@ public final class ValidationSupport {
 
     /**
      * TODO.
-     * @param fileName TODO
+     * @param path TODO
      * @return TODO
      */
-    @SuppressWarnings("PMD.MissingBreakInSwitch")
-    public static String getRecordName(String fileName) {
-        Objects.requireNonNull(fileName);
+    public static String getRecordName(Path path) {
+        Objects.requireNonNull(path);
 
         String recordName = "";
+
+        String fileName = path.getFileName().toString();
 
         boolean start = true;
         for (int i = 0; i < fileName.length(); i++) {
@@ -66,6 +71,7 @@ public final class ValidationSupport {
                     recordName += start ? Character.toUpperCase(fileName.charAt(i))
                         : fileName.charAt(i);
                     start = false;
+                    break;
             }
         }
 

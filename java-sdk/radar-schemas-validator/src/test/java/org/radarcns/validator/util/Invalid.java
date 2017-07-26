@@ -18,6 +18,9 @@ package org.radarcns.validator.util;
 
 import java.util.Optional;
 
+/**
+ * TODO.
+ */
 public class Invalid implements ValidationResult {
 
     private final String reason;

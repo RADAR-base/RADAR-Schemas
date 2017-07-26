@@ -16,22 +16,31 @@ package org.radarcns.validator.util;
  * limitations under the License.
  */
 
-import java.util.Optional;
+import static org.junit.Assert.assertEquals;
+import static org.radarcns.validator.util.SchemaValidator.getPath;
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import org.junit.Test;
 
 /**
  * TODO.
  */
-public interface ValidationResult {
+public class SchemaValidatorTest {
 
-    static ValidationResult valid() {
-        return ValidationSupport.getValid();
+    @Test
+    public void testGetPath() {
+        Path path = Paths.get("/Users/developer/Repositories/RADAR-Schemas/commons/"
+                + "monitor/application/application_external_time.avsc");
+
+        String expected = "/RADAR-Schemas/commons/monitor/application/"
+                + "application_external_time.avsc";
+
+        assertEquals(expected, getPath(path));
     }
 
-    static ValidationResult invalid(String reason) {
-        return new Invalid(reason);
+    @Test
+    public void testCollision() {
+        //TODO
     }
-
-    boolean isValid();
-
-    Optional<String> getReason();
 }
