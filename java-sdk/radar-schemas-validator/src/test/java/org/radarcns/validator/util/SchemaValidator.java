@@ -1,5 +1,7 @@
 package org.radarcns.validator.util;
 
+import static org.radarcns.validator.util.SchemaValidator.Message.DOC;
+import static org.radarcns.validator.util.SchemaValidator.Message.FIELDS;
 import static org.radarcns.validator.util.SchemaValidator.Message.FILED_NAME;
 import static org.radarcns.validator.util.SchemaValidator.Message.NOT_TIME_COMPLETED_FIELD;
 import static org.radarcns.validator.util.SchemaValidator.Message.NOT_TIME_RECEIVED_FIELD;
@@ -47,8 +49,10 @@ public interface SchemaValidator extends Function<Schema, ValidationResult> {
     String TIME_RECEIVED = "timeReceived";
     String TIME_COMPLETED = "timeCompleted";
 
-    String FIELD_NAME_REGEX = "^[a-z][a-zA-Z]*$";
     String NAMESPACE_REGEX = "^[a-z][a-z.]*$";
+    String RECORD_NAME_REGEX = "(^[A-Z][a-z]+)|(^[A-Z][a-z0-9]+[A-Z]$)"
+                + "|(^[A-Z][a-z0-9]+([A-Z][a-z0-9]+)+$)|(^[A-Z][a-z0-9]+([A-Z][a-z0-9]+)+[A-Z]$)";
+    String FIELD_NAME_REGEX = "^[a-z][a-zA-Z]*$";
 
     /** Field names cannot contain the following values. */
     enum FieldNameNotAllowed {
@@ -66,7 +70,7 @@ public interface SchemaValidator extends Function<Schema, ValidationResult> {
         }
     }
 
-    /** Folder names. */
+    /** Messages. */
     enum Message {
         NAME_SPACE("Namespace cannot be null and must fully lowercase dot separated without "
             + "numeric. In this case the expected value is \""),
@@ -82,12 +86,17 @@ public interface SchemaValidator extends Function<Schema, ValidationResult> {
             + "\" field formatted in " + Type.DOUBLE.getName().toUpperCase(Locale.ENGLISH) + "."),
         NOT_TIME_RECEIVED_FIELD("\"" + TIME_RECEIVED + "\" is allow only in " + NameFolder.PASSIVE
             + " schemas."),
+        FIELDS("Avro Record must have field list."),
         FILED_NAME("Field name does not respect lowerCamelCase name convention. It cannot contain"
             + " any of the following values ["
             + Stream.of(FieldNameNotAllowed.values())
                   .map(FieldNameNotAllowed::getName)
                   .collect(Collectors.joining(","))
-            + "].");
+            + "]. Please avoid abbreviations and write out the field name instead."),
+        DOC("Documentation is mandatory for any schema and field. The documentation should report "
+            + "what is being measured, how, and what units or ranges are applicable. Abbreviations "
+            + "and acronyms in the documentation should be written out. The sentence must be ended "
+            + "by a point. Please add \"doc\" property.");
 
         private final String message;
 
@@ -127,11 +136,40 @@ public interface SchemaValidator extends Function<Schema, ValidationResult> {
      * @return TODO
      */
     static SchemaValidator validateRecordName(String fileName) {
+        return validateRecordName(fileName, null);
+    }
+
+    /**
+     * TODO.
+     * @param fileName TODO
+     * @param skip TODO
+     * @return TODO
+     */
+    static SchemaValidator validateRecordName(String fileName, Set<String> skip) {
         String expected = getRecordName(fileName);
 
-        return schema -> schema.getName().equalsIgnoreCase(expected) ? valid() :
+        return schema ->
+                schema.getName().matches(RECORD_NAME_REGEX)
+                    && schema.getName().equalsIgnoreCase(expected)
+                    || Objects.nonNull(skip) && skip.contains(schema.getName()) ? valid() :
                 invalid(RECORD_NAME.getMessage().concat(expected).concat("\". ").concat(
                     schema.getFullName()).concat(" is invalid."));
+    }
+
+    /**
+     * TODO.
+     * @return TODO
+     */
+    static SchemaValidator validateSchemaDocumentation() {
+        return validate(schema -> Objects.nonNull(schema.getDoc()), DOC);
+    }
+
+    /**
+     * TODO.
+     * @return TODO
+     */
+    static SchemaValidator validateFields() {
+        return validate(schema -> !schema.getFields().isEmpty(), FIELDS);
     }
 
     /**
@@ -207,17 +245,17 @@ public interface SchemaValidator extends Function<Schema, ValidationResult> {
           FILED_NAME);
     }
 
-
     /**
      * TODO.
      * @return TODO
      */
-    static SchemaValidator validateDocumentation() {
+    static SchemaValidator validateFiledDocumentation() {
         return validate(schema ->
             schema.getFields()
                 .stream()
-                .allMatch(field -> Objects.nonNull(field.doc())),
-          FILED_NAME);
+                .allMatch(field -> Objects.nonNull(field.doc())
+                        && field.doc().lastIndexOf(".") == field.doc().length() - 1) ,
+            DOC);
     }
 
     /**

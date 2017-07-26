@@ -23,10 +23,12 @@ import static org.radarcns.validator.AvroValidator.FIELD_NAME_REGEX;
 import static org.radarcns.validator.StructureValidator.NameFolder.ACTIVE;
 import static org.radarcns.validator.StructureValidator.NameFolder.MONITOR;
 import static org.radarcns.validator.util.SchemaValidator.NAMESPACE_REGEX;
+import static org.radarcns.validator.util.SchemaValidator.RECORD_NAME_REGEX;
 
 import java.util.Collections;
 import java.util.Optional;
 import org.apache.avro.Schema;
+import org.apache.avro.Schema.Parser;
 import org.apache.avro.SchemaBuilder;
 import org.junit.Test;
 import org.radarcns.validator.util.SchemaValidator;
@@ -56,8 +58,29 @@ public class SchemaValidatorTest {
         assertTrue("org.radarcns".matches(NAMESPACE_REGEX));
         assertFalse("Org.radarcns".matches(NAMESPACE_REGEX));
         assertFalse("org.radarCns".matches(NAMESPACE_REGEX));
+        assertFalse(".org.radarcns".matches(NAMESPACE_REGEX));
         assertFalse("org.radar-cns".matches(NAMESPACE_REGEX));
         assertFalse("org.radarcns.empaticaE4".matches(NAMESPACE_REGEX));
+    }
+
+    @Test
+    public void recordNameRegex() {
+        assertTrue("Questionnaire".matches(RECORD_NAME_REGEX));
+        assertTrue("EmpaticaE4Acceleration".matches(RECORD_NAME_REGEX));
+        assertTrue("Heart4Me".matches(RECORD_NAME_REGEX));
+        assertTrue("Heart4M".matches(RECORD_NAME_REGEX));
+
+        assertFalse("Heart4".matches(RECORD_NAME_REGEX));
+        assertFalse("Heart4me".matches(RECORD_NAME_REGEX));
+        assertFalse("Heart4ME".matches(RECORD_NAME_REGEX));
+        assertFalse("4Me".matches(RECORD_NAME_REGEX));
+        assertFalse("TTest".matches(RECORD_NAME_REGEX));
+        assertFalse("questionnaire".matches(RECORD_NAME_REGEX));
+        assertFalse("questionnaire4".matches(RECORD_NAME_REGEX));
+        assertFalse("questionnaire4Me".matches(RECORD_NAME_REGEX));
+        assertFalse("questionnaire4me".matches(RECORD_NAME_REGEX));
+        assertFalse("A4MM".matches(RECORD_NAME_REGEX));
+        assertFalse("Aaaa4MMaa".matches(RECORD_NAME_REGEX));
     }
 
     @Test
@@ -141,29 +164,66 @@ public class SchemaValidatorTest {
         ValidationResult result;
 
         schema = SchemaBuilder
-                    .builder("org.radarcns.active.questionnaire")
-                    .record("Questionnaire")
+                    .builder("org.radarcns.active.testactive")
+                    .record("Schema")
                     .fields()
                     .endRecord();
 
-        result = SchemaValidator.validateRecordName("questionnaire.avsc").apply(schema);
+        result = SchemaValidator.validateRecordName("schema.avsc").apply(schema);
 
         assertTrue(result.isValid());
 
+        String fieldName = "EmpaticaE4Aceleration";
+        String fileName = "empatica_e4_acceleration.avsc";
+
         schema = SchemaBuilder
                     .builder("org.radarcns.passive.empatica")
-                    .record("EmpaticaE4Aceleration")
+                    .record(fieldName)
                     .fields()
                     .endRecord();
 
-        result = SchemaValidator.validateRecordName("empatica_e4_acceleration.avsc").apply(schema);
+        result = SchemaValidator.validateRecordName(fileName).apply(schema);
 
         assertFalse(result.isValid());
 
         assertEquals(Optional.of("Record name must be the conversion of the .avsc file name in "
                 + "UpperCamelCase. The expected value is EmpaticaE4Acceleration\". "
-                + "org.radarcns.passive.empatica.EmpaticaE4Aceleration is invalid."),
+                + "org.radarcns.passive.empatica." + fieldName + " is invalid."),
                 result.getReason());
+
+        result = SchemaValidator.validateRecordName(
+                fileName, Collections.singleton(fieldName)).apply(schema);
+
+        assertTrue(result.isValid());
+    }
+
+    @Test
+    public void fieldsTest() {
+        Schema schema;
+        ValidationResult result;
+
+        schema = SchemaBuilder
+                .builder(MONITOR_NAME_SPACE_MOCK)
+                .record(RECORD_NAME_MOCK)
+                .fields()
+                .endRecord();
+
+        result = SchemaValidator.validateFields().apply(schema);
+
+        assertFalse(result.isValid());
+        assertEquals(Optional.of("Avro Record must have field list. "
+                + getFinalMessage(MONITOR_NAME_SPACE_MOCK, RECORD_NAME_MOCK)), result.getReason());
+
+        schema = SchemaBuilder
+          .builder(MONITOR_NAME_SPACE_MOCK)
+          .record(RECORD_NAME_MOCK)
+          .fields()
+          .optionalBoolean("optional")
+          .endRecord();
+
+        result = SchemaValidator.validateFields().apply(schema);
+
+        assertTrue(result.isValid());
     }
 
     @Test
@@ -175,7 +235,7 @@ public class SchemaValidatorTest {
                     .builder("org.radarcns.time.test")
                     .record(RECORD_NAME_MOCK)
                     .fields()
-                    .requiredString("field")
+                    .requiredString("string")
                     .endRecord();
 
         result = SchemaValidator.validateTime().apply(schema);
@@ -291,6 +351,7 @@ public class SchemaValidatorTest {
         assertFalse(result.isValid());
         assertEquals(Optional.of("Field name does not respect lowerCamelCase name convention. "
                 + "It cannot contain any of the following values [value,Value]. "
+                + "Please avoid abbreviations and write out the field name instead. "
                 + getFinalMessage(MONITOR_NAME_SPACE_MOCK, RECORD_NAME_MOCK)),
                 result.getReason());
 
@@ -305,6 +366,7 @@ public class SchemaValidatorTest {
         assertFalse(result.isValid());
         assertEquals(Optional.of("Field name does not respect lowerCamelCase name convention. "
                 + "It cannot contain any of the following values [value,Value]. "
+                + "Please avoid abbreviations and write out the field name instead. "
                 + getFinalMessage(MONITOR_NAME_SPACE_MOCK, RECORD_NAME_MOCK)),
                 result.getReason());
 
@@ -321,6 +383,7 @@ public class SchemaValidatorTest {
         assertFalse(result.isValid());
         assertEquals(Optional.of("Field name does not respect lowerCamelCase name convention. "
                 + "It cannot contain any of the following values [value,Value]. "
+                + "Please avoid abbreviations and write out the field name instead. "
                 + getFinalMessage(MONITOR_NAME_SPACE_MOCK,RECORD_NAME_MOCK)),
                 result.getReason());
 
@@ -344,6 +407,69 @@ public class SchemaValidatorTest {
 
         result = SchemaValidator.validateFieldName(
                 Collections.singleton(FIELD_NUMBER_MOCK)).apply(schema);
+        assertTrue(result.isValid());
+    }
+
+    @Test
+    public void filedDocumentationTest() {
+        Schema schema;
+        ValidationResult result;
+
+        schema = new Parser().parse("{\"namespace\": \"org.radarcns.kafka.key\", "
+                + "\"type\": \"record\","
+                + " \"name\": \"key\", \"type\": \"record\", \"fields\": ["
+                + "{\"name\": \"userId\", \"type\": \"string\" , \"doc\": \"Documentation\"},"
+                + "{\"name\": \"sourceId\", \"type\": \"string\"} ]}");
+
+        result = SchemaValidator.validateFiledDocumentation().apply(schema);
+
+        assertFalse(result.isValid());
+        assertEquals(Optional.of("Documentation is mandatory for any schema and field. The "
+                + "documentation should report what is being measured, how, and what units or "
+                + "ranges are applicable. Abbreviations and acronyms in the documentation should "
+                + "be written out. The sentence must be ended by a point. Please add \"doc\" "
+                + "property. org.radarcns.kafka.key.key is invalid."),
+                result.getReason());
+
+        schema = new Parser().parse("{\"namespace\": \"org.radarcns.kafka.key\", "
+                + "\"type\": \"record\", \"name\": \"key\", \"type\": \"record\", \"fields\": ["
+                + "{\"name\": \"userId\", \"type\": \"string\" , \"doc\": \"Documentation.\"}]}");
+
+        result = SchemaValidator.validateFiledDocumentation().apply(schema);
+        assertTrue(result.isValid());
+    }
+
+    @Test
+    public void schemaDocumentationTest() {
+        Schema schema;
+        ValidationResult result;
+
+        schema = SchemaBuilder
+              .builder(MONITOR_NAME_SPACE_MOCK)
+              .record(RECORD_NAME_MOCK)
+              .fields()
+              .endRecord();
+
+        result = SchemaValidator.validateSchemaDocumentation().apply(schema);
+
+        assertFalse(result.isValid());
+        assertEquals(Optional.of("Documentation is mandatory for any schema and field. The "
+                + "documentation should report what is being measured, how, and what units or "
+                + "ranges are applicable. Abbreviations and acronyms in the documentation should "
+                + "be written out. The sentence must be ended by a point. "
+                + "Please add \"doc\" property. "
+                + getFinalMessage(MONITOR_NAME_SPACE_MOCK, RECORD_NAME_MOCK)),
+                result.getReason());
+
+        schema = SchemaBuilder
+              .builder(MONITOR_NAME_SPACE_MOCK)
+              .record(RECORD_NAME_MOCK)
+              .doc("Documentation.")
+              .fields()
+              .endRecord();
+
+        result = SchemaValidator.validateSchemaDocumentation().apply(schema);
+
         assertTrue(result.isValid());
     }
 
