@@ -16,8 +16,12 @@ package org.radarcns.validator.util;
  * limitations under the License.
  */
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import org.apache.avro.Schema;
+import org.apache.avro.Schema.Type;
 
 public final class ValidationSupport {
 
@@ -66,6 +70,25 @@ public final class ValidationSupport {
         }
 
         return recordName;
+    }
+
+    /**
+     * TODO.
+     * @param root TODO
+     * @return TODO
+     */
+    public static List<String> extractEnumerationFields(Schema root) {
+        if (root.getType().equals(Type.ENUM)) {
+            return root.getEnumSymbols();
+        }
+
+        final List<String> symbols = new LinkedList<>();
+        root.getFields().stream()
+            .filter(field -> field.schema().getType().equals(Type.ENUM))
+            .map(field -> field.schema())
+            .forEach(schema -> symbols.addAll(schema.getEnumSymbols()));
+
+        return symbols;
     }
 
 }

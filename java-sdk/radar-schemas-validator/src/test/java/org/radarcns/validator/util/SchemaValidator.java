@@ -1,6 +1,7 @@
 package org.radarcns.validator.util;
 
 import static org.radarcns.validator.util.SchemaValidator.Message.DOC;
+import static org.radarcns.validator.util.SchemaValidator.Message.ENUMERATION_SYMBOL;
 import static org.radarcns.validator.util.SchemaValidator.Message.FIELDS;
 import static org.radarcns.validator.util.SchemaValidator.Message.FILED_NAME;
 import static org.radarcns.validator.util.SchemaValidator.Message.NOT_TIME_COMPLETED_FIELD;
@@ -11,6 +12,7 @@ import static org.radarcns.validator.util.SchemaValidator.Message.TIME_FIELD;
 import static org.radarcns.validator.util.SchemaValidator.Message.TIME_RECEIVED_FIELD;
 import static org.radarcns.validator.util.ValidationResult.invalid;
 import static org.radarcns.validator.util.ValidationResult.valid;
+import static org.radarcns.validator.util.ValidationSupport.extractEnumerationFields;
 import static org.radarcns.validator.util.ValidationSupport.getRecordName;
 
 import java.util.Locale;
@@ -50,9 +52,13 @@ public interface SchemaValidator extends Function<Schema, ValidationResult> {
     String TIME_COMPLETED = "timeCompleted";
 
     String NAMESPACE_REGEX = "^[a-z][a-z.]*$";
+
     String RECORD_NAME_REGEX = "(^[A-Z][a-z]+)|(^[A-Z][a-z0-9]+[A-Z]$)"
                 + "|(^[A-Z][a-z0-9]+([A-Z][a-z0-9]+)+$)|(^[A-Z][a-z0-9]+([A-Z][a-z0-9]+)+[A-Z]$)";
+
     String FIELD_NAME_REGEX = "^[a-z][a-zA-Z]*$";
+
+    String ENUMERATION_SYMBOL_REGEX = "^[A-Z_]+$";
 
     /** Field names cannot contain the following values. */
     enum FieldNameNotAllowed {
@@ -74,8 +80,8 @@ public interface SchemaValidator extends Function<Schema, ValidationResult> {
     enum Message {
         NAME_SPACE("Namespace cannot be null and must fully lowercase dot separated without "
             + "numeric. In this case the expected value is \""),
-        RECORD_NAME("Record name must be the conversion of the .avsc file name in UpperCamelCase. "
-            + "The expected value is "),
+        RECORD_NAME("Record name must be the conversion of the .avsc file name in UpperCamelCase "
+            + "and name the device explicitly. The expected value is "),
         TIME_FIELD("Any schema representing collected data must have a \"" + TIME
             + "\" field formatted in " + Type.DOUBLE.getName().toUpperCase(Locale.ENGLISH) + "."),
         TIME_COMPLETED_FIELD("Any " + NameFolder.ACTIVE + " schema must have a \"" + TIME_COMPLETED
@@ -96,7 +102,9 @@ public interface SchemaValidator extends Function<Schema, ValidationResult> {
         DOC("Documentation is mandatory for any schema and field. The documentation should report "
             + "what is being measured, how, and what units or ranges are applicable. Abbreviations "
             + "and acronyms in the documentation should be written out. The sentence must be ended "
-            + "by a point. Please add \"doc\" property.");
+            + "by a point. Please add \"doc\" property."),
+        ENUMERATION_SYMBOL("Enumerator items should be written in uppercase characters separated "
+            + "by underscores.");
 
         private final String message;
 
@@ -249,13 +257,25 @@ public interface SchemaValidator extends Function<Schema, ValidationResult> {
      * TODO.
      * @return TODO
      */
-    static SchemaValidator validateFiledDocumentation() {
+    static SchemaValidator validateFieldDocumentation() {
         return validate(schema ->
             schema.getFields()
                 .stream()
                 .allMatch(field -> Objects.nonNull(field.doc())
                         && field.doc().lastIndexOf(".") == field.doc().length() - 1) ,
             DOC);
+    }
+
+    /**
+     * TODO.
+     * @return TODO
+     */
+    static SchemaValidator validateEnumeration() {
+        return validate(schema ->
+            extractEnumerationFields(schema).stream()
+                                            .allMatch(symbol -> symbol.matches(
+                                              ENUMERATION_SYMBOL_REGEX)),
+            ENUMERATION_SYMBOL);
     }
 
     /**

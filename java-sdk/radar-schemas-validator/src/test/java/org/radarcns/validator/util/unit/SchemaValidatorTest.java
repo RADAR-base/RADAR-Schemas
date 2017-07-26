@@ -22,6 +22,7 @@ import static org.junit.Assert.assertTrue;
 import static org.radarcns.validator.AvroValidator.FIELD_NAME_REGEX;
 import static org.radarcns.validator.StructureValidator.NameFolder.ACTIVE;
 import static org.radarcns.validator.StructureValidator.NameFolder.MONITOR;
+import static org.radarcns.validator.util.SchemaValidator.ENUMERATION_SYMBOL_REGEX;
 import static org.radarcns.validator.util.SchemaValidator.NAMESPACE_REGEX;
 import static org.radarcns.validator.util.SchemaValidator.RECORD_NAME_REGEX;
 
@@ -91,6 +92,18 @@ public class SchemaValidatorTest {
         assertTrue("listOfSeveralThings".matches(FIELD_NAME_REGEX));
         assertFalse("Time".matches(FIELD_NAME_REGEX));
         assertFalse("E4Heart".matches(FIELD_NAME_REGEX));
+    }
+
+    @Test
+    public void enumerationRegex() {
+        assertTrue("HELLO".matches(ENUMERATION_SYMBOL_REGEX));
+        assertTrue("HELLOTHERE".matches(ENUMERATION_SYMBOL_REGEX));
+        assertTrue("HELLO_THERE".matches(ENUMERATION_SYMBOL_REGEX));
+        assertFalse("Hello".matches(ENUMERATION_SYMBOL_REGEX));
+        assertFalse("hello".matches(ENUMERATION_SYMBOL_REGEX));
+        assertFalse("HelloThere".matches(ENUMERATION_SYMBOL_REGEX));
+        assertFalse("Hello_There".matches(ENUMERATION_SYMBOL_REGEX));
+        assertFalse("HELLO.THERE".matches(ENUMERATION_SYMBOL_REGEX));
     }
 
     @Test
@@ -187,8 +200,9 @@ public class SchemaValidatorTest {
         assertFalse(result.isValid());
 
         assertEquals(Optional.of("Record name must be the conversion of the .avsc file name in "
-                + "UpperCamelCase. The expected value is EmpaticaE4Acceleration\". "
-                + "org.radarcns.passive.empatica." + fieldName + " is invalid."),
+                + "UpperCamelCase and name the device explicitly. The expected value is "
+                + "EmpaticaE4Acceleration\". org.radarcns.passive.empatica."
+                + fieldName + " is invalid."),
                 result.getReason());
 
         result = SchemaValidator.validateRecordName(
@@ -421,7 +435,7 @@ public class SchemaValidatorTest {
                 + "{\"name\": \"userId\", \"type\": \"string\" , \"doc\": \"Documentation\"},"
                 + "{\"name\": \"sourceId\", \"type\": \"string\"} ]}");
 
-        result = SchemaValidator.validateFiledDocumentation().apply(schema);
+        result = SchemaValidator.validateFieldDocumentation().apply(schema);
 
         assertFalse(result.isValid());
         assertEquals(Optional.of("Documentation is mandatory for any schema and field. The "
@@ -435,7 +449,7 @@ public class SchemaValidatorTest {
                 + "\"type\": \"record\", \"name\": \"key\", \"type\": \"record\", \"fields\": ["
                 + "{\"name\": \"userId\", \"type\": \"string\" , \"doc\": \"Documentation.\"}]}");
 
-        result = SchemaValidator.validateFiledDocumentation().apply(schema);
+        result = SchemaValidator.validateFieldDocumentation().apply(schema);
         assertTrue(result.isValid());
     }
 
@@ -471,6 +485,84 @@ public class SchemaValidatorTest {
         result = SchemaValidator.validateSchemaDocumentation().apply(schema);
 
         assertTrue(result.isValid());
+    }
+
+    @Test
+    public void enumerationSymbolTest() {
+        Schema schema;
+        ValidationResult result;
+
+        String enumName = "org.radarcns.monitor.application.ApplicationServerStatus";
+        String connected = "CONNECTED";
+        String unknown = "UNKNOWN";
+
+        schema = SchemaBuilder
+              .enumeration(enumName)
+              .symbols(connected, "DISCONNECTED", unknown);
+
+        result = SchemaValidator.validateEnumeration().apply(schema);
+
+        assertTrue(result.isValid());
+
+        schema = new Parser().parse("{\"namespace\": \"org.radarcns.monitor.application\", "
+              + "\"type\": \"record\", \"name\": \"ApplicationServerStatus\", \"fields\": "
+              + "[ {\"name\": \"serverStatus\", \"type\": {\"name\": \"ServerStatus\", \"type\": "
+              + "\"enum\", \"symbols\": [\"CONNECTED\", \"NOT_CONNECTED\", \"UNKNOWN\"] } } ] }");
+
+        result = SchemaValidator.validateEnumeration().apply(schema);
+
+        assertTrue(result.isValid());
+
+        schema = SchemaBuilder
+              .enumeration(enumName)
+              .symbols(connected, "disconnected", unknown);
+
+        result = SchemaValidator.validateEnumeration().apply(schema);
+
+        String invalidMessage = "Enumerator items should be written in uppercase characters "
+                + "separated by underscores. "
+                + "org.radarcns.monitor.application.ApplicationServerStatus is invalid.";
+
+        assertFalse(result.isValid());
+        assertEquals(Optional.of(invalidMessage), result.getReason());
+
+        schema = SchemaBuilder
+              .enumeration(enumName)
+              .symbols(connected, "Not_Connected", unknown);
+
+        result = SchemaValidator.validateEnumeration().apply(schema);
+
+        assertFalse(result.isValid());
+        assertEquals(Optional.of(invalidMessage), result.getReason());
+
+        schema = SchemaBuilder
+              .enumeration(enumName)
+              .symbols(connected, "NotConnected", unknown);
+
+        result = SchemaValidator.validateEnumeration().apply(schema);
+
+        assertFalse(result.isValid());
+        assertEquals(Optional.of(invalidMessage), result.getReason());
+
+        schema = new Parser().parse("{\"namespace\": \"org.radarcns.monitor.application\", "
+              + "\"type\": \"record\", \"name\": \"ApplicationServerStatus\", \"fields\": "
+              + "[ {\"name\": \"serverStatus\", \"type\": {\"name\": \"ServerStatus\", \"type\": "
+              + "\"enum\", \"symbols\": [\"CONNECTED\", \"Not_Connected\", \"UNKNOWN\"] } } ] }");
+
+        result = SchemaValidator.validateEnumeration().apply(schema);
+
+        assertFalse(result.isValid());
+        assertEquals(Optional.of(invalidMessage), result.getReason());
+
+        schema = new Parser().parse("{\"namespace\": \"org.radarcns.monitor.application\", "
+              + "\"type\": \"record\", \"name\": \"ApplicationServerStatus\", \"fields\": "
+              + "[ {\"name\": \"serverStatus\", \"type\": {\"name\": \"ServerStatus\", \"type\": "
+              + "\"enum\", \"symbols\": [\"Connected\", \"NotConnected\", \"UNKNOWN\"] } } ] }");
+
+        result = SchemaValidator.validateEnumeration().apply(schema);
+
+        assertFalse(result.isValid());
+        assertEquals(Optional.of(invalidMessage), result.getReason());
     }
 
     private static String getFinalMessage(String nameSpace, String recordName) {
