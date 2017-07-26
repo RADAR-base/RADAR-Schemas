@@ -1,0 +1,11 @@
+{
+  "namespace": "org.radarcns.phone",
+  "type": "record",
+  "name": "PhoneUsageTotal",
+  "doc": "Aggregate time and opening events for an app",
+  "fields": [
+    {"name": "packageName", "type": "string", "doc": "package name of the app in use"},
+    {"name":"timeInForeground", "type":"int", "doc":"Total time in milliseconds the app was in the foreground"},
+    {"name":"timesOpen", "type":"int", "doc":"Total amount of times given app was opened in given time-frame"},
+  ]
+}
