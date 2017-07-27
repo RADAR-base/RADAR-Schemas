@@ -20,7 +20,7 @@ import static org.radarcns.validator.util.SchemaValidatorRole.TIME;
 import static org.radarcns.validator.util.SchemaValidatorRole.TIME_COMPLETED;
 import static org.radarcns.validator.util.SchemaValidatorRole.TIME_RECEIVED;
 import static org.radarcns.validator.util.SchemaValidatorRole.getActiveValidator;
-import static org.radarcns.validator.util.SchemaValidatorRole.getGeneralValidator;
+import static org.radarcns.validator.util.SchemaValidatorRole.getGeneralRecordValidator;
 import static org.radarcns.validator.util.SchemaValidatorRole.getMonitorValidator;
 import static org.radarcns.validator.util.SchemaValidatorRole.getPassiveValidator;
 
@@ -72,39 +72,8 @@ public final class SchemaValidator {
      */
     public static ValidationResult validate(Schema schema, Path pathToSchema, NameFolder root,
             String subfolder) {
-        Objects.requireNonNull(schema);
-        Objects.requireNonNull(pathToSchema);
-        Objects.requireNonNull(root);
-        Objects.requireNonNull(subfolder);
-
-        ValidationResult result;
-
-        switch (root) {
-            case ACTIVE:
-                result = getActiveValidator(pathToSchema, root, subfolder).apply(schema);
-                break;
-            case MONITOR:
-                result = getMonitorValidator(pathToSchema, root, subfolder).apply(schema);
-                break;
-            case KAFKA:
-                result = getGeneralValidator(pathToSchema, root, subfolder).apply(schema);
-                break;
-            case PASSIVE:
-                result = getPassiveValidator(pathToSchema, root, subfolder).apply(schema);
-                break;
-            default:
-                LOGGER.warn("Applying general validation to {}", getPath(pathToSchema));
-                result = getGeneralValidator(pathToSchema, root, subfolder).apply(schema);
-                break;
-        }
-
-        computeCollision(schema);
-
-        if (!result.isValid()) {
-            LOGGER.error("{} is invalid.", getPath(pathToSchema));
-        }
-
-        return result;
+        return validate(schema, pathToSchema, root, subfolder,
+                null, null);
     }
 
     /**
@@ -137,7 +106,7 @@ public final class SchemaValidator {
                         skipFieldName).apply(schema);
                 break;
             case KAFKA:
-                result = getGeneralValidator(pathToSchema, root, subfolder, skipRecordName,
+                result = getGeneralRecordValidator(pathToSchema, root, subfolder, skipRecordName,
                         skipFieldName).apply(schema);
                 break;
             case PASSIVE:
@@ -146,7 +115,7 @@ public final class SchemaValidator {
                 break;
             default:
                 LOGGER.warn("Applying general validation to {}", getPath(pathToSchema));
-                result = getGeneralValidator(pathToSchema, root, subfolder, skipRecordName,
+                result = getGeneralRecordValidator(pathToSchema, root, subfolder, skipRecordName,
                         skipFieldName).apply(schema);
                 break;
         }

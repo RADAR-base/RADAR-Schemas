@@ -16,12 +16,17 @@ package org.radarcns.validator.util;
  * limitations under the License.
  */
 
+import static java.util.stream.Collectors.toList;
+import static org.radarcns.validator.util.SchemaValidatorRole.UNKNOWN;
+
 import java.nio.file.Path;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import org.apache.avro.JsonProperties;
 import org.apache.avro.Schema;
+import org.apache.avro.Schema.Field;
 import org.apache.avro.Schema.Type;
 
 /**
@@ -95,6 +100,75 @@ public final class ValidationSupport {
             .forEach(schema -> symbols.addAll(schema.getEnumSymbols()));
 
         return symbols;
+    }
+
+    /**
+     * TODO.
+     * @param input TODO
+     * @return TODO
+     * @throws IllegalArgumentException TODO
+     */
+    public static boolean validateDefault(Schema input) {
+        if (!input.getType().equals(Type.RECORD)) {
+            throw new IllegalArgumentException("Function can be applied only to avro RECORD.");
+        }
+
+        boolean flag = true;
+
+        for (Field field : input.getFields()) {
+            switch (field.schema().getType()) {
+                case RECORD:
+                    flag = flag && validateDefault(field.schema());
+                    break;
+                case UNION:
+                    List<Type> types = field.schema().getTypes().stream()
+                            .filter(schema -> !schema.getType().equals(Type.NULL))
+                            .map(schema -> schema.getType()).collect(toList());
+                    if (types.size() > 1) {
+                        flag = flag && field.defaultVal().equals(JsonProperties.NULL_VALUE);
+                    } else {
+                        flag = flag && basicValidateDefault(field.defaultVal(), types.get(0));
+                    }
+                    break;
+                case ENUM:
+                    flag = flag && field.schema().getEnumSymbols().contains(UNKNOWN)
+                            && field.defaultVal().equals(UNKNOWN);
+                    break;
+                default: break;
+            }
+
+            if (!flag) {
+                return flag;
+            }
+        }
+
+        return flag;
+    }
+
+    /**
+     * TODO.
+     * @param defaultVal TODO
+     * @param type TODO
+     * @return TODO
+     */
+    private static boolean basicValidateDefault(Object defaultVal, Type type) {
+        switch (type) {
+            case INT:
+                return defaultVal.equals(Integer.MIN_VALUE) || defaultVal.equals(Integer.MAX_VALUE);
+            case LONG:
+                return defaultVal.equals(Long.MIN_VALUE) || defaultVal.equals(Long.MAX_VALUE);
+            case DOUBLE:
+                return defaultVal.equals("NaN");
+            case FLOAT:
+                return defaultVal.equals("NaN");
+            case BOOLEAN:
+                return defaultVal instanceof Boolean;
+            case BYTES:
+                //TODO check if there is better way
+                return defaultVal instanceof String;
+            default:
+                return defaultVal.equals(JsonProperties.NULL_VALUE);
+        }
     }
 
 }

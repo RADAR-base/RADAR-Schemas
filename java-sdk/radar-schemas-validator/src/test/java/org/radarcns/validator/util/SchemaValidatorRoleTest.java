@@ -364,9 +364,12 @@ public class SchemaValidatorRoleTest {
 
         result = SchemaValidatorRole.validateFieldName().apply(schema);
         assertFalse(result.isValid());
-        assertEquals(Optional.of("Field name does not respect lowerCamelCase name convention. "
-                + "It cannot contain any of the following values [value,Value]. "
-                + "Please avoid abbreviations and write out the field name instead. "
+
+        String message = "Field name does not respect lowerCamelCase name convention. "
+                + "It cannot contain any of the following values [value,Value,val,Val]. "
+                + "Please avoid abbreviations and write out the field name instead. ";
+
+        assertEquals(Optional.of(message
                 + getFinalMessage(MONITOR_NAME_SPACE_MOCK, RECORD_NAME_MOCK)),
                 result.getReason());
 
@@ -379,9 +382,7 @@ public class SchemaValidatorRoleTest {
 
         result = SchemaValidatorRole.validateFieldName().apply(schema);
         assertFalse(result.isValid());
-        assertEquals(Optional.of("Field name does not respect lowerCamelCase name convention. "
-                + "It cannot contain any of the following values [value,Value]. "
-                + "Please avoid abbreviations and write out the field name instead. "
+        assertEquals(Optional.of(message
                 + getFinalMessage(MONITOR_NAME_SPACE_MOCK, RECORD_NAME_MOCK)),
                 result.getReason());
 
@@ -396,9 +397,7 @@ public class SchemaValidatorRoleTest {
         result = SchemaValidatorRole.validateFieldName(
                 Collections.singleton(SchemaValidatorRole.TIME)).apply(schema);
         assertFalse(result.isValid());
-        assertEquals(Optional.of("Field name does not respect lowerCamelCase name convention. "
-                + "It cannot contain any of the following values [value,Value]. "
-                + "Please avoid abbreviations and write out the field name instead. "
+        assertEquals(Optional.of(message
                 + getFinalMessage(MONITOR_NAME_SPACE_MOCK,RECORD_NAME_MOCK)),
                 result.getReason());
 
@@ -501,16 +500,21 @@ public class SchemaValidatorRoleTest {
               .enumeration(enumName)
               .symbols(connected, "DISCONNECTED", unknown);
 
-        result = SchemaValidatorRole.validateEnumeration().apply(schema);
+        result = SchemaValidatorRole.validateEnumerationSymbols().apply(schema);
 
         assertTrue(result.isValid());
 
-        schema = new Parser().parse("{\"namespace\": \"org.radarcns.monitor.application\", "
-              + "\"type\": \"record\", \"name\": \"ApplicationServerStatus\", \"fields\": "
-              + "[ {\"name\": \"serverStatus\", \"type\": {\"name\": \"ServerStatus\", \"type\": "
-              + "\"enum\", \"symbols\": [\"CONNECTED\", \"NOT_CONNECTED\", \"UNKNOWN\"] } } ] }");
+        String schemaTxtInit = "{\"namespace\": \"org.radarcns.monitor.application\", "
+                + "\"type\": \"record\", \"name\": \"ApplicationServerStatus\", \"fields\": "
+                + "[ {\"name\": \"serverStatus\", \"type\": {\"name\": \"ServerStatus\", \"type\": "
+                + "\"enum\", \"symbols\": [";
 
-        result = SchemaValidatorRole.validateEnumeration().apply(schema);
+        String schemaTxtEnd = "] } } ] }";
+
+        schema = new Parser().parse(schemaTxtInit.concat(
+                "\"CONNECTED\", \"NOT_CONNECTED\", \"UNKNOWN\"".concat(schemaTxtEnd)));
+
+        result = SchemaValidatorRole.validateEnumerationSymbols().apply(schema);
 
         assertTrue(result.isValid());
 
@@ -518,7 +522,7 @@ public class SchemaValidatorRoleTest {
               .enumeration(enumName)
               .symbols(connected, "disconnected", unknown);
 
-        result = SchemaValidatorRole.validateEnumeration().apply(schema);
+        result = SchemaValidatorRole.validateEnumerationSymbols().apply(schema);
 
         String invalidMessage = "Enumerator items should be written in uppercase characters "
                 + "separated by underscores. "
@@ -531,7 +535,7 @@ public class SchemaValidatorRoleTest {
               .enumeration(enumName)
               .symbols(connected, "Not_Connected", unknown);
 
-        result = SchemaValidatorRole.validateEnumeration().apply(schema);
+        result = SchemaValidatorRole.validateEnumerationSymbols().apply(schema);
 
         assertFalse(result.isValid());
         assertEquals(Optional.of(invalidMessage), result.getReason());
@@ -540,27 +544,165 @@ public class SchemaValidatorRoleTest {
               .enumeration(enumName)
               .symbols(connected, "NotConnected", unknown);
 
-        result = SchemaValidatorRole.validateEnumeration().apply(schema);
+        result = SchemaValidatorRole.validateEnumerationSymbols().apply(schema);
 
         assertFalse(result.isValid());
         assertEquals(Optional.of(invalidMessage), result.getReason());
 
-        schema = new Parser().parse("{\"namespace\": \"org.radarcns.monitor.application\", "
-              + "\"type\": \"record\", \"name\": \"ApplicationServerStatus\", \"fields\": "
-              + "[ {\"name\": \"serverStatus\", \"type\": {\"name\": \"ServerStatus\", \"type\": "
-              + "\"enum\", \"symbols\": [\"CONNECTED\", \"Not_Connected\", \"UNKNOWN\"] } } ] }");
+        schema = new Parser().parse(schemaTxtInit.concat(
+                "\"CONNECTED\", \"Not_Connected\", \"UNKNOWN\"".concat(schemaTxtEnd)));
 
-        result = SchemaValidatorRole.validateEnumeration().apply(schema);
+        result = SchemaValidatorRole.validateEnumerationSymbols().apply(schema);
 
         assertFalse(result.isValid());
         assertEquals(Optional.of(invalidMessage), result.getReason());
 
-        schema = new Parser().parse("{\"namespace\": \"org.radarcns.monitor.application\", "
-              + "\"type\": \"record\", \"name\": \"ApplicationServerStatus\", \"fields\": "
-              + "[ {\"name\": \"serverStatus\", \"type\": {\"name\": \"ServerStatus\", \"type\": "
-              + "\"enum\", \"symbols\": [\"Connected\", \"NotConnected\", \"UNKNOWN\"] } } ] }");
+        schema = new Parser().parse(schemaTxtInit.concat(
+                "\"Connected\", \"NotConnected\", \"UNKNOWN\"".concat(schemaTxtEnd)));
 
-        result = SchemaValidatorRole.validateEnumeration().apply(schema);
+        result = SchemaValidatorRole.validateEnumerationSymbols().apply(schema);
+
+        assertFalse(result.isValid());
+        assertEquals(Optional.of(invalidMessage), result.getReason());
+    }
+
+    @Test
+    public void unknownSymbolTest() {
+        Schema schema;
+        ValidationResult result;
+
+        schema = SchemaBuilder.enumeration("org.radarcns.test.EnumeratorTest")
+            .symbols("TEST", "UNKNOWN");
+
+        result = SchemaValidatorRole.validateUnknownSymbol().apply(schema);
+
+        assertTrue(result.isValid());
+
+        schema = SchemaBuilder.enumeration("org.radarcns.test.EnumeratorTest")
+            .symbols("TEST", "UN_KNOWN");
+
+        result = SchemaValidatorRole.validateUnknownSymbol().apply(schema);
+
+        assertFalse(result.isValid());
+        assertEquals(Optional.of("Enumerator must contain the \"UNKNOWN\" symbol. It is "
+                + "useful to specify default value for a field using type equals to \"enum\". "
+                + "org.radarcns.test.EnumeratorTest is invalid."),
+                result.getReason());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void defaultValueExceptionTest() {
+        SchemaValidatorRole.validateDefault().apply(
+                SchemaBuilder.enumeration("org.radarcns.test.EnumeratorTest")
+                    .symbols("TEST", "UNKNOWN"));
+    }
+
+    @Test
+    @SuppressWarnings("PMD.ExcessiveMethodLength")
+    public void defaultValueTest() {
+        String namespace = "org.radarcns.test";
+        String recordName = "TestRecord";
+
+        Schema schema;
+        ValidationResult result;
+
+        schema = SchemaBuilder
+            .builder(namespace)
+            .record(recordName)
+            .fields()
+            .nullableDouble("nullableDouble", Double.NaN)
+            .nullableFloat("nullableFloat", Float.NaN)
+            .nullableInt("nullableIntMin", Integer.MIN_VALUE)
+            .nullableInt("nullableIntMax", Integer.MAX_VALUE)
+            .nullableLong("nullableLongMin", Long.MIN_VALUE)
+            .nullableLong("nullableLongMax", Long.MAX_VALUE)
+            .nullableString("nullableString", null)
+            .nullableBoolean("nullableBoolean", false) //check with text schema
+            .nullableBytes("nullableBytes", new byte[1])  //check with text schema
+            .endRecord();
+
+        result = SchemaValidatorRole.validateDefault().apply(schema);
+
+        assertTrue(result.isValid());
+
+        String scemaTxtInit = "{\"namespace\": \"org.radarcns.test\", "
+                + "\"type\": \"record\", \"name\": \"TestRecord\", \"fields\": ";
+
+        schema = new Parser().parse(scemaTxtInit
+            + "[ {\"name\": \"nullableBytes\", \"type\": [ \"null\", \"bytes\"], "
+            + "\"default\": \"null\" } ] }");
+
+        result = SchemaValidatorRole.validateDefault().apply(schema);
+
+        assertTrue(result.isValid());
+
+        schema = SchemaBuilder
+            .builder(namespace)
+            .record(recordName)
+            .fields()
+            .nullableDouble("nullableDouble", -1)
+            .endRecord();
+
+        result = SchemaValidatorRole.validateDefault().apply(schema);
+
+        String invalidMessage = "Any NULLABLE Avro field must specify a default value. "
+                + "The allowed default values are: \"UNKNOWN\" for ENUMERATION, \"MIN_VALUE\" or "
+                + "\"MAX_VALUE\" for nullable int and long, \"NaN\" for nullable float and double, "
+                + "\"true\" or \"false\" for nullable boolean, \"byte[]\" or \"null\" for bytes, "
+                + "and \"null\" for all the other cases. org.radarcns.test.TestRecord"
+                + " is invalid.";
+
+        assertFalse(result.isValid());
+        assertEquals(Optional.of(invalidMessage), result.getReason());
+
+        schema = SchemaBuilder
+            .builder(namespace)
+            .record(recordName)
+            .fields()
+            .nullableInt("nullableInt", -1)
+            .endRecord();
+
+        result = SchemaValidatorRole.validateDefault().apply(schema);
+
+        assertFalse(result.isValid());
+        assertEquals(Optional.of(invalidMessage), result.getReason());
+
+        schema = SchemaBuilder
+            .builder(namespace)
+            .record(recordName)
+            .fields()
+            .nullableLong("nullableLong", -1)
+            .endRecord();
+
+        result = SchemaValidatorRole.validateDefault().apply(schema);
+
+        assertFalse(result.isValid());
+        assertEquals(Optional.of(invalidMessage), result.getReason());
+
+        schema = new Parser().parse(scemaTxtInit
+            + "[ {\"name\": \"serverStatus\", \"type\": {\"name\": \"ServerStatus\", \"type\": "
+            + "\"enum\", \"symbols\": [\"Connected\", \"NotConnected\", \"UNKNOWN\"] }, "
+            + "\"default\": \"UNKNOWN\" } ] }");
+
+        result = SchemaValidatorRole.validateDefault().apply(schema);
+
+        assertTrue(result.isValid());
+
+        schema = new Parser().parse(scemaTxtInit
+            + "[ {\"name\": \"serverStatus\", \"type\": {\"name\": \"ServerStatus\", \"type\": "
+            + "\"enum\", \"symbols\": [\"Connected\", \"NotConnected\", \"UNKNOWN\"] }, "
+            + "\"default\": \"null\" } ] }");
+
+        result = SchemaValidatorRole.validateDefault().apply(schema);
+
+        assertFalse(result.isValid());
+        assertEquals(Optional.of(invalidMessage), result.getReason());
+
+        schema = new Parser().parse(scemaTxtInit
+            + "[ {\"name\": \"nullableBoolean\", \"type\": [ \"null\", \"boolean\"], "
+            + "\"default\": \"null\" } ] }");
+
+        result = SchemaValidatorRole.validateDefault().apply(schema);
 
         assertFalse(result.isValid());
         assertEquals(Optional.of(invalidMessage), result.getReason());

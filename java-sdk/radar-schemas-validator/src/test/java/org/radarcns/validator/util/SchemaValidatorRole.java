@@ -1,7 +1,9 @@
 package org.radarcns.validator.util;
 
+import static org.radarcns.validator.util.SchemaValidatorRole.Message.DEFAULT_VALUE;
 import static org.radarcns.validator.util.SchemaValidatorRole.Message.DOC;
 import static org.radarcns.validator.util.SchemaValidatorRole.Message.ENUMERATION_SYMBOL;
+import static org.radarcns.validator.util.SchemaValidatorRole.Message.ENUMERATION_UNKNOWN_SYMBOL;
 import static org.radarcns.validator.util.SchemaValidatorRole.Message.FIELDS;
 import static org.radarcns.validator.util.SchemaValidatorRole.Message.FILED_NAME;
 import static org.radarcns.validator.util.SchemaValidatorRole.Message.NOT_TIME_COMPLETED_FIELD;
@@ -55,6 +57,8 @@ interface SchemaValidatorRole extends Function<Schema, ValidationResult> {
     String TIME_RECEIVED = "timeReceived";
     String TIME_COMPLETED = "timeCompleted";
 
+    String UNKNOWN = "UNKNOWN";
+
     String NAMESPACE_REGEX = "^[a-z][a-z.]*$";
 
     String RECORD_NAME_REGEX = "(^[A-Z][a-z]+)|(^[A-Z][a-z0-9]+[A-Z]$)"
@@ -67,7 +71,9 @@ interface SchemaValidatorRole extends Function<Schema, ValidationResult> {
     /** Field names cannot contain the following values. */
     enum FieldNameNotAllowed {
         LOWER_VALUE("value"),
-        UPPERD_VALUE("Value");
+        UPPER_VALUE("Value"),
+        LOWER_VAL("val"),
+        UPPER_VAL("Val");
 
         private final String name;
 
@@ -108,7 +114,14 @@ interface SchemaValidatorRole extends Function<Schema, ValidationResult> {
             + "and acronyms in the documentation should be written out. The sentence must be ended "
             + "by a point. Please add \"doc\" property."),
         ENUMERATION_SYMBOL("Enumerator items should be written in uppercase characters separated "
-            + "by underscores.");
+            + "by underscores."),
+        ENUMERATION_UNKNOWN_SYMBOL("Enumerator must contain the \"" + UNKNOWN + "\" symbol. It is "
+            + "useful to specify default value for a field using type equals to \"enum\"."),
+        DEFAULT_VALUE("Any NULLABLE Avro field must specify a default value. The allowed default "
+            + "values are: \"UNKNOWN\" for ENUMERATION, \"MIN_VALUE\" or \"MAX_VALUE\" "
+            + "for nullable int and long, \"NaN\" for nullable float and double, \"true\" or "
+            + "\"false\" for nullable boolean, \"byte[]\" or \"null\" for bytes, and \"null\" "
+            + "for all the other cases.");
 
         private final String message;
 
@@ -227,12 +240,20 @@ interface SchemaValidatorRole extends Function<Schema, ValidationResult> {
      * TODO.
      * @return TODO
      */
-    static SchemaValidatorRole validateEnumeration() {
+    static SchemaValidatorRole validateEnumerationSymbols() {
         return validate(schema ->
                 extractEnumerationFields(schema).stream()
                     .allMatch(symbol -> symbol.matches(
                         ENUMERATION_SYMBOL_REGEX)),
             ENUMERATION_SYMBOL);
+    }
+
+    /**
+     * TODO.
+     * @return TODO
+     */
+    static SchemaValidatorRole validateDefault() {
+        return validate(schema -> ValidationSupport.validateDefault(schema), DEFAULT_VALUE);
     }
 
     /**
@@ -284,6 +305,15 @@ interface SchemaValidatorRole extends Function<Schema, ValidationResult> {
 
     /**
      * TODO.
+     * @return TODO
+     */
+    static SchemaValidatorRole validateUnknownSymbol() {
+        return validate(schema -> extractEnumerationFields(schema).contains(UNKNOWN),
+          ENUMERATION_UNKNOWN_SYMBOL);
+    }
+
+    /**
+     * TODO.
      * @param predicate TODO
      * @param message TODO
      * @return TODO
@@ -311,7 +341,7 @@ interface SchemaValidatorRole extends Function<Schema, ValidationResult> {
      * @param subfolder TODO
      * @return TODO
      */
-    static SchemaValidatorRole getGeneralValidator(Path pathToSchema, NameFolder root,
+    static SchemaValidatorRole getGeneralRecordValidator(Path pathToSchema, NameFolder root,
             String subfolder) {
         return validateNameSpace(root, subfolder)
                   .and(validateRecordName(pathToSchema))
@@ -319,7 +349,7 @@ interface SchemaValidatorRole extends Function<Schema, ValidationResult> {
                   .and(validateFields())
                   .and(validateFieldName())
                   .and(validateFieldDocumentation())
-                  .and(validateEnumeration());
+                  .and(validateEnumerationSymbols());
     }
 
     /**
@@ -331,7 +361,7 @@ interface SchemaValidatorRole extends Function<Schema, ValidationResult> {
      * @param skipFieldName TODO
      * @return TODO
      */
-    static SchemaValidatorRole getGeneralValidator(Path pathToSchema, NameFolder root,
+    static SchemaValidatorRole getGeneralRecordValidator(Path pathToSchema, NameFolder root,
             String subfolder, Set<String> skipRecordName, Set<String> skipFieldName) {
         return validateNameSpace(root, subfolder)
                   .and(validateRecordName(pathToSchema, skipRecordName))
@@ -339,7 +369,7 @@ interface SchemaValidatorRole extends Function<Schema, ValidationResult> {
                   .and(validateFields())
                   .and(validateFieldName(skipFieldName))
                   .and(validateFieldDocumentation())
-                  .and(validateEnumeration());
+                  .and(validateEnumerationSymbols());
     }
 
     /**
@@ -351,7 +381,7 @@ interface SchemaValidatorRole extends Function<Schema, ValidationResult> {
      */
     static SchemaValidatorRole getActiveValidator(Path pathToSchema, NameFolder root,
             String subfolder) {
-        return getGeneralValidator(pathToSchema, root, subfolder)
+        return getGeneralRecordValidator(pathToSchema, root, subfolder)
                   .and(validateTime())
                   .and(validateTimeCompleted())
                   .and(validateNotTimeReceived());
@@ -368,7 +398,8 @@ interface SchemaValidatorRole extends Function<Schema, ValidationResult> {
      */
     static SchemaValidatorRole getActiveValidator(Path pathToSchema, NameFolder root,
             String subfolder, Set<String> skipRecordName, Set<String> skipFieldName) {
-        return getGeneralValidator(pathToSchema, root, subfolder, skipRecordName, skipFieldName)
+        return getGeneralRecordValidator(pathToSchema, root, subfolder, skipRecordName,
+            skipFieldName)
                   .and(validateTime())
                   .and(validateTimeCompleted())
                   .and(validateNotTimeReceived());
@@ -383,7 +414,7 @@ interface SchemaValidatorRole extends Function<Schema, ValidationResult> {
      */
     static SchemaValidatorRole getMonitorValidator(Path pathToSchema, NameFolder root,
             String subfolder) {
-        return getGeneralValidator(pathToSchema, root, subfolder)
+        return getGeneralRecordValidator(pathToSchema, root, subfolder)
             .and(validateTime());
     }
 
@@ -398,8 +429,9 @@ interface SchemaValidatorRole extends Function<Schema, ValidationResult> {
      */
     static SchemaValidatorRole getMonitorValidator(Path pathToSchema, NameFolder root,
             String subfolder, Set<String> skipRecordName, Set<String> skipFieldName) {
-        return getGeneralValidator(pathToSchema, root, subfolder, skipRecordName, skipFieldName)
-            .and(validateTime());
+        return getGeneralRecordValidator(pathToSchema, root, subfolder, skipRecordName,
+            skipFieldName)
+                  .and(validateTime());
     }
 
     /**
@@ -411,7 +443,7 @@ interface SchemaValidatorRole extends Function<Schema, ValidationResult> {
      */
     static SchemaValidatorRole getPassiveValidator(Path pathToSchema, NameFolder root,
             String subfolder) {
-        return getGeneralValidator(pathToSchema, root, subfolder)
+        return getGeneralRecordValidator(pathToSchema, root, subfolder)
             .and(validateTime())
             .and(validateTimeReceived())
             .and(validateNotTimeCompleted());
@@ -428,10 +460,47 @@ interface SchemaValidatorRole extends Function<Schema, ValidationResult> {
      */
     static SchemaValidatorRole getPassiveValidator(Path pathToSchema, NameFolder root,
             String subfolder, Set<String> skipRecordName, Set<String> skipFieldName) {
-        return getGeneralValidator(pathToSchema, root, subfolder, skipRecordName, skipFieldName)
+        return getGeneralRecordValidator(pathToSchema, root, subfolder, skipRecordName,
+              skipFieldName)
             .and(validateTime())
             .and(validateTimeReceived())
             .and(validateNotTimeCompleted());
+    }
+
+    /**
+     * TODO.
+     * @param pathToSchema TODO
+     * @param root TODO
+     * @param subfolder TODO
+     * @return TODO
+     */
+    static SchemaValidatorRole getGeneralEnumValidator(Path pathToSchema, NameFolder root,
+            String subfolder) {
+        return validateNameSpace(root, subfolder)
+            .and(validateRecordName(pathToSchema))
+            .and(validateSchemaDocumentation())
+            .and(validateFields())
+            .and(validateEnumerationSymbols())
+            .and(validateUnknownSymbol());
+    }
+
+    /**
+     * TODO.
+     * @param pathToSchema TODO
+     * @param root TODO
+     * @param subfolder TODO
+     * @param skipRecordName TODO
+     * @return TODO
+     */
+    static SchemaValidatorRole getGeneralEnumValidator(Path pathToSchema, NameFolder root,
+            String subfolder, Set<String> skipRecordName) {
+        return validateNameSpace(root, subfolder)
+            .and(validateRecordName(pathToSchema, skipRecordName))
+            .and(validateSchemaDocumentation())
+            .and(validateFields())
+            .and(validateEnumerationSymbols())
+            .and(validateUnknownSymbol());
+
     }
 
 }
