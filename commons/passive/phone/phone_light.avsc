@@ -4,8 +4,8 @@
   "name": "PhoneLight",
   "doc": "Data from the light sensor in luminous flux per unit area.",
   "fields": [
-    {"name": "time", "type": "double", "doc": "device timestamp in UTC (s)"},
-    {"name": "timeReceived", "type": "double", "doc": "device receiver timestamp in UTC (s)"},
-    {"name": "light", "type": "float", "doc": "illuminance (lx)"}
+    { "name": "time", "type": "double", "doc": "device timestamp in UTC (s)." },
+    { "name": "timeReceived", "type": "double", "doc": "device receiver timestamp in UTC (s)." },
+    { "name": "light", "type": "float", "doc": "illuminance (lx)." }
   ]
 }

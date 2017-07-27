@@ -4,8 +4,8 @@
   "name": "PhoneStepCount",
   "doc": "Data from the step counter.",
   "fields": [
-    {"name": "time", "type": "double", "doc": "device timestamp in UTC (s)"},
-    {"name": "timeReceived", "type": "double", "doc": "device receiver timestamp in UTC (s)"},
-    {"name": "steps", "type": "int", "doc": "number of steps taken between this and the previous record"}
+    {"name": "time", "type": "double", "doc": "device timestamp in UTC (s)." },
+    {"name": "timeReceived", "type": "double", "doc": "device receiver timestamp in UTC (s)." },
+    {"name": "steps", "type": "int", "doc": "number of steps taken between this and the previous record." }
   ]
 }
