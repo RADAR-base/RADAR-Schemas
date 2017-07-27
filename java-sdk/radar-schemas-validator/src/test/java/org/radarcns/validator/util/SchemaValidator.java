@@ -195,6 +195,8 @@ final class SchemaValidator {
                               + "the name field accordingly.\n");
                   });
 
+        COLLISIONS.clear();
+
         return messageBuilder;
     }
 }

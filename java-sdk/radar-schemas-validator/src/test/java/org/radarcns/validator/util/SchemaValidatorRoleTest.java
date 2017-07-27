@@ -91,6 +91,7 @@ public class SchemaValidatorRoleTest {
 
     @Test
     public void fieldNameRegex() {
+        assertTrue("interBeatInterval".matches(FIELD_NAME_REGEX));
         assertTrue("x".matches(FIELD_NAME_REGEX));
         assertTrue(SchemaValidatorRole.TIME.matches(FIELD_NAME_REGEX));
         assertTrue("subjectId".matches(FIELD_NAME_REGEX));
@@ -101,6 +102,7 @@ public class SchemaValidatorRoleTest {
 
     @Test
     public void enumerationRegex() {
+        assertTrue("PHQ8".matches(ENUMERATION_SYMBOL_REGEX));
         assertTrue("HELLO".matches(ENUMERATION_SYMBOL_REGEX));
         assertTrue("HELLOTHERE".matches(ENUMERATION_SYMBOL_REGEX));
         assertTrue("HELLO_THERE".matches(ENUMERATION_SYMBOL_REGEX));

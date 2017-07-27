@@ -23,28 +23,50 @@ import java.util.Set;
 /**
  * TODO.
  */
-public class Skip {
+public class SkipConfig {
 
     private boolean nameRecord;
     private Set<String> fields;
 
-    public Skip(boolean nameRecord) {
-        this(nameRecord, null);
+    /**
+     * TODO.
+     * @param nameRecord TODO
+     */
+    public SkipConfig(boolean nameRecord) {
+        this(nameRecord, "");
     }
 
-    public Skip(String... fields) {
+    /**
+     * TODO.
+     * @param fields TODO
+     */
+    public SkipConfig(String... fields) {
         this(false, fields);
     }
 
-    public Skip(boolean nameRecord, String... fields) {
+    /**
+     * TODO.
+     * @param nameRecord TODO
+     * @param fields TODO
+     */
+    public SkipConfig(boolean nameRecord, String... fields) {
         this.nameRecord = nameRecord;
-        this.fields = fields == null ? null : new HashSet<>(Arrays.asList(fields));
+        this.fields = fields.length == 1 && fields[0].isEmpty() ? null :
+                new HashSet<>(Arrays.asList(fields));
     }
 
+    /**
+     * TODO.
+     * @return TODO
+     */
     public boolean isNameRecord() {
         return nameRecord;
     }
 
+    /**
+     * TODO.
+     * @return TODO
+     */
     public Set<String> getFields() {
         return fields;
     }

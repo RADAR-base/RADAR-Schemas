@@ -17,14 +17,13 @@ package org.radarcns.validator.util;
  */
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import org.apache.avro.Schema;
 import org.apache.avro.Schema.Parser;
 import org.radarcns.validator.CatalogValidator.NameFolder;
@@ -38,12 +37,17 @@ public final class AvroValidator {
     public static final String AVRO_FORMAT = "avsc";
     public static final String README_FILE = "README.md";
 
-    private static Map<String, Skip> skip;
+    private static final String WILD_CARD = ".*";
+
+    private static Map<String, SkipConfig> skip;
 
     static {
         skip = new HashMap<>();
         skip.put("org.radarcns.passive.biovotion.BiovotionVSMSpO2",
-                new Skip("spO2", "spO2Quality"));
+                new SkipConfig(true, "spO2", "spO2Quality"));
+        skip.put("org.radarcns.passive.biovotion.*", new SkipConfig(true));
+        skip.put("org.radarcns.passive.empatica.EmpaticaE4InterBeatInterval",
+                new SkipConfig("interBeatInterval"));
     }
 
     private AvroValidator() {
@@ -68,18 +72,29 @@ public final class AvroValidator {
                     AVRO_FORMAT, getExtension(file));
 
             Schema schema = new Parser().parse(file);
+
             ValidationResult result;
 
-            if (skip.containsKey(schema.getFullName())) {
-                Skip skipConfig = skip.get(schema.getFullName());
-                result = SchemaValidator.validate(schema, file.toPath(), packageName, parentName,
-                        skipConfig.isNameRecord(), skipConfig.getFields());
-            } else {
+            SkipConfig skipConfig = getSkipConfig(schema);
+
+            if (Objects.isNull(skipConfig)) {
                 result = SchemaValidator.validate(schema, file.toPath(), packageName, parentName);
+            } else {
+                result = SchemaValidator.validate(schema, file.toPath(), packageName, parentName,
+                    skipConfig.isNameRecord(), skipConfig.getFields());
             }
 
-            assertTrue(result.getReason().get(), result.isValid());
+            StringBuilder messageBuilder = new StringBuilder(200);
+            result.getReason().ifPresent(s -> messageBuilder.append(s));
+
+            assertTrue(messageBuilder.toString(), result.isValid());
         }
+    }
+
+    private static SkipConfig getSkipConfig(Schema schema) {
+        SkipConfig skipConfig = skip.get(schema.getFullName());
+        return Objects.isNull(skipConfig)
+                ? skip.get(schema.getNamespace().concat(WILD_CARD)) : skipConfig;
     }
 
     /**
@@ -87,7 +102,7 @@ public final class AvroValidator {
      * @param file TODO.
      * @return TODO.
      */
-    public static String getExtension(File file) {
+    private static String getExtension(File file) {
         String extension = "";
         int index = file.getName().lastIndexOf('.');
         if (index > 0) {
@@ -95,6 +110,16 @@ public final class AvroValidator {
         }
 
         return extension;
+    }
+
+    /**
+     * TODO.
+     */
+    public static void analyseNamingCollsion() {
+        String message = SchemaValidator.analyseCollision().toString();
+        if ("".equalsIgnoreCase(message)) {
+            LOGGER.warn(message);
+        }
     }
 
 }

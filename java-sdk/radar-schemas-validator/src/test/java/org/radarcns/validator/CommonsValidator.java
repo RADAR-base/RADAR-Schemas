@@ -41,6 +41,8 @@ public final class CommonsValidator {
         kafka();
         monitor();
         passive();
+
+        AvroValidator.analyseNamingCollsion();
     }
 
     /**

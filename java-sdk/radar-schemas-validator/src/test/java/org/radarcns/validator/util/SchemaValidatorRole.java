@@ -69,7 +69,7 @@ interface SchemaValidatorRole extends Function<Schema, ValidationResult> {
 
     String FIELD_NAME_REGEX = "^[a-z][a-zA-Z]*$";
 
-    String ENUMERATION_SYMBOL_REGEX = "^[A-Z_]+$";
+    String ENUMERATION_SYMBOL_REGEX = "^[A-Z0-8_]+$";
 
     /** Field names cannot contain the following values. */
     enum FieldNameNotAllowed {
@@ -179,7 +179,7 @@ interface SchemaValidatorRole extends Function<Schema, ValidationResult> {
 
         return schema ->
                 skip || schema.getName().matches(RECORD_NAME_REGEX)
-                    && schema.getName().equalsIgnoreCase(expected)? valid() :
+                    && schema.getName().equalsIgnoreCase(expected) ? valid() :
                 invalid(RECORD_NAME.getMessage().concat(expected).concat("\". ").concat(
                     schema.getFullName()).concat(" is invalid."));
     }
