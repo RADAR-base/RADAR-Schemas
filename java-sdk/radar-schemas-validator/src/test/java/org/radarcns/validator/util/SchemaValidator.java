@@ -37,14 +37,14 @@ import java.util.Set;
 import org.apache.avro.Schema;
 import org.apache.avro.Schema.Field;
 import org.apache.avro.Schema.Type;
-import org.radarcns.validator.StructureValidator.NameFolder;
+import org.radarcns.validator.CatalogValidator.NameFolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * TODO.
  */
-public final class SchemaValidator {
+final class SchemaValidator {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SchemaValidator.class);
 
@@ -74,7 +74,7 @@ public final class SchemaValidator {
     public static ValidationResult validate(Schema schema, Path pathToSchema, NameFolder root,
             String subfolder) {
         return validate(schema, pathToSchema, root, subfolder,
-                null, null);
+                false, null);
     }
 
     /**
@@ -89,7 +89,7 @@ public final class SchemaValidator {
      * @throws IOException TODO
      */
     public static ValidationResult validate(Schema schema, Path pathToSchema, NameFolder root,
-            String subfolder, Set<String> skipRecordName, Set<String> skipFieldName) {
+            String subfolder, boolean skipRecordName, Set<String> skipFieldName) {
         Objects.requireNonNull(schema);
         Objects.requireNonNull(pathToSchema);
         Objects.requireNonNull(root);

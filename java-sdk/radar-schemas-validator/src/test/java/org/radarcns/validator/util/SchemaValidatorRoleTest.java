@@ -19,10 +19,10 @@ package org.radarcns.validator.util;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.radarcns.validator.AvroValidator.FIELD_NAME_REGEX;
-import static org.radarcns.validator.StructureValidator.NameFolder.ACTIVE;
-import static org.radarcns.validator.StructureValidator.NameFolder.MONITOR;
+import static org.radarcns.validator.CatalogValidator.NameFolder.ACTIVE;
+import static org.radarcns.validator.CatalogValidator.NameFolder.MONITOR;
 import static org.radarcns.validator.util.SchemaValidatorRole.ENUMERATION_SYMBOL_REGEX;
+import static org.radarcns.validator.util.SchemaValidatorRole.FIELD_NAME_REGEX;
 import static org.radarcns.validator.util.SchemaValidatorRole.NAMESPACE_REGEX;
 import static org.radarcns.validator.util.SchemaValidatorRole.RECORD_NAME_REGEX;
 
@@ -211,8 +211,7 @@ public class SchemaValidatorRoleTest {
                 + fieldName + INVALID_TEXT),
                 result.getReason());
 
-        result = SchemaValidatorRole.validateRecordName(filePath,
-                Collections.singleton(fieldName)).apply(schema);
+        result = SchemaValidatorRole.validateRecordName(filePath, true).apply(schema);
 
         assertTrue(result.isValid());
     }

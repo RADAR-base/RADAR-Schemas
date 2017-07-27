@@ -17,10 +17,13 @@ package org.radarcns.validator;
  */
 
 import java.io.IOException;
-import org.radarcns.validator.StructureValidator.CommonsFolder;
-import org.radarcns.validator.StructureValidator.NameFolder;
+import org.radarcns.validator.CatalogValidator.CommonsFolder;
+import org.radarcns.validator.CatalogValidator.NameFolder;
+import org.radarcns.validator.util.AvroValidator;
 
-/** TODO. */
+/**
+ * TODO.
+ */
 public final class CommonsValidator {
 
     //private static final Logger LOGGER = LoggerFactory.getLogger(CommonsValidator.class);
@@ -29,7 +32,10 @@ public final class CommonsValidator {
         //Static class
     }
 
-    /** TODO. */
+    /**
+     * TODO.
+     * @throws IOException TODO
+     */
     public static void validateAll() throws IOException {
         active();
         kafka();
@@ -37,25 +43,37 @@ public final class CommonsValidator {
         passive();
     }
 
-    /** TODO. */
+    /**
+     * TODO.
+     * @throws IOException TODO
+     */
     public static void active() throws IOException {
         AvroValidator.analiseFiles(CommonsFolder.ACTIVE.getFolder(), NameFolder.ACTIVE,
                 null);
     }
 
-    /** TODO. */
+    /**
+     * TODO.
+     * @throws IOException TODO
+     */
     public static void kafka() throws IOException {
         AvroValidator.analiseFiles(CommonsFolder.KAFKA.getFolder(), NameFolder.KAFKA,
                 null);
     }
 
-    /** TODO. */
+    /**
+     * TODO.
+     * @throws IOException TODO
+     */
     public static void monitor() throws IOException {
         AvroValidator.analiseFiles(CommonsFolder.MONITOR.getFolder(), NameFolder.MONITOR,
                 null);
     }
 
-    /** TODO. */
+    /**
+     * TODO.
+     * @throws IOException TODO
+     */
     public static void passive() throws IOException {
         AvroValidator.analiseFiles(CommonsFolder.PASSIVE.getFolder(), NameFolder.PASSIVE,
                 null);

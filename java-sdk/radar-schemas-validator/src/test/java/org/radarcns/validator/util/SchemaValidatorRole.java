@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.apache.avro.Schema;
 import org.apache.avro.Schema.Type;
-import org.radarcns.validator.StructureValidator.NameFolder;
+import org.radarcns.validator.CatalogValidator.NameFolder;
 
 
 /*
@@ -165,7 +165,7 @@ interface SchemaValidatorRole extends Function<Schema, ValidationResult> {
      * @return TODO
      */
     static SchemaValidatorRole validateRecordName(Path path) {
-        return validateRecordName(path, null);
+        return validateRecordName(path, false);
     }
 
     /**
@@ -174,13 +174,12 @@ interface SchemaValidatorRole extends Function<Schema, ValidationResult> {
      * @param skip TODO
      * @return TODO
      */
-    static SchemaValidatorRole validateRecordName(Path path, Set<String> skip) {
+    static SchemaValidatorRole validateRecordName(Path path, boolean skip) {
         String expected = getRecordName(path);
 
         return schema ->
-                schema.getName().matches(RECORD_NAME_REGEX)
-                    && schema.getName().equalsIgnoreCase(expected)
-                    || Objects.nonNull(skip) && skip.contains(schema.getName()) ? valid() :
+                skip || schema.getName().matches(RECORD_NAME_REGEX)
+                    && schema.getName().equalsIgnoreCase(expected)? valid() :
                 invalid(RECORD_NAME.getMessage().concat(expected).concat("\". ").concat(
                     schema.getFullName()).concat(" is invalid."));
     }
@@ -374,7 +373,7 @@ interface SchemaValidatorRole extends Function<Schema, ValidationResult> {
      * @return TODO
      */
     static SchemaValidatorRole getGeneralRecordValidator(Path pathToSchema, NameFolder root,
-            String subfolder, Set<String> skipRecordName, Set<String> skipFieldName) {
+            String subfolder, boolean skipRecordName, Set<String> skipFieldName) {
         return validateNameSpace(root, subfolder)
                   .and(validateRecordName(pathToSchema, skipRecordName))
                   .and(validateSchemaDocumentation())
@@ -409,7 +408,7 @@ interface SchemaValidatorRole extends Function<Schema, ValidationResult> {
      * @return TODO
      */
     static SchemaValidatorRole getActiveValidator(Path pathToSchema, NameFolder root,
-            String subfolder, Set<String> skipRecordName, Set<String> skipFieldName) {
+            String subfolder,     boolean skipRecordName, Set<String> skipFieldName) {
         return getGeneralRecordValidator(pathToSchema, root, subfolder, skipRecordName,
             skipFieldName)
                   .and(validateTime())
@@ -440,7 +439,7 @@ interface SchemaValidatorRole extends Function<Schema, ValidationResult> {
      * @return TODO
      */
     static SchemaValidatorRole getMonitorValidator(Path pathToSchema, NameFolder root,
-            String subfolder, Set<String> skipRecordName, Set<String> skipFieldName) {
+            String subfolder,     boolean skipRecordName, Set<String> skipFieldName) {
         return getGeneralRecordValidator(pathToSchema, root, subfolder, skipRecordName,
             skipFieldName)
                   .and(validateTime());
@@ -471,7 +470,7 @@ interface SchemaValidatorRole extends Function<Schema, ValidationResult> {
      * @return TODO
      */
     static SchemaValidatorRole getPassiveValidator(Path pathToSchema, NameFolder root,
-            String subfolder, Set<String> skipRecordName, Set<String> skipFieldName) {
+            String subfolder,     boolean skipRecordName, Set<String> skipFieldName) {
         return getGeneralRecordValidator(pathToSchema, root, subfolder, skipRecordName,
               skipFieldName)
             .and(validateTime())
@@ -505,7 +504,7 @@ interface SchemaValidatorRole extends Function<Schema, ValidationResult> {
      * @return TODO
      */
     static SchemaValidatorRole getGeneralEnumValidator(Path pathToSchema, NameFolder root,
-            String subfolder, Set<String> skipRecordName) {
+            String subfolder,     boolean skipRecordName) {
         return validateNameSpace(root, subfolder)
             .and(validateRecordName(pathToSchema, skipRecordName))
             .and(validateSchemaDocumentation())

@@ -45,7 +45,7 @@ import org.junit.Test;
  * At moment, the {@code restapi} does not have a well defined structure.
  * TODO.
  */
-public class StructureValidator {
+public class CatalogValidator {
 
     /** Folder names. */
     public enum NameFolder {
@@ -145,8 +145,6 @@ public class StructureValidator {
             return folder;
         }
     }
-
-    //private static final Logger LOGGER = LoggerFactory.getLogger(StructureValidator.class);
 
     @Test
     public void commons() throws IOException {

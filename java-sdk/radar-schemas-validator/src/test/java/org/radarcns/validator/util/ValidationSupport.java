@@ -31,7 +31,7 @@ import org.apache.avro.Schema.Type;
 /**
  * TODO.
  */
-public final class ValidationSupport {
+final class ValidationSupport {
 
     static final ValidationResult VALID = new ValidationResult() {
         public boolean isValid() {
