@@ -9,6 +9,7 @@ import static org.radarcns.validator.util.SchemaValidatorRole.Message.FILED_NAME
 import static org.radarcns.validator.util.SchemaValidatorRole.Message.NOT_TIME_COMPLETED_FIELD;
 import static org.radarcns.validator.util.SchemaValidatorRole.Message.NOT_TIME_RECEIVED_FIELD;
 import static org.radarcns.validator.util.SchemaValidatorRole.Message.RECORD_NAME;
+import static org.radarcns.validator.util.SchemaValidatorRole.Message.SYMBOLS;
 import static org.radarcns.validator.util.SchemaValidatorRole.Message.TIME_COMPLETED_FIELD;
 import static org.radarcns.validator.util.SchemaValidatorRole.Message.TIME_FIELD;
 import static org.radarcns.validator.util.SchemaValidatorRole.Message.TIME_RECEIVED_FIELD;
@@ -49,6 +50,8 @@ import org.radarcns.validator.StructureValidator.NameFolder;
 /**
  * TODO.
  */
+@SuppressWarnings("PMD.GodClass")
+//TODO split in record and enumerator.
 interface SchemaValidatorRole extends Function<Schema, ValidationResult> {
 
     String NAME_SPACE = "org.radarcns";
@@ -113,6 +116,7 @@ interface SchemaValidatorRole extends Function<Schema, ValidationResult> {
             + "what is being measured, how, and what units or ranges are applicable. Abbreviations "
             + "and acronyms in the documentation should be written out. The sentence must be ended "
             + "by a point. Please add \"doc\" property."),
+        SYMBOLS("Avro Enumerator must have symbol list."),
         ENUMERATION_SYMBOL("Enumerator items should be written in uppercase characters separated "
             + "by underscores."),
         ENUMERATION_UNKNOWN_SYMBOL("Enumerator must contain the \"" + UNKNOWN + "\" symbol. It is "
@@ -234,6 +238,14 @@ interface SchemaValidatorRole extends Function<Schema, ValidationResult> {
                     .allMatch(field -> Objects.nonNull(field.doc())
                         && field.doc().lastIndexOf(".") == field.doc().length() - 1) ,
             DOC);
+    }
+
+    /**
+     * TODO.
+     * @return TODO
+     */
+    static SchemaValidatorRole validateSymbols() {
+        return validate(schema -> !schema.getEnumSymbols().isEmpty(), SYMBOLS);
     }
 
     /**
@@ -479,7 +491,7 @@ interface SchemaValidatorRole extends Function<Schema, ValidationResult> {
         return validateNameSpace(root, subfolder)
             .and(validateRecordName(pathToSchema))
             .and(validateSchemaDocumentation())
-            .and(validateFields())
+            .and(validateSymbols())
             .and(validateEnumerationSymbols())
             .and(validateUnknownSymbol());
     }
@@ -497,7 +509,7 @@ interface SchemaValidatorRole extends Function<Schema, ValidationResult> {
         return validateNameSpace(root, subfolder)
             .and(validateRecordName(pathToSchema, skipRecordName))
             .and(validateSchemaDocumentation())
-            .and(validateFields())
+            .and(validateSymbols())
             .and(validateEnumerationSymbols())
             .and(validateUnknownSymbol());
 

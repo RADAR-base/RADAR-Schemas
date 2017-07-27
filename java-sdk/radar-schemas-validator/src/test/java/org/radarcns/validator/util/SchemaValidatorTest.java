@@ -17,8 +17,10 @@ package org.radarcns.validator.util;
  */
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.radarcns.validator.StructureValidator.NameFolder.KAFKA;
+import static org.radarcns.validator.StructureValidator.NameFolder.MONITOR;
 import static org.radarcns.validator.util.SchemaValidator.analyseCollision;
 import static org.radarcns.validator.util.SchemaValidator.getPath;
 import static org.radarcns.validator.util.SchemaValidator.validate;
@@ -26,7 +28,9 @@ import static org.radarcns.validator.util.SchemaValidator.validate;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import org.apache.avro.Schema;
 import org.apache.avro.Schema.Parser;
+import org.apache.avro.SchemaBuilder;
 import org.junit.Test;
 
 /**
@@ -79,6 +83,35 @@ public class SchemaValidatorTest {
                 + "please modify the name field accordingly.\n";
 
         assertEquals(expected, analyseCollision().toString());
+    }
+
+    @Test
+    public void testEnumerator() {
+        Path schemaPath =  Paths.get("/Users/developer/Repositories/RADAR-Schemas/"
+                + "commons/monitor/application/server_status.avsc");
+
+        String subfolder = "application";
+
+        String name = "org.radarcns.monitor.application.ServerStatus";
+        String documentation = "Mock documentation.";
+
+        Schema schema = SchemaBuilder
+                .enumeration(name)
+                .doc(documentation)
+                .symbols("CONNECTED", "DISCONNECTED", "UNKNOWN");
+
+        ValidationResult result = validate(schema, schemaPath, MONITOR, subfolder);
+
+        assertTrue(result.isValid());
+
+        schema = SchemaBuilder
+                .enumeration(name)
+                .doc(documentation)
+                .symbols("CONNECTED", "DISCONNECTED", "un_known");
+
+        result = validate(schema, schemaPath, MONITOR, subfolder);
+
+        assertFalse(result.isValid());
     }
 
 }
