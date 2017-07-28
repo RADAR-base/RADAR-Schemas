@@ -1,0 +1,17 @@
+#====================== SKIP FILE =======================#
+files:
+  - commons/**/README.md
+  - specification/**/README.md
+
+#=================== SKIP TEST CONFIGURATION ===================#
+setup:
+    org.radarcns.passive.biovotion.*:
+        name_record_check: DISABLE
+    org.radarcns.passive.biovotion.BiovotionVSMSpO2:
+        name_record_check: DISABLE
+        fields:
+          - spO2
+          - spO2Quality
+    org.radarcns.passive.empatica.EmpaticaE4InterBeatInterval:
+        fields:
+          - interBeatInterval

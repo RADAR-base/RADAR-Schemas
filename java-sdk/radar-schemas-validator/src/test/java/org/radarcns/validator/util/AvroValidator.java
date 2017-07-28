@@ -21,12 +21,10 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
 import org.apache.avro.Schema;
 import org.apache.avro.Schema.Parser;
 import org.radarcns.validator.CatalogValidator.NameFolder;
+import org.radarcns.validator.config.SkipConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,20 +33,6 @@ public final class AvroValidator {
     private static final Logger LOGGER = LoggerFactory.getLogger(AvroValidator.class);
 
     public static final String AVRO_FORMAT = "avsc";
-    public static final String README_FILE = "README.md";
-
-    private static final String WILD_CARD = ".*";
-
-    private static Map<String, SkipConfig> skip;
-
-    static {
-        skip = new HashMap<>();
-        skip.put("org.radarcns.passive.biovotion.BiovotionVSMSpO2",
-                new SkipConfig(true, "spO2", "spO2Quality"));
-        skip.put("org.radarcns.passive.biovotion.*", new SkipConfig(true));
-        skip.put("org.radarcns.passive.empatica.EmpaticaE4InterBeatInterval",
-                new SkipConfig("interBeatInterval"));
-    }
 
     private AvroValidator() {
         //Static class
@@ -67,7 +51,9 @@ public final class AvroValidator {
             for (File son : file.listFiles()) {
                 analiseFiles(son, packageName, file.getName());
             }
-        } else if (!file.getName().equalsIgnoreCase(README_FILE)) {
+        } else if (!SkipConfig.skipFile(file)) {
+            LOGGER.info("Analyising file: {}", file.getAbsolutePath());
+
             assertEquals(packageName + "should contain only " + AVRO_FORMAT + " files",
                     AVRO_FORMAT, getExtension(file));
 
@@ -75,26 +61,22 @@ public final class AvroValidator {
 
             ValidationResult result;
 
-            SkipConfig skipConfig = getSkipConfig(schema);
-
-            if (Objects.isNull(skipConfig)) {
-                result = SchemaValidator.validate(schema, file.toPath(), packageName, parentName);
-            } else {
+            if (SkipConfig.contains(schema)) {
                 result = SchemaValidator.validate(schema, file.toPath(), packageName, parentName,
-                    skipConfig.isNameRecord(), skipConfig.getFields());
+                        SkipConfig.isNameRecordEnable(schema),
+                        SkipConfig.skippedNameFieldCheck(schema));
+            } else {
+                result = SchemaValidator.validate(schema, file.toPath(), packageName, parentName);
             }
 
-            StringBuilder messageBuilder = new StringBuilder(200);
-            result.getReason().ifPresent(s -> messageBuilder.append(s));
-
-            assertTrue(messageBuilder.toString(), result.isValid());
+            assertTrue(getMessage(result), result.isValid());
         }
     }
 
-    private static SkipConfig getSkipConfig(Schema schema) {
-        SkipConfig skipConfig = skip.get(schema.getFullName());
-        return Objects.isNull(skipConfig)
-                ? skip.get(schema.getNamespace().concat(WILD_CARD)) : skipConfig;
+    private static String getMessage(ValidationResult result) {
+        StringBuilder messageBuilder = new StringBuilder(200);
+        result.getReason().ifPresent(s -> messageBuilder.append(s));
+        return messageBuilder.toString();
     }
 
     /**
@@ -102,7 +84,7 @@ public final class AvroValidator {
      * @param file TODO.
      * @return TODO.
      */
-    private static String getExtension(File file) {
+    public static String getExtension(File file) {
         String extension = "";
         int index = file.getName().lastIndexOf('.');
         if (index > 0) {
@@ -115,11 +97,13 @@ public final class AvroValidator {
     /**
      * TODO.
      */
-    public static void analyseNamingCollsion() {
+    public static void analyseNamingCollision() {
         String message = SchemaValidator.analyseCollision().toString();
         if ("".equalsIgnoreCase(message)) {
             LOGGER.warn(message);
         }
+
+        SchemaValidator.resetCollision();
     }
 
 }

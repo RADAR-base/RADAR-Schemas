@@ -38,6 +38,7 @@ import org.apache.avro.Schema;
 import org.apache.avro.Schema.Field;
 import org.apache.avro.Schema.Type;
 import org.radarcns.validator.CatalogValidator.NameFolder;
+import org.radarcns.validator.config.SkipConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -137,7 +138,7 @@ final class SchemaValidator {
      * @return TODO
      */
     public static String getPath(Path path) {
-        return path.toString().substring(path.toString().indexOf("/RADAR-Schemas/"));
+        return path.toString().substring(path.toString().indexOf(SkipConfig.REPOSITORY_NAME));
     }
 
     /**
@@ -195,8 +196,13 @@ final class SchemaValidator {
                               + "the name field accordingly.\n");
                   });
 
-        COLLISIONS.clear();
-
         return messageBuilder;
+    }
+
+    /**
+     * TODO.
+     */
+    public static void resetCollision() {
+        COLLISIONS.clear();
     }
 }

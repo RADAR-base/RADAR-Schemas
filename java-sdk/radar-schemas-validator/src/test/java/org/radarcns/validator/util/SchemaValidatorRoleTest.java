@@ -625,6 +625,7 @@ public class SchemaValidatorRoleTest {
 
     @Test
     @SuppressWarnings("PMD.ExcessiveMethodLength")
+    // TODO improve test after having define the default guideline
     public void defaultValueTest() {
         //String namespace = "org.radarcns.test";
         //String recordName = "TestRecord";

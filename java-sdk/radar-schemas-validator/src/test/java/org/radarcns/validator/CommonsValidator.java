@@ -42,7 +42,7 @@ public final class CommonsValidator {
         monitor();
         passive();
 
-        AvroValidator.analyseNamingCollsion();
+        AvroValidator.analyseNamingCollision();
     }
 
     /**
