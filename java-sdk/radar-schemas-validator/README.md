@@ -1,8 +1,8 @@
 # RADAR Schemas Validator
 
-The RADAR Schemas Validator checks if the Schema Catalog is in a valid state.
+The RADAR Schemas Validator checks if the `Schema Catalog` is in a valid state.
 
-It first checks that the folder structure match the following design:
+It first checks the folder structure, it has to be compliant with:
 - commons
   * active
   * kafka
@@ -14,28 +14,28 @@ It first checks that the folder structure match the following design:
   * monitor
   * passive
   
-For each Avro schema under `commons` folder checks:
+For each Avro schema under `commons` folder checks if:
 - in case of `ENUM`
   * the `namespace` differs from null and it is a lowercase string dot separated without numeric
   * the `name` matches the .avsc file name and it is an UpperCamelCase string
-  * the is documentation
+  * there is documentation
   * `symbols` match UPPER_CASE format
-  * it contains the `UNKNOWN` symbol 
+  * the `UNKNOWN` symbol is present
 - in case of `RECORD`
   * the `namespace` differs from null and it is a lowercase string dot separated without numeric
   * the `name` matches the .avsc file name and it is an UpperCamelCase string
-  * it contains fields
+  * fields is not empty
   * the `field name` is a lowerCamelCase string and does not contain string such as `value`, `Value`, `val` and `Val`.
-  * schemas under `active` folder have `time` and `timeCompleted`, do not have a field named `timeReceived`
-  * schemas under `monitor` folder have `time`, do not have a field named either `timeCompleted` or `timeReceived`
-  * schemas under `passive` folder have `time` and `timeReceived`, do not have a field named `timeCompleted`
+  * schemas under `active` folder have `time` and `timeCompleted` fields, and do not contain a field named `timeReceived`
+  * schemas under `monitor` folder have `time` field, and do not contain a field named either `timeCompleted` or `timeReceived`
+  * schemas under `passive` folder have `time` and `timeReceived` fields, and do not have a field named `timeCompleted`
   * the record and any provided fields are documented
   * `ENUM` fields have `UNKNOWN` as `default` value
   * `nullable`/`optional` fields have `null` as default value 
   
-The validation process generates a field name collision summary. It is shown to the end user only in case of collisions.
+The validation process generates a field name collision summary. It is shown to the end user only in presence of collisions.
 
-Upon rule violation, the end user is notfied with a message explaining how to fix the issue.
+Upon rule violation, the end user is notified with a message explaining how to fix it.
 
 ## How to use
 
@@ -45,26 +45,33 @@ The validation is implemented as a `JUnit` test. To run the validation, simply t
 
 Record name, field name validations, and field name collision check can be suppressed modifying the [skip](src/test/resources/skip.yml) configuration file.
 
-`files` lists files paths that do not need to take into account. All tests are enable by default.
-
-```yaml
-schema_to_skip:
-  - record_name_check: [ENABLE | DISABLE]
-    fields:
-      - fieldnameOne
-      - fieldnameTwo
-``` 
-
-It can contain
+`files` lists file paths that can be ignored. It can contain values like
 - entire path like `commons/active/questionnaire/questionnaire.avsc`
 - folder and subfolder `commons/active/**`: all file under `active` and all its subfolder will be skipped
 - folder and subfolder `commons/active/**/*.avsc`: all file with format `avsc` under `active` and all its subfolder will be skipped
 
-`validation` allows the user to specify what checks should be skipped at schema level:
+```yaml
+files:
+  - path/to/avoid/README.md
+  - path/to/**
+  - path/to/**/README.md
+``` 
+
+`validation` allows the user to specify checks that should be skipped at schema level:
 - a key like `org.radarcns.passive.biovotion.*` set a skip configuration valid for all schemas under `org.radarcns.passive.biovotion` package
 - a key like `org.radarcns.passive.biovotion.BiovotionVSMSpO2` specify a configuration valid only for the given record
 - `name_record_check: DISABLE` suppresses the record name check
-- `fields` lists all field name for which the field check is suppressed
+- `fields` lists field names for which the field name check is suppressed
+All tests are enable by default.
+
+```yaml
+validation:
+  schema_to_skip:
+    - record_name_check: [ ENABLE | DISABLE ]
+      fields:
+        - fieldnameOne
+        - fieldnameTwo
+``` 
 
 `collision` can be set to suppress collision checks:
 
@@ -75,7 +82,6 @@ field_name:
 ``` 
 
 The schema can be specified as follow:
-- `*` turns off the collision check for all schemas for the given field name
-- `schema.to.skip.*` turns off the collision check also for all schemas under the package `schema.to.skip`. In case `field_name` appears in another schemas contained in a different package, the collision check will highlight this
-- `schema.to.skip.one` turns off the collision check also for the set schema. In case `field_name` appears in another schemas, the collision check will highlight this  
-
+- `*` turns off collision check for all schemas
+- `schema.to.skip.*` turns off collision check in package `schema.to.skip`. In case `field_name` appears in other schemas contained in a different package, the collision check will then highlight this
+- `schema.to.skip.one` turns off the collision check only for the set schema. In case `field_name` appears in other schemas, the collision check will highlight this
