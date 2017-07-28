@@ -6,9 +6,9 @@ files:
 #=================== SKIP TEST CONFIGURATION ===================#
 setup:
     org.radarcns.passive.biovotion.*:
-        name_record_check: DISABLE
+        record_name_check: DISABLE
     org.radarcns.passive.biovotion.BiovotionVSMSpO2:
-        name_record_check: DISABLE
+        record_name_check: DISABLE
         fields:
           - spO2
           - spO2Quality

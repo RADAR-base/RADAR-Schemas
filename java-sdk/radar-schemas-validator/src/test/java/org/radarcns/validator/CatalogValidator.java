@@ -164,12 +164,12 @@ public class CatalogValidator {
         //TODO check whether it is possible to define a structure
     }
 
-    @Test
+    /*@Test
     public void specification() {
         assertEquals(true, RootFolder.SPECIFICATION.getFolder().isDirectory());
 
         for (SpecificationFolder folder : SpecificationFolder.values()) {
             assertEquals(true, folder.getFolder().isDirectory());
         }
-    }
+    }*/
 }

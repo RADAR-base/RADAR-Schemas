@@ -41,7 +41,7 @@ class SkipConfigItem {
         }
     }
 
-    @JsonProperty("name_record_check")
+    @JsonProperty("record_name_check")
     @SuppressWarnings("PMD.ImmutableField")
     private CheckStatus nameRecordCheck = CheckStatus.ENABLE;
 

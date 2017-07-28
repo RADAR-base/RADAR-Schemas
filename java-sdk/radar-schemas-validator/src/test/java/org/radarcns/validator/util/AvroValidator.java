@@ -52,8 +52,6 @@ public final class AvroValidator {
                 analiseFiles(son, packageName, file.getName());
             }
         } else if (!SkipConfig.skipFile(file)) {
-            LOGGER.info("Analyising file: {}", file.getAbsolutePath());
-
             assertEquals(packageName + "should contain only " + AVRO_FORMAT + " files",
                     AVRO_FORMAT, getExtension(file));
 
