@@ -77,7 +77,8 @@ validation:
 
 ```yaml
 field_name:
-  - schema.to.skip.one
+  - *
+  - schema.to.skip.*
   - schema.to.skip.two
 ``` 
 
