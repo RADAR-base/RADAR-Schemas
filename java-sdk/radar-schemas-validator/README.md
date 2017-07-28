@@ -43,7 +43,7 @@ The validation is implemented as a `JUnit` test. To run the validation, simply t
 
 ## Suppress checks
 
-Record name and field name validations can be suppressed modifying the [skip](src/test/resources/skip.yml) configuration file.
+Record name, field name validations, and field name collision check can be suppressed modifying the [skip](src/test/resources/skip.yml) configuration file.
 
 `files` lists files paths that do not need to take into account. All tests are enable by default.
 
