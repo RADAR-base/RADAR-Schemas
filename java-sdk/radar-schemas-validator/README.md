@@ -45,14 +45,37 @@ The validation is implemented as a `JUnit` test. To run the validation, simply t
 
 Record name and field name validations can be suppressed modifying the [skip](src/test/resources/skip.yml) configuration file.
 
-`files` lists files paths that do not need to take into account. It can contain
+`files` lists files paths that do not need to take into account. All tests are enable by default.
+
+```yaml
+schema_to_skip:
+  - record_name_check: [ENABLE | DISABLE]
+    fields:
+      - fieldnameOne
+      - fieldnameTwo
+``` 
+
+It can contain
 - entire path like `commons/active/questionnaire/questionnaire.avsc`
 - folder and subfolder `commons/active/**`: all file under `active` and all its subfolder will be skipped
 - folder and subfolder `commons/active/**/*.avsc`: all file with format `avsc` under `active` and all its subfolder will be skipped
 
-`setup` allows the user to specify at schema level what checks should be skipped:
+`validation` allows the user to specify what checks should be skipped at schema level:
 - a key like `org.radarcns.passive.biovotion.*` set a skip configuration valid for all schemas under `org.radarcns.passive.biovotion` package
 - a key like `org.radarcns.passive.biovotion.BiovotionVSMSpO2` specify a configuration valid only for the given record
 - `name_record_check: DISABLE` suppresses the record name check
 - `fields` lists all field name for which the field check is suppressed
+
+`collision` can be set to suppress collision checks:
+
+```yaml
+field_name:
+  - schema.to.skip.one
+  - schema.to.skip.two
+``` 
+
+The schema can be specified as follow:
+- `*` turns off the collision check for all schemas for the given field name
+- `schema.to.skip.*` turns off the collision check also for all schemas under the package `schema.to.skip`. In case `field_name` appears in another schemas contained in a different package, the collision check will highlight this
+- `schema.to.skip.one` turns off the collision check also for the set schema. In case `field_name` appears in another schemas, the collision check will highlight this  
 

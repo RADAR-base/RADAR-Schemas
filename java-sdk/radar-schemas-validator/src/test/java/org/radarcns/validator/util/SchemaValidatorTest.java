@@ -23,6 +23,7 @@ import static org.radarcns.validator.CatalogValidator.NameFolder.KAFKA;
 import static org.radarcns.validator.CatalogValidator.NameFolder.MONITOR;
 import static org.radarcns.validator.util.SchemaValidator.analyseCollision;
 import static org.radarcns.validator.util.SchemaValidator.getPath;
+import static org.radarcns.validator.util.SchemaValidator.resetCollision;
 import static org.radarcns.validator.util.SchemaValidator.validate;
 
 import java.io.IOException;
@@ -71,18 +72,22 @@ public class SchemaValidatorTest {
 
         assertTrue(result.isValid());
 
-        String expected = "userTestId appears in:\n"
-                + "\t - org.radarcns.kafka.key.KeyWindowedTest as STRING\n"
+        String expected = "\"sourceTestId\" appears in:\n"
                 + "\t - org.radarcns.kafka.key.KeyMeasurementTest as STRING\n"
+                + "\t - org.radarcns.kafka.key.KeyWindowedTest as STRING\n"
                 + "In case they have different use-cases, "
                 + "please modify the name field accordingly.\n"
-                + "sourceTestId appears in:\n"
-                + "\t - org.radarcns.kafka.key.KeyWindowedTest as STRING\n"
+                + "\"userTestId\" appears in:\n"
                 + "\t - org.radarcns.kafka.key.KeyMeasurementTest as STRING\n"
+                + "\t - org.radarcns.kafka.key.KeyWindowedTest as STRING\n"
                 + "In case they have different use-cases, "
                 + "please modify the name field accordingly.\n";
 
-        assertEquals(expected, analyseCollision().toString());
+        String actual = analyseCollision().toString();
+
+        resetCollision();
+
+        assertEquals(expected, actual);
     }
 
     @Test

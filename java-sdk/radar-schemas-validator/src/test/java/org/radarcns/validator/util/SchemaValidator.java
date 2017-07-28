@@ -16,9 +16,6 @@ package org.radarcns.validator.util;
  * limitations under the License.
  */
 
-import static org.radarcns.validator.util.SchemaValidatorRole.TIME;
-import static org.radarcns.validator.util.SchemaValidatorRole.TIME_COMPLETED;
-import static org.radarcns.validator.util.SchemaValidatorRole.TIME_RECEIVED;
 import static org.radarcns.validator.util.SchemaValidatorRole.getActiveValidator;
 import static org.radarcns.validator.util.SchemaValidatorRole.getGeneralEnumValidator;
 import static org.radarcns.validator.util.SchemaValidatorRole.getGeneralRecordValidator;
@@ -27,11 +24,11 @@ import static org.radarcns.validator.util.SchemaValidatorRole.getPassiveValidato
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 import org.apache.avro.Schema;
@@ -49,15 +46,9 @@ final class SchemaValidator {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SchemaValidator.class);
 
-    private static final Map<String, List<Schema>> COLLISIONS = new HashMap<>();
+    private static final Map<String, Set<String>> COLLISIONS = new HashMap<>();
 
-    private static final Set<String> AVOID_COLLISION_CHECK = new HashSet<>();
-
-    static {
-        AVOID_COLLISION_CHECK.add(TIME);
-        AVOID_COLLISION_CHECK.add(TIME_COMPLETED);
-        AVOID_COLLISION_CHECK.add(TIME_RECEIVED);
-    }
+    private static final Map<String, Schema> CACHE = new HashMap<>();
 
     private SchemaValidator() {
         //Static class
@@ -95,6 +86,8 @@ final class SchemaValidator {
         Objects.requireNonNull(pathToSchema);
         Objects.requireNonNull(root);
         Objects.requireNonNull(subfolder);
+
+        CACHE.put(schema.getFullName(), schema);
 
         ValidationResult result;
 
@@ -151,19 +144,14 @@ final class SchemaValidator {
         }
 
         for (Field field : schema.getFields()) {
-
-            if (AVOID_COLLISION_CHECK.contains(field.name())) {
+            if (SkipConfig.skipCollision(schema, field)) {
                 continue;
             }
 
-            List<Schema> list = COLLISIONS.get(field.name());
-            if (list == null) {
-                list = new LinkedList<>();
-                list.add(schema);
-                COLLISIONS.put(field.name(), list);
-            } else {
-                list.add(schema);
-            }
+            Set<String> collision = SkipConfig.getCollision(schema, field);
+            collision.addAll(COLLISIONS.getOrDefault(field.name(), new HashSet<>()));
+
+            COLLISIONS.put(field.name(), collision);
             computeCollision(field.schema());
         }
     }
@@ -173,30 +161,36 @@ final class SchemaValidator {
      * @return TODO
      */
     public static StringBuilder analyseCollision() {
-        int capacity = 100 * COLLISIONS.values().stream().mapToInt(List::size).sum()
+        int capacity = 100 * COLLISIONS.values().stream().mapToInt(Set::size).sum()
                 + COLLISIONS.size() * 120 + 100;
 
         StringBuilder messageBuilder = new StringBuilder(capacity);
         COLLISIONS.entrySet().stream()
                   .filter(entry -> entry.getValue().size() > 1)
+                  .sorted(Comparator.comparing(Entry::getKey))
                   .forEach(entry -> {
-                      messageBuilder.append(entry.getKey().concat(" appears in:\n"));
+                      messageBuilder.append('\"').append(entry.getKey().concat("\" appears in:\n"));
                       entry.getValue().stream().forEach(
-                              schema -> messageBuilder.append("\t - "
-                                                      .concat(schema.getFullName())
-                                                      .concat(" as ")
-                                                      .concat(schema.getField(entry.getKey())
-                                                                    .schema()
-                                                                    .getType()
-                                                                    .getName()
-                                                                    .toUpperCase())
-                                                      .concat("\n")));
+                              schemaName -> addFieldDetails(entry, schemaName, messageBuilder)
+                      );
 
                       messageBuilder.append("In case they have different use-cases, please modify "
                               + "the name field accordingly.\n");
                   });
 
         return messageBuilder;
+    }
+
+    private static void addFieldDetails(Entry<String, Set<String>> entry, String schemaName,
+            StringBuilder messageBuilder) {
+        if (schemaName.contains(SkipConfig.WILD_CARD_COLLISION)
+                || schemaName.contains(SkipConfig.WILD_CARD_PACKAGE)) {
+            messageBuilder.append("\t - ".concat(schemaName).concat("\n"));
+        } else {
+            messageBuilder.append("\t - ".concat(schemaName).concat(" as ").concat(
+                    CACHE.get(schemaName).getField(
+                    entry.getKey()).schema().getType().getName().toUpperCase()).concat("\n"));
+        }
     }
 
     /**

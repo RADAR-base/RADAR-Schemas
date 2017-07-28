@@ -96,14 +96,17 @@ public final class AvroValidator {
 
     /**
      * TODO.
+     * @param reset TODO
      */
-    public static void analyseNamingCollision() {
+    public static void analyseNamingCollision(boolean reset) {
         String message = SchemaValidator.analyseCollision().toString();
-        if ("".equalsIgnoreCase(message)) {
-            LOGGER.warn(message);
+        if (!"".equalsIgnoreCase(message)) {
+            LOGGER.warn("Different schemas have fields with same names:\n{}", message);
         }
 
-        SchemaValidator.resetCollision();
+        if (reset) {
+            SchemaValidator.resetCollision();
+        }
     }
 
 }

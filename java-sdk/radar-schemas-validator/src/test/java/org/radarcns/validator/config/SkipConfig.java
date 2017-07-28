@@ -27,6 +27,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import org.apache.avro.Schema;
+import org.apache.avro.Schema.Field;
 import org.radarcns.config.YamlConfigLoader;
 
 /**
@@ -41,13 +42,17 @@ public class SkipConfig {
     private static final String FILE_NAME = "skip.yml";
 
     /** Wild card to suppress check for entire package. */
-    private static final String WILD_CARD_PACKAGE = ".*";
+    public static final String WILD_CARD_PACKAGE = ".*";
 
     /** Wild card to suppress check for folder and subfolders. */
     private static final String WILD_CARD_FOLDER = "**";
 
-    private final Map<String, SkipConfigItem> setup = new HashMap<>();
+    /** Wild card to suppress check all schemas. */
+    public static final String WILD_CARD_COLLISION = "*";
+
     private final Set<Path> files = new HashSet<>();
+    private final Map<String, SkipConfigItem> validation = new HashMap<>();
+    private final Map<String, Set<String>> collision = new HashMap<>();
 
     private static final SkipConfig CONFIG;
 
@@ -71,8 +76,8 @@ public class SkipConfig {
      * @return TODO
      */
     public static boolean contains(Schema schema) {
-        return CONFIG.setup.containsKey(schema.getNamespace().concat(WILD_CARD_PACKAGE))
-                || CONFIG.setup.containsKey(schema.getFullName());
+        return CONFIG.validation.containsKey(schema.getNamespace().concat(WILD_CARD_PACKAGE))
+                || CONFIG.validation.containsKey(schema.getFullName());
     }
 
     /**
@@ -81,9 +86,9 @@ public class SkipConfig {
      * @return TODO
      */
     public static boolean isNameRecordEnable(Schema schema) {
-        SkipConfigItem item = CONFIG.setup.get(schema.getFullName()) == null
-                ? CONFIG.setup.get(schema.getNamespace().concat(WILD_CARD_PACKAGE))
-                : CONFIG.setup.get(schema.getFullName());
+        SkipConfigItem item = CONFIG.validation.get(schema.getFullName()) == null
+                ? CONFIG.validation.get(schema.getNamespace().concat(WILD_CARD_PACKAGE))
+                : CONFIG.validation.get(schema.getFullName());
 
         return item == null || item.isNameRecordDisable();
     }
@@ -94,11 +99,45 @@ public class SkipConfig {
      * @return TODO
      */
     public static Set<String> skippedNameFieldCheck(Schema schema) {
-        SkipConfigItem item = CONFIG.setup.get(schema.getFullName()) == null
-                ? CONFIG.setup.get(schema.getNamespace().concat(WILD_CARD_PACKAGE))
-                : CONFIG.setup.get(schema.getFullName());
+        SkipConfigItem item = CONFIG.validation.get(schema.getFullName()) == null
+                ? CONFIG.validation.get(schema.getNamespace().concat(WILD_CARD_PACKAGE))
+                : CONFIG.validation.get(schema.getFullName());
 
         return item == null ? new HashSet<>() : item.getFields();
+    }
+
+    /**
+     * TODO.
+     * @param schema TODO
+     * @param field TODO
+     * @return TODO
+     */
+    public static boolean skipCollision(Schema schema, Field field) {
+        Set<String> info = CONFIG.collision.getOrDefault(field.name(), new HashSet<>());
+        if (info.contains(schema.getFullName()) || info.contains(WILD_CARD_COLLISION)) {
+            return true;
+        }
+
+        for (String value : info) {
+            if (value.contains(WILD_CARD_PACKAGE) && schema.getNamespace().startsWith(
+                    value.substring(0, value.length() - 2))) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * TODO.
+     * @param schema TODO
+     * @param field TODO
+     * @return TODO
+     */
+    public static Set<String> getCollision(Schema schema, Field field) {
+        Set<String> set = CONFIG.collision.getOrDefault(field.name(), new HashSet<>());
+        set.add(schema.getFullName());
+        return set;
     }
 
     /**
