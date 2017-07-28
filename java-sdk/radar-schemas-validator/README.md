@@ -37,6 +37,10 @@ The validation process generates a field name collision summary. It is shown to 
 
 Upon rule violation, the end user is notfied with a message explaining how to fix the issue.
 
+## How to use
+
+The validation is implemented as a `JUnit` test. To run the validation, simply type `./gradlew test`
+
 ## Suppress checks
 
 Record name and field name validations can be suppressed modifying the [skip](src/test/resources/skip.yml) configuration file.

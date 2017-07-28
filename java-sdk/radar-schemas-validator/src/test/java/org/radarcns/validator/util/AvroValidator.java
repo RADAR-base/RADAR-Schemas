@@ -68,6 +68,8 @@ public final class AvroValidator {
             }
 
             assertTrue(getMessage(result), result.isValid());
+
+            //TODO add file layout validation
         }
     }
 
