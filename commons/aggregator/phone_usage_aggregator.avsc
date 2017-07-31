@@ -1,7 +1,7 @@
 {
-  "namespace": "org.radarcns.phone",
+  "namespace": "org.radarcns.aggregator",
   "type": "record",
-  "name": "PhoneUsageTotal",
+  "name": "PhoneUsageAggregator",
   "doc": "Aggregate time and opening events for an app",
   "fields": [
     {"name": "packageName", "type": "string", "doc": "package name of the app in use"},
