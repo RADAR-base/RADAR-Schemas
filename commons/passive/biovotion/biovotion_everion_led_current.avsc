@@ -1,7 +1,7 @@
 {
   "namespace": "org.radarcns.passive.biovotion",
   "type": "record",
-  "name": "BiovotionVSMLedCurrent",
+  "name": "BiovotionEverionLedCurrent",
   "doc": "Applied current for red, green and ir leds.",
   "fields": [
     {"name": "time", "type": "double", "doc": "device timestamp in UTC (s)." },

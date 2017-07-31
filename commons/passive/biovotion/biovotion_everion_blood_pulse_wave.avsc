@@ -1,7 +1,7 @@
 {
   "namespace": "org.radarcns.passive.biovotion",
   "type": "record",
-  "name": "BiovotionVSMBloodPulseWave",
+  "name": "BiovotionEverionBloodPulseWave",
   "doc": "Blood pulse wave data calculated by biovotion device.",
   "fields": [
     { "name": "time", "type": "double", "doc": "device timestamp in UTC (s)." },

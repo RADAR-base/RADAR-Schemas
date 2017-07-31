@@ -1,7 +1,7 @@
 {
   "namespace": "org.radarcns.passive.biovotion",
   "type": "record",
-  "name": "BiovotionVSMRespirationRate",
+  "name": "BiovotionEverionRespirationRate",
   "doc": "Respiration rate data calculated by biovotion device.",
   "fields": [
     {"name": "time", "type": "double", "doc": "device timestamp in UTC (s)." },
