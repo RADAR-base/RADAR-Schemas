@@ -1,13 +1,11 @@
 #============================= SKIP FILE =============================#
 files:
-  - commons/**/README.md
-  - specification/**/README.md
+  - README.md
+  - .DS_Store
 
 #====================== SKIP TEST CONFIGURATION ======================#
 validation:
-  org.radarcns.passive.biovotion.*:
-    record_name_check: DISABLE
-  org.radarcns.passive.biovotion.BiovotionVSMSpO2:
+  org.radarcns.passive.biovotion.BiovotionEverionSpO2:
     record_name_check: DISABLE
     fields:
       - spO2
@@ -23,7 +21,7 @@ collision:
     - org.radarcns.kafka.aggregator.AggregatorDouble
     - org.radarcns.kafka.aggregator.AggregatorDoubleArray
   batteryLevel:
-    - org.radarcns.passive.biovotion.BiovotionVSMBatteryState
+    - org.radarcns.passive.biovotion.BiovotionEverionBatteryState
     - org.radarcns.passive.empatica.EmpaticaE4BatteryLevel
     - org.radarcns.passive.pebble.Pebble2BatteryLevel
     - org.radarcns.passive.phone.PhoneBatteryLevel
@@ -31,7 +29,7 @@ collision:
     - org.radarcns.kafka.aggregator.AggregatorDouble
     - org.radarcns.kafka.aggregator.AggregatorDoubleArray
   heartRate:
-    - org.radarcns.passive.biovotion.BiovotionVSMHeartRate
+    - org.radarcns.passive.biovotion.BiovotionEverionHeartRate
     - org.radarcns.passive.pebble.Pebble2HeartRate
     - org.radarcns.passive.pebble.Pebble2HeartRateFiltered
   iqr:
@@ -52,12 +50,18 @@ collision:
   sum:
     - org.radarcns.kafka.aggregator.AggregatorDouble
     - org.radarcns.kafka.aggregator.AggregatorDoubleArray
+  target:
+    - org.radarcns.passive.phone.PhoneCall
+    - org.radarcns.passive.phone.PhoneSms
   targetIsContact:
     - org.radarcns.passive.phone.PhoneCall
     - org.radarcns.passive.phone.PhoneSms
   temperature:
-    - org.radarcns.passive.biovotion.BiovotionVSMTemperature
+    - org.radarcns.passive.biovotion.BiovotionEverionTemperature
     - org.radarcns.passive.empatica.EmpaticaE4Temperature
+  type:
+    - org.radarcns.passive.phone.PhoneCall
+    - org.radarcns.passive.phone.PhoneSms
   time:
     - org.radarcns.active.*
     - org.radarcns.monitor.*
@@ -70,21 +74,21 @@ collision:
     - org.radarcns.kafka.key.KeyMeasurement
     - org.radarcns.kafka.key.KeyWindowed
   x:
-    - org.radarcns.passive.biovotion.BiovotionVSMAcceleration
+    - org.radarcns.passive.biovotion.BiovotionEverionAcceleration
     - org.radarcns.passive.empatica.EmpaticaE4Acceleration
     - org.radarcns.passive.pebble.Pebble2Acceleration
     - org.radarcns.passive.phone.PhoneAcceleration
     - org.radarcns.passive.phone.PhoneGyroscope
     - org.radarcns.passive.phone.PhoneMagneticField
   y:
-    - org.radarcns.passive.biovotion.BiovotionVSMAcceleration
+    - org.radarcns.passive.biovotion.BiovotionEverionAcceleration
     - org.radarcns.passive.empatica.EmpaticaE4Acceleration
     - org.radarcns.passive.pebble.Pebble2Acceleration
     - org.radarcns.passive.phone.PhoneAcceleration
     - org.radarcns.passive.phone.PhoneGyroscope
     - org.radarcns.passive.phone.PhoneMagneticField
   z:
-    - org.radarcns.passive.biovotion.BiovotionVSMAcceleration
+    - org.radarcns.passive.biovotion.BiovotionEverionAcceleration
     - org.radarcns.passive.empatica.EmpaticaE4Acceleration
     - org.radarcns.passive.pebble.Pebble2Acceleration
     - org.radarcns.passive.phone.PhoneAcceleration

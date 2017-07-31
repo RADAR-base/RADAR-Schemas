@@ -22,6 +22,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -144,6 +145,11 @@ public class CatalogValidator {
         public File getFolder() {
             return folder;
         }
+    }
+
+    @Before
+    public void validateSkipConfig() {
+        //TODO
     }
 
     @Test

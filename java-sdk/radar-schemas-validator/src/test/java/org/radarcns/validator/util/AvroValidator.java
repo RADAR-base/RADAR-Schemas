@@ -16,7 +16,6 @@ package org.radarcns.validator.util;
  * limitations under the License.
  */
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
@@ -51,9 +50,13 @@ public final class AvroValidator {
             for (File son : file.listFiles()) {
                 analiseFiles(son, packageName, file.getName());
             }
-        } else if (!SkipConfig.skipFile(file)) {
-            assertEquals(packageName + "should contain only " + AVRO_FORMAT + " files",
-                    AVRO_FORMAT, getExtension(file));
+        } else if (SkipConfig.skipFile(file)) {
+            LOGGER.info("Skipping {}", file.getAbsolutePath());
+        } else {
+            assertTrue(packageName.getName().concat(" should contain only ")
+                                            .concat(AVRO_FORMAT).concat(" files. ")
+                                            .concat(file.getAbsolutePath()).concat(" is invalid."),
+                        isAvscFile(file));
 
             Schema schema = new Parser().parse(file);
 
@@ -77,6 +80,15 @@ public final class AvroValidator {
         StringBuilder messageBuilder = new StringBuilder(200);
         result.getReason().ifPresent(s -> messageBuilder.append(s));
         return messageBuilder.toString();
+    }
+
+    /**
+     * TODO.
+     * @param file TODO
+     * @return TODO
+     */
+    public static boolean isAvscFile(File file) {
+        return AVRO_FORMAT.equals(getExtension(file));
     }
 
     /**

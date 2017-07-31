@@ -24,7 +24,6 @@ import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import org.apache.avro.Schema;
 import org.apache.avro.Schema.Field;
@@ -44,8 +43,11 @@ public class SkipConfig {
     /** Wild card to suppress check for entire package. */
     public static final String WILD_CARD_PACKAGE = ".*";
 
+    /** Wild card to suppress check for all file extension. */
+    public static final String WILD_CARD_FILE_NAME = "*.";
+
     /** Wild card to suppress check for folder and subfolders. */
-    private static final String WILD_CARD_FOLDER = "**";
+    public static final String WILD_CARD_FOLDER = "**";
 
     /** Wild card to suppress check all schemas. */
     public static final String WILD_CARD_COLLISION = "*";
@@ -146,43 +148,64 @@ public class SkipConfig {
      * @return TODO
      */
     public static boolean skipFile(File file) {
-        Objects.requireNonNull(file);
+        return skipFile(file, CONFIG.files);
+    }
 
-        String path = file.toPath().toString().substring(
-                file.toPath().toString().indexOf(REPOSITORY_NAME));
-        path = path.substring(REPOSITORY_NAME.length());
-        String[] components = path.split(File.separator);
-
+    /**
+     * TODO.
+     * @param file TODO
+     * @param pathToSkip TODO
+     * @return TODO
+     */
+    @SuppressWarnings({"PMD.ModifiedCyclomaticComplexity", "PMD.StdCyclomaticComplexity"})
+    //TODO simplify function
+    protected static boolean skipFile(File file, Set<Path> pathToSkip) {
         boolean flag = false;
 
-        for (Path pathConfig : CONFIG.files) {
-            if (pathConfig.startsWith(components[0])) {
-                String[] tempComp = pathConfig.toString().split(File.separator);
+        String pathString = file.toPath().toString().substring(file.toPath().toString().indexOf(
+                REPOSITORY_NAME));
+        pathString = pathString.substring(REPOSITORY_NAME.length());
+        String[] components = pathString.split(File.separator);
 
-                boolean match = true;
+        for (Path path : pathToSkip) {
+            if (path.getFileName().equals(path)) {
+                if (path.toString().startsWith(WILD_CARD_FILE_NAME)) {
+                    //Case extension
+                    flag = flag || getExtension(file).equals(path.toString().substring(2));
+                } else {
+                    //Case file name
+                    flag = flag || file.getName().equals(path.getFileName().toString());
+                }
+            } else {
+                if (pathString.equals(path.toString())) {
+                    //Exact match
+                    flag = true;
+                } else {
+                    //Search sub-path
+                    String[] configComp = path.toString().split(File.separator);
 
-                for (int i = 1; i < tempComp.length; i++) {
-                    if (!tempComp[i].equalsIgnoreCase(components[i])) {
-                        match = false;
-                        if (tempComp[i].equalsIgnoreCase(WILD_CARD_FOLDER)) {
-                            if (i + 1 < tempComp.length) {
-                                if (tempComp[i + 1].startsWith("*.")) {
-                                    //Case file format
-                                    flag = flag || getExtension(file).equalsIgnoreCase(
-                                        tempComp[i + 1].substring(2));
-                                } else if (tempComp[i + 1].contains(".")) {
-                                    //Case file name
-                                    flag = flag || file.getName().matches(tempComp[i + 1]);
+                    for (int i = 0; i < Math.min(configComp.length, components.length); i++) {
+                        if (!components[i].equals(configComp[i])) {
+                            if (configComp[i].equals(WILD_CARD_FOLDER)) {
+                                if (i == configComp.length - 1) {
+                                    //Case folder and subfolder file independent
+                                    flag = true;
+                                } else {
+                                    if (configComp[i + 1].startsWith(WILD_CARD_FILE_NAME)) {
+                                        //Case extension
+                                        flag = flag || getExtension(file).equals(
+                                            configComp[i + 1].substring(2));
+                                    } else {
+                                        //Case name
+                                        flag = flag || file.getName().equals(configComp[i + 1]);
+                                    }
                                 }
-                            } else {
-                                flag = flag || true;
                             }
+
+                            break;
                         }
                     }
                 }
-
-                //Case exact matching
-                flag = flag || match;
             }
         }
 

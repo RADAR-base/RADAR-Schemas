@@ -26,8 +26,6 @@ import org.radarcns.validator.util.AvroValidator;
  */
 public final class CommonsValidator {
 
-    //private static final Logger LOGGER = LoggerFactory.getLogger(CommonsValidator.class);
-
     private CommonsValidator() {
         //Static class
     }

@@ -52,6 +52,8 @@ public class SchemaValidatorTest {
 
     @Test
     public void testCollision() throws IOException {
+        resetCollision();
+
         Parser parser = new Parser();
 
         String folder = "key";

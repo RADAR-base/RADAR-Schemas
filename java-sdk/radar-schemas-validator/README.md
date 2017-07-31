@@ -49,12 +49,16 @@ Record name, field name validations, and field name collision check can be suppr
 - entire path like `commons/active/questionnaire/questionnaire.avsc`
 - folder and subfolder `commons/active/**`: all file under `active` and all its subfolder will be skipped
 - folder and subfolder `commons/active/**/*.avsc`: all file with format `avsc` under `active` and all its subfolder will be skipped
+- file name `.DS_Store`: all file named `.DS_Store` will be skipped
+- file extension `*.md`: all file with extension `*.md` will be skipped
 
 ```yaml
 files:
   - path/to/avoid/README.md
   - path/to/**
   - path/to/**/README.md
+  - .DS_Store
+  - *.md
 ``` 
 
 `validation` allows the user to specify checks that should be skipped at schema level:
