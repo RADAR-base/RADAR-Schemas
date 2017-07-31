@@ -5,7 +5,7 @@ files:
 
 #====================== SKIP TEST CONFIGURATION ======================#
 validation:
-  org.radarcns.passive.biovotion.BiovotionEverionSpO2:
+  org.radarcns.passive.biovotion.BiovotionVsm1SpO2:
     fields:
       - spO2
       - spO2Quality
@@ -20,7 +20,7 @@ collision:
     - org.radarcns.kafka.aggregator.AggregatorDouble
     - org.radarcns.kafka.aggregator.AggregatorDoubleArray
   batteryLevel:
-    - org.radarcns.passive.biovotion.BiovotionEverionBatteryState
+    - org.radarcns.passive.biovotion.BiovotionVsm1BatteryState
     - org.radarcns.passive.empatica.EmpaticaE4BatteryLevel
     - org.radarcns.passive.pebble.Pebble2BatteryLevel
     - org.radarcns.passive.phone.PhoneBatteryLevel
@@ -28,7 +28,7 @@ collision:
     - org.radarcns.kafka.aggregator.AggregatorDouble
     - org.radarcns.kafka.aggregator.AggregatorDoubleArray
   heartRate:
-    - org.radarcns.passive.biovotion.BiovotionEverionHeartRate
+    - org.radarcns.passive.biovotion.BiovotionVsm1HeartRate
     - org.radarcns.passive.pebble.Pebble2HeartRate
     - org.radarcns.passive.pebble.Pebble2HeartRateFiltered
   iqr:
@@ -56,7 +56,7 @@ collision:
     - org.radarcns.passive.phone.PhoneCall
     - org.radarcns.passive.phone.PhoneSms
   temperature:
-    - org.radarcns.passive.biovotion.BiovotionEverionTemperature
+    - org.radarcns.passive.biovotion.BiovotionVsm1Temperature
     - org.radarcns.passive.empatica.EmpaticaE4Temperature
   type:
     - org.radarcns.passive.phone.PhoneCall
@@ -73,21 +73,21 @@ collision:
     - org.radarcns.kafka.key.KeyMeasurement
     - org.radarcns.kafka.key.KeyWindowed
   x:
-    - org.radarcns.passive.biovotion.BiovotionEverionAcceleration
+    - org.radarcns.passive.biovotion.BiovotionVsm1Acceleration
     - org.radarcns.passive.empatica.EmpaticaE4Acceleration
     - org.radarcns.passive.pebble.Pebble2Acceleration
     - org.radarcns.passive.phone.PhoneAcceleration
     - org.radarcns.passive.phone.PhoneGyroscope
     - org.radarcns.passive.phone.PhoneMagneticField
   y:
-    - org.radarcns.passive.biovotion.BiovotionEverionAcceleration
+    - org.radarcns.passive.biovotion.BiovotionVsm1Acceleration
     - org.radarcns.passive.empatica.EmpaticaE4Acceleration
     - org.radarcns.passive.pebble.Pebble2Acceleration
     - org.radarcns.passive.phone.PhoneAcceleration
     - org.radarcns.passive.phone.PhoneGyroscope
     - org.radarcns.passive.phone.PhoneMagneticField
   z:
-    - org.radarcns.passive.biovotion.BiovotionEverionAcceleration
+    - org.radarcns.passive.biovotion.BiovotionVsm1Acceleration
     - org.radarcns.passive.empatica.EmpaticaE4Acceleration
     - org.radarcns.passive.pebble.Pebble2Acceleration
     - org.radarcns.passive.phone.PhoneAcceleration

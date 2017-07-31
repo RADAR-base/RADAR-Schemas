@@ -71,4 +71,3 @@ pmd {
 
     ruleSetFiles = files("$projectDir/config/pmd/ruleset.xml")
 }
-

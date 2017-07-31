@@ -1,0 +1,125 @@
+plugins {
+    id 'idea'
+    id 'checkstyle'
+    id 'pmd'
+}
+
+ext.artifactName = 'radar-schemas-specification'
+ext.description = 'RADAR Schemas Specification SDK'
+
+targetCompatibility = '1.8'
+sourceCompatibility = '1.8'
+
+idea {
+    module {
+        downloadSources = true
+    }
+}
+
+sourceSets {
+    main {
+        java.srcDir 'src/main/java'
+        resources.srcDir 'src/main/resources'
+    }
+    test {
+        java.srcDir 'src/test/java'
+        resources.srcDir 'src/test/resources'
+    }
+}
+
+ext.apacheCommonsVersion = '3.6'
+ext.junitVersion = '4.12'
+ext.radarCommonsVersion = '0.4.2'
+ext.slf4jVersion = '1.7.25'
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: junitVersion
+    testCompile group: 'org.slf4j', name: 'slf4j-simple', version: slf4jVersion
+    testCompile group: 'org.apache.commons', name: 'commons-lang3', version: apacheCommonsVersion
+    testCompile group: 'org.radarcns', name: 'radar-commons', version: radarCommonsVersion
+}
+
+//---------------------------------------------------------------------------//
+// Test definition                                                           //
+//---------------------------------------------------------------------------//
+test {
+    testLogging {
+        events "skipped", "failed"
+        exceptionFormat "full"
+        showExceptions = true
+        showCauses = true
+        showStackTraces = true
+        showStandardStreams = true
+    }
+}
+
+//---------------------------------------------------------------------------//
+// Style checking                                                            //
+//---------------------------------------------------------------------------//
+checkstyle {
+    // codacy version
+    toolVersion '6.16'
+    ignoreFailures false
+
+    configFile = file("$projectDir/config/checkstyle/checkstyle.xml")
+}
+
+pmd {
+    // pmd version
+    toolVersion = '5.5.2'
+    ignoreFailures = false
+
+    consoleOutput = true
+
+    ruleSets = []
+
+    ruleSetFiles = files("$projectDir/config/pmd/ruleset.xml")
+}
+
+//---------------------------------------------------------------------------//
+// Publishing                                                                //
+//---------------------------------------------------------------------------//
+
+publishing {
+    publications {
+        RadarQuestionnairePublication(MavenPublication) {
+            from components.java
+            artifact sourcesJar
+            artifact javadocJar
+            groupId project.group
+            artifactId artifactName
+            version project.version
+            pom.withXml {
+                def root = asNode()
+                root.appendNode('description', description)
+                root.appendNode('name', artifactName)
+                root.appendNode('url', githubUrl)
+                root.children().last() + pomConfig
+            }
+        }
+    }
+}
+
+bintray {
+    user = project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER')
+    key = project.hasProperty('bintrayApiKey') ? project.property('bintrayApiKey') : System.getenv('BINTRAY_API_KEY')
+    override = false
+    publications = ['RadarQuestionnairePublication']
+    pkg {
+        repo = project.group
+        name = artifactName
+        userOrg = 'radar-cns'
+        licenses = ['Apache-2.0']
+        websiteUrl = website
+        issueTrackerUrl = issueUrl
+        vcsUrl = githubUrl
+        githubRepo = githubRepoName
+        githubReleaseNotesFile = 'README.md'
+        version {
+            name = project.version
+            desc = description
+            vcsTag = System.getenv('TRAVIS_TAG')
+            released = new Date()
+        }
+    }
+}
