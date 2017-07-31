@@ -25,14 +25,19 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Stream;
 import org.apache.avro.Schema;
 import org.apache.avro.Schema.Field;
 import org.radarcns.config.YamlConfigLoader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * TODO.
  */
 public class SkipConfig {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(SkipConfig.class);
 
     /** Repository name. */
     public static final String REPOSITORY_NAME = "/RADAR-Schemas/";
@@ -52,6 +57,10 @@ public class SkipConfig {
     /** Wild card to suppress check all schemas. */
     public static final String WILD_CARD_COLLISION = "*";
 
+    /** Regex for validating the yml file. */
+    protected static final String VALID_INPUT_REGEX = "^[a-z][a-zA-Z0-9.*]*$";
+    protected static final String VALID_FILE_REGEX = "^[a-zA-Z0-9.*][a-zA-Z0-9._*\\/\\\\]+";
+
     private final Set<Path> files = new HashSet<>();
     private final Map<String, SkipConfigItem> validation = new HashMap<>();
     private final Map<String, Set<String>> collision = new HashMap<>();
@@ -70,6 +79,51 @@ public class SkipConfig {
         } catch (IOException exc) {
             throw new ExceptionInInitializerError(exc);
         }
+    }
+
+    /**
+     * TODO.
+     * @return TODO
+     */
+    public static boolean validate() {
+        boolean valid = validateClass(CONFIG.files.stream().map(Path::toString),
+                "Skipped file list is not valid.", true);
+
+        //Validate validation key map
+        valid = valid && validateClass(CONFIG.validation.keySet().stream(),
+                "Validation map keys are not valid.", false);
+
+        //Validate validation value map
+        valid = valid && validateClass(CONFIG.validation.values().stream()
+                                          .map(skipConfigItem -> skipConfigItem.getFields())
+                                          .flatMap(Set::stream),
+                                      "Validation map values are not valid.", false);
+
+        //Validate collision key map
+        valid = valid && validateClass(CONFIG.collision.keySet().stream(),
+                "Collision map keys are not valid.", false);
+
+        //Validate collision value map
+        return valid && validateClass(CONFIG.collision.values().stream().flatMap(Set::stream),
+                "Collision map values are not valid.", false);
+    }
+
+    /**
+     * TODO.
+     * @param stream TODO
+     * @param message TODO
+     * @param file TODO
+     * @return TODO
+     */
+    private static boolean validateClass(Stream<String> stream, String message, boolean file) {
+        return stream.allMatch(value -> {
+            if (file && !value.matches(VALID_FILE_REGEX)
+                    || !file && !value.matches(VALID_INPUT_REGEX)) {
+                LOGGER.error("{} Setting \"{}\" is invalid.", message, value);
+                return false;
+            }
+            return true;
+        });
     }
 
     /**

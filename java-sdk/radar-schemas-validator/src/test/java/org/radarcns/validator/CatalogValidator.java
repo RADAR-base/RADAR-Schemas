@@ -17,6 +17,7 @@ package org.radarcns.validator;
  */
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,6 +25,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.junit.Before;
 import org.junit.Test;
+import org.radarcns.validator.config.SkipConfig;
 
 /**
  * Checks that the tree folder structure respects the following structure
@@ -128,7 +130,7 @@ public class CatalogValidator {
     }
 
     /** Commons folders. */
-    public enum SpecificationFolder {
+    /*public enum SpecificationFolder {
         ACTIVE(new File(RootPath.SPECIFICATION.getPath().resolve(
               NameFolder.ACTIVE.getName()).toUri())),
         MONITOR(new File(RootPath.SPECIFICATION.getPath().resolve(
@@ -145,11 +147,11 @@ public class CatalogValidator {
         public File getFolder() {
             return folder;
         }
-    }
+    }*/
 
     @Before
     public void validateSkipConfig() {
-        //TODO
+        assertTrue(SkipConfig.validate());
     }
 
     @Test

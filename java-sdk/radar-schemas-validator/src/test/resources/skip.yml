@@ -6,7 +6,6 @@ files:
 #====================== SKIP TEST CONFIGURATION ======================#
 validation:
   org.radarcns.passive.biovotion.BiovotionEverionSpO2:
-    record_name_check: DISABLE
     fields:
       - spO2
       - spO2Quality

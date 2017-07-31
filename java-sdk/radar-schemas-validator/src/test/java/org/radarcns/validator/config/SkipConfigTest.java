@@ -18,6 +18,8 @@ package org.radarcns.validator.config;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.radarcns.validator.config.SkipConfig.VALID_FILE_REGEX;
+import static org.radarcns.validator.config.SkipConfig.VALID_INPUT_REGEX;
 import static org.radarcns.validator.config.SkipConfig.skipFile;
 
 import java.io.File;
@@ -33,7 +35,7 @@ import org.junit.Test;
 public class SkipConfigTest {
 
     @Test
-    public void testGetPath() {
+    public void testSkipFile() {
         String root = "/Users/developer/Repositories/RADAR-Schemas/";
 
         Set<Path> skipPaths = new HashSet<>();
@@ -81,7 +83,26 @@ public class SkipConfigTest {
         assertFalse(skipFile(new File(root.concat("restapi/data/acceleration.avsc")), skipPaths));
     }
 
+    @Test
+    public void testFileRegex() {
+        assertTrue(".DS_Store".matches(VALID_FILE_REGEX));
+        assertTrue("*.md".matches(VALID_FILE_REGEX));
+        assertTrue("commons\\**".matches(VALID_FILE_REGEX));
+        assertTrue("commons/**".matches(VALID_FILE_REGEX));
+        assertTrue("commons/**/README.md".matches(VALID_FILE_REGEX));
+        assertTrue("commons/monitor//application_external_time.avsc".matches(VALID_FILE_REGEX));
+        assertTrue("commons/**/*.avsc".matches(VALID_FILE_REGEX));
+        assertFalse("test-test.java".matches(VALID_FILE_REGEX));
+        assertFalse("/commons/**/*.avsc".matches(VALID_FILE_REGEX));
+    }
 
-
-
+    @Test
+    public void testGeneralRegex() {
+        assertTrue("avg".matches(VALID_INPUT_REGEX));
+        assertTrue("x".matches(VALID_INPUT_REGEX));
+        assertTrue("org.radarcns.passive.phone.PhoneCall".matches(VALID_INPUT_REGEX));
+        assertTrue("org.radarcns.active.*".matches(VALID_INPUT_REGEX));
+        assertFalse("org.radarcns.passive.phone.PhoneCall as ENUM".matches(VALID_INPUT_REGEX));
+        assertFalse("*".matches(VALID_INPUT_REGEX));
+    }
 }
