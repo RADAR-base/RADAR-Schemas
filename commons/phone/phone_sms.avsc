@@ -11,6 +11,6 @@
     {"name": "length", "type": ["null","int"], "doc": "number of characters in the message (null if unknown)", "default": null},
     {"name": "targetIsContact", "type": ["null","boolean"], "doc": "sms sender is a known contact, null if unknown", "default": null},
     {"name": "targetIsNonNumeric", "type": "boolean", "doc": "sms sender ID is replaced by text, e.g. a company name", "default": false},
-    {"name": "targetIsService", "type": "boolean", "doc": "target is a service, e.g. a 4-digit target", "default": false}
+    {"name": "targetLength", "type": "int", "doc": "length of the target phone number, -1 if not collected.", "default": -1}
   ]
 }

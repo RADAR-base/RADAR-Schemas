@@ -9,6 +9,8 @@
     {"name": "duration", "type": "float", "doc": "duration of the call (s)", "default": "NaN"},
     {"name": "target", "type": ["null", "bytes"], "doc": "HMAC SHA-256 one-way source/target of the call. This hash of a given phone number will be the same unless the app is reinstalled. If the number is unknown or anonymous, this contains null.", "default": null},
     {"name": "type", "type": {"name": "PhoneCallType", "type": "enum", "symbols": ["INCOMING", "OUTGOING", "MISSED", "VOICEMAIL", "UNKNOWN"]}, "doc": "direction of phone call", "default": "UNKNOWN"},
-    {"name": "targetIsContact", "type": ["null","boolean"], "doc": "call to/from a known contact, null if unknown", "default": null}
+    {"name": "targetIsContact", "type": ["null","boolean"], "doc": "call to/from a known contact, null if unknown", "default": null},
+    {"name": "targetIsNonNumeric", "type": "boolean", "doc": "sms sender ID is replaced by text, e.g. a company name", "default": false},
+    {"name": "targetLength", "type": "int", "doc": "length of the target phone number, -1 if not collected.", "default": -1}
   ]
 }
