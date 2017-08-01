@@ -2,13 +2,13 @@
   "namespace": "org.radarcns.passive.biovotion",
   "type": "record",
   "name": "BiovotionVsm1PpgRaw",
-  "doc": "Raw 14bit Photodiode ADC data for red, green, IR and dark portions (PPG raw data).",
+  "doc": "Raw 14bit Photodiode ADC (Analog to Digital conversion) data for red, green, IR and dark portions (PPG raw data).",
   "fields": [
     {"name": "time", "type": "double", "doc": "device timestamp in UTC (s)." },
     {"name": "timeReceived", "type": "double", "doc": "device receiver timestamp in UTC (s)." },
-    {"name": "red", "type": "float", "doc": "raw red light ADC response (normalized)." },
-    {"name": "green", "type": "float", "doc": "raw green light ADC response (normalized)." },
-    {"name": "ir", "type": "float", "doc": "raw IR light ADC response (normalized)." },
-    {"name": "dark", "type": "float", "doc": "raw dark light ADC response (normalized)." }
+    {"name": "red", "type": "float", "doc": "raw red light ADC response (normalized 0 -16383)." },
+    {"name": "green", "type": "float", "doc": "raw green light ADC response (normalized 0 -16383)." },
+    {"name": "ir", "type": "float", "doc": "raw IR light ADC response (normalized 0 -16383)." },
+    {"name": "dark", "type": "float", "doc": "raw dark light ADC response (normalized 0 -16383)." }
   ]
 }

@@ -51,7 +51,7 @@ public final class AvroValidator {
                 analiseFiles(son, packageName, file.getName());
             }
         } else if (SkipConfig.skipFile(file)) {
-            LOGGER.info("Skipping {}", file.getAbsolutePath());
+            LOGGER.debug("Skipping {}", file.getAbsolutePath());
         } else {
             assertTrue(packageName.getName().concat(" should contain only ")
                                             .concat(AVRO_FORMAT).concat(" files. ")

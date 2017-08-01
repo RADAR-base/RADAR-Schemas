@@ -6,7 +6,7 @@
   "fields": [
     {"name": "time", "type": "double", "doc": "device timestamp in UTC (s)." },
     {"name": "timeReceived", "type": "double", "doc": "device receiver timestamp in UTC (s)." },
-    {"name": "heartRateVariability", "type": "float", "doc": "Heart rate variability value (ms / RMSSD)." },
+    {"name": "heartRateVariability", "type": "float", "doc": "Heart rate variability value. The applied metric is the root mean squared of successive differences (RMSSD) of heart pulses, measured in milliseconds." },
     {"name": "heartRateVariabilityQuality", "type": "float", "doc": "Heart rate variability quality (0-1)." }
   ]
 }

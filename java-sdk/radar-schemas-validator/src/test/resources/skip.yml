@@ -5,7 +5,7 @@ files:
 
 #====================== SKIP TEST CONFIGURATION ======================#
 validation:
-  org.radarcns.passive.biovotion.BiovotionVsm1SpO2:
+  org.radarcns.passive.biovotion.BiovotionVsm1OxygenSaturation:
     fields:
       - spO2
       - spO2Quality
