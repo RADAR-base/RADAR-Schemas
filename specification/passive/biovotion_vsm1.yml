@@ -1,0 +1,101 @@
+#===================================== Biovotion VSM1 Everion =====================================#
+vendor: BIOVOTION
+model: VSM1
+app_provider: biovotion.BiovotionServiceProvider
+sensors:
+  - name: ACCELEROMETER
+    sample_rate: 51.2
+    unit: G
+    data_type: RAW
+    topic_name: android_biovotion_vsm1_acceleration
+    key_class: org.radarcns.kafka.key.KeyMeasurement
+    value_class: org.radarcns.passive.biovotion.BiovotionVsm1Acceleration
+    aggregator_class: org.radarcns.kafka.aggregator.AggregatorDoubleArray
+  - name: BATTERY
+    sample_rate: 1.0
+    unit: PERCENTAGE
+    data_type: RAW
+    topic_name: android_biovotion_vsm1_battery_state
+    key_class: org.radarcns.kafka.key.KeyMeasurement
+    value_class: org.radarcns.passive.biovotion.BiovotionVsm1BatteryState
+    aggregator_class: org.radarcns.kafka.aggregator.AggregatorDouble
+  - name: BLOOD_PULSE_WAVE
+    sample_rate: 1.0
+    unit: NONDIMENSIONAL
+    data_type: VENDOR
+    topic_name: android_biovotion_vsm1_acceleration
+    key_class: org.radarcns.kafka.key.KeyMeasurement
+    value_class: org.radarcns.passive.biovotion.BiovotionVsm1BloodPulseWave
+    aggregator_class: org.radarcns.kafka.aggregator.AggregatorDouble
+  - name: ENERGY
+    sample_rate: 1.0
+    unit: CALORIES_PER_SEC
+    data_type: VENDOR
+    topic_name: android_biovotion_vsm1_energy
+    key_class: org.radarcns.kafka.key.KeyMeasurement
+    value_class: org.radarcns.passive.biovotion.BiovotionVsm1Energy
+    aggregator_class: org.radarcns.kafka.aggregator.AggregatorDouble
+  - name: GALVANIC_SKIN_RESPONSE
+    sample_rate: 1.0
+    unit: KILO_OHM
+    data_type: VENDOR
+    topic_name: android_biovotion_vsm1_galvanic_skin_response
+    key_class: org.radarcns.kafka.key.KeyMeasurement
+    value_class: org.radarcns.passive.biovotion.BiovotionVsm1GalvanicSkinResponse
+    aggregator_class: org.radarcns.kafka.aggregator.AggregatorDoubleArray
+  - name: HEART_RATE
+    sample_rate: 1.0
+    unit: BEATS_PER_MIN
+    data_type: VENDOR
+    topic_name: android_biovotion_vsm1_heart_rate
+    key_class: org.radarcns.kafka.key.KeyMeasurement
+    value_class: org.radarcns.passive.biovotion.BiovotionVsm1HeartRate
+    aggregator_class: org.radarcns.kafka.aggregator.AggregatorDouble
+  - name: HEART_RATE_VARIABILITY
+    sample_rate: 1.0
+    unit: RMSSD_IN_MILLI_SEC
+    data_type: VENDOR
+    topic_name: android_biovotion_vsm1_heart_rate_variability
+    key_class: org.radarcns.kafka.key.KeyMeasurement
+    value_class: org.radarcns.passive.biovotion.BiovotionVsm1HeartRateVariability
+    aggregator_class: org.radarcns.kafka.aggregator.AggregatorDouble
+  - name: LED
+    sample_rate: 1.0
+    unit: MILLI_AMPER
+    data_type: VENDOR
+    topic_name: android_biovotion_vsm1_led_current
+    key_class: org.radarcns.kafka.key.KeyMeasurement
+    value_class: org.radarcns.passive.biovotion.BiovotionVsm1LedCurrent
+    aggregator_class: org.radarcns.kafka.aggregator.AggregatorDoubleArray
+  - name: PPG
+    sample_rate: 51.2
+    unit: NONDIMENSIONAL
+    data_type: VENDOR
+    topic_name: android_biovotion_vsm1_ppg_current
+    key_class: org.radarcns.kafka.key.KeyMeasurement
+    value_class: org.radarcns.passive.biovotion.BiovotionVsm1PpgRaw
+    aggregator_class: org.radarcns.kafka.aggregator.AggregatorDoubleArray
+  - name: RESPIRATION_RATE
+    sample_rate: 1.0
+    unit: BEATS_PER_MIN
+    data_type: VENDOR
+    topic_name: android_biovotion_vsm1_respiration_rate
+    key_class: org.radarcns.kafka.key.KeyMeasurement
+    value_class: org.radarcns.passive.biovotion.BiovotionVsm1RespirationRate
+    aggregator_class: org.radarcns.kafka.aggregator.AggregatorDouble
+  - name: OXYGEN_SATURATION
+    sample_rate: 1.0
+    unit: PERCENTAGE
+    data_type: RAW
+    topic_name: android_biovotion_vsm1_oxygen_saturation
+    key_class: org.radarcns.kafka.key.KeyMeasurement
+    value_class: org.radarcns.passive.biovotion.BiovotionVsm1OxygenSaturation
+    aggregator_class: org.radarcns.kafka.aggregator.AggregatorDouble
+  - name: THERMOMETER
+    sample_rate: 1.0
+    unit: CELSIUS
+    data_type: RAW
+    topic_name: android_biovotion_vsm1_temperature
+    key_class: org.radarcns.kafka.key.KeyMeasurement
+    value_class: org.radarcns.passive.biovotion.BiovotionVsm1Temperature
+    aggregator_class: org.radarcns.kafka.aggregator.AggregatorDouble

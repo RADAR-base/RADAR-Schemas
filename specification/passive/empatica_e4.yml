@@ -1,6 +1,6 @@
-
-#============================= Empatica E4 Wristband =============================#
-name: EMPATICA_E4
+#====================================== Empatica E4 Wristband =====================================#
+vendor: EMPATICA
+model: E4
 app_provider: .empatica.E4ServiceProvider
 sensors:
   - name: ACCELEROMETER
@@ -35,13 +35,6 @@ sensors:
     key_class: org.radarcns.kafka.key.KeyMeasurement
     value_class: org.radarcns.passive.empatica.EmpaticaE4ElectroDermalActivity
     aggregator_class: org.radarcns.kafka.aggregator.AggregatorDouble
-  - name: HEART_RATE
-    sample_rate: 1.0
-    unit: BEATS_PER_MIN
-    data_type: RADAR
-    input_topic_name: android_empatica_e4_inter_beat_interval
-    output_topic_name: android_empatica_e4_heartrate
-    aggregator_class: org.radarcns.kafka.aggregator.AggregatorDouble
   - name: INTER_BEAT_INTERVAL
     sample_rate: 1.0
     unit: BEATS_PER_MIN
@@ -57,4 +50,12 @@ sensors:
     topic_name: android_empatica_e4_temperature
     key_class: org.radarcns.kafka.key.KeyMeasurement
     value_class: org.radarcns.passive.empatica.EmpaticaE4BatteryLevel
+    aggregator_class: org.radarcns.kafka.aggregator.AggregatorDouble
+aggregators:
+  - name: HEART_RATE
+    sample_rate: 1.0
+    unit: BEATS_PER_MIN
+    data_type: RADAR
+    input_topic_name: android_empatica_e4_inter_beat_interval
+    output_topic_name: android_empatica_e4_heartrate
     aggregator_class: org.radarcns.kafka.aggregator.AggregatorDouble

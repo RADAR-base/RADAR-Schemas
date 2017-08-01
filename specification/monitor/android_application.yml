@@ -1,0 +1,32 @@
+#================================ Android Application Monitor =====================================#
+name: APPLICATION
+app_provider: .application.ApplicationServiceProvider
+sensors:
+  - name: EXTERNAL_TIME
+    sample_rate: 0.08
+    unit: NONDIMENSIONAL
+    data_type: RAW
+    topic_name: application_external_time
+    key_class: org.radarcns.kafka.key.KeyMeasurement
+    value_class: org.radarcns.monitor.application.ApplicationExternalTime
+  - name: RECORD_COUNTS
+    sample_rate: 0.08
+    unit: NONDIMENSIONAL
+    data_type: RAW
+    topic_name: application_record_counts
+    key_class: org.radarcns.kafka.key.KeyMeasurement
+    value_class: org.radarcns.monitor.application.ApplicationRecordCounts
+  - name: SERVER_STATUS
+    sample_rate: 0.08
+    unit: NONDIMENSIONAL
+    data_type: RAW
+    topic_name: application_server_status
+    key_class: org.radarcns.kafka.key.KeyMeasurement
+    value_class: org.radarcns.monitor.application.ApplicationServerStatus
+  - name: UPTIME
+    sample_rate: 0.08
+    unit: NONDIMENSIONAL
+    data_type: RAW
+    topic_name: application_uptime
+    key_class: org.radarcns.kafka.key.KeyMeasurement
+    value_class: org.radarcns.monitor.application.ApplicationUptime
