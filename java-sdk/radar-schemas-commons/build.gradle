@@ -2,6 +2,13 @@ ext.artifactName = 'radar-schemas-commons'
 ext.description = 'RADAR Schemas Commons SDK'
 
 //---------------------------------------------------------------------------//
+// Clean settings                                                            //
+//---------------------------------------------------------------------------//
+clean {
+    delete avroOutputDir
+}
+
+//---------------------------------------------------------------------------//
 // AVRO file manipulation                                                    //
 //---------------------------------------------------------------------------//
 task generateAvro(type: com.commercehub.gradle.plugin.avro.GenerateAvroJavaTask) {

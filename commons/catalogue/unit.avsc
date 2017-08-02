@@ -1,5 +1,5 @@
 {
-  "namespace": "org.radarcns.specifications",
+  "namespace": "org.radarcns.catalogue",
   "type": "enum",
   "name": "Unit",
   "doc": "Measurement units",

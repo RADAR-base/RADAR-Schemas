@@ -40,35 +40,30 @@ dependencies {
 }
 
 //---------------------------------------------------------------------------//
-// AVRO file manipulation                                                    //
+// Exchange configuration with Java code                                     //
 //---------------------------------------------------------------------------//
-ext.excludedFromCheckStyle = []
-
-task generateAvro(type: com.commercehub.gradle.plugin.avro.GenerateAvroJavaTask) {
-    source rootProject.fileTree('../commons') {
-        include 'active/questionnaire/questionnaire.avsc'
-    }
-    source rootProject.fileTree('../specifications/schemas') {
-        include '**/*.avsc'
-    }
-
-    outputDir avroOutputDir
-
-    //Files ignored from checkstyle
+ext.exchnageConfigPath = 'src/main/resources/exchange.properties'
+task exchangeConfig() {
     doLast {
-        def rootPath = sourceSets.main.allJava.srcDirTrees[0].dir.path
-        sourceSets.main.allJava.files.each {
-            excludedFromCheckStyle.add(it.path.replace(rootPath, '**'))
+        if (file(exchnageConfigPath).createNewFile()) {
+            file(exchnageConfigPath).write("project.group=${project.group}")
+        } else {
+            throw new GradleException("File for exchanginf configuration between Gradle and Java cannot be created. Error while managing file at ${exchnageConfigPath}")
         }
     }
 }
-compileJava.dependsOn generateAvro
+compileJava.dependsOn exchangeConfig
 
-task excludeAvroGenerated() {
-    doLast{
-        checkstyleMain.exclude(excludedFromCheckStyle)
+task cleanExchangeConfig() {
+    doLast {
+        if (file(exchnageConfigPath).exists()) {
+            if (!file(exchnageConfigPath).delete()) {
+                throw new GradleException("File at ${exchnageConfigPath} cannot be delated.")
+            }
+        }
     }
 }
+clean.dependsOn cleanExchangeConfig
 
 //---------------------------------------------------------------------------//
 // Test definition                                                           //
@@ -94,7 +89,6 @@ checkstyle {
 
     configFile = file("$projectDir/config/checkstyle/checkstyle.xml")
 }
-checkstyleMain.dependsOn excludeAvroGenerated
 
 pmd {
     // pmd version

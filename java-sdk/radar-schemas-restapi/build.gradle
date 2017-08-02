@@ -2,15 +2,20 @@ ext.artifactName = 'radar-schemas-restapi'
 ext.description = 'RADAR Schemas REST API SDK'
 
 //---------------------------------------------------------------------------//
+// Clean settings                                                            //
+//---------------------------------------------------------------------------//
+clean {
+    delete avroOutputDir
+}
+
+//---------------------------------------------------------------------------//
 // AVRO file manipulation                                                    //
 //---------------------------------------------------------------------------//
 task generateAvro(type: com.commercehub.gradle.plugin.avro.GenerateAvroJavaTask) {
     source rootProject.fileTree('../commons') {
         include 'active/questionnaire/questionnaire.avsc'
         include 'monitor/application/application_server_status.avsc'
-    }
-    source rootProject.fileTree('../specifications/schemas') {
-        include '**/*.avsc'
+        include 'catalogue/*.avsc'
     }
     source rootProject.fileTree('../restapi') {
         include '**/*.avsc'

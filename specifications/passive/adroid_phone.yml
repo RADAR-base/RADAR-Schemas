@@ -9,54 +9,54 @@ sensors:
     unit: G
     data_type: RAW
     topic_name: android_phone_acceleration
-    key_class: org.radarcns.kafka.key.KeyMeasurement
-    value_class: org.radarcns.passive.phone.PhoneAcceleration
-    aggregator_class: org.radarcns.kafka.aggregator.AggregatorDoubleArray
+    key_class: .kafka.key.KeyMeasurement
+    value_class: .passive.phone.PhoneAcceleration
+    aggregator_class: .kafka.aggregator.AggregatorDoubleArray
   - name: BATTERY
     app_provider: .phone.PhoneSensorProvider
     sample_rate: #TODO
     unit: PERCENTAGE
     data_type: RAW
     topic_name: android_phone_battery_level
-    key_class: org.radarcns.kafka.key.KeyMeasurement
-    value_class: org.radarcns.passive.phone.PhoneBatteryLevel
-    aggregator_class: org.radarcns.kafka.aggregator.AggregatorDouble
+    key_class: .kafka.key.KeyMeasurement
+    value_class: .passive.phone.PhoneBatteryLevel
+    aggregator_class: .kafka.aggregator.AggregatorDouble
   - name: GYROSCOPE
     app_provider: .phone.PhoneSensorProvider
     sample_rate: #TODO
     unit: RADAIAN_PER_SEC
     data_type: RAW
     topic_name: android_phone_gyroscope
-    key_class: org.radarcns.kafka.key.KeyMeasurement
-    value_class: org.radarcns.passive.phone.PhoneGyroscope
-    aggregator_class: org.radarcns.kafka.aggregator.AggregatorDoubleArray
+    key_class: .kafka.key.KeyMeasurement
+    value_class: .passive.phone.PhoneGyroscope
+    aggregator_class: .kafka.aggregator.AggregatorDoubleArray
   - name: LIGTH
     app_provider: .phone.PhoneSensorProvider
     sample_rate: #TODO
     unit: LUX
     data_type: RAW
     topic_name: android_phone_ligth
-    key_class: org.radarcns.kafka.key.KeyMeasurement
-    value_class: org.radarcns.passive.phone.PhoneLight
-    aggregator_class: org.radarcns.kafka.aggregator.AggregatorDouble
+    key_class: .kafka.key.KeyMeasurement
+    value_class: .passive.phone.PhoneLight
+    aggregator_class: .kafka.aggregator.AggregatorDouble
   - name: MAGNETIC_FIELD
     app_provider: .phone.PhoneSensorProvider
     sample_rate: #TODO
     unit: MICRO_TESLA
     data_type: RAW
     topic_name: android_phone_magnetic_field
-    key_class: org.radarcns.kafka.key.KeyMeasurement
-    value_class: org.radarcns.passive.phone.PhoneMagneticField
-    aggregator_class: org.radarcns.kafka.aggregator.AggregatorDoubleArray
+    key_class: .kafka.key.KeyMeasurement
+    value_class: .passive.phone.PhoneMagneticField
+    aggregator_class: .kafka.aggregator.AggregatorDoubleArray
   - name: STEP_COUNT
     app_provider: .phone.PhoneSensorProvider
     sample_rate: #TODO
     unit: NON_DIMENSIONAL
     data_type: VENDOR
     topic_name: android_phone_step_count
-    key_class: org.radarcns.kafka.key.KeyMeasurement
-    value_class: org.radarcns.passive.phone.PhoneStepCount
-    aggregator_class: org.radarcns.kafka.aggregator.AggregatorDouble
+    key_class: .kafka.key.KeyMeasurement
+    value_class: .passive.phone.PhoneStepCount
+    aggregator_class: .kafka.aggregator.AggregatorDouble
   # Location
   - name: RELATIVE_LOCATION
     app_provider: .phone.PhoneLocationProvider
@@ -64,8 +64,8 @@ sensors:
     unit: #TODO
     data_type: RAW
     topic_name: android_phone_relative_location
-    key_class: org.radarcns.kafka.key.KeyMeasurement
-    value_class: org.radarcns.passive.phone.PhoneRelativeLocation
+    key_class: .kafka.key.KeyMeasurement
+    value_class: .passive.phone.PhoneRelativeLocation
   # Log
   - name: PHONE_CALL
     app_provider: .phone.PhoneLogProvider
@@ -73,24 +73,24 @@ sensors:
     unit: NON_DIMENSIONAL
     data_type: RAW
     topic_name: android_phone_call
-    key_class: org.radarcns.kafka.key.KeyMeasurement
-    value_class: org.radarcns.passive.phone.PhoneCall
+    key_class: .kafka.key.KeyMeasurement
+    value_class: .passive.phone.PhoneCall
   - name: PHONE_SMS
     app_provider: .phone.PhoneLogProvider
     sample_rate: #TODO
     unit: NON_DIMENSIONAL
     data_type: RAW
     topic_name: android_phone_sms
-    key_class: org.radarcns.kafka.key.KeyMeasurement
-    value_class: org.radarcns.passive.phone.PhoneSms
+    key_class: .kafka.key.KeyMeasurement
+    value_class: .passive.phone.PhoneSms
   - name: PHONE_SMS_UNREAD
     app_provider: .phone.PhoneLogProvider
     sample_rate: #TODO
     unit: NON_DIMENSIONAL
     data_type: RAW
     topic_name: android_phone_sms_unread
-    key_class: org.radarcns.kafka.key.KeyMeasurement
-    value_class: org.radarcns.passive.phone.PhoneSmsUnread
+    key_class: .kafka.key.KeyMeasurement
+    value_class: .passive.phone.PhoneSmsUnread
   # Usage
   - name: USAGE_EVENT
     app_provider: .phone.PhoneUsageProvider
@@ -98,13 +98,13 @@ sensors:
     unit: NON_DIMENSIONAL
     data_type: RAW
     topic_name: android_phone_user_event
-    key_class: org.radarcns.kafka.key.KeyMeasurement
-    value_class: org.radarcns.passive.phone.PhoneUsageEvent
+    key_class: .kafka.key.KeyMeasurement
+    value_class: .passive.phone.PhoneUsageEvent
   - name: USER_INTERACTION
     app_provider: .phone.PhoneUsageProvider
     sample_rate: #TODO
     unit: NON_DIMENSIONAL
     data_type: RAW
     topic_name: android_phone_user_interaction
-    key_class: org.radarcns.kafka.key.KeyMeasurement
-    value_class: org.radarcns.passive.phone.PhoneUserInteraction
+    key_class: .kafka.key.KeyMeasurement
+    value_class: .passive.phone.PhoneUserInteraction

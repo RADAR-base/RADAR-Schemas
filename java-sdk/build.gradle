@@ -107,10 +107,6 @@ subprojects {
 
     // Generated avro files
     ext.avroOutputDir = file('src/main/java')
-
-    clean {
-        delete avroOutputDir
-    }
 }
 
 task wrapper(type: Wrapper) {

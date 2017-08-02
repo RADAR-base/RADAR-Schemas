@@ -2,8 +2,8 @@
 name: PHQ8 #QuestionnaireType
 assestment_type: QUESTIONNAIRE
 topic_name: questionnaire_phq8
-key_class: org.radarcns.kafka.key.KeyMeasurement
-value_class: org.radarcns.active.questionnaire.Questionnaire
+key_class: .kafka.key.KeyMeasurement
+value_class: .active.questionnaire.Questionnaire
 questions:
   - lead: Over the past two weeks, how often have you been bothered by any of the following problems?
     content: Little interest or pleasure in doing things.

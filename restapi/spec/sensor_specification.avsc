@@ -4,9 +4,9 @@
   "name": "SensorSpecification",
   "doc": "Sensor specification",
   "fields": [
-    {"name": "name", "type": "org.radarcns.specifications.SensorName", "doc": "Sensor name"},
-    {"name": "dataType", "type": "org.radarcns.specifications.DataType", "doc": "Explains if the values is a raw data, otherwise it reports who computes it"},
+    {"name": "name", "type": "org.radarcns.catalogue.SensorName", "doc": "Sensor name"},
+    {"name": "dataType", "type": "org.radarcns.catalogue.DataType", "doc": "Explains if the values is a raw data, otherwise it reports who computes it"},
     {"name": "frequency", "type": "double", "default": -1.0, "doc": "Number of expected samples per second"},
-    {"name": "unit", "type": "org.radarcns.specifications.Unit", "doc": "Measurement unit used by the sensor"}
+    {"name": "unit", "type": "org.radarcns.catalogue.Unit", "doc": "Measurement unit used by the sensor"}
   ]
 }
