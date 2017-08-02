@@ -1,6 +1,7 @@
-#===================== Personal Health Questionnaire Depression Scale (PHQ-8) =====================#
-name: PHQ8 #QuestionnaireType
-assestment_type: QUESTIONNAIRE
+#==================== Personal Health Questionnaire Depression Scale (PHQ-8) ======================#
+name: PHQ8
+assessment_type: QUESTIONNAIRE
+doc: Personal Health Questionnaire Depression Scale (PHQ-8) definition
 topic_name: questionnaire_phq8
 key_class: .kafka.key.KeyMeasurement
 value_class: .active.questionnaire.Questionnaire

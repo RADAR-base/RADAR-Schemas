@@ -1,0 +1,10 @@
+#==================================== External Time Monitor =======================================#
+name: EXTERNAL_TIME
+app_provider: .application.ApplicationServiceProvider
+doc: Information sent by the Android pRMT about time synchronisation with a NTS different from the default one.
+sample_rate: 0.08
+unit: NON_DIMENSIONAL
+data_type: RAW
+topic_name: application_external_time
+key_class: .kafka.key.KeyMeasurement
+value_class: .monitor.application.ApplicationExternalTime

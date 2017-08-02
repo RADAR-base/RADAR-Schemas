@@ -1,0 +1,10 @@
+#==================================== Server Status Monitor =======================================#
+name: SERVER_STATUS
+app_provider: .application.ApplicationServiceProvider
+doc: Monitor used by the Android pRMT to report the server connection status between the android client and the RADAR-CNS Platform.
+sample_rate: 0.08
+unit: NON_DIMENSIONAL
+data_type: RAW
+topic_name: application_uptime
+key_class: .kafka.key.KeyMeasurement
+value_class: .monitor.application.ApplicationServerStatus

@@ -51,11 +51,13 @@ sensors:
     key_class: .kafka.key.KeyMeasurement
     value_class: .passive.empatica.EmpaticaE4BatteryLevel
     aggregator_class: .kafka.aggregator.AggregatorDouble
-processed:
+processors:
   - name: HEART_RATE
     sample_rate: 1.0
     unit: BEATS_PER_MIN
     data_type: RADAR
     input_topic_name: android_empatica_e4_inter_beat_interval
+    input_key_class: .kafka.key.KeyMeasurement
+    input_value_class: .passive.empatica.EmpaticaE4InterBeatInterval
     output_topic_name: android_empatica_e4_heartrate
     aggregator_class: .kafka.aggregator.AggregatorDouble

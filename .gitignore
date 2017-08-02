@@ -13,7 +13,6 @@ java-sdk/radar-schemas-validator/build
 java-sdk/radar-schemas-validator/out
 
 #====================================== Schemas Specification =====================================#
-!java-sdk/radar-schemas-specifications/src/main/java/org/radarcns/specifications/**/*.java
-java-sdk/radar-schemas-specifications/src/main/java/org/radarcns/specifications/avro
+!java-sdk/radar-schemas-specifications/**/*.java
 java-sdk/radar-schemas-specifications/build
 java-sdk/radar-schemas-specifications/out

@@ -1,0 +1,10 @@
+#======================================== Uptime Monitor ==========================================#
+name: UPTIME
+app_provider: .application.ApplicationServiceProvider
+doc: Monitor used by the Android pRMT to notify the time duration since last reboot.
+sample_rate: 0.08
+unit: NON_DIMENSIONAL
+data_type: RAW
+topic_name: application_uptime
+key_class: .kafka.key.KeyMeasurement
+value_class: .monitor.application.ApplicationUptime

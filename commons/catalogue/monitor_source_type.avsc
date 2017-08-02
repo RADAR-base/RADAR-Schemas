@@ -1,0 +1,13 @@
+{
+  "namespace": "org.radarcns.catalogue",
+  "type": "enum",
+  "name": "MonitorSourceType",
+  "doc": "List of integrated active sources.",
+  "symbols": [
+    "EXTERNAL_TIME",
+    "RECORD_COUNTS",
+    "SERVER_STATUS",
+    "UPTIME",
+    "UNKNOWN"
+  ]
+}

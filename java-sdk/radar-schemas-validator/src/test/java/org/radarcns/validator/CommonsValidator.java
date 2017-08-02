@@ -17,8 +17,8 @@ package org.radarcns.validator;
  */
 
 import java.io.IOException;
-import org.radarcns.validator.CatalogValidator.CommonsFolder;
-import org.radarcns.validator.CatalogValidator.NameFolder;
+import org.radarcns.validator.SchemaCatalogValidator.CommonsFolder;
+import org.radarcns.validator.SchemaCatalogValidator.NameFolder;
 import org.radarcns.validator.util.AvroValidator;
 
 /**
@@ -36,6 +36,7 @@ public final class CommonsValidator {
      */
     public static void validateAll() throws IOException {
         active();
+        catalogue();
         kafka();
         monitor();
         passive();
@@ -48,8 +49,15 @@ public final class CommonsValidator {
      * @throws IOException TODO
      */
     public static void active() throws IOException {
-        AvroValidator.analiseFiles(CommonsFolder.ACTIVE.getFolder(), NameFolder.ACTIVE,
-                null);
+        AvroValidator.analiseFiles(CommonsFolder.ACTIVE.getFolder(), NameFolder.ACTIVE);
+    }
+
+    /**
+     * TODO.
+     * @throws IOException TODO
+     */
+    public static void catalogue() throws IOException {
+        AvroValidator.analiseFiles(CommonsFolder.CATALOGUE.getFolder(), NameFolder.CATALOGUE);
     }
 
     /**
@@ -57,8 +65,7 @@ public final class CommonsValidator {
      * @throws IOException TODO
      */
     public static void kafka() throws IOException {
-        AvroValidator.analiseFiles(CommonsFolder.KAFKA.getFolder(), NameFolder.KAFKA,
-                null);
+        AvroValidator.analiseFiles(CommonsFolder.KAFKA.getFolder(), NameFolder.KAFKA);
     }
 
     /**
@@ -66,8 +73,7 @@ public final class CommonsValidator {
      * @throws IOException TODO
      */
     public static void monitor() throws IOException {
-        AvroValidator.analiseFiles(CommonsFolder.MONITOR.getFolder(), NameFolder.MONITOR,
-                null);
+        AvroValidator.analiseFiles(CommonsFolder.MONITOR.getFolder(), NameFolder.MONITOR);
     }
 
     /**
@@ -75,7 +81,6 @@ public final class CommonsValidator {
      * @throws IOException TODO
      */
     public static void passive() throws IOException {
-        AvroValidator.analiseFiles(CommonsFolder.PASSIVE.getFolder(), NameFolder.PASSIVE,
-                null);
+        AvroValidator.analiseFiles(CommonsFolder.PASSIVE.getFolder(), NameFolder.PASSIVE);
     }
 }

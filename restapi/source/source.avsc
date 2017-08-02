@@ -5,7 +5,7 @@
   "doc": "Source details",
   "fields": [
     {"name": "id", "type": "string", "doc": "Source identifier" },
-    {"name": "type", "type": "org.radarcns.catalogue.PassiveSource", "doc": "Source name" },
+    {"name": "type", "type": "org.radarcns.catalogue.PassiveSourceType", "doc": "Source name" },
     {"name": "summary", "type": ["null", "SourceSummary"], "default": null, "doc": "Source details" }
   ]
 }

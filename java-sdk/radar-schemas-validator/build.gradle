@@ -36,6 +36,32 @@ dependencies {
 }
 
 //---------------------------------------------------------------------------//
+// Exchange configuration with Java code                                     //
+//---------------------------------------------------------------------------//
+ext.exchnageConfigPath = 'src/test/resources/gradle.properties'
+task exchangeConfig() {
+    doLast {
+        if (file(exchnageConfigPath).createNewFile()) {
+            file(exchnageConfigPath).write("project.group=${project.group}")
+        } else {
+            throw new GradleException("File for exchanginf configuration between Gradle and Java cannot be created. Error while managing file at ${exchnageConfigPath}")
+        }
+    }
+}
+compileJava.dependsOn exchangeConfig
+
+task cleanExchangeConfig() {
+    doLast {
+        if (file(exchnageConfigPath).exists()) {
+            if (!file(exchnageConfigPath).delete()) {
+                throw new GradleException("File at ${exchnageConfigPath} cannot be delated.")
+            }
+        }
+    }
+}
+clean.dependsOn cleanExchangeConfig
+
+//---------------------------------------------------------------------------//
 // Test definition                                                           //
 //---------------------------------------------------------------------------//
 test {

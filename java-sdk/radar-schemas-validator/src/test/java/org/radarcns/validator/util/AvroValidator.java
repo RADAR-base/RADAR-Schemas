@@ -22,7 +22,8 @@ import java.io.File;
 import java.io.IOException;
 import org.apache.avro.Schema;
 import org.apache.avro.Schema.Parser;
-import org.radarcns.validator.CatalogValidator.NameFolder;
+import org.radarcns.validator.SchemaCatalogValidator.NameFolder;
+import org.radarcns.validator.SchemaCatalogValidator.RootPath;
 import org.radarcns.validator.config.SkipConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,10 +42,13 @@ public final class AvroValidator {
      * TODO.
      * @param file TODO.
      * @param packageName TODO.
-     * @param parentName TODO.
      * @throws IOException TODO.
      */
-    public static void analiseFiles(File file, NameFolder packageName, String parentName)
+    public static void analiseFiles(File file, NameFolder packageName) throws IOException {
+        analiseFiles(file, packageName, null);
+    }
+
+    private static void analiseFiles(File file, NameFolder packageName, String parentName)
             throws IOException {
         if (file.isDirectory()) {
             for (File son : file.listFiles()) {
@@ -63,17 +67,29 @@ public final class AvroValidator {
             ValidationResult result;
 
             if (SkipConfig.contains(schema)) {
-                result = SchemaValidator.validate(schema, file.toPath(), packageName, parentName,
+                result = SchemaValidator.validate(schema, file.toPath(), packageName,
+                        isFirstLevel(file) ? null : parentName,
                         SkipConfig.isNameRecordEnable(schema),
                         SkipConfig.skippedNameFieldCheck(schema));
             } else {
-                result = SchemaValidator.validate(schema, file.toPath(), packageName, parentName);
+                result = SchemaValidator.validate(schema, file.toPath(), packageName,
+                        isFirstLevel(file) ? null : parentName);
             }
 
             assertTrue(getMessage(result), result.isValid());
 
             //TODO add file layout validation
         }
+    }
+
+    private static boolean isFirstLevel(File file) {
+        for (RootPath root : RootPath.values()) {
+            if (root.getPath().equals(file.getParentFile().getParentFile().toPath())) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private static String getMessage(ValidationResult result) {

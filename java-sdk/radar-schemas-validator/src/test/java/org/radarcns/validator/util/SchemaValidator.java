@@ -34,7 +34,7 @@ import java.util.Set;
 import org.apache.avro.Schema;
 import org.apache.avro.Schema.Field;
 import org.apache.avro.Schema.Type;
-import org.radarcns.validator.CatalogValidator.NameFolder;
+import org.radarcns.validator.SchemaCatalogValidator.NameFolder;
 import org.radarcns.validator.config.SkipConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -85,7 +85,6 @@ final class SchemaValidator {
         Objects.requireNonNull(schema);
         Objects.requireNonNull(pathToSchema);
         Objects.requireNonNull(root);
-        Objects.requireNonNull(subfolder);
 
         CACHE.put(schema.getFullName(), schema);
 
@@ -100,13 +99,17 @@ final class SchemaValidator {
                     result = getActiveValidator(pathToSchema, root, subfolder, skipRecordName,
                         skipFieldName).apply(schema);
                     break;
-                case MONITOR:
-                    result = getMonitorValidator(pathToSchema, root, subfolder, skipRecordName,
-                        skipFieldName).apply(schema);
+                case CATALOGUE:
+                    result = getGeneralRecordValidator(pathToSchema, root, subfolder,
+                        skipRecordName, skipFieldName).apply(schema);
                     break;
                 case KAFKA:
                     result = getGeneralRecordValidator(pathToSchema, root, subfolder,
                         skipRecordName, skipFieldName).apply(schema);
+                    break;
+                case MONITOR:
+                    result = getMonitorValidator(pathToSchema, root, subfolder, skipRecordName,
+                        skipFieldName).apply(schema);
                     break;
                 case PASSIVE:
                     result = getPassiveValidator(pathToSchema, root, subfolder, skipRecordName,

@@ -30,7 +30,7 @@ sensors:
   - name: HEART_RATE_FILTERED
     sample_rate: 1.0
     unit: BEATS_PER_MIN
-    data_type: VEDOR
+    data_type: VENDOR
     topic_name: android_pebble_2_heart_rate_filtered
     key_class: .kafka.key.KeyMeasurement
     value_class: .passive.pebble.Pebble2HeartRateFiltered

@@ -1,0 +1,14 @@
+#=============================== Experience Sampling Method (ESM) =================================#
+name: ESM
+assessment_type: QUESTIONNAIRE
+doc: Experience Sampling Method (ESM) definition
+topic_name: questionnaire_esm
+key_class: .kafka.key.KeyMeasurement
+value_class: .active.questionnaire.Questionnaire
+questions:
+  - lead: #TODO
+    content: #TODO
+    widget: #TODO
+    responses:
+      - text: #TODO
+        score: #TODO

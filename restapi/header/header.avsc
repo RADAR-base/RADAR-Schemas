@@ -6,7 +6,7 @@
   "fields": [
     { "name": "subjectId", "type": "string", "doc": "Subject identifier." },
     { "name": "sourceId", "type": "string", "doc": "Source identifier." },
-    { "name": "source", "type": ["org.radarcns.catalogue.ActiveSource", "org.radarcns.catalogue.PassiveSource"], "doc": "Source information, it can be a device or assessment name." },
+    { "name": "source", "type": ["org.radarcns.catalogue.ActiveSourceType", "org.radarcns.catalogue.PassiveSourceType"], "doc": "Source information, it can be a device or assessment name." },
     { "name": "type", "type": ["org.radarcns.catalogue.SensorName", "org.radarcns.active.questionnaire.QuestionnaireType"], "doc": "Report the sensor name or specific type of assessment." },
     { "name": "descriptiveStatistic", "type": "DescriptiveStatistic", "doc": "Statical value expressed by samples." },
     { "name": "unit", "type": "org.radarcns.catalogue.Unit", "doc": "Unit used by the source." },

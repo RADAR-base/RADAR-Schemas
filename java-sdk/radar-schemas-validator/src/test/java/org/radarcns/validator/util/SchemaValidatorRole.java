@@ -16,6 +16,7 @@ import static org.radarcns.validator.util.SchemaValidatorRole.Message.TIME_RECEI
 import static org.radarcns.validator.util.ValidationResult.invalid;
 import static org.radarcns.validator.util.ValidationResult.valid;
 import static org.radarcns.validator.util.ValidationSupport.extractEnumerationFields;
+import static org.radarcns.validator.util.ValidationSupport.getNamespace;
 import static org.radarcns.validator.util.ValidationSupport.getRecordName;
 
 import java.nio.file.Path;
@@ -28,7 +29,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.apache.avro.Schema;
 import org.apache.avro.Schema.Type;
-import org.radarcns.validator.CatalogValidator.NameFolder;
+import org.radarcns.validator.SchemaCatalogValidator.NameFolder;
 
 
 /*
@@ -53,8 +54,6 @@ import org.radarcns.validator.CatalogValidator.NameFolder;
 @SuppressWarnings("PMD.GodClass")
 //TODO split in record and enumerator.
 interface SchemaValidatorRole extends Function<Schema, ValidationResult> {
-
-    String NAME_SPACE = "org.radarcns";
 
     String TIME = "time";
     String TIME_RECEIVED = "timeReceived";
@@ -149,8 +148,7 @@ interface SchemaValidatorRole extends Function<Schema, ValidationResult> {
      * @return TODO
      */
     static SchemaValidatorRole validateNameSpace(NameFolder rootFolder, String subFolder) {
-        String expected = NAME_SPACE.concat(".").concat(
-                rootFolder.getName()).concat(".").concat(subFolder);
+        String expected = getNamespace(rootFolder, subFolder);
 
         return schema -> Objects.nonNull(schema.getNamespace())
                                 && schema.getNamespace() .matches(NAMESPACE_REGEX)

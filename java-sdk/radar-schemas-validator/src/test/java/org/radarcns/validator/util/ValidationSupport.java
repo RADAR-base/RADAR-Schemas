@@ -18,20 +18,27 @@ package org.radarcns.validator.util;
 
 import static org.radarcns.validator.util.SchemaValidatorRole.UNKNOWN;
 
+import java.io.IOException;
 import java.nio.file.Path;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Properties;
 import org.apache.avro.JsonProperties;
 import org.apache.avro.Schema;
 import org.apache.avro.Schema.Field;
 import org.apache.avro.Schema.Type;
+import org.radarcns.validator.SchemaCatalogValidator.NameFolder;
 
 /**
  * TODO.
  */
 final class ValidationSupport {
+
+    private static final String GRADLE_PROPERTIES = "gradle.properties";
+    private static final String PROPERTY_VALUE = "project.group";
+    private static String projectGroup;
 
     static final ValidationResult VALID = new ValidationResult() {
         public boolean isValid() {
@@ -50,6 +57,42 @@ final class ValidationSupport {
 
     static ValidationResult getValid() {
         return VALID;
+    }
+
+    /**
+     * TODO.
+     * @return TODO
+     */
+    public static String getProjectGroup() {
+        if (Objects.isNull(projectGroup)) {
+            try {
+                Properties prop = new Properties();
+                prop.load(ValidationSupport.class.getClassLoader().getResourceAsStream(
+                        GRADLE_PROPERTIES));
+                projectGroup = prop.getProperty(PROPERTY_VALUE);
+            } catch (IOException exc) {
+                throw new IllegalStateException(PROPERTY_VALUE.concat(
+                        " cannot be extracted from ").concat(GRADLE_PROPERTIES), exc);
+            }
+        }
+
+        return projectGroup;
+    }
+
+    /**
+     * TODO.
+     * @param rootFolder TODO
+     * @param subFolder TODO
+     * @return TODO
+     */
+    public static String getNamespace(NameFolder rootFolder, String subFolder) {
+        String expected = getProjectGroup().concat(".").concat(rootFolder.getName());
+
+        if (!Objects.isNull(subFolder)) {
+            expected = expected.concat(".").concat(subFolder);
+        }
+
+        return expected;
     }
 
     /**
