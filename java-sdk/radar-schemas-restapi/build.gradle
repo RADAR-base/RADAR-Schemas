@@ -9,6 +9,9 @@ task generateAvro(type: com.commercehub.gradle.plugin.avro.GenerateAvroJavaTask)
         include 'active/questionnaire/questionnaire.avsc'
         include 'monitor/application/application_server_status.avsc'
     }
+    source rootProject.fileTree('../specifications/schemas') {
+        include '**/*.avsc'
+    }
     source rootProject.fileTree('../restapi') {
         include '**/*.avsc'
     }

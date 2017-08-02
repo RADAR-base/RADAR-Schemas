@@ -1,0 +1,7 @@
+{
+  "namespace": "org.radarcns.specifications",
+  "type": "enum",
+  "name": "PassiveSource",
+  "doc": "Integrated passive sources",
+  "symbols": [ "ANDROID_PHONE" , "EMPATICA_E4", "PEBBLE_2", "BIOVOTION_VSM1", "UNKNOWN" ]
+}

@@ -51,7 +51,7 @@ sensors:
   - name: STEP_COUNT
     app_provider: .phone.PhoneSensorProvider
     sample_rate: #TODO
-    unit: NONDIMENSIONAL
+    unit: NON_DIMENSIONAL
     data_type: VENDOR
     topic_name: android_phone_step_count
     key_class: org.radarcns.kafka.key.KeyMeasurement
@@ -70,7 +70,7 @@ sensors:
   - name: PHONE_CALL
     app_provider: .phone.PhoneLogProvider
     sample_rate: #TODO
-    unit: NONDIMENSIONAL
+    unit: NON_DIMENSIONAL
     data_type: RAW
     topic_name: android_phone_call
     key_class: org.radarcns.kafka.key.KeyMeasurement
@@ -78,7 +78,7 @@ sensors:
   - name: PHONE_SMS
     app_provider: .phone.PhoneLogProvider
     sample_rate: #TODO
-    unit: NONDIMENSIONAL
+    unit: NON_DIMENSIONAL
     data_type: RAW
     topic_name: android_phone_sms
     key_class: org.radarcns.kafka.key.KeyMeasurement
@@ -86,7 +86,7 @@ sensors:
   - name: PHONE_SMS_UNREAD
     app_provider: .phone.PhoneLogProvider
     sample_rate: #TODO
-    unit: NONDIMENSIONAL
+    unit: NON_DIMENSIONAL
     data_type: RAW
     topic_name: android_phone_sms_unread
     key_class: org.radarcns.kafka.key.KeyMeasurement
@@ -95,7 +95,7 @@ sensors:
   - name: USAGE_EVENT
     app_provider: .phone.PhoneUsageProvider
     sample_rate: #TODO
-    unit: NONDIMENSIONAL
+    unit: NON_DIMENSIONAL
     data_type: RAW
     topic_name: android_phone_user_event
     key_class: org.radarcns.kafka.key.KeyMeasurement
@@ -103,7 +103,7 @@ sensors:
   - name: USER_INTERACTION
     app_provider: .phone.PhoneUsageProvider
     sample_rate: #TODO
-    unit: NONDIMENSIONAL
+    unit: NON_DIMENSIONAL
     data_type: RAW
     topic_name: android_phone_user_interaction
     key_class: org.radarcns.kafka.key.KeyMeasurement

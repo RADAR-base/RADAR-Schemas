@@ -1,5 +1,5 @@
 {
-  "namespace": "org.radarcns.avro.restapi.data",
+  "namespace": "org.radarcns.restapi.data",
   "type": "record",
   "name": "Quartiles",
   "doc": "List of quartiles",

@@ -1,5 +1,5 @@
 {
-  "namespace": "org.radarcns.avro.restapi.app",
+  "namespace": "org.radarcns.restapi.app",
   "type": "record",
   "name": "Application",
   "doc": "Smartphone application status",

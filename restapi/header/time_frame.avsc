@@ -1,5 +1,5 @@
 {
-  "namespace": "org.radarcns.avro.restapi.header",
+  "namespace": "org.radarcns.restapi.header",
   "type": "enum",
   "name": "TimeFrame",
   "doc": "Interval between two consecutive samples",

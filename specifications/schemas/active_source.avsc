@@ -1,0 +1,10 @@
+{
+  "namespace": "org.radarcns.specifications",
+  "type": "enum",
+  "name": "ActiveSource",
+  "doc": "List of integrated active sources.",
+  "symbols": [
+    "QUESTIONNAIRE",
+    "UNKNOWN"
+  ]
+}

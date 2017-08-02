@@ -21,7 +21,7 @@ sensors:
     aggregator_class: org.radarcns.kafka.aggregator.AggregatorDouble
   - name: BLOOD_VOLUME_PULSE
     sample_rate: 64.0
-    unit: NANOWATT
+    unit: NANO_WATT
     data_type: RAW
     topic_name: android_empatica_e4_blood_volume_pulse
     key_class: org.radarcns.kafka.key.KeyMeasurement
@@ -29,7 +29,7 @@ sensors:
     aggregator_class: org.radarcns.kafka.aggregator.AggregatorDouble
   - name: ELECTRODERMAL_ACTIVITY
     sample_rate: 4.0
-    unit: MICROSIEMENS
+    unit: MICRO_SIEMENS
     data_type: RAW
     topic_name: android_empatica_e4_electrodermal_activity
     key_class: org.radarcns.kafka.key.KeyMeasurement
@@ -51,7 +51,7 @@ sensors:
     key_class: org.radarcns.kafka.key.KeyMeasurement
     value_class: org.radarcns.passive.empatica.EmpaticaE4BatteryLevel
     aggregator_class: org.radarcns.kafka.aggregator.AggregatorDouble
-aggregators:
+processed:
   - name: HEART_RATE
     sample_rate: 1.0
     unit: BEATS_PER_MIN

@@ -1,0 +1,25 @@
+{
+  "namespace": "org.radarcns.specifications",
+  "type": "enum",
+  "name": "SensorName",
+  "doc": "Sensor types",
+  "symbols": [
+    "ACCELEROMETER" ,
+    "BATTERY",
+    "BLOOD_VOLUME_PULSE",
+    "BLOOD_PULSE_WAVE",
+    "ELECTRODERMAL_ACTIVITY",
+    "ENERGY",
+    "GALVANIC_SKIN_RESPONSE",
+    "HEART_RATE",
+    "HEART_RATE_FILTERED",
+    "HEART_RATE_VARIABILITY",
+    "INTER_BEAT_INTERVAL",
+    "LED",
+    "OXYGEN_SATURATION",
+    "PHOTOPLETHYSMOGRAPHY",
+    "RESPIRATION_RATE",
+    "THERMOMETER",
+    "UNKNOWN"
+   ]
+}

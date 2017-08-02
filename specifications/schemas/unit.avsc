@@ -1,0 +1,21 @@
+{
+  "namespace": "org.radarcns.specifications",
+  "type": "enum",
+  "name": "Unit",
+  "doc": "Measurement units",
+  "symbols": [
+    "BEATS_PER_MIN" ,
+    "CALORIES_PER_SEC",
+    "CELSIUS",
+    "G",
+    "KILO_OHM",
+    "MICRO_SIEMENS",
+    "MILLI_AMPERE",
+    "NANO_WATT",
+    "NON_DIMENSIONAL",
+    "PERCENTAGE",
+    "RMSSD_IN_MILLI_SEC",
+    "SECOND",
+    "UNKNOWN"
+  ]
+}

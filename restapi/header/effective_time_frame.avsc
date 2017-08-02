@@ -1,5 +1,5 @@
 {
-  "namespace": "org.radarcns.avro.restapi.header",
+  "namespace": "org.radarcns.restapi.header",
   "type": "record",
   "name": "EffectiveTimeFrame",
   "doc": "Provide the first and the last timestamp contained in the dataset",

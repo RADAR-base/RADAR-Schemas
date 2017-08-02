@@ -58,7 +58,8 @@ public class CatalogValidator {
         MONITOR("monitor"),
         PASSIVE("passive"),
         RESTAPI("restapi"),
-        SPECIFICATION("specification");
+        SCHEMAS("schemas"),
+        SPECIFICATIONS("specifications");
 
         private final String name;
 
@@ -74,14 +75,14 @@ public class CatalogValidator {
     /** Root paths. */
     public enum RootPath {
         COMMONS(Paths.get(
-                  new File(".").toURI()).getParent().getParent().getParent().resolve(
-                      NameFolder.COMMONS.getName())),
+                new File(".").toURI()).getParent().getParent().getParent().resolve(
+                        NameFolder.COMMONS.getName())),
         REST_API(Paths.get(
-                  new File(".").toURI()).getParent().getParent().getParent().resolve(
-                      NameFolder.RESTAPI.getName())),
-        SPECIFICATION(Paths.get(
-                  new File(".").toURI()).getParent().getParent().getParent().resolve(
-                      NameFolder.SPECIFICATION.getName()));
+                new File(".").toURI()).getParent().getParent().getParent().resolve(
+                        NameFolder.RESTAPI.getName())),
+        SPECIFICATIONS(Paths.get(
+                new File(".").toURI()).getParent().getParent().getParent().resolve(
+                        NameFolder.SPECIFICATIONS.getName()));
 
         private final Path path;
 
@@ -98,7 +99,7 @@ public class CatalogValidator {
     public enum RootFolder {
         COMMONS(new File(RootPath.COMMONS.getPath().toUri())),
         REST_API(new File(RootPath.REST_API.getPath().toUri())),
-        SPECIFICATION(new File(RootPath.SPECIFICATION.getPath().toUri()));
+        SPECIFICATIONS(new File(RootPath.SPECIFICATIONS.getPath().toUri()));
 
         private final File folder;
 
@@ -130,13 +131,15 @@ public class CatalogValidator {
     }
 
     /** Commons folders. */
-    /*public enum SpecificationFolder {
-        ACTIVE(new File(RootPath.SPECIFICATION.getPath().resolve(
-              NameFolder.ACTIVE.getName()).toUri())),
-        MONITOR(new File(RootPath.SPECIFICATION.getPath().resolve(
-              NameFolder.MONITOR.getName()).toUri())),
-        PASSIVE(new File(RootPath.SPECIFICATION.getPath().resolve(
-              NameFolder.PASSIVE.getName()).toUri()));
+    public enum SpecificationFolder {
+        ACTIVE(new File(RootPath.SPECIFICATIONS.getPath().resolve(
+                NameFolder.ACTIVE.getName()).toUri())),
+        MONITOR(new File(RootPath.SPECIFICATIONS.getPath().resolve(
+                NameFolder.MONITOR.getName()).toUri())),
+        PASSIVE(new File(RootPath.SPECIFICATIONS.getPath().resolve(
+                NameFolder.PASSIVE.getName()).toUri())),
+        SCHEMAS(new File(RootPath.SPECIFICATIONS.getPath().resolve(
+                NameFolder.SCHEMAS.getName()).toUri()));
 
         private final File folder;
 
@@ -147,7 +150,7 @@ public class CatalogValidator {
         public File getFolder() {
             return folder;
         }
-    }*/
+    }
 
     @Before
     public void validateSkipConfig() {
@@ -172,12 +175,12 @@ public class CatalogValidator {
         //TODO check whether it is possible to define a structure
     }
 
-    /*@Test
-    public void specification() {
-        assertEquals(true, RootFolder.SPECIFICATION.getFolder().isDirectory());
+    @Test
+    public void specifications() {
+        assertEquals(true, RootFolder.SPECIFICATIONS.getFolder().isDirectory());
 
         for (SpecificationFolder folder : SpecificationFolder.values()) {
             assertEquals(true, folder.getFolder().isDirectory());
         }
-    }*/
+    }
 }
