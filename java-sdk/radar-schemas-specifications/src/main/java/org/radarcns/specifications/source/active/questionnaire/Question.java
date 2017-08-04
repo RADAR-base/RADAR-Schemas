@@ -1,4 +1,4 @@
-package org.radarcns.specifications.util.active;
+package org.radarcns.specifications.source.active.questionnaire;
 
 /*
  * Copyright 2017 King's College London and The Hyve
@@ -19,6 +19,7 @@ package org.radarcns.specifications.util.active;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
+import org.radarcns.catalogue.RadarWidget;
 
 /**
  * TODO.
@@ -29,7 +30,7 @@ public class Question {
 
     private final String content;
 
-    private final String widget;
+    private final RadarWidget widget;
 
     private final List<Response> responses;
 
@@ -44,7 +45,7 @@ public class Question {
     public Question(
             @JsonProperty("lead") String lead,
             @JsonProperty("content") String content,
-            @JsonProperty("widget") String widget,
+            @JsonProperty("widget") RadarWidget widget,
             @JsonProperty("responses") List<Response> responses) {
         this.lead = lead;
         this.content = content;
@@ -60,7 +61,7 @@ public class Question {
         return content;
     }
 
-    public String getWidget() {
+    public RadarWidget getWidget() {
         return widget;
     }
 

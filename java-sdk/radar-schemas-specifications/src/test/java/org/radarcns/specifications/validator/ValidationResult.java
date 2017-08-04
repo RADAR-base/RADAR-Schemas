@@ -1,4 +1,4 @@
-package org.radarcns.specifications.util;
+package org.radarcns.specifications.validator;
 
 /*
  * Copyright 2017 King's College London and The Hyve
@@ -16,22 +16,22 @@ package org.radarcns.specifications.util;
  * limitations under the License.
  */
 
+import java.util.Optional;
+
 /**
  * TODO.
  */
-public abstract class Source {
+public interface ValidationResult {
 
-    private final String name;
-
-    /**
-     * TODO.
-     * @param name TODO
-     */
-    public Source(String name) {
-        this.name = name;
+    static ValidationResult valid() {
+        return ValidationSupport.getValid();
     }
 
-    public String getName() {
-        return name;
+    static ValidationResult invalid(String reason) {
+        return new Invalid(reason);
     }
+
+    boolean isValid();
+
+    Optional<String> getReason();
 }

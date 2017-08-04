@@ -21,10 +21,10 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.radarcns.validator.SchemaCatalogValidator.NameFolder.ACTIVE;
 import static org.radarcns.validator.SchemaCatalogValidator.NameFolder.MONITOR;
-import static org.radarcns.validator.util.SchemaValidatorRole.ENUMERATION_SYMBOL_REGEX;
-import static org.radarcns.validator.util.SchemaValidatorRole.FIELD_NAME_REGEX;
-import static org.radarcns.validator.util.SchemaValidatorRole.NAMESPACE_REGEX;
-import static org.radarcns.validator.util.SchemaValidatorRole.RECORD_NAME_REGEX;
+import static org.radarcns.validator.util.SchemaValidationRoles.ENUMERATION_SYMBOL_REGEX;
+import static org.radarcns.validator.util.SchemaValidationRoles.FIELD_NAME_REGEX;
+import static org.radarcns.validator.util.SchemaValidationRoles.NAMESPACE_REGEX;
+import static org.radarcns.validator.util.SchemaValidationRoles.RECORD_NAME_REGEX;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -38,7 +38,7 @@ import org.junit.Test;
 /**
  * TODO.
  */
-public class SchemaValidatorRoleTest {
+public class SchemaValidationRolesTest {
 
     private static final String ACTIVE_NAME_SPACE_MOCK = "org.radarcns.active.test";
     private static final String MONITOR_NAME_SPACE_MOCK = "org.radarcns.monitor.test";
@@ -93,7 +93,7 @@ public class SchemaValidatorRoleTest {
     public void fieldNameRegex() {
         assertTrue("interBeatInterval".matches(FIELD_NAME_REGEX));
         assertTrue("x".matches(FIELD_NAME_REGEX));
-        assertTrue(SchemaValidatorRole.TIME.matches(FIELD_NAME_REGEX));
+        assertTrue(SchemaValidationRoles.TIME.matches(FIELD_NAME_REGEX));
         assertTrue("subjectId".matches(FIELD_NAME_REGEX));
         assertTrue("listOfSeveralThings".matches(FIELD_NAME_REGEX));
         assertFalse("Time".matches(FIELD_NAME_REGEX));
@@ -124,7 +124,7 @@ public class SchemaValidatorRoleTest {
                     .fields()
                     .endRecord();
 
-        result = SchemaValidatorRole.validateNameSpace(ACTIVE,
+        result = SchemaValidationRoles.validateNameSpace(ACTIVE,
                 "questionnaire").apply(schema);
 
         assertTrue(result.isValid());
@@ -135,7 +135,7 @@ public class SchemaValidatorRoleTest {
                     .fields()
                     .endRecord();
 
-        result = SchemaValidatorRole.validateNameSpace(MONITOR, "test").apply(schema);
+        result = SchemaValidationRoles.validateNameSpace(MONITOR, "test").apply(schema);
 
         assertFalse(result.isValid());
 
@@ -151,7 +151,7 @@ public class SchemaValidatorRoleTest {
                     .fields()
                     .endRecord();
 
-        result = SchemaValidatorRole.validateNameSpace(MONITOR, "test").apply(schema);
+        result = SchemaValidationRoles.validateNameSpace(MONITOR, "test").apply(schema);
 
         assertFalse(result.isValid());
 
@@ -167,7 +167,7 @@ public class SchemaValidatorRoleTest {
                     .fields()
                     .endRecord();
 
-        result = SchemaValidatorRole.validateNameSpace(MONITOR, "test").apply(schema);
+        result = SchemaValidationRoles.validateNameSpace(MONITOR, "test").apply(schema);
 
         assertFalse(result.isValid());
 
@@ -189,7 +189,7 @@ public class SchemaValidatorRoleTest {
                     .fields()
                     .endRecord();
 
-        result = SchemaValidatorRole.validateRecordName(
+        result = SchemaValidationRoles.validateRecordName(
                 Paths.get("/path/to/schema.avsc")).apply(schema);
 
         assertTrue(result.isValid());
@@ -203,7 +203,7 @@ public class SchemaValidatorRoleTest {
                     .fields()
                     .endRecord();
 
-        result = SchemaValidatorRole.validateRecordName(filePath).apply(schema);
+        result = SchemaValidationRoles.validateRecordName(filePath).apply(schema);
 
         assertFalse(result.isValid());
 
@@ -213,7 +213,7 @@ public class SchemaValidatorRoleTest {
                 + fieldName + INVALID_TEXT),
                 result.getReason());
 
-        result = SchemaValidatorRole.validateRecordName(filePath, true).apply(schema);
+        result = SchemaValidationRoles.validateRecordName(filePath, true).apply(schema);
 
         assertTrue(result.isValid());
     }
@@ -229,7 +229,7 @@ public class SchemaValidatorRoleTest {
                 .fields()
                 .endRecord();
 
-        result = SchemaValidatorRole.validateFields().apply(schema);
+        result = SchemaValidationRoles.validateFields().apply(schema);
 
         assertFalse(result.isValid());
         assertEquals(Optional.of("Avro Record must have field list. "
@@ -242,7 +242,7 @@ public class SchemaValidatorRoleTest {
           .optionalBoolean("optional")
           .endRecord();
 
-        result = SchemaValidatorRole.validateFields().apply(schema);
+        result = SchemaValidationRoles.validateFields().apply(schema);
 
         assertTrue(result.isValid());
     }
@@ -259,7 +259,7 @@ public class SchemaValidatorRoleTest {
                     .requiredString("string")
                     .endRecord();
 
-        result = SchemaValidatorRole.validateTime().apply(schema);
+        result = SchemaValidationRoles.validateTime().apply(schema);
 
         assertFalse(result.isValid());
 
@@ -272,10 +272,10 @@ public class SchemaValidatorRoleTest {
                     .builder("org.radarcns.time.test")
                     .record(RECORD_NAME_MOCK)
                     .fields()
-                    .requiredDouble(SchemaValidatorRole.TIME)
+                    .requiredDouble(SchemaValidationRoles.TIME)
                     .endRecord();
 
-        result = SchemaValidatorRole.validateTime().apply(schema);
+        result = SchemaValidationRoles.validateTime().apply(schema);
 
         assertTrue(result.isValid());
     }
@@ -292,13 +292,13 @@ public class SchemaValidatorRoleTest {
                     .requiredString("field")
                     .endRecord();
 
-        result = SchemaValidatorRole.validateTimeCompleted().apply(schema);
+        result = SchemaValidationRoles.validateTimeCompleted().apply(schema);
         assertFalse(result.isValid());
         assertEquals(Optional.of("Any ACTIVE schema must have a \"timeCompleted\" field formatted "
                 + "in DOUBLE. org.radarcns.active.test." + RECORD_NAME_MOCK + INVALID_TEXT),
                 result.getReason());
 
-        result = SchemaValidatorRole.validateNotTimeCompleted().apply(schema);
+        result = SchemaValidationRoles.validateNotTimeCompleted().apply(schema);
         assertTrue(result.isValid());
 
         schema = SchemaBuilder
@@ -308,10 +308,10 @@ public class SchemaValidatorRoleTest {
                       .requiredDouble("timeCompleted")
                       .endRecord();
 
-        result = SchemaValidatorRole.validateTimeCompleted().apply(schema);
+        result = SchemaValidationRoles.validateTimeCompleted().apply(schema);
         assertTrue(result.isValid());
 
-        result = SchemaValidatorRole.validateNotTimeCompleted().apply(schema);
+        result = SchemaValidationRoles.validateNotTimeCompleted().apply(schema);
         assertFalse(result.isValid());
         assertEquals(Optional.of("\"timeCompleted\" is allow only in ACTIVE schemas. "
                 + getFinalMessage(ACTIVE_NAME_SPACE_MOCK, RECORD_NAME_MOCK)),
@@ -330,13 +330,13 @@ public class SchemaValidatorRoleTest {
                     .requiredString("field")
                     .endRecord();
 
-        result = SchemaValidatorRole.validateTimeReceived().apply(schema);
+        result = SchemaValidationRoles.validateTimeReceived().apply(schema);
         assertFalse(result.isValid());
         assertEquals(Optional.of("Any PASSIVE schema must have a \"timeReceived\" field formatted "
                 + "in DOUBLE. org.radarcns.monitor.test." + RECORD_NAME_MOCK + INVALID_TEXT),
                 result.getReason());
 
-        result = SchemaValidatorRole.validateNotTimeReceived().apply(schema);
+        result = SchemaValidationRoles.validateNotTimeReceived().apply(schema);
         assertTrue(result.isValid());
 
         schema = SchemaBuilder
@@ -346,10 +346,10 @@ public class SchemaValidatorRoleTest {
                     .requiredDouble("timeReceived")
                     .endRecord();
 
-        result = SchemaValidatorRole.validateTimeReceived().apply(schema);
+        result = SchemaValidationRoles.validateTimeReceived().apply(schema);
         assertTrue(result.isValid());
 
-        result = SchemaValidatorRole.validateNotTimeReceived().apply(schema);
+        result = SchemaValidationRoles.validateNotTimeReceived().apply(schema);
         assertFalse(result.isValid());
         assertEquals(Optional.of("\"timeReceived\" is allow only in PASSIVE schemas. "
                 + getFinalMessage(MONITOR_NAME_SPACE_MOCK, RECORD_NAME_MOCK)),
@@ -368,7 +368,7 @@ public class SchemaValidatorRoleTest {
                 .requiredString(FIELD_NUMBER_MOCK + "value")
                 .endRecord();
 
-        result = SchemaValidatorRole.validateFieldName().apply(schema);
+        result = SchemaValidationRoles.validateFieldName().apply(schema);
         assertFalse(result.isValid());
 
         String message = "Field name does not respect lowerCamelCase name convention. "
@@ -386,7 +386,7 @@ public class SchemaValidatorRoleTest {
                 .requiredString(FIELD_NUMBER_MOCK)
                 .endRecord();
 
-        result = SchemaValidatorRole.validateFieldName().apply(schema);
+        result = SchemaValidationRoles.validateFieldName().apply(schema);
         assertFalse(result.isValid());
         assertEquals(Optional.of(message
                 + getFinalMessage(MONITOR_NAME_SPACE_MOCK, RECORD_NAME_MOCK)),
@@ -397,11 +397,11 @@ public class SchemaValidatorRoleTest {
           .record(RECORD_NAME_MOCK)
           .fields()
           .requiredString(FIELD_NUMBER_MOCK)
-          .requiredString(SchemaValidatorRole.TIME)
+          .requiredString(SchemaValidationRoles.TIME)
           .endRecord();
 
-        result = SchemaValidatorRole.validateFieldName(
-                Collections.singleton(SchemaValidatorRole.TIME)).apply(schema);
+        result = SchemaValidationRoles.validateFieldName(
+                Collections.singleton(SchemaValidationRoles.TIME)).apply(schema);
         assertFalse(result.isValid());
         assertEquals(Optional.of(message
                 + getFinalMessage(MONITOR_NAME_SPACE_MOCK,RECORD_NAME_MOCK)),
@@ -414,7 +414,7 @@ public class SchemaValidatorRoleTest {
               .requiredDouble("timeReceived")
               .endRecord();
 
-        result = SchemaValidatorRole.validateFieldName().apply(schema);
+        result = SchemaValidationRoles.validateFieldName().apply(schema);
         assertTrue(result.isValid());
 
         schema = SchemaBuilder
@@ -422,10 +422,10 @@ public class SchemaValidatorRoleTest {
               .record(RECORD_NAME_MOCK)
               .fields()
               .requiredString(FIELD_NUMBER_MOCK)
-              .requiredString(SchemaValidatorRole.TIME)
+              .requiredString(SchemaValidationRoles.TIME)
               .endRecord();
 
-        result = SchemaValidatorRole.validateFieldName(
+        result = SchemaValidationRoles.validateFieldName(
                 Collections.singleton(FIELD_NUMBER_MOCK)).apply(schema);
         assertTrue(result.isValid());
     }
@@ -441,7 +441,7 @@ public class SchemaValidatorRoleTest {
                 + "{\"name\": \"userId\", \"type\": \"string\" , \"doc\": \"Documentation\"},"
                 + "{\"name\": \"sourceId\", \"type\": \"string\"} ]}");
 
-        result = SchemaValidatorRole.validateFieldDocumentation().apply(schema);
+        result = SchemaValidationRoles.validateFieldDocumentation().apply(schema);
 
         assertFalse(result.isValid());
         assertEquals(Optional.of("Documentation is mandatory for any schema and field. The "
@@ -455,7 +455,7 @@ public class SchemaValidatorRoleTest {
                 + "\"type\": \"record\", \"name\": \"key\", \"type\": \"record\", \"fields\": ["
                 + "{\"name\": \"userId\", \"type\": \"string\" , \"doc\": \"Documentation.\"}]}");
 
-        result = SchemaValidatorRole.validateFieldDocumentation().apply(schema);
+        result = SchemaValidationRoles.validateFieldDocumentation().apply(schema);
         assertTrue(result.isValid());
     }
 
@@ -470,7 +470,7 @@ public class SchemaValidatorRoleTest {
               .fields()
               .endRecord();
 
-        result = SchemaValidatorRole.validateSchemaDocumentation().apply(schema);
+        result = SchemaValidationRoles.validateSchemaDocumentation().apply(schema);
 
         assertFalse(result.isValid());
         assertEquals(Optional.of("Documentation is mandatory for any schema and field. The "
@@ -488,7 +488,7 @@ public class SchemaValidatorRoleTest {
               .fields()
               .endRecord();
 
-        result = SchemaValidatorRole.validateSchemaDocumentation().apply(schema);
+        result = SchemaValidationRoles.validateSchemaDocumentation().apply(schema);
 
         assertTrue(result.isValid());
     }
@@ -501,13 +501,13 @@ public class SchemaValidatorRoleTest {
         schema = SchemaBuilder.enumeration(ENUMERATOR_NAME_SPACE_MOCK)
             .symbols("TEST", UNKNOWN_MOCK);
 
-        result = SchemaValidatorRole.validateSymbols().apply(schema);
+        result = SchemaValidationRoles.validateSymbols().apply(schema);
 
         assertTrue(result.isValid());
 
         schema = SchemaBuilder.enumeration(ENUMERATOR_NAME_SPACE_MOCK).symbols();
 
-        result = SchemaValidatorRole.validateSymbols().apply(schema);
+        result = SchemaValidationRoles.validateSymbols().apply(schema);
 
         assertFalse(result.isValid());
         assertEquals(Optional.of("Avro Enumerator must have symbol list. "
@@ -526,7 +526,7 @@ public class SchemaValidatorRoleTest {
               .enumeration(enumName)
               .symbols(connected, "DISCONNECTED", UNKNOWN_MOCK);
 
-        result = SchemaValidatorRole.validateEnumerationSymbols().apply(schema);
+        result = SchemaValidationRoles.validateEnumerationSymbols().apply(schema);
 
         assertTrue(result.isValid());
 
@@ -540,7 +540,7 @@ public class SchemaValidatorRoleTest {
         schema = new Parser().parse(schemaTxtInit.concat(
                 "\"CONNECTED\", \"NOT_CONNECTED\", \"" + UNKNOWN_MOCK + "\"".concat(schemaTxtEnd)));
 
-        result = SchemaValidatorRole.validateEnumerationSymbols().apply(schema);
+        result = SchemaValidationRoles.validateEnumerationSymbols().apply(schema);
 
         assertTrue(result.isValid());
 
@@ -548,7 +548,7 @@ public class SchemaValidatorRoleTest {
               .enumeration(enumName)
               .symbols(connected, "disconnected", UNKNOWN_MOCK);
 
-        result = SchemaValidatorRole.validateEnumerationSymbols().apply(schema);
+        result = SchemaValidationRoles.validateEnumerationSymbols().apply(schema);
 
         String invalidMessage = "Enumerator items should be written in uppercase characters "
                 + "separated by underscores. "
@@ -561,7 +561,7 @@ public class SchemaValidatorRoleTest {
               .enumeration(enumName)
               .symbols(connected, "Not_Connected", UNKNOWN_MOCK);
 
-        result = SchemaValidatorRole.validateEnumerationSymbols().apply(schema);
+        result = SchemaValidationRoles.validateEnumerationSymbols().apply(schema);
 
         assertFalse(result.isValid());
         assertEquals(Optional.of(invalidMessage), result.getReason());
@@ -570,7 +570,7 @@ public class SchemaValidatorRoleTest {
               .enumeration(enumName)
               .symbols(connected, "NotConnected", UNKNOWN_MOCK);
 
-        result = SchemaValidatorRole.validateEnumerationSymbols().apply(schema);
+        result = SchemaValidationRoles.validateEnumerationSymbols().apply(schema);
 
         assertFalse(result.isValid());
         assertEquals(Optional.of(invalidMessage), result.getReason());
@@ -578,7 +578,7 @@ public class SchemaValidatorRoleTest {
         schema = new Parser().parse(schemaTxtInit.concat(
                 "\"CONNECTED\", \"Not_Connected\", \"" + UNKNOWN_MOCK + "\"".concat(schemaTxtEnd)));
 
-        result = SchemaValidatorRole.validateEnumerationSymbols().apply(schema);
+        result = SchemaValidationRoles.validateEnumerationSymbols().apply(schema);
 
         assertFalse(result.isValid());
         assertEquals(Optional.of(invalidMessage), result.getReason());
@@ -586,7 +586,7 @@ public class SchemaValidatorRoleTest {
         schema = new Parser().parse(schemaTxtInit.concat(
                 "\"Connected\", \"NotConnected\", \"" + UNKNOWN_MOCK + "\"".concat(schemaTxtEnd)));
 
-        result = SchemaValidatorRole.validateEnumerationSymbols().apply(schema);
+        result = SchemaValidationRoles.validateEnumerationSymbols().apply(schema);
 
         assertFalse(result.isValid());
         assertEquals(Optional.of(invalidMessage), result.getReason());
@@ -600,14 +600,14 @@ public class SchemaValidatorRoleTest {
         schema = SchemaBuilder.enumeration(ENUMERATOR_NAME_SPACE_MOCK)
             .symbols("VALUE", UNKNOWN_MOCK);
 
-        result = SchemaValidatorRole.validateUnknownSymbol().apply(schema);
+        result = SchemaValidationRoles.validateUnknownSymbol().apply(schema);
 
         assertTrue(result.isValid());
 
         schema = SchemaBuilder.enumeration(ENUMERATOR_NAME_SPACE_MOCK)
             .symbols("FIELD", "UN_KNOWN");
 
-        result = SchemaValidatorRole.validateUnknownSymbol().apply(schema);
+        result = SchemaValidationRoles.validateUnknownSymbol().apply(schema);
 
         assertFalse(result.isValid());
         assertEquals(Optional.of("Enumerator must contain the \"UNKNOWN\" symbol. It is "
@@ -618,7 +618,7 @@ public class SchemaValidatorRoleTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void defaultValueExceptionTest() {
-        SchemaValidatorRole.validateDefault().apply(
+        SchemaValidationRoles.validateDefault().apply(
                 SchemaBuilder.enumeration(ENUMERATOR_NAME_SPACE_MOCK)
                     .symbols("VAL", UNKNOWN_MOCK));
     }
@@ -648,7 +648,7 @@ public class SchemaValidatorRoleTest {
             .nullableBytes("nullableBytes", new byte[1])  //check with text schema
             .endRecord();
 
-        result = SchemaValidatorRole.validateDefault().apply(schema);
+        result = SchemaValidationRoles.validateDefault().apply(schema);
 
         assertTrue(result.isValid());*/
 
@@ -659,7 +659,7 @@ public class SchemaValidatorRoleTest {
             + "[ {\"name\": \"nullableBytes\", \"type\": [ \"null\", \"bytes\"], "
             + "\"default\": \"null\" } ] }");
 
-        result = SchemaValidatorRole.validateDefault().apply(schema);
+        result = SchemaValidationRoles.validateDefault().apply(schema);
 
         assertTrue(result.isValid());
 
@@ -670,7 +670,7 @@ public class SchemaValidatorRoleTest {
             .nullableDouble("nullableDouble", -1)
             .endRecord();
 
-        result = SchemaValidatorRole.validateDefault().apply(schema);*/
+        result = SchemaValidationRoles.validateDefault().apply(schema);*/
 
         /*assertFalse(result.isValid());
         assertEquals(Optional.of(invalidMessage), result.getReason());
@@ -682,7 +682,7 @@ public class SchemaValidatorRoleTest {
             .nullableInt("nullableInt", -1)
             .endRecord();
 
-        result = SchemaValidatorRole.validateDefault().apply(schema);
+        result = SchemaValidationRoles.validateDefault().apply(schema);
 
         assertFalse(result.isValid());
         assertEquals(Optional.of(invalidMessage), result.getReason());
@@ -694,7 +694,7 @@ public class SchemaValidatorRoleTest {
             .nullableLong("nullableLong", -1)
             .endRecord();
 
-        result = SchemaValidatorRole.validateDefault().apply(schema);
+        result = SchemaValidationRoles.validateDefault().apply(schema);
 
         assertFalse(result.isValid());
         assertEquals(Optional.of(invalidMessage), result.getReason());*/
@@ -704,7 +704,7 @@ public class SchemaValidatorRoleTest {
             + "\"enum\", \"symbols\": [\"Connected\", \"NotConnected\", \"UNKNOWN\"] }, "
             + "\"default\": \"UNKNOWN\" } ] }");
 
-        result = SchemaValidatorRole.validateDefault().apply(schema);
+        result = SchemaValidationRoles.validateDefault().apply(schema);
 
         assertTrue(result.isValid());
 
@@ -713,7 +713,7 @@ public class SchemaValidatorRoleTest {
             + "\"enum\", \"symbols\": [\"Connected\", \"NotConnected\", \"UNKNOWN\"] }, "
             + "\"default\": \"null\" } ] }");
 
-        result = SchemaValidatorRole.validateDefault().apply(schema);
+        result = SchemaValidationRoles.validateDefault().apply(schema);
 
         String invalidMessage = "Any NULLABLE Avro field must specify a default value. "
                 + "The allowed default values are: \"UNKNOWN\" for ENUMERATION, \"MIN_VALUE\" or "
@@ -729,7 +729,7 @@ public class SchemaValidatorRoleTest {
             + "[ {\"name\": \"nullableBoolean\", \"type\": [ \"null\", \"boolean\"], "
             + "\"default\": \"null\" } ] }");
 
-        result = SchemaValidatorRole.validateDefault().apply(schema);
+        result = SchemaValidationRoles.validateDefault().apply(schema);
 
         assertFalse(result.isValid());
         assertEquals(Optional.of(invalidMessage), result.getReason());*/

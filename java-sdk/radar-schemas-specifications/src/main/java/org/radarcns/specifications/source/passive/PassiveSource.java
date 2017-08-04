@@ -1,4 +1,4 @@
-package org.radarcns.specifications.util.passive;
+package org.radarcns.specifications.source.passive;
 
 /*
  * Copyright 2017 King's College London and The Hyve
@@ -18,13 +18,18 @@ package org.radarcns.specifications.util.passive;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import java.util.List;
-import org.radarcns.specifications.util.Source;
+import java.util.HashSet;
+import java.util.Set;
+import org.radarcns.catalogue.PassiveSourceType;
+import org.radarcns.specifications.source.Source;
+import org.radarcns.specifications.util.Utils;
 
 /**
  * TODO.
  */
 public class PassiveSource extends Source {
+
+    private final PassiveSourceType type;
 
     private final String vendor;
 
@@ -32,9 +37,9 @@ public class PassiveSource extends Source {
 
     private final String appProvider;
 
-    private final List<Sensor> sensors;
+    private final Set<Sensor> sensors;
 
-    private final List<Processor> processors;
+    private final Set<Processor> processors;
 
     /**
      * TODO.
@@ -48,15 +53,21 @@ public class PassiveSource extends Source {
     public PassiveSource(
             @JsonProperty("vendor") String vendor,
             @JsonProperty("model") String model,
+            @JsonProperty("doc") String description,
             @JsonProperty("app_provider") String appProvider,
-            @JsonProperty("sensors") List<Sensor> sensors,
-            @JsonProperty("processors") List<Processor> processors) {
-        super(vendor.concat("_").concat(model));
+            @JsonProperty("sensors") Set<Sensor> sensors,
+            @JsonProperty("processors") Set<Processor> processors) {
+        super(vendor.concat("_").concat(model), description);
+        this.type = PassiveSourceType.valueOf(vendor.concat("_").concat(model));
         this.vendor = vendor;
         this.model = model;
         this.appProvider = appProvider;
         this.sensors = sensors;
         this.processors = processors;
+    }
+
+    public PassiveSourceType getType() {
+        return type;
     }
 
     public String getVendor() {
@@ -68,14 +79,29 @@ public class PassiveSource extends Source {
     }
 
     public String getAppProvider() {
-        return appProvider;
+        return Utils.getProjectGroup().concat(appProvider);
     }
 
-    public List<Sensor> getSensors() {
-        return sensors;
+    public Set<Sensor> getSensors() {
+        return sensors == null ? new HashSet<>() : sensors;
     }
 
-    public List<Processor> getProcessors() {
-        return processors;
+    public Set<Processor> getProcessors() {
+        return processors == null ? new HashSet<>() : processors;
+    }
+
+    @Override
+    public Set<String> getTopics() {
+        Set<String> set = new HashSet<>();
+
+        if (sensors != null && !sensors.isEmpty()) {
+            sensors.forEach(sensor -> set.addAll(sensor.getTopics()));
+        }
+
+        if (processors != null && !processors.isEmpty()) {
+            processors.forEach(proc -> set.addAll(proc.getTopics()));
+        }
+
+        return set;
     }
 }

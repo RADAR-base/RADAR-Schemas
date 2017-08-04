@@ -1,5 +1,5 @@
 {
-  "namespace": "org.radarcns.restapi.header",
+  "namespace": "org.radarcns.catalogue",
   "type": "enum",
   "name": "TimeFrame",
   "doc": "Interval between two consecutive samples",
@@ -10,6 +10,7 @@
     "TEN_MIN" ,
     "ONE_HOUR" ,
     "ONE_DAY" ,
-    "ONE_WEEK"
+    "ONE_WEEK",
+    "UNKNOWN"
     ]
 }

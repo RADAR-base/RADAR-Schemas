@@ -45,7 +45,7 @@ import org.radarcns.validator.config.SkipConfig;
  *      <li>passive</li>
  *    </ul>
  * </ul>
- * At moment, the {@code restapi} does not have a well defined structure.
+ * At moment, the {@code restApi} does not have a well defined structure.
  * TODO.
  */
 public class SchemaCatalogValidator {
@@ -58,7 +58,7 @@ public class SchemaCatalogValidator {
         KAFKA("kafka"),
         MONITOR("monitor"),
         PASSIVE("passive"),
-        REST_API("restapi"),
+        REST_API("restApi"),
         SPECIFICATIONS("specifications");
 
         private final String name;
@@ -153,11 +153,19 @@ public class SchemaCatalogValidator {
     }
 
     @Before
+    /**
+     * Verifies that {@link SkipConfig} is valid. Without this configuration, the validation cannot
+     *      take place.
+     */
     public void validateSkipConfig() {
         assertTrue(SkipConfig.validate());
     }
 
     @Test
+    /**
+     * Validates the {@code RADAR-Schemas/commons} folder applying specific tests to each subfolder.
+     * @see CommonsValidator
+     */
     public void commons() throws IOException {
         assertEquals(true, RootFolder.COMMONS.getFolder().isDirectory());
 
@@ -169,18 +177,25 @@ public class SchemaCatalogValidator {
     }
 
     @Test
-    public void restapi() {
+    //TODO
+    public void restApi() {
         assertEquals(true, RootFolder.REST_API.getFolder().isDirectory());
 
         //TODO check whether it is possible to define a structure
     }
 
     @Test
+    /**
+     * Checks only the folder structure, the validation is left the to the
+     *      {@code radar-schemas-specifications} module.
+     */
     public void specifications() {
         assertEquals(true, RootFolder.SPECIFICATIONS.getFolder().isDirectory());
 
         for (SpecificationFolder folder : SpecificationFolder.values()) {
             assertEquals(true, folder.getFolder().isDirectory());
         }
+
+        //TODO verify that there are only YML files
     }
 }

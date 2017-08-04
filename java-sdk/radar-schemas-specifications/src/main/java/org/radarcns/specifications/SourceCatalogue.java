@@ -16,23 +16,27 @@ package org.radarcns.specifications;
  * limitations under the License.
  */
 
+import static java.util.Collections.singleton;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import org.radarcns.active.questionnaire.QuestionnaireType;
 import org.radarcns.catalogue.ActiveSourceType;
 import org.radarcns.catalogue.MonitorSourceType;
 import org.radarcns.catalogue.PassiveSourceType;
 import org.radarcns.config.YamlConfigLoader;
-import org.radarcns.specifications.util.Source;
-import org.radarcns.specifications.util.active.ActiveSource;
-import org.radarcns.specifications.util.active.QuestionnaireSource;
-import org.radarcns.specifications.util.passive.MonitorSource;
-import org.radarcns.specifications.util.passive.PassiveSource;
-import org.radarcns.specifications.util.passive.Sensor;
+import org.radarcns.specifications.source.Source;
+import org.radarcns.specifications.source.active.questionnaire.QuestionnaireSource;
+import org.radarcns.specifications.source.passive.MonitorSource;
+import org.radarcns.specifications.source.passive.PassiveSource;
+import org.radarcns.specifications.source.passive.Processor;
+import org.radarcns.specifications.source.passive.Sensor;
 
 /**
  * TODO.
@@ -58,20 +62,30 @@ public class SourceCatalogue {
 
     public static final String BASE_FOLDER_NAME = "specifications";
 
-    private static final String YAML_EXTENSION = ".yml";
+    public static final String YAML_EXTENSION = ".yml";
 
-    private static final Path BASE_PATH = Paths.get(new File(".").toURI())
+    public static final Path BASE_PATH = Paths.get(new File(".").toURI())
             .getParent().getParent().getParent().resolve(BASE_FOLDER_NAME);
 
     private static final Map<QuestionnaireType, QuestionnaireSource> ACTIVE_SOURCES;
     private static final Map<MonitorSourceType, MonitorSource> MONITOR_SOURCES;
     private static final Map<PassiveSourceType, PassiveSource> PASSIVE_SOURCES;
 
+    private static final Set<Source> SOURCES;
+
     static {
         try {
             ACTIVE_SOURCES = initActiveSources();
             MONITOR_SOURCES = initMonitorSources();
             PASSIVE_SOURCES = initPassiveSources();
+
+            int initCapacity = (int) Math.ceil((ACTIVE_SOURCES.size()
+                    + MONITOR_SOURCES.size() + PASSIVE_SOURCES.size()) * 100d / 75d);
+            SOURCES = new HashSet<>(initCapacity);
+
+            SOURCES.addAll(ACTIVE_SOURCES.values());
+            SOURCES.addAll(MONITOR_SOURCES.values());
+            SOURCES.addAll(PASSIVE_SOURCES.values());
         } catch (IOException exc) {
             throw new ExceptionInInitializerError(exc);
         }
@@ -132,15 +146,97 @@ public class SourceCatalogue {
         return map;
     }
 
+    /**
+     * TODO.
+     * @return TODO
+     */
     public static Map<QuestionnaireType, QuestionnaireSource> getActiveSources() {
         return ACTIVE_SOURCES;
     }
 
+    /**
+     * TODO.
+     * @param type TODO
+     * @return TODO
+     */
+    public static QuestionnaireSource getActiveSource(QuestionnaireType type) {
+        return ACTIVE_SOURCES.get(type);
+    }
+
+    /**
+     * TODO.
+     * @return TODO
+     */
     public static Map<MonitorSourceType, MonitorSource> getMonitorSources() {
         return MONITOR_SOURCES;
     }
 
+    /**
+     * TODO.
+     * @param type TODO
+     * @return TODO
+     */
+    public static MonitorSource getMonitorSource(MonitorSourceType type) {
+        return MONITOR_SOURCES.get(type);
+    }
+
+    /**
+     * TODO.
+     * @return TODO
+     */
     public static Map<PassiveSourceType, PassiveSource> getPassiveSources() {
         return PASSIVE_SOURCES;
+    }
+
+    /**
+     * TODO.
+     * @param type TODO
+     * @return TODO
+     */
+    public static PassiveSource getPassiveSource(PassiveSourceType type) {
+        return PASSIVE_SOURCES.get(type);
+    }
+
+    /**
+     * TODO.
+     * @return TODO
+     */
+    public static Set<String> getTopics() {
+        Set<String> set = new HashSet<>();
+        SOURCES.forEach(source -> set.addAll(source.getTopics()));
+        return set;
+    }
+
+    /**
+     * TODO.
+     * @return TODO
+     */
+    public static Map<String, Map<String, Set<String>>> getTopicsVerbose() {
+        Map<String, Map<String, Set<String>>> map = new HashMap<>();
+
+        for (QuestionnaireSource source : ACTIVE_SOURCES.values()) {
+            Map<String, Set<String>> details = new HashMap<>();
+            details.put(source.getQuestionnaireType().name(), singleton(source.getTopic()));
+            map.put(ActiveSourceType.QUESTIONNAIRE.name(), details);
+        }
+
+        for (MonitorSource source : MONITOR_SOURCES.values()) {
+            Map<String, Set<String>> details = new HashMap<>();
+            details.put(source.getType().name(), source.getTopics());
+            map.put(NameFolder.MONITOR.getName().toUpperCase(), details);
+        }
+
+        for (PassiveSource source : PASSIVE_SOURCES.values()) {
+            Map<String, Set<String>> details = new HashMap<>();
+            for (Sensor sensor : source.getSensors()) {
+                details.put(sensor.getName().name(), sensor.getTopics());
+            }
+            for (Processor proc : source.getProcessors()) {
+                details.put(proc.getName().name(), proc.getTopics());
+            }
+            map.put(source.getType().name(), details);
+        }
+
+        return map;
     }
 }

@@ -16,7 +16,7 @@ package org.radarcns.validator.util;
  * limitations under the License.
  */
 
-import static org.radarcns.validator.util.SchemaValidatorRole.UNKNOWN;
+import static org.radarcns.validator.util.SchemaValidationRoles.UNKNOWN;
 
 import java.io.IOException;
 import java.nio.file.Path;

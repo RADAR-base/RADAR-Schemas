@@ -1,4 +1,4 @@
-package org.radarcns.specifications.util.active;
+package org.radarcns.specifications.source.active;
 
 /*
  * Copyright 2017 King's College London and The Hyve
@@ -18,56 +18,57 @@ package org.radarcns.specifications.util.active;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.radarcns.specifications.util.Source;
+import java.util.Collections;
+import java.util.Set;
+import org.radarcns.specifications.source.Source;
+import org.radarcns.specifications.util.Utils;
 
 /**
  * TODO.
  */
 public abstract class ActiveSource extends Source {
 
-    private final String topicName;
+    private final String topic;
 
-    private final String keyClass;
+    private final String key;
 
-    private final String valueClass;
-
-    private final String doc;
+    private final String value;
 
     /**
      * TODO.
      * @param name TODO
-     * @param topicName TODO
-     * @param keyClass TODO
-     * @param valueClass TODO
+     * @param topic TODO
+     * @param key TODO
+     * @param value TODO
      * @param description TODO
      */
     @JsonCreator
     public ActiveSource(
             @JsonProperty("name") String name,
-            @JsonProperty("topic_name") String topicName,
-            @JsonProperty("key_class") String keyClass,
-            @JsonProperty("value_class") String valueClass,
+            @JsonProperty("topic") String topic,
+            @JsonProperty("key") String key,
+            @JsonProperty("value") String value,
             @JsonProperty("doc") String description) {
-        super(name);
-        this.topicName = topicName;
-        this.keyClass = keyClass;
-        this.valueClass = valueClass;
-        this.doc = description;
+        super(name, description);
+        this.topic = topic;
+        this.key = key;
+        this.value = value;
     }
 
-    public String getTopicName() {
-        return topicName;
+    public String getTopic() {
+        return topic;
     }
 
-    public String getKeyClass() {
-        return keyClass;
+    public String getKey() {
+        return Utils.getProjectGroup().concat(key);
     }
 
-    public String getValueClass() {
-        return valueClass;
+    public String getValue() {
+        return Utils.getProjectGroup().concat(value);
     }
 
-    public String getDoc() {
-        return doc;
+    @Override
+    public Set<String> getTopics() {
+        return Collections.singleton(topic);
     }
 }

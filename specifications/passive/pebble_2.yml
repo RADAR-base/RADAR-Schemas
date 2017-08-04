@@ -7,31 +7,31 @@ sensors:
     sample_rate: 10.0
     unit: G
     data_type: RAW
-    topic_name: android_pebble_2_acceleration
-    key_class: .kafka.key.KeyMeasurement
-    value_class: .passive.pebble.Pebble2Acceleration
-    aggregator_class: .kafka.aggregator.AggregatorDoubleArray
+    topic: android_pebble_2_acceleration
+    key: .kafka.key.KeyMeasurement
+    value: .passive.pebble.Pebble2Acceleration
+    aggregator: .kafka.aggregator.AggregatorDoubleArray
   - name: BATTERY
     sample_rate: 1.0
     unit: PERCENTAGE
     data_type: RAW
-    topic_name: android_pebble_2_battery_level
-    key_class: .kafka.key.KeyMeasurement
-    value_class: .passive.pebble.Pebble2BatteryLevel
-    aggregator_class: .kafka.aggregator.AggregatorDouble
+    topic: android_pebble_2_battery_level
+    key: .kafka.key.KeyMeasurement
+    value: .passive.pebble.Pebble2BatteryLevel
+    aggregator: .kafka.aggregator.AggregatorDouble
   - name: HEART_RATE
     sample_rate: 1.0
     unit: BEATS_PER_MIN
     data_type: RAW
-    topic_name: android_pebble_2_heart_rate
-    key_class: .kafka.key.KeyMeasurement
-    value_class: .passive.pebble.Pebble2HeartRate
-    aggregator_class: .kafka.aggregator.AggregatorDouble
+    topic: android_pebble_2_heart_rate
+    key: .kafka.key.KeyMeasurement
+    value: .passive.pebble.Pebble2HeartRate
+    aggregator: .kafka.aggregator.AggregatorDouble
   - name: HEART_RATE_FILTERED
     sample_rate: 1.0
     unit: BEATS_PER_MIN
     data_type: VENDOR
-    topic_name: android_pebble_2_heart_rate_filtered
-    key_class: .kafka.key.KeyMeasurement
-    value_class: .passive.pebble.Pebble2HeartRateFiltered
-    aggregator_class: .kafka.aggregator.AggregatorDouble
+    topic: android_pebble_2_heart_rate_filtered
+    key: .kafka.key.KeyMeasurement
+    value: .passive.pebble.Pebble2HeartRateFiltered
+    aggregator: .kafka.aggregator.AggregatorDouble

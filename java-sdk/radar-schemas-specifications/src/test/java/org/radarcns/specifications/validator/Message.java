@@ -1,4 +1,4 @@
-package org.radarcns.specifications.util.active;
+package org.radarcns.specifications.validator;
 
 /*
  * Copyright 2017 King's College London and The Hyve
@@ -16,35 +16,23 @@ package org.radarcns.specifications.util.active;
  * limitations under the License.
  */
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
+
 
 /**
  * TODO.
  */
-public class Response {
-
-    private final String text;
-    private final Integer score;
+public interface Message {
 
     /**
      * TODO.
-     * @param text TODO
-     * @param score TODO
+     * @return TODO
      */
-    @JsonCreator
-    public Response(
-            @JsonProperty("text") String text,
-            @JsonProperty("score") Integer score) {
-        this.text = text;
-        this.score = score;
-    }
+    String getMessage();
 
-    public String getText() {
-        return text;
-    }
-
-    public Integer getScore() {
-        return score;
-    }
+    /**
+     * TODO.
+     * @param info TODO
+     * @return TODO
+     */
+    String getMessage(String info);
 }

@@ -1,4 +1,4 @@
-package org.radarcns.specifications.util.active;
+package org.radarcns.specifications.source.active.questionnaire;
 
 /*
  * Copyright 2017 King's College London and The Hyve
@@ -21,6 +21,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 import org.radarcns.active.questionnaire.QuestionnaireType;
 import org.radarcns.catalogue.ActiveSourceType;
+import org.radarcns.specifications.source.active.ActiveSource;
 
 /**
  * TODO.
@@ -29,7 +30,7 @@ public class QuestionnaireSource extends ActiveSource {
 
     private QuestionnaireType name;
 
-    private ActiveSourceType assestmentType;
+    private ActiveSourceType assessmentType;
 
     private List<Question> questions;
 
@@ -54,7 +55,19 @@ public class QuestionnaireSource extends ActiveSource {
             @JsonProperty("questions") List<Question> questions) {
         super(name.name(), topicName, keyClass, valueClass, description);
         this.name = name;
-        this.assestmentType = assessmentType;
+        this.assessmentType = assessmentType;
         this.questions = questions;
+    }
+
+    public QuestionnaireType getQuestionnaireType() {
+        return name;
+    }
+
+    public ActiveSourceType getAssessmentType() {
+        return assessmentType;
+    }
+
+    public List<Question> getQuestions() {
+        return questions;
     }
 }

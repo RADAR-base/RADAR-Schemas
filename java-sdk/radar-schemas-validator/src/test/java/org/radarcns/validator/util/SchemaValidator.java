@@ -16,11 +16,11 @@ package org.radarcns.validator.util;
  * limitations under the License.
  */
 
-import static org.radarcns.validator.util.SchemaValidatorRole.getActiveValidator;
-import static org.radarcns.validator.util.SchemaValidatorRole.getGeneralEnumValidator;
-import static org.radarcns.validator.util.SchemaValidatorRole.getGeneralRecordValidator;
-import static org.radarcns.validator.util.SchemaValidatorRole.getMonitorValidator;
-import static org.radarcns.validator.util.SchemaValidatorRole.getPassiveValidator;
+import static org.radarcns.validator.util.SchemaValidationRoles.getActiveValidator;
+import static org.radarcns.validator.util.SchemaValidationRoles.getGeneralEnumValidator;
+import static org.radarcns.validator.util.SchemaValidationRoles.getGeneralRecordValidator;
+import static org.radarcns.validator.util.SchemaValidationRoles.getMonitorValidator;
+import static org.radarcns.validator.util.SchemaValidationRoles.getPassiveValidator;
 
 import java.io.IOException;
 import java.nio.file.Path;

@@ -80,7 +80,7 @@ public class SkipConfigTest {
         skipPaths.add(Paths.get("commons/**/*.avsc"));
         assertTrue(skipFile(new File(root.concat("commons/monitor/application/"
                 + "application_external_time.avsc")), skipPaths));
-        assertFalse(skipFile(new File(root.concat("restapi/data/acceleration.avsc")), skipPaths));
+        assertFalse(skipFile(new File(root.concat("restApi/data/acceleration.avsc")), skipPaths));
     }
 
     @Test

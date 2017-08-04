@@ -7,57 +7,57 @@ sensors:
     sample_rate: 32.0
     unit: G
     data_type: RAW
-    topic_name: android_empatica_e4_acceleration
-    key_class: .kafka.key.KeyMeasurement
-    value_class: .passive.empatica.EmpaticaE4Acceleration
-    aggregator_class: .kafka.aggregator.AggregatorDoubleArray
+    topic: android_empatica_e4_acceleration
+    key: .kafka.key.KeyMeasurement
+    value: .passive.empatica.EmpaticaE4Acceleration
+    aggregator: .kafka.aggregator.AggregatorDoubleArray
   - name: BATTERY
     sample_rate: 1.0
     unit: PERCENTAGE
     data_type: RAW
-    topic_name: android_empatica_e4_battery_level
-    key_class: .kafka.key.KeyMeasurement
-    value_class: .passive.empatica.EmpaticaE4BatteryLevel
-    aggregator_class: .kafka.aggregator.AggregatorDouble
+    topic: android_empatica_e4_battery_level
+    key: .kafka.key.KeyMeasurement
+    value: .passive.empatica.EmpaticaE4BatteryLevel
+    aggregator: .kafka.aggregator.AggregatorDouble
   - name: BLOOD_VOLUME_PULSE
     sample_rate: 64.0
     unit: NANO_WATT
     data_type: RAW
-    topic_name: android_empatica_e4_blood_volume_pulse
-    key_class: .kafka.key.KeyMeasurement
-    value_class: .passive.empatica.EmpaticaE4BloodVolumePulse
-    aggregator_class: .kafka.aggregator.AggregatorDouble
+    topic: android_empatica_e4_blood_volume_pulse
+    key: .kafka.key.KeyMeasurement
+    value: .passive.empatica.EmpaticaE4BloodVolumePulse
+    aggregator: .kafka.aggregator.AggregatorDouble
   - name: ELECTRODERMAL_ACTIVITY
     sample_rate: 4.0
     unit: MICRO_SIEMENS
     data_type: RAW
-    topic_name: android_empatica_e4_electrodermal_activity
-    key_class: .kafka.key.KeyMeasurement
-    value_class: .passive.empatica.EmpaticaE4ElectroDermalActivity
-    aggregator_class: .kafka.aggregator.AggregatorDouble
+    topic: android_empatica_e4_electrodermal_activity
+    key: .kafka.key.KeyMeasurement
+    value: .passive.empatica.EmpaticaE4ElectroDermalActivity
+    aggregator: .kafka.aggregator.AggregatorDouble
   - name: INTER_BEAT_INTERVAL
     sample_rate: 1.0
     unit: BEATS_PER_MIN
     data_type: VENDOR
-    topic_name: android_empatica_e4_inter_beat_interval
-    key_class: .kafka.key.KeyMeasurement
-    value_class: .passive.empatica.EmpaticaE4InterBeatInterval
-    aggregator_class: .kafka.aggregator.AggregatorDouble
+    topic: android_empatica_e4_inter_beat_interval
+    key: .kafka.key.KeyMeasurement
+    value: .passive.empatica.EmpaticaE4InterBeatInterval
+    aggregator: .kafka.aggregator.AggregatorDouble
   - name: THERMOMETER
     sample_rate: 4.0
     unit: CELSIUS
     data_type: RAW
-    topic_name: android_empatica_e4_temperature
-    key_class: .kafka.key.KeyMeasurement
-    value_class: .passive.empatica.EmpaticaE4BatteryLevel
-    aggregator_class: .kafka.aggregator.AggregatorDouble
+    topic: android_empatica_e4_temperature
+    key: .kafka.key.KeyMeasurement
+    value: .passive.empatica.EmpaticaE4BatteryLevel
+    aggregator: .kafka.aggregator.AggregatorDouble
 processors:
   - name: HEART_RATE
     sample_rate: 1.0
     unit: BEATS_PER_MIN
     data_type: RADAR
-    input_topic_name: android_empatica_e4_inter_beat_interval
-    input_key_class: .kafka.key.KeyMeasurement
-    input_value_class: .passive.empatica.EmpaticaE4InterBeatInterval
-    output_topic_name: android_empatica_e4_heartrate
-    aggregator_class: .kafka.aggregator.AggregatorDouble
+    input_topic: android_empatica_e4_inter_beat_interval
+    input_key: .kafka.key.KeyMeasurement
+    input_value: .passive.empatica.EmpaticaE4InterBeatInterval
+    base_output_topic: android_empatica_e4_heartrate
+    aggregator: .kafka.aggregator.AggregatorDouble

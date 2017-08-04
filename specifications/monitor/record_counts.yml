@@ -5,6 +5,6 @@ doc: Monitor used by the Android pRMT to report the number of cached and created
 sample_rate: 0.08
 unit: NON_DIMENSIONAL
 data_type: RAW
-topic_name: application_record_counts
-key_class: .kafka.key.KeyMeasurement
-value_class: .monitor.application.ApplicationRecordCounts
+topic: application_record_counts
+key: .kafka.key.KeyMeasurement
+value: .monitor.application.ApplicationRecordCounts

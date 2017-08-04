@@ -7,95 +7,95 @@ sensors:
     sample_rate: 51.2
     unit: G
     data_type: RAW
-    topic_name: android_biovotion_vsm1_acceleration
-    key_class: .kafka.key.KeyMeasurement
-    value_class: .passive.biovotion.BiovotionVsm1Acceleration
-    aggregator_class: .kafka.aggregator.AggregatorDoubleArray
+    topic: android_biovotion_vsm1_acceleration
+    key: .kafka.key.KeyMeasurement
+    value: .passive.biovotion.BiovotionVsm1Acceleration
+    aggregator: .kafka.aggregator.AggregatorDoubleArray
   - name: BATTERY
     sample_rate: 1.0
     unit: PERCENTAGE
     data_type: RAW
-    topic_name: android_biovotion_vsm1_battery_state
-    key_class: .kafka.key.KeyMeasurement
-    value_class: .passive.biovotion.BiovotionVsm1BatteryState
-    aggregator_class: .kafka.aggregator.AggregatorDouble
+    topic: android_biovotion_vsm1_battery_state
+    key: .kafka.key.KeyMeasurement
+    value: .passive.biovotion.BiovotionVsm1BatteryState
+    aggregator: .kafka.aggregator.AggregatorDouble
   - name: BLOOD_PULSE_WAVE
     sample_rate: 1.0
     unit: NON_DIMENSIONAL
     data_type: VENDOR
-    topic_name: android_biovotion_vsm1_acceleration
-    key_class: .kafka.key.KeyMeasurement
-    value_class: .passive.biovotion.BiovotionVsm1BloodPulseWave
-    aggregator_class: .kafka.aggregator.AggregatorDouble
+    topic: android_biovotion_vsm1_acceleration
+    key: .kafka.key.KeyMeasurement
+    value: .passive.biovotion.BiovotionVsm1BloodPulseWave
+    aggregator: .kafka.aggregator.AggregatorDouble
   - name: ENERGY
     sample_rate: 1.0
     unit: CALORIES_PER_SEC
     data_type: VENDOR
-    topic_name: android_biovotion_vsm1_energy
-    key_class: .kafka.key.KeyMeasurement
-    value_class: .passive.biovotion.BiovotionVsm1Energy
-    aggregator_class: .kafka.aggregator.AggregatorDouble
+    topic: android_biovotion_vsm1_energy
+    key: .kafka.key.KeyMeasurement
+    value: .passive.biovotion.BiovotionVsm1Energy
+    aggregator: .kafka.aggregator.AggregatorDouble
   - name: GALVANIC_SKIN_RESPONSE
     sample_rate: 1.0
     unit: KILO_OHM
     data_type: VENDOR
-    topic_name: android_biovotion_vsm1_galvanic_skin_response
-    key_class: .kafka.key.KeyMeasurement
-    value_class: .passive.biovotion.BiovotionVsm1GalvanicSkinResponse
-    aggregator_class: .kafka.aggregator.AggregatorDoubleArray
+    topic: android_biovotion_vsm1_galvanic_skin_response
+    key: .kafka.key.KeyMeasurement
+    value: .passive.biovotion.BiovotionVsm1GalvanicSkinResponse
+    aggregator: .kafka.aggregator.AggregatorDoubleArray
   - name: HEART_RATE
     sample_rate: 1.0
     unit: BEATS_PER_MIN
     data_type: VENDOR
-    topic_name: android_biovotion_vsm1_heart_rate
-    key_class: .kafka.key.KeyMeasurement
-    value_class: .passive.biovotion.BiovotionVsm1HeartRate
-    aggregator_class: .kafka.aggregator.AggregatorDouble
+    topic: android_biovotion_vsm1_heart_rate
+    key: .kafka.key.KeyMeasurement
+    value: .passive.biovotion.BiovotionVsm1HeartRate
+    aggregator: .kafka.aggregator.AggregatorDouble
   - name: HEART_RATE_VARIABILITY
     sample_rate: 1.0
     unit: RMSSD_IN_MILLI_SEC
     data_type: VENDOR
-    topic_name: android_biovotion_vsm1_heart_rate_variability
-    key_class: .kafka.key.KeyMeasurement
-    value_class: .passive.biovotion.BiovotionVsm1HeartRateVariability
-    aggregator_class: .kafka.aggregator.AggregatorDouble
+    topic: android_biovotion_vsm1_heart_rate_variability
+    key: .kafka.key.KeyMeasurement
+    value: .passive.biovotion.BiovotionVsm1HeartRateVariability
+    aggregator: .kafka.aggregator.AggregatorDouble
   - name: LED
     sample_rate: 1.0
     unit: MILLI_AMPERE
     data_type: VENDOR
-    topic_name: android_biovotion_vsm1_led_current
-    key_class: .kafka.key.KeyMeasurement
-    value_class: .passive.biovotion.BiovotionVsm1LedCurrent
-    aggregator_class: .kafka.aggregator.AggregatorDoubleArray
+    topic: android_biovotion_vsm1_led_current
+    key: .kafka.key.KeyMeasurement
+    value: .passive.biovotion.BiovotionVsm1LedCurrent
+    aggregator: .kafka.aggregator.AggregatorDoubleArray
   - name: PHOTOPLETHYSMOGRAPHY
     sample_rate: 51.2
     unit: NON_DIMENSIONAL
     data_type: VENDOR
-    topic_name: android_biovotion_vsm1_ppg_current
-    key_class: .kafka.key.KeyMeasurement
-    value_class: .passive.biovotion.BiovotionVsm1PpgRaw
-    aggregator_class: .kafka.aggregator.AggregatorDoubleArray
+    topic: android_biovotion_vsm1_ppg_current
+    key: .kafka.key.KeyMeasurement
+    value: .passive.biovotion.BiovotionVsm1PpgRaw
+    aggregator: .kafka.aggregator.AggregatorDoubleArray
   - name: RESPIRATION_RATE
     sample_rate: 1.0
     unit: BEATS_PER_MIN
     data_type: VENDOR
-    topic_name: android_biovotion_vsm1_respiration_rate
-    key_class: .kafka.key.KeyMeasurement
-    value_class: .passive.biovotion.BiovotionVsm1RespirationRate
-    aggregator_class: .kafka.aggregator.AggregatorDouble
+    topic: android_biovotion_vsm1_respiration_rate
+    key: .kafka.key.KeyMeasurement
+    value: .passive.biovotion.BiovotionVsm1RespirationRate
+    aggregator: .kafka.aggregator.AggregatorDouble
   - name: OXYGEN_SATURATION
     sample_rate: 1.0
     unit: PERCENTAGE
     data_type: RAW
-    topic_name: android_biovotion_vsm1_oxygen_saturation
-    key_class: .kafka.key.KeyMeasurement
-    value_class: .passive.biovotion.BiovotionVsm1OxygenSaturation
-    aggregator_class: .kafka.aggregator.AggregatorDouble
+    topic: android_biovotion_vsm1_oxygen_saturation
+    key: .kafka.key.KeyMeasurement
+    value: .passive.biovotion.BiovotionVsm1OxygenSaturation
+    aggregator: .kafka.aggregator.AggregatorDouble
   - name: THERMOMETER
     sample_rate: 1.0
     unit: CELSIUS
     data_type: RAW
-    topic_name: android_biovotion_vsm1_temperature
-    key_class: .kafka.key.KeyMeasurement
-    value_class: .passive.biovotion.BiovotionVsm1Temperature
-    aggregator_class: .kafka.aggregator.AggregatorDouble
+    topic: android_biovotion_vsm1_temperature
+    key: .kafka.key.KeyMeasurement
+    value: .passive.biovotion.BiovotionVsm1Temperature
+    aggregator: .kafka.aggregator.AggregatorDouble

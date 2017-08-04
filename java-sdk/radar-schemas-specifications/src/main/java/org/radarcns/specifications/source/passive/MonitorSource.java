@@ -1,4 +1,4 @@
-package org.radarcns.specifications.util.passive;
+package org.radarcns.specifications.source.passive;
 
 /*
  * Copyright 2017 King's College London and The Hyve
@@ -18,20 +18,23 @@ package org.radarcns.specifications.util.passive;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.Collections;
+import java.util.Objects;
+import java.util.Set;
 import org.radarcns.catalogue.DataType;
-import org.radarcns.catalogue.SensorName;
+import org.radarcns.catalogue.MonitorSourceType;
 import org.radarcns.catalogue.Unit;
+import org.radarcns.specifications.source.Source;
+import org.radarcns.specifications.util.Utils;
 
 /**
  * TODO.
  */
-public class Sensor {
+public class MonitorSource extends Source {
 
-    private final SensorName name;
+    private final MonitorSourceType name;
 
     private final String appProvider;
-
-    private final String doc;
 
     private final double sampleRate;
 
@@ -39,61 +42,58 @@ public class Sensor {
 
     private final DataType dataType;
 
-    private final String topicName;
+    private final String topic;
 
-    private final String keyClass;
+    private final String key;
 
-    private final String valueClass;
+    private final String value;
 
-    private final String aggregatorClass;
+    private final String aggregator;
 
     /**
      * TODO.
+     *
      * @param name TODO
      * @param appProvider TODO
      * @param doc TODO
      * @param sampleRate TODO
      * @param unit TODO
      * @param dataType TODO
-     * @param topicName TODO
-     * @param keyClass TODO
-     * @param valueClass TODO
-     * @param aggregatorClass TODO
+     * @param topic TODO
+     * @param key TODO
+     * @param value TODO
+     * @param aggregator TODO
      */
     @JsonCreator
-    public Sensor(
-            @JsonProperty("name") SensorName name,
+    public MonitorSource(
+            @JsonProperty("name") MonitorSourceType name,
             @JsonProperty("app_provider") String appProvider,
             @JsonProperty("doc") String doc,
             @JsonProperty("sample_rate") double sampleRate,
             @JsonProperty("unit") Unit unit,
             @JsonProperty("data_type") DataType dataType,
-            @JsonProperty("topic_name") String topicName,
-            @JsonProperty("key_class") String keyClass,
-            @JsonProperty("value_class") String valueClass,
-            @JsonProperty("aggregator_class") String aggregatorClass) {
+            @JsonProperty("topic") String topic,
+            @JsonProperty("key") String key,
+            @JsonProperty("value") String value,
+            @JsonProperty("aggregator") String aggregator) {
+        super(name.name(), doc);
         this.name = name;
         this.appProvider = appProvider;
-        this.doc = doc;
         this.sampleRate = sampleRate;
         this.unit = unit;
         this.dataType = dataType;
-        this.topicName = topicName;
-        this.keyClass = keyClass;
-        this.valueClass = valueClass;
-        this.aggregatorClass = aggregatorClass;
+        this.topic = topic;
+        this.key = key;
+        this.value = value;
+        this.aggregator = aggregator;
     }
 
-    public SensorName getName() {
+    public MonitorSourceType getType() {
         return name;
     }
 
     public String getAppProvider() {
-        return appProvider;
-    }
-
-    public String getDoc() {
-        return doc;
+        return Utils.getProjectGroup().concat(appProvider);
     }
 
     public double getSampleRate() {
@@ -108,19 +108,24 @@ public class Sensor {
         return dataType;
     }
 
-    public String getTopicName() {
-        return topicName;
+    public String getTopic() {
+        return topic;
     }
 
-    public String getKeyClass() {
-        return keyClass;
+    public String getKey() {
+        return Utils.getProjectGroup().concat(key);
     }
 
-    public String getValueClass() {
-        return valueClass;
+    public String getValue() {
+        return Utils.getProjectGroup().concat(value);
     }
 
-    public String getAggregatorClass() {
-        return aggregatorClass;
+    public String getAggregator() {
+        return Objects.isNull(aggregator) ? null : Utils.getProjectGroup().concat(aggregator);
+    }
+
+    @Override
+    public Set<String> getTopics() {
+        return Collections.singleton(topic);
     }
 }
