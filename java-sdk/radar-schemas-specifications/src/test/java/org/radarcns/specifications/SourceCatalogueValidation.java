@@ -62,13 +62,6 @@ public class SourceCatalogueValidation {
                         .allMatch(type -> getPassiveSource(type) != null));
     }
 
-    //TODO
-    @Test
-    public void validateTopicNamesVerbose() {
-        //SourceCatalogue.getTopicsVerbose();
-        System.out.println(CommandLineApp.getTopicsVerbose(true, null));
-    }
-
     @Test
     public void validateTopicNames() {
         SourceCatalogue.getTopics().forEach(topic ->
