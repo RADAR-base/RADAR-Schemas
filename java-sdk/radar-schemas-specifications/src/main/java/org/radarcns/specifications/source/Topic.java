@@ -20,6 +20,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.radarcns.catalogue.TimeFrame;
@@ -243,6 +244,30 @@ public class Topic implements Aggregatable{
             .append(baseOutput)
             .append(output)
             .toHashCode();
+    }
+
+
+    public String toString(boolean reduced) {
+        String result = "inputTopic: " + inputTopic + '\n'
+            + "inputKey: " + inputKey + '\n'
+            + "inputValue: " + inputValue + '\n'
+            + "aggregator: " + aggregator + '\n';
+
+        if (output.isEmpty()) {
+            result = result + "output: empty";
+        } else {
+            result = result + "output:\n\t- ";
+        }
+        if (reduced) {
+                result = result + output.stream().map(
+                        TopicMetadata::getOutput).collect(Collectors.joining("\n\t- "));
+        } else {
+            result = result + output.stream().map(metadata -> metadata.getInput().concat(
+                "\t").concat(metadata.getStateStore()).concat("\t").concat(
+                    metadata.getOutput())).collect(Collectors.joining("\n\t- "));
+        }
+
+        return result.concat("\n");
     }
 
     /**

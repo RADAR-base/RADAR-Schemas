@@ -16,26 +16,14 @@ package org.radarcns.specifications;
  * limitations under the License.
  */
 
-import static org.junit.Assert.assertTrue;
-import static org.radarcns.specifications.SourceCatalogue.BASE_PATH;
-import static org.radarcns.specifications.SourceCatalogue.YAML_EXTENSION;
 import static org.radarcns.specifications.validator.ValidationSupport.Package;
-import static org.radarcns.specifications.validator.ValidationSupport.getMessage;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.radarcns.catalogue.PassiveSourceType;
-import org.radarcns.config.YamlConfigLoader;
-import org.radarcns.specifications.SourceCatalogue.NameFolder;
-import org.radarcns.specifications.source.passive.PassiveSource;
-import org.radarcns.specifications.source.passive.Processor;
-import org.radarcns.specifications.source.passive.Sensor;
-import org.radarcns.specifications.validator.ValidationResult;
-import org.radarcns.specifications.validator.Validator;
 
 /**
  * TODO.

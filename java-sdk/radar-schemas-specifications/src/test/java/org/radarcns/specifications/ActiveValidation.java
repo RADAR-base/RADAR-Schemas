@@ -16,22 +16,8 @@ package org.radarcns.specifications;
  * limitations under the License.
  */
 
-import static org.junit.Assert.assertTrue;
-import static org.radarcns.specifications.SourceCatalogue.BASE_PATH;
-import static org.radarcns.specifications.SourceCatalogue.YAML_EXTENSION;
-import static org.radarcns.specifications.validator.ValidationSupport.getMessage;
-
-import java.io.File;
 import java.io.IOException;
 import org.junit.Test;
-import org.radarcns.active.questionnaire.QuestionnaireType;
-import org.radarcns.config.YamlConfigLoader;
-import org.radarcns.specifications.SourceCatalogue.NameFolder;
-import org.radarcns.specifications.source.active.questionnaire.Question;
-import org.radarcns.specifications.source.active.questionnaire.QuestionnaireSource;
-import org.radarcns.specifications.source.active.questionnaire.Response;
-import org.radarcns.specifications.validator.ValidationResult;
-import org.radarcns.specifications.validator.Validator;
 
 /**
  * TODO.

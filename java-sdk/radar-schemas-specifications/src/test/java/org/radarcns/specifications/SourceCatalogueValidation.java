@@ -24,8 +24,6 @@ import static org.radarcns.specifications.validator.ValidationSupport.isValidTop
 
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 import org.junit.Test;
 import org.radarcns.active.questionnaire.QuestionnaireType;
@@ -65,17 +63,11 @@ public class SourceCatalogueValidation {
     }
 
     //TODO
-    /*@Test
+    @Test
     public void validateTopicNamesVerbose() {
-        for (Entry<String, Map<String, Set<String>>> source
-                : SourceCatalogue.getTopicsVerbose().entrySet()) {
-            for (Entry<String, Set<String>> details : source.getValue().entrySet()) {
-                details.getValue().forEach(topic -> assertTrue(
-                    topic + " in " + source.getKey() + "-" + details.getKey()
-                            + " is invalid", isValidTopic(topic)));
-            }
-        }
-    }*/
+        //SourceCatalogue.getTopicsVerbose();
+        System.out.println(CommandLineApp.getTopicsVerbose(true, null));
+    }
 
     @Test
     public void validateTopicNames() {

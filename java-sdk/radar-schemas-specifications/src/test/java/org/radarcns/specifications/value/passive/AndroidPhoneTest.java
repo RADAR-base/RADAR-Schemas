@@ -35,7 +35,6 @@ import static org.radarcns.specifications.value.Utility.testSensorNonAggregatabl
 import static org.radarcns.specifications.value.Utility.testSensorTimed;
 import static org.radarcns.specifications.value.Utility.testSourceTopics;
 
-import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.radarcns.catalogue.DataType;

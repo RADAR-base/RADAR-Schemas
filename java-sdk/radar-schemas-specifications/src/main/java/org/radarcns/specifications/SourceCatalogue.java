@@ -201,38 +201,4 @@ public class SourceCatalogue {
         SOURCES.forEach(source -> set.addAll(source.getTopics()));
         return set;
     }
-
-    /**
-     * TODO.
-     * @return TODO
-     */
-    public static Map<String, Map<String, Set<String>>> getTopicsVerbose() {
-        return null;
-        /*Map<String, Map<String, Set<String>>> map = new HashMap<>();
-
-        for (QuestionnaireSource source : ACTIVE_SOURCES.values()) {
-            Map<String, Set<String>> details = new HashMap<>();
-            details.put(source.getQuestionnaireType().name(), singleton(source.getTopic()));
-            map.put(ActiveSourceType.QUESTIONNAIRE.name(), details);
-        }
-
-        for (MonitorSource source : MONITOR_SOURCES.values()) {
-            Map<String, Set<String>> details = new HashMap<>();
-            details.put(source.getType().name(), source.getTopics());
-            map.put(NameFolder.MONITOR.getName().toUpperCase(), details);
-        }
-
-        for (PassiveSource source : PASSIVE_SOURCES.values()) {
-            Map<String, Set<String>> details = new HashMap<>();
-            for (Sensor sensor : source.getSensors()) {
-                details.put(sensor.getName().name(), sensor.getTopics());
-            }
-            for (Processor proc : source.getProcessors()) {
-                details.put(proc.getName().name(), proc.getTopics());
-            }
-            map.put(source.getType().name(), details);
-        }
-
-        return map;*/
-    }
 }

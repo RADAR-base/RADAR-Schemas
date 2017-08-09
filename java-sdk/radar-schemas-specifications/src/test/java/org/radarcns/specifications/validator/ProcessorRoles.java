@@ -2,8 +2,6 @@ package org.radarcns.specifications.validator;
 
 import static org.radarcns.specifications.validator.ValidationResult.invalid;
 import static org.radarcns.specifications.validator.ValidationResult.valid;
-import static org.radarcns.specifications.validator.ValidationSupport.isValidTopic;
-import static org.radarcns.specifications.validator.ValidationSupport.isValidTopicVerbose;
 
 import java.util.Objects;
 import org.radarcns.catalogue.DataType;
