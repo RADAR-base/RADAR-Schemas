@@ -41,10 +41,11 @@ dependencies {
 ext.exchnageConfigPath = 'src/test/resources/gradle.properties'
 task exchangeConfig() {
     doLast {
-        if (file(exchnageConfigPath).createNewFile()) {
+        if (file(exchnageConfigPath).delete()) {
+            file(exchnageConfigPath).createNewFile()
             file(exchnageConfigPath).write("project.group=${project.group}")
         } else {
-            throw new GradleException("File for exchanginf configuration between Gradle and Java cannot be created. Error while managing file at ${exchnageConfigPath}")
+            throw new GradleException("Error while creating file at ${exchnageConfigPath}")
         }
     }
 }

@@ -49,7 +49,7 @@ sensors:
     data_type: RAW
     topic: android_empatica_e4_temperature
     key: .kafka.key.KeyMeasurement
-    value: .passive.empatica.EmpaticaE4BatteryLevel
+    value: .passive.empatica.EmpaticaE4Temperature
     aggregator: .kafka.aggregator.AggregatorDouble
 processors:
   - name: HEART_RATE

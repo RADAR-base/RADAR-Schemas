@@ -53,10 +53,6 @@ public final class Utils {
         if (Objects.isNull(projectGroup)) {
             try {
                 Properties prop = new Properties();
-
-
-                //System.out.println();
-
                 prop.load(
                     ClassLoader.getSystemClassLoader().getResourceAsStream(GRADLE_PROPERTIES));
                 projectGroup = prop.getProperty(PROPERTY_VALUE);
@@ -67,7 +63,6 @@ public final class Utils {
         }
 
         return projectGroup;
-        //return "org.radarcns";
     }
 
     /**

@@ -16,23 +16,34 @@ package org.radarcns.specifications.source.active;
  * limitations under the License.
  */
 
+import static org.radarcns.specifications.util.Labels.ASSESSMENT_TYPE;
+import static org.radarcns.specifications.util.Labels.DOC;
+import static org.radarcns.specifications.util.Labels.KEY;
+import static org.radarcns.specifications.util.Labels.NAME;
+import static org.radarcns.specifications.util.Labels.TOPIC;
+import static org.radarcns.specifications.util.Labels.VALUE;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import java.util.Collections;
+import java.util.Objects;
 import java.util.Set;
+import org.radarcns.catalogue.ActiveSourceType;
 import org.radarcns.specifications.source.Source;
-import org.radarcns.specifications.util.Utils;
+import org.radarcns.specifications.source.Topic;
 
 /**
  * TODO.
  */
 public abstract class ActiveSource extends Source {
 
-    private final String topic;
+    private ActiveSourceType assessmentType;
 
-    private final String key;
+    private final Topic topic;
 
-    private final String value;
+    private final Set<String> topics;
+
+    private static final String NULL_MESSAGE = " in ".concat(
+            ActiveSource.class.getName()).concat(" cannot be null.");
 
     /**
      * TODO.
@@ -44,31 +55,36 @@ public abstract class ActiveSource extends Source {
      */
     @JsonCreator
     public ActiveSource(
-            @JsonProperty("name") String name,
-            @JsonProperty("topic") String topic,
-            @JsonProperty("key") String key,
-            @JsonProperty("value") String value,
-            @JsonProperty("doc") String description) {
+            @JsonProperty(ASSESSMENT_TYPE) ActiveSourceType assessmentType,
+            @JsonProperty(NAME) String name,
+            @JsonProperty(TOPIC) String topic,
+            @JsonProperty(KEY) String key,
+            @JsonProperty(VALUE) String value,
+            @JsonProperty(DOC) String description) {
         super(name, description);
-        this.topic = topic;
-        this.key = key;
-        this.value = value;
+
+        Objects.requireNonNull(assessmentType, ASSESSMENT_TYPE.concat(NULL_MESSAGE));
+        Objects.requireNonNull(key, KEY.concat(NULL_MESSAGE));
+        Objects.requireNonNull(topic, TOPIC.concat(NULL_MESSAGE));
+        Objects.requireNonNull(value, VALUE.concat(NULL_MESSAGE));
+
+        this.assessmentType = assessmentType;
+
+        this.topic = new Topic(topic, key, value, null, null);
+
+        this.topics = this.topic.getTopicNames();
     }
 
-    public String getTopic() {
+    public ActiveSourceType getAssessmentType() {
+        return assessmentType;
+    }
+
+    public Topic getTopic() {
         return topic;
-    }
-
-    public String getKey() {
-        return Utils.getProjectGroup().concat(key);
-    }
-
-    public String getValue() {
-        return Utils.getProjectGroup().concat(value);
     }
 
     @Override
     public Set<String> getTopics() {
-        return Collections.singleton(topic);
+        return topics;
     }
 }

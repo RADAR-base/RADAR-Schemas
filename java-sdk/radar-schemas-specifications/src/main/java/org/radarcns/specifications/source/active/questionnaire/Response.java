@@ -16,8 +16,12 @@ package org.radarcns.specifications.source.active.questionnaire;
  * limitations under the License.
  */
 
+import static org.radarcns.specifications.util.Labels.SCORE;
+import static org.radarcns.specifications.util.Labels.TEXT;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.Objects;
 
 /**
  * TODO.
@@ -27,6 +31,9 @@ public class Response {
     private final String text;
     private final Integer score;
 
+    private static final String NULL_MESSAGE = " in ".concat(
+        Response.class.getName()).concat(" cannot be null.");
+
     /**
      * TODO.
      * @param text TODO
@@ -34,10 +41,14 @@ public class Response {
      */
     @JsonCreator
     public Response(
-            @JsonProperty("text") String text,
-            @JsonProperty("score") Integer score) {
-        this.text = text;
+            @JsonProperty(TEXT) String text,
+            @JsonProperty(SCORE) Integer score) {
+
+        Objects.requireNonNull(score, SCORE.concat(NULL_MESSAGE));
+        Objects.requireNonNull(text, TEXT.concat(NULL_MESSAGE));
+
         this.score = score;
+        this.text = text;
     }
 
     public String getText() {

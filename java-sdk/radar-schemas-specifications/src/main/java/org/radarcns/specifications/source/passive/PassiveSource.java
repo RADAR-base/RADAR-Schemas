@@ -16,11 +16,22 @@ package org.radarcns.specifications.source.passive;
  * limitations under the License.
  */
 
+import static org.radarcns.specifications.util.Labels.APP_PROVIDER;
+import static org.radarcns.specifications.util.Labels.DOC;
+import static org.radarcns.specifications.util.Labels.MODEL;
+import static org.radarcns.specifications.util.Labels.PROCESSORS;
+import static org.radarcns.specifications.util.Labels.SENSORS;
+import static org.radarcns.specifications.util.Labels.VENDOR;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 import org.radarcns.catalogue.PassiveSourceType;
+import org.radarcns.catalogue.SensorName;
 import org.radarcns.specifications.source.Source;
 import org.radarcns.specifications.util.Utils;
 
@@ -41,6 +52,8 @@ public class PassiveSource extends Source {
 
     private final Set<Processor> processors;
 
+    private final Set<String> topics;
+
     /**
      * TODO.
      * @param vendor TODO
@@ -51,19 +64,45 @@ public class PassiveSource extends Source {
      */
     @JsonCreator
     public PassiveSource(
-            @JsonProperty("vendor") String vendor,
-            @JsonProperty("model") String model,
-            @JsonProperty("doc") String description,
-            @JsonProperty("app_provider") String appProvider,
-            @JsonProperty("sensors") Set<Sensor> sensors,
-            @JsonProperty("processors") Set<Processor> processors) {
+            @JsonProperty(VENDOR) String vendor,
+            @JsonProperty(MODEL) String model,
+            @JsonProperty(DOC) String description,
+            @JsonProperty(APP_PROVIDER) String appProvider,
+            @JsonProperty(SENSORS) Set<Sensor> sensors,
+            @JsonProperty(PROCESSORS) Set<Processor> processors) {
         super(vendor.concat("_").concat(model), description);
-        this.type = PassiveSourceType.valueOf(vendor.concat("_").concat(model));
+
+        Objects.requireNonNull(sensors, SENSORS.concat(" in ").concat(
+                PassiveSource.class.getName()).concat(" cannot be null."));
+
+        try {
+            this.type = PassiveSourceType.valueOf(vendor.concat("_").concat(model));
+        } catch (IllegalArgumentException exc) {
+            throw new IllegalArgumentException(PassiveSourceType.getClassSchema().getName() + " in "
+                    + PassiveSource.class.getName() + " cannot be null. The concatenation of "
+                    + "\"vendor\" and \"model\" separated by underscore must be equal to one of "
+                    + "the following values: "
+                    + Arrays.stream(PassiveSourceType.values())
+                        .map(PassiveSourceType::name)
+                        .collect(Collectors.joining(",")), exc);
+        }
+
         this.vendor = vendor;
         this.model = model;
-        this.appProvider = appProvider;
+        this.appProvider = Objects.isNull(appProvider)
+                ? null : Utils.getProjectGroup().concat(appProvider);
         this.sensors = sensors;
-        this.processors = processors;
+        this.processors = Objects.isNull(processors) ? new HashSet<>() : processors;
+
+        topics = new HashSet<>();
+
+        if (!this.sensors.isEmpty()) {
+            sensors.forEach(sensor -> topics.addAll(sensor.getTopic().getTopicNames()));
+        }
+
+        if (!this.processors.isEmpty()) {
+            processors.forEach(proc -> topics.addAll(proc.getTopic().getTopicNames()));
+        }
     }
 
     public PassiveSourceType getType() {
@@ -79,29 +118,49 @@ public class PassiveSource extends Source {
     }
 
     public String getAppProvider() {
-        return Utils.getProjectGroup().concat(appProvider);
+        return appProvider;
     }
 
     public Set<Sensor> getSensors() {
-        return sensors == null ? new HashSet<>() : sensors;
+        return sensors;
+    }
+
+    /**
+     * TODO.
+     * @param name TODO
+     * @return TODO
+     */
+    public Sensor getSensor(SensorName name) {
+        for (Sensor sensor : sensors) {
+            if (sensor.getName().name().equals(name.name())) {
+                return sensor;
+            }
+        }
+
+        throw new IllegalArgumentException(name.name() + " is not a valid sensor for " + getName());
     }
 
     public Set<Processor> getProcessors() {
-        return processors == null ? new HashSet<>() : processors;
+        return processors;
+    }
+
+    /**
+     * TODO.
+     * @param name TODO
+     * @return TODO
+     */
+    public Processor getProcessor(SensorName name) {
+        for (Processor processor : processors) {
+            if (processor.getName().name().equals(name.name())) {
+                return processor;
+            }
+        }
+
+        throw new IllegalArgumentException(name.name() + " is not a valid sensor for " + getName());
     }
 
     @Override
     public Set<String> getTopics() {
-        Set<String> set = new HashSet<>();
-
-        if (sensors != null && !sensors.isEmpty()) {
-            sensors.forEach(sensor -> set.addAll(sensor.getTopics()));
-        }
-
-        if (processors != null && !processors.isEmpty()) {
-            processors.forEach(proc -> set.addAll(proc.getTopics()));
-        }
-
-        return set;
+        return topics;
     }
 }

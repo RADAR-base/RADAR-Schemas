@@ -6,6 +6,7 @@ import static org.radarcns.specifications.validator.ValidationResult.valid;
 import static org.radarcns.specifications.validator.ValidationSupport.removeExtension;
 
 import java.io.File;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -52,15 +53,18 @@ interface PassiveSourceRoles extends GenericRoles<PassiveSource> {
 
     /** Messages. */
     enum PassiveSourceInfo implements Message {
-        APP_PROVIDER("App provider cannot be null and must be equal to one of the following "
-                .concat(allowedProvider().stream().map(
-                        Object::toString).collect(Collectors.joining(","))).concat(".")),
-        TOPICS("There is no correspondence between topics set at source level al the union of all "
-                + "sensors and processors topic sets."),
-        TYPE("Passive Source Type cannot be null and should be equal to vendor concatenated to "
-                + "name in uppercase."),
-        VENDOR_AND_NAME("Vendor and name values cannot be null. Vendor concatenated to name must "
-                + "be equal to the source file name.");
+        APP_PROVIDER("App provider must be equal to one of the following ".concat(
+                allowedProvider().stream().map(Object::toString).collect(Collectors.joining(
+                    ","))).concat(".")),
+        SENSORS("Sensor list cannot be null or empty and cannot contain two sensors with".concat(
+                "the same name")),
+        TOPICS("Union of sensors and processors topic sets does not match topic set".concat(
+                "a source level.")),
+        TYPE("Passive Source Type should be the concatenation of vendor and name values".concat(
+                "in uppercase separated by underscore.")),
+        VENDOR_AND_NAME("Vendor and name values cannot be null. The concatenation of ".concat(
+                "vendor with \"_\" and name should be equal to the source file").concat(
+                " name in lowercase."));
 
         private final String message;
 
@@ -83,38 +87,8 @@ interface PassiveSourceRoles extends GenericRoles<PassiveSource> {
      */
     static GenericRoles<PassiveSource> validateAppProvider() {
         return passive -> Objects.isNull(passive.getAppProvider())
-            || allowedProvider().contains(passive.getAppProvider()) ?
-            valid() : invalid(PassiveSourceInfo.APP_PROVIDER.getMessage());
-    }
-
-    /**
-     * TODO.
-     * @return TODO
-     */
-    static GenericRoles<PassiveSource> validateTopics() {
-        return passive -> {
-                Set<String> topics = passive.getTopics();
-                boolean check = Objects.nonNull(topics)
-                        && !topics.isEmpty()
-                        && passive.getSensors().stream().allMatch(
-                            sensor -> topics.containsAll(sensor.getTopics()));
-
-                if (Objects.nonNull(passive.getProcessors())) {
-                    check = check &&  passive.getProcessors().stream().allMatch(
-                            processor -> topics.containsAll(processor.getTopics()));
-                }
-
-                return check ? valid() : invalid(PassiveSourceInfo.TOPICS.getMessage());
-        };
-    }
-
-    /**
-     * TODO.
-     * @return TODO
-     */
-    static GenericRoles<PassiveSource> validateSourceType() {
-        return passive -> Objects.nonNull(passive.getType()) ?
-            valid() : invalid(PassiveSourceInfo.TYPE.getMessage());
+                || allowedProvider().contains(passive.getAppProvider()) ?
+                valid() : invalid(PassiveSourceInfo.APP_PROVIDER.getMessage());
     }
 
     /**
@@ -126,8 +100,54 @@ interface PassiveSourceRoles extends GenericRoles<PassiveSource> {
         return passive -> Objects.nonNull(passive.getVendor())
                 && Objects.nonNull(passive.getModel())
                 && removeExtension(file, YAML_EXTENSION).equalsIgnoreCase(
-                        passive.getVendor().toLowerCase().concat(
-                                passive.getModel().toLowerCase())) ? valid()
+                passive.getType().name().toLowerCase()) ? valid()
                 : invalid(PassiveSourceInfo.VENDOR_AND_NAME.getMessage());
+    }
+
+    /**
+     * TODO.
+     * @return TODO
+     */
+    static GenericRoles<PassiveSource> validateSensors() {
+        return passive -> {
+            boolean check = Objects.nonNull(passive.getSensors());
+            check = check && !passive.getSensors().isEmpty();
+
+            Set<String> temp = new HashSet<>();
+            check = check && passive.getSensors().stream().allMatch(
+                    sensor -> !temp.add(sensor.getName().name()));
+
+            return check ? valid() : invalid(PassiveSourceInfo.SENSORS.getMessage());
+        };
+    }
+
+    /**
+     * TODO.
+     * @return TODO
+     */
+    static GenericRoles<PassiveSource> validateSourceType() {
+        return passive -> Objects.nonNull(passive.getType()) ?
+                valid() : invalid(PassiveSourceInfo.TYPE.getMessage());
+    }
+
+    /**
+     * TODO.
+     * @return TODO
+     */
+    static GenericRoles<PassiveSource> validateTopics() {
+        return passive -> {
+            /*Set<String> topics = passive.getTopics();
+            boolean check = Objects.nonNull(topics)
+                && !topics.isEmpty()
+                && passive.getSensors().stream().allMatch(sensor ->
+                topics.containsAll(sensor.getTopics()));
+
+            check = check && Objects.nonNull(passive.getProcessors())
+                && passive.getProcessors().stream().allMatch(processor ->
+                topics.containsAll(processor.getTopics()));
+
+            return check ? valid() : invalid(PassiveSourceInfo.TOPICS.getMessage());*/
+            return false ? valid() : invalid(PassiveSourceInfo.TOPICS.getMessage());
+        };
     }
 }

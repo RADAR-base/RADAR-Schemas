@@ -16,8 +16,6 @@ package org.radarcns.specifications;
  * limitations under the License.
  */
 
-import static java.util.Collections.singleton;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -27,7 +25,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import org.radarcns.active.questionnaire.QuestionnaireType;
-import org.radarcns.catalogue.ActiveSourceType;
 import org.radarcns.catalogue.MonitorSourceType;
 import org.radarcns.catalogue.PassiveSourceType;
 import org.radarcns.config.YamlConfigLoader;
@@ -35,8 +32,6 @@ import org.radarcns.specifications.source.Source;
 import org.radarcns.specifications.source.active.questionnaire.QuestionnaireSource;
 import org.radarcns.specifications.source.passive.MonitorSource;
 import org.radarcns.specifications.source.passive.PassiveSource;
-import org.radarcns.specifications.source.passive.Processor;
-import org.radarcns.specifications.source.passive.Sensor;
 
 /**
  * TODO.
@@ -212,7 +207,8 @@ public class SourceCatalogue {
      * @return TODO
      */
     public static Map<String, Map<String, Set<String>>> getTopicsVerbose() {
-        Map<String, Map<String, Set<String>>> map = new HashMap<>();
+        return null;
+        /*Map<String, Map<String, Set<String>>> map = new HashMap<>();
 
         for (QuestionnaireSource source : ACTIVE_SOURCES.values()) {
             Map<String, Set<String>> details = new HashMap<>();
@@ -237,6 +233,6 @@ public class SourceCatalogue {
             map.put(source.getType().name(), details);
         }
 
-        return map;
+        return map;*/
     }
 }

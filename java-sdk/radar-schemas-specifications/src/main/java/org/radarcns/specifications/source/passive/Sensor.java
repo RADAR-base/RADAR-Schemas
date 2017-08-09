@@ -16,42 +16,40 @@ package org.radarcns.specifications.source.passive;
  * limitations under the License.
  */
 
+import static org.radarcns.specifications.util.Labels.AGGREGATOR;
+import static org.radarcns.specifications.util.Labels.APP_PROVIDER;
+import static org.radarcns.specifications.util.Labels.DATA_TYPE;
+import static org.radarcns.specifications.util.Labels.DOC;
+import static org.radarcns.specifications.util.Labels.KEY;
+import static org.radarcns.specifications.util.Labels.NAME;
+import static org.radarcns.specifications.util.Labels.SAMPLE_RATE;
+import static org.radarcns.specifications.util.Labels.TOPIC;
+import static org.radarcns.specifications.util.Labels.UNIT;
+import static org.radarcns.specifications.util.Labels.VALUE;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Objects;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.radarcns.catalogue.DataType;
 import org.radarcns.catalogue.SensorName;
 import org.radarcns.catalogue.Unit;
-import org.radarcns.specifications.util.TopicUtils;
+import org.radarcns.specifications.source.KafkaActor;
+import org.radarcns.specifications.source.Topic;
 import org.radarcns.specifications.util.Utils;
 
 /**
  * TODO.
  */
-public class Sensor {
+public class Sensor extends KafkaActor {
 
     private final SensorName name;
 
     private final String appProvider;
 
-    private final String doc;
-
-    private final double sampleRate;
-
-    private final Unit unit;
-
-    private final DataType dataType;
-
-    private final String topic;
-
-    private final String key;
-
-    private final String value;
-
-    private final String aggregator;
+    private static final String NULL_MESSAGE = " in ".concat(
+        Processor.class.getName()).concat(" cannot be null.");
 
     /**
      * TODO.
@@ -68,83 +66,32 @@ public class Sensor {
      */
     @JsonCreator
     public Sensor(
-            @JsonProperty("name") SensorName name,
-            @JsonProperty("app_provider") String appProvider,
-            @JsonProperty("doc") String doc,
-            @JsonProperty("sample_rate") double sampleRate,
-            @JsonProperty("unit") Unit unit,
-            @JsonProperty("data_type") DataType dataType,
-            @JsonProperty("topic") String topic,
-            @JsonProperty("key") String key,
-            @JsonProperty("value") String value,
-            @JsonProperty("aggregator") String aggregator) {
+            @JsonProperty(NAME) SensorName name,
+            @JsonProperty(APP_PROVIDER) String appProvider,
+            @JsonProperty(DOC) String doc,
+            @JsonProperty(SAMPLE_RATE) double sampleRate,
+            @JsonProperty(UNIT) Unit unit,
+            @JsonProperty(DATA_TYPE) DataType dataType,
+            @JsonProperty(TOPIC) String topic,
+            @JsonProperty(KEY) String key,
+            @JsonProperty(VALUE) String value,
+            @JsonProperty(AGGREGATOR) String aggregator) {
+        super(doc, sampleRate, unit, dataType,
+                new Topic(topic, key, value, aggregator, null));
+
+        Objects.requireNonNull(name, NAME.concat(NULL_MESSAGE));
+
         this.name = name;
-        this.appProvider = appProvider;
-        this.doc = doc;
-        this.sampleRate = sampleRate;
-        this.unit = unit;
-        this.dataType = dataType;
-        this.topic = topic;
-        this.key = key;
-        this.value = value;
-        this.aggregator = aggregator;
+        this.appProvider = Objects.isNull(appProvider)
+                ? null : Utils.getProjectGroup().concat(appProvider);
+    }
+
+    public String getAppProvider() {
+        return appProvider;
     }
 
     public SensorName getName() {
         return name;
-    }
-
-    public String getAppProvider() {
-        return Utils.getProjectGroup().concat(appProvider);
-    }
-
-    public String getDoc() {
-        return doc;
-    }
-
-    public double getSampleRate() {
-        return sampleRate;
-    }
-
-    public Unit getUnit() {
-        return unit;
-    }
-
-    public DataType getDataType() {
-        return dataType;
-    }
-
-    public String getTopic() {
-        return topic;
-    }
-
-    public String getKey() {
-        return Utils.getProjectGroup().concat(key);
-    }
-
-    public String getValue() {
-        return Utils.getProjectGroup().concat(value);
-    }
-
-    public String getAggregator() {
-        return Utils.getProjectGroup().concat(aggregator);
-    }
-
-    /**
-     * TODO.
-     * @return TODO
-     */
-    public Set<String> getTopics() {
-        Set<String> set = new HashSet<>();
-        set.add(topic);
-
-        if (Utils.isTimedAggregator(aggregator)) {
-            set.addAll(TopicUtils.getTimedOutputStateStoreTopics(topic));
-        } else {
-            set.add(TopicUtils.getOutTopic(topic));
-        }
-
-        return set;
     }
 
     @Override
@@ -160,32 +107,16 @@ public class Sensor {
         Sensor sensor = (Sensor) o;
 
         return new EqualsBuilder()
-            .append(sampleRate, sensor.sampleRate)
-            .append(name, sensor.name)
+            .appendSuper(super.equals(o))
             .append(appProvider, sensor.appProvider)
-            .append(doc, sensor.doc)
-            .append(unit, sensor.unit)
-            .append(dataType, sensor.dataType)
-            .append(topic, sensor.topic)
-            .append(key, sensor.key)
-            .append(value, sensor.value)
-            .append(aggregator, sensor.aggregator)
             .isEquals();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
-            .append(name)
+            .appendSuper(super.hashCode())
             .append(appProvider)
-            .append(doc)
-            .append(sampleRate)
-            .append(unit)
-            .append(dataType)
-            .append(topic)
-            .append(key)
-            .append(value)
-            .append(aggregator)
             .toHashCode();
     }
 }

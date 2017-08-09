@@ -16,42 +16,35 @@ package org.radarcns.specifications.source.passive;
  * limitations under the License.
  */
 
+import static org.radarcns.specifications.util.Labels.AGGREGATOR;
+import static org.radarcns.specifications.util.Labels.BASE_OUTPUT_TOPIC;
+import static org.radarcns.specifications.util.Labels.DATA_TYPE;
+import static org.radarcns.specifications.util.Labels.DOC;
+import static org.radarcns.specifications.util.Labels.INPUT_KEY;
+import static org.radarcns.specifications.util.Labels.INPUT_TOPIC;
+import static org.radarcns.specifications.util.Labels.INPUT_VALUE;
+import static org.radarcns.specifications.util.Labels.NAME;
+import static org.radarcns.specifications.util.Labels.SAMPLE_RATE;
+import static org.radarcns.specifications.util.Labels.UNIT;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import java.util.HashSet;
-import java.util.Set;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
+import java.util.Objects;
 import org.radarcns.catalogue.DataType;
 import org.radarcns.catalogue.SensorName;
 import org.radarcns.catalogue.Unit;
-import org.radarcns.specifications.util.TopicUtils;
-import org.radarcns.specifications.util.Utils;
+import org.radarcns.specifications.source.KafkaActor;
+import org.radarcns.specifications.source.Topic;
 
 /**
  * TODO.
  */
-public class Processor {
+public class Processor extends KafkaActor {
 
     private final SensorName name;
 
-    private final String doc;
-
-    private final double sampleRate;
-
-    private final Unit unit;
-
-    private final DataType dataType;
-
-    private final String inputTopic;
-
-    private final String inputKey;
-
-    private final String inputValue;
-
-    private final String baseOutputTopic;
-
-    private final String aggregator;
+    private static final String NULL_MESSAGE = " in ".concat(
+            Processor.class.getName()).concat(" cannot be null.");
 
     /**
      * TODO.
@@ -68,123 +61,26 @@ public class Processor {
      */
     @JsonCreator
     public Processor(
-            @JsonProperty("name") SensorName name,
-            @JsonProperty("doc") String doc,
-            @JsonProperty("sample_rate") double sampleRate,
-            @JsonProperty("unit") Unit unit,
-            @JsonProperty("data_type") DataType dataType,
-            @JsonProperty("input_topic") String inputTopic,
-            @JsonProperty("input_key") String inputKey,
-            @JsonProperty("input_value") String inputValue,
-            @JsonProperty("base_output_topic") String baseOutputTopic,
-            @JsonProperty("aggregator") String aggregator) {
+            @JsonProperty(NAME) SensorName name,
+            @JsonProperty(DOC) String doc,
+            @JsonProperty(SAMPLE_RATE) double sampleRate,
+            @JsonProperty(UNIT) Unit unit,
+            @JsonProperty(DATA_TYPE) DataType dataType,
+            @JsonProperty(INPUT_TOPIC) String inputTopic,
+            @JsonProperty(INPUT_KEY) String inputKey,
+            @JsonProperty(INPUT_VALUE) String inputValue,
+            @JsonProperty(BASE_OUTPUT_TOPIC) String baseOutputTopic,
+            @JsonProperty(AGGREGATOR) String aggregator) {
+        super(doc, sampleRate, unit, dataType,
+                new Topic(inputTopic, inputKey, inputValue, aggregator, baseOutputTopic));
+
+        Objects.requireNonNull(baseOutputTopic, BASE_OUTPUT_TOPIC.concat(NULL_MESSAGE));
+        Objects.requireNonNull(name, NAME.concat(NULL_MESSAGE));
+
         this.name = name;
-        this.doc = doc;
-        this.sampleRate = sampleRate;
-        this.unit = unit;
-        this.dataType = dataType;
-        this.inputTopic = inputTopic;
-        this.inputKey = inputKey;
-        this.inputValue = inputValue;
-        this.baseOutputTopic = baseOutputTopic;
-        this.aggregator = aggregator;
     }
 
     public SensorName getName() {
         return name;
-    }
-
-    public String getDoc() {
-        return doc;
-    }
-
-    public double getSampleRate() {
-        return sampleRate;
-    }
-
-    public Unit getUnit() {
-        return unit;
-    }
-
-    public DataType getDataType() {
-        return dataType;
-    }
-
-    public String getInputTopic() {
-        return inputTopic;
-    }
-
-    public String getInputKey() {
-        return Utils.getProjectGroup().concat(inputKey);
-    }
-
-    public String getInputValue() {
-        return Utils.getProjectGroup().concat(inputValue);
-    }
-
-    public String getBaseOutputTopic() {
-        return baseOutputTopic;
-    }
-
-    public String getAggregator() {
-        return Utils.getProjectGroup().concat(aggregator);
-    }
-
-    /**
-     * TODO.
-     * @return TODO
-     */
-    public Set<String> getTopics() {
-        Set<String> set = new HashSet<>();
-
-        if (Utils.isTimedAggregator(aggregator)) {
-            set.addAll(TopicUtils.getTimedOutputStateStoreTopics(baseOutputTopic));
-        } else {
-            set.add(TopicUtils.getOutTopic(baseOutputTopic));
-        }
-
-        return set;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-
-        if (!(o instanceof Processor)) {
-            return false;
-        }
-
-        Processor processor = (Processor) o;
-
-        return new EqualsBuilder()
-            .append(sampleRate, processor.sampleRate)
-            .append(name, processor.name)
-            .append(doc, processor.doc)
-            .append(unit, processor.unit)
-            .append(dataType, processor.dataType)
-            .append(inputTopic, processor.inputTopic)
-            .append(inputKey, processor.inputKey)
-            .append(inputValue, processor.inputValue)
-            .append(baseOutputTopic, processor.baseOutputTopic)
-            .append(aggregator, processor.aggregator)
-            .isEquals();
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder(17, 37)
-            .append(name)
-            .append(doc)
-            .append(sampleRate)
-            .append(unit)
-            .append(dataType)
-            .append(inputTopic)
-            .append(inputKey)
-            .append(inputValue)
-            .append(baseOutputTopic)
-            .append(aggregator)
-            .toHashCode();
     }
 }

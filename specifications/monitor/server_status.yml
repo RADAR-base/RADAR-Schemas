@@ -5,6 +5,6 @@ doc: Monitor used by the Android pRMT to report the server connection status bet
 sample_rate: 0.08
 unit: NON_DIMENSIONAL
 data_type: RAW
-topic: application_uptime
+topic: application_server_status
 key: .kafka.key.KeyMeasurement
 value: .monitor.application.ApplicationServerStatus

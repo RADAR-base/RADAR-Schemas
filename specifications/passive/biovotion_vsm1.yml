@@ -15,15 +15,15 @@ sensors:
     sample_rate: 1.0
     unit: PERCENTAGE
     data_type: RAW
-    topic: android_biovotion_vsm1_battery_state
+    topic: android_biovotion_vsm1_battery_level
     key: .kafka.key.KeyMeasurement
-    value: .passive.biovotion.BiovotionVsm1BatteryState
+    value: .passive.biovotion.BiovotionVsm1BatteryLevel
     aggregator: .kafka.aggregator.AggregatorDouble
   - name: BLOOD_PULSE_WAVE
     sample_rate: 1.0
     unit: NON_DIMENSIONAL
     data_type: VENDOR
-    topic: android_biovotion_vsm1_acceleration
+    topic: android_biovotion_vsm1_blood_volume_pulse
     key: .kafka.key.KeyMeasurement
     value: .passive.biovotion.BiovotionVsm1BloodPulseWave
     aggregator: .kafka.aggregator.AggregatorDouble
@@ -47,7 +47,7 @@ sensors:
     sample_rate: 1.0
     unit: BEATS_PER_MIN
     data_type: VENDOR
-    topic: android_biovotion_vsm1_heart_rate
+    topic: android_biovotion_vsm1_heartrate
     key: .kafka.key.KeyMeasurement
     value: .passive.biovotion.BiovotionVsm1HeartRate
     aggregator: .kafka.aggregator.AggregatorDouble
@@ -55,7 +55,7 @@ sensors:
     sample_rate: 1.0
     unit: RMSSD_IN_MILLI_SEC
     data_type: VENDOR
-    topic: android_biovotion_vsm1_heart_rate_variability
+    topic: android_biovotion_vsm1_heartrate_variability
     key: .kafka.key.KeyMeasurement
     value: .passive.biovotion.BiovotionVsm1HeartRateVariability
     aggregator: .kafka.aggregator.AggregatorDouble
@@ -70,8 +70,8 @@ sensors:
   - name: PHOTOPLETHYSMOGRAPHY
     sample_rate: 51.2
     unit: NON_DIMENSIONAL
-    data_type: VENDOR
-    topic: android_biovotion_vsm1_ppg_current
+    data_type: RAW
+    topic: android_biovotion_vsm1_ppg_raw
     key: .kafka.key.KeyMeasurement
     value: .passive.biovotion.BiovotionVsm1PpgRaw
     aggregator: .kafka.aggregator.AggregatorDoubleArray
@@ -86,7 +86,7 @@ sensors:
   - name: OXYGEN_SATURATION
     sample_rate: 1.0
     unit: PERCENTAGE
-    data_type: RAW
+    data_type: VENDOR
     topic: android_biovotion_vsm1_oxygen_saturation
     key: .kafka.key.KeyMeasurement
     value: .passive.biovotion.BiovotionVsm1OxygenSaturation

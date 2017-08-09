@@ -16,6 +16,9 @@ package org.radarcns.specifications.source;
  * limitations under the License.
  */
 
+import static org.radarcns.specifications.util.Labels.NAME;
+
+import java.util.Objects;
 import java.util.Set;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -29,7 +32,14 @@ public abstract class Source {
 
     private final String doc;
 
+    /**
+     * TODO.
+     * @param name TODO
+     * @param doc TODO
+     */
     public Source(String name, String doc) {
+        Objects.requireNonNull(name, NAME.concat(" in ").concat(
+                Source.class.getName()).concat(" cannot be null"));
         this.name = name;
         this.doc = doc;
     }

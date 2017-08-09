@@ -1,4 +1,4 @@
-package org.radarcns.specifications.validator;
+package org.radarcns.specifications.source;
 
 /*
  * Copyright 2017 King's College London and The Hyve
@@ -16,21 +16,20 @@ package org.radarcns.specifications.validator;
  * limitations under the License.
  */
 
+import java.util.Set;
+import org.radarcns.specifications.source.Topic.TopicMetadata;
+
 /**
- * TODO.
+ * TODO
  */
-public interface Message {
+public interface Aggregatable {
 
-    /**
-     * TODO.
-     * @return TODO
-     */
-    String getMessage();
+    boolean isAggregatable();
 
-    /**
-     * TODO.
-     * @param info TODO
-     * @return TODO
-     */
-    String getMessage(String info);
+    String getAggregator();
+
+    String getInputTopic();
+
+    Set<TopicMetadata> getOutputTopics();
+
 }

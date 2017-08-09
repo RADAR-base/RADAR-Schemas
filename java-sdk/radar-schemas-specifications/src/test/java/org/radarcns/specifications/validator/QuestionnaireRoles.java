@@ -7,9 +7,6 @@ import static org.radarcns.specifications.validator.ValidationSupport.removeExte
 
 import java.io.File;
 import java.util.Objects;
-import java.util.Set;
-import java.util.stream.Collectors;
-import org.radarcns.catalogue.ActiveSourceType;
 import org.radarcns.specifications.source.active.questionnaire.QuestionnaireSource;
 
 /*
@@ -27,17 +24,17 @@ import org.radarcns.specifications.source.active.questionnaire.QuestionnaireSour
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * TODO.
+ */
 interface QuestionnaireRoles extends GenericRoles<QuestionnaireSource> {
 
     /** Messages. */
     enum QuestionnaireInfo implements Message {
-        ASSESSMENT_TYPE("Assessment Type should be equal to ".concat(
-                ActiveSourceType.QUESTIONNAIRE.name()).concat(".")),
         QUESTIONS("Questions list cannot null or empty."),
-        QUESTIONNAIRE_TYPE("Questionnaire Type cannot be null and should match with the "
-                + "configuration file name."),
-        TOPICS("Topic set is invalid. It should contain only to the topic specified in "
-                + "the configuration file.");
+        QUESTIONNAIRE_TYPE("Questionnaire Type cannot be null and should match with the ".concat(
+                "configuration file name."));
 
         private final String message;
 
@@ -52,17 +49,6 @@ interface QuestionnaireRoles extends GenericRoles<QuestionnaireSource> {
         public String getMessage(String info) {
             return message.concat(" ").concat(info);
         }
-    }
-
-    /**
-     * TODO.
-     * @return TODO
-     */
-    static GenericRoles<QuestionnaireSource> validateAssessmentType() {
-        return questionnaire -> Objects.nonNull(questionnaire.getAssessmentType())
-            && questionnaire.getAssessmentType().name().equals(
-                    ActiveSourceType.QUESTIONNAIRE.name())
-            ? valid() : invalid(QuestionnaireInfo.ASSESSMENT_TYPE.getMessage());
     }
 
     /**
@@ -85,20 +71,5 @@ interface QuestionnaireRoles extends GenericRoles<QuestionnaireSource> {
         return questionnaire -> Objects.nonNull(questionnaire.getQuestions())
                 && !questionnaire.getQuestions().isEmpty()
                 ? valid() : invalid(QuestionnaireInfo.QUESTIONS.getMessage());
-    }
-
-    /**
-     * TODO.
-     * @return TODO
-     */
-    static GenericRoles<QuestionnaireSource> validateTopics() {
-        return questionnaire -> {
-            Set<String> input = questionnaire.getTopics();
-            return Objects.nonNull(input) && input.size() == 1
-                && input.contains(questionnaire.getTopic()) ?
-                valid() : invalid(QuestionnaireInfo.TOPICS.getMessage(
-                    input == null ? "" : input.stream().map(Object::toString).collect(
-                        Collectors.joining(","))));
-        };
     }
 }

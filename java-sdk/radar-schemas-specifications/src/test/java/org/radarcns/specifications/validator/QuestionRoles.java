@@ -57,8 +57,8 @@ interface QuestionRoles extends GenericRoles<Question> {
      */
     static GenericRoles<Question> validateContent() {
         return question -> Objects.nonNull(question.getContent())
-            && question.getContent().endsWith(".")
-            ? valid() : invalid(QuestionInfo.CONTENT.getMessage());
+                && question.getContent().endsWith(".")
+                ? valid() : invalid(QuestionInfo.CONTENT.getMessage());
     }
 
     /**
@@ -67,8 +67,8 @@ interface QuestionRoles extends GenericRoles<Question> {
      */
     static GenericRoles<Question> validateLead() {
         return question -> Objects.nonNull(question.getLead())
-            && question.getLead().endsWith("?")
-            ? valid() : invalid(QuestionInfo.LEAD.getMessage());
+                && question.getLead().endsWith("?")
+                ? valid() : invalid(QuestionInfo.LEAD.getMessage());
     }
 
     /**
@@ -85,9 +85,9 @@ interface QuestionRoles extends GenericRoles<Question> {
      * TODO.
      * @return TODO
      */
-    static GenericRoles<Question> validateResposnses() {
+    static GenericRoles<Question> validateResponses() {
         return question -> Objects.nonNull(question.getResponses())
-            && !question.getResponses().isEmpty()
-            ? valid() : invalid(QuestionInfo.RESPONSES.getMessage());
+                && !question.getResponses().isEmpty()
+                ? valid() : invalid(QuestionInfo.RESPONSES.getMessage());
     }
 }

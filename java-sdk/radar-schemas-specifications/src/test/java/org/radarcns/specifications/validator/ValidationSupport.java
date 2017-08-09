@@ -28,6 +28,27 @@ import scala.MatchError;
  */
 public final class ValidationSupport {
 
+    /** Package names. */
+    public enum Package {
+        AGGREGATOR(".kafka.aggregator"),
+        BIOVOTION(".passive.biovotion"),
+        EMPATICA(".passive.empatica"),
+        KAFKA_KEY(".kafka.key"),
+        MONITOR(".monitor"),
+        PEBBLE(".passive.pebble"),
+        QUESTIONNAIRE(".active.questionnaire");
+
+        private final String name;
+
+        Package(String name) {
+            this.name = name;
+        }
+
+        public String getName() {
+            return name;
+        }
+    }
+
     static final ValidationResult VALID = new ValidationResult() {
         public boolean isValid() {
             return true;

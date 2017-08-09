@@ -9,8 +9,10 @@ import java.io.File;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import org.radarcns.catalogue.DataType;
 import org.radarcns.specifications.source.passive.MonitorSource;
+import org.radarcns.specifications.util.Utils;
 
 /*
  * Copyright 2017 King's College London and The Hyve
@@ -33,17 +35,24 @@ import org.radarcns.specifications.source.passive.MonitorSource;
  */
 interface MonitorRoles extends GenericRoles<MonitorSource> {
 
-    String APP_PROVIDER_NAME = "org.radarcns.application.ApplicationServiceProvider";
+    /**
+     * TODO.
+     * @return TODO
+     */
+    static Set<String> allowedProvider() {
+        return Stream.of(
+            Utils.getProjectGroup().concat(".application.ApplicationServiceProvider")
+        ).collect(Collectors.toSet());
+    }
 
     /** Messages. */
     enum MonitorInfo implements Message {
-        APP_PROVIDER("App provider cannot be null and must be equal to ".concat(
-                APP_PROVIDER_NAME).concat(".")),
-        DATA_TYPE("The only data type should be ".concat(DataType.RAW.name()).concat(".")),
-        NOT_AGGREGATOR("Aggregator is not defined yet."),
-        SOURCE_TYPE("Source type cannot be null and should match the file name."),
-        TOPICS("Topic set is invalid. It should contain only to the topic specified in "
-                + "the configuration file.");
+        APP_PROVIDER("App provider should be equal to one of the following values".concat(
+                allowedProvider().stream().collect(Collectors.joining("'"))).concat(".")),
+        DATA_TYPE("The only allowed data type is ".concat(DataType.RAW.name()).concat(".")),
+        NOT_AGGREGATOR("Aggregators are not defined yet for ".concat(
+                MonitorSource.class.getName()).concat(".")),
+        SOURCE_TYPE("Source type should match file name.");
 
         private final String message;
 
@@ -65,7 +74,7 @@ interface MonitorRoles extends GenericRoles<MonitorSource> {
      * @return TODO
      */
     static GenericRoles<MonitorSource> validateAggregator() {
-        return monitor -> Objects.isNull(monitor.getAggregator()) ? valid()
+        return monitor -> /*Objects.isNull(monitor.getAggregator())*/ false ? valid()
                 : invalid(MonitorInfo.NOT_AGGREGATOR.getMessage());
     }
 
@@ -75,7 +84,7 @@ interface MonitorRoles extends GenericRoles<MonitorSource> {
      */
     static GenericRoles<MonitorSource> validateAppProvider() {
         return monitor -> Objects.nonNull(monitor.getAppProvider())
-                && monitor.getAppProvider().equals(APP_PROVIDER_NAME) ?
+                && allowedProvider().contains(monitor.getAppProvider()) ?
                 valid() : invalid(MonitorInfo.APP_PROVIDER.getMessage());
     }
 
@@ -84,9 +93,9 @@ interface MonitorRoles extends GenericRoles<MonitorSource> {
      * @return TODO
      */
     static GenericRoles<MonitorSource> validateDataType() {
-        return monitor -> Objects.nonNull(monitor.getDataType())
-                && monitor.getDataType().name().equals(DataType.RAW.name()) ?
-                valid() : invalid(MonitorInfo.DATA_TYPE.getMessage());
+        return monitor -> /*Objects.nonNull(monitor.getDataType())
+                && monitor.getDataType().name().equals(DataType.RAW.name())*/
+                false ? valid() : invalid(MonitorInfo.DATA_TYPE.getMessage());
     }
 
     /**
@@ -96,22 +105,7 @@ interface MonitorRoles extends GenericRoles<MonitorSource> {
      */
     static GenericRoles<MonitorSource> validateSourceType(File file) {
         return monitor -> Objects.nonNull(monitor.getType())
-                && removeExtension(file, YAML_EXTENSION).equalsIgnoreCase(monitor.getType().name())?
-                valid() : invalid(MonitorInfo.SOURCE_TYPE.getMessage());
-    }
-
-    /**
-     * TODO.
-     * @return TODO
-     */
-    static GenericRoles<MonitorSource> validateTopics() {
-        return monitor -> {
-            Set<String> input = monitor.getTopics();
-            return Objects.nonNull(input) && input.size() == 1
-                && input.contains(monitor.getTopic()) ?
-                valid() : invalid(MonitorInfo.TOPICS.getMessage(
-                        input == null ? "" : input.stream().map(Object::toString).collect(
-                            Collectors.joining(","))));
-        };
+                && removeExtension(file, YAML_EXTENSION).equalsIgnoreCase(monitor.getType().name())
+                ? valid() : invalid(MonitorInfo.SOURCE_TYPE.getMessage());
     }
 }

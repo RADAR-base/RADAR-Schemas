@@ -186,8 +186,8 @@ public class SchemaCatalogValidator {
 
     @Test
     /**
-     * Checks only the folder structure, the validation is left the to the
-     *      {@code radar-schemas-specifications} module.
+     * Checks only the folder structure and if they contain only {@code YAML} files. The semantic
+     *      validation is left the to the {@code radar-schemas-specifications} module.
      */
     public void specifications() {
         assertEquals(true, RootFolder.SPECIFICATIONS.getFolder().isDirectory());
@@ -196,6 +196,6 @@ public class SchemaCatalogValidator {
             assertEquals(true, folder.getFolder().isDirectory());
         }
 
-        //TODO verify that there are only YML files
+        SpecificationsValidator.validateAll();
     }
 }

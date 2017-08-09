@@ -25,6 +25,7 @@ ext.slf4jVersion = '1.7.25'
 
 dependencies {
     implementation project(':radar-schemas-commons')
+
     implementation group: 'org.radarcns', name: 'radar-commons', version: radarCommonsVersion
     implementation group: 'org.apache.commons', name: 'commons-lang3', version: apacheCommonsVersion
 
@@ -47,19 +48,13 @@ dependencies {
 // Exchange configuration with Java code                                     //
 //---------------------------------------------------------------------------//
 ext.exchnageConfigMainPath = 'src/main/resources/exchange.properties'
-ext.exchnageConfigTestPath = 'src/test/resources/exchange.properties'
 task exchangeConfig() {
     doLast {
-        if (file(exchnageConfigMainPath).createNewFile()) {
+        if (file(exchnageConfigMainPath).delete()) {
+            file(exchnageConfigMainPath).createNewFile()
             file(exchnageConfigMainPath).write("project.group=${project.group}")
         } else {
-            throw new GradleException("File for exchanging configuration between Gradle and Java cannot be created. Error while managing file at ${exchnageConfigMainPath}")
-        }
-
-        if (file(exchnageConfigTestPath).createNewFile()) {
-            file(exchnageConfigTestPath).write("project.group=${project.group}")
-        } else {
-            throw new GradleException("File for exchanging configuration between Gradle and Java cannot be created. Error while managing file at ${exchnageConfigTestPath}")
+            throw new GradleException("Error while creating file at ${exchnageConfigMainPath}")
         }
     }
 }

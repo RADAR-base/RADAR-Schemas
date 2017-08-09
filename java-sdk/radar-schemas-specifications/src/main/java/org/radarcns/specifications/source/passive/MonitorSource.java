@@ -16,15 +16,27 @@ package org.radarcns.specifications.source.passive;
  * limitations under the License.
  */
 
+import static org.radarcns.specifications.util.Labels.AGGREGATOR;
+import static org.radarcns.specifications.util.Labels.APP_PROVIDER;
+import static org.radarcns.specifications.util.Labels.DATA_TYPE;
+import static org.radarcns.specifications.util.Labels.DOC;
+import static org.radarcns.specifications.util.Labels.KEY;
+import static org.radarcns.specifications.util.Labels.NAME;
+import static org.radarcns.specifications.util.Labels.SAMPLE_RATE;
+import static org.radarcns.specifications.util.Labels.TOPIC;
+import static org.radarcns.specifications.util.Labels.UNIT;
+import static org.radarcns.specifications.util.Labels.VALUE;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
 import org.radarcns.catalogue.DataType;
 import org.radarcns.catalogue.MonitorSourceType;
 import org.radarcns.catalogue.Unit;
+import org.radarcns.specifications.source.KafkaActor;
 import org.radarcns.specifications.source.Source;
+import org.radarcns.specifications.source.Topic;
 import org.radarcns.specifications.util.Utils;
 
 /**
@@ -32,23 +44,14 @@ import org.radarcns.specifications.util.Utils;
  */
 public class MonitorSource extends Source {
 
-    private final MonitorSourceType name;
+    private final MonitorSourceType type;
 
     private final String appProvider;
 
-    private final double sampleRate;
+    private final KafkaActor kafkaActor;
 
-    private final Unit unit;
-
-    private final DataType dataType;
-
-    private final String topic;
-
-    private final String key;
-
-    private final String value;
-
-    private final String aggregator;
+    private static final String NULL_MESSAGE = " in ".concat(
+            MonitorSource.class.getName()).concat(" cannot be null.");
 
     /**
      * TODO.
@@ -66,66 +69,41 @@ public class MonitorSource extends Source {
      */
     @JsonCreator
     public MonitorSource(
-            @JsonProperty("name") MonitorSourceType name,
-            @JsonProperty("app_provider") String appProvider,
-            @JsonProperty("doc") String doc,
-            @JsonProperty("sample_rate") double sampleRate,
-            @JsonProperty("unit") Unit unit,
-            @JsonProperty("data_type") DataType dataType,
-            @JsonProperty("topic") String topic,
-            @JsonProperty("key") String key,
-            @JsonProperty("value") String value,
-            @JsonProperty("aggregator") String aggregator) {
+            @JsonProperty(NAME) MonitorSourceType name,
+            @JsonProperty(APP_PROVIDER) String appProvider,
+            @JsonProperty(DOC) String doc,
+            @JsonProperty(SAMPLE_RATE) double sampleRate,
+            @JsonProperty(UNIT) Unit unit,
+            @JsonProperty(DATA_TYPE) DataType dataType,
+            @JsonProperty(TOPIC) String topic,
+            @JsonProperty(KEY) String key,
+            @JsonProperty(VALUE) String value,
+            @JsonProperty(AGGREGATOR) String aggregator) {
         super(name.name(), doc);
-        this.name = name;
-        this.appProvider = appProvider;
-        this.sampleRate = sampleRate;
-        this.unit = unit;
-        this.dataType = dataType;
-        this.topic = topic;
-        this.key = key;
-        this.value = value;
-        this.aggregator = aggregator;
+
+        Objects.requireNonNull(appProvider, APP_PROVIDER.concat(NULL_MESSAGE));
+
+        this.type = name;
+        this.appProvider = Utils.getProjectGroup().concat(appProvider);
+
+        this.kafkaActor = new KafkaActor(doc, sampleRate, unit, dataType,
+                new Topic(topic, key, value, aggregator, null));
     }
 
     public MonitorSourceType getType() {
-        return name;
+        return type;
     }
 
     public String getAppProvider() {
-        return Utils.getProjectGroup().concat(appProvider);
+        return appProvider;
     }
 
-    public double getSampleRate() {
-        return sampleRate;
-    }
-
-    public Unit getUnit() {
-        return unit;
-    }
-
-    public DataType getDataType() {
-        return dataType;
-    }
-
-    public String getTopic() {
-        return topic;
-    }
-
-    public String getKey() {
-        return Utils.getProjectGroup().concat(key);
-    }
-
-    public String getValue() {
-        return Utils.getProjectGroup().concat(value);
-    }
-
-    public String getAggregator() {
-        return Objects.isNull(aggregator) ? null : Utils.getProjectGroup().concat(aggregator);
+    public KafkaActor getKafkaActor() {
+        return kafkaActor;
     }
 
     @Override
     public Set<String> getTopics() {
-        return Collections.singleton(topic);
+        return kafkaActor.getTopic().getTopicNames();
     }
 }

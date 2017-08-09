@@ -16,9 +16,15 @@ package org.radarcns.specifications.source.active.questionnaire;
  * limitations under the License.
  */
 
+import static org.radarcns.specifications.util.Labels.CONTENT;
+import static org.radarcns.specifications.util.Labels.LEAD;
+import static org.radarcns.specifications.util.Labels.RESPONSES;
+import static org.radarcns.specifications.util.Labels.WIDGET;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
+import java.util.Objects;
 import org.radarcns.catalogue.RadarWidget;
 
 /**
@@ -34,6 +40,9 @@ public class Question {
 
     private final List<Response> responses;
 
+    private static final String NULL_MESSAGE = " in ".concat(
+            Question.class.getName()).concat(" cannot be null.");
+
     /**
      * TODO.
      * @param lead TODO
@@ -43,10 +52,16 @@ public class Question {
      */
     @JsonCreator
     public Question(
-            @JsonProperty("lead") String lead,
-            @JsonProperty("content") String content,
-            @JsonProperty("widget") RadarWidget widget,
-            @JsonProperty("responses") List<Response> responses) {
+            @JsonProperty(LEAD) String lead,
+            @JsonProperty(CONTENT) String content,
+            @JsonProperty(WIDGET) RadarWidget widget,
+            @JsonProperty(RESPONSES) List<Response> responses) {
+
+        Objects.requireNonNull(lead, LEAD.concat(NULL_MESSAGE));
+        Objects.requireNonNull(content, CONTENT.concat(NULL_MESSAGE));
+        Objects.requireNonNull(widget, WIDGET.concat(NULL_MESSAGE));
+        Objects.requireNonNull(responses, RESPONSES.concat(NULL_MESSAGE));
+
         this.lead = lead;
         this.content = content;
         this.widget = widget;

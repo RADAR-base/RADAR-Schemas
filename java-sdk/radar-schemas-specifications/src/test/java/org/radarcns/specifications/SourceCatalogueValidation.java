@@ -23,6 +23,7 @@ import static org.radarcns.specifications.SourceCatalogue.getPassiveSource;
 import static org.radarcns.specifications.validator.ValidationSupport.isValidTopic;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -30,6 +31,9 @@ import org.junit.Test;
 import org.radarcns.active.questionnaire.QuestionnaireType;
 import org.radarcns.catalogue.MonitorSourceType;
 import org.radarcns.catalogue.PassiveSourceType;
+import org.radarcns.specifications.source.active.questionnaire.QuestionnaireSource;
+import org.radarcns.specifications.source.passive.MonitorSource;
+import org.radarcns.specifications.source.passive.PassiveSource;
 
 /**
  * TODO.
@@ -60,7 +64,8 @@ public class SourceCatalogueValidation {
                         .allMatch(type -> getPassiveSource(type) != null));
     }
 
-    @Test
+    //TODO
+    /*@Test
     public void validateTopicNamesVerbose() {
         for (Entry<String, Map<String, Set<String>>> source
                 : SourceCatalogue.getTopicsVerbose().entrySet()) {
@@ -70,11 +75,29 @@ public class SourceCatalogueValidation {
                             + " is invalid", isValidTopic(topic)));
             }
         }
-    }
+    }*/
 
     @Test
     public void validateTopicNames() {
         SourceCatalogue.getTopics().forEach(topic ->
                 assertTrue(topic + " is invalid", isValidTopic(topic)));
+    }
+
+    @Test
+    public void validateTopics() {
+        Set<String> expected = new HashSet<>();
+
+        for (QuestionnaireSource source : SourceCatalogue.getActiveSources().values()) {
+            expected.addAll(source.getTopics());
+        }
+        for (MonitorSource source : SourceCatalogue.getMonitorSources().values()) {
+            expected.addAll(source.getTopics());
+        }
+        for (PassiveSource source : SourceCatalogue.getPassiveSources().values()) {
+            expected.addAll(source.getTopics());
+        }
+
+        expected.removeAll(SourceCatalogue.getTopics());
+        assertTrue(expected.isEmpty());
     }
 }

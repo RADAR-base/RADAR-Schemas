@@ -22,8 +22,8 @@ sensors:
   - name: HEART_RATE
     sample_rate: 1.0
     unit: BEATS_PER_MIN
-    data_type: RAW
-    topic: android_pebble_2_heart_rate
+    data_type: VENDOR
+    topic: android_pebble_2_heartrate
     key: .kafka.key.KeyMeasurement
     value: .passive.pebble.Pebble2HeartRate
     aggregator: .kafka.aggregator.AggregatorDouble
@@ -31,7 +31,7 @@ sensors:
     sample_rate: 1.0
     unit: BEATS_PER_MIN
     data_type: VENDOR
-    topic: android_pebble_2_heart_rate_filtered
+    topic: android_pebble_2_heartrate_filtered
     key: .kafka.key.KeyMeasurement
     value: .passive.pebble.Pebble2HeartRateFiltered
     aggregator: .kafka.aggregator.AggregatorDouble

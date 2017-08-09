@@ -16,37 +16,6 @@ package org.radarcns.specifications.validator;
  * limitations under the License.
  */
 
-import static org.radarcns.specifications.validator.MonitorRoles.validateAggregator;
-import static org.radarcns.specifications.validator.MonitorRoles.validateDataType;
-import static org.radarcns.specifications.validator.PassiveSourceRoles.validateModelAndVendor;
-import static org.radarcns.specifications.validator.ProcessorRoles.validateBaseOutputTopic;
-import static org.radarcns.specifications.validator.QuestionRoles.validateContent;
-import static org.radarcns.specifications.validator.QuestionRoles.validateLead;
-import static org.radarcns.specifications.validator.QuestionRoles.validateResposnses;
-import static org.radarcns.specifications.validator.QuestionRoles.validateWidget;
-import static org.radarcns.specifications.validator.QuestionnaireRoles.validateQuestionnaireType;
-import static org.radarcns.specifications.validator.QuestionnaireRoles.validateQuestions;
-import static org.radarcns.specifications.validator.ResponseRoles.validateScore;
-import static org.radarcns.specifications.validator.ResponseRoles.validateText;
-import static org.radarcns.specifications.validator.GenericRoles.validateDoc;
-import static org.radarcns.specifications.validator.GenericRoles.validateKey;
-import static org.radarcns.specifications.validator.GenericRoles.validateSampleRate;
-import static org.radarcns.specifications.validator.GenericRoles.validateTopic;
-import static org.radarcns.specifications.validator.GenericRoles.validateUnit;
-import static org.radarcns.specifications.validator.GenericRoles.validateValue;
-
-import java.io.File;
-import org.radarcns.specifications.source.active.questionnaire.Question;
-import org.radarcns.specifications.source.active.questionnaire.QuestionnaireSource;
-import org.radarcns.specifications.source.active.questionnaire.Response;
-import org.radarcns.specifications.source.passive.MonitorSource;
-import org.radarcns.specifications.source.passive.PassiveSource;
-import org.radarcns.specifications.source.passive.Processor;
-import org.radarcns.specifications.source.passive.Sensor;
-import org.radarcns.specifications.validator.GenericRoles.Package;
-
-//TODO validate enum to be different from UNKNOWN
-
 /**
  * TODO
  */
@@ -62,35 +31,35 @@ public final class Validator {
      * @param file TODO
      * @return TODO
      */
-    public static ValidationResult validateMonitor(MonitorSource source, File file) {
+   /* public static ValidationResult validateMonitor(MonitorSource source, File file) {
         return (ValidationResult) MonitorRoles.validateAppProvider()
-                .and(validateAggregator())
-                .and(validateDataType())
-                .and(validateDoc(source.getDoc(), false))
-                .and(validateKey(source.getKey()))
+                .and(MonitorRoles.validateAggregator())
+                .and(MonitorRoles.validateDataType())
+                .and(GenericRoles.validateDoc(source.getDoc(), false))
+                //.and(GenericRoles.validateKey(source.getKey()))
                 .and(GenericRoles.validateName(source.getName()))
-                .and(validateSampleRate(source.getSampleRate()))
+                .and(GenericRoles.validateSampleRate(source.getSampleRate()))
                 .and(MonitorRoles.validateSourceType(file))
-                .and(validateTopic(source.getTopic()))
-                .and(MonitorRoles.validateTopics())
-                .and(GenericRoles.validateTopics(source.getTopics()))
-                .and(validateValue(Package.MONITOR, source.getValue()))
-                .and(validateUnit(source.getUnit()))
+                //.and(GenericRoles.validateTopic(source.getTopic()))
+                .and(AggregatableRoles.validateTopics())
+                .and(GenericRoles.validateTopicNames(source.getTopics()))
+                //.and(GenericRoles.validateValue(Package.MONITOR, source.getValue()))
+                .and(GenericRoles.validateUnit(source.getUnit()))
                 .apply(source);
-    }
+    }*/
 
     /**
      * TODO.
      * @param question TODO
      * @return TODO
      */
-    public static ValidationResult validateQuestion(Question question) {
-        return (ValidationResult) validateContent()
-                .and(validateLead())
-                .and(validateWidget())
-                .and(validateResposnses())
+    /*public static ValidationResult validateQuestion(Question question) {
+        return (ValidationResult) QuestionRoles.validateContent()
+                .and(QuestionRoles.validateLead())
+                .and(QuestionRoles.validateWidget())
+                .and(QuestionRoles.validateResponses())
                 .apply(question);
-    }
+    }*/
 
     /**
      * TODO.
@@ -98,19 +67,19 @@ public final class Validator {
      * @param file TODO
      * @return TODO
      */
-    public static ValidationResult validateQuestionnaire(QuestionnaireSource source, File file) {
-        return (ValidationResult) QuestionnaireRoles.validateAssessmentType()
-                .and(validateDoc(source.getDoc(), false))
-                .and(validateKey(source.getKey()))
+    /*public static ValidationResult validateQuestionnaire(QuestionnaireSource source, File file) {
+        return (ValidationResult) ActiveSourceRoles.validateAssessmentType()
+                .and(GenericRoles.validateDoc(source.getDoc(), false))
+                .and(GenericRoles.validateKey(source.getKey()))
                 .and(GenericRoles.validateName(source.getName()))
-                .and(validateQuestions())
-                .and(validateQuestionnaireType(file))
-                .and(validateTopic(source.getTopic()))
-                .and(QuestionnaireRoles.validateTopics())
-                .and(GenericRoles.validateTopics(source.getTopics()))
-                .and(validateValue(Package.QUESTIONNAIRE, source.getValue()))
+                .and(QuestionnaireRoles.validateQuestions())
+                .and(QuestionnaireRoles.validateQuestionnaireType(file))
+                .and(GenericRoles.validateTopic(source.getTopic()))
+                .and(ActiveSourceRoles.validateTopics())
+                .and(GenericRoles.validateTopicNames(source.getTopics()))
+                .and(GenericRoles.validateValue(Package.QUESTIONNAIRE, source.getValue()))
                 .apply(source);
-    }
+    }*/
 
     /**
      * TODO.
@@ -118,27 +87,28 @@ public final class Validator {
      * @param file TODO
      * @return TODO
      */
-    public static ValidationResult validatePassive(PassiveSource source, File file) {
+    /*public static ValidationResult validatePassive(PassiveSource source, File file) {
         return (ValidationResult) PassiveSourceRoles.validateAppProvider()
-                    .and(validateDoc(source.getDoc(), true))
-                    .and(validateModelAndVendor(file))
-                    .and(GenericRoles.validateName(source.getName()))
-                    .and(PassiveSourceRoles.validateSourceType())
-                    .and(PassiveSourceRoles.validateTopics())
-                    .and(GenericRoles.validateTopics(source.getTopics()))
-                    .apply(source);
-    }
+                .and(GenericRoles.validateDoc(source.getDoc(), true))
+                .and(PassiveSourceRoles.validateModelAndVendor(file))
+                .and(GenericRoles.validateName(source.getName()))
+                .and(PassiveSourceRoles.validateSensors())
+                .and(PassiveSourceRoles.validateSourceType())
+                .and(PassiveSourceRoles.validateTopics())
+                .and(GenericRoles.validateTopicNames(source.getTopics()))
+                .apply(source);
+    }*/
 
     /**
      * TODO.
      * @param response TODO
      * @return TODO
      */
-    public static ValidationResult validateResponse(Response response) {
-        return (ValidationResult) validateScore()
-                    .and(validateText())
-                    .apply(response);
-    }
+    /*public static ValidationResult validateResponse(Response response) {
+        return (ValidationResult) ResponseRoles.validateScore()
+                .and(ResponseRoles.validateText())
+                .apply(response);
+    }*/
 
     /**
      * TODO.
@@ -146,22 +116,22 @@ public final class Validator {
      * @param packageName TODO
      * @return TODO
      */
-    public static ValidationResult validateSensor(Package packageName, Sensor sensor) {
-        return (ValidationResult)
-            validateAggregator(sensor.getAggregator(), true)
-            .and(SensorRoles.validateAppProvider())
-            .and(SensorRoles.validateDataType())
-            .and(validateDoc(sensor.getDoc(), true))
-            .and(validateKey(sensor.getKey()))
-            .and(SensorRoles.validateName())
-            .and(validateSampleRate(sensor.getSampleRate()))
-            .and(validateTopic(sensor.getTopic()))
-            .and(SensorRoles.validateTopics())
-            .and(GenericRoles.validateTopics(sensor.getTopics()))
-            .and(validateUnit(sensor.getUnit()))
-            .and(validateValue(packageName, sensor.getValue()))
-            .apply(sensor);
-    }
+    /*public static ValidationResult validateSensor(Package packageName, Sensor sensor) {
+        return (ValidationResult) SensorRoles.validateAppProvider()
+                .and(SensorRoles.validateDataType())
+                .and(GenericRoles.validateDoc(sensor.getDoc(), true))
+                //.and(GenericRoles.validateKey(sensor.getKey()))
+                .and(SensorRoles.validateName())
+                .and(GenericRoles.validateSampleRate(sensor.getSampleRate()))
+                .and(GenericRoles.validateTopic(sensor.getInputTopic()))
+                //.and(GenericRoles.validateTopic(sensor.getTopic()))
+                .and(AggregatableRoles.validateTopics())
+                .and(AggregatableRoles.validateAggregator(false))
+                .and(GenericRoles.validateTopicNames(sensor.getTopics()))
+                .and(GenericRoles.validateUnit(sensor.getUnit()))
+                //.and(GenericRoles.validateValue(packageName, sensor.getValue()))
+                .apply(sensor);
+    }*/
 
     /**
      * TODO.
@@ -169,20 +139,19 @@ public final class Validator {
      * @param packageName TODO
      * @return TODO
      */
-    public static ValidationResult validateProcessor(Package packageName, Processor processor) {
-        return (ValidationResult)
-            validateAggregator(processor.getAggregator(), false)
-                .and(validateBaseOutputTopic())
+    /*public static ValidationResult validateProcessor(Package packageName, Processor processor) {
+        return (ValidationResult) ProcessorRoles.validateBaseOutputTopic()
                 .and(ProcessorRoles.validateDataType())
-                .and(validateDoc(processor.getDoc(), true))
-                .and(validateKey(processor.getInputKey()))
+                .and(GenericRoles.validateDoc(processor.getDoc(), true))
+                //.and(GenericRoles.validateKey(processor.getInputKey()))
                 .and(ProcessorRoles.validateName())
-                .and(validateSampleRate(processor.getSampleRate()))
-                .and(validateTopic(processor.getInputTopic()))
-                .and(ProcessorRoles.validateTopics())
-                .and(GenericRoles.validateTopics(processor.getTopics()))
-                .and(validateUnit(processor.getUnit()))
-                .and(validateValue(packageName, processor.getInputValue()))
+                .and(GenericRoles.validateSampleRate(processor.getSampleRate()))
+                .and(GenericRoles.validateTopic(processor.getInputTopic()))
+                .and(AggregatableRoles.validateTopics())
+                .and(AggregatableRoles.validateAggregator(false))
+                .and(GenericRoles.validateTopicNames(processor.getTopics()))
+                .and(GenericRoles.validateUnit(processor.getUnit()))
+                //.and(GenericRoles.validateValue(packageName, processor.getInputValue()))
                 .apply(processor);
-    }
+    }*/
 }
