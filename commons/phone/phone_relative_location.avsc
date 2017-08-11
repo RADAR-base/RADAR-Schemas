@@ -6,7 +6,12 @@
   "fields": [
     {"name": "time", "type": "double", "doc": "device timestamp in UTC (s)"},
     {"name": "timeReceived", "type": "double", "doc": "device receiver timestamp in UTC (s)"},
-    {"name": "provider", "type": {"name": "LocationProvider", "type": "enum", "symbols": ["GPS", "NETWORK", "OTHER"]}, "doc": "Android provider of the location data"},
+    {"name": "provider", "type": {
+      "name": "LocationProvider",
+      "type": "enum",
+      "doc": "Type of provider of location data.",
+      "symbols": ["GPS", "NETWORK", "OTHER"]
+      }, "doc": "Android provider of the location data"},
     {"name": "latitude", "type": ["null", "double"], "doc": "relative latitude from an initial random reference latitude (degrees with range [-90, 90])", "default": null},
     {"name": "longitude", "type": ["null", "double"], "doc": "relative longitude from an initial reference longitude (degrees with range [-180, 180])", "default": null},
     {"name": "altitude", "type": ["null", "float"], "doc": "height above the WGS 84 reference ellipsoid (m)", "default": null},
