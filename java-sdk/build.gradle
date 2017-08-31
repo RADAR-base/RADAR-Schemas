@@ -15,7 +15,7 @@ subprojects {
     apply plugin: 'maven-publish'
 
     // Configuration
-    version = '0.2-alpha.2-SNAPSHOT'
+    version = '0.2-alpha.2'
     group = 'org.radarcns'
     ext.githubRepoName = 'RADAR-CNS/RADAR-Schemas'
 
