@@ -1,0 +1,13 @@
+{
+  "namespace": "org.radarcns.phone",
+  "type": "record",
+  "name": "PhoneContactsList",
+  "doc": "Number of new contacts added/removed from the list of contacts between this and the previous record.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "device timestamp in UTC (s)"},
+    {"name": "timeReceived", "type": "double", "doc": "device receiver timestamp in UTC (s)"},
+    {"name": "contactsAdded", "type": "int", "doc": "Number of new contacts added to the list of contacts."},
+    {"name": "contactsRemoved", "type": "int", "doc": "Number of new contacts removed from the list of contacts."},
+    {"name": "contactsNumber", "type": "int", "doc": "Current number of contacts in the list of contacts."}
+  ]
+}
