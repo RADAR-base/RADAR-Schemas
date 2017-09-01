@@ -1,0 +1,13 @@
+{
+  "namespace": "org.radarcns.phone",
+  "type": "record",
+  "name": "PhoneBluetoothDevices",
+  "doc": "Phone Bluetooth devices info.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "device timestamp in UTC (s)"},
+    {"name": "timeReceived", "type": "double", "doc": "device receiver timestamp in UTC (s)"},
+    {"name": "pairedDevices", "type": "int", "doc": "Number of paired devices"},
+    {"name": "nearbyDevices", "type": "int", "doc": "Number of nearby devices"},
+    {"name": "enabled", "type": "boolean", "doc": "whether Bluetooth is enabled"}
+  ]
+}
