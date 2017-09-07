@@ -1,0 +1,32 @@
+{
+  "namespace": "org.radarcns.weather",
+  "type": "record",
+  "name": "WeatherCurrent",
+  "doc": "Weather information at the time reported.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "device timestamp in UTC (s)"},
+    {"name": "timeReceived", "type": "double", "doc": "device receiver timestamp in UTC (s)"},
+    {"name": "sunrise", "type": "double", "doc": "sunrise time in hours after midnight (h). The difference with sunset is the hours of daylight."},
+    {"name": "sunset", "type": "double", "doc": "sunset time in hours after midnight (h). The difference with sunrise is the hours of daylight."},
+    {"name": "temperature", "type": ["null","float"], "doc": "current ambient temperature (C)"},
+    {"name": "pressure", "type": ["null","float"], "doc": "current atmospheric pressure on sea level (hPa)"},
+    {"name": "humidity", "type": ["null","float"], "doc": "current humidity (%)"},
+    {"name": "cloudiness", "type": ["null","float"], "doc": "current cloudiness (%)"},
+    {"name": "precipitation3h", "type": ["null","float"], "doc": "rain or snow volume for the last 3 hours (mm)"},
+    {"name": "condition", "type": {
+          "name": "WeatherCondition",
+          "type": "enum",
+          "doc": "types of weather condition",
+          "symbols": ["CLEAR", "CLOUDY", "DRIZZLE", "RAINY", "SNOWY", "ICY", "FOGGY", "STORM", "THUNDER", "OTHER"]
+        },
+       "doc": "current weather condition"},
+    {"name": "source", "type": "string", "doc": "from which source/API the weather data was retrieved"},
+    {"name": "locationSource", "type": {
+          "name": "LocationType",
+          "type": "enum",
+          "doc": "how the location was determined",
+          "symbols": ["GPS","NETWORK","CITY_NAME","OTHER"]
+        },
+      "doc": "the source of the location used to get the weather details"}
+  ]
+}
