@@ -18,18 +18,18 @@
           "name": "WeatherCondition",
           "type": "enum",
           "doc": "types of weather condition",
-          "symbols": ["CLEAR", "CLOUDY", "DRIZZLE", "RAINY", "SNOWY", "ICY", "FOGGY", "STORM", "THUNDER", "OTHER", "UNKNOWN"],
-          "default": "UNKNOWN"
+          "symbols": ["CLEAR", "CLOUDY", "DRIZZLE", "RAINY", "SNOWY", "ICY", "FOGGY", "STORM", "THUNDER", "OTHER", "UNKNOWN"]
         },
-       "doc": "current weather condition"},
+      "default": "UNKNOWN",
+      "doc": "current weather condition"},
     {"name": "source", "type": "string", "doc": "from which source/API the weather data was retrieved"},
     {"name": "locationSource", "type": {
           "name": "LocationType",
           "type": "enum",
           "doc": "how the location was determined",
-          "symbols": ["GPS","NETWORK","CITY_NAME","OTHER", "UNKNOWN"],
-          "default": "UNKNOWN"
+          "symbols": ["GPS","NETWORK","CITY_NAME","OTHER", "UNKNOWN"]
         },
+      "default": "UNKNOWN",
       "doc": "the source of the location used to get the weather details"}
   ]
 }
