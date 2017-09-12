@@ -65,12 +65,6 @@ task cleanExchangeConfig() {
                 throw new GradleException("File at ${exchnageConfigMainPath} cannot be delated.")
             }
         }
-
-        if (file(exchnageConfigTestPath).exists()) {
-            if (!file(exchnageConfigTestPath).delete()) {
-                throw new GradleException("File at ${exchnageConfigTestPath} cannot be delated.")
-            }
-        }
     }
 }
 clean.dependsOn cleanExchangeConfig

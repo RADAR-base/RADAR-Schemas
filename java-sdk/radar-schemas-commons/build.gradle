@@ -1,6 +1,12 @@
 ext.artifactName = 'radar-schemas-commons'
 ext.description = 'RADAR Schemas Commons SDK'
 
+sourceSets {
+    main {
+        java.srcDir avroOutputDir
+    }
+}
+
 //---------------------------------------------------------------------------//
 // Clean settings                                                            //
 //---------------------------------------------------------------------------//

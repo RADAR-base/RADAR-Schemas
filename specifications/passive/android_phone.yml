@@ -5,54 +5,48 @@ sensors:
   #Phone sensors
   - name: ACCELEROMETER
     app_provider: .phone.PhoneSensorProvider
-    sample_rate: -1 #TODO
     unit: G
-    data_type: RAW
+    processing_state: RAW
     topic: android_phone_acceleration
     key: .kafka.key.KeyMeasurement
     value: .passive.phone.PhoneAcceleration
     aggregator: .kafka.aggregator.AggregatorDoubleArray
   - name: BATTERY
     app_provider: .phone.PhoneSensorProvider
-    sample_rate: -1 #TODO
     unit: PERCENTAGE
-    data_type: RAW
+    processing_state: RAW
     topic: android_phone_battery_level
     key: .kafka.key.KeyMeasurement
     value: .passive.phone.PhoneBatteryLevel
     aggregator: .kafka.aggregator.AggregatorDouble
   - name: GYROSCOPE
     app_provider: .phone.PhoneSensorProvider
-    sample_rate: -1 #TODO
     unit: RADAIAN_PER_SEC
-    data_type: RAW
+    processing_state: RAW
     topic: android_phone_gyroscope
     key: .kafka.key.KeyMeasurement
     value: .passive.phone.PhoneGyroscope
     aggregator: .kafka.aggregator.AggregatorDoubleArray
   - name: LIGHT
     app_provider: .phone.PhoneSensorProvider
-    sample_rate: -1 #TODO
     unit: LUX
-    data_type: RAW
+    processing_state: RAW
     topic: android_phone_light
     key: .kafka.key.KeyMeasurement
     value: .passive.phone.PhoneLight
     aggregator: .kafka.aggregator.AggregatorDouble
   - name: MAGNETIC_FIELD
     app_provider: .phone.PhoneSensorProvider
-    sample_rate: -1 #TODO
     unit: MICRO_TESLA
-    data_type: RAW
+    processing_state: RAW
     topic: android_phone_magnetic_field
     key: .kafka.key.KeyMeasurement
     value: .passive.phone.PhoneMagneticField
     aggregator: .kafka.aggregator.AggregatorDoubleArray
   - name: STEP_COUNT
     app_provider: .phone.PhoneSensorProvider
-    sample_rate: -1 #TODO
     unit: NON_DIMENSIONAL
-    data_type: VENDOR
+    processing_state: VENDOR
     topic: android_phone_step_count
     key: .kafka.key.KeyMeasurement
     value: .passive.phone.PhoneStepCount
@@ -60,51 +54,45 @@ sensors:
   # Location
   - name: RELATIVE_LOCATION
     app_provider: .phone.PhoneLocationProvider
-    sample_rate: -1 #TODO
     unit: DEGREE
-    data_type: RAW
+    processing_state: RAW
     topic: android_phone_relative_location
     key: .kafka.key.KeyMeasurement
     value: .passive.phone.PhoneRelativeLocation
   # Log
   - name: PHONE_CALL
     app_provider: .phone.PhoneLogProvider
-    sample_rate: -1 #TODO
     unit: NON_DIMENSIONAL
-    data_type: RAW
+    processing_state: RAW
     topic: android_phone_call
     key: .kafka.key.KeyMeasurement
     value: .passive.phone.PhoneCall
   - name: PHONE_SMS
     app_provider: .phone.PhoneLogProvider
-    sample_rate: -1 #TODO
     unit: NON_DIMENSIONAL
-    data_type: RAW
+    processing_state: RAW
     topic: android_phone_sms
     key: .kafka.key.KeyMeasurement
     value: .passive.phone.PhoneSms
   - name: PHONE_SMS_UNREAD
     app_provider: .phone.PhoneLogProvider
-    sample_rate: -1 #TODO
     unit: NON_DIMENSIONAL
-    data_type: RAW
+    processing_state: RAW
     topic: android_phone_sms_unread
     key: .kafka.key.KeyMeasurement
     value: .passive.phone.PhoneSmsUnread
   # Usage
   - name: USAGE_EVENT
     app_provider: .phone.PhoneUsageProvider
-    sample_rate: -1 #TODO
     unit: NON_DIMENSIONAL
-    data_type: RAW
+    processing_state: RAW
     topic: android_phone_usage_event
     key: .kafka.key.KeyMeasurement
     value: .passive.phone.PhoneUsageEvent
   - name: USER_INTERACTION
     app_provider: .phone.PhoneUsageProvider
-    sample_rate: -1 #TODO
     unit: NON_DIMENSIONAL
-    data_type: RAW
+    processing_state: RAW
     topic: android_phone_user_interaction
     key: .kafka.key.KeyMeasurement
     value: .passive.phone.PhoneUserInteraction

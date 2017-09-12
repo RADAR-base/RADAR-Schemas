@@ -6,8 +6,8 @@
   "fields": [
     { "name": "subjectId", "type": "string", "doc": "Subject identifier." },
     { "name": "sourceId", "type": "string", "doc": "Source identifier." },
-    { "name": "source", "type": ["org.radarcns.catalogue.ActiveSourceType", "org.radarcns.catalogue.PassiveSourceType"], "doc": "Source information, it can be a device or assessment name." },
-    { "name": "type", "type": ["org.radarcns.catalogue.SensorName", "org.radarcns.active.questionnaire.QuestionnaireType"], "doc": "Report the sensor name or specific type of assessment." },
+    { "name": "source", "type": "string", "doc": "Source information, it can be a device or assessment name." },
+    { "name": "type", "type": ["org.radarcns.catalogue.SensorName", "string"], "doc": "Report the sensor name or specific type of assessment." },
     { "name": "descriptiveStatistic", "type": "DescriptiveStatistic", "doc": "Statical value expressed by samples." },
     { "name": "unit", "type": "org.radarcns.catalogue.Unit", "doc": "Unit used by the source." },
     { "name": "timeFrame", "type": "org.radarcns.catalogue.TimeFrame", "doc": "Time interval between two consecutive samples." },

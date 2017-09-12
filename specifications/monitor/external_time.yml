@@ -4,7 +4,7 @@ app_provider: .application.ApplicationServiceProvider
 doc: Information sent by the Android pRMT about time synchronisation with a NTS different from the default one.
 sample_rate: 0.08
 unit: NON_DIMENSIONAL
-data_type: RAW
+processing_state: RAW
 topic: application_external_time
 key: .kafka.key.KeyMeasurement
 value: .monitor.application.ApplicationExternalTime

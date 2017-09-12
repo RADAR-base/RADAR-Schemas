@@ -6,7 +6,7 @@ sensors:
   - name: ACCELEROMETER
     sample_rate: 51.2
     unit: G
-    data_type: RAW
+    processing_state: RAW
     topic: android_biovotion_vsm1_acceleration
     key: .kafka.key.KeyMeasurement
     value: .passive.biovotion.BiovotionVsm1Acceleration
@@ -14,7 +14,7 @@ sensors:
   - name: BATTERY
     sample_rate: 1.0
     unit: PERCENTAGE
-    data_type: RAW
+    processing_state: RAW
     topic: android_biovotion_vsm1_battery_level
     key: .kafka.key.KeyMeasurement
     value: .passive.biovotion.BiovotionVsm1BatteryLevel
@@ -22,7 +22,7 @@ sensors:
   - name: BLOOD_PULSE_WAVE
     sample_rate: 1.0
     unit: NON_DIMENSIONAL
-    data_type: VENDOR
+    processing_state: VENDOR
     topic: android_biovotion_vsm1_blood_volume_pulse
     key: .kafka.key.KeyMeasurement
     value: .passive.biovotion.BiovotionVsm1BloodPulseWave
@@ -30,7 +30,7 @@ sensors:
   - name: ENERGY
     sample_rate: 1.0
     unit: CALORIES_PER_SEC
-    data_type: VENDOR
+    processing_state: VENDOR
     topic: android_biovotion_vsm1_energy
     key: .kafka.key.KeyMeasurement
     value: .passive.biovotion.BiovotionVsm1Energy
@@ -38,7 +38,7 @@ sensors:
   - name: GALVANIC_SKIN_RESPONSE
     sample_rate: 1.0
     unit: KILO_OHM
-    data_type: VENDOR
+    processing_state: VENDOR
     topic: android_biovotion_vsm1_galvanic_skin_response
     key: .kafka.key.KeyMeasurement
     value: .passive.biovotion.BiovotionVsm1GalvanicSkinResponse
@@ -46,7 +46,7 @@ sensors:
   - name: HEART_RATE
     sample_rate: 1.0
     unit: BEATS_PER_MIN
-    data_type: VENDOR
+    processing_state: VENDOR
     topic: android_biovotion_vsm1_heartrate
     key: .kafka.key.KeyMeasurement
     value: .passive.biovotion.BiovotionVsm1HeartRate
@@ -54,7 +54,7 @@ sensors:
   - name: HEART_RATE_VARIABILITY
     sample_rate: 1.0
     unit: RMSSD_IN_MILLI_SEC
-    data_type: VENDOR
+    processing_state: VENDOR
     topic: android_biovotion_vsm1_heartrate_variability
     key: .kafka.key.KeyMeasurement
     value: .passive.biovotion.BiovotionVsm1HeartRateVariability
@@ -62,7 +62,7 @@ sensors:
   - name: LED
     sample_rate: 1.0
     unit: MILLI_AMPERE
-    data_type: VENDOR
+    processing_state: VENDOR
     topic: android_biovotion_vsm1_led_current
     key: .kafka.key.KeyMeasurement
     value: .passive.biovotion.BiovotionVsm1LedCurrent
@@ -70,7 +70,7 @@ sensors:
   - name: PHOTOPLETHYSMOGRAPHY
     sample_rate: 51.2
     unit: NON_DIMENSIONAL
-    data_type: RAW
+    processing_state: RAW
     topic: android_biovotion_vsm1_ppg_raw
     key: .kafka.key.KeyMeasurement
     value: .passive.biovotion.BiovotionVsm1PpgRaw
@@ -78,7 +78,7 @@ sensors:
   - name: RESPIRATION_RATE
     sample_rate: 1.0
     unit: BEATS_PER_MIN
-    data_type: VENDOR
+    processing_state: VENDOR
     topic: android_biovotion_vsm1_respiration_rate
     key: .kafka.key.KeyMeasurement
     value: .passive.biovotion.BiovotionVsm1RespirationRate
@@ -86,7 +86,7 @@ sensors:
   - name: OXYGEN_SATURATION
     sample_rate: 1.0
     unit: PERCENTAGE
-    data_type: VENDOR
+    processing_state: VENDOR
     topic: android_biovotion_vsm1_oxygen_saturation
     key: .kafka.key.KeyMeasurement
     value: .passive.biovotion.BiovotionVsm1OxygenSaturation
@@ -94,7 +94,7 @@ sensors:
   - name: THERMOMETER
     sample_rate: 1.0
     unit: CELSIUS
-    data_type: RAW
+    processing_state: RAW
     topic: android_biovotion_vsm1_temperature
     key: .kafka.key.KeyMeasurement
     value: .passive.biovotion.BiovotionVsm1Temperature

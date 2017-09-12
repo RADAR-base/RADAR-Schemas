@@ -1,6 +1,12 @@
 ext.artifactName = 'radar-schemas-restapi'
 ext.description = 'RADAR Schemas REST API SDK'
 
+sourceSets {
+    main {
+        java.srcDir avroOutputDir
+    }
+}
+
 //---------------------------------------------------------------------------//
 // Clean settings                                                            //
 //---------------------------------------------------------------------------//

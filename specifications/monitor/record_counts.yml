@@ -4,7 +4,7 @@ app_provider: .application.ApplicationServiceProvider
 doc: Monitor used by the Android pRMT to report the number of cached and created records.
 sample_rate: 0.08
 unit: NON_DIMENSIONAL
-data_type: RAW
+processing_state: RAW
 topic: application_record_counts
 key: .kafka.key.KeyMeasurement
 value: .monitor.application.ApplicationRecordCounts

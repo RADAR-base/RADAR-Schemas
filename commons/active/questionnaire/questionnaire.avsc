@@ -6,7 +6,7 @@
   "fields": [
     { "name": "time", "type": "double", "doc": "timestamp in UTC (s) when the questionnaire is submitted to the subject." },
     { "name": "timeCompleted", "type": "double", "doc": "timestamp in UTC (s) when subject marks the questionnaire as." },
-    { "name": "name", "type": {"name": "QuestionnaireType", "type": "enum", "symbols": ["PHQ8", "UNKNOWN"]}, "doc": "Questionnaire names.", "default": "UNKNOWN" },
+    { "name": "name", "type": "string", "doc": "Questionnaire names.", "default": "UNKNOWN" },
     { "name": "version", "type": "string", "doc": "It reports the questionnaire version stated in the JSON specification." },
     { "name": "answers",
       "type": {

@@ -6,7 +6,7 @@ sensors:
   - name: ACCELEROMETER
     sample_rate: 32.0
     unit: G
-    data_type: RAW
+    processing_state: RAW
     topic: android_empatica_e4_acceleration
     key: .kafka.key.KeyMeasurement
     value: .passive.empatica.EmpaticaE4Acceleration
@@ -14,7 +14,7 @@ sensors:
   - name: BATTERY
     sample_rate: 1.0
     unit: PERCENTAGE
-    data_type: RAW
+    processing_state: RAW
     topic: android_empatica_e4_battery_level
     key: .kafka.key.KeyMeasurement
     value: .passive.empatica.EmpaticaE4BatteryLevel
@@ -22,7 +22,7 @@ sensors:
   - name: BLOOD_VOLUME_PULSE
     sample_rate: 64.0
     unit: NANO_WATT
-    data_type: RAW
+    processing_state: RAW
     topic: android_empatica_e4_blood_volume_pulse
     key: .kafka.key.KeyMeasurement
     value: .passive.empatica.EmpaticaE4BloodVolumePulse
@@ -30,7 +30,7 @@ sensors:
   - name: ELECTRODERMAL_ACTIVITY
     sample_rate: 4.0
     unit: MICRO_SIEMENS
-    data_type: RAW
+    processing_state: RAW
     topic: android_empatica_e4_electrodermal_activity
     key: .kafka.key.KeyMeasurement
     value: .passive.empatica.EmpaticaE4ElectroDermalActivity
@@ -38,7 +38,7 @@ sensors:
   - name: INTER_BEAT_INTERVAL
     sample_rate: 1.0
     unit: BEATS_PER_MIN
-    data_type: VENDOR
+    processing_state: VENDOR
     topic: android_empatica_e4_inter_beat_interval
     key: .kafka.key.KeyMeasurement
     value: .passive.empatica.EmpaticaE4InterBeatInterval
@@ -46,7 +46,7 @@ sensors:
   - name: THERMOMETER
     sample_rate: 4.0
     unit: CELSIUS
-    data_type: RAW
+    processing_state: RAW
     topic: android_empatica_e4_temperature
     key: .kafka.key.KeyMeasurement
     value: .passive.empatica.EmpaticaE4Temperature
@@ -55,7 +55,7 @@ processors:
   - name: HEART_RATE
     sample_rate: 1.0
     unit: BEATS_PER_MIN
-    data_type: RADAR
+    processing_state: RADAR
     input_topic: android_empatica_e4_inter_beat_interval
     input_key: .kafka.key.KeyMeasurement
     input_value: .passive.empatica.EmpaticaE4InterBeatInterval

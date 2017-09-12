@@ -4,7 +4,7 @@ app_provider: .application.ApplicationServiceProvider
 doc: Monitor used by the Android pRMT to report the server connection status between the android client and the RADAR-CNS Platform.
 sample_rate: 0.08
 unit: NON_DIMENSIONAL
-data_type: RAW
+processing_state: RAW
 topic: application_server_status
 key: .kafka.key.KeyMeasurement
 value: .monitor.application.ApplicationServerStatus
