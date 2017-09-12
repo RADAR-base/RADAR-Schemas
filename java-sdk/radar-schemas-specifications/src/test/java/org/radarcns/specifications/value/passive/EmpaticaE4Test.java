@@ -155,11 +155,11 @@ public class EmpaticaE4Test {
         Processor processor = empaticaE4.getProcessor(HEART_RATE);
         assertEquals("org.radarcns.kafka.aggregator.AggregatorDouble",
                 processor.getTopic().getAggregator());
-        assertEquals(DataType.RADAR.name(), processor.getDataType().name());
+        assertEquals(DataType.RADAR.name(), processor.getProcessingState().name());
         //processor.getDoc();
-        assertEquals(HEART_RATE.name(), processor.getName().name());
+        assertEquals(HEART_RATE.name(), processor.getName());
         assertEquals(1.0, processor.getSampleRate(), 0.0);
-        assertEquals(Unit.BEATS_PER_MIN.name(), processor.getUnit().name());
+        assertEquals(Unit.BEATS_PER_MIN.name(), processor.getUnit());
         testTopicTimedAggregator(
             "org.radarcns.kafka.aggregator.AggregatorDouble",
             "android_empatica_e4_inter_beat_interval",

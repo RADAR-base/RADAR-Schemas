@@ -16,17 +16,14 @@ package org.radarcns.specifications.source;
  * limitations under the License.
  */
 
-import static org.radarcns.specifications.util.Labels.DATA_TYPE;
-import static org.radarcns.specifications.util.Labels.SAMPLE_RATE;
-import static org.radarcns.specifications.util.Labels.TOPIC;
-import static org.radarcns.specifications.util.Labels.UNIT;
+import org.radarcns.catalogue.DataType;
+import org.radarcns.specifications.source.passive.Sensor;
 
 import java.util.Objects;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.radarcns.catalogue.DataType;
-import org.radarcns.catalogue.Unit;
-import org.radarcns.specifications.source.passive.Sensor;
+
+import static org.radarcns.specifications.util.Labels.PROCESSING_STATE;
+import static org.radarcns.specifications.util.Labels.TOPIC;
+import static org.radarcns.specifications.util.Labels.UNIT;
 
 public class KafkaActor {
 
@@ -34,7 +31,7 @@ public class KafkaActor {
 
     private final double sampleRate;
 
-    private final Unit unit;
+    private final String unit;
 
     private final DataType dataType;
 
@@ -43,10 +40,8 @@ public class KafkaActor {
     private static final String NULL_MESSAGE = " in ".concat(
         Sensor.class.getName()).concat(" cannot be null.");
 
-    public KafkaActor(String doc, double sampleRate, Unit unit, DataType dataType, Topic topic) {
-
-        Objects.requireNonNull(dataType, DATA_TYPE.concat(NULL_MESSAGE));
-        Objects.requireNonNull(sampleRate, SAMPLE_RATE.concat(NULL_MESSAGE));
+    public KafkaActor(String doc, double sampleRate, String unit, DataType dataType, Topic topic) {
+        Objects.requireNonNull(dataType, PROCESSING_STATE.concat(NULL_MESSAGE));
         Objects.requireNonNull(topic, TOPIC.concat(NULL_MESSAGE));
         Objects.requireNonNull(unit, UNIT.concat(NULL_MESSAGE));
 
@@ -65,11 +60,11 @@ public class KafkaActor {
         return sampleRate;
     }
 
-    public Unit getUnit() {
+    public String getUnit() {
         return unit;
     }
 
-    public DataType getDataType() {
+    public DataType getProcessingState() {
         return dataType;
     }
 
@@ -79,33 +74,18 @@ public class KafkaActor {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-
-        if (!(o instanceof KafkaActor)) {
-            return false;
-        }
-
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         KafkaActor that = (KafkaActor) o;
-
-        return new EqualsBuilder()
-            .append(sampleRate, that.sampleRate)
-            .append(doc, that.doc)
-            .append(unit, that.unit)
-            .append(dataType, that.dataType)
-            .append(topic, that.topic)
-            .isEquals();
+        return Double.compare(that.sampleRate, sampleRate) == 0 &&
+                Objects.equals(doc, that.doc) &&
+                Objects.equals(unit, that.unit) &&
+                dataType == that.dataType &&
+                Objects.equals(topic, that.topic);
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 37)
-            .append(doc)
-            .append(sampleRate)
-            .append(unit)
-            .append(dataType)
-            .append(topic)
-            .toHashCode();
+        return Objects.hash(doc, sampleRate, unit, dataType, topic);
     }
 }

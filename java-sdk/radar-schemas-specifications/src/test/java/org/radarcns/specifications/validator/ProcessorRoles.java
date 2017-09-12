@@ -57,8 +57,8 @@ interface ProcessorRoles extends GenericRoles<Processor> {
      * @return TODO
      */
     static GenericRoles<Processor> validateDataType() {
-        return processor -> Objects.nonNull(processor.getDataType())
-                && processor.getDataType().name().equals(DataType.RADAR.name())
+        return processor -> Objects.nonNull(processor.getProcessingState())
+                && processor.getProcessingState().name().equals(DataType.RADAR.name())
                 ? valid() : invalid(ProcessorInfo.DATA_TYPE.getMessage());
     }
 
@@ -68,7 +68,7 @@ interface ProcessorRoles extends GenericRoles<Processor> {
      */
     static GenericRoles<Processor> validateName() {
         return processor -> Objects.nonNull(processor.getName())
-                && !processor.getName().name().equals(SensorName.UNKNOWN.name())
+                && !processor.getName().equals(SensorName.UNKNOWN.name())
                 ? valid() : invalid(ProcessorInfo.NAME.getMessage());
     }
 

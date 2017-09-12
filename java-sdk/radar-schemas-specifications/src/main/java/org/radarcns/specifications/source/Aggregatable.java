@@ -24,7 +24,7 @@ import org.radarcns.specifications.source.Topic.TopicMetadata;
  */
 public interface Aggregatable {
 
-    boolean isAggregatable();
+    boolean hasAggregator();
 
     String getAggregator();
 

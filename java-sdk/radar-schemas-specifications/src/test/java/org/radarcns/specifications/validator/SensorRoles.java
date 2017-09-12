@@ -71,8 +71,8 @@ interface SensorRoles extends TopicRoles {
      * @return TODO
      */
     static GenericRoles<Sensor> validateDataType() {
-        return sensor -> Objects.nonNull(sensor.getDataType())
-            && !sensor.getDataType().name().equals(DataType.UNKNOWN.name())
+        return sensor -> Objects.nonNull(sensor.getProcessingState())
+            && !sensor.getProcessingState().name().equals(DataType.UNKNOWN.name())
             ? valid() : invalid(SensorInfo.DATA_TYPE.getMessage());
     }
 

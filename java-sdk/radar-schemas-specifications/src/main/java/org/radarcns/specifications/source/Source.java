@@ -16,20 +16,16 @@ package org.radarcns.specifications.source;
  * limitations under the License.
  */
 
-import static org.radarcns.specifications.util.Labels.NAME;
-
 import java.util.Objects;
 import java.util.Set;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
+
+import static org.radarcns.specifications.util.Labels.NAME;
 
 /**
  * TODO.
  */
 public abstract class Source {
-
     private final String name;
-
     private final String doc;
 
     /**
@@ -63,22 +59,16 @@ public abstract class Source {
         if (this == o) {
             return true;
         }
-
-        if (!(o instanceof Source)) {
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
-
         Source source = (Source) o;
-
-        return new EqualsBuilder()
-            .append(name, source.name)
-            .isEquals();
+        return Objects.equals(name, source.name) &&
+                Objects.equals(doc, source.doc);
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 37)
-            .append(name)
-            .toHashCode();
+        return Objects.hash(name, doc);
     }
 }

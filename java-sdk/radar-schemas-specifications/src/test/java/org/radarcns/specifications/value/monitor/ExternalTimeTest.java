@@ -47,10 +47,10 @@ public class ExternalTimeTest {
 
         KafkaActor actor = externalTime.getKafkaActor();
 
-        assertEquals(DataType.RAW.name(), actor.getDataType().name());
+        assertEquals(DataType.RAW.name(), actor.getProcessingState().name());
         assertEquals(0.08, actor.getSampleRate(), 0.0);
-        assertEquals(MonitorSourceType.EXTERNAL_TIME.name(), externalTime.getType().name());
-        assertEquals(Unit.NON_DIMENSIONAL, actor.getUnit());
+        assertEquals(MonitorSourceType.EXTERNAL_TIME.name(), externalTime.getType());
+        assertEquals(Unit.NON_DIMENSIONAL.name(), actor.getUnit());
 
         testTopicNonAggregatable("application_external_time",
             "org.radarcns.kafka.key.KeyMeasurement",

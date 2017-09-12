@@ -47,10 +47,10 @@ public class Utility {
     private static boolean testGenericTopic(String inputTopic, String key, String value,
             String aggregator, Topic topic) {
         if (Objects.isNull(aggregator)) {
-            assertFalse(topic.isAggregatable());
+            assertFalse(topic.hasAggregator());
             assertNull(topic.getAggregator());
         } else {
-            assertTrue(topic.isAggregatable());
+            assertTrue(topic.hasAggregator());
             assertEquals(aggregator, topic.getAggregator());
         }
 
@@ -186,11 +186,11 @@ public class Utility {
             String inputTopic, SensorName sensorName, DataType dataType, Unit unit,
             double sampleRate) {
         assertEquals(appProvider, sensor.getAppProvider());
-        assertEquals(dataType.name(), sensor.getDataType().name());
+        assertEquals(dataType.name(), sensor.getProcessingState().name());
         //sensor.getDoc()
         assertEquals(sensorName.name(), sensor.getName().name());
         assertEquals(sampleRate, sensor.getSampleRate(), 0);
-        assertEquals(unit.name(), sensor.getUnit().name());
+        assertEquals(unit.name(), sensor.getUnit());
 
         return true;
     }

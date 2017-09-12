@@ -26,7 +26,7 @@ public final class Labels {
     public static final String ASSESSMENT_TYPE = "assessment_type";
     public static final String CONTENT = "content";
     public static final String BASE_OUTPUT_TOPIC = "base_output_topic";
-    public static final String DATA_TYPE = "data_type";
+    public static final String PROCESSING_STATE = "processing_state";
     public static final String DOC = "doc";
     public static final String KEY = "key";
     public static final String INPUT_KEY = "input_key";

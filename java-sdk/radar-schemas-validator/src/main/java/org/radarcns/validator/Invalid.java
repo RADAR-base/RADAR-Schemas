@@ -1,4 +1,4 @@
-package org.radarcns.validator.util;
+package org.radarcns.validator;
 
 /*
  * Copyright 2017 King's College London and The Hyve
@@ -16,6 +16,7 @@ package org.radarcns.validator.util;
  * limitations under the License.
  */
 
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -42,20 +43,17 @@ public class Invalid implements ValidationResult {
         if (this == o) {
             return true;
         }
-
-        if (!(o instanceof Invalid)) {
+        if (o == null || !getClass().equals(o.getClass())) {
             return false;
         }
 
         Invalid invalid = (Invalid) o;
 
-        return new org.apache.commons.lang3.builder.EqualsBuilder().append(
-                      reason, invalid.reason).isEquals();
+        return Objects.equals(reason, invalid.reason);
     }
 
     @Override
     public int hashCode() {
-        return new org.apache.commons.lang3.builder.HashCodeBuilder(
-              17, 37).append(reason).toHashCode();
+        return reason != null ? reason.hashCode() : 0;
     }
 }

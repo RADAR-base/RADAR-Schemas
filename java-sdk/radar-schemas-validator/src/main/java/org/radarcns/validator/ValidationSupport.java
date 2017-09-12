@@ -1,4 +1,4 @@
-package org.radarcns.validator.util;
+package org.radarcns.validator;
 
 /*
  * Copyright 2017 King's College London and The Hyve
@@ -16,12 +16,13 @@ package org.radarcns.validator.util;
  * limitations under the License.
  */
 
-import static org.radarcns.validator.util.SchemaValidationRoles.UNKNOWN;
+import static org.radarcns.validator.SchemaValidationRoles.UNKNOWN;
 
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Properties;
@@ -29,12 +30,11 @@ import org.apache.avro.JsonProperties;
 import org.apache.avro.Schema;
 import org.apache.avro.Schema.Field;
 import org.apache.avro.Schema.Type;
-import org.radarcns.validator.SchemaCatalogValidator.NameFolder;
 
 /**
  * TODO.
  */
-final class ValidationSupport {
+public final class ValidationSupport {
 
     private static final String GRADLE_PROPERTIES = "gradle.properties";
     private static final String PROPERTY_VALUE = "project.group";
@@ -81,15 +81,17 @@ final class ValidationSupport {
 
     /**
      * TODO.
-     * @param rootFolder TODO
-     * @param subFolder TODO
+     * @param scope TODO
      * @return TODO
      */
-    public static String getNamespace(NameFolder rootFolder, String subFolder) {
-        String expected = getProjectGroup().concat(".").concat(rootFolder.getName());
+    public static String getNamespace(Path schemaPath, Scope scope) {
+        String expected = getProjectGroup() + '.' + scope.getName();
 
-        if (!Objects.isNull(subFolder)) {
-            expected = expected.concat(".").concat(subFolder);
+        // add subfolder of root to namespace
+        Path rootPath = scope.getCommonsPath();
+        Path relativePath = rootPath.relativize(schemaPath);
+        if (relativePath.getNameCount() > 1) {
+            expected = expected + '.' + relativePath.getName(0);
         }
 
         return expected;
@@ -103,26 +105,30 @@ final class ValidationSupport {
     public static String getRecordName(Path path) {
         Objects.requireNonNull(path);
 
-        String recordName = "";
+        char[] fileName = path.getFileName().toString().toCharArray();
 
-        String fileName = path.getFileName().toString();
+        StringBuilder recordName = new StringBuilder(fileName.length);
 
-        boolean start = true;
-        for (int i = 0; i < fileName.length(); i++) {
-            switch (fileName.charAt(i)) {
-                case '_' :
-                    start = true;
+        boolean nextIsUpperCase = true;
+        for (char c : fileName) {
+            switch (c) {
+                case '_':
+                    nextIsUpperCase = true;
                     break;
-                case '.' : return recordName;
+                case '.':
+                    return recordName.toString();
                 default:
-                    recordName += start ? Character.toUpperCase(fileName.charAt(i))
-                        : fileName.charAt(i);
-                    start = false;
+                    if (nextIsUpperCase) {
+                        recordName.append(String.valueOf(c).toUpperCase(Locale.ENGLISH));
+                        nextIsUpperCase = false;
+                    } else {
+                        recordName.append(c);
+                    }
                     break;
             }
         }
 
-        return recordName;
+        return recordName.toString();
     }
 
     /**
@@ -138,7 +144,7 @@ final class ValidationSupport {
         final List<String> symbols = new LinkedList<>();
         root.getFields().stream()
             .filter(field -> field.schema().getType().equals(Type.ENUM))
-            .map(field -> field.schema())
+            .map(Field::schema)
             .forEach(schema -> symbols.addAll(schema.getEnumSymbols()));
 
         return symbols;
@@ -156,29 +162,28 @@ final class ValidationSupport {
             throw new IllegalArgumentException("Function can be applied only to avro RECORD.");
         }
 
-        boolean flag = true;
-
         for (Field field : input.getFields()) {
+            boolean flag = true;
             switch (field.schema().getType()) {
                 case RECORD:
-                    flag = flag && validateDefault(field.schema());
+                    flag = validateDefault(field.schema());
                     break;
                 case UNION:
-                    flag = flag && field.defaultVal().equals(JsonProperties.NULL_VALUE);
+                    flag = field.defaultVal().equals(JsonProperties.NULL_VALUE);
                     break;
                 case ENUM:
-                    flag = flag && field.schema().getEnumSymbols().contains(UNKNOWN)
+                    flag = field.schema().getEnumSymbols().contains(UNKNOWN)
                             && field.defaultVal().equals(UNKNOWN);
                     break;
                 default: break;
             }
 
             if (!flag) {
-                return flag;
+                return false;
             }
         }
 
-        return flag;
+        return true;
     }
 
     /**
@@ -208,4 +213,14 @@ final class ValidationSupport {
         }
     }*/
 
+
+    /**
+     * TODO.
+     * @param file TODO.
+     * @return TODO.
+     */
+    public static boolean matchesExtension(Path file, String extension) {
+        return file.toString().toLowerCase(Locale.ENGLISH)
+                .endsWith("." + extension.toLowerCase(Locale.ENGLISH));
+    }
 }

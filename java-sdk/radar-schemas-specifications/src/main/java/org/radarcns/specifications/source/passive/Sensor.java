@@ -16,9 +16,20 @@ package org.radarcns.specifications.source.passive;
  * limitations under the License.
  */
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.radarcns.catalogue.DataType;
+import org.radarcns.catalogue.SensorName;
+import org.radarcns.catalogue.Unit;
+import org.radarcns.specifications.source.KafkaActor;
+import org.radarcns.specifications.source.Topic;
+import org.radarcns.specifications.util.Utils;
+
+import java.util.Objects;
+
 import static org.radarcns.specifications.util.Labels.AGGREGATOR;
 import static org.radarcns.specifications.util.Labels.APP_PROVIDER;
-import static org.radarcns.specifications.util.Labels.DATA_TYPE;
+import static org.radarcns.specifications.util.Labels.PROCESSING_STATE;
 import static org.radarcns.specifications.util.Labels.DOC;
 import static org.radarcns.specifications.util.Labels.KEY;
 import static org.radarcns.specifications.util.Labels.NAME;
@@ -27,25 +38,12 @@ import static org.radarcns.specifications.util.Labels.TOPIC;
 import static org.radarcns.specifications.util.Labels.UNIT;
 import static org.radarcns.specifications.util.Labels.VALUE;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import java.util.Objects;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.radarcns.catalogue.DataType;
-import org.radarcns.catalogue.SensorName;
-import org.radarcns.catalogue.Unit;
-import org.radarcns.specifications.source.KafkaActor;
-import org.radarcns.specifications.source.Topic;
-import org.radarcns.specifications.util.Utils;
-
 /**
  * TODO.
  */
 public class Sensor extends KafkaActor {
 
     private final SensorName name;
-
     private final String appProvider;
 
     private static final String NULL_MESSAGE = " in ".concat(
@@ -70,8 +68,8 @@ public class Sensor extends KafkaActor {
             @JsonProperty(APP_PROVIDER) String appProvider,
             @JsonProperty(DOC) String doc,
             @JsonProperty(SAMPLE_RATE) double sampleRate,
-            @JsonProperty(UNIT) Unit unit,
-            @JsonProperty(DATA_TYPE) DataType dataType,
+            @JsonProperty(UNIT) String unit,
+            @JsonProperty(PROCESSING_STATE) DataType dataType,
             @JsonProperty(TOPIC) String topic,
             @JsonProperty(KEY) String key,
             @JsonProperty(VALUE) String value,
@@ -99,24 +97,17 @@ public class Sensor extends KafkaActor {
         if (this == o) {
             return true;
         }
-
-        if (!(o instanceof Sensor)) {
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
-
+        if (!super.equals(o)) return false;
         Sensor sensor = (Sensor) o;
-
-        return new EqualsBuilder()
-            .appendSuper(super.equals(o))
-            .append(appProvider, sensor.appProvider)
-            .isEquals();
+        return name == sensor.name &&
+                Objects.equals(appProvider, sensor.appProvider);
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 37)
-            .appendSuper(super.hashCode())
-            .append(appProvider)
-            .toHashCode();
+        return Objects.hash(super.hashCode(), name, appProvider);
     }
 }

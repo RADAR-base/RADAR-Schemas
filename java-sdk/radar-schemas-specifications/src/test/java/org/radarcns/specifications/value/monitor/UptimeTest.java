@@ -47,9 +47,9 @@ public class UptimeTest {
 
         KafkaActor actor = uptime.getKafkaActor();
 
-        assertEquals(DataType.RAW.name(), actor.getDataType().name());
+        assertEquals(DataType.RAW.name(), actor.getProcessingState().name());
         assertEquals(0.08, actor.getSampleRate(), 0.0);
-        assertEquals(MonitorSourceType.UPTIME.name(), uptime.getType().name());
+        assertEquals(MonitorSourceType.UPTIME.name(), uptime.getType());
         assertEquals(Unit.NON_DIMENSIONAL, actor.getUnit());
 
         testTopicNonAggregatable("application_uptime",

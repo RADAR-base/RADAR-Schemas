@@ -151,7 +151,7 @@ public class PassiveSource extends Source {
      */
     public Processor getProcessor(SensorName name) {
         for (Processor processor : processors) {
-            if (processor.getName().name().equals(name.name())) {
+            if (processor.getName().equals(name.name())) {
                 return processor;
             }
         }

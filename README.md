@@ -19,11 +19,9 @@ In addition, schemas in the `commons` directory should follow the following guid
 - Prefer a categorical specification (an Avro enum) over a free string. This disambiguates the possible values for analysis.
 - Prefer a flat record over a hierarchical record. This simplifies the organization of the data downstream, for example, when mapping to CSV.
 - Prefer written out fields to arrays. This simplifies the organization of the data downstream, for example, when mapping to CSV.
-- Give each schema a proper namespace, preferably `org.radarcns.deviceproducer` fully in lowercase, without any numbers, uppercase letters or symbols (except `.`). For the Empatica E4, the producer is Empatica, so the namespace is `org.radarcns.empatica`. For generic types, like a phone, Android Wear device or Android application, the namespace could just be `org.radarcns.phone`, `org.radarcns.wear`, or `org.radarcns.application`.
+- Give each schema a proper namespace, preferably `org.radarcns.<vendor>` fully in lowercase, without any numbers, uppercase letters or symbols (except `.`). For the Empatica E4, the vendor is Empatica, so the namespace is `org.radarcns.empatica`. For generic types, like a phone, Android Wear device or Android application, the namespace could just be `org.radarcns.phone`, `org.radarcns.wear`, or `org.radarcns.application`.
 - In the schema name, use upper camel case and name the device explicitly (for example, `EmpaticaE4Temperature`).
 
 ### Validation phase
 
 Avro schemas are automatically validated against RADAR-CNS guide lines while building. Record Name and field name validations can be suppressed configuring [skip.yml](java-sdk/radar-schemas-validator/src/test/resources/skip.yml). For more details, check [catalog validator](java-sdk/radar-schemas-validator).
-
-

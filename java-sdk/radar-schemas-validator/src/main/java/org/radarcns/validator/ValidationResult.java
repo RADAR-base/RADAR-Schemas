@@ -1,4 +1,4 @@
-package org.radarcns.validator.util;
+package org.radarcns.validator;
 
 /*
  * Copyright 2017 King's College London and The Hyve

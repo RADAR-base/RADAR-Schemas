@@ -1,6 +1,9 @@
 package org.radarcns.validator.config;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSetter;
+
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
@@ -24,7 +27,7 @@ import java.util.Set;
 /**
  * TODO.
  */
-class SkipConfigItem {
+class ConfigItem {
 
     /** Possible check status. */
     private enum CheckStatus {
@@ -45,10 +48,9 @@ class SkipConfigItem {
     @SuppressWarnings("PMD.ImmutableField")
     private CheckStatus nameRecordCheck = CheckStatus.ENABLE;
 
-    @SuppressWarnings("PMD.ImmutableField")
-    private Set<String> fields = new HashSet<>();
+    private final Set<String> fields = new HashSet<>();
 
-    public SkipConfigItem() {
+    public ConfigItem() {
       // POJO initializer
     }
 
@@ -66,13 +68,26 @@ class SkipConfigItem {
      *
      * @return TODO
      */
-    Set<String> getFields() {
+    @JsonSetter("fields")
+    public void setFields(Collection<String> fields) {
+        if (!this.fields.isEmpty()) {
+            this.fields.clear();
+        }
+        this.fields.addAll(fields);
+    }
+
+    /**
+     * TODO.
+     *
+     * @return TODO
+     */
+    public Set<String> getFields() {
         return fields;
     }
 
     @Override
     public String toString() {
-        return "SkipConfigItem{"
+        return "ConfigItem{"
             + "nameRecordCheck=" + nameRecordCheck
             + ", fields=" + fields
             + '}';

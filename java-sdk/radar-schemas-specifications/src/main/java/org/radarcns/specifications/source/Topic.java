@@ -16,15 +16,14 @@ package org.radarcns.specifications.source;
  * limitations under the License.
  */
 
+import org.radarcns.catalogue.TimeFrame;
+import org.radarcns.specifications.util.Utils;
+
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.radarcns.catalogue.TimeFrame;
-import org.radarcns.specifications.util.Utils;
 
 /**
  * TODO.
@@ -169,7 +168,7 @@ public class Topic implements Aggregatable{
     }
 
     @Override
-    public boolean isAggregatable() {
+    public boolean hasAggregator() {
         return Objects.nonNull(aggregator);
     }
 
@@ -202,7 +201,7 @@ public class Topic implements Aggregatable{
         Set<String> names = new HashSet<>();
         names.add(inputTopic);
 
-        if (isAggregatable()) {
+        if (hasAggregator()) {
             for (TopicMetadata metadata : output) {
                 names.add(metadata.getStateStore());
                 names.add(metadata.getOutput());
@@ -217,35 +216,22 @@ public class Topic implements Aggregatable{
         if (this == o) {
             return true;
         }
-
-        if (!(o instanceof Topic)) {
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
-
         Topic topic = (Topic) o;
-
-        return new EqualsBuilder()
-            .append(inputTopic, topic.inputTopic)
-            .append(inputKey, topic.inputKey)
-            .append(inputValue, topic.inputValue)
-            .append(aggregator, topic.aggregator)
-            .append(baseOutput, topic.baseOutput)
-            .append(output, topic.output)
-            .isEquals();
+        return Objects.equals(inputTopic, topic.inputTopic) &&
+                Objects.equals(inputKey, topic.inputKey) &&
+                Objects.equals(inputValue, topic.inputValue) &&
+                Objects.equals(aggregator, topic.aggregator) &&
+                Objects.equals(baseOutput, topic.baseOutput) &&
+                Objects.equals(output, topic.output);
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 37)
-            .append(inputTopic)
-            .append(inputKey)
-            .append(inputValue)
-            .append(aggregator)
-            .append(baseOutput)
-            .append(output)
-            .toHashCode();
+        return Objects.hash(inputTopic, inputKey, inputValue, aggregator, baseOutput, output);
     }
-
 
     public String toString(boolean reduced) {
         String result = "inputTopic: " + inputTopic + '\n'

@@ -47,10 +47,10 @@ public class RecordCountsTest {
 
         KafkaActor actor = recordCounts.getKafkaActor();
 
-        assertEquals(DataType.RAW.name(), actor.getDataType().name());
+        assertEquals(DataType.RAW.name(), actor.getProcessingState().name());
         assertEquals(0.08, actor.getSampleRate(), 0.0);
-        assertEquals(MonitorSourceType.RECORD_COUNTS.name(), recordCounts.getType().name());
-        assertEquals(Unit.NON_DIMENSIONAL, actor.getUnit());
+        assertEquals(MonitorSourceType.RECORD_COUNTS.name(), recordCounts.getType());
+        assertEquals(Unit.NON_DIMENSIONAL.name(), actor.getUnit());
 
         testTopicNonAggregatable("application_record_counts",
             "org.radarcns.kafka.key.KeyMeasurement",

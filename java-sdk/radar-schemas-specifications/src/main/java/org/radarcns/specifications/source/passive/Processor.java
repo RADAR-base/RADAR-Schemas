@@ -18,7 +18,7 @@ package org.radarcns.specifications.source.passive;
 
 import static org.radarcns.specifications.util.Labels.AGGREGATOR;
 import static org.radarcns.specifications.util.Labels.BASE_OUTPUT_TOPIC;
-import static org.radarcns.specifications.util.Labels.DATA_TYPE;
+import static org.radarcns.specifications.util.Labels.PROCESSING_STATE;
 import static org.radarcns.specifications.util.Labels.DOC;
 import static org.radarcns.specifications.util.Labels.INPUT_KEY;
 import static org.radarcns.specifications.util.Labels.INPUT_TOPIC;
@@ -41,10 +41,10 @@ import org.radarcns.specifications.source.Topic;
  */
 public class Processor extends KafkaActor {
 
-    private final SensorName name;
+    private final String name;
 
-    private static final String NULL_MESSAGE = " in ".concat(
-            Processor.class.getName()).concat(" cannot be null.");
+    private static final String NULL_MESSAGE = " in "
+            + Processor.class.getName() + " cannot be null.";
 
     /**
      * TODO.
@@ -61,11 +61,11 @@ public class Processor extends KafkaActor {
      */
     @JsonCreator
     public Processor(
-            @JsonProperty(NAME) SensorName name,
+            @JsonProperty(NAME) String name,
             @JsonProperty(DOC) String doc,
             @JsonProperty(SAMPLE_RATE) double sampleRate,
-            @JsonProperty(UNIT) Unit unit,
-            @JsonProperty(DATA_TYPE) DataType dataType,
+            @JsonProperty(UNIT) String unit,
+            @JsonProperty(PROCESSING_STATE) DataType dataType,
             @JsonProperty(INPUT_TOPIC) String inputTopic,
             @JsonProperty(INPUT_KEY) String inputKey,
             @JsonProperty(INPUT_VALUE) String inputValue,
@@ -75,12 +75,12 @@ public class Processor extends KafkaActor {
                 new Topic(inputTopic, inputKey, inputValue, aggregator, baseOutputTopic));
 
         Objects.requireNonNull(baseOutputTopic, BASE_OUTPUT_TOPIC.concat(NULL_MESSAGE));
-        Objects.requireNonNull(name, NAME.concat(NULL_MESSAGE));
+        Objects.requireNonNull(name, NAME + NULL_MESSAGE);
 
         this.name = name;
     }
 
-    public SensorName getName() {
+    public String getName() {
         return name;
     }
 }

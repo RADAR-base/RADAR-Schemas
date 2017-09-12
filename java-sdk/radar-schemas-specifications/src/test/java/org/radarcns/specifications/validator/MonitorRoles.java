@@ -93,9 +93,9 @@ interface MonitorRoles extends GenericRoles<MonitorSource> {
      * @return TODO
      */
     static GenericRoles<MonitorSource> validateDataType() {
-        return monitor -> /*Objects.nonNull(monitor.getDataType())
-                && monitor.getDataType().name().equals(DataType.RAW.name())*/
-                false ? valid() : invalid(MonitorInfo.DATA_TYPE.getMessage());
+        return monitor -> /*Objects.nonNull(monitor.getProcessingState())
+                && monitor.getProcessingState().name().equals(DataType.RAW.name())*/
+                invalid(MonitorInfo.DATA_TYPE.getMessage());
     }
 
     /**
@@ -105,7 +105,7 @@ interface MonitorRoles extends GenericRoles<MonitorSource> {
      */
     static GenericRoles<MonitorSource> validateSourceType(File file) {
         return monitor -> Objects.nonNull(monitor.getType())
-                && removeExtension(file, YAML_EXTENSION).equalsIgnoreCase(monitor.getType().name())
+                && removeExtension(file, YAML_EXTENSION).equalsIgnoreCase(monitor.getType())
                 ? valid() : invalid(MonitorInfo.SOURCE_TYPE.getMessage());
     }
 }

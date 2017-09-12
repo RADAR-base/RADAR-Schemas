@@ -1,4 +1,4 @@
-package org.radarcns.validator.util;
+package org.radarcns.validator;
 
 /*
  * Copyright 2017 King's College London and The Hyve
@@ -16,24 +16,26 @@ package org.radarcns.validator.util;
  * limitations under the License.
  */
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.radarcns.validator.SchemaCatalogValidator.NameFolder.ACTIVE;
-import static org.radarcns.validator.SchemaCatalogValidator.NameFolder.MONITOR;
-import static org.radarcns.validator.util.SchemaValidationRoles.ENUMERATION_SYMBOL_REGEX;
-import static org.radarcns.validator.util.SchemaValidationRoles.FIELD_NAME_REGEX;
-import static org.radarcns.validator.util.SchemaValidationRoles.NAMESPACE_REGEX;
-import static org.radarcns.validator.util.SchemaValidationRoles.RECORD_NAME_REGEX;
+import org.apache.avro.Schema;
+import org.apache.avro.Schema.Parser;
+import org.apache.avro.SchemaBuilder;
+import org.junit.Test;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.Optional;
-import org.apache.avro.Schema;
-import org.apache.avro.Schema.Parser;
-import org.apache.avro.SchemaBuilder;
-import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.radarcns.validator.Scope.ACTIVE;
+import static org.radarcns.validator.Scope.MONITOR;
+import static org.radarcns.validator.SchemaValidationRoles.ENUM_SYMBOL_PATTERN;
+import static org.radarcns.validator.SchemaValidationRoles.FIELD_NAME_PATTERN;
+import static org.radarcns.validator.SchemaValidationRoles.NAMESPACE_PATTERN;
+import static org.radarcns.validator.SchemaValidationRoles.RECORD_NAME_PATTERN;
+import static org.radarcns.validator.SchemaValidationRoles.matches;
 
 /**
  * TODO.
@@ -61,62 +63,63 @@ public class SchemaValidationRolesTest {
 
     @Test
     public void nameSpaceRegex() {
-        assertTrue("org.radarcns".matches(NAMESPACE_REGEX));
-        assertFalse("Org.radarcns".matches(NAMESPACE_REGEX));
-        assertFalse("org.radarCns".matches(NAMESPACE_REGEX));
-        assertFalse(".org.radarcns".matches(NAMESPACE_REGEX));
-        assertFalse("org.radar-cns".matches(NAMESPACE_REGEX));
-        assertFalse("org.radarcns.empaticaE4".matches(NAMESPACE_REGEX));
+        assertTrue(matches("org.radarcns", NAMESPACE_PATTERN));
+        assertFalse(matches("Org.radarcns", NAMESPACE_PATTERN));
+        assertFalse(matches("org.radarCns", NAMESPACE_PATTERN));
+        assertFalse(matches(".org.radarcns", NAMESPACE_PATTERN));
+        assertFalse(matches("org.radar-cns", NAMESPACE_PATTERN));
+        assertFalse(matches("org.radarcns.empaticaE4", NAMESPACE_PATTERN));
     }
 
     @Test
     public void recordNameRegex() {
-        assertTrue("Questionnaire".matches(RECORD_NAME_REGEX));
-        assertTrue("EmpaticaE4Acceleration".matches(RECORD_NAME_REGEX));
-        assertTrue("Heart4Me".matches(RECORD_NAME_REGEX));
-        assertTrue("Heart4M".matches(RECORD_NAME_REGEX));
+        assertTrue(matches("Questionnaire", RECORD_NAME_PATTERN));
+        assertTrue(matches("EmpaticaE4Acceleration", RECORD_NAME_PATTERN));
+        assertTrue(matches("Heart4Me", RECORD_NAME_PATTERN));
+        assertTrue(matches("Heart4M", RECORD_NAME_PATTERN));
 
-        assertFalse("Heart4".matches(RECORD_NAME_REGEX));
-        assertFalse("Heart4me".matches(RECORD_NAME_REGEX));
-        assertFalse("Heart4ME".matches(RECORD_NAME_REGEX));
-        assertFalse("4Me".matches(RECORD_NAME_REGEX));
-        assertFalse("TTest".matches(RECORD_NAME_REGEX));
-        assertFalse("questionnaire".matches(RECORD_NAME_REGEX));
-        assertFalse("questionnaire4".matches(RECORD_NAME_REGEX));
-        assertFalse("questionnaire4Me".matches(RECORD_NAME_REGEX));
-        assertFalse("questionnaire4me".matches(RECORD_NAME_REGEX));
-        assertFalse("A4MM".matches(RECORD_NAME_REGEX));
-        assertFalse("Aaaa4MMaa".matches(RECORD_NAME_REGEX));
+        assertFalse(matches("Heart4", RECORD_NAME_PATTERN));
+        assertFalse(matches("Heart4me", RECORD_NAME_PATTERN));
+        assertFalse(matches("Heart4ME", RECORD_NAME_PATTERN));
+        assertFalse(matches("4Me", RECORD_NAME_PATTERN));
+        assertFalse(matches("TTest", RECORD_NAME_PATTERN));
+        assertFalse(matches("questionnaire", RECORD_NAME_PATTERN));
+        assertFalse(matches("questionnaire4", RECORD_NAME_PATTERN));
+        assertFalse(matches("questionnaire4Me", RECORD_NAME_PATTERN));
+        assertFalse(matches("questionnaire4me", RECORD_NAME_PATTERN));
+        assertFalse(matches("A4MM", RECORD_NAME_PATTERN));
+        assertFalse(matches("Aaaa4MMaa", RECORD_NAME_PATTERN));
     }
 
     @Test
     public void fieldNameRegex() {
-        assertTrue("interBeatInterval".matches(FIELD_NAME_REGEX));
-        assertTrue("x".matches(FIELD_NAME_REGEX));
-        assertTrue(SchemaValidationRoles.TIME.matches(FIELD_NAME_REGEX));
-        assertTrue("subjectId".matches(FIELD_NAME_REGEX));
-        assertTrue("listOfSeveralThings".matches(FIELD_NAME_REGEX));
-        assertFalse("Time".matches(FIELD_NAME_REGEX));
-        assertFalse("E4Heart".matches(FIELD_NAME_REGEX));
+        assertTrue(matches("interBeatInterval", FIELD_NAME_PATTERN));
+        assertTrue(matches("x", FIELD_NAME_PATTERN));
+        assertTrue(matches(SchemaValidationRoles.TIME, FIELD_NAME_PATTERN));
+        assertTrue(matches("subjectId", FIELD_NAME_PATTERN));
+        assertTrue(matches("listOfSeveralThings", FIELD_NAME_PATTERN));
+        assertFalse(matches("Time", FIELD_NAME_PATTERN));
+        assertFalse(matches("E4Heart", FIELD_NAME_PATTERN));
     }
 
     @Test
     public void enumerationRegex() {
-        assertTrue("PHQ8".matches(ENUMERATION_SYMBOL_REGEX));
-        assertTrue("HELLO".matches(ENUMERATION_SYMBOL_REGEX));
-        assertTrue("HELLOTHERE".matches(ENUMERATION_SYMBOL_REGEX));
-        assertTrue("HELLO_THERE".matches(ENUMERATION_SYMBOL_REGEX));
-        assertFalse("Hello".matches(ENUMERATION_SYMBOL_REGEX));
-        assertFalse("hello".matches(ENUMERATION_SYMBOL_REGEX));
-        assertFalse("HelloThere".matches(ENUMERATION_SYMBOL_REGEX));
-        assertFalse("Hello_There".matches(ENUMERATION_SYMBOL_REGEX));
-        assertFalse("HELLO.THERE".matches(ENUMERATION_SYMBOL_REGEX));
+        assertTrue(matches("PHQ8", ENUM_SYMBOL_PATTERN));
+        assertTrue(matches("HELLO", ENUM_SYMBOL_PATTERN));
+        assertTrue(matches("HELLOTHERE", ENUM_SYMBOL_PATTERN));
+        assertTrue(matches("HELLO_THERE", ENUM_SYMBOL_PATTERN));
+        assertFalse(matches("Hello", ENUM_SYMBOL_PATTERN));
+        assertFalse(matches("hello", ENUM_SYMBOL_PATTERN));
+        assertFalse(matches("HelloThere", ENUM_SYMBOL_PATTERN));
+        assertFalse(matches("Hello_There", ENUM_SYMBOL_PATTERN));
+        assertFalse(matches("HELLO.THERE", ENUM_SYMBOL_PATTERN));
     }
 
     @Test
     public void nameSpaceTest() {
         Schema schema;
         ValidationResult result;
+        Path path;
 
         schema = SchemaBuilder
                     .builder("org.radarcns.active.questionnaire")
@@ -124,8 +127,9 @@ public class SchemaValidationRolesTest {
                     .fields()
                     .endRecord();
 
-        result = SchemaValidationRoles.validateNameSpace(ACTIVE,
-                "questionnaire").apply(schema);
+        path = ACTIVE.getCommonsPath().resolve("questionnaire/questionnaire.avsc");
+
+        result = SchemaValidationRoles.validateNameSpace(path, ACTIVE).apply(schema);
 
         assertTrue(result.isValid());
 
@@ -135,7 +139,8 @@ public class SchemaValidationRolesTest {
                     .fields()
                     .endRecord();
 
-        result = SchemaValidationRoles.validateNameSpace(MONITOR, "test").apply(schema);
+        path = MONITOR.getCommonsPath().resolve("test/record_name.avsc");
+        result = SchemaValidationRoles.validateNameSpace(path, MONITOR).apply(schema);
 
         assertFalse(result.isValid());
 
@@ -151,7 +156,7 @@ public class SchemaValidationRolesTest {
                     .fields()
                     .endRecord();
 
-        result = SchemaValidationRoles.validateNameSpace(MONITOR, "test").apply(schema);
+        result = SchemaValidationRoles.validateNameSpace(path, MONITOR).apply(schema);
 
         assertFalse(result.isValid());
 
@@ -167,7 +172,7 @@ public class SchemaValidationRolesTest {
                     .fields()
                     .endRecord();
 
-        result = SchemaValidationRoles.validateNameSpace(MONITOR, "test").apply(schema);
+        result = SchemaValidationRoles.validateNameSpace(path, MONITOR).apply(schema);
 
         assertFalse(result.isValid());
 

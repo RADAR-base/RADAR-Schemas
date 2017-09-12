@@ -59,7 +59,7 @@ interface TopicRoles extends GenericRoles<Topic> {
     }
 
     //public String getInputTopic()
-    //public boolean isAggregatable()
+    //public boolean hasAggregator()
     //public String getAggregator()
     //public Set<TopicMetadata> getOutput()
     //public Set<String> getTopicNames()

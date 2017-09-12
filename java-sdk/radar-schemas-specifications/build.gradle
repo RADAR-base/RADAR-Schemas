@@ -16,7 +16,6 @@ idea {
     }
 }
 
-ext.apacheCommonsVersion = '3.6'
 ext.kafkaVersion = '0.10.2.1'
 ext.jacksonModuleParameterNamesVersion = '2.9.0'
 ext.junitVersion = '4.12'
@@ -27,7 +26,6 @@ dependencies {
     implementation project(':radar-schemas-commons')
 
     implementation group: 'org.radarcns', name: 'radar-commons', version: radarCommonsVersion
-    implementation group: 'org.apache.commons', name: 'commons-lang3', version: apacheCommonsVersion
 
     testCompile group: 'junit', name: 'junit', version: junitVersion
     testCompile group: 'org.slf4j', name: 'slf4j-simple', version: slf4jVersion
@@ -50,7 +48,7 @@ dependencies {
 ext.exchnageConfigMainPath = 'src/main/resources/exchange.properties'
 task exchangeConfig() {
     doLast {
-        if (file(exchnageConfigMainPath).delete()) {
+        if (!file(exchnageConfigMainPath).exists() || file(exchnageConfigMainPath).delete()) {
             file(exchnageConfigMainPath).createNewFile()
             file(exchnageConfigMainPath).write("project.group=${project.group}")
         } else {

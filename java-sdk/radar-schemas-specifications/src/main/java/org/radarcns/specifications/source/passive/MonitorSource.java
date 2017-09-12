@@ -18,7 +18,7 @@ package org.radarcns.specifications.source.passive;
 
 import static org.radarcns.specifications.util.Labels.AGGREGATOR;
 import static org.radarcns.specifications.util.Labels.APP_PROVIDER;
-import static org.radarcns.specifications.util.Labels.DATA_TYPE;
+import static org.radarcns.specifications.util.Labels.PROCESSING_STATE;
 import static org.radarcns.specifications.util.Labels.DOC;
 import static org.radarcns.specifications.util.Labels.KEY;
 import static org.radarcns.specifications.util.Labels.NAME;
@@ -32,8 +32,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Objects;
 import java.util.Set;
 import org.radarcns.catalogue.DataType;
-import org.radarcns.catalogue.MonitorSourceType;
-import org.radarcns.catalogue.Unit;
 import org.radarcns.specifications.source.KafkaActor;
 import org.radarcns.specifications.source.Source;
 import org.radarcns.specifications.source.Topic;
@@ -44,10 +42,8 @@ import org.radarcns.specifications.util.Utils;
  */
 public class MonitorSource extends Source {
 
-    private final MonitorSourceType type;
-
+    private final String type;
     private final String appProvider;
-
     private final KafkaActor kafkaActor;
 
     private static final String NULL_MESSAGE = " in ".concat(
@@ -69,17 +65,17 @@ public class MonitorSource extends Source {
      */
     @JsonCreator
     public MonitorSource(
-            @JsonProperty(NAME) MonitorSourceType name,
+            @JsonProperty(NAME) String name,
             @JsonProperty(APP_PROVIDER) String appProvider,
             @JsonProperty(DOC) String doc,
             @JsonProperty(SAMPLE_RATE) double sampleRate,
-            @JsonProperty(UNIT) Unit unit,
-            @JsonProperty(DATA_TYPE) DataType dataType,
+            @JsonProperty(UNIT) String unit,
+            @JsonProperty(PROCESSING_STATE) DataType dataType,
             @JsonProperty(TOPIC) String topic,
             @JsonProperty(KEY) String key,
             @JsonProperty(VALUE) String value,
             @JsonProperty(AGGREGATOR) String aggregator) {
-        super(name.name(), doc);
+        super(name, doc);
 
         Objects.requireNonNull(appProvider, APP_PROVIDER.concat(NULL_MESSAGE));
 
@@ -90,7 +86,7 @@ public class MonitorSource extends Source {
                 new Topic(topic, key, value, aggregator, null));
     }
 
-    public MonitorSourceType getType() {
+    public String getType() {
         return type;
     }
 

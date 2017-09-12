@@ -49,12 +49,10 @@ public class CommandLineApp {
 
         for (Topic topic : getAllTopics()) {
             set.add(topic.getInputTopic());
-            if (topic.isAggregatable()) {
+            if (topic.hasAggregator()) {
                 topic.getOutputTopics().stream()
                     .map(TopicMetadata::getOutput)
-                    .forEach(output -> set.add(output));
-            } else {
-                set.add(topic.getInputTopic());
+                    .forEach(set::add);
             }
         }
 
@@ -83,10 +81,10 @@ public class CommandLineApp {
         Set<String> set = new HashSet<>();
 
         for (Topic topic : getAllTopics()) {
-            if (topic.isAggregatable()) {
+            if (topic.hasAggregator()) {
                 topic.getOutputTopics().stream()
                     .map(TopicMetadata::getOutput)
-                    .forEach(output -> set.add(output));
+                    .forEach(set::add);
             } else {
                 set.add(topic.getInputTopic());
             }
@@ -100,24 +98,24 @@ public class CommandLineApp {
 
         SourceCatalogue.getActiveSources().values().stream()
             .map(QuestionnaireSource::getTopic)
-            .forEach(topic -> set.add(topic));
+            .forEach(set::add);
 
         SourceCatalogue.getMonitorSources().values().stream()
             .map(MonitorSource::getKafkaActor)
             .map(KafkaActor::getTopic)
-            .forEach(topic -> set.add(topic));
+            .forEach(set::add);
 
         SourceCatalogue.getPassiveSources().values().stream()
             .map(PassiveSource::getSensors)
             .flatMap(Set::stream)
             .map(Sensor::getTopic)
-            .forEach(topic -> set.add(topic));
+            .forEach(set::add);
 
         SourceCatalogue.getPassiveSources().values().stream()
             .map(PassiveSource::getProcessors)
             .flatMap(Set::stream)
             .map(Processor::getTopic)
-            .forEach(topic -> set.add(topic));
+            .forEach(set::add);
 
         return set;
     }
@@ -169,7 +167,7 @@ public class CommandLineApp {
 
         details = new HashMap<>();
         for (MonitorSource source : SourceCatalogue.getMonitorSources().values()) {
-            details.put(source.getType().name(),
+            details.put(source.getType(),
                     source.getKafkaActor().getTopic().toString(reduced));
         }
         map.put(NameFolder.MONITOR.getName().toUpperCase(), details);
@@ -180,7 +178,7 @@ public class CommandLineApp {
                 details.put(sensor.getName().name(), sensor.getTopic().toString(reduced));
             }
             for (Processor proc : source.getProcessors()) {
-                details.put(proc.getName().name(), proc.getTopic().toString(reduced));
+                details.put(proc.getName(), proc.getTopic().toString(reduced));
             }
             map.put(source.getType().name(), details);
         }

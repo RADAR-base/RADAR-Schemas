@@ -47,10 +47,10 @@ public class ServerStatusTest {
 
         KafkaActor actor = serverStatus.getKafkaActor();
 
-        assertEquals(DataType.RAW.name(), actor.getDataType().name());
+        assertEquals(DataType.RAW.name(), actor.getProcessingState().name());
         assertEquals(0.08, actor.getSampleRate(), 0.0);
-        assertEquals(MonitorSourceType.SERVER_STATUS.name(), serverStatus.getType().name());
-        assertEquals(Unit.NON_DIMENSIONAL, actor.getUnit());
+        assertEquals(MonitorSourceType.SERVER_STATUS.name(), serverStatus.getType());
+        assertEquals(Unit.NON_DIMENSIONAL.name(), actor.getUnit());
 
         testTopicNonAggregatable("application_server_status",
             "org.radarcns.kafka.key.KeyMeasurement",

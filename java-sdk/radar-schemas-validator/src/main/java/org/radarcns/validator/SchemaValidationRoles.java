@@ -1,35 +1,34 @@
-package org.radarcns.validator.util;
+package org.radarcns.validator;
 
-import static org.radarcns.validator.util.SchemaValidationRoles.Message.DEFAULT_VALUE;
-import static org.radarcns.validator.util.SchemaValidationRoles.Message.DOC;
-import static org.radarcns.validator.util.SchemaValidationRoles.Message.ENUMERATION_SYMBOL;
-import static org.radarcns.validator.util.SchemaValidationRoles.Message.ENUMERATION_UNKNOWN_SYMBOL;
-import static org.radarcns.validator.util.SchemaValidationRoles.Message.FIELDS;
-import static org.radarcns.validator.util.SchemaValidationRoles.Message.FILED_NAME;
-import static org.radarcns.validator.util.SchemaValidationRoles.Message.NOT_TIME_COMPLETED_FIELD;
-import static org.radarcns.validator.util.SchemaValidationRoles.Message.NOT_TIME_RECEIVED_FIELD;
-import static org.radarcns.validator.util.SchemaValidationRoles.Message.RECORD_NAME;
-import static org.radarcns.validator.util.SchemaValidationRoles.Message.SYMBOLS;
-import static org.radarcns.validator.util.SchemaValidationRoles.Message.TIME_COMPLETED_FIELD;
-import static org.radarcns.validator.util.SchemaValidationRoles.Message.TIME_FIELD;
-import static org.radarcns.validator.util.SchemaValidationRoles.Message.TIME_RECEIVED_FIELD;
-import static org.radarcns.validator.util.ValidationResult.invalid;
-import static org.radarcns.validator.util.ValidationResult.valid;
-import static org.radarcns.validator.util.ValidationSupport.extractEnumerationFields;
-import static org.radarcns.validator.util.ValidationSupport.getNamespace;
-import static org.radarcns.validator.util.ValidationSupport.getRecordName;
+import static org.radarcns.validator.SchemaValidationRoles.Message.DEFAULT_VALUE;
+import static org.radarcns.validator.SchemaValidationRoles.Message.DOC;
+import static org.radarcns.validator.SchemaValidationRoles.Message.ENUMERATION_SYMBOL;
+import static org.radarcns.validator.SchemaValidationRoles.Message.ENUMERATION_UNKNOWN_SYMBOL;
+import static org.radarcns.validator.SchemaValidationRoles.Message.FIELDS;
+import static org.radarcns.validator.SchemaValidationRoles.Message.FILED_NAME;
+import static org.radarcns.validator.SchemaValidationRoles.Message.NOT_TIME_COMPLETED_FIELD;
+import static org.radarcns.validator.SchemaValidationRoles.Message.NOT_TIME_RECEIVED_FIELD;
+import static org.radarcns.validator.SchemaValidationRoles.Message.RECORD_NAME;
+import static org.radarcns.validator.SchemaValidationRoles.Message.SYMBOLS;
+import static org.radarcns.validator.SchemaValidationRoles.Message.TIME_COMPLETED_FIELD;
+import static org.radarcns.validator.SchemaValidationRoles.Message.TIME_FIELD;
+import static org.radarcns.validator.SchemaValidationRoles.Message.TIME_RECEIVED_FIELD;
+import static org.radarcns.validator.ValidationResult.invalid;
+import static org.radarcns.validator.ValidationResult.valid;
+import static org.radarcns.validator.ValidationSupport.extractEnumerationFields;
+import static org.radarcns.validator.ValidationSupport.getNamespace;
+import static org.radarcns.validator.ValidationSupport.getRecordName;
 
 import java.nio.file.Path;
-import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.apache.avro.Schema;
 import org.apache.avro.Schema.Type;
-import org.radarcns.validator.SchemaCatalogValidator.NameFolder;
 
 
 /*
@@ -61,14 +60,14 @@ interface SchemaValidationRoles extends Function<Schema, ValidationResult> {
 
     String UNKNOWN = "UNKNOWN";
 
-    String NAMESPACE_REGEX = "^[a-z][a-z.]*$";
+    Pattern NAMESPACE_PATTERN = Pattern.compile("^[a-z][a-z.]*$");
 
-    String RECORD_NAME_REGEX = "(^[A-Z][a-z]+)|(^[A-Z][a-z0-9]+[A-Z]$)"
-                + "|(^[A-Z][a-z0-9]+([A-Z][a-z0-9]+)+$)|(^[A-Z][a-z0-9]+([A-Z][a-z0-9]+)+[A-Z]$)";
+    Pattern RECORD_NAME_PATTERN = Pattern.compile("(^[A-Z][a-z]+)|(^[A-Z][a-z0-9]+[A-Z]$)"
+                + "|(^[A-Z][a-z0-9]+([A-Z][a-z0-9]+)+$)|(^[A-Z][a-z0-9]+([A-Z][a-z0-9]+)+[A-Z]$)");
 
-    String FIELD_NAME_REGEX = "^[a-z][a-zA-Z]*$";
+    Pattern FIELD_NAME_PATTERN = Pattern.compile("^[a-z][a-zA-Z]*$");
 
-    String ENUMERATION_SYMBOL_REGEX = "^[A-Z0-8_]+$";
+    Pattern ENUM_SYMBOL_PATTERN = Pattern.compile("^[A-Z][A-Z0-9_]*$");
 
     /** Field names cannot contain the following values. */
     enum FieldNameNotAllowed {
@@ -91,19 +90,21 @@ interface SchemaValidationRoles extends Function<Schema, ValidationResult> {
     /** Messages. */
     enum Message {
         NAME_SPACE("Namespace cannot be null and must fully lowercase dot separated without "
-            + "numeric. In this case the expected value is \""),
+                + "numeric. In this case the expected value is \""),
         RECORD_NAME("Record name must be the conversion of the .avsc file name in UpperCamelCase "
-            + "and must explicitly contain the device name. The expected value is "),
+                + "and must explicitly contain the device name. The expected value is "),
         TIME_FIELD("Any schema representing collected data must have a \"" + TIME
-            + "\" field formatted in " + Type.DOUBLE.getName().toUpperCase(Locale.ENGLISH) + "."),
-        TIME_COMPLETED_FIELD("Any " + NameFolder.ACTIVE + " schema must have a \"" + TIME_COMPLETED
-            + "\" field formatted in " + Type.DOUBLE.getName().toUpperCase(Locale.ENGLISH) + "."),
-        NOT_TIME_COMPLETED_FIELD("\"" + TIME_COMPLETED + "\" is allow only in " + NameFolder.ACTIVE
-            + " schemas."),
-        TIME_RECEIVED_FIELD("Any " + NameFolder.PASSIVE + " schema must have a \"" + TIME_RECEIVED
-            + "\" field formatted in " + Type.DOUBLE.getName().toUpperCase(Locale.ENGLISH) + "."),
-        NOT_TIME_RECEIVED_FIELD("\"" + TIME_RECEIVED + "\" is allow only in " + NameFolder.PASSIVE
-            + " schemas."),
+                + "\" field formatted in " + Type.DOUBLE + "."),
+        TIME_COMPLETED_FIELD("Any " + Scope.ACTIVE + " schema must have a \""
+                + TIME_COMPLETED + "\" field formatted in "
+                + Type.DOUBLE + "."),
+        NOT_TIME_COMPLETED_FIELD("\"" + TIME_COMPLETED + "\" is allow only in "
+                + Scope.ACTIVE + " schemas."),
+        TIME_RECEIVED_FIELD("Any " + Scope.PASSIVE
+                + " schema must have a \"" + TIME_RECEIVED + "\" field formatted in "
+                + Type.DOUBLE + "."),
+        NOT_TIME_RECEIVED_FIELD("\"" + TIME_RECEIVED + "\" is allow only in "
+                + Scope.PASSIVE + " schemas."),
         FIELDS("Avro Record must have field list."),
         FILED_NAME("Field name does not respect lowerCamelCase name convention. It cannot contain"
             + " any of the following values ["
@@ -143,15 +144,14 @@ interface SchemaValidationRoles extends Function<Schema, ValidationResult> {
 
     /**
      * TODO.
-     * @param rootFolder TODO
-     * @param subFolder TODO
+     * @param scope TODO
      * @return TODO
      */
-    static SchemaValidationRoles validateNameSpace(NameFolder rootFolder, String subFolder) {
-        String expected = getNamespace(rootFolder, subFolder);
+    static SchemaValidationRoles validateNameSpace(Path schemaPath, Scope scope) {
+        String expected = getNamespace(schemaPath, scope);
 
         return schema -> Objects.nonNull(schema.getNamespace())
-                                && schema.getNamespace() .matches(NAMESPACE_REGEX)
+                                && NAMESPACE_PATTERN.matcher(schema.getNamespace()).matches()
                                 && schema.getNamespace().equalsIgnoreCase(expected) ? valid() :
                                 invalid(Message.NAME_SPACE.getMessage().concat(expected).concat(
                                     "\". ").concat(schema.getFullName()).concat(" is invalid."));
@@ -176,7 +176,7 @@ interface SchemaValidationRoles extends Function<Schema, ValidationResult> {
         String expected = getRecordName(path);
 
         return schema ->
-                skip || schema.getName().matches(RECORD_NAME_REGEX)
+                skip || matches(schema.getName(), RECORD_NAME_PATTERN)
                     && schema.getName().equalsIgnoreCase(expected) ? valid() :
                 invalid(RECORD_NAME.getMessage().concat(expected).concat("\". ").concat(
                     schema.getFullName()).concat(" is invalid."));
@@ -212,15 +212,25 @@ interface SchemaValidationRoles extends Function<Schema, ValidationResult> {
      * @return TODO
      */
     static SchemaValidationRoles validateFieldName(Set<String> skip) {
-        return validate(schema ->
+        return validate(schema -> {
+                    Stream<String> stream = schema.getFields()
+                            .stream()
+                            .map(Schema.Field::name);
+                    if (skip != null && !skip.isEmpty()) {
+                        stream = stream.filter(name -> !skip::contains(name));
+                    }
+                }
                 schema.getFields()
                     .stream()
-                    .map(field -> field.name())
+                    .map(Schema.Field::name);
+
+
+
+                    .filter(name -> skip == null || !skip.contains(name))
                     .allMatch(name ->
-                        name.matches(FIELD_NAME_REGEX)
+                            matches(name, FIELD_NAME_PATTERN)
                             && Stream.of(FieldNameNotAllowed.values())
-                            .noneMatch(notAllowed -> name.contains(notAllowed.getName()))
-                            || Objects.nonNull(skip) && skip.contains(name)),
+                                .noneMatch(notAllowed -> name.contains(notAllowed.getName()))),
             FILED_NAME);
     }
 
@@ -252,8 +262,7 @@ interface SchemaValidationRoles extends Function<Schema, ValidationResult> {
     static SchemaValidationRoles validateEnumerationSymbols() {
         return validate(schema ->
                 extractEnumerationFields(schema).stream()
-                    .allMatch(symbol -> symbol.matches(
-                        ENUMERATION_SYMBOL_REGEX)),
+                    .allMatch(matches(ENUM_SYMBOL_PATTERN)),
             ENUMERATION_SYMBOL);
     }
 
@@ -262,7 +271,7 @@ interface SchemaValidationRoles extends Function<Schema, ValidationResult> {
      * @return TODO
      */
     static SchemaValidationRoles validateDefault() {
-        return validate(schema -> ValidationSupport.validateDefault(schema), DEFAULT_VALUE);
+        return validate(ValidationSupport::validateDefault, DEFAULT_VALUE);
     }
 
     /**
@@ -333,13 +342,13 @@ interface SchemaValidationRoles extends Function<Schema, ValidationResult> {
 
     /**
      * TODO.
-     * @param other TODO
+     * @param also TODO
      * @return TODO
      */
-    default SchemaValidationRoles and(SchemaValidationRoles other) {
+    default SchemaValidationRoles and(SchemaValidationRoles also) {
         return schema -> {
-            final ValidationResult result = this.apply(schema);
-            return result.isValid() ? other.apply(schema) : result;
+            ValidationResult result = this.apply(schema);
+            return result.isValid() ? also.apply(schema) : result;
         };
     }
 
@@ -347,12 +356,11 @@ interface SchemaValidationRoles extends Function<Schema, ValidationResult> {
      * TODO.
      * @param pathToSchema TODO
      * @param root TODO
-     * @param subfolder TODO
      * @return TODO
      */
-    static SchemaValidationRoles getGeneralRecordValidator(Path pathToSchema, NameFolder root,
-            String subfolder) {
-        return validateNameSpace(root, subfolder)
+    static SchemaValidationRoles getGeneralRecordValidator(Path pathToSchema,
+            Scope root) {
+        return validateNameSpace(pathToSchema, root)
                   .and(validateRecordName(pathToSchema))
                   .and(validateSchemaDocumentation())
                   .and(validateFields())
@@ -365,14 +373,14 @@ interface SchemaValidationRoles extends Function<Schema, ValidationResult> {
      * TODO.
      * @param pathToSchema TODO
      * @param root TODO
-     * @param subfolder TODO
      * @param skipRecordName TODO
      * @param skipFieldName TODO
      * @return TODO
      */
-    static SchemaValidationRoles getGeneralRecordValidator(Path pathToSchema, NameFolder root,
-            String subfolder, boolean skipRecordName, Set<String> skipFieldName) {
-        return validateNameSpace(root, subfolder)
+    static SchemaValidationRoles getGeneralRecordValidator(Path pathToSchema,
+            Scope root, boolean skipRecordName,
+            Set<String> skipFieldName) {
+        return validateNameSpace(pathToSchema, root)
                   .and(validateRecordName(pathToSchema, skipRecordName))
                   .and(validateSchemaDocumentation())
                   .and(validateFields())
@@ -385,12 +393,10 @@ interface SchemaValidationRoles extends Function<Schema, ValidationResult> {
      * TODO.
      * @param pathToSchema TODO
      * @param root TODO
-     * @param subfolder TODO
      * @return TODO
      */
-    static SchemaValidationRoles getActiveValidator(Path pathToSchema, NameFolder root,
-            String subfolder) {
-        return getGeneralRecordValidator(pathToSchema, root, subfolder)
+    static SchemaValidationRoles getActiveValidator(Path pathToSchema, Scope root) {
+        return getGeneralRecordValidator(pathToSchema, root)
                   .and(validateTime())
                   .and(validateTimeCompleted())
                   .and(validateNotTimeReceived());
@@ -400,14 +406,13 @@ interface SchemaValidationRoles extends Function<Schema, ValidationResult> {
      * TODO.
      * @param pathToSchema TODO
      * @param root TODO
-     * @param subfolder TODO
      * @param skipRecordName TODO
      * @param skipFieldName TODO
      * @return TODO
      */
-    static SchemaValidationRoles getActiveValidator(Path pathToSchema, NameFolder root,
-            String subfolder,     boolean skipRecordName, Set<String> skipFieldName) {
-        return getGeneralRecordValidator(pathToSchema, root, subfolder, skipRecordName,
+    static SchemaValidationRoles getActiveValidator(Path pathToSchema, Scope root,
+            boolean skipRecordName, Set<String> skipFieldName) {
+        return getGeneralRecordValidator(pathToSchema, root, skipRecordName,
             skipFieldName)
                   .and(validateTime())
                   .and(validateTimeCompleted())
@@ -418,12 +423,10 @@ interface SchemaValidationRoles extends Function<Schema, ValidationResult> {
      * TODO.
      * @param pathToSchema TODO
      * @param root TODO
-     * @param subfolder TODO
      * @return TODO
      */
-    static SchemaValidationRoles getMonitorValidator(Path pathToSchema, NameFolder root,
-            String subfolder) {
-        return getGeneralRecordValidator(pathToSchema, root, subfolder)
+    static SchemaValidationRoles getMonitorValidator(Path pathToSchema, Scope root) {
+        return getGeneralRecordValidator(pathToSchema, root)
             .and(validateTime());
     }
 
@@ -431,14 +434,13 @@ interface SchemaValidationRoles extends Function<Schema, ValidationResult> {
      * TODO.
      * @param pathToSchema TODO
      * @param root TODO
-     * @param subfolder TODO
      * @param skipRecordName TODO
      * @param skipFieldName TODO
      * @return TODO
      */
-    static SchemaValidationRoles getMonitorValidator(Path pathToSchema, NameFolder root,
-            String subfolder,     boolean skipRecordName, Set<String> skipFieldName) {
-        return getGeneralRecordValidator(pathToSchema, root, subfolder, skipRecordName,
+    static SchemaValidationRoles getMonitorValidator(Path pathToSchema, Scope root,
+             boolean skipRecordName, Set<String> skipFieldName) {
+        return getGeneralRecordValidator(pathToSchema, root, skipRecordName,
             skipFieldName)
                   .and(validateTime());
     }
@@ -447,12 +449,10 @@ interface SchemaValidationRoles extends Function<Schema, ValidationResult> {
      * TODO.
      * @param pathToSchema TODO
      * @param root TODO
-     * @param subfolder TODO
      * @return TODO
      */
-    static SchemaValidationRoles getPassiveValidator(Path pathToSchema, NameFolder root,
-            String subfolder) {
-        return getGeneralRecordValidator(pathToSchema, root, subfolder)
+    static SchemaValidationRoles getPassiveValidator(Path pathToSchema, Scope root) {
+        return getGeneralRecordValidator(pathToSchema, root)
             .and(validateTime())
             .and(validateTimeReceived())
             .and(validateNotTimeCompleted());
@@ -462,14 +462,13 @@ interface SchemaValidationRoles extends Function<Schema, ValidationResult> {
      * TODO.
      * @param pathToSchema TODO
      * @param root TODO
-     * @param subfolder TODO
      * @param skipRecordName TODO
      * @param skipFieldName TODO
      * @return TODO
      */
-    static SchemaValidationRoles getPassiveValidator(Path pathToSchema, NameFolder root,
-            String subfolder,     boolean skipRecordName, Set<String> skipFieldName) {
-        return getGeneralRecordValidator(pathToSchema, root, subfolder, skipRecordName,
+    static SchemaValidationRoles getPassiveValidator(Path pathToSchema, Scope root,
+            boolean skipRecordName, Set<String> skipFieldName) {
+        return getGeneralRecordValidator(pathToSchema, root, skipRecordName,
               skipFieldName)
             .and(validateTime())
             .and(validateTimeReceived())
@@ -480,12 +479,10 @@ interface SchemaValidationRoles extends Function<Schema, ValidationResult> {
      * TODO.
      * @param pathToSchema TODO
      * @param root TODO
-     * @param subfolder TODO
      * @return TODO
      */
-    static SchemaValidationRoles getGeneralEnumValidator(Path pathToSchema, NameFolder root,
-            String subfolder) {
-        return validateNameSpace(root, subfolder)
+    static SchemaValidationRoles getGeneralEnumValidator(Path pathToSchema, Scope root) {
+        return validateNameSpace(pathToSchema, root)
             .and(validateRecordName(pathToSchema))
             .and(validateSchemaDocumentation())
             .and(validateSymbols())
@@ -497,13 +494,12 @@ interface SchemaValidationRoles extends Function<Schema, ValidationResult> {
      * TODO.
      * @param pathToSchema TODO
      * @param root TODO
-     * @param subfolder TODO
      * @param skipRecordName TODO
      * @return TODO
      */
-    static SchemaValidationRoles getGeneralEnumValidator(Path pathToSchema, NameFolder root,
-            String subfolder,     boolean skipRecordName) {
-        return validateNameSpace(root, subfolder)
+    static SchemaValidationRoles getGeneralEnumValidator(Path pathToSchema, Scope root,
+            boolean skipRecordName) {
+        return validateNameSpace(pathToSchema, root)
             .and(validateRecordName(pathToSchema, skipRecordName))
             .and(validateSchemaDocumentation())
             .and(validateSymbols())
@@ -512,4 +508,11 @@ interface SchemaValidationRoles extends Function<Schema, ValidationResult> {
 
     }
 
+    static boolean matches(String str, Pattern pattern) {
+        return pattern.matcher(str).matches();
+    }
+
+    static Predicate<String> matches(Pattern pattern) {
+        return str -> pattern.matcher(str).matches();
+    }
 }
