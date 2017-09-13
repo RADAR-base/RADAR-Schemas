@@ -35,9 +35,6 @@ public class Sensor extends KafkaActor {
     private final SensorName name;
     private final String appProvider;
 
-    private static final String NULL_MESSAGE = " in ".concat(
-        Processor.class.getName()).concat(" cannot be null.");
-
     /**
      * TODO.
      * @param name TODO
@@ -66,11 +63,11 @@ public class Sensor extends KafkaActor {
         super(doc, sampleRate, unit, dataType,
                 new Topic(topic, key, value, aggregator, null));
 
-        Objects.requireNonNull(name, Labels.NAME.concat(NULL_MESSAGE));
+        Objects.requireNonNull(name);
 
         this.name = name;
         this.appProvider = Objects.isNull(appProvider)
-                ? null : Utils.getProjectGroup().concat(appProvider);
+                ? null : Utils.getProjectGroup() + appProvider;
     }
 
     public String getAppProvider() {

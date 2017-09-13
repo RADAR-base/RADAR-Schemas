@@ -18,7 +18,6 @@ package org.radarcns.schema.validation;
 
 import org.apache.avro.Schema;
 import org.apache.avro.SchemaBuilder;
-import org.junit.Assert;
 import org.junit.Test;
 
 import java.nio.file.Path;
@@ -43,7 +42,7 @@ public class SchemaValidatorTest {
         String expected = "/RADAR-Schemas/commons/monitor/application/"
                 + "application_external_time.avsc";
 
-        Assert.assertEquals(expected, SchemaValidator.getPath(path));
+        assertEquals(expected, SchemaValidator.getPath(path));
     }
 
     @Test
@@ -59,7 +58,7 @@ public class SchemaValidatorTest {
                 .doc(documentation)
                 .symbols("CONNECTED", "DISCONNECTED", "UNKNOWN");
 
-        ValidationResult result = SchemaValidator.validate(schema, schemaPath, MONITOR);
+        ValidationResult result = validate(schema, schemaPath, MONITOR);
 
         assertTrue(result.isValid());
 
@@ -68,7 +67,7 @@ public class SchemaValidatorTest {
                 .doc(documentation)
                 .symbols("CONNECTED", "DISCONNECTED", "un_known");
 
-        result = SchemaValidator.validate(schema, schemaPath, MONITOR);
+        result = validate(schema, schemaPath, MONITOR);
 
         assertFalse(result.isValid());
     }

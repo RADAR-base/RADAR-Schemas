@@ -1,4 +1,4 @@
-package org.radarcns.schema.specification.util;
+package org.radarcns.schema.validation.util;
 
 /*
  * Copyright 2017 King's College London and The Hyve
@@ -23,6 +23,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import org.radarcns.kafka.aggregator.AggregatorDouble;
 import org.radarcns.kafka.aggregator.AggregatorDoubleArray;
+import org.radarcns.schema.specification.util.Utils;
 
 /**
  * TODO.

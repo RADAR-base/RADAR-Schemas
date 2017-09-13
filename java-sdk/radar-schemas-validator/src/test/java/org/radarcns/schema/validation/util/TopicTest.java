@@ -1,4 +1,4 @@
-package org.radarcns.schema.specification.util;
+package org.radarcns.schema.validation.util;
 
 /*
  * Copyright 2017 King's College London and The Hyve
@@ -16,16 +16,15 @@ package org.radarcns.schema.specification.util;
  * limitations under the License.
  */
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import org.junit.Test;
+import org.radarcns.schema.specification.source.Topic;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import org.junit.Assert;
-import org.junit.Test;
-import org.radarcns.schema.specification.source.Topic;
-import org.radarcns.schema.specification.validator.ValidationSupport;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.radarcns.schema.validation.ValidationSupport.isValidTopic;
 
 /**
  * TODO.
@@ -34,7 +33,7 @@ public class TopicTest {
 
     @Test
     public void getOutTopicTest() {
-        Assert.assertEquals("topic_name_output", Topic.getOutTopic("topic_name"));
+        assertEquals("topic_name_output", Topic.getOutTopic("topic_name"));
     }
 
     @Test
@@ -51,7 +50,7 @@ public class TopicTest {
         Set<String> actual = Topic.getTimedOutTopics("topic_name_output");
         assertEquals(expected.size(), actual.size());
 
-        actual.forEach(value -> expected.remove(value));
+        actual.forEach(expected::remove);
         assertTrue(expected.isEmpty());
     }
 
@@ -72,10 +71,10 @@ public class TopicTest {
 
     @Test
     public void getStateStoreNameTest() {
-        Assert.assertEquals("From-topic_in-To-topic_out",
+        assertEquals("From-topic_in-To-topic_out",
                 Topic.getStateStoreName("topic_in", "topic_out"));
 
-        assertTrue(ValidationSupport.isValidTopic(Topic.getStateStoreName("topic_in", "topic_out")));
+        assertTrue(isValidTopic(Topic.getStateStoreName("topic_in", "topic_out")));
     }
 
     @Test(expected = NullPointerException.class)

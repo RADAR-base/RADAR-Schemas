@@ -31,9 +31,6 @@ public class Response {
     private final String text;
     private final Integer score;
 
-    private static final String NULL_MESSAGE = " in ".concat(
-        Response.class.getName()).concat(" cannot be null.");
-
     /**
      * TODO.
      * @param text TODO
@@ -44,8 +41,8 @@ public class Response {
             @JsonProperty(TEXT) String text,
             @JsonProperty(SCORE) Integer score) {
 
-        Objects.requireNonNull(score, SCORE.concat(NULL_MESSAGE));
-        Objects.requireNonNull(text, TEXT.concat(NULL_MESSAGE));
+        Objects.requireNonNull(score);
+        Objects.requireNonNull(text);
 
         this.score = score;
         this.text = text;

@@ -1,4 +1,4 @@
-package org.radarcns.schema.specification;
+package org.radarcns.schema.validation;
 
 /*
  * Copyright 2017 King's College London and The Hyve
@@ -18,7 +18,9 @@ package org.radarcns.schema.specification;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.radarcns.schema.specification.SourceCatalogue;
 import org.radarcns.schema.specification.source.MonitorSource;
+import org.radarcns.schema.specification.source.active.ActiveSource;
 import org.radarcns.schema.specification.source.active.questionnaire.QuestionnaireSource;
 import org.radarcns.schema.specification.source.passive.PassiveSource;
 import org.slf4j.Logger;
@@ -32,7 +34,7 @@ import java.util.Set;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.radarcns.schema.specification.SourceCatalogue.BASE_PATH;
-import static org.radarcns.schema.specification.validator.ValidationSupport.isValidTopic;
+import static org.radarcns.schema.validation.ValidationSupport.isValidTopic;
 
 /**
  * TODO.
@@ -51,19 +53,21 @@ public class SourceCatalogueValidation {
         assertTrue("Not all " + QuestionnaireSource.RadarSourceTypes.class.getName()
                         + " have a specification",
                 Arrays.stream(QuestionnaireSource.RadarSourceTypes.values())
-                        .allMatch(type -> catalogue.getActiveSource(type.name()) != null));
+                    .allMatch(type -> catalogue.getActiveSource(type.name()) != null));
     }
 
     @Test
     public void checkMonitorSourceType() {
-        assertTrue("Not all " + MonitorSource.RadarSourceTypes.class.getName() + " have a specification",
-            Arrays.stream(MonitorSource.RadarSourceTypes.values())
-                .allMatch(type -> catalogue.getMonitorSource(type.name()) != null));
+        assertTrue("Not all " + MonitorSource.RadarSourceTypes.class.getName()
+                        + " have a specification",
+                Arrays.stream(MonitorSource.RadarSourceTypes.values())
+                    .allMatch(type -> catalogue.getMonitorSource(type.name()) != null));
     }
 
     @Test
     public void checkPassiveSourceType() {
-        assertEquals("Not all " + PassiveSource.RadarSourceTypes.class.getName() + " have a specification", 0,
+        assertEquals("Not all " + PassiveSource.RadarSourceTypes.class.getName()
+                        + " have a specification", 0,
                 Arrays.stream(PassiveSource.RadarSourceTypes.values())
                         .filter(type -> catalogue.getPassiveSource(type.name()) == null)
                         .peek(t -> logger.error("Passive source {} unknown", t))
@@ -80,7 +84,7 @@ public class SourceCatalogueValidation {
     public void validateTopics() {
         Set<String> expected = new HashSet<>();
 
-        for (QuestionnaireSource source : catalogue.getActiveSources().values()) {
+        for (ActiveSource source : catalogue.getActiveSources().values()) {
             expected.addAll(source.getTopics());
         }
         for (MonitorSource source : catalogue.getMonitorSources().values()) {

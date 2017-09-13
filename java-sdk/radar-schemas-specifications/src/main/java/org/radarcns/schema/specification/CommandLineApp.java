@@ -109,7 +109,7 @@ public class CommandLineApp {
         Set<Topic> set = new HashSet<>();
 
         catalogue.getActiveSources().values().stream()
-            .map(QuestionnaireSource::getTopic)
+            .map(ActiveSource::getTopic)
             .forEach(set::add);
 
         catalogue.getMonitorSources().values().stream()
@@ -138,7 +138,7 @@ public class CommandLineApp {
      * @return TODO
      */
     public String getTopicsVerbose(boolean reduced, String source) {
-        String result = "";
+        StringBuilder result = new StringBuilder();
 
         Map<String, Map<String, String>> map = getTopicsInfoVerbose(reduced);
 
@@ -147,20 +147,20 @@ public class CommandLineApp {
 
         for (String key : rootKeys) {
             if (Objects.isNull(source) || key.equalsIgnoreCase(source)) {
-                result = result.concat(key).concat("\n");
+                result.append(key).append('\n');
 
                 List<String> firstLevelKeys = new ArrayList<>(map.get(key).keySet());
                 Collections.sort(firstLevelKeys);
 
                 for (String details : firstLevelKeys) {
-                    result = result.concat("\t").concat(details).concat("\n");
-                    result = result.concat("\t\t").concat(map.get(key).get(details));
+                    result.append('\t').append(details).append('\n');
+                    result.append("\t\t").append(map.get(key).get(details));
                 }
-                result = result.concat("\n");
+                result.append('\n');
             }
         }
 
-        return result;
+        return result.toString();
     }
 
     /**
@@ -172,8 +172,12 @@ public class CommandLineApp {
         Map<String, Map<String, String>> map = new HashMap<>();
 
         Map<String, String> details = new HashMap<>();
-        for (QuestionnaireSource source : catalogue.getActiveSources().values()) {
-            details.put(source.getQuestionnaireType(), source.getTopic().toString(reduced));
+        for (ActiveSource source : catalogue.getActiveSources().values()) {
+            if (source instanceof QuestionnaireSource) {
+                details.put(
+                        ((QuestionnaireSource)source).getQuestionnaireType(),
+                        source.getTopic().toString(reduced));
+            }
         }
         map.put(ActiveSource.RadarSourceTypes.QUESTIONNAIRE.name(), details);
 

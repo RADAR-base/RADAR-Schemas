@@ -32,9 +32,6 @@ public class Processor extends KafkaActor {
 
     private final String name;
 
-    private static final String NULL_MESSAGE = " in "
-            + Processor.class.getName() + " cannot be null.";
-
     /**
      * TODO.
      * @param name TODO
@@ -63,8 +60,8 @@ public class Processor extends KafkaActor {
         super(doc, sampleRate, unit, dataType,
                 new Topic(inputTopic, inputKey, inputValue, aggregator, baseOutputTopic));
 
-        Objects.requireNonNull(baseOutputTopic, Labels.BASE_OUTPUT_TOPIC.concat(NULL_MESSAGE));
-        Objects.requireNonNull(name, Labels.NAME + NULL_MESSAGE);
+        Objects.requireNonNull(baseOutputTopic);
+        Objects.requireNonNull(name);
 
         this.name = name;
     }

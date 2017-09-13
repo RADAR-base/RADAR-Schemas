@@ -133,10 +133,10 @@ public class Topic implements Aggregatable{
         Objects.requireNonNull(inputValue);
 
         this.inputTopic = inputTopic;
-        this.inputKey = Utils.getProjectGroup().concat(inputKey);
-        this.inputValue = Utils.getProjectGroup().concat(inputValue);
+        this.inputKey = Utils.getProjectGroup() + inputKey;
+        this.inputValue = Utils.getProjectGroup() + inputValue;
         this.aggregator = Objects.isNull(aggregator) ? null :
-                Utils.getProjectGroup().concat(aggregator);
+                Utils.getProjectGroup() + aggregator;
 
         this.baseOutput = Objects.nonNull(baseOutput) ? baseOutput : inputTopic;
 
@@ -234,26 +234,27 @@ public class Topic implements Aggregatable{
     }
 
     public String toString(boolean reduced) {
-        String result = "inputTopic: " + inputTopic + '\n'
-            + "inputKey: " + inputKey + '\n'
-            + "inputValue: " + inputValue + '\n'
-            + "aggregator: " + aggregator + '\n';
+        StringBuilder result = new StringBuilder()
+                .append("inputTopic: ").append(inputTopic).append('\n')
+                .append("inputKey: ").append(inputKey).append('\n')
+                .append("inputValue: ").append(inputValue).append('\n')
+                .append("aggregator: ").append(aggregator).append('\n');
 
         if (output.isEmpty()) {
-            result = result + "output: empty";
+            result.append("output: empty");
         } else {
-            result = result + "output:\n\t- ";
+            result.append("output:\n\t- ");
         }
         if (reduced) {
-                result = result + output.stream().map(
-                        TopicMetadata::getOutput).collect(Collectors.joining("\n\t- "));
+            result.append(output.stream().map(
+                        TopicMetadata::getOutput).collect(Collectors.joining("\n\t- ")));
         } else {
-            result = result + output.stream().map(metadata -> metadata.getInput().concat(
-                "\t").concat(metadata.getStateStore()).concat("\t").concat(
-                    metadata.getOutput())).collect(Collectors.joining("\n\t- "));
+            result.append(output.stream().map(metadata -> metadata.getInput()
+                + '\t' + metadata.getStateStore() + '\t'
+                    + metadata.getOutput()).collect(Collectors.joining("\n\t- ")));
         }
 
-        return result.concat("\n");
+        return result.append('\n').toString();
     }
 
     /**
@@ -262,7 +263,7 @@ public class Topic implements Aggregatable{
      * @return TODO
      */
     public static String getOutTopic(String topicName) {
-        return topicName.concat(OUTPUT_LABEL);
+        return topicName + OUTPUT_LABEL;
     }
 
     /**
@@ -272,7 +273,7 @@ public class Topic implements Aggregatable{
      * @return TODO
      */
     public static String getOutTopic(String topicName, TimeLabel timeLabel) {
-        return topicName.concat(timeLabel.getLabel());
+        return topicName + timeLabel.getLabel();
     }
 
     /**
@@ -285,7 +286,7 @@ public class Topic implements Aggregatable{
 
         for (TimeLabel label : TimeLabel.values()) {
             if (label.getIntervalInMilliSec() != -1) {
-                set.add(topicName.concat(label.getLabel()));
+                set.add(topicName + label.getLabel());
             }
         }
 

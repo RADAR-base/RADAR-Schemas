@@ -1,4 +1,4 @@
-package org.radarcns.schema.specification;
+package org.radarcns.schema.validation;
 
 /*
  * Copyright 2017 King's College London and The Hyve
@@ -19,7 +19,6 @@ package org.radarcns.schema.specification;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.radarcns.schema.specification.source.passive.PassiveSource;
-import org.radarcns.schema.specification.validator.ValidationSupport;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -56,7 +55,7 @@ public class PassiveValidation {
 
             File file = new File(BASE_PATH.resolve(
                 NameFolder.PASSIVE.getName()).resolve(
-                type.name().toLowerCase().concat(YAML_EXTENSION)).toUri());
+                type.name().toLowerCase() + YAML_EXTENSION)).toUri());
 
             PassiveSource source = new YamlConfigLoader().load(file, PassiveSource.class);
 

@@ -1,4 +1,4 @@
-package org.radarcns.schema.specification;
+package org.radarcns.schema.validation;
 
 /*
  * Copyright 2017 King's College London and The Hyve
@@ -34,7 +34,7 @@ public class ActiveValidation {
 
             File file = new File(BASE_PATH.resolve(
                 NameFolder.ACTIVE.getName()).resolve(
-                type.name().toLowerCase().concat(YAML_EXTENSION)).toUri());
+                type.name().toLowerCase() + YAML_EXTENSION)).toUri());
 
             QuestionnaireSource source = new YamlConfigLoader().load(file,
                     QuestionnaireSource.class);

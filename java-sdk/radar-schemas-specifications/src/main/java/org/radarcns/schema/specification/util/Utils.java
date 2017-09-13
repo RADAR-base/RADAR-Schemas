@@ -58,8 +58,8 @@ public final class Utils {
                     ClassLoader.getSystemClassLoader().getResourceAsStream(GRADLE_PROPERTIES));
                 projectGroup = prop.getProperty(PROPERTY_VALUE);
             } catch (IOException exc) {
-                throw new IllegalStateException(PROPERTY_VALUE.concat(
-                    " cannot be extracted from ").concat(GRADLE_PROPERTIES), exc);
+                throw new IllegalStateException(PROPERTY_VALUE
+                    + " cannot be extracted from " + GRADLE_PROPERTIES, exc);
             }
         }
 

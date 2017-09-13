@@ -23,12 +23,22 @@ import java.util.Optional;
  */
 public interface ValidationResult {
 
+    ValidationResult VALID = new ValidationResult() {
+        public boolean isValid() {
+            return true;
+        }
+
+        public Optional<String> getReason() {
+            return Optional.empty();
+        }
+    };
+
     static ValidationResult valid() {
-        return ValidationSupport.getValid();
+        return VALID;
     }
 
     static ValidationResult invalid(String reason) {
-        return new Invalid(reason);
+        return new InvalidResult(reason);
     }
 
     boolean isValid();

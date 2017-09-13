@@ -1,5 +1,3 @@
-package org.radarcns.schema.specification.validator;
-
 /*
  * Copyright 2017 King's College London and The Hyve
  *
@@ -16,21 +14,36 @@ package org.radarcns.schema.specification.validator;
  * limitations under the License.
  */
 
+package org.radarcns.schema.validation.roles;
+
+import org.radarcns.schema.specification.source.active.questionnaire.Response;
+
+import static org.radarcns.schema.validation.roles.Validator.validateNonNull;
+
 /**
  * TODO.
  */
-public interface Message {
+public final class ResponseRoles {
+    private static final String SCORE = "Answer score cannot be null.";
+    private static final String TEXT = "Answer text cannot be null.";
+
+    private ResponseRoles() {
+        // utility class
+    }
 
     /**
      * TODO.
      * @return TODO
      */
-    String getMessage();
+    static Validator<Response> validateScore() {
+        return validateNonNull(Response::getScore, SCORE);
+    }
 
     /**
      * TODO.
-     * @param info TODO
      * @return TODO
      */
-    String getMessage(String info);
+    static Validator<Response> validateText() {
+        return validateNonNull(Response::getText, TEXT);
+    }
 }

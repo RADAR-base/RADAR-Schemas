@@ -36,9 +36,6 @@ public class MonitorSource extends Source {
     private final String appProvider;
     private final KafkaActor kafkaActor;
 
-    private static final String NULL_MESSAGE = " in ".concat(
-            MonitorSource.class.getName()).concat(" cannot be null.");
-
     /**
      * TODO.
      *
@@ -67,10 +64,10 @@ public class MonitorSource extends Source {
             @JsonProperty(Labels.AGGREGATOR) String aggregator) {
         super(name, doc);
 
-        Objects.requireNonNull(appProvider, Labels.APP_PROVIDER.concat(NULL_MESSAGE));
+        Objects.requireNonNull(appProvider);
 
         this.type = name;
-        this.appProvider = Utils.getProjectGroup().concat(appProvider);
+        this.appProvider = Utils.getProjectGroup() + appProvider;
 
         this.kafkaActor = new KafkaActor(doc, sampleRate, unit, dataType,
                 new Topic(topic, key, value, aggregator, null));

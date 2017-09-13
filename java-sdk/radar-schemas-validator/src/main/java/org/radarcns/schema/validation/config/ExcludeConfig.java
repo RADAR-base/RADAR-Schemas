@@ -98,7 +98,7 @@ public class ExcludeConfig {
      * @return TODO
      */
     public boolean contains(Schema schema) {
-        return validation.containsKey(schema.getNamespace().concat(WILD_CARD_PACKAGE))
+        return validation.containsKey(schema.getNamespace() + WILD_CARD_PACKAGE)
                 || validation.containsKey(schema.getFullName());
     }
 
@@ -109,7 +109,7 @@ public class ExcludeConfig {
      */
     public boolean isNameRecordEnable(Schema schema) {
         ConfigItem item = validation.get(schema.getFullName()) == null
-                ? validation.get(schema.getNamespace().concat(WILD_CARD_PACKAGE))
+                ? validation.get(schema.getNamespace() + WILD_CARD_PACKAGE)
                 : validation.get(schema.getFullName());
 
         return item == null || item.isNameRecordDisable();
@@ -122,7 +122,7 @@ public class ExcludeConfig {
      */
     public Set<String> skippedNameFieldCheck(Schema schema) {
         ConfigItem item = validation.get(schema.getFullName()) == null
-                ? validation.get(schema.getNamespace().concat(WILD_CARD_PACKAGE))
+                ? validation.get(schema.getNamespace() + WILD_CARD_PACKAGE)
                 : validation.get(schema.getFullName());
 
         return item == null ? new HashSet<>() : item.getFields();

@@ -29,11 +29,11 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import static org.radarcns.schema.validation.SchemaValidationRoles.getActiveValidator;
-import static org.radarcns.schema.validation.SchemaValidationRoles.getGeneralEnumValidator;
-import static org.radarcns.schema.validation.SchemaValidationRoles.getGeneralRecordValidator;
-import static org.radarcns.schema.validation.SchemaValidationRoles.getMonitorValidator;
-import static org.radarcns.schema.validation.SchemaValidationRoles.getPassiveValidator;
+import static org.radarcns.schema.validation.roles.SchemaValidationRoles.getActiveValidator;
+import static org.radarcns.schema.validation.roles.SchemaValidationRoles.getGeneralEnumValidator;
+import static org.radarcns.schema.validation.roles.SchemaValidationRoles.getGeneralRecordValidator;
+import static org.radarcns.schema.validation.roles.SchemaValidationRoles.getMonitorValidator;
+import static org.radarcns.schema.validation.roles.SchemaValidationRoles.getPassiveValidator;
 
 final class SchemaValidator {
 

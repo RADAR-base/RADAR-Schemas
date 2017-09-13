@@ -36,9 +36,6 @@ public class Question {
 
     private final List<Response> responses;
 
-    private static final String NULL_MESSAGE = " in ".concat(
-            Question.class.getName()).concat(" cannot be null.");
-
     /**
      * TODO.
      * @param lead TODO
@@ -53,10 +50,10 @@ public class Question {
             @JsonProperty(Labels.WIDGET) RadarWidget widget,
             @JsonProperty(Labels.RESPONSES) List<Response> responses) {
 
-        Objects.requireNonNull(lead, Labels.LEAD.concat(NULL_MESSAGE));
-        Objects.requireNonNull(content, Labels.CONTENT.concat(NULL_MESSAGE));
-        Objects.requireNonNull(widget, Labels.WIDGET.concat(NULL_MESSAGE));
-        Objects.requireNonNull(responses, Labels.RESPONSES.concat(NULL_MESSAGE));
+        Objects.requireNonNull(lead);
+        Objects.requireNonNull(content);
+        Objects.requireNonNull(widget);
+        Objects.requireNonNull(responses);
 
         this.lead = lead;
         this.content = content;

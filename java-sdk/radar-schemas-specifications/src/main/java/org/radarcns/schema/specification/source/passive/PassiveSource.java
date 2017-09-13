@@ -65,15 +65,14 @@ public class PassiveSource extends Source {
             @JsonProperty(Labels.APP_PROVIDER) String appProvider,
             @JsonProperty(Labels.SENSORS) Set<Sensor> sensors,
             @JsonProperty(Labels.PROCESSORS) Set<Processor> processors) {
-        super(vendor.concat("_").concat(model), description);
+        super(vendor + '_' + model, description);
 
-        Objects.requireNonNull(sensors, Labels.SENSORS.concat(" in ").concat(
-                PassiveSource.class.getName()).concat(" cannot be null."));
+        Objects.requireNonNull(sensors);
         this.type = vendor + '_' + model;
         this.vendor = vendor;
         this.model = model;
         this.appProvider = Objects.isNull(appProvider)
-                ? null : Utils.getProjectGroup().concat(appProvider);
+                ? null : Utils.getProjectGroup() + appProvider;
         this.sensors = sensors;
         this.processors = Objects.isNull(processors) ? new HashSet<>() : processors;
 

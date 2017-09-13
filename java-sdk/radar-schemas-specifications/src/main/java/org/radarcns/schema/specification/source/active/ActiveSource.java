@@ -17,6 +17,7 @@ package org.radarcns.schema.specification.source.active;
  */
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.radarcns.schema.specification.source.Source;
 import org.radarcns.schema.specification.source.Topic;
@@ -34,7 +35,8 @@ import static org.radarcns.schema.specification.util.Labels.VALUE;
 /**
  * TODO.
  */
-public abstract class ActiveSource extends Source {
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class ActiveSource extends Source {
     public enum RadarSourceTypes {
         QUESTIONNAIRE
     }
@@ -43,9 +45,6 @@ public abstract class ActiveSource extends Source {
     private final Topic topic;
 
     private final Set<String> topics;
-
-    private static final String NULL_MESSAGE = " in ".concat(
-            ActiveSource.class.getName()).concat(" cannot be null.");
 
     /**
      * TODO.
@@ -65,10 +64,10 @@ public abstract class ActiveSource extends Source {
             @JsonProperty(DOC) String description) {
         super(name, description);
 
-        Objects.requireNonNull(assessmentType, ASSESSMENT_TYPE.concat(NULL_MESSAGE));
-        Objects.requireNonNull(key, KEY.concat(NULL_MESSAGE));
-        Objects.requireNonNull(topic, TOPIC.concat(NULL_MESSAGE));
-        Objects.requireNonNull(value, VALUE.concat(NULL_MESSAGE));
+        Objects.requireNonNull(assessmentType);
+        Objects.requireNonNull(key);
+        Objects.requireNonNull(topic);
+        Objects.requireNonNull(value);
 
         this.assessmentType = assessmentType;
 

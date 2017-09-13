@@ -1,4 +1,4 @@
-package org.radarcns.schema.validation;
+package org.radarcns.schema.validation.roles;
 
 /*
  * Copyright 2017 King's College London and The Hyve
@@ -20,6 +20,8 @@ import org.apache.avro.Schema;
 import org.apache.avro.Schema.Parser;
 import org.apache.avro.SchemaBuilder;
 import org.junit.Test;
+import org.radarcns.schema.validation.ValidationResult;
+import org.radarcns.schema.validation.ValidationSupport;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -30,10 +32,15 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.radarcns.schema.validation.SchemaRepository.COMMONS_PATH;
 import static org.radarcns.schema.Scope.ACTIVE;
 import static org.radarcns.schema.Scope.MONITOR;
-import static org.radarcns.schema.validation.SchemaValidationRoles.matches;
+import static org.radarcns.schema.validation.SchemaRepository.COMMONS_PATH;
+import static org.radarcns.schema.validation.roles.SchemaValidationRoles.ENUM_SYMBOL_PATTERN;
+import static org.radarcns.schema.validation.roles.SchemaValidationRoles.FIELD_NAME_PATTERN;
+import static org.radarcns.schema.validation.roles.SchemaValidationRoles.NAMESPACE_PATTERN;
+import static org.radarcns.schema.validation.roles.SchemaValidationRoles.RECORD_NAME_PATTERN;
+import static org.radarcns.schema.validation.roles.SchemaValidationRoles.validateNameSpace;
+import static org.radarcns.schema.validation.roles.Validator.matches;
 
 /**
  * TODO.
@@ -61,121 +68,132 @@ public class SchemaValidationRolesTest {
 
     @Test
     public void nameSpaceRegex() {
-        assertTrue(SchemaValidationRoles.matches("org.radarcns", SchemaValidationRoles.NAMESPACE_PATTERN));
-        assertFalse(SchemaValidationRoles.matches("Org.radarcns", SchemaValidationRoles.NAMESPACE_PATTERN));
-        assertFalse(SchemaValidationRoles.matches("org.radarCns", SchemaValidationRoles.NAMESPACE_PATTERN));
-        assertFalse(SchemaValidationRoles.matches(".org.radarcns", SchemaValidationRoles.NAMESPACE_PATTERN));
-        assertFalse(SchemaValidationRoles.matches("org.radar-cns", SchemaValidationRoles.NAMESPACE_PATTERN));
-        assertFalse(SchemaValidationRoles.matches("org.radarcns.empaticaE4", SchemaValidationRoles.NAMESPACE_PATTERN));
+        assertTrue(matches("org.radarcns", NAMESPACE_PATTERN));
+        assertFalse(matches("Org.radarcns", NAMESPACE_PATTERN));
+        assertFalse(matches("org.radarCns", NAMESPACE_PATTERN));
+        assertFalse(matches(".org.radarcns", NAMESPACE_PATTERN));
+        assertFalse(matches("org.radar-cns", NAMESPACE_PATTERN));
+        assertFalse(matches("org.radarcns.empaticaE4", NAMESPACE_PATTERN));
     }
 
     @Test
     public void recordNameRegex() {
-        assertTrue(SchemaValidationRoles.matches("Questionnaire", SchemaValidationRoles.RECORD_NAME_PATTERN));
-        assertTrue(SchemaValidationRoles.matches("EmpaticaE4Acceleration", SchemaValidationRoles.RECORD_NAME_PATTERN));
-        assertTrue(SchemaValidationRoles.matches("Heart4Me", SchemaValidationRoles.RECORD_NAME_PATTERN));
-        assertTrue(SchemaValidationRoles.matches("Heart4M", SchemaValidationRoles.RECORD_NAME_PATTERN));
+        assertTrue(matches("Questionnaire", RECORD_NAME_PATTERN));
+        assertTrue(matches("EmpaticaE4Acceleration", RECORD_NAME_PATTERN));
+        assertTrue(matches("Heart4Me", RECORD_NAME_PATTERN));
+        assertTrue(matches("Heart4M", RECORD_NAME_PATTERN));
 
-        assertFalse(SchemaValidationRoles.matches("Heart4", SchemaValidationRoles.RECORD_NAME_PATTERN));
-        assertFalse(SchemaValidationRoles.matches("Heart4me", SchemaValidationRoles.RECORD_NAME_PATTERN));
-        assertFalse(SchemaValidationRoles.matches("Heart4ME", SchemaValidationRoles.RECORD_NAME_PATTERN));
-        assertFalse(SchemaValidationRoles.matches("4Me", SchemaValidationRoles.RECORD_NAME_PATTERN));
-        assertFalse(SchemaValidationRoles.matches("TTest", SchemaValidationRoles.RECORD_NAME_PATTERN));
-        assertFalse(SchemaValidationRoles.matches("questionnaire", SchemaValidationRoles.RECORD_NAME_PATTERN));
-        assertFalse(SchemaValidationRoles.matches("questionnaire4", SchemaValidationRoles.RECORD_NAME_PATTERN));
-        assertFalse(SchemaValidationRoles.matches("questionnaire4Me", SchemaValidationRoles.RECORD_NAME_PATTERN));
-        assertFalse(SchemaValidationRoles.matches("questionnaire4me", SchemaValidationRoles.RECORD_NAME_PATTERN));
-        assertFalse(SchemaValidationRoles.matches("A4MM", SchemaValidationRoles.RECORD_NAME_PATTERN));
-        assertFalse(SchemaValidationRoles.matches("Aaaa4MMaa", SchemaValidationRoles.RECORD_NAME_PATTERN));
+        assertFalse(matches("Heart4", RECORD_NAME_PATTERN));
+        assertFalse(matches("Heart4me", RECORD_NAME_PATTERN));
+        assertFalse(matches("Heart4ME", RECORD_NAME_PATTERN));
+        assertFalse(matches("4Me", RECORD_NAME_PATTERN));
+        assertFalse(matches("TTest", RECORD_NAME_PATTERN));
+        assertFalse(matches("questionnaire", RECORD_NAME_PATTERN));
+        assertFalse(matches("questionnaire4", RECORD_NAME_PATTERN));
+        assertFalse(matches("questionnaire4Me", RECORD_NAME_PATTERN));
+        assertFalse(matches("questionnaire4me", RECORD_NAME_PATTERN));
+        assertFalse(matches("A4MM", RECORD_NAME_PATTERN));
+        assertFalse(matches("Aaaa4MMaa", RECORD_NAME_PATTERN));
     }
 
     @Test
     public void fieldNameRegex() {
-        assertTrue(SchemaValidationRoles.matches("interBeatInterval", SchemaValidationRoles.FIELD_NAME_PATTERN));
-        assertTrue(SchemaValidationRoles.matches("x", SchemaValidationRoles.FIELD_NAME_PATTERN));
-        assertTrue(SchemaValidationRoles.matches(SchemaValidationRoles.TIME, SchemaValidationRoles.FIELD_NAME_PATTERN));
-        assertTrue(SchemaValidationRoles.matches("subjectId", SchemaValidationRoles.FIELD_NAME_PATTERN));
-        assertTrue(SchemaValidationRoles.matches("listOfSeveralThings", SchemaValidationRoles.FIELD_NAME_PATTERN));
-        assertFalse(SchemaValidationRoles.matches("Time", SchemaValidationRoles.FIELD_NAME_PATTERN));
-        assertFalse(SchemaValidationRoles.matches("E4Heart", SchemaValidationRoles.FIELD_NAME_PATTERN));
+        assertTrue(matches("interBeatInterval", FIELD_NAME_PATTERN));
+        assertTrue(matches("x", FIELD_NAME_PATTERN));
+        assertTrue(matches(SchemaValidationRoles.TIME, FIELD_NAME_PATTERN));
+        assertTrue(matches("subjectId", FIELD_NAME_PATTERN));
+        assertTrue(matches("listOfSeveralThings", FIELD_NAME_PATTERN));
+        assertFalse(matches("Time", FIELD_NAME_PATTERN));
+        assertFalse(matches("E4Heart", FIELD_NAME_PATTERN));
     }
 
     @Test
     public void enumerationRegex() {
-        assertTrue(SchemaValidationRoles.matches("PHQ8", SchemaValidationRoles.ENUM_SYMBOL_PATTERN));
-        assertTrue(SchemaValidationRoles.matches("HELLO", SchemaValidationRoles.ENUM_SYMBOL_PATTERN));
-        assertTrue(SchemaValidationRoles.matches("HELLOTHERE", SchemaValidationRoles.ENUM_SYMBOL_PATTERN));
-        assertTrue(SchemaValidationRoles.matches("HELLO_THERE", SchemaValidationRoles.ENUM_SYMBOL_PATTERN));
-        assertFalse(SchemaValidationRoles.matches("Hello", SchemaValidationRoles.ENUM_SYMBOL_PATTERN));
-        assertFalse(SchemaValidationRoles.matches("hello", SchemaValidationRoles.ENUM_SYMBOL_PATTERN));
-        assertFalse(SchemaValidationRoles.matches("HelloThere", SchemaValidationRoles.ENUM_SYMBOL_PATTERN));
-        assertFalse(SchemaValidationRoles.matches("Hello_There", SchemaValidationRoles.ENUM_SYMBOL_PATTERN));
-        assertFalse(SchemaValidationRoles.matches("HELLO.THERE", SchemaValidationRoles.ENUM_SYMBOL_PATTERN));
+        assertTrue(matches("PHQ8", ENUM_SYMBOL_PATTERN));
+        assertTrue(matches("HELLO", ENUM_SYMBOL_PATTERN));
+        assertTrue(matches("HELLOTHERE", ENUM_SYMBOL_PATTERN));
+        assertTrue(matches("HELLO_THERE", ENUM_SYMBOL_PATTERN));
+        assertFalse(matches("Hello", ENUM_SYMBOL_PATTERN));
+        assertFalse(matches("hello", ENUM_SYMBOL_PATTERN));
+        assertFalse(matches("HelloThere", ENUM_SYMBOL_PATTERN));
+        assertFalse(matches("Hello_There", ENUM_SYMBOL_PATTERN));
+        assertFalse(matches("HELLO.THERE", ENUM_SYMBOL_PATTERN));
     }
 
     @Test
     public void nameSpaceTest() {
-        Schema schema;
-        ValidationResult result;
-        Path path;
-        Path root;
+        Schema schema = SchemaBuilder
+                .builder("org.radarcns.active.questionnaire")
+                .record("Questionnaire")
+                .fields()
+                .endRecord();
 
-        schema = SchemaBuilder
-                    .builder("org.radarcns.active.questionnaire")
-                    .record("Questionnaire")
-                    .fields()
-                    .endRecord();
-
-        root = ACTIVE.getPath(COMMONS_PATH);
+        Path root = ACTIVE.getPath(COMMONS_PATH);
         assertNotNull(root);
-        path = root.resolve("questionnaire/questionnaire.avsc");
+        Path path = root.resolve("questionnaire/questionnaire.avsc");
 
-        result = SchemaValidationRoles.validateNameSpace(path, ACTIVE).apply(schema);
+        ValidationResult result = validateNameSpace(path, ACTIVE).apply(schema);
 
         assertTrue(result.isValid());
+    }
 
-        schema = SchemaBuilder
-                    .builder("org.radar-cns.monitors.test")
-                    .record(RECORD_NAME_MOCK)
-                    .fields()
-                    .endRecord();
+    @Test
+    public void nameSpaceInvalidDashTest() {
+        Schema schema = SchemaBuilder
+                .builder("org.radar-cns.monitors.test")
+                .record(RECORD_NAME_MOCK)
+                .fields()
+                .endRecord();
 
-        root = MONITOR.getPath(COMMONS_PATH);
+        Path root = MONITOR.getPath(COMMONS_PATH);
         assertNotNull(root);
-        path = root.resolve("test/record_name.avsc");
-        result = SchemaValidationRoles.validateNameSpace(path, MONITOR).apply(schema);
+        Path path = root.resolve("test/record_name.avsc");
+        ValidationResult result = validateNameSpace(path, MONITOR).apply(schema);
 
         assertFalse(result.isValid());
 
         assertEquals(Optional.of("Namespace cannot be null and must fully lowercase dot "
-                + "separated without numeric. In this case the expected value is "
-                + "\"org.radarcns.monitor.test\". org.radar-cns.monitors.test."
-                + RECORD_NAME_MOCK + INVALID_TEXT),
+                        + "separated without numeric. In this case the expected value is "
+                        + "\"org.radarcns.monitor.test\". org.radar-cns.monitors.test."
+                        + RECORD_NAME_MOCK + INVALID_TEXT),
                 result.getReason());
+    }
 
-        schema = SchemaBuilder
-                    .builder("org.radarcns.monitors.test")
-                    .record(RECORD_NAME_MOCK)
-                    .fields()
-                    .endRecord();
+    @Test
+    public void nameSpaceInvalidPlural() {
+        Schema schema = SchemaBuilder
+                .builder("org.radarcns.monitors.test")
+                .record(RECORD_NAME_MOCK)
+                .fields()
+                .endRecord();
 
-        result = SchemaValidationRoles.validateNameSpace(path, MONITOR).apply(schema);
+        Path root = MONITOR.getPath(COMMONS_PATH);
+        assertNotNull(root);
+        Path path = root.resolve("test/record_name.avsc");
+        ValidationResult result = validateNameSpace(path, MONITOR).apply(schema);
 
         assertFalse(result.isValid());
 
         assertEquals(Optional.of("Namespace cannot be null and must fully lowercase dot "
-                + "separated without numeric. In this case the expected value is "
-                + "\"org.radarcns.monitor.test\". org.radarcns.monitors.test."
-                + RECORD_NAME_MOCK + INVALID_TEXT),
+                        + "separated without numeric. In this case the expected value is "
+                        + "\"org.radarcns.monitor.test\". org.radarcns.monitors.test."
+                        + RECORD_NAME_MOCK + INVALID_TEXT),
                 result.getReason());
+    }
 
-        schema = SchemaBuilder
+    @Test
+    public void nameSpaceInvalidLastPartPlural() {
+
+        Schema schema = SchemaBuilder
                     .builder("org.radarcns.monitor.tests")
                     .record(RECORD_NAME_MOCK)
                     .fields()
                     .endRecord();
 
-        result = SchemaValidationRoles.validateNameSpace(path, MONITOR).apply(schema);
+        Path root = MONITOR.getPath(COMMONS_PATH);
+        assertNotNull(root);
+        Path path = root.resolve("test/record_name.avsc");
+        ValidationResult result = validateNameSpace(path, MONITOR).apply(schema);
 
         assertFalse(result.isValid());
 
@@ -217,7 +235,7 @@ public class SchemaValidationRolesTest {
 
         assertEquals(Optional.of("Record name must be the conversion of the .avsc file name in "
                 + "UpperCamelCase and must explicitly contain the device name. "
-                + "The expected value is EmpaticaE4Acceleration\". org.radarcns.passive.empatica."
+                + "The expected value is \"EmpaticaE4Acceleration\". org.radarcns.passive.empatica."
                 + fieldName + INVALID_TEXT),
                 result.getReason());
 
@@ -380,7 +398,7 @@ public class SchemaValidationRolesTest {
         assertFalse(result.isValid());
 
         String message = "Field name does not respect lowerCamelCase name convention. "
-                + "It cannot contain any of the following values [value,Value,val,Val]. "
+                + "It cannot contain any of the following values [value, Value, val, Val]. "
                 + "Please avoid abbreviations and write out the field name instead. ";
 
         assertEquals(Optional.of(message
@@ -545,8 +563,8 @@ public class SchemaValidationRolesTest {
 
         String schemaTxtEnd = "] } } ] }";
 
-        schema = new Parser().parse(schemaTxtInit.concat(
-                "\"CONNECTED\", \"NOT_CONNECTED\", \"" + UNKNOWN_MOCK + "\"".concat(schemaTxtEnd)));
+        schema = new Parser().parse(schemaTxtInit
+                + "\"CONNECTED\", \"NOT_CONNECTED\", \"" + UNKNOWN_MOCK + "\"" + schemaTxtEnd);
 
         result = SchemaValidationRoles.validateEnumerationSymbols().apply(schema);
 
@@ -583,16 +601,16 @@ public class SchemaValidationRolesTest {
         assertFalse(result.isValid());
         assertEquals(Optional.of(invalidMessage), result.getReason());
 
-        schema = new Parser().parse(schemaTxtInit.concat(
-                "\"CONNECTED\", \"Not_Connected\", \"" + UNKNOWN_MOCK + "\"".concat(schemaTxtEnd)));
+        schema = new Parser().parse(schemaTxtInit
+                + "\"CONNECTED\", \"Not_Connected\", \"" + UNKNOWN_MOCK + "\"" + schemaTxtEnd);
 
         result = SchemaValidationRoles.validateEnumerationSymbols().apply(schema);
 
         assertFalse(result.isValid());
         assertEquals(Optional.of(invalidMessage), result.getReason());
 
-        schema = new Parser().parse(schemaTxtInit.concat(
-                "\"Connected\", \"NotConnected\", \"" + UNKNOWN_MOCK + "\"".concat(schemaTxtEnd)));
+        schema = new Parser().parse(schemaTxtInit
+                + "\"Connected\", \"NotConnected\", \"" + UNKNOWN_MOCK + "\"" + schemaTxtEnd);
 
         result = SchemaValidationRoles.validateEnumerationSymbols().apply(schema);
 
@@ -724,10 +742,8 @@ public class SchemaValidationRolesTest {
         result = SchemaValidationRoles.validateDefault().apply(schema);
 
         String invalidMessage = "Any NULLABLE Avro field must specify a default value. "
-                + "The allowed default values are: \"UNKNOWN\" for ENUMERATION, \"MIN_VALUE\" or "
-                + "\"MAX_VALUE\" for nullable int and long, \"NaN\" for nullable float and double, "
-                + "\"true\" or \"false\" for nullable boolean, \"byte[]\" or \"null\" for bytes, "
-                + "and \"null\" for all the other cases. org.radarcns.test.TestRecord"
+                + "The allowed default values are: \"UNKNOWN\" for ENUMERATION, and \"null\""
+                + " for all the other cases. org.radarcns.test.TestRecord"
                 + INVALID_TEXT;
 
         assertFalse(result.isValid());
@@ -744,7 +760,7 @@ public class SchemaValidationRolesTest {
     }
 
     private static String getFinalMessage(String nameSpace, String recordName) {
-        return nameSpace.concat(".").concat(recordName).concat(INVALID_TEXT);
+        return nameSpace + "." + recordName + INVALID_TEXT;
     }
 
 }

@@ -34,8 +34,7 @@ public abstract class Source {
      * @param doc TODO
      */
     public Source(String name, String doc) {
-        Objects.requireNonNull(name, NAME.concat(" in ").concat(
-                Source.class.getName()).concat(" cannot be null"));
+        Objects.requireNonNull(name);
         this.name = name;
         this.doc = doc;
     }

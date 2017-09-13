@@ -22,11 +22,11 @@ import java.util.Optional;
 /**
  * TODO.
  */
-public class Invalid implements ValidationResult {
+public class InvalidResult implements ValidationResult {
 
     private final String reason;
 
-    Invalid(String reason) {
+    public InvalidResult(String reason) {
         this.reason = reason;
     }
 
@@ -43,17 +43,15 @@ public class Invalid implements ValidationResult {
         if (this == o) {
             return true;
         }
-        if (o == null || !getClass().equals(o.getClass())) {
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
-
-        Invalid invalid = (Invalid) o;
-
+        InvalidResult invalid = (InvalidResult) o;
         return Objects.equals(reason, invalid.reason);
     }
 
     @Override
     public int hashCode() {
-        return reason != null ? reason.hashCode() : 0;
+        return Objects.hash(reason);
     }
 }

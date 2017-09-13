@@ -65,8 +65,7 @@ public class QuestionnaireSource extends ActiveSource {
         super(assessmentType, name, topic, key, value, doc);
         this.type = name;
 
-        Objects.requireNonNull(questions, QUESTIONS.concat(" in ").concat(
-                QuestionnaireSource.class.getName()).concat(" cannot be null."));
+        Objects.requireNonNull(questions);
         this.questions = questions;
     }
 

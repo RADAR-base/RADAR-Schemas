@@ -34,13 +34,10 @@ public class KafkaActor {
 
     private final Topic topic;
 
-    private static final String NULL_MESSAGE = " in ".concat(
-        Sensor.class.getName()).concat(" cannot be null.");
-
     public KafkaActor(String doc, double sampleRate, String unit, ProcessingState dataType, Topic topic) {
-        Objects.requireNonNull(dataType, Labels.PROCESSING_STATE.concat(NULL_MESSAGE));
-        Objects.requireNonNull(topic, Labels.TOPIC.concat(NULL_MESSAGE));
-        Objects.requireNonNull(unit, Labels.UNIT.concat(NULL_MESSAGE));
+        Objects.requireNonNull(dataType);
+        Objects.requireNonNull(topic);
+        Objects.requireNonNull(unit);
 
         this.doc = doc;
         this.sampleRate = sampleRate;
