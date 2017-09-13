@@ -18,22 +18,51 @@ package org.radarcns.schema.validation;
 
 import org.apache.avro.Schema;
 import org.apache.avro.Schema.Parser;
-import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.radarcns.schema.Scope;
 import org.radarcns.schema.validation.config.ExcludeConfig;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.stream.Collectors;
 
+import static org.junit.Assert.fail;
 import static org.radarcns.schema.validation.SchemaRepository.COMMONS_PATH;
 
 public final class AvroValidator {
     public static final String AVRO_EXTENSION = "avsc";
-    private final ExcludeConfig config;
+    private ExcludeConfig config;
 
-    public AvroValidator(ExcludeConfig config) {
-        this.config = config;
+    @Before
+    public void setUp() {
+        config = ExcludeConfig.load();
+    }
+
+    @Test
+    public void active() throws IOException {
+        analyseFiles(Scope.ACTIVE);
+    }
+
+    @Test
+    public void monitor() throws IOException {
+        analyseFiles(Scope.MONITOR);
+    }
+
+    @Test
+    public void passive() throws IOException {
+        analyseFiles(Scope.PASSIVE);
+    }
+
+    @Test
+    public void kafka() throws IOException {
+        analyseFiles(Scope.KAFKA);
+    }
+
+    @Test
+    public void catalogue() throws IOException {
+        analyseFiles(Scope.CATALOGUE);
     }
 
     /**
@@ -43,39 +72,38 @@ public final class AvroValidator {
      */
     public void analyseFiles(Scope scope)
             throws IOException {
-        Files.walk(scope.getPath(COMMONS_PATH))
+        Parser parser = new Parser();
+        String errors = Files.walk(scope.getPath(COMMONS_PATH))
                 .filter(Files::isRegularFile)
                 .filter(p -> !config.skipFile(p))
-                .forEach(p -> {
-                    Assert.assertTrue(scope.getLower() + " should contain only "
-                                    + AVRO_EXTENSION + " files. " + p.toAbsolutePath()
-                                    + " is invalid.",
-                            isAvscFile(p));
+                .map(p -> {
+                    if (!isAvscFile(p)) {
+                        return new InvalidResult(scope.getLower() + " should contain only "
+                                + AVRO_EXTENSION + " files. " + p.toAbsolutePath()
+                                + " is invalid.");
+                    }
 
                     try {
-                        Schema schema = new Parser().parse(p.toFile());
-
-                        ValidationResult result;
+                        Schema schema = parser.parse(p.toFile());
 
                         if (config.contains(schema)) {
-                            result = SchemaValidator.validate(schema, p, scope,
+                            return SchemaValidator.validate(schema, p, scope,
                                     config.isNameRecordEnable(schema),
                                     config.skippedNameFieldCheck(schema));
                         } else {
-                            result = SchemaValidator.validate(schema, p, scope);
+                            return SchemaValidator.validate(schema, p, scope);
                         }
-
-                        Assert.assertTrue(getMessage(result), result.isValid());
                     } catch (IOException e) {
-                        throw new AssertionError("Cannot parse file", e);
+                        return new InvalidResult("Cannot parse file: " + e);
                     }
+                })
+                .filter(r -> !r.isValid())
+                .map(r -> "\nValidation FAILED:\n" + r.getReason().orElse("") + "\n")
+                .collect(Collectors.joining());
 
-                    //TODO add file layout validation
-                });
-    }
-
-    private static String getMessage(ValidationResult result) {
-        return result.getReason().orElse("");
+        if (!errors.isEmpty()) {
+            fail(errors);
+        }
     }
 
     /**

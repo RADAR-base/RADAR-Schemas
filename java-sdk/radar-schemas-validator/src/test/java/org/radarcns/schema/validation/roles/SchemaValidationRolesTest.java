@@ -258,8 +258,6 @@ public class SchemaValidationRolesTest {
         result = SchemaValidationRoles.validateFields().apply(schema);
 
         assertFalse(result.isValid());
-        assertEquals(Optional.of("Avro Record must have field list. "
-                + getFinalMessage(MONITOR_NAME_SPACE_MOCK, RECORD_NAME_MOCK)), result.getReason());
 
         schema = SchemaBuilder
           .builder(MONITOR_NAME_SPACE_MOCK)
@@ -289,11 +287,6 @@ public class SchemaValidationRolesTest {
 
         assertFalse(result.isValid());
 
-        assertEquals(Optional.of("Any schema representing collected data must have a \"time\" field"
-                + " formatted in DOUBLE. org.radarcns.time.test." + RECORD_NAME_MOCK
-                + INVALID_TEXT),
-                result.getReason());
-
         schema = SchemaBuilder
                     .builder("org.radarcns.time.test")
                     .record(RECORD_NAME_MOCK)
@@ -320,9 +313,6 @@ public class SchemaValidationRolesTest {
 
         result = SchemaValidationRoles.validateTimeCompleted().apply(schema);
         assertFalse(result.isValid());
-        assertEquals(Optional.of("Any ACTIVE schema must have a \"timeCompleted\" field formatted "
-                + "in DOUBLE. org.radarcns.active.test." + RECORD_NAME_MOCK + INVALID_TEXT),
-                result.getReason());
 
         result = SchemaValidationRoles.validateNotTimeCompleted().apply(schema);
         assertTrue(result.isValid());
@@ -339,9 +329,6 @@ public class SchemaValidationRolesTest {
 
         result = SchemaValidationRoles.validateNotTimeCompleted().apply(schema);
         assertFalse(result.isValid());
-        assertEquals(Optional.of("\"timeCompleted\" is allow only in ACTIVE schemas. "
-                + getFinalMessage(ACTIVE_NAME_SPACE_MOCK, RECORD_NAME_MOCK)),
-                result.getReason());
     }
 
     @Test
@@ -358,9 +345,6 @@ public class SchemaValidationRolesTest {
 
         result = SchemaValidationRoles.validateTimeReceived().apply(schema);
         assertFalse(result.isValid());
-        assertEquals(Optional.of("Any PASSIVE schema must have a \"timeReceived\" field formatted "
-                + "in DOUBLE. org.radarcns.monitor.test." + RECORD_NAME_MOCK + INVALID_TEXT),
-                result.getReason());
 
         result = SchemaValidationRoles.validateNotTimeReceived().apply(schema);
         assertTrue(result.isValid());
@@ -377,9 +361,6 @@ public class SchemaValidationRolesTest {
 
         result = SchemaValidationRoles.validateNotTimeReceived().apply(schema);
         assertFalse(result.isValid());
-        assertEquals(Optional.of("\"timeReceived\" is allow only in PASSIVE schemas. "
-                + getFinalMessage(MONITOR_NAME_SPACE_MOCK, RECORD_NAME_MOCK)),
-                result.getReason());
     }
 
     @Test
@@ -397,14 +378,6 @@ public class SchemaValidationRolesTest {
         result = SchemaValidationRoles.validateFieldName().apply(schema);
         assertFalse(result.isValid());
 
-        String message = "Field name does not respect lowerCamelCase name convention. "
-                + "It cannot contain any of the following values [value, Value, val, Val]. "
-                + "Please avoid abbreviations and write out the field name instead. ";
-
-        assertEquals(Optional.of(message
-                + getFinalMessage(MONITOR_NAME_SPACE_MOCK, RECORD_NAME_MOCK)),
-                result.getReason());
-
         schema = SchemaBuilder
                 .builder(MONITOR_NAME_SPACE_MOCK)
                 .record(RECORD_NAME_MOCK)
@@ -414,9 +387,6 @@ public class SchemaValidationRolesTest {
 
         result = SchemaValidationRoles.validateFieldName().apply(schema);
         assertFalse(result.isValid());
-        assertEquals(Optional.of(message
-                + getFinalMessage(MONITOR_NAME_SPACE_MOCK, RECORD_NAME_MOCK)),
-                result.getReason());
 
         schema = SchemaBuilder
           .builder(MONITOR_NAME_SPACE_MOCK)
@@ -429,9 +399,6 @@ public class SchemaValidationRolesTest {
         result = SchemaValidationRoles.validateFieldName(
                 Collections.singleton(SchemaValidationRoles.TIME)).apply(schema);
         assertFalse(result.isValid());
-        assertEquals(Optional.of(message
-                + getFinalMessage(MONITOR_NAME_SPACE_MOCK,RECORD_NAME_MOCK)),
-                result.getReason());
 
         schema = SchemaBuilder
               .builder(MONITOR_NAME_SPACE_MOCK)
@@ -470,12 +437,6 @@ public class SchemaValidationRolesTest {
         result = SchemaValidationRoles.validateFieldDocumentation().apply(schema);
 
         assertFalse(result.isValid());
-        assertEquals(Optional.of("Documentation is mandatory for any schema and field. The "
-                + "documentation should report what is being measured, how, and what units or "
-                + "ranges are applicable. Abbreviations and acronyms in the documentation should "
-                + "be written out. The sentence must be ended by a point. Please add \"doc\" "
-                + "property. org.radarcns.kafka.key.key is invalid."),
-                result.getReason());
 
         schema = new Parser().parse("{\"namespace\": \"org.radarcns.kafka.key\", "
                 + "\"type\": \"record\", \"name\": \"key\", \"type\": \"record\", \"fields\": ["
@@ -499,13 +460,6 @@ public class SchemaValidationRolesTest {
         result = SchemaValidationRoles.validateSchemaDocumentation().apply(schema);
 
         assertFalse(result.isValid());
-        assertEquals(Optional.of("Documentation is mandatory for any schema and field. The "
-                + "documentation should report what is being measured, how, and what units or "
-                + "ranges are applicable. Abbreviations and acronyms in the documentation should "
-                + "be written out. The sentence must be ended by a point. "
-                + "Please add \"doc\" property. "
-                + getFinalMessage(MONITOR_NAME_SPACE_MOCK, RECORD_NAME_MOCK)),
-                result.getReason());
 
         schema = SchemaBuilder
               .builder(MONITOR_NAME_SPACE_MOCK)
@@ -536,8 +490,6 @@ public class SchemaValidationRolesTest {
         result = SchemaValidationRoles.validateSymbols().apply(schema);
 
         assertFalse(result.isValid());
-        assertEquals(Optional.of("Avro Enumerator must have symbol list. "
-                + ENUMERATOR_NAME_SPACE_MOCK + INVALID_TEXT), result.getReason());
     }
 
     @Test
@@ -576,12 +528,7 @@ public class SchemaValidationRolesTest {
 
         result = SchemaValidationRoles.validateEnumerationSymbols().apply(schema);
 
-        String invalidMessage = "Enumerator items should be written in uppercase characters "
-                + "separated by underscores. "
-                + "org.radarcns.monitor.application.ApplicationServerStatus is invalid.";
-
         assertFalse(result.isValid());
-        assertEquals(Optional.of(invalidMessage), result.getReason());
 
         schema = SchemaBuilder
               .enumeration(enumName)
@@ -590,7 +537,6 @@ public class SchemaValidationRolesTest {
         result = SchemaValidationRoles.validateEnumerationSymbols().apply(schema);
 
         assertFalse(result.isValid());
-        assertEquals(Optional.of(invalidMessage), result.getReason());
 
         schema = SchemaBuilder
               .enumeration(enumName)
@@ -599,7 +545,6 @@ public class SchemaValidationRolesTest {
         result = SchemaValidationRoles.validateEnumerationSymbols().apply(schema);
 
         assertFalse(result.isValid());
-        assertEquals(Optional.of(invalidMessage), result.getReason());
 
         schema = new Parser().parse(schemaTxtInit
                 + "\"CONNECTED\", \"Not_Connected\", \"" + UNKNOWN_MOCK + "\"" + schemaTxtEnd);
@@ -607,7 +552,6 @@ public class SchemaValidationRolesTest {
         result = SchemaValidationRoles.validateEnumerationSymbols().apply(schema);
 
         assertFalse(result.isValid());
-        assertEquals(Optional.of(invalidMessage), result.getReason());
 
         schema = new Parser().parse(schemaTxtInit
                 + "\"Connected\", \"NotConnected\", \"" + UNKNOWN_MOCK + "\"" + schemaTxtEnd);
@@ -615,7 +559,6 @@ public class SchemaValidationRolesTest {
         result = SchemaValidationRoles.validateEnumerationSymbols().apply(schema);
 
         assertFalse(result.isValid());
-        assertEquals(Optional.of(invalidMessage), result.getReason());
     }
 
     @Test
@@ -636,10 +579,6 @@ public class SchemaValidationRolesTest {
         result = SchemaValidationRoles.validateUnknownSymbol().apply(schema);
 
         assertFalse(result.isValid());
-        assertEquals(Optional.of("Enumerator must contain the \"UNKNOWN\" symbol. It is "
-                + "useful to specify default value for a field using type equals to \"enum\". "
-                + ENUMERATOR_NAME_SPACE_MOCK + INVALID_TEXT),
-                result.getReason());
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -741,13 +680,7 @@ public class SchemaValidationRolesTest {
 
         result = SchemaValidationRoles.validateDefault().apply(schema);
 
-        String invalidMessage = "Any NULLABLE Avro field must specify a default value. "
-                + "The allowed default values are: \"UNKNOWN\" for ENUMERATION, and \"null\""
-                + " for all the other cases. org.radarcns.test.TestRecord"
-                + INVALID_TEXT;
-
         assertFalse(result.isValid());
-        assertEquals(Optional.of(invalidMessage), result.getReason());
 
         /*schema = new Parser().parse(scemaTxtInit
             + "[ {\"name\": \"nullableBoolean\", \"type\": [ \"null\", \"boolean\"], "
@@ -758,9 +691,4 @@ public class SchemaValidationRolesTest {
         assertFalse(result.isValid());
         assertEquals(Optional.of(invalidMessage), result.getReason());*/
     }
-
-    private static String getFinalMessage(String nameSpace, String recordName) {
-        return nameSpace + "." + recordName + INVALID_TEXT;
-    }
-
 }

@@ -456,6 +456,6 @@ public final class SchemaValidationRoles {
     }
 
     private static Function<Schema, String> message(String text) {
-        return schema -> text + ' ' + schema.getFullName() + " is invalid.";
+        return schema -> schema.getFullName() + " is invalid. " + text;
     }
 }

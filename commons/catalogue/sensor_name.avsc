@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.catalogue",
   "type": "enum",
   "name": "SensorName",
-  "doc": "Sensor types",
+  "doc": "Sensor types.",
   "symbols": [
     "ACCELEROMETER" ,
     "BATTERY",

@@ -1,5 +1,3 @@
-package org.radarcns.schema.specification.source;
-
 /*
  * Copyright 2017 King's College London and The Hyve
  *
@@ -16,9 +14,9 @@ package org.radarcns.schema.specification.source;
  * limitations under the License.
  */
 
+package org.radarcns.schema.specification.source;
+
 import org.radarcns.catalogue.ProcessingState;
-import org.radarcns.schema.specification.util.Labels;
-import org.radarcns.schema.specification.source.passive.Sensor;
 
 import java.util.Objects;
 

@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.catalogue",
   "type": "enum",
   "name": "TimeFrame",
-  "doc": "Interval between two consecutive samples",
+  "doc": "Interval between two consecutive samples.",
   "symbols": [
     "TEN_SECOND" ,
     "THIRTY_SECOND" ,

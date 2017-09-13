@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.catalogue",
   "type": "enum",
   "name": "Unit",
-  "doc": "Measurement units",
+  "doc": "Measurement units.",
   "symbols": [
     "BEATS_PER_MIN" ,
     "CALORIES_PER_SEC",
