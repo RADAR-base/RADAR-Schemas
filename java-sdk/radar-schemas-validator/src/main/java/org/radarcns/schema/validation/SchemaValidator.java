@@ -24,8 +24,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.nio.file.Path;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Collection;
 import java.util.Objects;
 import java.util.Set;
 
@@ -39,26 +38,22 @@ final class SchemaValidator {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SchemaValidator.class);
 
-    private static final Map<String, Schema> CACHE = new HashMap<>();
-
     private SchemaValidator() {
         //Static class
     }
 
-    public static ValidationResult validate(Schema schema, Path pathToSchema, Scope root) {
+    public static Collection<ValidationException> validate(Schema schema, Path pathToSchema, Scope root) {
         return validate(schema, pathToSchema, root,
                 false, null);
     }
 
-    public static ValidationResult validate(Schema schema, Path pathToSchema, Scope root,
+    public static Collection<ValidationException> validate(Schema schema, Path pathToSchema, Scope root,
             boolean skipRecordName, Set<String> skipFieldName) {
         Objects.requireNonNull(schema);
         Objects.requireNonNull(pathToSchema);
         Objects.requireNonNull(root);
 
-        CACHE.put(schema.getFullName(), schema);
-
-        ValidationResult result;
+        Collection<ValidationException> result;
 
         if (schema.getType().equals(Type.ENUM)) {
             result = getGeneralEnumValidator(pathToSchema, root,

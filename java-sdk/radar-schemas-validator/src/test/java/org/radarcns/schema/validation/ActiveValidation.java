@@ -40,15 +40,15 @@ public class ActiveValidation {
                     QuestionnaireSource.class);
 
             ValidationResult result = Validator.validateQuestionnaire(source, file);
-            assertTrue(getMessage(file, result), result.isValid());
+            assertTrue(getMessage(file, result), result.isEmpty());
 
             for (Question question : source.getQuestions()) {
                 result = Validator.validateQuestion(question);
-                assertTrue(getMessage(file, result), result.isValid());
+                assertTrue(getMessage(file, result), result.isEmpty());
 
                 for (Response response : question.getResponses()) {
                     result = Validator.validateResponse(response);
-                    assertTrue(getMessage(file, result), result.isValid());
+                    assertTrue(getMessage(file, result), result.isEmpty());
                 }
             }
         }*/

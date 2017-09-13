@@ -16,32 +16,35 @@ package org.radarcns.schema.validation;
  * limitations under the License.
  */
 
-import java.util.Optional;
+import java.util.Objects;
 
 /**
  * TODO.
  */
-public interface ValidationResult {
+public class ValidationException extends RuntimeException {
+    public ValidationException(String message) {
+        super(message);
+    }
 
-    ValidationResult VALID = new ValidationResult() {
-        public boolean isValid() {
+    public ValidationException(String message, Throwable exception) {
+        super(message, exception);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
             return true;
         }
-
-        public Optional<String> getReason() {
-            return Optional.empty();
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
         }
-    };
-
-    static ValidationResult valid() {
-        return VALID;
+        ValidationException ex = (ValidationException) obj;
+        return Objects.equals(getMessage(), ex.getMessage())
+                && Objects.equals(getCause(), ex.getCause());
     }
 
-    static ValidationResult invalid(String reason) {
-        return new InvalidResult(reason);
+    @Override
+    public int hashCode() {
+        return Objects.hash(getMessage(), getCause());
     }
-
-    boolean isValid();
-
-    Optional<String> getReason();
 }

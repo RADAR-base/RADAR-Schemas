@@ -18,15 +18,13 @@ package org.radarcns.schema.validation.roles;
 
 import org.radarcns.schema.specification.source.Topic;
 import org.radarcns.schema.specification.util.Utils;
-import org.radarcns.schema.validation.InvalidResult;
+import org.radarcns.schema.validation.ValidationException;
 import org.radarcns.schema.validation.ValidationSupport;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static org.radarcns.schema.validation.ValidationResult.VALID;
 import static org.radarcns.schema.validation.ValidationSupport.isValidClass;
 import static org.radarcns.schema.validation.ValidationSupport.isValidTopic;
 import static org.radarcns.schema.validation.roles.Validator.validate;
@@ -80,12 +78,9 @@ public final class TopicRoles {
     }
 
     static Validator<? extends Collection<String>> validateTopics() {
-        return topics -> {
-            List<String> invalidTopics = topics.stream()
+        return topics -> topics.stream()
                     .filter(topic -> !isValidTopic(topic))
+                    .map(topic -> new ValidationException(TOPIC + ValidationSupport.isValidTopicVerbose(topic)))
                     .collect(Collectors.toList());
-            return invalidTopics.isEmpty() ? VALID
-                    : new InvalidResult(TOPIC + ValidationSupport.isValidTopicsVerbose(topics));
-        };
     }
 }

@@ -1,5 +1,3 @@
-package org.radarcns.schema.validation;
-
 /*
  * Copyright 2017 King's College London and The Hyve
  *
@@ -16,53 +14,29 @@ package org.radarcns.schema.validation;
  * limitations under the License.
  */
 
+package org.radarcns.schema.validation;
+
 import org.apache.avro.Schema;
 import org.apache.avro.Schema.Parser;
-import org.junit.Before;
-import org.junit.Test;
 import org.radarcns.schema.Scope;
 import org.radarcns.schema.validation.config.ExcludeConfig;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-import static org.junit.Assert.fail;
 import static org.radarcns.schema.validation.SchemaRepository.COMMONS_PATH;
 
 public final class AvroValidator {
     public static final String AVRO_EXTENSION = "avsc";
     private ExcludeConfig config;
 
-    @Before
-    public void setUp() {
-        config = ExcludeConfig.load();
-    }
-
-    @Test
-    public void active() throws IOException {
-        analyseFiles(Scope.ACTIVE);
-    }
-
-    @Test
-    public void monitor() throws IOException {
-        analyseFiles(Scope.MONITOR);
-    }
-
-    @Test
-    public void passive() throws IOException {
-        analyseFiles(Scope.PASSIVE);
-    }
-
-    @Test
-    public void kafka() throws IOException {
-        analyseFiles(Scope.KAFKA);
-    }
-
-    @Test
-    public void catalogue() throws IOException {
-        analyseFiles(Scope.CATALOGUE);
+    public AvroValidator(ExcludeConfig config) {
+        this.config = config;
     }
 
     /**
@@ -70,17 +44,17 @@ public final class AvroValidator {
      * @param scope TODO.
      * @throws IOException TODO.
      */
-    public void analyseFiles(Scope scope)
+    public Collection<ValidationException> analyseFiles(Scope scope)
             throws IOException {
         Parser parser = new Parser();
-        String errors = Files.walk(scope.getPath(COMMONS_PATH))
+        return Files.walk(scope.getPath(COMMONS_PATH))
                 .filter(Files::isRegularFile)
                 .filter(p -> !config.skipFile(p))
-                .map(p -> {
+                .flatMap(p -> {
                     if (!isAvscFile(p)) {
-                        return new InvalidResult(scope.getLower() + " should contain only "
-                                + AVRO_EXTENSION + " files. " + p.toAbsolutePath()
-                                + " is invalid.");
+                        return Stream.of(new ValidationException(
+                                p.toAbsolutePath() + " is invalid. " + scope.getLower()
+                                + " should contain only " + AVRO_EXTENSION + " files."));
                     }
 
                     try {
@@ -89,21 +63,16 @@ public final class AvroValidator {
                         if (config.contains(schema)) {
                             return SchemaValidator.validate(schema, p, scope,
                                     config.isNameRecordEnable(schema),
-                                    config.skippedNameFieldCheck(schema));
+                                    config.skippedNameFieldCheck(schema)).stream();
                         } else {
-                            return SchemaValidator.validate(schema, p, scope);
+                            return SchemaValidator.validate(schema, p, scope).stream();
                         }
                     } catch (IOException e) {
-                        return new InvalidResult("Cannot parse file: " + e);
+                        return Stream.of(new ValidationException(
+                                "Cannot parse file " + p.toAbsolutePath(), e));
                     }
                 })
-                .filter(r -> !r.isValid())
-                .map(r -> "\nValidation FAILED:\n" + r.getReason().orElse("") + "\n")
-                .collect(Collectors.joining());
-
-        if (!errors.isEmpty()) {
-            fail(errors);
-        }
+                .collect(Collectors.toList());
     }
 
     /**

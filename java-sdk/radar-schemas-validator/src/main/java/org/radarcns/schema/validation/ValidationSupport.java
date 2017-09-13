@@ -255,7 +255,7 @@ public final class ValidationSupport {
         }
 
         for (Field field : input.getFields()) {
-            boolean flag = true;
+            boolean flag;
             switch (field.schema().getType()) {
                 case RECORD:
                     flag = validateDefault(field.schema());
@@ -278,47 +278,6 @@ public final class ValidationSupport {
         }
 
         return true;
-    }
-
-    /**
-     * TODO.
-     * @param defaultVal TODO
-     * @param type TODO
-     * @return TODO
-     */
-    //TODO analyse schemas and redesign
-    /*private static boolean basicValidateDefault(Object defaultVal, Type type) {
-        switch (type) {
-            case INT:
-                return defaultVal.equals(Integer.MIN_VALUE) || defaultVal.equals(Integer.MAX_VALUE);
-            case LONG:
-                return defaultVal.equals(Long.MIN_VALUE) || defaultVal.equals(Long.MAX_VALUE);
-            case DOUBLE:
-                return defaultVal.equals("NaN");
-            case FLOAT:
-                return defaultVal.equals("NaN");
-            case BOOLEAN:
-                return defaultVal instanceof Boolean;
-            case BYTES:
-                //TODO check if there is better way
-                return defaultVal instanceof String;
-            default:
-                return defaultVal.equals(JsonProperties.NULL_VALUE);
-        }
-    }*/
-
-    /**
-     * TODO.
-     * @param path TODO
-     * @return TODO
-     */
-    public static String getMessage(Path path, ValidationResult result) {
-        if (result.isValid()) {
-            return "";
-        }
-
-        return result.getReason().orElse("INVALID")
-                + ' ' + path.toAbsolutePath() + " is invalid.";
     }
 
     /**

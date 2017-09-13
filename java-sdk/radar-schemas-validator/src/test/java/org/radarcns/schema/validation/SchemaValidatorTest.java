@@ -22,6 +22,7 @@ import org.junit.Test;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Collection;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -58,9 +59,9 @@ public class SchemaValidatorTest {
                 .doc(documentation)
                 .symbols("CONNECTED", "DISCONNECTED", "UNKNOWN");
 
-        ValidationResult result = validate(schema, schemaPath, MONITOR);
+        Collection<ValidationException> result =validate(schema, schemaPath, MONITOR);
 
-        assertTrue(result.isValid());
+        assertTrue(result.isEmpty());
 
         schema = SchemaBuilder
                 .enumeration(name)
@@ -69,7 +70,7 @@ public class SchemaValidatorTest {
 
         result = validate(schema, schemaPath, MONITOR);
 
-        assertFalse(result.isValid());
+        assertFalse(result.isEmpty());
     }
 
 }

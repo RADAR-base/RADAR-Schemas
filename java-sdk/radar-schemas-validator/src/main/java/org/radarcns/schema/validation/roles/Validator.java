@@ -17,10 +17,12 @@
 
 package org.radarcns.schema.validation.roles;
 
-import org.radarcns.schema.validation.InvalidResult;
-import org.radarcns.schema.validation.ValidationResult;
+import org.radarcns.schema.validation.ValidationException;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
@@ -28,7 +30,7 @@ import java.util.regex.Pattern;
 /**
  * TODO.
  */
-public interface Validator<T> extends Function<T, ValidationResult> {
+public interface Validator<T> extends Function<T, Collection<ValidationException>> {
     /**
      * TODO.
      * @param predicate TODO
@@ -36,8 +38,8 @@ public interface Validator<T> extends Function<T, ValidationResult> {
      * @return TODO
      */
     static <T> Validator<T> validate(Predicate<T> predicate, String message) {
-        return object -> predicate.test(object) ? ValidationResult.VALID
-                : new InvalidResult(message);
+        return object -> predicate.test(object) ? Collections.emptySet()
+                : Collections.singleton(new ValidationException(message));
     }
 
     /**
@@ -48,8 +50,8 @@ public interface Validator<T> extends Function<T, ValidationResult> {
      */
     static <T> Validator<T> validate(Predicate<T> predicate, Function<T, String> message) {
         return object -> predicate.test(object)
-                ? ValidationResult.VALID
-                : new InvalidResult(message.apply(object));
+                ? Collections.emptySet()
+                : Collections.singleton(new ValidationException(message.apply(object)));
     }
 
     /**
@@ -158,8 +160,9 @@ public interface Validator<T> extends Function<T, ValidationResult> {
      */
     default Validator<T> and(Validator<T> other) {
         return object -> {
-            final ValidationResult result = this.apply(object);
-            return result.isValid() ? other.apply(object) : result;
+            List<ValidationException> exceptionList = new ArrayList<>(this.apply(object));
+            exceptionList.addAll(other.apply(object));
+            return exceptionList;
         };
     }
 

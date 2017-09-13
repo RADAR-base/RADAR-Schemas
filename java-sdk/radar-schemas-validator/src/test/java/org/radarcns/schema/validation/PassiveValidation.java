@@ -1,5 +1,3 @@
-package org.radarcns.schema.validation;
-
 /*
  * Copyright 2017 King's College London and The Hyve
  *
@@ -15,6 +13,8 @@ package org.radarcns.schema.validation;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+package org.radarcns.schema.validation;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -59,18 +59,18 @@ public class PassiveValidation {
 
             PassiveSource source = new YamlConfigLoader().load(file, PassiveSource.class);
 
-            ValidationResult result = Validator.validatePassive(source, file);
-            assertTrue(getMessage(file, result), result.isValid());
+            Collection<ValidationException> result =Validator.validatePassive(source, file);
+            assertTrue(getMessage(file, result), result.isEmpty());
 
             for (Sensor sensor : source.getSensors()) {
                 result = Validator.validateSensor(converter.get(type), sensor);
-                assertTrue(getMessage(file, result), result.isValid());
+                assertTrue(getMessage(file, result), result.isEmpty());
 
             }
 
             for (Processor processor : source.getProcessors()) {
                 result = Validator.validateProcessor(converter.get(type), processor);
-                assertTrue(getMessage(file, result), result.isValid());
+                assertTrue(getMessage(file, result), result.isEmpty());
 
             }
         }*/

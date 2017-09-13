@@ -39,7 +39,7 @@ public class MonitorValidation {
             MonitorSource source = new YamlConfigLoader().load(file, MonitorSource.class);
 
             ValidationResult result = Validator.validateMonitor(source, file);
-            assertTrue(getMessage(file, result), result.isValid());
+            assertTrue(getMessage(file, result), result.isEmpty());
         }*/
     }
 
