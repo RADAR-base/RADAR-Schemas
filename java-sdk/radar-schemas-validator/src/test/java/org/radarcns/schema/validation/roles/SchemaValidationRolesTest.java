@@ -1,5 +1,3 @@
-package org.radarcns.schema.validation.roles;
-
 /*
  * Copyright 2017 King's College London and The Hyve
  *
@@ -15,6 +13,8 @@ package org.radarcns.schema.validation.roles;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+package org.radarcns.schema.validation.roles;
 
 import org.apache.avro.Schema;
 import org.apache.avro.Schema.Parser;
