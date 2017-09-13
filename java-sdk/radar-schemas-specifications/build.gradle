@@ -27,7 +27,6 @@ dependencies {
 
     implementation group: 'org.radarcns', name: 'radar-commons', version: radarCommonsVersion
 
-    testCompile project(':radar-schemas-validator')
     testCompile group: 'junit', name: 'junit', version: junitVersion
     testCompile group: 'org.slf4j', name: 'slf4j-simple', version: slf4jVersion
 }

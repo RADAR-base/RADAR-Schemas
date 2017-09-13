@@ -16,15 +16,12 @@ package org.radarcns.schema.specification;
  * limitations under the License.
  */
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import org.radarcns.config.YamlConfigLoader;
 import org.radarcns.schema.Scope;
+import org.radarcns.schema.specification.source.MonitorSource;
 import org.radarcns.schema.specification.source.Source;
 import org.radarcns.schema.specification.source.active.ActiveSource;
 import org.radarcns.schema.specification.source.active.questionnaire.QuestionnaireSource;
-import org.radarcns.schema.specification.source.MonitorSource;
 import org.radarcns.schema.specification.source.passive.PassiveSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
