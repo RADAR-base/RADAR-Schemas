@@ -8,13 +8,14 @@ import org.radarcns.schema.validation.config.ExcludeConfig;
 import java.io.IOException;
 
 import static org.junit.Assert.assertTrue;
+import static org.radarcns.schema.specification.SourceCatalogue.BASE_PATH;
 
 public class SpecificationsValidatorTest {
     private SpecificationsValidator validator;
 
     @Before
-    public void setUp() {
-        this.validator = new SpecificationsValidator(ExcludeConfig.load());
+    public void setUp() throws IOException {
+        this.validator = new SpecificationsValidator(BASE_PATH, ExcludeConfig.load(null));
     }
 
     @Test

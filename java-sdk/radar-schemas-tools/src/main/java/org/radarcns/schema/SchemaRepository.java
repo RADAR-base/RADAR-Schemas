@@ -1,5 +1,3 @@
-package org.radarcns.schema.validation;
-
 /*
  * Copyright 2017 King's College London and The Hyve
  *
@@ -16,8 +14,7 @@ package org.radarcns.schema.validation;
  * limitations under the License.
  */
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
+package org.radarcns.schema;
 
 /**
  * Checks the schema catalog.
@@ -44,10 +41,9 @@ import java.nio.file.Paths;
  */
 public final class SchemaRepository {
 
-    public static final Path PROJECT_ROOT = Paths.get("../..").toAbsolutePath();
-    public static final Path COMMONS_PATH = PROJECT_ROOT.resolve("commons");
-    public static final Path REST_API_PATH = PROJECT_ROOT.resolve("restapi");
-    public static final Path SPECIFICATIONS_PATH = PROJECT_ROOT.resolve("specifications");
+    public static final String COMMONS_PATH = "commons";
+    public static final String REST_API_PATH = "restapi";
+    public static final String SPECIFICATIONS_PATH = "specifications";
 
     private SchemaRepository() {
         // utility class

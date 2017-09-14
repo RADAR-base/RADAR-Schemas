@@ -1,5 +1,3 @@
-package org.radarcns.schema.specification;
-
 /*
  * Copyright 2017 King's College London and The Hyve
  *
@@ -15,6 +13,8 @@ package org.radarcns.schema.specification;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+package org.radarcns.schema.specification;
 
 import org.radarcns.config.YamlConfigLoader;
 import org.radarcns.schema.Scope;
@@ -56,7 +56,7 @@ public class SourceCatalogue {
 
     private final Set<Source> sources;
 
-    // package private for testing
+    @SuppressWarnings("WeakerAccess")
     SourceCatalogue(Map<String, ActiveSource> activeSources,
             Map<String, MonitorSource> monitorSources,
             Map<String, PassiveSource> passiveSources) {
@@ -188,8 +188,8 @@ public class SourceCatalogue {
      * @return TODO
      */
     public Set<String> getTopics() {
-        Set<String> set = new HashSet<>();
-        sources.forEach(source -> set.addAll(source.getTopics()));
-        return set;
+        return sources.stream()
+                .flatMap(source -> source.getTopics().stream())
+                .collect(Collectors.toSet());
     }
 }

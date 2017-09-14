@@ -34,7 +34,8 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.radarcns.schema.Scope.ACTIVE;
 import static org.radarcns.schema.Scope.MONITOR;
-import static org.radarcns.schema.validation.SchemaRepository.COMMONS_PATH;
+import static org.radarcns.schema.SchemaRepository.COMMONS_PATH;
+import static org.radarcns.schema.specification.SourceCatalogue.BASE_PATH;
 import static org.radarcns.schema.validation.roles.SchemaValidationRoles.ENUM_SYMBOL_PATTERN;
 import static org.radarcns.schema.validation.roles.SchemaValidationRoles.FIELD_NAME_PATTERN;
 import static org.radarcns.schema.validation.roles.SchemaValidationRoles.NAMESPACE_PATTERN;
@@ -80,8 +81,7 @@ public class SchemaValidationRolesTest {
         assertTrue(matches("EmpaticaE4Acceleration", RECORD_NAME_PATTERN));
         assertTrue(matches("Heart4Me", RECORD_NAME_PATTERN));
         assertTrue(matches("Heart4M", RECORD_NAME_PATTERN));
-
-        assertFalse(matches("Heart4", RECORD_NAME_PATTERN));
+        assertTrue(matches("Heart4", RECORD_NAME_PATTERN));
         assertFalse(matches("Heart4me", RECORD_NAME_PATTERN));
         assertFalse(matches("Heart4ME", RECORD_NAME_PATTERN));
         assertFalse(matches("4Me", RECORD_NAME_PATTERN));
@@ -126,11 +126,12 @@ public class SchemaValidationRolesTest {
                 .fields()
                 .endRecord();
 
-        Path root = ACTIVE.getPath(COMMONS_PATH);
+        Path root = ACTIVE.getPath(BASE_PATH.resolve(COMMONS_PATH));
         assertNotNull(root);
         Path path = root.resolve("questionnaire/questionnaire.avsc");
 
-        Collection<ValidationException> result = validateNameSpace(path, ACTIVE).apply(schema);
+        Collection<ValidationException> result = validateNameSpace(BASE_PATH, path, ACTIVE)
+                .apply(schema);
 
         assertTrue(result.isEmpty());
     }
@@ -143,10 +144,11 @@ public class SchemaValidationRolesTest {
                 .fields()
                 .endRecord();
 
-        Path root = MONITOR.getPath(COMMONS_PATH);
+        Path root = MONITOR.getPath(BASE_PATH.resolve(COMMONS_PATH));
         assertNotNull(root);
         Path path = root.resolve("test/record_name.avsc");
-        Collection<ValidationException> result = validateNameSpace(path, MONITOR).apply(schema);
+        Collection<ValidationException> result = validateNameSpace(BASE_PATH, path, MONITOR)
+                .apply(schema);
 
         assertFalse(result.isEmpty());
 
@@ -160,10 +162,11 @@ public class SchemaValidationRolesTest {
                 .fields()
                 .endRecord();
 
-        Path root = MONITOR.getPath(COMMONS_PATH);
+        Path root = MONITOR.getPath(BASE_PATH.resolve(COMMONS_PATH));
         assertNotNull(root);
         Path path = root.resolve("test/record_name.avsc");
-        Collection<ValidationException> result = validateNameSpace(path, MONITOR).apply(schema);
+        Collection<ValidationException> result = validateNameSpace(BASE_PATH, path, MONITOR)
+                .apply(schema);
 
         assertFalse(result.isEmpty());
     }
@@ -177,10 +180,11 @@ public class SchemaValidationRolesTest {
                     .fields()
                     .endRecord();
 
-        Path root = MONITOR.getPath(COMMONS_PATH);
+        Path root = MONITOR.getPath(BASE_PATH.resolve(COMMONS_PATH));
         assertNotNull(root);
         Path path = root.resolve("test/record_name.avsc");
-        Collection<ValidationException> result = validateNameSpace(path, MONITOR).apply(schema);
+        Collection<ValidationException> result = validateNameSpace(BASE_PATH, path, MONITOR)
+                .apply(schema);
 
         assertFalse(result.isEmpty());
     }

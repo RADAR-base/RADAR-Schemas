@@ -19,12 +19,14 @@ package org.radarcns.schema.validation.config;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import org.apache.avro.Schema;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
@@ -72,14 +74,22 @@ public class ExcludeConfig {
     }
 
     /** Load the ExcludeConfig from file. */
-    public static ExcludeConfig load() {
-        try {
-            YAMLFactory factory = new YAMLFactory();
-            return new ObjectMapper(factory)
-                    .readerFor(ExcludeConfig.class)
-                    .readValue(ExcludeConfig.class.getClassLoader().getResourceAsStream(FILE_NAME));
-        } catch (IOException exc) {
-            throw new ExceptionInInitializerError(exc);
+    public static ExcludeConfig load(Path path) throws IOException {
+        YAMLFactory factory = new YAMLFactory();
+        ObjectReader reader = new ObjectMapper(factory)
+                .readerFor(ExcludeConfig.class);
+        if (path == null) {
+            ClassLoader loader = ExcludeConfig.class.getClassLoader();
+            try (InputStream in = loader.getResourceAsStream(FILE_NAME)) {
+                if (in == null) {
+                    logger.debug("Not loading any configuration");
+                    return new ExcludeConfig();
+                } else {
+                    return reader.readValue(in);
+                }
+            }
+        } else {
+            return reader.readValue(path.toFile());
         }
     }
 

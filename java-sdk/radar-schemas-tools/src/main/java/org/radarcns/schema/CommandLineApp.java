@@ -1,5 +1,3 @@
-package org.radarcns.schema;
-
 /*
  * Copyright 2017 King's College London and The Hyve
  *
@@ -16,29 +14,43 @@ package org.radarcns.schema;
  * limitations under the License.
  */
 
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
+package org.radarcns.schema;
 
+import net.sourceforge.argparse4j.ArgumentParsers;
+import net.sourceforge.argparse4j.impl.Arguments;
+import net.sourceforge.argparse4j.inf.ArgumentParser;
+import net.sourceforge.argparse4j.inf.ArgumentParserException;
+import net.sourceforge.argparse4j.inf.Namespace;
+import net.sourceforge.argparse4j.inf.Subparser;
+import net.sourceforge.argparse4j.inf.Subparsers;
 import org.radarcns.schema.specification.KafkaActor;
 import org.radarcns.schema.specification.MonitorSource;
 import org.radarcns.schema.specification.SourceCatalogue;
 import org.radarcns.schema.specification.Topic;
 import org.radarcns.schema.specification.active.ActiveSource;
 import org.radarcns.schema.specification.active.questionnaire.QuestionnaireSource;
+import org.radarcns.schema.specification.passive.PassiveSource;
 import org.radarcns.schema.specification.passive.Processor;
 import org.radarcns.schema.specification.passive.Sensor;
-import org.radarcns.schema.specification.passive.PassiveSource;
+import org.radarcns.schema.validation.SchemaValidator;
+import org.radarcns.schema.validation.ValidationException;
+import org.radarcns.schema.validation.config.ExcludeConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 /**
  * TODO.
@@ -47,8 +59,10 @@ public class CommandLineApp {
     private static final Logger logger = LoggerFactory.getLogger(CommandLineApp.class);
 
     private final SourceCatalogue catalogue;
+    private final Path root;
 
     public CommandLineApp(Path root) throws IOException {
+        this.root = root;
         this.catalogue = SourceCatalogue.load(root);
     }
 
@@ -56,8 +70,8 @@ public class CommandLineApp {
      * TODO.
      * @return TODO
      */
-    public Set<String> getTopicsToCreate() {
-        Set<String> set = new HashSet<>();
+    public SortedSet<String> getTopicsToCreate() {
+        SortedSet<String> set = new TreeSet<>();
 
         for (Topic topic : getAllTopics()) {
             set.add(topic.getInputTopic());
@@ -138,6 +152,7 @@ public class CommandLineApp {
      * @return TODO
      */
     public String getTopicsVerbose(boolean reduced, String source) {
+        logger.info("Topic list {} {}", reduced, source);
         StringBuilder result = new StringBuilder();
 
         Map<String, Map<String, String>> map = getTopicsInfoVerbose(reduced);
@@ -146,7 +161,7 @@ public class CommandLineApp {
         Collections.sort(rootKeys);
 
         for (String key : rootKeys) {
-            if (Objects.isNull(source) || key.equalsIgnoreCase(source)) {
+            if (source == null || key.equalsIgnoreCase(source)) {
                 result.append(key).append('\n');
 
                 List<String> firstLevelKeys = new ArrayList<>(map.get(key).keySet());
@@ -154,7 +169,9 @@ public class CommandLineApp {
 
                 for (String details : firstLevelKeys) {
                     result.append('\t').append(details);
-                    result.append("\n\t\t").append(map.get(key).get(details));
+                    result.append("\n\t\t")
+                            .append(map.get(key).get(details)
+                                    .replace("\n", "\n\t\t"));
                 }
                 result.append('\n');
             }
@@ -202,20 +219,115 @@ public class CommandLineApp {
         return map;
     }
 
-    @SuppressWarnings("PMD.SystemPrintln")
-    public static void main(String... args) {
-        if (args.length < 1) {
-            System.err.println("Usage: app ROOT_DIRECTORY");
-            System.exit(1);
+
+    public String validateSchemas(String scopeString, String configSubPath) throws IOException {
+        Path configPath = null;
+        if (configSubPath != null) {
+            if (configSubPath.charAt(0) == '/') {
+                configPath = Paths.get(configSubPath);
+            } else {
+                configPath = root.resolve(configSubPath);
+            }
         }
-        CommandLineApp app = null;
-        try {
-            app = new CommandLineApp(Paths.get(args[0]));
-        } catch (IOException e) {
-            logger.error("Failed to load catalog from first argument.");
-            System.exit(1);
+        ExcludeConfig config = ExcludeConfig.load(configPath);
+        SchemaValidator validator = new SchemaValidator(root, config);
+        StringBuilder result = new StringBuilder();
+        if (scopeString == null) {
+            for (Scope scope : Scope.values()) {
+                Collection<ValidationException> results = validator.analyseFiles(scope);
+                for (ValidationException ex : results) {
+                    result.append("Validation FAILED:\n")
+                            .append(ex.getMessage()).append("\n\n");
+                }
+            }
+        } else {
+            Scope scope = Scope.valueOf(scopeString);
+            Collection<ValidationException> results = validator.analyseFiles(scope);
+            for (ValidationException ex : results) {
+                result.append("Validation FAILED:\n")
+                        .append(ex.getMessage()).append("\n\n");
+            }
         }
-        System.out.println(app.getTopicsToCreate());
+        return result.toString();
     }
 
+    @SuppressWarnings("PMD.SystemPrintln")
+    public static void main(String... args) {
+        ArgumentParser parser = ArgumentParsers.newArgumentParser("radar-schema")
+                .defaultHelp(true)
+                .description("Validate and list schema specifications");
+
+        Subparsers subParsers = parser.addSubparsers().dest("subparser");
+        Subparser validateParser = subParsers.addParser("validate", true)
+                .description("Validate a set of specifications");
+        validateParser.addArgument("root")
+                .nargs("?")
+                .help("Root schemas directory with a specifications and commons directory")
+                .setDefault(".");
+        validateParser.addArgument("-s", "--scope")
+                .help("Type of specifications to validate")
+                .choices(Scope.values());
+        validateParser.addArgument("-c", "--config")
+                .help("Configuration file to use");
+
+        Subparser listParser = subParsers.addParser("list", true)
+                .description("list topics and schemas");
+        listParser.addArgument("root")
+                .nargs("?")
+                .help("Root schemas directory with a specifications and commons directory")
+                .setDefault(".");
+        listParser.addArgument("-r", "--raw")
+                .help("List raw input topics")
+                .action(Arguments.storeTrue());
+        listParser.addArgument("-q", "--quiet")
+                .help("Only print the requested topics")
+                .action(Arguments.storeTrue());
+        listParser.addArgument("-m", "--match")
+                .help("Only print the requested topics");
+        listParser.addArgument("-S", "--stream")
+                .help("List the output topics of Kafka Streams")
+                .action(Arguments.storeTrue());
+
+        Namespace ns = null;
+        try {
+            ns = parser.parseArgs(args);
+        } catch (ArgumentParserException e) {
+            parser.handleError(e);
+            System.exit(1);
+        }
+
+        CommandLineApp app = null;
+        try {
+            app = new CommandLineApp(Paths.get(ns.getString("root")).toAbsolutePath());
+        } catch (IOException e) {
+            logger.error("Failed to load catalog from root.");
+            System.exit(1);
+        }
+        switch (ns.getString("subparser")) {
+            case "list":
+                if (ns.getBoolean("raw")) {
+                    System.out.println(String.join("\n", app.getRawTopics()));
+                } else if (ns.getBoolean("stream")) {
+                    System.out.println(String.join("\n", app.getResultsCacheTopics()));
+                } else if (ns.getBoolean("quiet")) {
+                    System.out.println(String.join("\n", app.getTopicsToCreate()));
+                } else {
+                    System.out.println(app.getTopicsVerbose(false, ns.getString("match")));
+                }
+                break;
+            case "validate":
+                try {
+                    System.out.println(app.validateSchemas(
+                            ns.getString("scope"), ns.getString("config")));
+                } catch (IOException e) {
+                    logger.error("Failed to load schemas", e);
+                }
+                break;
+            default:
+                parser.handleError(new ArgumentParserException(
+                        "Subcommand " + ns.getString("subparser") + " not implemented",
+                        parser));
+                break;
+        }
+    }
 }

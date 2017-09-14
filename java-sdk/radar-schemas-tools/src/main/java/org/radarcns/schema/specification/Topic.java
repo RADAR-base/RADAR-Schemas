@@ -17,6 +17,7 @@
 package org.radarcns.schema.specification;
 
 import org.radarcns.catalogue.TimeFrame;
+import org.radarcns.schema.util.Utils;
 
 import java.util.HashSet;
 import java.util.Objects;

@@ -27,37 +27,16 @@ dependencies {
     implementation group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-yaml', version: '2.8.10'
     implementation project(':radar-schemas-commons')
     implementation group: 'org.radarcns', name: 'radar-commons', version: '0.5'
+    implementation group: 'net.sourceforge.argparse4j', name: 'argparse4j', version: '0.7.0'
+
+    runtimeOnly group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.25'
 
     testCompile group: 'junit', name: 'junit', version: junitVersion
-    testCompile group: 'org.slf4j', name: 'slf4j-simple', version: slf4jVersion
 }
 
-//---------------------------------------------------------------------------//
-// Exchange configuration with Java code                                     //
-//---------------------------------------------------------------------------//
-ext.exchnageConfigPath = 'src/test/resources/gradle.properties'
-task exchangeConfig() {
-    doLast {
-        if (!file(exchnageConfigPath).exists() || file(exchnageConfigPath).delete()) {
-            file(exchnageConfigPath).createNewFile()
-            file(exchnageConfigPath).write("project.group=${project.group}")
-        } else {
-            throw new GradleException("Error while creating file at ${exchnageConfigPath}")
-        }
-    }
+task createStartScripts(type: CreateStartScripts) {
+    applicationName = 'radar-schema'
 }
-compileJava.dependsOn exchangeConfig
-
-task cleanExchangeConfig() {
-    doLast {
-        if (file(exchnageConfigPath).exists()) {
-            if (!file(exchnageConfigPath).delete()) {
-                throw new GradleException("File at ${exchnageConfigPath} cannot be delated.")
-            }
-        }
-    }
-}
-clean.dependsOn cleanExchangeConfig
 
 //---------------------------------------------------------------------------//
 // Test definition                                                           //

@@ -38,18 +38,18 @@ import static org.radarcns.schema.Scope.CATALOGUE;
 import static org.radarcns.schema.Scope.KAFKA;
 import static org.radarcns.schema.Scope.MONITOR;
 import static org.radarcns.schema.Scope.PASSIVE;
-import static org.radarcns.schema.validation.SchemaValidator.validate;
 
 /**
  * TODO.
  */
 public class SchemaValidatorTest {
     private SchemaValidator validator;
+    private static final Path ROOT = Paths.get("../..").toAbsolutePath();
 
     @Before
-    public void setUp() {
-        ExcludeConfig config = ExcludeConfig.load();
-        validator = new SchemaValidator(config);
+    public void setUp() throws IOException {
+        ExcludeConfig config = ExcludeConfig.load(null);
+        validator = new SchemaValidator(ROOT, config);
     }
 
     @Test
@@ -101,7 +101,7 @@ public class SchemaValidatorTest {
 
     @Test
     public void testEnumerator() {
-        Path schemaPath =  SchemaRepository.PROJECT_ROOT.resolve(
+        Path schemaPath =  ROOT.resolve(
                 "commons/monitor/application/server_status.avsc");
 
         String name = "org.radarcns.monitor.application.ServerStatus";
@@ -112,7 +112,7 @@ public class SchemaValidatorTest {
                 .doc(documentation)
                 .symbols("CONNECTED", "DISCONNECTED", "UNKNOWN");
 
-        Collection<ValidationException> result = validate(schema, schemaPath, MONITOR);
+        Collection<ValidationException> result = validator.validate(schema, schemaPath, MONITOR);
 
         assertTrue(result.isEmpty());
 
@@ -121,7 +121,7 @@ public class SchemaValidatorTest {
                 .doc(documentation)
                 .symbols("CONNECTED", "DISCONNECTED", "un_known");
 
-        result = validate(schema, schemaPath, MONITOR);
+        result = validator.validate(schema, schemaPath, MONITOR);
 
         assertFalse(result.isEmpty());
     }

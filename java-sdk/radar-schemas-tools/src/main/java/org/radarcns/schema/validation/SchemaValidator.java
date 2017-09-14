@@ -32,7 +32,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.radarcns.schema.validation.SchemaRepository.COMMONS_PATH;
+import static org.radarcns.schema.SchemaRepository.COMMONS_PATH;
 import static org.radarcns.schema.validation.roles.SchemaValidationRoles.getActiveValidator;
 import static org.radarcns.schema.validation.roles.SchemaValidationRoles.getGeneralEnumValidator;
 import static org.radarcns.schema.validation.roles.SchemaValidationRoles.getGeneralRecordValidator;
@@ -43,10 +43,12 @@ public class SchemaValidator {
     public static final String AVRO_EXTENSION = "avsc";
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SchemaValidator.class);
-    private ExcludeConfig config;
+    private final Path root;
+    private final ExcludeConfig config;
 
-    public SchemaValidator(ExcludeConfig config) {
+    public SchemaValidator(Path root, ExcludeConfig config) {
         this.config = config;
+        this.root = root;
     }
 
     /**
@@ -57,7 +59,7 @@ public class SchemaValidator {
     public Collection<ValidationException> analyseFiles(Scope scope)
             throws IOException {
         Schema.Parser parser = new Schema.Parser();
-        return Files.walk(scope.getPath(COMMONS_PATH))
+        return Files.walk(scope.getPath(root.resolve(COMMONS_PATH)))
                 .filter(Files::isRegularFile)
                 .filter(p -> !config.skipFile(p))
                 .flatMap(p -> {
@@ -94,52 +96,48 @@ public class SchemaValidator {
         return ValidationSupport.matchesExtension(file, AVRO_EXTENSION);
     }
 
-    private SchemaValidator() {
-        //Static class
-    }
-
-    public static Collection<ValidationException> validate(Schema schema, Path pathToSchema,
-            Scope root) {
-        return validate(schema, pathToSchema, root,
+    public Collection<ValidationException> validate(Schema schema, Path pathToSchema,
+            Scope scope) {
+        return validate(schema, pathToSchema, scope,
                 false, null);
     }
 
-    public static Collection<ValidationException> validate(Schema schema, Path pathToSchema,
-            Scope root, boolean skipRecordName, Set<String> skipFieldName) {
+    public Collection<ValidationException> validate(Schema schema, Path pathToSchema,
+            Scope scope, boolean skipRecordName, Set<String> skipFieldName) {
         Objects.requireNonNull(schema);
         Objects.requireNonNull(pathToSchema);
-        Objects.requireNonNull(root);
+        Objects.requireNonNull(scope);
 
         Collection<ValidationException> result;
 
         if (schema.getType().equals(Type.ENUM)) {
-            result = getGeneralEnumValidator(pathToSchema, root,
+            result = getGeneralEnumValidator(root, pathToSchema, scope,
                     skipRecordName).apply(schema);
         } else {
-            switch (root) {
+            switch (scope) {
                 case ACTIVE:
-                    result = getActiveValidator(pathToSchema, root, skipRecordName,
+                    result = getActiveValidator(root, pathToSchema, scope, skipRecordName,
                         skipFieldName).apply(schema);
                     break;
                 case CATALOGUE:
-                    result = getGeneralRecordValidator(pathToSchema, root,
+                    result = getGeneralRecordValidator(root, pathToSchema, scope,
                         skipRecordName, skipFieldName).apply(schema);
                     break;
                 case KAFKA:
-                    result = getGeneralRecordValidator(pathToSchema, root,
+                    result = getGeneralRecordValidator(root, pathToSchema, scope,
                             skipRecordName, skipFieldName).apply(schema);
                     break;
                 case MONITOR:
-                    result = getMonitorValidator(pathToSchema, root, skipRecordName,
+                    result = getMonitorValidator(root, pathToSchema, scope, skipRecordName,
                         skipFieldName).apply(schema);
                     break;
                 case PASSIVE:
-                    result = getPassiveValidator(pathToSchema, root, skipRecordName,
+                    result = getPassiveValidator(root, pathToSchema, scope, skipRecordName,
                         skipFieldName).apply(schema);
                     break;
                 default:
                     LOGGER.warn("Applying general validation to {}", getPath(pathToSchema));
-                    result = getGeneralRecordValidator(pathToSchema, root, skipRecordName,
+                    result = getGeneralRecordValidator(root, pathToSchema, scope, skipRecordName,
                             skipFieldName).apply(schema);
                     break;
             }

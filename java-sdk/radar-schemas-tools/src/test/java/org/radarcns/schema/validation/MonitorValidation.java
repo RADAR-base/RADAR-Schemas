@@ -33,7 +33,7 @@ public class MonitorValidation {
             }
 
             File file = new File(BASE_PATH.resolve(
-                    NameFolder.MONITOR.getName()).resolve(
+                    NameFolder.MONITOR.getLiteral()).resolve(
                             type.name().toLowerCase() + YAML_EXTENSION)).toUri());
 
             MonitorSource source = new YamlConfigLoader().load(file, MonitorSource.class);

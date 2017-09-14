@@ -17,7 +17,7 @@
 package org.radarcns.schema.validation.roles;
 
 import org.radarcns.schema.specification.Topic;
-import org.radarcns.schema.specification.Utils;
+import org.radarcns.schema.util.Utils;
 import org.radarcns.schema.validation.ValidationException;
 import org.radarcns.schema.validation.ValidationSupport;
 

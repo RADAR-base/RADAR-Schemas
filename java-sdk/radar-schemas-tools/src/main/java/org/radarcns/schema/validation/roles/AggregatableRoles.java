@@ -1,6 +1,6 @@
 package org.radarcns.schema.validation.roles;
 
-import org.radarcns.schema.specification.Utils;
+import org.radarcns.schema.util.Utils;
 import org.radarcns.schema.specification.Aggregatable;
 import org.radarcns.schema.validation.ValidationSupport;
 

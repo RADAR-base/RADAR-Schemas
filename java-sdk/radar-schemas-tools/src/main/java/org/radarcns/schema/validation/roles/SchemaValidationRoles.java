@@ -19,6 +19,7 @@ package org.radarcns.schema.validation.roles;
 import org.apache.avro.Schema;
 import org.apache.avro.Schema.Type;
 import org.radarcns.schema.Scope;
+import org.radarcns.schema.validation.ValidationException;
 import org.radarcns.schema.validation.ValidationSupport;
 
 import java.nio.file.Path;
@@ -37,7 +38,6 @@ import static org.radarcns.schema.validation.roles.Validator.validate;
 import static org.radarcns.schema.validation.roles.Validator.validateNonEmpty;
 import static org.radarcns.schema.validation.roles.Validator.validateNonNull;
 
-
 /**
  * TODO.
  */
@@ -53,30 +53,30 @@ public final class SchemaValidationRoles {
 
     static final Pattern NAMESPACE_PATTERN = Pattern.compile("^[a-z][a-z.]*$");
 
-    static final Pattern RECORD_NAME_PATTERN = Pattern.compile("(^[A-Z][a-z]+)"
-            + "|(^[A-Z][a-z0-9]+[A-Z]$)"
-            + "|(^[A-Z][a-z0-9]+([A-Z][a-z0-9]+)+$)"
-            + "|(^[A-Z][a-z0-9]+([A-Z][a-z0-9]+)+[A-Z]$)");
+    // CamelCase
+    // see SchemaValidatorRolesTest#recordNameRegex() for valid and invalid values
+    static final Pattern RECORD_NAME_PATTERN = Pattern.compile(
+            "^([A-Z]([a-z]+[0-9]*|[a-z]*[0-9]+))+[A-Z]?$");
 
-    static final Pattern FIELD_NAME_PATTERN = Pattern.compile("^[a-z][a-zA-Z]*$");
+    // lowerCamelCase
+    static final Pattern FIELD_NAME_PATTERN = Pattern.compile(
+            "^[a-z][a-z0-9]*([a-z0-9][A-Z][a-z0-9]+)?([A-Z][a-z0-9]+)*[A-Z]?$");
 
     static final Pattern ENUM_SYMBOL_PATTERN = Pattern.compile("^[A-Z][A-Z0-9_]*$");
 
     /** Field names cannot contain the following values. */
     enum FieldNameNotAllowed {
         LOWER_VALUE("value"),
-        UPPER_VALUE("Value"),
-        LOWER_VAL("val"),
-        UPPER_VAL("Val");
+        UPPER_VALUE("Value");
 
-        private final String name;
+        private final String literal;
 
-        FieldNameNotAllowed(String name) {
-            this.name = name;
+        FieldNameNotAllowed(String literal) {
+            this.literal = literal;
         }
 
-        public String getName() {
-            return name;
+        public String getLiteral() {
+            return literal;
         }
     }
 
@@ -98,12 +98,15 @@ public final class SchemaValidationRoles {
     private static final String NOT_TIME_RECEIVED_FIELD = "\"" + TIME_RECEIVED
             + "\" is allow only in " + Scope.PASSIVE + " schemas.";
     private static final String FIELDS = "Avro Record must have field list.";
-    private static final String FIELD_NAME = "Field name does not respect lowerCamelCase name"
-            + " convention. It cannot contain any of the following values ["
+    private static final String FIELD_NAME_NOT_ALLOWED = "Field name cannot contain any of the"
+            + " following values ["
             + Arrays.stream(FieldNameNotAllowed.values())
-                .map(FieldNameNotAllowed::getName)
+                .map(FieldNameNotAllowed::getLiteral)
                 .collect(Collectors.joining(", "))
-            + "]. Please avoid abbreviations and write out the field name instead.";
+            + "].";
+    private static final String FIELD_NAME_LOWER_CAMEL = "Field name does not respect"
+            + " lowerCamelCase name convention. Please avoid abbreviations and write out the"
+            + " field name instead.";
     private static final String DOC = "Documentation is mandatory for any schema and field."
             + " The documentation should report "
             + "what is being measured, how, and what units or ranges are applicable. Abbreviations "
@@ -128,8 +131,8 @@ public final class SchemaValidationRoles {
      * @param scope TODO
      * @return TODO
      */
-    public static Validator<Schema> validateNameSpace(Path schemaPath, Scope scope) {
-        String expected = ValidationSupport.getNamespace(schemaPath, scope);
+    public static Validator<Schema> validateNameSpace(Path root, Path schemaPath, Scope scope) {
+        String expected = ValidationSupport.getNamespace(root, schemaPath, scope);
 
         return validateNonNull(Schema::getNamespace,
                 namespace -> matches(namespace, NAMESPACE_PATTERN)
@@ -193,18 +196,32 @@ public final class SchemaValidationRoles {
      * @return TODO
      */
     public static Validator<Schema> validateFieldName(Set<String> skip) {
-        return validate(schema -> {
+        return schema -> {
             Stream<String> stream = schema.getFields()
                     .stream()
                     .map(Schema.Field::name);
             if (skip != null && !skip.isEmpty()) {
                 stream = stream.filter(name -> !skip.contains(name));
             }
-            return stream.allMatch(name ->
-                    matches(name, FIELD_NAME_PATTERN)
-                            && Stream.of(FieldNameNotAllowed.values())
-                            .noneMatch(notAllowed -> name.contains(notAllowed.getName())));
-        }, message(FIELD_NAME));
+
+
+            return stream.map(name -> {
+                if (!matches(name, FIELD_NAME_PATTERN)) {
+                    return new ValidationException(
+                            "Field " + name + " of schema " + schema.getFullName()
+                                    + " is invalid. " + FIELD_NAME_LOWER_CAMEL);
+                }
+                if (Stream.of(FieldNameNotAllowed.values())
+                        .anyMatch(notAllowed -> name.endsWith(notAllowed.getLiteral()))) {
+                    return new ValidationException(
+                            "Field " + name + " of schema " + schema.getFullName()
+                                    + " is invalid. " + FIELD_NAME_NOT_ALLOWED);
+                }
+                return null;
+            })
+            .filter(Objects::nonNull)
+            .collect(Collectors.toList());
+        };
     }
 
     /**
@@ -303,12 +320,12 @@ public final class SchemaValidationRoles {
     /**
      * TODO.
      * @param pathToSchema TODO
-     * @param root TODO
+     * @param scope TODO
      * @return TODO
      */
-    public static Validator<Schema> getGeneralRecordValidator(Path pathToSchema,
-            Scope root) {
-        return validateNameSpace(pathToSchema, root)
+    public static Validator<Schema> getGeneralRecordValidator(Path root, Path pathToSchema,
+            Scope scope) {
+        return validateNameSpace(root, pathToSchema, scope)
                   .and(validateRecordName(pathToSchema))
                   .and(validateSchemaDocumentation())
                   .and(validateFields())
@@ -320,15 +337,15 @@ public final class SchemaValidationRoles {
     /**
      * TODO.
      * @param pathToSchema TODO
-     * @param root TODO
+     * @param scope TODO
      * @param skipRecordName TODO
      * @param skipFieldName TODO
      * @return TODO
      */
-    public static Validator<Schema> getGeneralRecordValidator(Path pathToSchema,
-            Scope root, boolean skipRecordName,
+    public static Validator<Schema> getGeneralRecordValidator(Path root, Path pathToSchema,
+            Scope scope, boolean skipRecordName,
             Set<String> skipFieldName) {
-        return validateNameSpace(pathToSchema, root)
+        return validateNameSpace(root, pathToSchema, scope)
                   .and(validateRecordName(pathToSchema, skipRecordName))
                   .and(validateSchemaDocumentation())
                   .and(validateFields())
@@ -340,11 +357,11 @@ public final class SchemaValidationRoles {
     /**
      * TODO.
      * @param pathToSchema TODO
-     * @param root TODO
+     * @param scope TODO
      * @return TODO7
      */
-    public static Validator<Schema> getActiveValidator(Path pathToSchema, Scope root) {
-        return getGeneralRecordValidator(pathToSchema, root)
+    public static Validator<Schema> getActiveValidator(Path root, Path pathToSchema, Scope scope) {
+        return getGeneralRecordValidator(root, pathToSchema, scope)
                   .and(validateTime())
                   .and(validateTimeCompleted())
                   .and(validateNotTimeReceived());
@@ -353,14 +370,14 @@ public final class SchemaValidationRoles {
     /**
      * TODO.
      * @param pathToSchema TODO
-     * @param root TODO
+     * @param scope TODO
      * @param skipRecordName TODO
      * @param skipFieldName TODO
      * @return TODO
      */
-    public static Validator<Schema> getActiveValidator(Path pathToSchema, Scope root,
+    public static Validator<Schema> getActiveValidator(Path root, Path pathToSchema, Scope scope,
             boolean skipRecordName, Set<String> skipFieldName) {
-        return getGeneralRecordValidator(pathToSchema, root, skipRecordName,
+        return getGeneralRecordValidator(root, pathToSchema, scope, skipRecordName,
             skipFieldName)
                   .and(validateTime())
                   .and(validateTimeCompleted())
@@ -370,25 +387,25 @@ public final class SchemaValidationRoles {
     /**
      * TODO.
      * @param pathToSchema TODO
-     * @param root TODO
+     * @param scope TODO
      * @return TODO
      */
-    public static Validator<Schema> getMonitorValidator(Path pathToSchema, Scope root) {
-        return getGeneralRecordValidator(pathToSchema, root)
+    public static Validator<Schema> getMonitorValidator(Path root, Path pathToSchema, Scope scope) {
+        return getGeneralRecordValidator(root, pathToSchema, scope)
             .and(validateTime());
     }
 
     /**
      * TODO.
      * @param pathToSchema TODO
-     * @param root TODO
+     * @param scope TODO
      * @param skipRecordName TODO
      * @param skipFieldName TODO
      * @return TODO
      */
-    public static Validator<Schema> getMonitorValidator(Path pathToSchema, Scope root,
+    public static Validator<Schema> getMonitorValidator(Path root, Path pathToSchema, Scope scope,
              boolean skipRecordName, Set<String> skipFieldName) {
-        return getGeneralRecordValidator(pathToSchema, root, skipRecordName,
+        return getGeneralRecordValidator(root, pathToSchema, scope, skipRecordName,
             skipFieldName)
                   .and(validateTime());
     }
@@ -396,11 +413,11 @@ public final class SchemaValidationRoles {
     /**
      * TODO.
      * @param pathToSchema TODO
-     * @param root TODO
+     * @param scope TODO
      * @return TODO
      */
-    public static Validator<Schema> getPassiveValidator(Path pathToSchema, Scope root) {
-        return getGeneralRecordValidator(pathToSchema, root)
+    public static Validator<Schema> getPassiveValidator(Path root, Path pathToSchema, Scope scope) {
+        return getGeneralRecordValidator(root, pathToSchema, scope)
             .and(validateTime())
             .and(validateTimeReceived())
             .and(validateNotTimeCompleted());
@@ -409,14 +426,14 @@ public final class SchemaValidationRoles {
     /**
      * TODO.
      * @param pathToSchema TODO
-     * @param root TODO
+     * @param scope TODO
      * @param skipRecordName TODO
      * @param skipFieldName TODO
      * @return TODO
      */
-    public static Validator<Schema> getPassiveValidator(Path pathToSchema, Scope root,
+    public static Validator<Schema> getPassiveValidator(Path root, Path pathToSchema, Scope scope,
             boolean skipRecordName, Set<String> skipFieldName) {
-        return getGeneralRecordValidator(pathToSchema, root, skipRecordName,
+        return getGeneralRecordValidator(root, pathToSchema, scope, skipRecordName,
               skipFieldName)
             .and(validateTime())
             .and(validateTimeReceived())
@@ -426,11 +443,12 @@ public final class SchemaValidationRoles {
     /**
      * TODO.
      * @param pathToSchema TODO
-     * @param root TODO
+     * @param scope TODO
      * @return TODO
      */
-    public static Validator<Schema> getGeneralEnumValidator(Path pathToSchema, Scope root) {
-        return validateNameSpace(pathToSchema, root)
+    public static Validator<Schema> getGeneralEnumValidator(Path root, Path pathToSchema,
+            Scope scope) {
+        return validateNameSpace(root, pathToSchema, scope)
             .and(validateRecordName(pathToSchema))
             .and(validateSchemaDocumentation())
             .and(validateSymbols())
@@ -441,13 +459,13 @@ public final class SchemaValidationRoles {
     /**
      * TODO.
      * @param pathToSchema TODO
-     * @param root TODO
+     * @param scope TODO
      * @param skipRecordName TODO
      * @return TODO
      */
-    public static Validator<Schema> getGeneralEnumValidator(Path pathToSchema, Scope root,
-            boolean skipRecordName) {
-        return validateNameSpace(pathToSchema, root)
+    public static Validator<Schema> getGeneralEnumValidator(Path root, Path pathToSchema,
+            Scope scope, boolean skipRecordName) {
+        return validateNameSpace(root, pathToSchema, scope)
             .and(validateRecordName(pathToSchema, skipRecordName))
             .and(validateSchemaDocumentation())
             .and(validateSymbols())

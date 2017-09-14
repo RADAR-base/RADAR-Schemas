@@ -33,7 +33,7 @@ public class ActiveValidation {
             }
 
             File file = new File(BASE_PATH.resolve(
-                NameFolder.ACTIVE.getName()).resolve(
+                NameFolder.ACTIVE.getLiteral()).resolve(
                 type.name().toLowerCase() + YAML_EXTENSION)).toUri());
 
             QuestionnaireSource source = new YamlConfigLoader().load(file,

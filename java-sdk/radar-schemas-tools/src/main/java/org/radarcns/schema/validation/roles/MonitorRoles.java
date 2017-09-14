@@ -1,7 +1,7 @@
 package org.radarcns.schema.validation.roles;
 
 import org.radarcns.schema.specification.MonitorSource;
-import org.radarcns.schema.specification.Utils;
+import org.radarcns.schema.util.Utils;
 
 import java.nio.file.Path;
 import java.util.Collections;

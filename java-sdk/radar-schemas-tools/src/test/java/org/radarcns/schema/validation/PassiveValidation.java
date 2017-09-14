@@ -54,7 +54,7 @@ public class PassiveValidation {
             }
 
             File file = new File(BASE_PATH.resolve(
-                NameFolder.PASSIVE.getName()).resolve(
+                NameFolder.PASSIVE.getLiteral()).resolve(
                 type.name().toLowerCase() + YAML_EXTENSION)).toUri());
 
             PassiveSource source = new YamlConfigLoader().load(file, PassiveSource.class);

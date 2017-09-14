@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.radarcns.schema.specification;
+package org.radarcns.schema.util;
 
 import org.radarcns.kafka.aggregator.AggregatorDouble;
 import org.radarcns.kafka.aggregator.AggregatorDoubleArray;
@@ -60,13 +60,13 @@ public final class Utils {
             try (InputStream in = loader.getResourceAsStream(GRADLE_PROPERTIES)) {
                 if (in == null) {
                     projectGroup = "org.radarcns";
-                    logger.warn("Project group not specified. Using \"{}\".", projectGroup);
+                    logger.debug("Project group not specified. Using \"{}\".", projectGroup);
                 } else {
                     prop.load(in);
                     projectGroup = prop.getProperty(GROUP_PROPERTY);
                     if (projectGroup == null) {
                         projectGroup = "org.radarcns";
-                        logger.warn("Project group not specified. Using \"{}\".", projectGroup);
+                        logger.debug("Project group not specified. Using \"{}\".", projectGroup);
                     }
                 }
             } catch (IOException exc) {

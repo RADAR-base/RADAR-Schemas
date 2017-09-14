@@ -23,7 +23,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import static org.radarcns.schema.validation.SchemaRepository.SPECIFICATIONS_PATH;
+import static org.radarcns.schema.SchemaRepository.SPECIFICATIONS_PATH;
 
 /**
  * TODO.
@@ -31,13 +31,15 @@ import static org.radarcns.schema.validation.SchemaRepository.SPECIFICATIONS_PAT
 public class SpecificationsValidator {
     public static final String YML_EXTENSION = "yml";
     private final ExcludeConfig config;
+    private final Path root;
 
-    public SpecificationsValidator(ExcludeConfig config) {
+    public SpecificationsValidator(Path root, ExcludeConfig config) {
+        this.root = root;
         this.config = config;
     }
 
     public boolean specificationsAreYmlFiles(Scope scope) throws IOException {
-        return Files.walk(scope.getPath(SPECIFICATIONS_PATH))
+        return Files.walk(scope.getPath(root.resolve(SPECIFICATIONS_PATH)))
                     .filter(Files::isRegularFile)
                     .filter(p -> !config.skipFile(p))
                     .allMatch(SpecificationsValidator::isYmlFile);

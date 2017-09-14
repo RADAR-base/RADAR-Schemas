@@ -22,20 +22,19 @@ import org.apache.avro.Schema.Field;
 import org.apache.avro.Schema.Type;
 import org.radarcns.schema.Scope;
 
-import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.Properties;
 import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static org.radarcns.schema.specification.Utils.toSnakeCase;
-import static org.radarcns.schema.validation.SchemaRepository.COMMONS_PATH;
+import static org.radarcns.schema.SchemaRepository.COMMONS_PATH;
+import static org.radarcns.schema.util.Utils.getProjectGroup;
+import static org.radarcns.schema.util.Utils.toSnakeCase;
 import static org.radarcns.schema.validation.roles.SchemaValidationRoles.UNKNOWN;
 
 /**
@@ -64,9 +63,6 @@ public final class ValidationSupport {
         }
     }
 
-    private static final String GRADLE_PROPERTIES = "gradle.properties";
-    private static final String PROPERTY_VALUE = "project.group";
-    private static String projectGroup;
     // snake case
     private static final Pattern TOPIC_PATTERN = Pattern.compile(
             "[A-Za-z][a-z0-9-]*(_[A-Za-z0-9-]+)*");
@@ -77,32 +73,12 @@ public final class ValidationSupport {
 
     /**
      * TODO.
-     * @return TODO
-     */
-    public static String getProjectGroup() {
-        if (Objects.isNull(projectGroup)) {
-            try {
-                Properties prop = new Properties();
-                prop.load(ValidationSupport.class.getClassLoader().getResourceAsStream(
-                        GRADLE_PROPERTIES));
-                projectGroup = prop.getProperty(PROPERTY_VALUE);
-            } catch (IOException exc) {
-                throw new IllegalStateException(PROPERTY_VALUE
-                        + " cannot be extracted from " + GRADLE_PROPERTIES, exc);
-            }
-        }
-
-        return projectGroup;
-    }
-
-    /**
-     * TODO.
      * @param scope TODO
      * @return TODO
      */
-    public static String getNamespace(Path schemaPath, Scope scope) {
+    public static String getNamespace(Path root, Path schemaPath, Scope scope) {
         // add subfolder of root to namespace
-        Path rootPath = scope.getPath(COMMONS_PATH);
+        Path rootPath = scope.getPath(root.resolve(COMMONS_PATH));
         if (rootPath == null) {
             throw new IllegalArgumentException("Scope " + scope + " does not have a commons path");
         }

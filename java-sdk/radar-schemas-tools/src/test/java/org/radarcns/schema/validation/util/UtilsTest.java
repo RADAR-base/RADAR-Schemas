@@ -23,7 +23,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import org.radarcns.kafka.aggregator.AggregatorDouble;
 import org.radarcns.kafka.aggregator.AggregatorDoubleArray;
-import org.radarcns.schema.specification.Utils;
+import org.radarcns.schema.util.Utils;
 
 /**
  * TODO.

@@ -1,5 +1,3 @@
-package org.radarcns.schema.specification;
-
 /*
  * Copyright 2017 King's College London and The Hyve
  *
@@ -15,6 +13,10 @@ package org.radarcns.schema.specification;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+package org.radarcns.schema.specification;
+
+import org.radarcns.schema.util.Utils;
 
 import java.util.Objects;
 import java.util.Set;
