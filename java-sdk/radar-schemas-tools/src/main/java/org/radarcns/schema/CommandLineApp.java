@@ -33,7 +33,6 @@ import org.radarcns.schema.specification.passive.PassiveSource;
 import org.radarcns.schema.specification.passive.Processor;
 import org.radarcns.schema.specification.passive.Sensor;
 import org.radarcns.schema.validation.SchemaValidator;
-import org.radarcns.schema.validation.ValidationException;
 import org.radarcns.schema.validation.config.ExcludeConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,7 +41,6 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -51,6 +49,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * TODO.
@@ -231,24 +231,19 @@ public class CommandLineApp {
         }
         ExcludeConfig config = ExcludeConfig.load(configPath);
         SchemaValidator validator = new SchemaValidator(root, config);
-        StringBuilder result = new StringBuilder();
         if (scopeString == null) {
-            for (Scope scope : Scope.values()) {
-                Collection<ValidationException> results = validator.analyseFiles(scope);
-                for (ValidationException ex : results) {
-                    result.append("Validation FAILED:\n")
-                            .append(ex.getMessage()).append("\n\n");
-                }
-            }
+            return Stream.of(Scope.values())
+                    .flatMap(scope -> {
+                        try {
+                            return SchemaValidator.formatStream(validator.analyseFiles(scope));
+                        } catch (IOException ex) {
+                            return Stream.of("Failed to read schemas from scope " + scope + "\n\n");
+                        }
+                    })
+                    .collect(Collectors.joining());
         } else {
-            Scope scope = Scope.valueOf(scopeString);
-            Collection<ValidationException> results = validator.analyseFiles(scope);
-            for (ValidationException ex : results) {
-                result.append("Validation FAILED:\n")
-                        .append(ex.getMessage()).append("\n\n");
-            }
+            return SchemaValidator.format(validator.analyseFiles(Scope.valueOf(scopeString)));
         }
-        return result.toString();
     }
 
     @SuppressWarnings("PMD.SystemPrintln")

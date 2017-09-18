@@ -15,22 +15,20 @@
  * limitations under the License.
  */
 
-package org.radarcns.schema.validation.roles;
+package org.radarcns.schema.validation.rules;
 
 import org.radarcns.schema.validation.ValidationException;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 /**
  * TODO.
  */
-public interface Validator<T> extends Function<T, Collection<ValidationException>> {
+public interface Validator<T> extends Function<T, Stream<ValidationException>> {
     /**
      * TODO.
      * @param predicate TODO
@@ -38,8 +36,7 @@ public interface Validator<T> extends Function<T, Collection<ValidationException
      * @return TODO
      */
     static <T> Validator<T> validate(Predicate<T> predicate, String message) {
-        return object -> predicate.test(object) ? Collections.emptySet()
-                : Collections.singleton(new ValidationException(message));
+        return object -> predicate.test(object) ? valid() : raise(message);
     }
 
     /**
@@ -49,9 +46,7 @@ public interface Validator<T> extends Function<T, Collection<ValidationException
      * @return TODO
      */
     static <T> Validator<T> validate(Predicate<T> predicate, Function<T, String> message) {
-        return object -> predicate.test(object)
-                ? Collections.emptySet()
-                : Collections.singleton(new ValidationException(message.apply(object)));
+        return object -> predicate.test(object) ? valid() : raise(message).apply(object);
     }
 
     /**
@@ -159,11 +154,16 @@ public interface Validator<T> extends Function<T, Collection<ValidationException
      * @return TODO
      */
     default Validator<T> and(Validator<T> other) {
-        return object -> {
-            List<ValidationException> exceptionList = new ArrayList<>(this.apply(object));
-            exceptionList.addAll(other.apply(object));
-            return exceptionList;
-        };
+        return object -> Stream.concat(this.apply(object), other.apply(object));
+    }
+
+    /**
+     * TODO.
+     * @param other TODO
+     * @return TODO
+     */
+    default <R> Validator<T> and(Validator<R> other, Function<T, R> toOther) {
+        return object -> Stream.concat(this.apply(object), other.apply(toOther.apply(object)));
     }
 
     static boolean matches(String str, Pattern pattern) {
@@ -172,5 +172,17 @@ public interface Validator<T> extends Function<T, Collection<ValidationException
 
     static Predicate<String> matches(Pattern pattern) {
         return str -> pattern.matcher(str).matches();
+    }
+
+    static <T> Function<T, Stream<ValidationException>> raise(Function<T, String> message) {
+        return t -> raise(message.apply(t));
+    }
+
+    static Stream<ValidationException> raise(String message) {
+        return Stream.of(new ValidationException(message));
+    }
+
+    static Stream<ValidationException> valid() {
+        return Stream.empty();
     }
 }

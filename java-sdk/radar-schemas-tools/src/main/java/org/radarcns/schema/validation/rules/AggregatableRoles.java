@@ -1,12 +1,12 @@
-package org.radarcns.schema.validation.roles;
+package org.radarcns.schema.validation.rules;
 
 import org.radarcns.schema.util.Utils;
 import org.radarcns.schema.specification.Aggregatable;
 import org.radarcns.schema.validation.ValidationSupport;
 
 import static org.radarcns.schema.validation.ValidationSupport.isValidClass;
-import static org.radarcns.schema.validation.roles.Validator.validateNonNull;
-import static org.radarcns.schema.validation.roles.Validator.validateOrNull;
+import static org.radarcns.schema.validation.rules.Validator.validateNonNull;
+import static org.radarcns.schema.validation.rules.Validator.validateOrNull;
 
 /*
  * Copyright 2017 King's College London and The Hyve

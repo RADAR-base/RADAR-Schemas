@@ -1,4 +1,4 @@
-package org.radarcns.schema.validation.roles;
+package org.radarcns.schema.validation.rules;
 
 /*
  * Copyright 2017 King's College London and The Hyve
@@ -19,7 +19,7 @@ package org.radarcns.schema.validation.roles;
 import org.radarcns.catalogue.RadarWidget;
 import org.radarcns.schema.specification.active.questionnaire.Question;
 
-import static org.radarcns.schema.validation.roles.Validator.validateNonNull;
+import static org.radarcns.schema.validation.rules.Validator.validateNonNull;
 
 /**
  * TODO.

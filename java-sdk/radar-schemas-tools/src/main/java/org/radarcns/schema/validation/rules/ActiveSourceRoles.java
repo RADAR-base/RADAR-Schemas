@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package org.radarcns.schema.validation.roles;
+package org.radarcns.schema.validation.rules;
 
 import org.radarcns.schema.specification.active.ActiveSource;
 import org.radarcns.schema.specification.active.questionnaire.QuestionnaireSource;
 
-import static org.radarcns.schema.validation.roles.Validator.validateNonNull;
+import static org.radarcns.schema.validation.rules.Validator.validateNonNull;
 
 /**
  * TODO.

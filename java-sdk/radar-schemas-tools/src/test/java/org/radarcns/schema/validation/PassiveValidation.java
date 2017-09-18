@@ -59,7 +59,7 @@ public class PassiveValidation {
 
             PassiveSource source = new YamlConfigLoader().load(file, PassiveSource.class);
 
-            Collection<ValidationException> result =Validator.validatePassive(source, file);
+            Stream<ValidationException> result =Validator.validatePassive(source, file);
             assertTrue(getMessage(file, result), result.isEmpty());
 
             for (Sensor sensor : source.getSensors()) {

@@ -17,38 +17,32 @@ package org.radarcns.schema.validation;
  */
 
 import org.apache.avro.Schema;
-import org.apache.avro.Schema.Type;
 import org.radarcns.schema.Scope;
 import org.radarcns.schema.validation.config.ExcludeConfig;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.radarcns.schema.validation.rules.RadarSchemaValidationRules;
+import org.radarcns.schema.validation.rules.SchemaMetadata;
+import org.radarcns.schema.validation.rules.Validator;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Collection;
-import java.util.Objects;
-import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.radarcns.schema.SchemaRepository.COMMONS_PATH;
-import static org.radarcns.schema.validation.roles.SchemaValidationRoles.getActiveValidator;
-import static org.radarcns.schema.validation.roles.SchemaValidationRoles.getGeneralEnumValidator;
-import static org.radarcns.schema.validation.roles.SchemaValidationRoles.getGeneralRecordValidator;
-import static org.radarcns.schema.validation.roles.SchemaValidationRoles.getMonitorValidator;
-import static org.radarcns.schema.validation.roles.SchemaValidationRoles.getPassiveValidator;
 
 public class SchemaValidator {
     public static final String AVRO_EXTENSION = "avsc";
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SchemaValidator.class);
     private final Path root;
     private final ExcludeConfig config;
+    private final Validator<SchemaMetadata> validator;
 
     public SchemaValidator(Path root, ExcludeConfig config) {
         this.config = config;
         this.root = root;
+        this.validator = new RadarSchemaValidationRules(root, config)
+                .getValidator();
     }
 
     /**
@@ -56,9 +50,10 @@ public class SchemaValidator {
      * @param scope TODO.
      * @throws IOException TODO.
      */
-    public Collection<ValidationException> analyseFiles(Scope scope)
+    public Stream<ValidationException> analyseFiles(Scope scope)
             throws IOException {
         Schema.Parser parser = new Schema.Parser();
+
         return Files.walk(scope.getPath(root.resolve(COMMONS_PATH)))
                 .filter(Files::isRegularFile)
                 .filter(p -> !config.skipFile(p))
@@ -72,19 +67,25 @@ public class SchemaValidator {
                     try {
                         Schema schema = parser.parse(p.toFile());
 
-                        if (config.contains(schema)) {
-                            return validate(schema, p, scope,
-                                    config.isNameRecordEnable(schema),
-                                    config.skippedNameFieldCheck(schema)).stream();
-                        } else {
-                            return validate(schema, p, scope).stream();
-                        }
+                        return validate(schema, p, scope);
                     } catch (IOException e) {
                         return Stream.of(new ValidationException(
                                 "Cannot parse file " + p.toAbsolutePath(), e));
                     }
-                })
-                .collect(Collectors.toList());
+                });
+    }
+
+    public Stream<ValidationException> validate(Schema schema, Path path, Scope scope) {
+        return validator.apply(new SchemaMetadata(schema, scope, path));
+    }
+
+    public static Stream<String> formatStream(Stream<ValidationException> exceptionStream) {
+        return exceptionStream.map(ex -> "Validation FAILED:\n" + ex.getMessage() + "\n\n");
+    }
+
+    public static String format(Stream<ValidationException> exceptionStream) {
+        return SchemaValidator.formatStream(exceptionStream)
+                .collect(Collectors.joining());
     }
 
     /**
@@ -94,56 +95,6 @@ public class SchemaValidator {
      */
     public static boolean isAvscFile(Path file) {
         return ValidationSupport.matchesExtension(file, AVRO_EXTENSION);
-    }
-
-    public Collection<ValidationException> validate(Schema schema, Path pathToSchema,
-            Scope scope) {
-        return validate(schema, pathToSchema, scope,
-                false, null);
-    }
-
-    public Collection<ValidationException> validate(Schema schema, Path pathToSchema,
-            Scope scope, boolean skipRecordName, Set<String> skipFieldName) {
-        Objects.requireNonNull(schema);
-        Objects.requireNonNull(pathToSchema);
-        Objects.requireNonNull(scope);
-
-        Collection<ValidationException> result;
-
-        if (schema.getType().equals(Type.ENUM)) {
-            result = getGeneralEnumValidator(root, pathToSchema, scope,
-                    skipRecordName).apply(schema);
-        } else {
-            switch (scope) {
-                case ACTIVE:
-                    result = getActiveValidator(root, pathToSchema, scope, skipRecordName,
-                        skipFieldName).apply(schema);
-                    break;
-                case CATALOGUE:
-                    result = getGeneralRecordValidator(root, pathToSchema, scope,
-                        skipRecordName, skipFieldName).apply(schema);
-                    break;
-                case KAFKA:
-                    result = getGeneralRecordValidator(root, pathToSchema, scope,
-                            skipRecordName, skipFieldName).apply(schema);
-                    break;
-                case MONITOR:
-                    result = getMonitorValidator(root, pathToSchema, scope, skipRecordName,
-                        skipFieldName).apply(schema);
-                    break;
-                case PASSIVE:
-                    result = getPassiveValidator(root, pathToSchema, scope, skipRecordName,
-                        skipFieldName).apply(schema);
-                    break;
-                default:
-                    LOGGER.warn("Applying general validation to {}", getPath(pathToSchema));
-                    result = getGeneralRecordValidator(root, pathToSchema, scope, skipRecordName,
-                            skipFieldName).apply(schema);
-                    break;
-            }
-        }
-
-        return result;
     }
 
     /**

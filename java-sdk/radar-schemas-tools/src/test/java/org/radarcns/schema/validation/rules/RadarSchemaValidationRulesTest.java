@@ -14,39 +14,42 @@
  * limitations under the License.
  */
 
-package org.radarcns.schema.validation.roles;
+package org.radarcns.schema.validation.rules;
 
 import org.apache.avro.Schema;
 import org.apache.avro.Schema.Parser;
 import org.apache.avro.SchemaBuilder;
+import org.junit.Before;
 import org.junit.Test;
 import org.radarcns.schema.validation.ValidationException;
 import org.radarcns.schema.validation.ValidationSupport;
+import org.radarcns.schema.validation.config.ExcludeConfig;
 
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Collection;
 import java.util.Collections;
+import java.util.stream.Stream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.radarcns.schema.SchemaRepository.COMMONS_PATH;
 import static org.radarcns.schema.Scope.ACTIVE;
 import static org.radarcns.schema.Scope.MONITOR;
-import static org.radarcns.schema.SchemaRepository.COMMONS_PATH;
+import static org.radarcns.schema.Scope.PASSIVE;
 import static org.radarcns.schema.specification.SourceCatalogue.BASE_PATH;
-import static org.radarcns.schema.validation.roles.SchemaValidationRoles.ENUM_SYMBOL_PATTERN;
-import static org.radarcns.schema.validation.roles.SchemaValidationRoles.FIELD_NAME_PATTERN;
-import static org.radarcns.schema.validation.roles.SchemaValidationRoles.NAMESPACE_PATTERN;
-import static org.radarcns.schema.validation.roles.SchemaValidationRoles.RECORD_NAME_PATTERN;
-import static org.radarcns.schema.validation.roles.SchemaValidationRoles.validateNameSpace;
-import static org.radarcns.schema.validation.roles.Validator.matches;
+import static org.radarcns.schema.validation.rules.RadarSchemaValidationRules.ENUM_SYMBOL_PATTERN;
+import static org.radarcns.schema.validation.rules.RadarSchemaValidationRules.FIELD_NAME_PATTERN;
+import static org.radarcns.schema.validation.rules.RadarSchemaValidationRules.NAMESPACE_PATTERN;
+import static org.radarcns.schema.validation.rules.RadarSchemaValidationRules.RECORD_NAME_PATTERN;
+import static org.radarcns.schema.validation.rules.Validator.matches;
 
 /**
  * TODO.
  */
-public class SchemaValidationRolesTest {
+public class RadarSchemaValidationRulesTest {
 
     private static final String ACTIVE_NAME_SPACE_MOCK = "org.radarcns.active.test";
     private static final String MONITOR_NAME_SPACE_MOCK = "org.radarcns.monitor.test";
@@ -55,6 +58,14 @@ public class SchemaValidationRolesTest {
 
     private static final String RECORD_NAME_MOCK = "RecordName";
     private static final String FIELD_NUMBER_MOCK = "Field1";
+    private RadarSchemaValidationRules validator;
+    private ExcludeConfig config;
+
+    @Before
+    public void setUp() throws IOException {
+        config = new ExcludeConfig();
+        validator = new RadarSchemaValidationRules(BASE_PATH, config);
+    }
 
     @Test
     public void fileNameTest() {
@@ -98,7 +109,7 @@ public class SchemaValidationRolesTest {
     public void fieldNameRegex() {
         assertTrue(matches("interBeatInterval", FIELD_NAME_PATTERN));
         assertTrue(matches("x", FIELD_NAME_PATTERN));
-        assertTrue(matches(SchemaValidationRoles.TIME, FIELD_NAME_PATTERN));
+        assertTrue(matches(RadarSchemaValidationRules.TIME, FIELD_NAME_PATTERN));
         assertTrue(matches("subjectId", FIELD_NAME_PATTERN));
         assertTrue(matches("listOfSeveralThings", FIELD_NAME_PATTERN));
         assertFalse(matches("Time", FIELD_NAME_PATTERN));
@@ -130,10 +141,10 @@ public class SchemaValidationRolesTest {
         assertNotNull(root);
         Path path = root.resolve("questionnaire/questionnaire.avsc");
 
-        Collection<ValidationException> result = validateNameSpace(BASE_PATH, path, ACTIVE)
-                .apply(schema);
+        Stream<ValidationException> result = validator.validateNameSpace()
+                .apply(new SchemaMetadata(schema, ACTIVE, path));
 
-        assertTrue(result.isEmpty());
+        assertEquals(0, result.count());
     }
 
     @Test
@@ -147,10 +158,10 @@ public class SchemaValidationRolesTest {
         Path root = MONITOR.getPath(BASE_PATH.resolve(COMMONS_PATH));
         assertNotNull(root);
         Path path = root.resolve("test/record_name.avsc");
-        Collection<ValidationException> result = validateNameSpace(BASE_PATH, path, MONITOR)
-                .apply(schema);
+        Stream<ValidationException> result = validator.validateNameSpace()
+                .apply(new SchemaMetadata(schema, MONITOR, path));
 
-        assertFalse(result.isEmpty());
+        assertEquals(1, result.count());
 
     }
 
@@ -165,10 +176,10 @@ public class SchemaValidationRolesTest {
         Path root = MONITOR.getPath(BASE_PATH.resolve(COMMONS_PATH));
         assertNotNull(root);
         Path path = root.resolve("test/record_name.avsc");
-        Collection<ValidationException> result = validateNameSpace(BASE_PATH, path, MONITOR)
-                .apply(schema);
+        Stream<ValidationException> result = validator.validateNameSpace()
+                .apply(new SchemaMetadata(schema, MONITOR, path));
 
-        assertFalse(result.isEmpty());
+        assertEquals(1, result.count());
     }
 
     @Test
@@ -183,10 +194,10 @@ public class SchemaValidationRolesTest {
         Path root = MONITOR.getPath(BASE_PATH.resolve(COMMONS_PATH));
         assertNotNull(root);
         Path path = root.resolve("test/record_name.avsc");
-        Collection<ValidationException> result = validateNameSpace(BASE_PATH, path, MONITOR)
-                .apply(schema);
+        Stream<ValidationException> result = validator.validateNameSpace()
+                .apply(new SchemaMetadata(schema, MONITOR, path));
 
-        assertFalse(result.isEmpty());
+        assertEquals(1, result.count());
     }
 
     @Test
@@ -197,11 +208,12 @@ public class SchemaValidationRolesTest {
                     .fields()
                     .endRecord();
 
-        Collection<ValidationException> result = SchemaValidationRoles.validateRecordName(
-                Paths.get("/path/to/schema.avsc")).apply(schema);
+        Stream<ValidationException> result = validator.validateRecordName()
+                .apply(new SchemaMetadata(schema, ACTIVE, Paths.get("/path/to/schema.avsc")));
 
-        assertTrue(result.isEmpty());
+        assertEquals(0, result.count());
 
+        // misspell aceleration
         String fieldName = "EmpaticaE4Aceleration";
         Path filePath = Paths.get("/path/to/empatica_e4_acceleration.avsc");
 
@@ -211,19 +223,22 @@ public class SchemaValidationRolesTest {
                     .fields()
                     .endRecord();
 
-        result = SchemaValidationRoles.validateRecordName(filePath).apply(schema);
+        result = validator.validateRecordName()
+                .apply(new SchemaMetadata(schema, PASSIVE, filePath));
 
-        assertFalse(result.isEmpty());
+        assertEquals(1, result.count());
 
-        result = SchemaValidationRoles.validateRecordName(filePath, true).apply(schema);
+        config.setFiles("/path/to/empatica_e4_acceleration.avsc");
+        result = validator.validateRecordName()
+                .apply(new SchemaMetadata(schema, PASSIVE, filePath));
 
-        assertTrue(result.isEmpty());
+        assertEquals(0, result.count());
     }
 
     @Test
     public void fieldsTest() {
         Schema schema;
-        Collection<ValidationException> result;
+        Stream<ValidationException> result;
 
         schema = SchemaBuilder
                 .builder(MONITOR_NAME_SPACE_MOCK)
@@ -231,9 +246,9 @@ public class SchemaValidationRolesTest {
                 .fields()
                 .endRecord();
 
-        result = SchemaValidationRoles.validateFields().apply(schema);
+        result = validator.validateFields().apply(schema);
 
-        assertFalse(result.isEmpty());
+        assertEquals(1, result.count());
 
         schema = SchemaBuilder
           .builder(MONITOR_NAME_SPACE_MOCK)
@@ -242,15 +257,15 @@ public class SchemaValidationRolesTest {
           .optionalBoolean("optional")
           .endRecord();
 
-        result = SchemaValidationRoles.validateFields().apply(schema);
+        result = validator.validateFields().apply(schema);
 
-        assertTrue(result.isEmpty());
+        assertEquals(0, result.count());
     }
 
     @Test
     public void timeTest() {
         Schema schema;
-        Collection<ValidationException> result;
+        Stream<ValidationException> result;
 
         schema = SchemaBuilder
                     .builder("org.radarcns.time.test")
@@ -259,26 +274,26 @@ public class SchemaValidationRolesTest {
                     .requiredString("string")
                     .endRecord();
 
-        result = SchemaValidationRoles.validateTime().apply(schema);
+        result = validator.validateTime().apply(schema);
 
-        assertFalse(result.isEmpty());
+        assertEquals(1, result.count());
 
         schema = SchemaBuilder
                     .builder("org.radarcns.time.test")
                     .record(RECORD_NAME_MOCK)
                     .fields()
-                    .requiredDouble(SchemaValidationRoles.TIME)
+                    .requiredDouble(RadarSchemaValidationRules.TIME)
                     .endRecord();
 
-        result = SchemaValidationRoles.validateTime().apply(schema);
+        result = validator.validateTime().apply(schema);
 
-        assertTrue(result.isEmpty());
+        assertEquals(0, result.count());
     }
 
     @Test
     public void timeCompletedTest() {
         Schema schema;
-        Collection<ValidationException> result;
+        Stream<ValidationException> result;
 
         schema = SchemaBuilder
                     .builder(ACTIVE_NAME_SPACE_MOCK)
@@ -287,11 +302,11 @@ public class SchemaValidationRolesTest {
                     .requiredString("field")
                     .endRecord();
 
-        result = SchemaValidationRoles.validateTimeCompleted().apply(schema);
-        assertFalse(result.isEmpty());
+        result = validator.validateTimeCompleted().apply(schema);
+        assertEquals(1, result.count());
 
-        result = SchemaValidationRoles.validateNotTimeCompleted().apply(schema);
-        assertTrue(result.isEmpty());
+        result = validator.validateNotTimeCompleted().apply(schema);
+        assertEquals(0, result.count());
 
         schema = SchemaBuilder
                       .builder(ACTIVE_NAME_SPACE_MOCK)
@@ -300,17 +315,17 @@ public class SchemaValidationRolesTest {
                       .requiredDouble("timeCompleted")
                       .endRecord();
 
-        result = SchemaValidationRoles.validateTimeCompleted().apply(schema);
-        assertTrue(result.isEmpty());
+        result = validator.validateTimeCompleted().apply(schema);
+        assertEquals(0, result.count());
 
-        result = SchemaValidationRoles.validateNotTimeCompleted().apply(schema);
-        assertFalse(result.isEmpty());
+        result = validator.validateNotTimeCompleted().apply(schema);
+        assertEquals(1, result.count());
     }
 
     @Test
     public void timeReceivedTest() {
         Schema schema;
-        Collection<ValidationException> result;
+        Stream<ValidationException> result;
 
         schema = SchemaBuilder
                     .builder(MONITOR_NAME_SPACE_MOCK)
@@ -319,11 +334,11 @@ public class SchemaValidationRolesTest {
                     .requiredString("field")
                     .endRecord();
 
-        result = SchemaValidationRoles.validateTimeReceived().apply(schema);
-        assertFalse(result.isEmpty());
+        result = validator.validateTimeReceived().apply(schema);
+        assertEquals(1, result.count());
 
-        result = SchemaValidationRoles.validateNotTimeReceived().apply(schema);
-        assertTrue(result.isEmpty());
+        result = validator.validateNotTimeReceived().apply(schema);
+        assertEquals(0, result.count());
 
         schema = SchemaBuilder
                     .builder(MONITOR_NAME_SPACE_MOCK)
@@ -332,17 +347,17 @@ public class SchemaValidationRolesTest {
                     .requiredDouble("timeReceived")
                     .endRecord();
 
-        result = SchemaValidationRoles.validateTimeReceived().apply(schema);
-        assertTrue(result.isEmpty());
+        result = validator.validateTimeReceived().apply(schema);
+        assertEquals(0, result.count());
 
-        result = SchemaValidationRoles.validateNotTimeReceived().apply(schema);
-        assertFalse(result.isEmpty());
+        result = validator.validateNotTimeReceived().apply(schema);
+        assertEquals(1, result.count());
     }
 
     @Test
     public void fieldNameTest() {
         Schema schema;
-        Collection<ValidationException> result;
+        Stream<ValidationException> result;
 
         schema = SchemaBuilder
                 .builder(MONITOR_NAME_SPACE_MOCK)
@@ -351,8 +366,8 @@ public class SchemaValidationRolesTest {
                 .requiredString(FIELD_NUMBER_MOCK + "value")
                 .endRecord();
 
-        result = SchemaValidationRoles.validateFieldName().apply(schema);
-        assertFalse(result.isEmpty());
+        result = validator.validateFieldName().apply(schema);
+        assertEquals(1, result.count());
 
         schema = SchemaBuilder
                 .builder(MONITOR_NAME_SPACE_MOCK)
@@ -361,20 +376,20 @@ public class SchemaValidationRolesTest {
                 .requiredString(FIELD_NUMBER_MOCK)
                 .endRecord();
 
-        result = SchemaValidationRoles.validateFieldName().apply(schema);
-        assertFalse(result.isEmpty());
+        result = validator.validateFieldName().apply(schema);
+        assertEquals(1, result.count());
 
         schema = SchemaBuilder
           .builder(MONITOR_NAME_SPACE_MOCK)
           .record(RECORD_NAME_MOCK)
           .fields()
           .requiredString(FIELD_NUMBER_MOCK)
-          .requiredString(SchemaValidationRoles.TIME)
+          .requiredString(RadarSchemaValidationRules.TIME)
           .endRecord();
 
-        result = SchemaValidationRoles.validateFieldName(
-                Collections.singleton(SchemaValidationRoles.TIME)).apply(schema);
-        assertFalse(result.isEmpty());
+        result = validator.validateFieldName(s ->
+                Collections.singleton(RadarSchemaValidationRules.TIME)).apply(schema);
+        assertEquals(1, result.count());
 
         schema = SchemaBuilder
               .builder(MONITOR_NAME_SPACE_MOCK)
@@ -383,26 +398,26 @@ public class SchemaValidationRolesTest {
               .requiredDouble("timeReceived")
               .endRecord();
 
-        result = SchemaValidationRoles.validateFieldName().apply(schema);
-        assertTrue(result.isEmpty());
+        result = validator.validateFieldName().apply(schema);
+        assertEquals(0, result.count());
 
         schema = SchemaBuilder
               .builder(MONITOR_NAME_SPACE_MOCK)
               .record(RECORD_NAME_MOCK)
               .fields()
               .requiredString(FIELD_NUMBER_MOCK)
-              .requiredString(SchemaValidationRoles.TIME)
+              .requiredString(RadarSchemaValidationRules.TIME)
               .endRecord();
 
-        result = SchemaValidationRoles.validateFieldName(
+        result = validator.validateFieldName(s ->
                 Collections.singleton(FIELD_NUMBER_MOCK)).apply(schema);
-        assertTrue(result.isEmpty());
+        assertEquals(0, result.count());
     }
 
     @Test
     public void filedDocumentationTest() {
         Schema schema;
-        Collection<ValidationException> result;
+        Stream<ValidationException> result;
 
         schema = new Parser().parse("{\"namespace\": \"org.radarcns.kafka.key\", "
                 + "\"type\": \"record\","
@@ -410,22 +425,22 @@ public class SchemaValidationRolesTest {
                 + "{\"name\": \"userId\", \"type\": \"string\" , \"doc\": \"Documentation\"},"
                 + "{\"name\": \"sourceId\", \"type\": \"string\"} ]}");
 
-        result = SchemaValidationRoles.validateFieldDocumentation().apply(schema);
+        result = validator.validateFieldDocumentation().apply(schema);
 
-        assertFalse(result.isEmpty());
+        assertEquals(1, result.count());
 
         schema = new Parser().parse("{\"namespace\": \"org.radarcns.kafka.key\", "
                 + "\"type\": \"record\", \"name\": \"key\", \"type\": \"record\", \"fields\": ["
                 + "{\"name\": \"userId\", \"type\": \"string\" , \"doc\": \"Documentation.\"}]}");
 
-        result = SchemaValidationRoles.validateFieldDocumentation().apply(schema);
-        assertTrue(result.isEmpty());
+        result = validator.validateFieldDocumentation().apply(schema);
+        assertEquals(0, result.count());
     }
 
     @Test
     public void schemaDocumentationTest() {
         Schema schema;
-        Collection<ValidationException> result;
+        Stream<ValidationException> result;
 
         schema = SchemaBuilder
               .builder(MONITOR_NAME_SPACE_MOCK)
@@ -433,9 +448,9 @@ public class SchemaValidationRolesTest {
               .fields()
               .endRecord();
 
-        result = SchemaValidationRoles.validateSchemaDocumentation().apply(schema);
+        result = validator.validateSchemaDocumentation().apply(schema);
 
-        assertFalse(result.isEmpty());
+        assertEquals(1, result.count());
 
         schema = SchemaBuilder
               .builder(MONITOR_NAME_SPACE_MOCK)
@@ -444,34 +459,34 @@ public class SchemaValidationRolesTest {
               .fields()
               .endRecord();
 
-        result = SchemaValidationRoles.validateSchemaDocumentation().apply(schema);
+        result = validator.validateSchemaDocumentation().apply(schema);
 
-        assertTrue(result.isEmpty());
+        assertEquals(0, result.count());
     }
 
     @Test
     public void enumerationSymbolsTest() {
         Schema schema;
-        Collection<ValidationException> result;
+        Stream<ValidationException> result;
 
         schema = SchemaBuilder.enumeration(ENUMERATOR_NAME_SPACE_MOCK)
             .symbols("TEST", UNKNOWN_MOCK);
 
-        result = SchemaValidationRoles.validateSymbols().apply(schema);
+        result = validator.validateSymbols().apply(schema);
 
-        assertTrue(result.isEmpty());
+        assertEquals(0, result.count());
 
         schema = SchemaBuilder.enumeration(ENUMERATOR_NAME_SPACE_MOCK).symbols();
 
-        result = SchemaValidationRoles.validateSymbols().apply(schema);
+        result = validator.validateSymbols().apply(schema);
 
-        assertFalse(result.isEmpty());
+        assertEquals(1, result.count());
     }
 
     @Test
     public void enumerationSymbolTest() {
         Schema schema;
-        Collection<ValidationException> result;
+        Stream<ValidationException> result;
 
         String enumName = "org.radarcns.monitor.application.ApplicationServerStatus";
         String connected = "CONNECTED";
@@ -480,9 +495,9 @@ public class SchemaValidationRolesTest {
               .enumeration(enumName)
               .symbols(connected, "DISCONNECTED", UNKNOWN_MOCK);
 
-        result = SchemaValidationRoles.validateEnumerationSymbols().apply(schema);
+        result = validator.validateEnumerationSymbols().apply(schema);
 
-        assertTrue(result.isEmpty());
+        assertEquals(0, result.count());
 
         String schemaTxtInit = "{\"namespace\": \"org.radarcns.monitor.application\", "
                 + "\"type\": \"record\", \"name\": \"ApplicationServerStatus\", \"fields\": "
@@ -494,74 +509,56 @@ public class SchemaValidationRolesTest {
         schema = new Parser().parse(schemaTxtInit
                 + "\"CONNECTED\", \"NOT_CONNECTED\", \"" + UNKNOWN_MOCK + "\"" + schemaTxtEnd);
 
-        result = SchemaValidationRoles.validateEnumerationSymbols().apply(schema);
+        result = validator.validateEnumerationSymbols().apply(schema);
 
-        assertTrue(result.isEmpty());
+        assertEquals(0, result.count());
 
         schema = SchemaBuilder
               .enumeration(enumName)
               .symbols(connected, "disconnected", UNKNOWN_MOCK);
 
-        result = SchemaValidationRoles.validateEnumerationSymbols().apply(schema);
+        result = validator.validateEnumerationSymbols().apply(schema);
 
-        assertFalse(result.isEmpty());
+        assertEquals(1, result.count());
 
         schema = SchemaBuilder
               .enumeration(enumName)
               .symbols(connected, "Not_Connected", UNKNOWN_MOCK);
 
-        result = SchemaValidationRoles.validateEnumerationSymbols().apply(schema);
+        result = validator.validateEnumerationSymbols().apply(schema);
 
-        assertFalse(result.isEmpty());
+        assertEquals(1, result.count());
 
         schema = SchemaBuilder
               .enumeration(enumName)
               .symbols(connected, "NotConnected", UNKNOWN_MOCK);
 
-        result = SchemaValidationRoles.validateEnumerationSymbols().apply(schema);
+        result = validator.validateEnumerationSymbols().apply(schema);
 
-        assertFalse(result.isEmpty());
+        assertEquals(1, result.count());
 
         schema = new Parser().parse(schemaTxtInit
                 + "\"CONNECTED\", \"Not_Connected\", \"" + UNKNOWN_MOCK + "\"" + schemaTxtEnd);
 
-        result = SchemaValidationRoles.validateEnumerationSymbols().apply(schema);
+        result = validator.validateEnumerationSymbols().apply(schema);
 
-        assertFalse(result.isEmpty());
+        assertEquals(1, result.count());
 
         schema = new Parser().parse(schemaTxtInit
                 + "\"Connected\", \"NotConnected\", \"" + UNKNOWN_MOCK + "\"" + schemaTxtEnd);
 
-        result = SchemaValidationRoles.validateEnumerationSymbols().apply(schema);
+        result = validator.validateEnumerationSymbols().apply(schema);
 
-        assertFalse(result.isEmpty());
+        assertEquals(1, result.count());
     }
 
     @Test
-    public void unknownSymbolTest() {
-        Schema schema;
-        Collection<ValidationException> result;
-
-        schema = SchemaBuilder.enumeration(ENUMERATOR_NAME_SPACE_MOCK)
-            .symbols("VALUE", UNKNOWN_MOCK);
-
-        result = SchemaValidationRoles.validateUnknownSymbol().apply(schema);
-
-        assertTrue(result.isEmpty());
-
-        schema = SchemaBuilder.enumeration(ENUMERATOR_NAME_SPACE_MOCK)
-            .symbols("FIELD", "UN_KNOWN");
-
-        result = SchemaValidationRoles.validateUnknownSymbol().apply(schema);
-
-        assertFalse(result.isEmpty());
-    }
-
-    @Test(expected = IllegalArgumentException.class)
     public void defaultValueExceptionTest() {
-        SchemaValidationRoles.validateDefault().apply(
+        Stream<ValidationException> result = validator.validateDefault().apply(
                 SchemaBuilder.enumeration(ENUMERATOR_NAME_SPACE_MOCK)
-                    .symbols("VAL", UNKNOWN_MOCK));
+                        .symbols("VAL", UNKNOWN_MOCK));
+
+        assertEquals(1, result.count());
     }
 
     @Test
@@ -572,7 +569,7 @@ public class SchemaValidationRolesTest {
         //String recordName = "TestRecord";
 
         Schema schema;
-        Collection<ValidationException> result;
+        Stream<ValidationException> result;
 
         /*schema = SchemaBuilder
             .builder(namespace)
@@ -589,9 +586,9 @@ public class SchemaValidationRolesTest {
             .nullableBytes("nullableBytes", new byte[1])  //check with text schema
             .endRecord();
 
-        result = SchemaValidationRoles.validateDefault().apply(schema);
+        result = validator.validateDefault().apply(schema);
 
-        assertTrue(result.isEmpty());*/
+        assertEquals(0, result.count());*/
 
         String scemaTxtInit = "{\"namespace\": \"org.radarcns.test\", "
                 + "\"type\": \"record\", \"name\": \"TestRecord\", \"fields\": ";
@@ -600,9 +597,9 @@ public class SchemaValidationRolesTest {
             + "[ {\"name\": \"nullableBytes\", \"type\": [ \"null\", \"bytes\"], "
             + "\"default\": \"null\" } ] }");
 
-        result = SchemaValidationRoles.validateDefault().apply(schema);
+        result = validator.validateDefault().apply(schema);
 
-        assertTrue(result.isEmpty());
+        assertEquals(0, result.count());
 
         schema = SchemaBuilder
             .builder(namespace)
@@ -611,9 +608,9 @@ public class SchemaValidationRolesTest {
             .nullableDouble("nullableDouble", -1)
             .endRecord();
 
-        result = SchemaValidationRoles.validateDefault().apply(schema);*/
+        result = validator.validateDefault().apply(schema);*/
 
-        /*assertFalse(result.isEmpty());
+        /*assertEquals(1, result.count());
         assertEquals(Optional.of(invalidMessage), result.getReason());
 
         schema = SchemaBuilder
@@ -623,9 +620,9 @@ public class SchemaValidationRolesTest {
             .nullableInt("nullableInt", -1)
             .endRecord();
 
-        result = SchemaValidationRoles.validateDefault().apply(schema);
+        result = validator.validateDefault().apply(schema);
 
-        assertFalse(result.isEmpty());
+        assertEquals(1, result.count());
         assertEquals(Optional.of(invalidMessage), result.getReason());
 
         schema = SchemaBuilder
@@ -635,9 +632,9 @@ public class SchemaValidationRolesTest {
             .nullableLong("nullableLong", -1)
             .endRecord();
 
-        result = SchemaValidationRoles.validateDefault().apply(schema);
+        result = validator.validateDefault().apply(schema);
 
-        assertFalse(result.isEmpty());
+        assertEquals(1, result.count());
         assertEquals(Optional.of(invalidMessage), result.getReason());*/
 
         schema = new Parser().parse(scemaTxtInit
@@ -645,26 +642,26 @@ public class SchemaValidationRolesTest {
             + "\"enum\", \"symbols\": [\"Connected\", \"NotConnected\", \"UNKNOWN\"] }, "
             + "\"default\": \"UNKNOWN\" } ] }");
 
-        result = SchemaValidationRoles.validateDefault().apply(schema);
+        result = validator.validateDefault().apply(schema);
 
-        assertTrue(result.isEmpty());
+        assertEquals(0, result.count());
 
         schema = new Parser().parse(scemaTxtInit
             + "[ {\"name\": \"serverStatus\", \"type\": {\"name\": \"ServerStatus\", \"type\": "
             + "\"enum\", \"symbols\": [\"Connected\", \"NotConnected\", \"UNKNOWN\"] }, "
             + "\"default\": \"null\" } ] }");
 
-        result = SchemaValidationRoles.validateDefault().apply(schema);
+        result = validator.validateDefault().apply(schema);
 
-        assertFalse(result.isEmpty());
+        assertEquals(1, result.count());
 
         /*schema = new Parser().parse(scemaTxtInit
             + "[ {\"name\": \"nullableBoolean\", \"type\": [ \"null\", \"boolean\"], "
             + "\"default\": \"null\" } ] }");
 
-        result = SchemaValidationRoles.validateDefault().apply(schema);
+        result = validator.validateDefault().apply(schema);
 
-        assertFalse(result.isEmpty());
+        assertEquals(1, result.count());
         assertEquals(Optional.of(invalidMessage), result.getReason());*/
     }
 }

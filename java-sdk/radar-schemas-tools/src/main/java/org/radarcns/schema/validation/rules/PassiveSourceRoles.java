@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.radarcns.schema.validation.roles;
+package org.radarcns.schema.validation.rules;
 
 import org.radarcns.schema.specification.SourceCatalogue;
 import org.radarcns.schema.specification.passive.PassiveSource;
@@ -27,9 +27,9 @@ import java.util.Objects;
 import java.util.Set;
 
 import static org.radarcns.schema.validation.ValidationSupport.equalsFileName;
-import static org.radarcns.schema.validation.roles.Validator.validate;
-import static org.radarcns.schema.validation.roles.Validator.validateNonNull;
-import static org.radarcns.schema.validation.roles.Validator.validateOrNull;
+import static org.radarcns.schema.validation.rules.Validator.validate;
+import static org.radarcns.schema.validation.rules.Validator.validateNonNull;
+import static org.radarcns.schema.validation.rules.Validator.validateOrNull;
 
 /**
  * TODO.

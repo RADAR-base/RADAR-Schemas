@@ -35,7 +35,7 @@ import java.util.regex.Pattern;
 import static org.radarcns.schema.SchemaRepository.COMMONS_PATH;
 import static org.radarcns.schema.util.Utils.getProjectGroup;
 import static org.radarcns.schema.util.Utils.toSnakeCase;
-import static org.radarcns.schema.validation.roles.SchemaValidationRoles.UNKNOWN;
+import static org.radarcns.schema.validation.rules.RadarSchemaValidationRules.UNKNOWN;
 
 /**
  * TODO.

@@ -26,12 +26,9 @@ import org.radarcns.schema.validation.config.ExcludeConfig;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Collection;
-import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.radarcns.schema.Scope.ACTIVE;
 import static org.radarcns.schema.Scope.CATALOGUE;
@@ -78,13 +75,10 @@ public class SchemaValidatorTest {
     }
 
     private void testScope(Scope scope) throws IOException {
-        Collection<ValidationException> results = validator.analyseFiles(scope);
-        if (!results.isEmpty()) {
-            String resultString = results.stream()
-                    .map(r -> "\nValidation FAILED:\n" + r.getMessage() + "\n")
-                    .collect(Collectors.joining());
+        String result = SchemaValidator.format(validator.analyseFiles(scope));
 
-            fail(resultString);
+        if (!result.isEmpty()) {
+            fail(result);
         }
     }
 
@@ -112,9 +106,9 @@ public class SchemaValidatorTest {
                 .doc(documentation)
                 .symbols("CONNECTED", "DISCONNECTED", "UNKNOWN");
 
-        Collection<ValidationException> result = validator.validate(schema, schemaPath, MONITOR);
+        Stream<ValidationException> result = validator.validate(schema, schemaPath, MONITOR);
 
-        assertTrue(result.isEmpty());
+        assertEquals(0, result.count());
 
         schema = SchemaBuilder
                 .enumeration(name)
@@ -123,7 +117,6 @@ public class SchemaValidatorTest {
 
         result = validator.validate(schema, schemaPath, MONITOR);
 
-        assertFalse(result.isEmpty());
+        assertEquals(1, result.count());
     }
-
 }

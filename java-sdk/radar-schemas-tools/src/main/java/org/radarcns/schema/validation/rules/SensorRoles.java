@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-package org.radarcns.schema.validation.roles;
+package org.radarcns.schema.validation.rules;
 
 import org.radarcns.catalogue.ProcessingState;
 import org.radarcns.catalogue.SensorName;
 import org.radarcns.schema.specification.passive.Sensor;
 
-import static org.radarcns.schema.validation.roles.PassiveSourceRoles.RADAR_PROVIDERS;
-import static org.radarcns.schema.validation.roles.Validator.validateNonNull;
-import static org.radarcns.schema.validation.roles.Validator.validateOrNull;
+import static org.radarcns.schema.validation.rules.PassiveSourceRoles.RADAR_PROVIDERS;
+import static org.radarcns.schema.validation.rules.Validator.validateNonNull;
+import static org.radarcns.schema.validation.rules.Validator.validateOrNull;
 
 /**
  * TODO.

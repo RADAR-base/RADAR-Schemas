@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.radarcns.schema.validation.roles;
+package org.radarcns.schema.validation.rules;
 
 import org.radarcns.schema.specification.Topic;
 import org.radarcns.schema.util.Utils;
@@ -23,12 +23,11 @@ import org.radarcns.schema.validation.ValidationSupport;
 
 import java.util.Collection;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 import static org.radarcns.schema.validation.ValidationSupport.isValidClass;
 import static org.radarcns.schema.validation.ValidationSupport.isValidTopic;
-import static org.radarcns.schema.validation.roles.Validator.validate;
-import static org.radarcns.schema.validation.roles.Validator.validateNonNull;
+import static org.radarcns.schema.validation.rules.Validator.validate;
+import static org.radarcns.schema.validation.rules.Validator.validateNonNull;
 
 /**
  * TODO.
@@ -81,7 +80,6 @@ public final class TopicRoles {
         return topics -> topics.stream()
                     .filter(topic -> !isValidTopic(topic))
                     .map(topic -> new ValidationException(
-                            TOPIC + ValidationSupport.isValidTopicVerbose(topic)))
-                    .collect(Collectors.toList());
+                            TOPIC + ValidationSupport.isValidTopicVerbose(topic)));
     }
 }

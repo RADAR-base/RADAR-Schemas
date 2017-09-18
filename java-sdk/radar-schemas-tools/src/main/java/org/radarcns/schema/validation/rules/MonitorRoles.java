@@ -1,4 +1,4 @@
-package org.radarcns.schema.validation.roles;
+package org.radarcns.schema.validation.rules;
 
 import org.radarcns.schema.specification.MonitorSource;
 import org.radarcns.schema.util.Utils;
@@ -9,7 +9,7 @@ import java.util.Set;
 
 import static org.radarcns.schema.specification.SourceCatalogue.YAML_EXTENSION;
 import static org.radarcns.schema.validation.ValidationSupport.equalsFileName;
-import static org.radarcns.schema.validation.roles.Validator.validateNonNull;
+import static org.radarcns.schema.validation.rules.Validator.validateNonNull;
 
 /*
  * Copyright 2017 King's College London and The Hyve
