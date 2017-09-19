@@ -29,6 +29,10 @@ import java.util.stream.Stream;
  * TODO.
  */
 public interface Validator<T> extends Function<T, Stream<ValidationException>> {
+    static Stream<ValidationException> check(boolean test, String message) {
+        return test ? valid() : raise(message);
+    }
+
     /**
      * TODO.
      * @param predicate TODO
@@ -36,7 +40,7 @@ public interface Validator<T> extends Function<T, Stream<ValidationException>> {
      * @return TODO
      */
     static <T> Validator<T> validate(Predicate<T> predicate, String message) {
-        return object -> predicate.test(object) ? valid() : raise(message);
+        return object -> check(predicate.test(object), message);
     }
 
     /**
@@ -46,7 +50,11 @@ public interface Validator<T> extends Function<T, Stream<ValidationException>> {
      * @return TODO
      */
     static <T> Validator<T> validate(Predicate<T> predicate, Function<T, String> message) {
-        return object -> predicate.test(object) ? valid() : raise(message).apply(object);
+        return object -> check(predicate.test(object), message.apply(object));
+    }
+
+    static <T, V> Validator<T> validate(Function<T, V> property, Predicate<V> predicate, Function<T, String> message) {
+        return object -> check(predicate.test(property.apply(object)), message.apply(object));
     }
 
     /**
@@ -85,6 +93,38 @@ public interface Validator<T> extends Function<T, Stream<ValidationException>> {
             V val = property.apply(o);
             return val != null && predicate.test(val);
         }, message);
+    }
+
+    /**
+     * TODO.
+     * @param message TODO
+     * @return TODO
+     */
+    static <T> Validator<T> validateNonEmpty(Function<T, String> property,
+            Function<T, String> message, Validator<String> validator) {
+        return o -> {
+            String val = property.apply(o);
+            if (val == null || val.isEmpty()) {
+                return raise(message.apply(o));
+            }
+            return validator.apply(val);
+        };
+    }
+
+    /**
+     * TODO.
+     * @param message TODO
+     * @return TODO
+     */
+    static <T> Validator<T> validateNonEmpty(Function<T, String> property, String message,
+            Validator<String> validator) {
+        return o -> {
+            String val = property.apply(o);
+            if (val == null || val.isEmpty()) {
+                return raise(message);
+            }
+            return validator.apply(val);
+        };
     }
 
     /**
@@ -172,10 +212,6 @@ public interface Validator<T> extends Function<T, Stream<ValidationException>> {
 
     static Predicate<String> matches(Pattern pattern) {
         return str -> pattern.matcher(str).matches();
-    }
-
-    static <T> Function<T, Stream<ValidationException>> raise(Function<T, String> message) {
-        return t -> raise(message.apply(t));
     }
 
     static Stream<ValidationException> raise(String message) {

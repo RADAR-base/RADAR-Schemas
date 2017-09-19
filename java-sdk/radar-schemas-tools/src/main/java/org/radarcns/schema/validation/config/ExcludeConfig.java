@@ -131,7 +131,7 @@ public class ExcludeConfig {
      * @return TODO
      */
     public boolean isSkipped(SchemaField field) {
-        Schema schema = field.getSchemaMetadata().getSchema();
+        Schema schema = field.getSchema();
         ConfigItem item = validation.get(schema.getFullName()) == null
                 ? validation.get(schema.getNamespace() + WILD_CARD_PACKAGE)
                 : validation.get(schema.getFullName());

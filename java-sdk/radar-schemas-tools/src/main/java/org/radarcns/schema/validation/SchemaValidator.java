@@ -19,7 +19,8 @@ package org.radarcns.schema.validation;
 import org.apache.avro.Schema;
 import org.radarcns.schema.Scope;
 import org.radarcns.schema.validation.config.ExcludeConfig;
-import org.radarcns.schema.validation.rules.RadarSchemaValidationRules;
+import org.radarcns.schema.validation.rules.RadarSchemaMetadataRules;
+import org.radarcns.schema.validation.rules.RadarSchemaRules;
 import org.radarcns.schema.validation.rules.SchemaMetadata;
 import org.radarcns.schema.validation.rules.Validator;
 
@@ -41,8 +42,7 @@ public class SchemaValidator {
     public SchemaValidator(Path root, ExcludeConfig config) {
         this.config = config;
         this.root = root;
-        this.validator = new RadarSchemaValidationRules(root, config)
-                .getValidator();
+        this.validator = new RadarSchemaMetadataRules(root, config).getValidator();
     }
 
     /**

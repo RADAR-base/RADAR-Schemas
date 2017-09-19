@@ -16,27 +16,16 @@
 
 package org.radarcns.schema.validation.rules;
 
-import org.apache.avro.JsonProperties;
 import org.apache.avro.Schema;
 import org.apache.avro.Schema.Type;
 import org.radarcns.schema.validation.ValidationException;
-import org.radarcns.schema.validation.ValidationSupport;
 import org.radarcns.schema.validation.config.ExcludeConfig;
 
-import java.nio.file.Path;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiFunction;
-import java.util.function.Function;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
-import static org.radarcns.schema.validation.rules.SchemaValidationRules.message;
-import static org.radarcns.schema.validation.rules.SchemaValidationRules.messageField;
-import static org.radarcns.schema.validation.rules.SchemaValidationRules.messageSchema;
 import static org.radarcns.schema.validation.rules.Validator.matches;
 import static org.radarcns.schema.validation.rules.Validator.raise;
 import static org.radarcns.schema.validation.rules.Validator.valid;
@@ -47,14 +36,11 @@ import static org.radarcns.schema.validation.rules.Validator.validateNonNull;
 /**
  * Schema validation rules enforced for the RADAR-Schemas repository.
  */
-public class RadarSchemaValidationRules implements SchemaValidationRules {
+public class RadarSchemaRules implements SchemaRules {
 
-    private static final String UNKNOWN = "UNKNOWN";
     static final String TIME = "time";
     private static final String TIME_RECEIVED = "timeReceived";
     private static final String TIME_COMPLETED = "timeCompleted";
-    private final Map<Type, Function<SchemaField, Stream<ValidationException>>>
-            defaultsValidator;
 
     static final Pattern NAMESPACE_PATTERN = Pattern.compile("^[a-z]+(\\.[a-z]+)*$");
 
@@ -63,85 +49,29 @@ public class RadarSchemaValidationRules implements SchemaValidationRules {
     static final Pattern RECORD_NAME_PATTERN = Pattern.compile(
             "^([A-Z]([a-z]+[0-9]*|[a-z]*[0-9]+))+[A-Z]?$");
 
-    // lowerCamelCase
-    static final Pattern FIELD_NAME_PATTERN = Pattern.compile(
-            "^[a-z][a-z0-9]*([a-z0-9][A-Z][a-z0-9]+)?([A-Z][a-z0-9]+)*[A-Z]?$");
-
     static final Pattern ENUM_SYMBOL_PATTERN = Pattern.compile("^[A-Z][A-Z0-9_]*$");
-    private static final List<String> FIELD_NAME_NOT_ALLOWED_SUFFIX = Arrays.asList(
-            "value", "Value");
 
     private static final String WITH_TYPE_DOUBLE = "\" field with type \"double\".";
 
-    private final Path root;
     private final ExcludeConfig config;
+    private final RadarSchemaFieldRules fieldRules;
 
     /**
      * RADAR-Schema validation rules.
-     * @param root root directory of the RADAR-Schemas repository
      * @param config validation configuration
      */
-    public RadarSchemaValidationRules(Path root, ExcludeConfig config) {
-        this.root = root;
+    public RadarSchemaRules(ExcludeConfig config, RadarSchemaFieldRules fieldRules) {
         this.config = config;
+        this.fieldRules = fieldRules;
+    }
 
-        defaultsValidator = new HashMap<>();
-        defaultsValidator.put(Type.RECORD, validateDefault());
-        defaultsValidator.put(Type.ENUM, this::validateDefaultEnum);
-        defaultsValidator.put(Type.UNION, this::validateDefaultUnion);
+    public RadarSchemaRules(ExcludeConfig config) {
+        this(config, new RadarSchemaFieldRules());
     }
 
     @Override
-    public Validator<SchemaField> validateFieldTypes() {
-        return field -> {
-            SchemaMetadata metadata = field.getSchemaMetadata().withSubSchema(
-                    field.getField().schema());
-
-            Schema.Type subType = field.getField().schema().getType();
-            if (subType == Schema.Type.UNION) {
-                return validateInternalUnion().apply(field);
-            } else if (subType == Schema.Type.RECORD) {
-                return internalRecordValidation().apply(metadata);
-            } else if (subType == Schema.Type.ENUM) {
-                return internalEnumValidation().apply(metadata);
-            } else {
-                return valid();
-            }
-        };
-    }
-
-    @Override
-    public Validator<SchemaMetadata> validateSchemaLocation() {
-        return validateNamespaceSchemaLocation()
-                .and(validateNameSchemaLocation());
-    }
-
-    private Validator<SchemaMetadata> validateNamespaceSchemaLocation() {
-        return metadata -> {
-            try {
-                String expected = ValidationSupport.getNamespace(
-                        root, metadata.getPath(), metadata.getScope());
-                String namespace = metadata.getSchema().getNamespace();
-
-                return expected.equalsIgnoreCase(namespace) ? valid() : raise(message(
-                        "Namespace cannot be null and must fully lowercase dot"
-                        + " separated without numeric. In this case the expected value is \""
-                        + expected + "\".").apply(metadata));
-            } catch (IllegalArgumentException ex) {
-                return Stream.of(new ValidationException("Path " + metadata.getPath()
-                        + " is not part of root " + root, ex));
-            }
-        };
-    }
-
-    private Validator<SchemaMetadata> validateNameSchemaLocation() {
-        return metadata -> {
-            String expected = ValidationSupport.getRecordName(metadata.getPath());
-
-            return expected.equalsIgnoreCase(metadata.getSchema().getName()) ? valid() : raise(
-                    message("Record name should match file name. Expected record name is \""
-                                + expected + "\".").apply(metadata));
-        };
+    public SchemaFieldRules getFieldRules() {
+        return fieldRules;
     }
 
     @Override
@@ -163,7 +93,7 @@ public class RadarSchemaValidationRules implements SchemaValidationRules {
                 schema);
     }
 
-    private <T> Stream<ValidationException> validateDocumentation(String doc,
+    static <T> Stream<ValidationException> validateDocumentation(String doc,
             BiFunction<String, T, String> message, T schema) {
         if (doc == null || doc.isEmpty()) {
             return raise(message.apply("Property \"doc\" is missing. Documentation is"
@@ -192,22 +122,6 @@ public class RadarSchemaValidationRules implements SchemaValidationRules {
         return result;
     }
 
-    @Override
-    public Validator<SchemaField> validateFieldName() {
-        return validateNonNull(f -> f.getField().name(), matches(FIELD_NAME_PATTERN), messageField(
-                            "Field name does not respect lowerCamelCase name convention."
-                            + " Please avoid abbreviations and write out the field name instead."))
-                .and(validateNonNull(f -> f.getField().name(),
-                        n -> FIELD_NAME_NOT_ALLOWED_SUFFIX.stream().noneMatch(n::endsWith),
-                        messageField("Field name may not end with the following values: "
-                                    + FIELD_NAME_NOT_ALLOWED_SUFFIX + ".")));
-    }
-
-    @Override
-    public Validator<SchemaField> validateFieldDocumentation() {
-        return field -> validateDocumentation(field.getField().doc(),
-                (m, f) -> messageField(m).apply(f), field);
-    }
 
     @Override
     public Validator<Schema> validateSymbols() {
@@ -220,38 +134,6 @@ public class RadarSchemaValidationRules implements SchemaValidationRules {
                                     + "Enumerator items should be written in"
                                     + " uppercase characters separated by underscores.")
                                 .apply(schema))));
-    }
-
-    @Override
-    public Validator<SchemaField> validateDefault() {
-        return input -> defaultsValidator
-                        .getOrDefault(input.getField().schema().getType(),
-                                this::validateDefaultOther)
-                        .apply(input);
-    }
-
-    private Stream<ValidationException> validateDefaultEnum(SchemaField field) {
-        return !field.getField().schema().getEnumSymbols().contains(UNKNOWN)
-                    || (field.getField().defaultVal() != null
-                    && field.getField().defaultVal().toString().equals(UNKNOWN)) ? valid()
-                    : raise(messageField("Default is \"" + field.getField().defaultVal()
-                            + "\". Any Avro enum type that has an \"UNKNOWN\" symbol must set its"
-                            + " default value to \"UNKNOWN\".").apply(field));
-    }
-
-    private Stream<ValidationException> validateDefaultUnion(SchemaField field) {
-        return !field.getField().schema().getTypes().contains(Schema.create(Type.NULL))
-                || (field.getField().defaultVal() != null
-                && field.getField().defaultVal().equals(JsonProperties.NULL_VALUE)) ? valid()
-                : raise(messageField("Default is not null. Any nullable Avro field must"
-                + " specify have its default value set to null.").apply(field));
-    }
-
-    private Stream<ValidationException> validateDefaultOther(SchemaField field) {
-        return field.getField().defaultVal() == null ? valid() : raise(messageField(
-                "Default of type " + field.getField().schema().getType() + " is set to "
-                + field.getField().defaultVal() + ". The only acceptable default values are the"
-                + " \"UNKNOWN\" enum symbol and null.").apply(field));
     }
 
     /**
@@ -284,7 +166,7 @@ public class RadarSchemaValidationRules implements SchemaValidationRules {
      */
     @Override
     public Validator<Schema> validateNotTimeCompleted() {
-        return validate(schema -> Objects.isNull(schema.getField(TIME_COMPLETED)),
+        return validate(s -> s.getField(TIME_COMPLETED), Objects::isNull,
             messageSchema("\"" + TIME_COMPLETED
                     + "\" is allow only in ACTIVE schemas."));
     }
@@ -299,17 +181,13 @@ public class RadarSchemaValidationRules implements SchemaValidationRules {
 
     @Override
     public Validator<Schema> validateNotTimeReceived() {
-        return validate(schema -> Objects.isNull(schema.getField(TIME_RECEIVED)),
+        return validate(s -> s.getField(TIME_RECEIVED), Objects::isNull,
                 messageSchema("\"" + TIME_RECEIVED + "\" is allow only in PASSIVE schemas."));
     }
 
     @Override
-    public Validator<SchemaMetadata> fields(Validator<SchemaField> validator) {
-        return metadata -> {
-            Schema schema = metadata.getSchema();
-            if (config.skipFile(metadata.getPath())) {
-                return valid();
-            }
+    public Validator<Schema> fields(Validator<SchemaField> validator) {
+        return schema -> {
             if (!schema.getType().equals(Schema.Type.RECORD)) {
                 return raise("Default validation can be applied only to an Avro RECORD, not to "
                         + schema.getType() + " of schema " + schema.getFullName() + '.');
@@ -319,16 +197,10 @@ public class RadarSchemaValidationRules implements SchemaValidationRules {
             }
             return schema.getFields().stream()
                     .flatMap(field -> {
-                        SchemaField schemaField = new SchemaField(metadata, field);
+                        SchemaField schemaField = new SchemaField(schema, field);
                         return config.isSkipped(schemaField) ? valid()
                                 : validator.apply(schemaField);
                     });
         };
-    }
-
-    @Override
-    public Validator<SchemaMetadata> schema(Validator<Schema> validator) {
-        return metadata -> config.skipFile(metadata.getPath()) ? valid()
-                : validator.apply(metadata.getSchema());
     }
 }

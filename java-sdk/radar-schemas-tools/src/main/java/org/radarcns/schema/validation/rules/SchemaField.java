@@ -3,16 +3,16 @@ package org.radarcns.schema.validation.rules;
 import org.apache.avro.Schema;
 
 public class SchemaField {
-    private final SchemaMetadata metadata;
+    private final Schema schema;
     private final Schema.Field field;
 
-    public SchemaField(SchemaMetadata metadata, Schema.Field field) {
-        this.metadata = metadata;
+    public SchemaField(Schema schema, Schema.Field field) {
+        this.schema = schema;
         this.field = field;
     }
 
-    public SchemaMetadata getSchemaMetadata() {
-        return metadata;
+    public Schema getSchema() {
+        return schema;
     }
 
     public Schema.Field getField() {

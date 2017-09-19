@@ -21,34 +21,24 @@ import org.apache.avro.Schema.Parser;
 import org.apache.avro.SchemaBuilder;
 import org.junit.Before;
 import org.junit.Test;
-import org.radarcns.schema.validation.SchemaValidator;
 import org.radarcns.schema.validation.ValidationException;
-import org.radarcns.schema.validation.ValidationSupport;
 import org.radarcns.schema.validation.config.ExcludeConfig;
 
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.stream.Stream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.radarcns.schema.SchemaRepository.COMMONS_PATH;
-import static org.radarcns.schema.Scope.MONITOR;
-import static org.radarcns.schema.Scope.PASSIVE;
-import static org.radarcns.schema.specification.SourceCatalogue.BASE_PATH;
-import static org.radarcns.schema.validation.rules.RadarSchemaValidationRules.ENUM_SYMBOL_PATTERN;
-import static org.radarcns.schema.validation.rules.RadarSchemaValidationRules.FIELD_NAME_PATTERN;
-import static org.radarcns.schema.validation.rules.RadarSchemaValidationRules.NAMESPACE_PATTERN;
-import static org.radarcns.schema.validation.rules.RadarSchemaValidationRules.RECORD_NAME_PATTERN;
+import static org.radarcns.schema.validation.rules.RadarSchemaRules.ENUM_SYMBOL_PATTERN;
+import static org.radarcns.schema.validation.rules.RadarSchemaRules.NAMESPACE_PATTERN;
+import static org.radarcns.schema.validation.rules.RadarSchemaRules.RECORD_NAME_PATTERN;
 import static org.radarcns.schema.validation.rules.Validator.matches;
 
 /**
  * TODO.
  */
-public class RadarSchemaValidationRulesTest {
+public class RadarSchemaRulesTest {
 
     private static final String ACTIVE_NAME_SPACE_MOCK = "org.radarcns.active.test";
     private static final String MONITOR_NAME_SPACE_MOCK = "org.radarcns.monitor.test";
@@ -56,22 +46,12 @@ public class RadarSchemaValidationRulesTest {
     private static final String UNKNOWN_MOCK = "UNKNOWN";
 
     private static final String RECORD_NAME_MOCK = "RecordName";
-    private static final String FIELD_NUMBER_MOCK = "Field1";
-    private RadarSchemaValidationRules validator;
+    private RadarSchemaRules validator;
 
     @Before
     public void setUp() throws IOException {
         ExcludeConfig config = new ExcludeConfig();
-        validator = new RadarSchemaValidationRules(BASE_PATH, config);
-    }
-
-    @Test
-    public void fileNameTest() {
-        assertEquals("Questionnaire",
-                ValidationSupport.getRecordName(Paths.get("/path/to/questionnaire.avsc")));
-        assertEquals("ApplicationExternalTime",
-                ValidationSupport.getRecordName(
-                        Paths.get("/path/to/application_external_time.avsc")));
+        validator = new RadarSchemaRules(config);
     }
 
     @Test
@@ -101,17 +81,6 @@ public class RadarSchemaValidationRulesTest {
         assertFalse(matches("questionnaire4me", RECORD_NAME_PATTERN));
         assertFalse(matches("A4MM", RECORD_NAME_PATTERN));
         assertFalse(matches("Aaaa4MMaa", RECORD_NAME_PATTERN));
-    }
-
-    @Test
-    public void fieldNameRegex() {
-        assertTrue(matches("interBeatInterval", FIELD_NAME_PATTERN));
-        assertTrue(matches("x", FIELD_NAME_PATTERN));
-        assertTrue(matches(RadarSchemaValidationRules.TIME, FIELD_NAME_PATTERN));
-        assertTrue(matches("subjectId", FIELD_NAME_PATTERN));
-        assertTrue(matches("listOfSeveralThings", FIELD_NAME_PATTERN));
-        assertFalse(matches("Time", FIELD_NAME_PATTERN));
-        assertFalse(matches("E4Heart", FIELD_NAME_PATTERN));
     }
 
     @Test
@@ -157,41 +126,6 @@ public class RadarSchemaValidationRulesTest {
     }
 
     @Test
-    public void nameSpaceInvalidPlural() {
-        Schema schema = SchemaBuilder
-                .builder("org.radarcns.monitors.test")
-                .record(RECORD_NAME_MOCK)
-                .fields()
-                .endRecord();
-
-        Path root = MONITOR.getPath(BASE_PATH.resolve(COMMONS_PATH));
-        assertNotNull(root);
-        Path path = root.resolve("test/record_name.avsc");
-        Stream<ValidationException> result = validator.validateSchemaLocation()
-                .apply(new SchemaMetadata(schema, MONITOR, path));
-
-        assertEquals(1, result.count());
-    }
-
-    @Test
-    public void nameSpaceInvalidLastPartPlural() {
-
-        Schema schema = SchemaBuilder
-                    .builder("org.radarcns.monitor.tests")
-                    .record(RECORD_NAME_MOCK)
-                    .fields()
-                    .endRecord();
-
-        Path root = MONITOR.getPath(BASE_PATH.resolve(COMMONS_PATH));
-        assertNotNull(root);
-        Path path = root.resolve("test/record_name.avsc");
-        Stream<ValidationException> result = validator.validateSchemaLocation()
-                .apply(new SchemaMetadata(schema, MONITOR, path));
-
-        assertEquals(1, result.count());
-    }
-
-    @Test
     public void recordNameTest() {
         Schema schema = SchemaBuilder
                     .builder("org.radarcns.active.testactive")
@@ -203,35 +137,6 @@ public class RadarSchemaValidationRulesTest {
                 .apply(schema);
 
         assertEquals(0, result.count());
-
-        // misspell aceleration
-        String fieldName = "EmpaticaE4Aceleration";
-        Path filePath = Paths.get("/path/to/empatica_e4_acceleration.avsc");
-
-        schema = SchemaBuilder
-                    .builder("org.radarcns.passive.empatica")
-                    .record(fieldName)
-                    .fields()
-                    .endRecord();
-
-        result = validator.validateSchemaLocation()
-                .apply(new SchemaMetadata(schema, PASSIVE, filePath));
-
-        assertEquals(2, result.count());
-
-        fieldName = "EmpaticaE4Acceleration";
-        filePath = BASE_PATH.resolve("commons/passive/empatica/empatica_e4_acceleration.avsc");
-
-        schema = SchemaBuilder
-                .builder("org.radarcns.passive.empatica")
-                .record(fieldName)
-                .fields()
-                .endRecord();
-
-        result = validator.validateSchemaLocation()
-                .apply(new SchemaMetadata(schema, PASSIVE, filePath));
-
-        assertEquals("", SchemaValidator.format(result));
     }
 
     @Test
@@ -245,7 +150,8 @@ public class RadarSchemaValidationRulesTest {
                 .fields()
                 .endRecord();
 
-        result = validator.fields(validator.validateFieldTypes()).apply(new SchemaMetadata(schema));
+        result = validator.fields(validator.getFieldRules().validateFieldTypes(validator))
+                .apply(schema);
 
         assertEquals(1, result.count());
 
@@ -256,8 +162,8 @@ public class RadarSchemaValidationRulesTest {
           .optionalBoolean("optional")
           .endRecord();
 
-        result = validator.fields(validator.validateFieldTypes())
-                .apply(new SchemaMetadata(schema));
+        result = validator.fields(validator.getFieldRules().validateFieldTypes(validator))
+                .apply(schema);
 
         assertEquals(0, result.count());
     }
@@ -282,7 +188,7 @@ public class RadarSchemaValidationRulesTest {
                     .builder("org.radarcns.time.test")
                     .record(RECORD_NAME_MOCK)
                     .fields()
-                    .requiredDouble(RadarSchemaValidationRules.TIME)
+                    .requiredDouble(RadarSchemaRules.TIME)
                     .endRecord();
 
         result = validator.validateTime().apply(schema);
@@ -352,67 +258,6 @@ public class RadarSchemaValidationRulesTest {
 
         result = validator.validateNotTimeReceived().apply(schema);
         assertEquals(1, result.count());
-    }
-
-    @Test
-    public void fieldNameTest() {
-        Schema schema;
-        Stream<ValidationException> result;
-
-        schema = SchemaBuilder
-                .builder(MONITOR_NAME_SPACE_MOCK)
-                .record(RECORD_NAME_MOCK)
-                .fields()
-                .requiredString(FIELD_NUMBER_MOCK + "value")
-                .endRecord();
-
-        result = validator.fields(validator.validateFieldName()).apply(new SchemaMetadata(schema));
-        assertEquals(2, result.count());
-
-        schema = SchemaBuilder
-                .builder(MONITOR_NAME_SPACE_MOCK)
-                .record(RECORD_NAME_MOCK)
-                .fields()
-                .requiredString(FIELD_NUMBER_MOCK)
-                .endRecord();
-
-        result = validator.fields(validator.validateFieldName()).apply(new SchemaMetadata(schema));
-        assertEquals(1, result.count());
-
-        schema = SchemaBuilder
-              .builder(MONITOR_NAME_SPACE_MOCK)
-              .record(RECORD_NAME_MOCK)
-              .fields()
-              .requiredDouble("timeReceived")
-              .endRecord();
-
-        result = validator.fields(validator.validateFieldName()).apply(new SchemaMetadata(schema));
-        assertEquals(0, result.count());
-    }
-
-    @Test
-    public void filedDocumentationTest() {
-        Schema schema;
-        Stream<ValidationException> result;
-
-        schema = new Parser().parse("{\"namespace\": \"org.radarcns.kafka.key\", "
-                + "\"type\": \"record\","
-                + " \"name\": \"key\", \"type\": \"record\", \"fields\": ["
-                + "{\"name\": \"userId\", \"type\": \"string\" , \"doc\": \"Documentation\"},"
-                + "{\"name\": \"sourceId\", \"type\": \"string\"} ]}");
-
-        result = validator.fields(validator.validateFieldDocumentation())
-                .apply(new SchemaMetadata(schema));
-
-        assertEquals(2, result.count());
-
-        schema = new Parser().parse("{\"namespace\": \"org.radarcns.kafka.key\", "
-                + "\"type\": \"record\", \"name\": \"key\", \"type\": \"record\", \"fields\": ["
-                + "{\"name\": \"userId\", \"type\": \"string\" , \"doc\": \"Documentation.\"}]}");
-
-        result = validator.fields(validator.validateFieldDocumentation())
-                .apply(new SchemaMetadata(schema));
-        assertEquals(0, result.count());
     }
 
     @Test
@@ -527,123 +372,5 @@ public class RadarSchemaValidationRulesTest {
         result = validator.validateSymbols().apply(schema);
 
         assertEquals(2, result.count());
-    }
-
-    @Test
-    public void defaultValueExceptionTest() {
-        Stream<ValidationException> result = validator.fields(validator.validateDefault()).apply(
-                new SchemaMetadata(SchemaBuilder.record(RECORD_NAME_MOCK)
-                        .fields()
-                        .name(FIELD_NUMBER_MOCK)
-                        .type(SchemaBuilder.enumeration(ENUMERATOR_NAME_SPACE_MOCK)
-                                .symbols("VAL", UNKNOWN_MOCK))
-                        .noDefault()
-                        .endRecord()));
-
-        assertEquals(1, result.count());
-    }
-
-    @Test
-    @SuppressWarnings("PMD.ExcessiveMethodLength")
-    // TODO improve test after having define the default guideline
-    public void defaultValueTest() {
-        //String namespace = "org.radarcns.test";
-        //String recordName = "TestRecord";
-
-        Schema schema;
-        Stream<ValidationException> result;
-
-        /*schema = SchemaBuilder
-            .builder(namespace)
-            .record(recordName)
-            .fields()
-            .nullableDouble("nullableDouble", Double.NaN)
-            .nullableFloat("nullableFloat", Float.NaN)
-            .nullableInt("nullableIntMin", Integer.MIN_VALUE)
-            .nullableInt("nullableIntMax", Integer.MAX_VALUE)
-            .nullableLong("nullableLongMin", Long.MIN_VALUE)
-            .nullableLong("nullableLongMax", Long.MAX_VALUE)
-            .nullableString("nullableString", null)
-            .nullableBoolean("nullableBoolean", false) //check with text schema
-            .nullableBytes("nullableBytes", new byte[1])  //check with text schema
-            .endRecord();
-
-        result = validator.validateDefault().apply(schema);
-
-        assertEquals(0, result.count());*/
-
-        String scemaTxtInit = "{\"namespace\": \"org.radarcns.test\", "
-                + "\"type\": \"record\", \"name\": \"TestRecord\", \"fields\": ";
-
-        /*schema = new Parser().parse(scemaTxtInit
-            + "[ {\"name\": \"nullableBytes\", \"type\": [ \"null\", \"bytes\"], "
-            + "\"default\": \"null\" } ] }");
-
-        result = validator.validateDefault().apply(schema);
-
-        assertEquals(0, result.count());
-
-        schema = SchemaBuilder
-            .builder(namespace)
-            .record(recordName)
-            .fields()
-            .nullableDouble("nullableDouble", -1)
-            .endRecord();
-
-        result = validator.validateDefault().apply(schema);*/
-
-        /*assertEquals(1, result.count());
-        assertEquals(Optional.of(invalidMessage), result.getReason());
-
-        schema = SchemaBuilder
-            .builder(namespace)
-            .record(recordName)
-            .fields()
-            .nullableInt("nullableInt", -1)
-            .endRecord();
-
-        result = validator.validateDefault().apply(schema);
-
-        assertEquals(1, result.count());
-        assertEquals(Optional.of(invalidMessage), result.getReason());
-
-        schema = SchemaBuilder
-            .builder(namespace)
-            .record(recordName)
-            .fields()
-            .nullableLong("nullableLong", -1)
-            .endRecord();
-
-        result = validator.validateDefault().apply(schema);
-
-        assertEquals(1, result.count());
-        assertEquals(Optional.of(invalidMessage), result.getReason());*/
-
-        schema = new Parser().parse(scemaTxtInit
-            + "[ {\"name\": \"serverStatus\", \"type\": {\"name\": \"ServerStatus\", \"type\": "
-            + "\"enum\", \"symbols\": [\"Connected\", \"NotConnected\", \"UNKNOWN\"] }, "
-            + "\"default\": \"UNKNOWN\" } ] }");
-
-        result = validator.fields(validator.validateDefault()).apply(new SchemaMetadata(schema));
-
-        assertEquals(0, result.count());
-
-        schema = new Parser().parse(scemaTxtInit
-            + "[ {\"name\": \"serverStatus\", \"type\": {\"name\": \"ServerStatus\", \"type\": "
-            + "\"enum\", \"symbols\": [\"Connected\", \"NotConnected\", \"UNKNOWN\"] }, "
-            + "\"default\": \"null\" } ] }");
-
-        result = validator.fields(validator.validateDefault()).apply(new SchemaMetadata(schema));
-
-        assertEquals(1, result.count());
-
-        /*schema = new Parser().parse(scemaTxtInit
-            + "[ {\"name\": \"nullableBoolean\", \"type\": [ \"null\", \"boolean\"], "
-            + "\"default\": \"null\" } ] }");
-
-        result = validator.validateDefault().apply(schema);
-
-        assertEquals(1, result.count());
-        assertEquals(Optional.of(invalidMessage), result.getReason());*/
     }
 }
