@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import org.apache.avro.Schema;
+import org.radarcns.schema.validation.rules.SchemaField;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -127,15 +128,15 @@ public class ExcludeConfig {
 
     /**
      * TODO.
-     * @param schema TODO
      * @return TODO
      */
-    public Set<String> skippedNameFieldCheck(Schema schema) {
+    public boolean isSkipped(SchemaField field) {
+        Schema schema = field.getSchemaMetadata().getSchema();
         ConfigItem item = validation.get(schema.getFullName()) == null
                 ? validation.get(schema.getNamespace() + WILD_CARD_PACKAGE)
                 : validation.get(schema.getFullName());
 
-        return item == null ? new HashSet<>() : item.getFields();
+        return item != null && item.getFields().contains(field.getField().name());
     }
 
     /**
@@ -144,15 +145,25 @@ public class ExcludeConfig {
      * @return TODO
      */
     public boolean skipFile(Path checkPath) {
-        Path relativePath;
-        if (checkPath.isAbsolute() && root != null) {
-            relativePath = root.relativize(checkPath.normalize());
-        } else {
-            relativePath = checkPath;
+        if (checkPath == null) {
+            return false;
         }
+        Path relativePath = relativize(checkPath);
+
         return matchers.stream()
                 .anyMatch(p -> p.matches(relativePath)
                         || p.matches(checkPath.getFileName()));
+    }
+
+    private Path relativize(Path path) {
+        if (path.isAbsolute() && root != null) {
+            try {
+                return root.relativize(path.normalize());
+            } catch (IllegalArgumentException ex) {
+                // relativePath cannot be relativized
+            }
+        }
+        return path;
     }
 
     public void setFiles(String... files) {

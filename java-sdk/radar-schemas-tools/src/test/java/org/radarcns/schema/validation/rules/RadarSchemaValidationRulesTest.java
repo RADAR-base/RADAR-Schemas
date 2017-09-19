@@ -21,6 +21,7 @@ import org.apache.avro.Schema.Parser;
 import org.apache.avro.SchemaBuilder;
 import org.junit.Before;
 import org.junit.Test;
+import org.radarcns.schema.validation.SchemaValidator;
 import org.radarcns.schema.validation.ValidationException;
 import org.radarcns.schema.validation.ValidationSupport;
 import org.radarcns.schema.validation.config.ExcludeConfig;
@@ -28,7 +29,6 @@ import org.radarcns.schema.validation.config.ExcludeConfig;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Collections;
 import java.util.stream.Stream;
 
 import static org.junit.Assert.assertEquals;
@@ -139,10 +139,9 @@ public class RadarSchemaValidationRulesTest {
 
         Path root = ACTIVE.getPath(BASE_PATH.resolve(COMMONS_PATH));
         assertNotNull(root);
-        Path path = root.resolve("questionnaire/questionnaire.avsc");
 
         Stream<ValidationException> result = validator.validateNameSpace()
-                .apply(new SchemaMetadata(schema, ACTIVE, path));
+                .apply(schema);
 
         assertEquals(0, result.count());
     }
@@ -159,7 +158,7 @@ public class RadarSchemaValidationRulesTest {
         assertNotNull(root);
         Path path = root.resolve("test/record_name.avsc");
         Stream<ValidationException> result = validator.validateNameSpace()
-                .apply(new SchemaMetadata(schema, MONITOR, path));
+                .apply(schema);
 
         assertEquals(1, result.count());
 
@@ -176,7 +175,7 @@ public class RadarSchemaValidationRulesTest {
         Path root = MONITOR.getPath(BASE_PATH.resolve(COMMONS_PATH));
         assertNotNull(root);
         Path path = root.resolve("test/record_name.avsc");
-        Stream<ValidationException> result = validator.validateNameSpace()
+        Stream<ValidationException> result = validator.validateSchemaLocation()
                 .apply(new SchemaMetadata(schema, MONITOR, path));
 
         assertEquals(1, result.count());
@@ -194,7 +193,7 @@ public class RadarSchemaValidationRulesTest {
         Path root = MONITOR.getPath(BASE_PATH.resolve(COMMONS_PATH));
         assertNotNull(root);
         Path path = root.resolve("test/record_name.avsc");
-        Stream<ValidationException> result = validator.validateNameSpace()
+        Stream<ValidationException> result = validator.validateSchemaLocation()
                 .apply(new SchemaMetadata(schema, MONITOR, path));
 
         assertEquals(1, result.count());
@@ -208,8 +207,8 @@ public class RadarSchemaValidationRulesTest {
                     .fields()
                     .endRecord();
 
-        Stream<ValidationException> result = validator.validateRecordName()
-                .apply(new SchemaMetadata(schema, ACTIVE, Paths.get("/path/to/schema.avsc")));
+        Stream<ValidationException> result = validator.validateName()
+                .apply(schema);
 
         assertEquals(0, result.count());
 
@@ -223,16 +222,24 @@ public class RadarSchemaValidationRulesTest {
                     .fields()
                     .endRecord();
 
-        result = validator.validateRecordName()
+        result = validator.validateSchemaLocation()
                 .apply(new SchemaMetadata(schema, PASSIVE, filePath));
 
-        assertEquals(1, result.count());
+        assertEquals(2, result.count());
 
-        config.setFiles("/path/to/empatica_e4_acceleration.avsc");
-        result = validator.validateRecordName()
+        fieldName = "EmpaticaE4Acceleration";
+        filePath = BASE_PATH.resolve("commons/passive/empatica/empatica_e4_acceleration.avsc");
+
+        schema = SchemaBuilder
+                .builder("org.radarcns.passive.empatica")
+                .record(fieldName)
+                .fields()
+                .endRecord();
+
+        result = validator.validateSchemaLocation()
                 .apply(new SchemaMetadata(schema, PASSIVE, filePath));
 
-        assertEquals(0, result.count());
+        assertEquals("", SchemaValidator.format(result));
     }
 
     @Test
@@ -246,7 +253,7 @@ public class RadarSchemaValidationRulesTest {
                 .fields()
                 .endRecord();
 
-        result = validator.validateFields().apply(schema);
+        result = validator.fields(validator.validateFieldTypes()).apply(new SchemaMetadata(schema));
 
         assertEquals(1, result.count());
 
@@ -257,7 +264,8 @@ public class RadarSchemaValidationRulesTest {
           .optionalBoolean("optional")
           .endRecord();
 
-        result = validator.validateFields().apply(schema);
+        result = validator.fields(validator.validateFieldTypes())
+                .apply(new SchemaMetadata(schema));
 
         assertEquals(0, result.count());
     }
@@ -366,7 +374,7 @@ public class RadarSchemaValidationRulesTest {
                 .requiredString(FIELD_NUMBER_MOCK + "value")
                 .endRecord();
 
-        result = validator.validateFieldName().apply(schema);
+        result = validator.fields(validator.validateFieldName()).apply(new SchemaMetadata(schema));
         assertEquals(1, result.count());
 
         schema = SchemaBuilder
@@ -376,7 +384,7 @@ public class RadarSchemaValidationRulesTest {
                 .requiredString(FIELD_NUMBER_MOCK)
                 .endRecord();
 
-        result = validator.validateFieldName().apply(schema);
+        result = validator.fields(validator.validateFieldName()).apply(new SchemaMetadata(schema));
         assertEquals(1, result.count());
 
         schema = SchemaBuilder
@@ -387,8 +395,9 @@ public class RadarSchemaValidationRulesTest {
           .requiredString(RadarSchemaValidationRules.TIME)
           .endRecord();
 
-        result = validator.validateFieldName(s ->
-                Collections.singleton(RadarSchemaValidationRules.TIME)).apply(schema);
+        result = validator.fields(validator.validateFieldName(
+                s -> RadarSchemaValidationRules.TIME.equalsIgnoreCase(s.getField().name())))
+                .apply(new SchemaMetadata(schema));
         assertEquals(1, result.count());
 
         schema = SchemaBuilder
@@ -398,7 +407,7 @@ public class RadarSchemaValidationRulesTest {
               .requiredDouble("timeReceived")
               .endRecord();
 
-        result = validator.validateFieldName().apply(schema);
+        result = validator.fields(validator.validateFieldName()).apply(new SchemaMetadata(schema));
         assertEquals(0, result.count());
 
         schema = SchemaBuilder
@@ -409,8 +418,9 @@ public class RadarSchemaValidationRulesTest {
               .requiredString(RadarSchemaValidationRules.TIME)
               .endRecord();
 
-        result = validator.validateFieldName(s ->
-                Collections.singleton(FIELD_NUMBER_MOCK)).apply(schema);
+        result = validator.fields(validator.validateFieldName(
+                        s -> FIELD_NUMBER_MOCK.equalsIgnoreCase(s.getField().name())))
+                        .apply(new SchemaMetadata(schema));
         assertEquals(0, result.count());
     }
 
@@ -425,15 +435,17 @@ public class RadarSchemaValidationRulesTest {
                 + "{\"name\": \"userId\", \"type\": \"string\" , \"doc\": \"Documentation\"},"
                 + "{\"name\": \"sourceId\", \"type\": \"string\"} ]}");
 
-        result = validator.validateFieldDocumentation().apply(schema);
+        result = validator.fields(validator.validateFieldDocumentation())
+                .apply(new SchemaMetadata(schema));
 
-        assertEquals(1, result.count());
+        assertEquals(2, result.count());
 
         schema = new Parser().parse("{\"namespace\": \"org.radarcns.kafka.key\", "
                 + "\"type\": \"record\", \"name\": \"key\", \"type\": \"record\", \"fields\": ["
                 + "{\"name\": \"userId\", \"type\": \"string\" , \"doc\": \"Documentation.\"}]}");
 
-        result = validator.validateFieldDocumentation().apply(schema);
+        result = validator.fields(validator.validateFieldDocumentation())
+                .apply(new SchemaMetadata(schema));
         assertEquals(0, result.count());
     }
 
@@ -495,21 +507,20 @@ public class RadarSchemaValidationRulesTest {
               .enumeration(enumName)
               .symbols(connected, "DISCONNECTED", UNKNOWN_MOCK);
 
-        result = validator.validateEnumerationSymbols().apply(schema);
+        result = validator.validateSymbols().apply(schema);
 
         assertEquals(0, result.count());
 
         String schemaTxtInit = "{\"namespace\": \"org.radarcns.monitor.application\", "
-                + "\"type\": \"record\", \"name\": \"ApplicationServerStatus\", \"fields\": "
-                + "[ {\"name\": \"serverStatus\", \"type\": {\"name\": \"ServerStatus\", \"type\": "
+                + "\"name\": \"ServerStatus\", \"type\": "
                 + "\"enum\", \"symbols\": [";
 
-        String schemaTxtEnd = "] } } ] }";
+        String schemaTxtEnd = "] }";
 
         schema = new Parser().parse(schemaTxtInit
                 + "\"CONNECTED\", \"NOT_CONNECTED\", \"" + UNKNOWN_MOCK + "\"" + schemaTxtEnd);
 
-        result = validator.validateEnumerationSymbols().apply(schema);
+        result = validator.validateSymbols().apply(schema);
 
         assertEquals(0, result.count());
 
@@ -517,7 +528,7 @@ public class RadarSchemaValidationRulesTest {
               .enumeration(enumName)
               .symbols(connected, "disconnected", UNKNOWN_MOCK);
 
-        result = validator.validateEnumerationSymbols().apply(schema);
+        result = validator.validateSymbols().apply(schema);
 
         assertEquals(1, result.count());
 
@@ -525,7 +536,7 @@ public class RadarSchemaValidationRulesTest {
               .enumeration(enumName)
               .symbols(connected, "Not_Connected", UNKNOWN_MOCK);
 
-        result = validator.validateEnumerationSymbols().apply(schema);
+        result = validator.validateSymbols().apply(schema);
 
         assertEquals(1, result.count());
 
@@ -533,30 +544,35 @@ public class RadarSchemaValidationRulesTest {
               .enumeration(enumName)
               .symbols(connected, "NotConnected", UNKNOWN_MOCK);
 
-        result = validator.validateEnumerationSymbols().apply(schema);
+        result = validator.validateSymbols().apply(schema);
 
         assertEquals(1, result.count());
 
         schema = new Parser().parse(schemaTxtInit
                 + "\"CONNECTED\", \"Not_Connected\", \"" + UNKNOWN_MOCK + "\"" + schemaTxtEnd);
 
-        result = validator.validateEnumerationSymbols().apply(schema);
+        result = validator.validateSymbols().apply(schema);
 
         assertEquals(1, result.count());
 
         schema = new Parser().parse(schemaTxtInit
                 + "\"Connected\", \"NotConnected\", \"" + UNKNOWN_MOCK + "\"" + schemaTxtEnd);
 
-        result = validator.validateEnumerationSymbols().apply(schema);
+        result = validator.validateSymbols().apply(schema);
 
-        assertEquals(1, result.count());
+        assertEquals(2, result.count());
     }
 
     @Test
     public void defaultValueExceptionTest() {
-        Stream<ValidationException> result = validator.validateDefault().apply(
-                SchemaBuilder.enumeration(ENUMERATOR_NAME_SPACE_MOCK)
-                        .symbols("VAL", UNKNOWN_MOCK));
+        Stream<ValidationException> result = validator.fields(validator.validateDefault()).apply(
+                new SchemaMetadata(SchemaBuilder.record(RECORD_NAME_MOCK)
+                        .fields()
+                        .name(FIELD_NUMBER_MOCK)
+                        .type(SchemaBuilder.enumeration(ENUMERATOR_NAME_SPACE_MOCK)
+                                .symbols("VAL", UNKNOWN_MOCK))
+                        .noDefault()
+                        .endRecord()));
 
         assertEquals(1, result.count());
     }
@@ -642,7 +658,7 @@ public class RadarSchemaValidationRulesTest {
             + "\"enum\", \"symbols\": [\"Connected\", \"NotConnected\", \"UNKNOWN\"] }, "
             + "\"default\": \"UNKNOWN\" } ] }");
 
-        result = validator.validateDefault().apply(schema);
+        result = validator.fields(validator.validateDefault()).apply(new SchemaMetadata(schema));
 
         assertEquals(0, result.count());
 
@@ -651,7 +667,7 @@ public class RadarSchemaValidationRulesTest {
             + "\"enum\", \"symbols\": [\"Connected\", \"NotConnected\", \"UNKNOWN\"] }, "
             + "\"default\": \"null\" } ] }");
 
-        result = validator.validateDefault().apply(schema);
+        result = validator.fields(validator.validateDefault()).apply(new SchemaMetadata(schema));
 
         assertEquals(1, result.count());
 

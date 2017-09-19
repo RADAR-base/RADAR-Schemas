@@ -16,16 +16,10 @@ package org.radarcns.schema.validation;
  * limitations under the License.
  */
 
-import org.apache.avro.JsonProperties;
-import org.apache.avro.Schema;
-import org.apache.avro.Schema.Field;
-import org.apache.avro.Schema.Type;
 import org.radarcns.schema.Scope;
 
 import java.nio.file.Path;
 import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.function.Predicate;
@@ -35,7 +29,6 @@ import java.util.regex.Pattern;
 import static org.radarcns.schema.SchemaRepository.COMMONS_PATH;
 import static org.radarcns.schema.util.Utils.getProjectGroup;
 import static org.radarcns.schema.util.Utils.toSnakeCase;
-import static org.radarcns.schema.validation.rules.RadarSchemaValidationRules.UNKNOWN;
 
 /**
  * TODO.
@@ -114,25 +107,6 @@ public final class ValidationSupport {
         } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
             return false;
         }
-    }
-
-    /**
-     * TODO.
-     * @param root TODO
-     * @return TODO
-     */
-    public static List<String> extractEnumerationFields(Schema root) {
-        if (root.getType().equals(Type.ENUM)) {
-            return root.getEnumSymbols();
-        }
-
-        final List<String> symbols = new LinkedList<>();
-        root.getFields().stream()
-            .filter(field -> field.schema().getType().equals(Type.ENUM))
-            .map(Field::schema)
-            .forEach(schema -> symbols.addAll(schema.getEnumSymbols()));
-
-        return symbols;
     }
 
     /**
@@ -216,44 +190,6 @@ public final class ValidationSupport {
         }
 
         return reason.toString();
-    }
-
-    /**
-     * TODO.
-     * @param input TODO
-     * @return TODO
-     * @throws IllegalArgumentException TODO
-     */
-    //TODO analyse schemas and improve
-    public static boolean validateDefault(Schema input) {
-        if (!input.getType().equals(Type.RECORD)) {
-            throw new IllegalArgumentException("Function can be applied only to avro RECORD.");
-        }
-
-        for (Field field : input.getFields()) {
-            boolean flag;
-            switch (field.schema().getType()) {
-                case RECORD:
-                    flag = validateDefault(field.schema());
-                    break;
-                case UNION:
-                    flag = field.defaultVal().equals(JsonProperties.NULL_VALUE);
-                    break;
-                case ENUM:
-                    flag = field.schema().getEnumSymbols().contains(UNKNOWN)
-                            && field.defaultVal().equals(UNKNOWN);
-                    break;
-                default:
-                    flag = field.defaultVal() == null;
-                    break;
-            }
-
-            if (!flag) {
-                return false;
-            }
-        }
-
-        return true;
     }
 
     /**

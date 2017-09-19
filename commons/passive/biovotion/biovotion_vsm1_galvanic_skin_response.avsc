@@ -4,9 +4,9 @@
   "name": "BiovotionVsm1GalvanicSkinResponse",
   "doc": "Raw galvanic skin response data.",
   "fields": [
-    { "name": "time", "type": "double", "doc": "device timestamp in UTC (s)." },
-    { "name": "timeReceived", "type": "double", "doc": "device receiver timestamp in UTC (s)." },
-    { "name": "galvanicSkinResponseAmplitude", "type": "float", "doc": "gsr amplitude (kOhm)." },
-    { "name": "galvanicSkinResponsePhase", "type": "float", "doc": "gsr phase." }
+    { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+    { "name": "timeReceived", "type": "double", "doc": "Device receiver timestamp in UTC (s)." },
+    { "name": "galvanicSkinResponseAmplitude", "type": "float", "doc": "Gsr amplitude (kOhm)." },
+    { "name": "galvanicSkinResponsePhase", "type": "float", "doc": "Gsr phase." }
   ]
 }

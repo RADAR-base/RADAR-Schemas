@@ -16,7 +16,6 @@ package org.radarcns.schema.validation.rules;
  * limitations under the License.
  */
 
-import org.radarcns.catalogue.RadarWidget;
 import org.radarcns.schema.specification.active.questionnaire.Question;
 
 import static org.radarcns.schema.validation.rules.Validator.validateNonNull;
@@ -29,8 +28,7 @@ public final class QuestionRoles {
             + " a point.";
     private static final String LEAD = "Question lead cannot be null and should be ended by a"
             + " question mark.";
-    private static final String WIDGET = "Widget cannot be null and must be different from "
-            + RadarWidget.UNKNOWN.name() + '.';
+    private static final String WIDGET = "Widget cannot be null.";
     private static final String RESPONSES = "Responses list cannot be null or empty.";
 
 
@@ -59,8 +57,7 @@ public final class QuestionRoles {
      * @return TODO
      */
     static Validator<Question> validateWidget() {
-        return validateNonNull(Question::getWidget, widget -> widget != RadarWidget.UNKNOWN,
-                WIDGET);
+        return validateNonNull(Question::getWidget, WIDGET);
     }
 
     /**

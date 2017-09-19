@@ -30,14 +30,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
-import static org.radarcns.schema.validation.ValidationSupport.extractEnumerationFields;
-import static org.radarcns.schema.validation.ValidationSupport.nonEmpty;
 import static org.radarcns.schema.validation.rules.Validator.matches;
 import static org.radarcns.schema.validation.rules.Validator.raise;
 import static org.radarcns.schema.validation.rules.Validator.valid;
@@ -46,19 +44,18 @@ import static org.radarcns.schema.validation.rules.Validator.validateNonEmpty;
 import static org.radarcns.schema.validation.rules.Validator.validateNonNull;
 
 /**
- * TODO.
+ * Schema validation rules enforced for the RADAR-Schemas repository.
  */
 public class RadarSchemaValidationRules implements SchemaValidationRules {
 
+    private static final String UNKNOWN = "UNKNOWN";
     static final String TIME = "time";
     private static final String TIME_RECEIVED = "timeReceived";
     private static final String TIME_COMPLETED = "timeCompleted";
-    private final Map<Type, BiFunction<Schema.Field, Schema, Stream<ValidationException>>>
+    private final Map<Type, Function<SchemaField, Stream<ValidationException>>>
             defaultsValidator;
 
-    public static final String UNKNOWN = "UNKNOWN";
-
-    static final Pattern NAMESPACE_PATTERN = Pattern.compile("^[a-z][a-z.]*$");
+    static final Pattern NAMESPACE_PATTERN = Pattern.compile("^[a-z]+(\\.[a-z]+)*$");
 
     // CamelCase
     // see SchemaValidatorRolesTest#recordNameRegex() for valid and invalid values
@@ -87,17 +84,11 @@ public class RadarSchemaValidationRules implements SchemaValidationRules {
             + Type.DOUBLE + ".";
     private static final String NOT_TIME_RECEIVED_FIELD = "\"" + TIME_RECEIVED
             + "\" is allow only in " + Scope.PASSIVE + " schemas.";
-    private static final String FIELDS = "Avro Record must have field list.";
     private static final String FIELD_NAME_NOT_ALLOWED = "Field name cannot end with the"
             + " following values " + FIELD_NAME_NOT_ALLOWED_SUFFIX + ".";
     private static final String FIELD_NAME_LOWER_CAMEL = "Field name does not respect"
             + " lowerCamelCase name convention. Please avoid abbreviations and write out the"
             + " field name instead.";
-    private static final String DOC = "Documentation is mandatory for any schema and field."
-            + " The documentation should report "
-            + "what is being measured, how, and what units or ranges are applicable. Abbreviations "
-            + "and acronyms in the documentation should be written out. The sentence must be ended "
-            + "by a point. Please add \"doc\" property.";
     private static final String SYMBOLS = "Avro Enumerator must have symbol list.";
     private static final String ENUMERATION_SYMBOL = "Enumerator items should be written in"
             + " uppercase characters separated by underscores.";
@@ -105,32 +96,88 @@ public class RadarSchemaValidationRules implements SchemaValidationRules {
     private final Path root;
     private final ExcludeConfig config;
 
+    /**
+     * RADAR-Schema validation rules.
+     * @param root root directory of the RADAR-Schemas repository
+     * @param config validation configuration
+     */
     public RadarSchemaValidationRules(Path root, ExcludeConfig config) {
         this.root = root;
         this.config = config;
 
         defaultsValidator = new HashMap<>();
-        defaultsValidator.put(Type.RECORD, (f, s) -> this.validateDefault().apply(f.schema()));
+        defaultsValidator.put(Type.RECORD, validateDefault());
         defaultsValidator.put(Type.ENUM, this::validateDefaultEnum);
         defaultsValidator.put(Type.UNION, this::validateDefaultUnion);
     }
 
-    /**
-     * TODO.
-     * @return TODO
-     */
     @Override
-    public Validator<SchemaMetadata> validateNameSpace() {
+    public Validator<SchemaField> validateFieldTypes() {
+        return field -> {
+            SchemaMetadata metadata = field.getSchemaMetadata().withSubSchema(
+                    field.getField().schema());
+
+            Schema.Type subType = field.getField().schema().getType();
+            if (subType == Schema.Type.UNION) {
+                return validateInternalUnion(field);
+            } else if (subType == Schema.Type.RECORD) {
+                return internalRecordValidation().apply(metadata);
+            } else if (subType == Schema.Type.ENUM) {
+                return internalEnumValidation().apply(metadata);
+            } else {
+                return valid();
+            }
+        };
+    }
+
+    private Stream<ValidationException> validateInternalUnion(SchemaField field) {
+        return field.getField().schema().getTypes().stream()
+                .flatMap(schema -> {
+                    Schema.Type type = schema.getType();
+                    SchemaMetadata subMeta = field.getSchemaMetadata().withSubSchema(
+                            schema);
+                    if (type == Schema.Type.RECORD) {
+                        return internalRecordValidation().apply(subMeta);
+                    } else if (type == Schema.Type.ENUM) {
+                        return internalEnumValidation().apply(subMeta);
+                    } if (type == Schema.Type.UNION) {
+                        return raise(messageField("Cannot have a nested union.")
+                                .apply(field));
+                    } else {
+                        return valid();
+                    }
+                });
+    }
+
+    @Override
+    public Validator<SchemaMetadata> validateSchemaLocation() {
+        return validateNamespaceSchemaLocation()
+                .and(validateNameSchemaLocation());
+    }
+
+    private Validator<SchemaMetadata> validateNamespaceSchemaLocation() {
         return metadata -> {
-            String expected = ValidationSupport.getNamespace(root,
-                    metadata.getPath(), metadata.getScope());
+                try {
+                    String expected = ValidationSupport.getNamespace(
+                            root, metadata.getPath(), metadata.getScope());
+                    String namespace = metadata.getSchema().getNamespace();
 
-            String namespace = metadata.getSchema().getNamespace();
+                    return expected.equalsIgnoreCase(namespace) ? valid() : raise(message(
+                            NAME_SPACE + expected + "\".").apply(metadata));
+                } catch (IllegalArgumentException ex) {
+                    return Stream.of(new ValidationException("Path " + metadata.getPath()
+                            + " is not part of root " + root, ex));
+                }
+        };
+    }
 
-            return namespace != null && matches(namespace, NAMESPACE_PATTERN)
-                    && namespace.equalsIgnoreCase(expected) ? valid() : raise(
-                            message(NAME_SPACE).apply(metadata.getSchema())
-                                    + expected + "\".");
+    private Validator<SchemaMetadata> validateNameSchemaLocation() {
+        return metadata -> {
+            String expected = ValidationSupport.getRecordName(metadata.getPath());
+
+            return expected.equalsIgnoreCase(metadata.getSchema().getName()) ? valid() : raise(
+                    message("Record name should match file name. Expected record name is \""
+                                + expected + "\".").apply(metadata));
         };
     }
 
@@ -139,159 +186,122 @@ public class RadarSchemaValidationRules implements SchemaValidationRules {
      * @return TODO
      */
     @Override
-    public Validator<SchemaMetadata> validateRecordName() {
-        return metadata -> {
-            String name = metadata.getSchema().getName();
+    public Validator<Schema> validateNameSpace() {
+        return validateNonNull(Schema::getNamespace, matches(NAMESPACE_PATTERN),
+                messageSchema("Namespace cannot be null and must fully lowercase, period-"
+                + "separated, without numeric characters."));
+    }
 
-            if (!config.skipFile(metadata.getPath())) {
-                if (!matches(name, RECORD_NAME_PATTERN)) {
-                    return raise(message("Record names must be camel case.")
-                            .apply(metadata.getSchema()));
+    @Override
+    public Validator<Schema> validateName() {
+        return validateNonNull(Schema::getName, matches(RECORD_NAME_PATTERN),
+                messageSchema("Record names must be camel case."));
+    }
+
+    @Override
+    public Validator<Schema> validateSchemaDocumentation() {
+        return schema -> validateDocumentation(schema.getDoc(), (m, t) -> messageSchema(m).apply(t),
+                schema);
+    }
+
+    private <T> Stream<ValidationException> validateDocumentation(String doc,
+            BiFunction<String, T, String> message, T schema) {
+        if (doc == null || doc.isEmpty()) {
+            return raise(message.apply("Property \"doc\" is missing. Documentation is"
+                    + " mandatory for all fields. The documentation should report what is being"
+                    + " measured, how, and what units or ranges are applicable. Abbreviations"
+                    + " and acronyms in the documentation should be written out. The sentence"
+                    + " must end with a period '.'. Please add \"doc\" property.", schema));
+        }
+
+        Stream<ValidationException> result = valid();
+        if (doc.charAt(doc.length() - 1) != '.') {
+            result = raise(message.apply("Documentation is not terminated with a period. The"
+                    + " documentation should report what is being measured, how, and what units"
+                    + " or ranges are applicable. Abbreviations and acronyms in the"
+                    + " documentation should be written out. Please end the sentence with a"
+                    + " period '.'.", schema));
+        }
+        if (!Character.isUpperCase(doc.charAt(0))) {
+            result = Stream.concat(result, raise(
+                    message.apply("Documentation does not start with a capital letter. The"
+                            + " documentation should report what is being measured, how, and what"
+                            + " units or ranges are applicable. Abbreviations and acronyms in the"
+                            + " documentation should be written out. Please end the sentence with a"
+                            + " period '.'.", schema)));
+        }
+        return result;
+    }
+
+    @Override
+    public Validator<SchemaField> validateFieldName() {
+        return validateFieldName(config::isSkipped);
+    }
+
+    /**
+     * Checks field names, except when the given predicate tests true.
+     * @param skip fields to skip
+     */
+    protected Validator<SchemaField> validateFieldName(Predicate<SchemaField> skip) {
+        return field -> {
+            if (!skip.test(field)) {
+                String name = field.getField().name();
+                if (!matches(name, FIELD_NAME_PATTERN)) {
+                    return raise(messageField(FIELD_NAME_LOWER_CAMEL).apply(field));
                 }
-                String expected = ValidationSupport.getRecordName(metadata.getPath());
-                if (!name.equalsIgnoreCase(expected)) {
-                    return raise(message("The path of a record must match its schema."
-                            + " Expected record name is \"")
-                            .apply(metadata.getSchema()) + expected + "\".");
+                if (FIELD_NAME_NOT_ALLOWED_SUFFIX.stream().anyMatch(name::endsWith)) {
+                    return raise(messageField(FIELD_NAME_NOT_ALLOWED).apply(field));
                 }
             }
             return valid();
         };
     }
 
-    /**
-     * TODO.
-     * @return TODO
-     */
     @Override
-    public Validator<Schema> validateSchemaDocumentation() {
-        return validateNonNull(Schema::getDoc, doc -> doc.charAt(doc.length() - 1) == '.',
-                message(DOC));
+    public Validator<SchemaField> validateFieldDocumentation() {
+        return field -> validateDocumentation(field.getField().doc(),
+                (m, f) -> messageField(m).apply(f), field);
     }
 
-    /**
-     * TODO.
-     * @return TODO
-     */
-    @Override
-    public Validator<Schema> validateFields() {
-        return validateNonEmpty(Schema::getFields, message(FIELDS));
-    }
-
-    /**
-     * TODO.
-     * @return TODO
-     */
-    @Override
-    public Validator<Schema> validateFieldName() {
-        return validateFieldName(config::skippedNameFieldCheck);
-    }
-
-    /**
-     * TODO.
-     * @return TODO
-     */
-    protected Validator<Schema> validateFieldName(Function<Schema, Set<String>> skip) {
-        return schema -> {
-            Stream<String> stream = schema.getFields().stream()
-                    .map(Schema.Field::name);
-            Set<String> skipped = skip.apply(schema);
-            if (skipped != null && !skipped.isEmpty()) {
-                stream = stream.filter(name -> !skipped.contains(name));
-            }
-
-            return stream
-                    .flatMap(name -> {
-                        if (!matches(name, FIELD_NAME_PATTERN)) {
-                            return raise(
-                                    "Field " + name + " of schema " + schema.getFullName()
-                                            + " is invalid. " + FIELD_NAME_LOWER_CAMEL);
-                        }
-                        if (FIELD_NAME_NOT_ALLOWED_SUFFIX.stream().anyMatch(name::endsWith)) {
-                            return raise(
-                                    "Field " + name + " of schema " + schema.getFullName()
-                                            + " is invalid. " + FIELD_NAME_NOT_ALLOWED);
-                        }
-                        return valid();
-                    });
-        };
-    }
-
-    /**
-     * TODO.
-     * @return TODO
-     */
-    @Override
-    public Validator<Schema> validateFieldDocumentation() {
-        return validate(schema ->
-                    schema.getFields()
-                            .stream()
-                            .allMatch(field -> field.doc() != null
-                                    && field.doc().charAt(field.doc().length() - 1) == '.'),
-            message(DOC));
-    }
-
-    /**
-     * TODO.
-     * @return TODO
-     */
     @Override
     public Validator<Schema> validateSymbols() {
-        return validate(schema -> nonEmpty(schema.getEnumSymbols()), message(SYMBOLS));
+        return validateNonEmpty(Schema::getEnumSymbols, messageSchema(SYMBOLS))
+                .and(schema -> schema.getEnumSymbols().stream()
+                        .filter(symbol -> !matches(symbol, ENUM_SYMBOL_PATTERN))
+                        .map(s -> new ValidationException(messageSchema(
+                                "Symbol " + s + " does not use valid syntax. "
+                                        + ENUMERATION_SYMBOL).apply(schema))));
     }
 
-    /**
-     * TODO.
-     * @return TODO
-     */
     @Override
-    public Validator<Schema> validateEnumerationSymbols() {
-        return validate(schema ->
-                extractEnumerationFields(schema).stream().allMatch(matches(ENUM_SYMBOL_PATTERN)),
-            message(ENUMERATION_SYMBOL));
+    public Validator<SchemaField> validateDefault() {
+        return input -> defaultsValidator
+                        .getOrDefault(input.getField().schema().getType(), this::validateDefaultOther)
+                        .apply(input);
     }
 
-    /**
-     * TODO.
-     * @return TODO
-     */
-    @Override
-    public Validator<Schema> validateDefault() {
-        return input -> {
-            if (!input.getType().equals(Type.RECORD)) {
-                return raise("Default validation can be applied only to an Avro RECORD, not to "
-                        + input.getType() + '.');
-            }
-
-            return input.getFields().stream()
-                    .flatMap(field -> defaultsValidator
-                            .getOrDefault(field.schema().getType(), this::validateDefaultOther)
-                            .apply(field, input));
-        };
-    }
-
-    private Stream<ValidationException> validateDefaultEnum(Schema.Field field, Schema schema) {
-        return !field.schema().getEnumSymbols().contains(UNKNOWN)
-                    || (field.defaultVal() != null
-                    && field.defaultVal().toString().equals(UNKNOWN)) ? valid() : raise(message(
-                            "Default of field " + field.name() + " is \"" + field.defaultVal()
+    private Stream<ValidationException> validateDefaultEnum(SchemaField field) {
+        return !field.getField().schema().getEnumSymbols().contains(UNKNOWN)
+                    || (field.getField().defaultVal() != null
+                    && field.getField().defaultVal().toString().equals(UNKNOWN)) ? valid()
+                    : raise(messageField("Default is \"" + field.getField().defaultVal()
                             + "\". Any Avro enum type that has an \"UNKNOWN\" symbol must set its"
-                            + " default value to \"UNKNOWN\".").apply(schema));
+                            + " default value to \"UNKNOWN\".").apply(field));
     }
 
-    private Stream<ValidationException> validateDefaultUnion(Schema.Field field, Schema schema) {
-        return !field.schema().getTypes().contains(Schema.create(Type.NULL))
-                || (field.defaultVal() != null
-                && field.defaultVal().equals(JsonProperties.NULL_VALUE)) ? valid() : raise(message(
-                    "Default of field " + field.name() + " is not null. Any nullable Avro"
-                        + " field must specify have its default value set to null.").apply(schema));
+    private Stream<ValidationException> validateDefaultUnion(SchemaField field) {
+        return !field.getField().schema().getTypes().contains(Schema.create(Type.NULL))
+                || (field.getField().defaultVal() != null
+                && field.getField().defaultVal().equals(JsonProperties.NULL_VALUE)) ? valid()
+                : raise(messageField("Default is not null. Any nullable Avro field must"
+                + " specify have its default value set to null.").apply(field));
     }
 
-    private Stream<ValidationException> validateDefaultOther(Schema.Field field, Schema schema) {
-        return field.defaultVal() == null ? valid() : raise(message("Default of field '"
-                + field.name() + "' with type " + field.schema().getType() + " is set to "
-                + field.defaultVal() + ". The only acceptable default values are the \"UNKNOWN\""
-                + "enum symbol and null.").apply(schema));
+    private Stream<ValidationException> validateDefaultOther(SchemaField field) {
+        return field.getField().defaultVal() == null ? valid() : raise(messageField(
+                "Default of type " + field.getField().schema().getType() + " is set to "
+                + field.getField().defaultVal() + ". The only acceptable default values are the"
+                + " \"UNKNOWN\" enum symbol and null.").apply(field));
     }
 
     /**
@@ -301,7 +311,7 @@ public class RadarSchemaValidationRules implements SchemaValidationRules {
     @Override
     public Validator<Schema> validateTime() {
         return validateNonNull(s -> s.getField(TIME),
-                time -> time.schema().getType().equals(Type.DOUBLE), message(TIME_FIELD));
+                time -> time.schema().getType().equals(Type.DOUBLE), messageSchema(TIME_FIELD));
     }
 
     /**
@@ -311,7 +321,7 @@ public class RadarSchemaValidationRules implements SchemaValidationRules {
     @Override
     public Validator<Schema> validateTimeCompleted() {
         return validateNonNull(s -> s.getField(TIME_COMPLETED),
-                time -> time.schema().getType().equals(Type.DOUBLE), message(TIME_COMPLETED_FIELD));
+                time -> time.schema().getType().equals(Type.DOUBLE), messageSchema(TIME_COMPLETED_FIELD));
     }
 
     /**
@@ -321,7 +331,7 @@ public class RadarSchemaValidationRules implements SchemaValidationRules {
     @Override
     public Validator<Schema> validateNotTimeCompleted() {
         return validate(schema -> Objects.isNull(schema.getField(TIME_COMPLETED)),
-            message(NOT_TIME_COMPLETED_FIELD));
+            messageSchema(NOT_TIME_COMPLETED_FIELD));
     }
 
     /**
@@ -331,7 +341,7 @@ public class RadarSchemaValidationRules implements SchemaValidationRules {
     @Override
     public Validator<Schema> validateTimeReceived() {
         return validateNonNull(s -> s.getField(TIME_RECEIVED),
-                time -> time.schema().getType().equals(Type.DOUBLE), message(TIME_RECEIVED_FIELD));
+                time -> time.schema().getType().equals(Type.DOUBLE), messageSchema(TIME_RECEIVED_FIELD));
     }
 
     /**
@@ -341,10 +351,49 @@ public class RadarSchemaValidationRules implements SchemaValidationRules {
     @Override
     public Validator<Schema> validateNotTimeReceived() {
         return validate(schema -> Objects.isNull(schema.getField(TIME_RECEIVED)),
-                message(NOT_TIME_RECEIVED_FIELD));
+                messageSchema(NOT_TIME_RECEIVED_FIELD));
     }
 
-    private static Function<Schema, String> message(String text) {
+    private static Function<Schema, String> messageSchema(String text) {
         return schema -> "Schema " + schema.getFullName() + " is invalid. " + text;
+    }
+
+    private static Function<SchemaMetadata, String> message(String text) {
+        return metadata -> "Schema " + metadata.getSchema().getFullName()
+                + " at " + metadata.getPath() + " is invalid. " + text;
+    }
+
+    private static Function<SchemaField, String> messageField(String text) {
+        return schema -> "Field " + schema.getField().name() + " in schema "
+                + schema.getSchemaMetadata().getSchema().getFullName() + " is invalid. " + text;
+    }
+
+    @Override
+    public Validator<SchemaMetadata> fields(Validator<SchemaField> validator) {
+        return metadata -> {
+            Schema schema = metadata.getSchema();
+            if (config.skipFile(metadata.getPath())) {
+                return valid();
+            }
+            if (!schema.getType().equals(Schema.Type.RECORD)) {
+                return raise("Default validation can be applied only to an Avro RECORD, not to "
+                        + schema.getType() + " of schema " + schema.getFullName() + '.');
+            }
+            if (schema.getFields().isEmpty()) {
+                return raise("Schema " + schema.getFullName() + " does not contain any fields.");
+            }
+            return schema.getFields().stream()
+                    .flatMap(field -> {
+                        SchemaField schemaField = new SchemaField(metadata, field);
+                        return config.isSkipped(schemaField) ? valid()
+                                : validator.apply(schemaField);
+                    });
+        };
+    }
+
+    @Override
+    public Validator<SchemaMetadata> schema(Validator<Schema> validator) {
+        return metadata -> config.skipFile(metadata.getPath()) ? valid()
+                : validator.apply(metadata.getSchema());
     }
 }

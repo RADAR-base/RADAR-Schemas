@@ -10,6 +10,10 @@ public class SchemaMetadata {
     private final Scope scope;
     private final Path path;
 
+    public SchemaMetadata(Schema schema) {
+        this(schema, null, null);
+    }
+
     public SchemaMetadata(Schema schema, Scope scope, Path path) {
         this.schema = schema;
         this.scope = scope;
@@ -26,5 +30,9 @@ public class SchemaMetadata {
 
     public Schema getSchema() {
         return schema;
+    }
+
+    public SchemaMetadata withSubSchema(Schema schema) {
+        return new SchemaMetadata(schema, scope, path);
     }
 }

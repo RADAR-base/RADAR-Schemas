@@ -4,10 +4,10 @@
   "name": "BiovotionVsm1Temperature",
   "doc": "Data from temperature sensor expressed in degrees on the Celsius (°C) scale.",
   "fields": [
-    {"name": "time", "type": "double", "doc": "device timestamp in UTC (s)." },
-    {"name": "timeReceived", "type": "double", "doc": "device receiver timestamp in UTC (s)." },
-    {"name": "temperature", "type": "float", "doc": "skin temperature (°C)." },
-    {"name": "temperatureLocal", "type": "float", "doc": "device (board) temperature (°C)." },
-    {"name": "temperatureBarometer", "type": "float", "doc": "barometer temperature (°C)." }
+    {"name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+    {"name": "timeReceived", "type": "double", "doc": "Device receiver timestamp in UTC (s)." },
+    {"name": "temperature", "type": "float", "doc": "Skin temperature (°C)." },
+    {"name": "temperatureLocal", "type": "float", "doc": "Device (board) temperature (°C)." },
+    {"name": "temperatureBarometer", "type": "float", "doc": "Barometer temperature (°C)." }
   ]
 }

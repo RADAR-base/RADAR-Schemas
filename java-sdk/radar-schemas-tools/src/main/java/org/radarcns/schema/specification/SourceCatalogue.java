@@ -48,7 +48,7 @@ public class SourceCatalogue {
     /** Folder names. */
     public static final String YAML_EXTENSION = ".yml";
 
-    public static final Path BASE_PATH = Paths.get("../..");
+    public static final Path BASE_PATH = Paths.get("../..").toAbsolutePath().normalize();
 
     private final Map<String, ActiveSource> activeSources;
     private final Map<String, MonitorSource> monitorSources;
