@@ -21,11 +21,16 @@ import org.apache.avro.Schema.Type;
 import org.radarcns.schema.validation.ValidationException;
 import org.radarcns.schema.validation.config.ExcludeConfig;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
+import static org.radarcns.schema.validation.rules.Validator.check;
 import static org.radarcns.schema.validation.rules.Validator.matches;
 import static org.radarcns.schema.validation.rules.Validator.raise;
 import static org.radarcns.schema.validation.rules.Validator.valid;
@@ -43,6 +48,7 @@ public class RadarSchemaRules implements SchemaRules {
     private static final String TIME_COMPLETED = "timeCompleted";
 
     static final Pattern NAMESPACE_PATTERN = Pattern.compile("^[a-z]+(\\.[a-z]+)*$");
+    private final Map<String, Schema> schemaStore;
 
     // CamelCase
     // see SchemaValidatorRolesTest#recordNameRegex() for valid and invalid values
@@ -63,6 +69,7 @@ public class RadarSchemaRules implements SchemaRules {
     public RadarSchemaRules(ExcludeConfig config, RadarSchemaFieldRules fieldRules) {
         this.config = config;
         this.fieldRules = fieldRules;
+        this.schemaStore = new HashMap<>();
     }
 
     public RadarSchemaRules(ExcludeConfig config) {
@@ -72,6 +79,17 @@ public class RadarSchemaRules implements SchemaRules {
     @Override
     public SchemaFieldRules getFieldRules() {
         return fieldRules;
+    }
+
+    @Override
+    public Validator<Schema> validateUniqueness() {
+        return schema -> {
+            String key = schema.getFullName();
+            Schema oldSchema = schemaStore.putIfAbsent(key, schema);
+            return check(oldSchema == null || oldSchema.equals(schema), messageSchema(
+                    "Schema is already defined elsewhere with a different definition.")
+                    .apply(schema));
+        };
     }
 
     @Override
@@ -202,5 +220,9 @@ public class RadarSchemaRules implements SchemaRules {
                                 : validator.apply(schemaField);
                     });
         };
+    }
+
+    public Map<String, Schema> getSchemaStore() {
+        return Collections.unmodifiableMap(schemaStore);
     }
 }

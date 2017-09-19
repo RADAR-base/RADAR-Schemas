@@ -2,6 +2,7 @@ package org.radarcns.schema.validation.rules;
 
 import org.apache.avro.JsonProperties;
 import org.apache.avro.Schema;
+import org.apache.avro.SchemaBuilder;
 import org.radarcns.schema.validation.ValidationException;
 
 import java.util.Arrays;
@@ -44,9 +45,9 @@ public class RadarSchemaFieldRules implements SchemaFieldRules {
             if (subType == Schema.Type.UNION) {
                 return validateInternalUnion(schemaRules).apply(field);
             } else if (subType == Schema.Type.RECORD) {
-                return schemaRules.validateRecord(false).apply(schema);
+                return schemaRules.validateRecord().apply(schema);
             } else if (subType == Schema.Type.ENUM) {
-                return schemaRules.validateEnum(false).apply(schema);
+                return schemaRules.validateEnum().apply(schema);
             } else {
                 return valid();
             }

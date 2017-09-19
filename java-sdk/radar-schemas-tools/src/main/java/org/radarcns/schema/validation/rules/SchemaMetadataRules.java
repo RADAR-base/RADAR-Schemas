@@ -20,7 +20,7 @@ public interface SchemaMetadataRules {
             Validator<SchemaMetadata> validator = validateSchemaLocation();
 
             if (metadata.getSchema().getType().equals(Schema.Type.ENUM)) {
-                validator = validator.and(schema(schemaRules.validateEnum(true)));
+                validator = validator.and(schema(schemaRules.validateEnum()));
             } else {
                 switch (metadata.getScope()) {
                     case ACTIVE:
@@ -33,7 +33,7 @@ public interface SchemaMetadataRules {
                         validator = validator.and(schema(schemaRules.validatePassive()));
                         break;
                     default:
-                        validator = validator.and(schema(schemaRules.validateRecord(true)));
+                        validator = validator.and(schema(schemaRules.validateRecord()));
                         break;
                 }
             }

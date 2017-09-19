@@ -9,6 +9,9 @@ import static org.radarcns.schema.validation.rules.Validator.raise;
 public interface SchemaRules {
     SchemaFieldRules getFieldRules();
 
+    /** Checks that schemas are unique compared to already validated schemas. */
+    Validator<Schema> validateUniqueness();
+
     /** Checks schema namespace format. */
     Validator<Schema> validateNameSpace();
 
@@ -36,39 +39,29 @@ public interface SchemaRules {
     /** Checks that schemas should not have a {@code timeReceived} field. */
     Validator<Schema> validateNotTimeReceived();
 
-    default Validator<Schema> validateEnum(boolean topLevel) {
-        Validator<Schema> validator = validateSymbols()
+    default Validator<Schema> validateEnum() {
+        return validateUniqueness()
+                .and(validateNameSpace())
+                .and(validateSymbols())
                 .and(validateSchemaDocumentation())
                 .and(validateName());
-        if (topLevel) {
-            validator = validator.and(validateNameSpace());
-        }
-        return validator;
     }
 
     /** Validate a record that is defined inline. */
-    default Validator<Schema> validateRecord(boolean topLevel) {
-        SchemaFieldRules fieldRules = getFieldRules();
-
-        Validator<Schema> validator = validateName()
+    default Validator<Schema> validateRecord() {
+        return validateUniqueness()
+                .and(validateNameSpace())
+                .and(validateName())
                 .and(validateSchemaDocumentation())
-                .and(fields(fieldRules.validateFieldTypes(this)
-                        .and(fieldRules.validateFieldName())
-                        .and(fieldRules.validateDefault())
-                        .and(fieldRules.validateFieldDocumentation())));
-        if (topLevel) {
-            validator = validator.and(validateNameSpace());
-        }
-        return validator;
+                .and(fields(getFieldRules().getValidator(this)));
     }
-
 
     /**
      * Validates record schemas of an active source
      * @return TODO
      */
     default Validator<Schema> validateActiveSource() {
-        return validateRecord(true)
+        return validateRecord()
                 .and(validateTime()
                 .and(validateTimeCompleted())
                 .and(validateNotTimeReceived()));
@@ -79,7 +72,7 @@ public interface SchemaRules {
      * @return TODO
      */
     default Validator<Schema> validateMonitor() {
-        return validateRecord(true)
+        return validateRecord()
                 .and(validateTime());
     }
 
@@ -87,7 +80,7 @@ public interface SchemaRules {
      * Validates schemas of passive sources.
      */
     default Validator<Schema> validatePassive() {
-        return validateRecord(true)
+        return validateRecord()
                 .and(validateTime())
                 .and(validateTimeReceived())
                 .and(validateNotTimeCompleted());

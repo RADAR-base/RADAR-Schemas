@@ -22,11 +22,15 @@ import org.radarcns.schema.validation.config.ExcludeConfig;
 import org.radarcns.schema.validation.rules.RadarSchemaMetadataRules;
 import org.radarcns.schema.validation.rules.RadarSchemaRules;
 import org.radarcns.schema.validation.rules.SchemaMetadata;
+import org.radarcns.schema.validation.rules.SchemaMetadataRules;
 import org.radarcns.schema.validation.rules.Validator;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Map;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -38,41 +42,54 @@ public class SchemaValidator {
     private final Path root;
     private final ExcludeConfig config;
     private final Validator<SchemaMetadata> validator;
+    private final SchemaMetadataRules rules;
 
     public SchemaValidator(Path root, ExcludeConfig config) {
         this.config = config;
         this.root = root;
-        this.validator = new RadarSchemaMetadataRules(root, config).getValidator();
+        this.rules = new RadarSchemaMetadataRules(root, config);
+        this.validator = rules.getValidator();
     }
 
     /**
      * TODO.
      * @param scope TODO.
+     */
+    public Stream<ValidationException> analyseFiles(Scope scope) {
+        try {
+            return Files.walk(scope.getPath(root.resolve(COMMONS_PATH)))
+                    .filter(Files::isRegularFile)
+                    .filter(p -> !config.skipFile(p))
+                    .flatMap(p -> {
+                        if (!isAvscFile(p)) {
+                            return Stream.of(new ValidationException(
+                                    p.toAbsolutePath() + " is invalid. " + scope.getLower()
+                                            + " should contain only " + AVRO_EXTENSION + " files."));
+                        }
+
+                        try {
+                            Schema schema = new Schema.Parser().parse(p.toFile());
+
+                            return validate(schema, p, scope);
+                        } catch (IOException e) {
+                            return Stream.of(new ValidationException(
+                                    "Cannot parse file " + p.toAbsolutePath(), e));
+                        }
+                    });
+        } catch (IOException ex) {
+            return Stream.of(new ValidationException("Failed to read files: " + ex, ex));
+        }
+    }
+
+
+    /**
+     * TODO.
      * @throws IOException TODO.
      */
-    public Stream<ValidationException> analyseFiles(Scope scope)
+    public Stream<ValidationException> analyseFiles()
             throws IOException {
-        Schema.Parser parser = new Schema.Parser();
-
-        return Files.walk(scope.getPath(root.resolve(COMMONS_PATH)))
-                .filter(Files::isRegularFile)
-                .filter(p -> !config.skipFile(p))
-                .flatMap(p -> {
-                    if (!isAvscFile(p)) {
-                        return Stream.of(new ValidationException(
-                                p.toAbsolutePath() + " is invalid. " + scope.getLower()
-                                        + " should contain only " + AVRO_EXTENSION + " files."));
-                    }
-
-                    try {
-                        Schema schema = parser.parse(p.toFile());
-
-                        return validate(schema, p, scope);
-                    } catch (IOException e) {
-                        return Stream.of(new ValidationException(
-                                "Cannot parse file " + p.toAbsolutePath(), e));
-                    }
-                });
+        return Stream.of(Scope.values())
+                .flatMap(this::analyseFiles);
     }
 
     public Stream<ValidationException> validate(Schema schema, Path path, Scope scope) {
@@ -104,5 +121,13 @@ public class SchemaValidator {
      */
     public static String getPath(Path path) {
         return path.toString().substring(path.toString().indexOf(ExcludeConfig.REPOSITORY_NAME));
+    }
+
+    public SchemaMetadataRules getRules() {
+        return rules;
+    }
+
+    public Map<String, Schema> getValidatedSchemas() {
+        return ((RadarSchemaRules) rules.getSchemaRules()).getSchemaStore();
     }
 }
