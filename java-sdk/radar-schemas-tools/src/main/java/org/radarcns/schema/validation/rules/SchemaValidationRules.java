@@ -2,7 +2,10 @@ package org.radarcns.schema.validation.rules;
 
 import org.apache.avro.Schema;
 
+import java.util.function.Function;
+
 import static org.radarcns.schema.validation.rules.Validator.raise;
+import static org.radarcns.schema.validation.rules.Validator.valid;
 
 public interface SchemaValidationRules {
     /** Checks the location of a schema with its internal data. */
@@ -36,6 +39,25 @@ public interface SchemaValidationRules {
                 .and(fields(validateFieldName()))
                 .and(fields(validateDefault()))
                 .and(fields(validateFieldDocumentation()));
+    }
+
+    default Validator<SchemaField> validateInternalUnion() {
+        return field -> field.getField().schema().getTypes().stream()
+                .flatMap(schema -> {
+                    Schema.Type type = schema.getType();
+                    SchemaMetadata subMeta = field.getSchemaMetadata().withSubSchema(
+                            schema);
+                    if (type == Schema.Type.RECORD) {
+                        return internalRecordValidation().apply(subMeta);
+                    } else if (type == Schema.Type.ENUM) {
+                        return internalEnumValidation().apply(subMeta);
+                    } else if (type == Schema.Type.UNION) {
+                        return raise(messageField("Cannot have a nested union.")
+                                .apply(field));
+                    } else {
+                        return valid();
+                    }
+                });
     }
 
     /** Checks field name format. */
@@ -169,5 +191,19 @@ public interface SchemaValidationRules {
     /** Validates schemas without their metadata. */
     default Validator<SchemaMetadata> schema(Validator<Schema> validator) {
         return metadata -> validator.apply(metadata.getSchema());
+    }
+
+    static Function<Schema, String> messageSchema(String text) {
+        return schema -> "Schema " + schema.getFullName() + " is invalid. " + text;
+    }
+
+    static Function<SchemaMetadata, String> message(String text) {
+        return metadata -> "Schema " + metadata.getSchema().getFullName()
+                + " at " + metadata.getPath() + " is invalid. " + text;
+    }
+
+    static Function<SchemaField, String> messageField(String text) {
+        return schema -> "Field " + schema.getField().name() + " in schema "
+                + schema.getSchemaMetadata().getSchema().getFullName() + " is invalid. " + text;
     }
 }

@@ -19,7 +19,6 @@ package org.radarcns.schema.validation.rules;
 import org.apache.avro.JsonProperties;
 import org.apache.avro.Schema;
 import org.apache.avro.Schema.Type;
-import org.radarcns.schema.Scope;
 import org.radarcns.schema.validation.ValidationException;
 import org.radarcns.schema.validation.ValidationSupport;
 import org.radarcns.schema.validation.config.ExcludeConfig;
@@ -32,10 +31,12 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiFunction;
 import java.util.function.Function;
-import java.util.function.Predicate;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
+import static org.radarcns.schema.validation.rules.SchemaValidationRules.message;
+import static org.radarcns.schema.validation.rules.SchemaValidationRules.messageField;
+import static org.radarcns.schema.validation.rules.SchemaValidationRules.messageSchema;
 import static org.radarcns.schema.validation.rules.Validator.matches;
 import static org.radarcns.schema.validation.rules.Validator.raise;
 import static org.radarcns.schema.validation.rules.Validator.valid;
@@ -70,28 +71,7 @@ public class RadarSchemaValidationRules implements SchemaValidationRules {
     private static final List<String> FIELD_NAME_NOT_ALLOWED_SUFFIX = Arrays.asList(
             "value", "Value");
 
-    private static final String NAME_SPACE = "Namespace cannot be null and must fully lowercase dot"
-            + " separated without numeric. In this case the expected value is \"";
-    private static final String TIME_FIELD = "Any schema representing collected data must have a \""
-            + TIME + "\" field formatted in " + Type.DOUBLE + ".";
-    private static final String TIME_COMPLETED_FIELD = "Any " + Scope.ACTIVE
-            + " schema must have a \"" + TIME_COMPLETED + "\" field formatted in "
-            + Type.DOUBLE + ".";
-    private static final String NOT_TIME_COMPLETED_FIELD = "\"" + TIME_COMPLETED
-            + "\" is allow only in " + Scope.ACTIVE + " schemas.";
-    private static final String TIME_RECEIVED_FIELD = "Any " + Scope.PASSIVE
-            + " schema must have a \"" + TIME_RECEIVED + "\" field formatted in "
-            + Type.DOUBLE + ".";
-    private static final String NOT_TIME_RECEIVED_FIELD = "\"" + TIME_RECEIVED
-            + "\" is allow only in " + Scope.PASSIVE + " schemas.";
-    private static final String FIELD_NAME_NOT_ALLOWED = "Field name cannot end with the"
-            + " following values " + FIELD_NAME_NOT_ALLOWED_SUFFIX + ".";
-    private static final String FIELD_NAME_LOWER_CAMEL = "Field name does not respect"
-            + " lowerCamelCase name convention. Please avoid abbreviations and write out the"
-            + " field name instead.";
-    private static final String SYMBOLS = "Avro Enumerator must have symbol list.";
-    private static final String ENUMERATION_SYMBOL = "Enumerator items should be written in"
-            + " uppercase characters separated by underscores.";
+    private static final String WITH_TYPE_DOUBLE = "\" field with type \"double\".";
 
     private final Path root;
     private final ExcludeConfig config;
@@ -119,7 +99,7 @@ public class RadarSchemaValidationRules implements SchemaValidationRules {
 
             Schema.Type subType = field.getField().schema().getType();
             if (subType == Schema.Type.UNION) {
-                return validateInternalUnion(field);
+                return validateInternalUnion().apply(field);
             } else if (subType == Schema.Type.RECORD) {
                 return internalRecordValidation().apply(metadata);
             } else if (subType == Schema.Type.ENUM) {
@@ -130,25 +110,6 @@ public class RadarSchemaValidationRules implements SchemaValidationRules {
         };
     }
 
-    private Stream<ValidationException> validateInternalUnion(SchemaField field) {
-        return field.getField().schema().getTypes().stream()
-                .flatMap(schema -> {
-                    Schema.Type type = schema.getType();
-                    SchemaMetadata subMeta = field.getSchemaMetadata().withSubSchema(
-                            schema);
-                    if (type == Schema.Type.RECORD) {
-                        return internalRecordValidation().apply(subMeta);
-                    } else if (type == Schema.Type.ENUM) {
-                        return internalEnumValidation().apply(subMeta);
-                    } if (type == Schema.Type.UNION) {
-                        return raise(messageField("Cannot have a nested union.")
-                                .apply(field));
-                    } else {
-                        return valid();
-                    }
-                });
-    }
-
     @Override
     public Validator<SchemaMetadata> validateSchemaLocation() {
         return validateNamespaceSchemaLocation()
@@ -157,17 +118,19 @@ public class RadarSchemaValidationRules implements SchemaValidationRules {
 
     private Validator<SchemaMetadata> validateNamespaceSchemaLocation() {
         return metadata -> {
-                try {
-                    String expected = ValidationSupport.getNamespace(
-                            root, metadata.getPath(), metadata.getScope());
-                    String namespace = metadata.getSchema().getNamespace();
+            try {
+                String expected = ValidationSupport.getNamespace(
+                        root, metadata.getPath(), metadata.getScope());
+                String namespace = metadata.getSchema().getNamespace();
 
-                    return expected.equalsIgnoreCase(namespace) ? valid() : raise(message(
-                            NAME_SPACE + expected + "\".").apply(metadata));
-                } catch (IllegalArgumentException ex) {
-                    return Stream.of(new ValidationException("Path " + metadata.getPath()
-                            + " is not part of root " + root, ex));
-                }
+                return expected.equalsIgnoreCase(namespace) ? valid() : raise(message(
+                        "Namespace cannot be null and must fully lowercase dot"
+                        + " separated without numeric. In this case the expected value is \""
+                        + expected + "\".").apply(metadata));
+            } catch (IllegalArgumentException ex) {
+                return Stream.of(new ValidationException("Path " + metadata.getPath()
+                        + " is not part of root " + root, ex));
+            }
         };
     }
 
@@ -181,10 +144,6 @@ public class RadarSchemaValidationRules implements SchemaValidationRules {
         };
     }
 
-    /**
-     * TODO.
-     * @return TODO
-     */
     @Override
     public Validator<Schema> validateNameSpace() {
         return validateNonNull(Schema::getNamespace, matches(NAMESPACE_PATTERN),
@@ -235,26 +194,13 @@ public class RadarSchemaValidationRules implements SchemaValidationRules {
 
     @Override
     public Validator<SchemaField> validateFieldName() {
-        return validateFieldName(config::isSkipped);
-    }
-
-    /**
-     * Checks field names, except when the given predicate tests true.
-     * @param skip fields to skip
-     */
-    protected Validator<SchemaField> validateFieldName(Predicate<SchemaField> skip) {
-        return field -> {
-            if (!skip.test(field)) {
-                String name = field.getField().name();
-                if (!matches(name, FIELD_NAME_PATTERN)) {
-                    return raise(messageField(FIELD_NAME_LOWER_CAMEL).apply(field));
-                }
-                if (FIELD_NAME_NOT_ALLOWED_SUFFIX.stream().anyMatch(name::endsWith)) {
-                    return raise(messageField(FIELD_NAME_NOT_ALLOWED).apply(field));
-                }
-            }
-            return valid();
-        };
+        return validateNonNull(f -> f.getField().name(), matches(FIELD_NAME_PATTERN), messageField(
+                            "Field name does not respect lowerCamelCase name convention."
+                            + " Please avoid abbreviations and write out the field name instead."))
+                .and(validateNonNull(f -> f.getField().name(),
+                        n -> FIELD_NAME_NOT_ALLOWED_SUFFIX.stream().noneMatch(n::endsWith),
+                        messageField("Field name may not end with the following values: "
+                                    + FIELD_NAME_NOT_ALLOWED_SUFFIX + ".")));
     }
 
     @Override
@@ -265,18 +211,22 @@ public class RadarSchemaValidationRules implements SchemaValidationRules {
 
     @Override
     public Validator<Schema> validateSymbols() {
-        return validateNonEmpty(Schema::getEnumSymbols, messageSchema(SYMBOLS))
+        return validateNonEmpty(Schema::getEnumSymbols, messageSchema(
+                "Avro Enumerator must have symbol list."))
                 .and(schema -> schema.getEnumSymbols().stream()
                         .filter(symbol -> !matches(symbol, ENUM_SYMBOL_PATTERN))
                         .map(s -> new ValidationException(messageSchema(
                                 "Symbol " + s + " does not use valid syntax. "
-                                        + ENUMERATION_SYMBOL).apply(schema))));
+                                    + "Enumerator items should be written in"
+                                    + " uppercase characters separated by underscores.")
+                                .apply(schema))));
     }
 
     @Override
     public Validator<SchemaField> validateDefault() {
         return input -> defaultsValidator
-                        .getOrDefault(input.getField().schema().getType(), this::validateDefaultOther)
+                        .getOrDefault(input.getField().schema().getType(),
+                                this::validateDefaultOther)
                         .apply(input);
     }
 
@@ -311,7 +261,9 @@ public class RadarSchemaValidationRules implements SchemaValidationRules {
     @Override
     public Validator<Schema> validateTime() {
         return validateNonNull(s -> s.getField(TIME),
-                time -> time.schema().getType().equals(Type.DOUBLE), messageSchema(TIME_FIELD));
+                time -> time.schema().getType().equals(Type.DOUBLE), messageSchema(
+                        "Any schema representing collected data must have a \""
+                        + TIME + WITH_TYPE_DOUBLE));
     }
 
     /**
@@ -321,7 +273,9 @@ public class RadarSchemaValidationRules implements SchemaValidationRules {
     @Override
     public Validator<Schema> validateTimeCompleted() {
         return validateNonNull(s -> s.getField(TIME_COMPLETED),
-                time -> time.schema().getType().equals(Type.DOUBLE), messageSchema(TIME_COMPLETED_FIELD));
+                time -> time.schema().getType().equals(Type.DOUBLE),
+                messageSchema("Any ACTIVE schema must have a \""
+                        + TIME_COMPLETED + WITH_TYPE_DOUBLE));
     }
 
     /**
@@ -331,41 +285,22 @@ public class RadarSchemaValidationRules implements SchemaValidationRules {
     @Override
     public Validator<Schema> validateNotTimeCompleted() {
         return validate(schema -> Objects.isNull(schema.getField(TIME_COMPLETED)),
-            messageSchema(NOT_TIME_COMPLETED_FIELD));
+            messageSchema("\"" + TIME_COMPLETED
+                    + "\" is allow only in ACTIVE schemas."));
     }
 
-    /**
-     * TODO.
-     * @return TODO
-     */
     @Override
     public Validator<Schema> validateTimeReceived() {
         return validateNonNull(s -> s.getField(TIME_RECEIVED),
-                time -> time.schema().getType().equals(Type.DOUBLE), messageSchema(TIME_RECEIVED_FIELD));
+                time -> time.schema().getType().equals(Type.DOUBLE),
+                messageSchema("Any PASSIVE schema must have a \""
+                        + TIME_RECEIVED + WITH_TYPE_DOUBLE));
     }
 
-    /**
-     * TODO.
-     * @return TODO
-     */
     @Override
     public Validator<Schema> validateNotTimeReceived() {
         return validate(schema -> Objects.isNull(schema.getField(TIME_RECEIVED)),
-                messageSchema(NOT_TIME_RECEIVED_FIELD));
-    }
-
-    private static Function<Schema, String> messageSchema(String text) {
-        return schema -> "Schema " + schema.getFullName() + " is invalid. " + text;
-    }
-
-    private static Function<SchemaMetadata, String> message(String text) {
-        return metadata -> "Schema " + metadata.getSchema().getFullName()
-                + " at " + metadata.getPath() + " is invalid. " + text;
-    }
-
-    private static Function<SchemaField, String> messageField(String text) {
-        return schema -> "Field " + schema.getField().name() + " in schema "
-                + schema.getSchemaMetadata().getSchema().getFullName() + " is invalid. " + text;
+                messageSchema("\"" + TIME_RECEIVED + "\" is allow only in PASSIVE schemas."));
     }
 
     @Override

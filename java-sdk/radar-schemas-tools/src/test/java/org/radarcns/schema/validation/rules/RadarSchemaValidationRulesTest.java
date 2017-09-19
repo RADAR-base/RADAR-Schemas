@@ -36,7 +36,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.radarcns.schema.SchemaRepository.COMMONS_PATH;
-import static org.radarcns.schema.Scope.ACTIVE;
 import static org.radarcns.schema.Scope.MONITOR;
 import static org.radarcns.schema.Scope.PASSIVE;
 import static org.radarcns.schema.specification.SourceCatalogue.BASE_PATH;
@@ -59,11 +58,10 @@ public class RadarSchemaValidationRulesTest {
     private static final String RECORD_NAME_MOCK = "RecordName";
     private static final String FIELD_NUMBER_MOCK = "Field1";
     private RadarSchemaValidationRules validator;
-    private ExcludeConfig config;
 
     @Before
     public void setUp() throws IOException {
-        config = new ExcludeConfig();
+        ExcludeConfig config = new ExcludeConfig();
         validator = new RadarSchemaValidationRules(BASE_PATH, config);
     }
 
@@ -137,9 +135,6 @@ public class RadarSchemaValidationRulesTest {
                 .fields()
                 .endRecord();
 
-        Path root = ACTIVE.getPath(BASE_PATH.resolve(COMMONS_PATH));
-        assertNotNull(root);
-
         Stream<ValidationException> result = validator.validateNameSpace()
                 .apply(schema);
 
@@ -154,9 +149,6 @@ public class RadarSchemaValidationRulesTest {
                 .fields()
                 .endRecord();
 
-        Path root = MONITOR.getPath(BASE_PATH.resolve(COMMONS_PATH));
-        assertNotNull(root);
-        Path path = root.resolve("test/record_name.avsc");
         Stream<ValidationException> result = validator.validateNameSpace()
                 .apply(schema);
 
@@ -375,7 +367,7 @@ public class RadarSchemaValidationRulesTest {
                 .endRecord();
 
         result = validator.fields(validator.validateFieldName()).apply(new SchemaMetadata(schema));
-        assertEquals(1, result.count());
+        assertEquals(2, result.count());
 
         schema = SchemaBuilder
                 .builder(MONITOR_NAME_SPACE_MOCK)
@@ -388,19 +380,6 @@ public class RadarSchemaValidationRulesTest {
         assertEquals(1, result.count());
 
         schema = SchemaBuilder
-          .builder(MONITOR_NAME_SPACE_MOCK)
-          .record(RECORD_NAME_MOCK)
-          .fields()
-          .requiredString(FIELD_NUMBER_MOCK)
-          .requiredString(RadarSchemaValidationRules.TIME)
-          .endRecord();
-
-        result = validator.fields(validator.validateFieldName(
-                s -> RadarSchemaValidationRules.TIME.equalsIgnoreCase(s.getField().name())))
-                .apply(new SchemaMetadata(schema));
-        assertEquals(1, result.count());
-
-        schema = SchemaBuilder
               .builder(MONITOR_NAME_SPACE_MOCK)
               .record(RECORD_NAME_MOCK)
               .fields()
@@ -408,19 +387,6 @@ public class RadarSchemaValidationRulesTest {
               .endRecord();
 
         result = validator.fields(validator.validateFieldName()).apply(new SchemaMetadata(schema));
-        assertEquals(0, result.count());
-
-        schema = SchemaBuilder
-              .builder(MONITOR_NAME_SPACE_MOCK)
-              .record(RECORD_NAME_MOCK)
-              .fields()
-              .requiredString(FIELD_NUMBER_MOCK)
-              .requiredString(RadarSchemaValidationRules.TIME)
-              .endRecord();
-
-        result = validator.fields(validator.validateFieldName(
-                        s -> FIELD_NUMBER_MOCK.equalsIgnoreCase(s.getField().name())))
-                        .apply(new SchemaMetadata(schema));
         assertEquals(0, result.count());
     }
 
