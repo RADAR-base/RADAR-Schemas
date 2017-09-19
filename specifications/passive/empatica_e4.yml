@@ -4,7 +4,7 @@ model: E4
 app_provider: .empatica.E4ServiceProvider
 sensors:
   - name: ACCELEROMETER
-    sample_rate: 32.0
+    default_sample_rate: 32.0
     unit: G
     processing_state: RAW
     topic: android_empatica_e4_acceleration
@@ -12,7 +12,7 @@ sensors:
     value: .passive.empatica.EmpaticaE4Acceleration
     aggregator: .kafka.aggregator.AggregatorDoubleArray
   - name: BATTERY
-    sample_rate: 1.0
+    default_sample_rate: 1.0
     unit: PERCENTAGE
     processing_state: RAW
     topic: android_empatica_e4_battery_level
@@ -20,7 +20,7 @@ sensors:
     value: .passive.empatica.EmpaticaE4BatteryLevel
     aggregator: .kafka.aggregator.AggregatorDouble
   - name: BLOOD_VOLUME_PULSE
-    sample_rate: 64.0
+    default_sample_rate: 64.0
     unit: NANO_WATT
     processing_state: RAW
     topic: android_empatica_e4_blood_volume_pulse
@@ -28,7 +28,7 @@ sensors:
     value: .passive.empatica.EmpaticaE4BloodVolumePulse
     aggregator: .kafka.aggregator.AggregatorDouble
   - name: ELECTRODERMAL_ACTIVITY
-    sample_rate: 4.0
+    default_sample_rate: 4.0
     unit: MICRO_SIEMENS
     processing_state: RAW
     topic: android_empatica_e4_electrodermal_activity
@@ -36,7 +36,7 @@ sensors:
     value: .passive.empatica.EmpaticaE4ElectroDermalActivity
     aggregator: .kafka.aggregator.AggregatorDouble
   - name: INTER_BEAT_INTERVAL
-    sample_rate: 1.0
+    default_sample_rate: 1.0
     unit: BEATS_PER_MIN
     processing_state: VENDOR
     topic: android_empatica_e4_inter_beat_interval
@@ -44,7 +44,7 @@ sensors:
     value: .passive.empatica.EmpaticaE4InterBeatInterval
     aggregator: .kafka.aggregator.AggregatorDouble
   - name: THERMOMETER
-    sample_rate: 4.0
+    default_sample_rate: 4.0
     unit: CELSIUS
     processing_state: RAW
     topic: android_empatica_e4_temperature
@@ -53,7 +53,7 @@ sensors:
     aggregator: .kafka.aggregator.AggregatorDouble
 processors:
   - name: HEART_RATE
-    sample_rate: 1.0
+    default_sample_rate: 1.0
     unit: BEATS_PER_MIN
     processing_state: RADAR
     input_topic: android_empatica_e4_inter_beat_interval

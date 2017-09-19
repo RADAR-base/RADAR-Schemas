@@ -50,7 +50,8 @@ public class Processor extends KafkaActor {
     public Processor(
             @JsonProperty(Labels.NAME) String name,
             @JsonProperty(Labels.DOC) String doc,
-            @JsonProperty(Labels.SAMPLE_RATE) double sampleRate,
+            @JsonProperty(Labels.DEFAULT_SAMPLE_INTERVAL) double sampleInterval,
+            @JsonProperty(Labels.DEFAULT_SAMPLE_RATE) double sampleRate,
             @JsonProperty(Labels.UNIT) String unit,
             @JsonProperty(Labels.PROCESSING_STATE) ProcessingState dataType,
             @JsonProperty(Labels.INPUT_TOPIC) String inputTopic,
@@ -58,7 +59,7 @@ public class Processor extends KafkaActor {
             @JsonProperty(Labels.INPUT_VALUE) String inputValue,
             @JsonProperty(Labels.BASE_OUTPUT_TOPIC) String baseOutputTopic,
             @JsonProperty(Labels.AGGREGATOR) String aggregator) {
-        super(doc, sampleRate, unit, dataType,
+        super(doc, sampleInterval, sampleRate, unit, dataType,
                 new Topic(inputTopic, inputKey, inputValue, aggregator, baseOutputTopic));
 
         Objects.requireNonNull(baseOutputTopic);

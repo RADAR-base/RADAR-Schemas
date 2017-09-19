@@ -72,7 +72,7 @@ public class PassiveSource extends Source {
         this.type = vendor + '_' + model;
         this.vendor = vendor;
         this.model = model;
-        this.appProvider = deduceProjectClass(appProvider);
+        this.appProvider = expandClass(appProvider);
         this.sensors = sensors;
         this.processors = processors == null ? new HashSet<>() : processors;
 

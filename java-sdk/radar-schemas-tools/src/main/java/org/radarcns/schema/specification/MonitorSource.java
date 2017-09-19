@@ -54,7 +54,8 @@ public class MonitorSource extends Source {
             @JsonProperty(Labels.NAME) String name,
             @JsonProperty(Labels.APP_PROVIDER) String appProvider,
             @JsonProperty(Labels.DOC) String doc,
-            @JsonProperty(Labels.SAMPLE_RATE) double sampleRate,
+            @JsonProperty(Labels.DEFAULT_SAMPLE_RATE) Double sampleRate,
+            @JsonProperty(Labels.DEFAULT_SAMPLE_INTERVAL) Double sampleInterval,
             @JsonProperty(Labels.UNIT) String unit,
             @JsonProperty(Labels.PROCESSING_STATE) ProcessingState dataType,
             @JsonProperty(Labels.TOPIC) String topic,
@@ -66,9 +67,8 @@ public class MonitorSource extends Source {
         Objects.requireNonNull(appProvider);
 
         this.type = name;
-        this.appProvider = deduceProjectClass(appProvider);
-
-        this.kafkaActor = new KafkaActor(doc, sampleRate, unit, dataType,
+        this.appProvider = expandClass(appProvider);
+        this.kafkaActor = new KafkaActor(doc, sampleInterval, sampleRate, unit, dataType,
                 new Topic(topic, key, value, aggregator, null));
     }
 

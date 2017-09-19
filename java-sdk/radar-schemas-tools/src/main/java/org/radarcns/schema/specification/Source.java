@@ -71,13 +71,13 @@ public abstract class Source {
         return Objects.hash(name, doc);
     }
 
-    public static String deduceProjectClass(String appProvider) {
-        if (appProvider == null || appProvider.isEmpty()) {
+    public static String expandClass(String classShorthand) {
+        if (classShorthand == null || classShorthand.isEmpty()) {
             return null;
-        } else if (appProvider.charAt(0) == '.') {
-            return Utils.getProjectGroup() + appProvider;
+        } else if (classShorthand.charAt(0) == '.') {
+            return Utils.getProjectGroup() + classShorthand;
         } else {
-            return appProvider;
+            return classShorthand;
         }
     }
 }

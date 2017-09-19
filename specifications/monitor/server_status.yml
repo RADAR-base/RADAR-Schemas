@@ -2,7 +2,7 @@
 name: SERVER_STATUS
 app_provider: .application.ApplicationServiceProvider
 doc: Monitor used by the Android pRMT to report the server connection status between the android client and the RADAR-CNS Platform.
-sample_rate: 0.08
+default_sample_interval: 300
 unit: NON_DIMENSIONAL
 processing_state: RAW
 topic: application_server_status

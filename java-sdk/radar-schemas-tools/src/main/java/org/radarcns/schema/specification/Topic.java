@@ -24,7 +24,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-import static org.radarcns.schema.specification.Source.deduceProjectClass;
+import static org.radarcns.schema.specification.Source.expandClass;
 
 /**
  * TODO.
@@ -134,9 +134,9 @@ public class Topic implements Aggregatable {
         Objects.requireNonNull(inputValue);
 
         this.inputTopic = inputTopic;
-        this.inputKey = deduceProjectClass(inputKey);
-        this.inputValue = deduceProjectClass(inputValue);
-        this.aggregator = deduceProjectClass(aggregator);
+        this.inputKey = expandClass(inputKey);
+        this.inputValue = expandClass(inputValue);
+        this.aggregator = expandClass(aggregator);
 
         this.baseOutput = baseOutput != null ? baseOutput : inputTopic;
 

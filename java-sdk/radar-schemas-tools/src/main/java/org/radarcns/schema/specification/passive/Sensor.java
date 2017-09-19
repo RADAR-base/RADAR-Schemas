@@ -26,7 +26,7 @@ import org.radarcns.schema.specification.Labels;
 
 import java.util.Objects;
 
-import static org.radarcns.schema.specification.Source.deduceProjectClass;
+import static org.radarcns.schema.specification.Source.expandClass;
 
 /**
  * TODO.
@@ -55,20 +55,21 @@ public class Sensor extends KafkaActor {
             @JsonProperty(Labels.NAME) SensorName name,
             @JsonProperty(Labels.APP_PROVIDER) String appProvider,
             @JsonProperty(Labels.DOC) String doc,
-            @JsonProperty(Labels.SAMPLE_RATE) double sampleRate,
+            @JsonProperty(Labels.DEFAULT_SAMPLE_INTERVAL) double sampleInterval,
+            @JsonProperty(Labels.DEFAULT_SAMPLE_RATE) double sampleRate,
             @JsonProperty(Labels.UNIT) String unit,
             @JsonProperty(Labels.PROCESSING_STATE) ProcessingState dataType,
             @JsonProperty(Labels.TOPIC) String topic,
             @JsonProperty(Labels.KEY) String key,
             @JsonProperty(Labels.VALUE) String value,
             @JsonProperty(Labels.AGGREGATOR) String aggregator) {
-        super(doc, sampleRate, unit, dataType,
+        super(doc, sampleInterval, sampleRate, unit, dataType,
                 new Topic(topic, key, value, aggregator, null));
 
         Objects.requireNonNull(name);
 
         this.name = name;
-        this.appProvider = deduceProjectClass(appProvider);
+        this.appProvider = expandClass(appProvider);
     }
 
     public String getAppProvider() {

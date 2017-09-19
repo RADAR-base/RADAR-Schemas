@@ -38,7 +38,8 @@ public final class Labels {
     public static final String PROCESSORS = "processors";
     public static final String QUESTIONS = "questions";
     public static final String RESPONSES = "responses";
-    public static final String SAMPLE_RATE = "sample_rate";
+    public static final String DEFAULT_SAMPLE_RATE = "default_sample_rate";
+    public static final String DEFAULT_SAMPLE_INTERVAL = "default_sample_interval";
     public static final String SCORE = "score";
     public static final String SENSORS = "sensors";
     public static final String TEXT = "text";

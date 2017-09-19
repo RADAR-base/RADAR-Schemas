@@ -33,6 +33,7 @@ import org.radarcns.schema.specification.passive.PassiveSource;
 import org.radarcns.schema.specification.passive.Processor;
 import org.radarcns.schema.specification.passive.Sensor;
 import org.radarcns.schema.validation.SchemaValidator;
+import org.radarcns.schema.validation.ValidationException;
 import org.radarcns.schema.validation.config.ExcludeConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,12 +50,12 @@ import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
  * TODO.
  */
+@SuppressWarnings("PMD.SystemPrintln")
 public class CommandLineApp {
     private static final Logger logger = LoggerFactory.getLogger(CommandLineApp.class);
 
@@ -219,8 +220,44 @@ public class CommandLineApp {
         return map;
     }
 
+    public int validateSchemas(Namespace ns) {
+        try {
+            ExcludeConfig config = loadConfig(ns.getString("config"));
+            SchemaValidator validator = new SchemaValidator(root, config);
+            Stream<ValidationException> stream = validateSchemas(
+                    ns.getString("scope"), validator);
 
-    public String validateSchemas(String scopeString, String configSubPath) throws IOException {
+            if (ns.getBoolean("quiet")) {
+                return stream.count() > 0 ? 1 : 0;
+            } else {
+                String result = SchemaValidator.format(stream);
+
+                System.out.println(result);
+                if (ns.getBoolean("verbose")) {
+                    System.out.println("Validated schemas:");
+                    for (String name : new TreeSet<>(validator.getValidatedSchemas().keySet())) {
+                        System.out.println(" - " + name);
+                    }
+                    System.out.println();
+                }
+                return result.isEmpty() ? 0 : 1;
+            }
+        } catch (IOException e) {
+            System.err.println("Failed to load schemas: " + e);
+            return 1;
+        }
+    }
+
+    private Stream<ValidationException> validateSchemas(String scopeString,
+            SchemaValidator validator) throws IOException {
+        if (scopeString == null) {
+            return validator.analyseFiles();
+        } else {
+            return validator.analyseFiles(Scope.valueOf(scopeString));
+        }
+    }
+
+    private ExcludeConfig loadConfig(String configSubPath) throws IOException {
         Path configPath = null;
         if (configSubPath != null) {
             if (configSubPath.charAt(0) == '/') {
@@ -229,24 +266,9 @@ public class CommandLineApp {
                 configPath = root.resolve(configSubPath);
             }
         }
-        ExcludeConfig config = ExcludeConfig.load(configPath);
-        SchemaValidator validator = new SchemaValidator(root, config);
-        if (scopeString == null) {
-            return Stream.of(Scope.values())
-                    .flatMap(scope -> {
-                        try {
-                            return SchemaValidator.formatStream(validator.analyseFiles(scope));
-                        } catch (IOException ex) {
-                            return Stream.of("Failed to read schemas from scope " + scope + "\n\n");
-                        }
-                    })
-                    .collect(Collectors.joining());
-        } else {
-            return SchemaValidator.format(validator.analyseFiles(Scope.valueOf(scopeString)));
-        }
+        return ExcludeConfig.load(configPath);
     }
 
-    @SuppressWarnings("PMD.SystemPrintln")
     public static void main(String... args) {
         ArgumentParser parser = ArgumentParsers.newArgumentParser("radar-schema")
                 .defaultHelp(true)
@@ -264,6 +286,12 @@ public class CommandLineApp {
                 .choices(Scope.values());
         validateParser.addArgument("-c", "--config")
                 .help("Configuration file to use");
+        validateParser.addArgument("-v", "--verbose")
+                .help("Verbose validation message")
+                .action(Arguments.storeTrue());
+        validateParser.addArgument("-q", "--quiet")
+                .help("Only set exit code.")
+                .action(Arguments.storeTrue());
 
         Subparser listParser = subParsers.addParser("list", true)
                 .description("list topics and schemas");
@@ -311,12 +339,7 @@ public class CommandLineApp {
                 }
                 break;
             case "validate":
-                try {
-                    System.out.println(app.validateSchemas(
-                            ns.getString("scope"), ns.getString("config")));
-                } catch (IOException e) {
-                    logger.error("Failed to load schemas", e);
-                }
+                System.exit(app.validateSchemas(ns));
                 break;
             default:
                 parser.handleError(new ArgumentParserException(

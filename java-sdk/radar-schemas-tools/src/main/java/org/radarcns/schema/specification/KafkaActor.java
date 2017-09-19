@@ -24,7 +24,7 @@ public class KafkaActor {
 
     private final String doc;
 
-    private final double sampleRate;
+    private final Double sampleInterval;
 
     private final String unit;
 
@@ -32,14 +32,18 @@ public class KafkaActor {
 
     private final Topic topic;
 
-    public KafkaActor(String doc, double sampleRate, String unit, ProcessingState dataType,
-            Topic topic) {
+    public KafkaActor(String doc, Double sampleInterval, Double sampleRate, String unit,
+            ProcessingState dataType, Topic topic) {
         Objects.requireNonNull(dataType);
         Objects.requireNonNull(topic);
         Objects.requireNonNull(unit);
 
         this.doc = doc;
-        this.sampleRate = sampleRate;
+        if (sampleInterval == null && sampleRate != null) {
+            this.sampleInterval = 1.0 / sampleRate;
+        } else {
+            this.sampleInterval = sampleInterval;
+        }
         this.unit = unit;
         this.dataType = dataType;
         this.topic = topic;
@@ -49,8 +53,8 @@ public class KafkaActor {
         return doc;
     }
 
-    public double getSampleRate() {
-        return sampleRate;
+    public Double getSampleInterval() {
+        return sampleInterval;
     }
 
     public String getUnit() {
@@ -74,7 +78,7 @@ public class KafkaActor {
             return false;
         }
         KafkaActor that = (KafkaActor) o;
-        return Double.compare(that.sampleRate, sampleRate) == 0
+        return Objects.equals(that.sampleInterval, sampleInterval)
                 && Objects.equals(doc, that.doc)
                 && Objects.equals(unit, that.unit)
                 && dataType == that.dataType
@@ -83,6 +87,6 @@ public class KafkaActor {
 
     @Override
     public int hashCode() {
-        return Objects.hash(doc, sampleRate, unit, dataType, topic);
+        return Objects.hash(doc, sampleInterval, unit, dataType, topic);
     }
 }

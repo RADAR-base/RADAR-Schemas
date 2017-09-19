@@ -373,4 +373,46 @@ public class RadarSchemaRulesTest {
 
         assertEquals(2, result.count());
     }
+
+
+    @Test
+    public void testUniqueness() {
+        String schemaTxt = "{\"namespace\": \"org.radarcns.monitor.application\", "
+                + "\"name\": \"ServerStatus\", \"type\": "
+                + "\"enum\", \"symbols\": [\"A\", \"B\"]}";
+        String schemaTxtAlt = "{\"namespace\": \"org.radarcns.monitor.application\", "
+                + "\"name\": \"ServerStatus\", \"type\": "
+                + "\"enum\", \"symbols\": [\"A\", \"B\", \"C\"]}";
+        String schemaTxt2 = "{\"namespace\": \"org.radarcns.monitor.application\", "
+                + "\"name\": \"ServerStatus2\", \"type\": "
+                + "\"enum\", \"symbols\": [\"A\", \"B\"]}";
+        String schemaTxt3 = "{\"namespace\": \"org.radarcns.monitor.applications\", "
+                + "\"name\": \"ServerStatus\", \"type\": "
+                + "\"enum\", \"symbols\": [\"A\", \"B\"]}";
+
+        Schema schema = new Parser().parse(schemaTxt);
+        Stream<ValidationException> result = validator.validateUniqueness().apply(schema);
+        assertEquals(0, result.count());
+        result = validator.validateUniqueness().apply(schema);
+        assertEquals(0, result.count());
+
+        Schema schemaAlt = new Parser().parse(schemaTxtAlt);
+        result = validator.validateUniqueness().apply(schemaAlt);
+        assertEquals(1, result.count());
+        result = validator.validateUniqueness().apply(schemaAlt);
+        assertEquals(1, result.count());
+
+        Schema schema2 = new Parser().parse(schemaTxt2);
+        result = validator.validateUniqueness().apply(schema2);
+        assertEquals(0, result.count());
+
+        Schema schema3 = new Parser().parse(schemaTxt3);
+        result = validator.validateUniqueness().apply(schema3);
+        assertEquals(0, result.count());
+        result = validator.validateUniqueness().apply(schema3);
+        assertEquals(0, result.count());
+
+        result = validator.validateUniqueness().apply(schemaAlt);
+        assertEquals(1, result.count());
+    }
 }

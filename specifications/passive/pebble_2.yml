@@ -4,7 +4,7 @@ model: 2
 app_provider: .pebble.PebbleServiceProvider
 sensors:
   - name: ACCELEROMETER
-    sample_rate: 10.0
+    default_sample_rate: 10.0
     unit: G
     processing_state: RAW
     topic: android_pebble_2_acceleration
@@ -12,7 +12,7 @@ sensors:
     value: .passive.pebble.Pebble2Acceleration
     aggregator: .kafka.aggregator.AggregatorDoubleArray
   - name: BATTERY
-    sample_rate: 1.0
+    default_sample_rate: 1.0
     unit: PERCENTAGE
     processing_state: RAW
     topic: android_pebble_2_battery_level
@@ -20,7 +20,7 @@ sensors:
     value: .passive.pebble.Pebble2BatteryLevel
     aggregator: .kafka.aggregator.AggregatorDouble
   - name: HEART_RATE
-    sample_rate: 1.0
+    default_sample_rate: 1.0
     unit: BEATS_PER_MIN
     processing_state: VENDOR
     topic: android_pebble_2_heartrate
@@ -28,7 +28,7 @@ sensors:
     value: .passive.pebble.Pebble2HeartRate
     aggregator: .kafka.aggregator.AggregatorDouble
   - name: HEART_RATE_FILTERED
-    sample_rate: 1.0
+    default_sample_rate: 1.0
     unit: BEATS_PER_MIN
     processing_state: VENDOR
     topic: android_pebble_2_heartrate_filtered
