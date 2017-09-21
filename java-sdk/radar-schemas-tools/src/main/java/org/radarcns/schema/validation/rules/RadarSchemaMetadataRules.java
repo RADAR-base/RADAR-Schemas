@@ -1,12 +1,10 @@
 package org.radarcns.schema.validation.rules;
 
 import org.apache.avro.Schema;
-import org.radarcns.schema.validation.ValidationException;
 import org.radarcns.schema.validation.ValidationSupport;
 import org.radarcns.schema.validation.config.ExcludeConfig;
 
 import java.nio.file.Path;
-import java.util.stream.Stream;
 
 import static org.radarcns.schema.validation.rules.Validator.check;
 import static org.radarcns.schema.validation.rules.Validator.raise;
@@ -47,11 +45,11 @@ public class RadarSchemaMetadataRules implements SchemaMetadataRules {
 
                 return check(expected.equalsIgnoreCase(namespace), message(
                         "Namespace cannot be null and must fully lowercase dot"
-                                + " separated without numeric. In this case the expected value is \""
-                                + expected + "\".").apply(metadata));
+                        + " separated without numeric. In this case the expected value is \""
+                        + expected + "\".").apply(metadata));
             } catch (IllegalArgumentException ex) {
-                return Stream.of(new ValidationException("Path " + metadata.getPath()
-                        + " is not part of root " + root, ex));
+                return raise("Path " + metadata.getPath()
+                        + " is not part of root " + root, ex);
             }
         };
     }

@@ -16,15 +16,20 @@
 
 package org.radarcns.schema.specification;
 
-import org.radarcns.config.YamlConfigLoader;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectReader;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import org.radarcns.schema.Scope;
 import org.radarcns.schema.specification.active.ActiveSource;
-import org.radarcns.schema.specification.active.questionnaire.QuestionnaireSource;
+import org.radarcns.schema.specification.stream.StreamGroup;
+import org.radarcns.schema.specification.monitor.MonitorSource;
 import org.radarcns.schema.specification.passive.PassiveSource;
+import org.radarcns.topic.AvroTopic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -36,8 +41,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * TODO.
@@ -50,51 +55,53 @@ public class SourceCatalogue {
 
     public static final Path BASE_PATH = Paths.get("../..").toAbsolutePath().normalize();
 
-    private final Map<String, ActiveSource> activeSources;
+    private final Map<String, ActiveSource<?>> activeSources;
     private final Map<String, MonitorSource> monitorSources;
     private final Map<String, PassiveSource> passiveSources;
+    private final Map<String, StreamGroup> streamGroups;
 
-    private final Set<Source> sources;
+    private final Set<DataProducer<?>> sources;
 
     @SuppressWarnings("WeakerAccess")
-    SourceCatalogue(Map<String, ActiveSource> activeSources,
+    SourceCatalogue(Map<String, ActiveSource<?>> activeSources,
             Map<String, MonitorSource> monitorSources,
-            Map<String, PassiveSource> passiveSources) {
+            Map<String, PassiveSource> passiveSources,
+            Map<String, StreamGroup> streamGroups) {
         this.activeSources = activeSources;
         this.monitorSources = monitorSources;
         this.passiveSources = passiveSources;
+        this.streamGroups = streamGroups;
 
         sources = new HashSet<>();
 
         sources.addAll(activeSources.values());
         sources.addAll(monitorSources.values());
         sources.addAll(passiveSources.values());
+        sources.addAll(streamGroups.values());
     }
 
     public static SourceCatalogue load(Path root) throws IOException {
         Path specRoot = root.resolve("specifications");
-        YamlConfigLoader configLoader = new YamlConfigLoader();
+
+        ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
+        mapper.setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE);
+
+        // only serialize fields, not getters, etc.
+        mapper.setVisibility(mapper.getSerializationConfig().getDefaultVisibilityChecker()
+                .withFieldVisibility(JsonAutoDetect.Visibility.ANY)
+                .withGetterVisibility(JsonAutoDetect.Visibility.NONE)
+                .withIsGetterVisibility(JsonAutoDetect.Visibility.NONE)
+                .withSetterVisibility(JsonAutoDetect.Visibility.NONE)
+                .withCreatorVisibility(JsonAutoDetect.Visibility.NONE));
 
         return new SourceCatalogue(
-            initActiveSources(configLoader, specRoot),
-            initSources(configLoader, specRoot, Scope.MONITOR, MonitorSource.class),
-            initSources(configLoader, specRoot, Scope.PASSIVE, PassiveSource.class)
-        );
+            initSources(mapper.readerFor(ActiveSource.class), specRoot, Scope.ACTIVE),
+            initSources(mapper.readerFor(MonitorSource.class), specRoot, Scope.MONITOR),
+            initSources(mapper.readerFor(PassiveSource.class), specRoot, Scope.PASSIVE),
+            initSources(mapper.readerFor(StreamGroup.class), specRoot, Scope.STREAM));
     }
 
-    private static <T> Map<String, T> initSources(YamlConfigLoader configLoader, Path root,
-            Scope scope, Class<T> sourceClass) throws IOException {
-        return initSources(root, scope, f -> {
-            try {
-                return configLoader.load(f.toFile(), sourceClass);
-            } catch (IOException e) {
-                logger.error("Failed to load configuration {}", f, e);
-                return null;
-            }
-        });
-    }
-
-    private static <T> Map<String, T> initSources(Path root, Scope scope, Function<Path, T> map)
+    private static <T> Map<String, T> initSources(ObjectReader reader, Path root, Scope scope)
             throws IOException {
         Path baseFolder = scope.getPath(root);
         if (baseFolder == null) {
@@ -104,39 +111,27 @@ public class SourceCatalogue {
 
         return Files.walk(baseFolder)
                 .filter(Files::isRegularFile)
-                .map(f -> new AbstractMap.SimpleImmutableEntry<>(
-                        f.getFileName().toString()
-                                .split("\\.")[0]
-                                .toUpperCase(Locale.ENGLISH),
-                        map.apply(f)))
+                .map(f -> {
+                    try {
+                        return new AbstractMap.SimpleImmutableEntry<>(
+                                f.getFileName().toString()
+                                        .split("\\.")[0]
+                                        .toUpperCase(Locale.ENGLISH),
+                                reader.<T>readValue(f.toFile()));
+                    } catch (IOException ex) {
+                        logger.error("Failed to load configuration {}", f, ex);
+                        return null;
+                    }
+                })
                 .filter(Objects::nonNull)
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-    }
-
-    private static Map<String, ActiveSource> initActiveSources(YamlConfigLoader configLoader,
-            Path root) throws IOException {
-        return initSources(root, Scope.ACTIVE, f -> {
-            try {
-                File file = f.toFile();
-                ActiveSource source = configLoader.load(file, ActiveSource.class);
-                switch (source.getAssessmentType().toUpperCase(Locale.ENGLISH)) {
-                    case "QUESTIONNAIRE":
-                        return configLoader.load(file, QuestionnaireSource.class);
-                    default:
-                        return source;
-                }
-            } catch (IOException e) {
-                logger.error("Failed to load configuration {}", f, e);
-                return null;
-            }
-        });
     }
 
     /**
      * TODO.
      * @return TODO
      */
-    public Map<String, ActiveSource> getActiveSources() {
+    public Map<String, ActiveSource<?>> getActiveSources() {
         return activeSources;
     }
 
@@ -187,9 +182,21 @@ public class SourceCatalogue {
      * TODO.
      * @return TODO
      */
-    public Set<String> getTopics() {
+    public Stream<String> getTopicNames() {
         return sources.stream()
-                .flatMap(source -> source.getTopics().stream())
-                .collect(Collectors.toSet());
+                .flatMap(DataProducer::getTopicNames);
+    }
+
+    public Stream<AvroTopic<?, ?>> getTopics() {
+        return sources.stream()
+                .flatMap(DataProducer::getTopics);
+    }
+
+    public Map<String, StreamGroup> getStreamGroups() {
+        return streamGroups;
+    }
+
+    public Set<DataProducer<?>> getSources() {
+        return sources;
     }
 }

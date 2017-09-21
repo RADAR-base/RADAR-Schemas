@@ -2,7 +2,6 @@ package org.radarcns.schema.validation.rules;
 
 import org.apache.avro.JsonProperties;
 import org.apache.avro.Schema;
-import org.apache.avro.SchemaBuilder;
 import org.radarcns.schema.validation.ValidationException;
 
 import java.util.Arrays;
@@ -101,7 +100,7 @@ public class RadarSchemaFieldRules implements SchemaFieldRules {
     private Stream<ValidationException> validateDefaultOther(SchemaField field) {
         return check(field.getField().defaultVal() == null, messageField(
                 "Default of type " + field.getField().schema().getType() + " is set to "
-                        + field.getField().defaultVal() + ". The only acceptable default values are the"
-                        + " \"UNKNOWN\" enum symbol and null.").apply(field));
+                + field.getField().defaultVal() + ". The only acceptable default values are the"
+                + " \"UNKNOWN\" enum symbol and null.").apply(field));
     }
 }

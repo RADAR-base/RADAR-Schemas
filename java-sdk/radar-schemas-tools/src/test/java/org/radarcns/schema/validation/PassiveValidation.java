@@ -62,7 +62,7 @@ public class PassiveValidation {
             Stream<ValidationException> result =Validator.validatePassive(source, file);
             assertTrue(getMessage(file, result), result.isEmpty());
 
-            for (Sensor sensor : source.getSensors()) {
+            for (PassiveData sensor : source.getSensors()) {
                 result = Validator.validateSensor(converter.get(type), sensor);
                 assertTrue(getMessage(file, result), result.isEmpty());
 

@@ -16,7 +16,7 @@
 
 package org.radarcns.schema.validation.rules;
 
-import org.radarcns.schema.specification.active.questionnaire.QuestionnaireSource;
+import org.radarcns.schema.specification.active.questionnaire.QuestionnaireDataTopic;
 
 import java.nio.file.Path;
 
@@ -42,8 +42,8 @@ public final class QuestionnaireRoles {
      * TODO.
      * @return TODO
      */
-    static Validator<QuestionnaireSource> validateQuestionnaireType(Path file) {
-        return validateNonNull(QuestionnaireSource::getQuestionnaireType,
+    static Validator<QuestionnaireDataTopic> validateQuestionnaireType(Path file) {
+        return validateNonNull(QuestionnaireDataTopic::getType,
                 equalsFileName(file, YAML_EXTENSION),
                 QUESTIONNAIRE_TYPE);
     }
@@ -52,7 +52,7 @@ public final class QuestionnaireRoles {
      * TODO.
      * @return TODO
      */
-    static Validator<QuestionnaireSource> validateQuestions() {
-        return validateNonEmpty(QuestionnaireSource::getQuestions, QUESTIONS);
+    static Validator<QuestionnaireDataTopic> validateQuestions() {
+        return validateNonEmpty(QuestionnaireDataTopic::getQuestions, QUESTIONS);
     }
 }

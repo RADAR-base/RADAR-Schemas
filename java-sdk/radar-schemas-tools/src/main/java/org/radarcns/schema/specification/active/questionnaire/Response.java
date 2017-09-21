@@ -16,43 +16,25 @@ package org.radarcns.schema.specification.active.questionnaire;
  * limitations under the License.
  */
 
-import static org.radarcns.schema.specification.Labels.SCORE;
-import static org.radarcns.schema.specification.Labels.TEXT;
-
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import java.util.Objects;
+
+import javax.validation.constraints.NotBlank;
 
 /**
  * TODO.
  */
 public class Response {
+    @JsonProperty @NotBlank
+    private String text;
 
-    private final String text;
-    private final Integer score;
-
-    /**
-     * TODO.
-     * @param text TODO
-     * @param score TODO
-     */
-    @JsonCreator
-    public Response(
-            @JsonProperty(TEXT) String text,
-            @JsonProperty(SCORE) Integer score) {
-
-        Objects.requireNonNull(score);
-        Objects.requireNonNull(text);
-
-        this.score = score;
-        this.text = text;
-    }
+    @JsonProperty
+    private Object value;
 
     public String getText() {
         return text;
     }
 
-    public Integer getScore() {
-        return score;
+    public Object getValue() {
+        return value;
     }
 }

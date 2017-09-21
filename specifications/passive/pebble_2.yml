@@ -1,37 +1,30 @@
 #============================================ Pebble 2 ============================================#
 vendor: PEBBLE
 model: 2
+doc: Pebble 2 data collected over Bluetooth by a RADAR Pebble app
 app_provider: .pebble.PebbleServiceProvider
-sensors:
-  - name: ACCELEROMETER
+data:
+  - type: ACCELEROMETER
     default_sample_rate: 10.0
     unit: G
     processing_state: RAW
     topic: android_pebble_2_acceleration
-    key: .kafka.key.KeyMeasurement
-    value: .passive.pebble.Pebble2Acceleration
-    aggregator: .kafka.aggregator.AggregatorDoubleArray
-  - name: BATTERY
+    value_schema: .passive.pebble.Pebble2Acceleration
+  - type: BATTERY
     default_sample_rate: 1.0
     unit: PERCENTAGE
     processing_state: RAW
     topic: android_pebble_2_battery_level
-    key: .kafka.key.KeyMeasurement
-    value: .passive.pebble.Pebble2BatteryLevel
-    aggregator: .kafka.aggregator.AggregatorDouble
-  - name: HEART_RATE
+    value_schema: .passive.pebble.Pebble2BatteryLevel
+  - type: HEART_RATE
     default_sample_rate: 1.0
     unit: BEATS_PER_MIN
     processing_state: VENDOR
     topic: android_pebble_2_heartrate
-    key: .kafka.key.KeyMeasurement
-    value: .passive.pebble.Pebble2HeartRate
-    aggregator: .kafka.aggregator.AggregatorDouble
-  - name: HEART_RATE_FILTERED
+    value_schema: .passive.pebble.Pebble2HeartRate
+  - type: HEART_RATE_FILTERED
     default_sample_rate: 1.0
     unit: BEATS_PER_MIN
     processing_state: VENDOR
     topic: android_pebble_2_heartrate_filtered
-    key: .kafka.key.KeyMeasurement
-    value: .passive.pebble.Pebble2HeartRateFiltered
-    aggregator: .kafka.aggregator.AggregatorDouble
+    value_schema: .passive.pebble.Pebble2HeartRateFiltered

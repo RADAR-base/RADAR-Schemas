@@ -17,7 +17,7 @@
 package org.radarcns.schema.validation.rules;
 
 import org.radarcns.schema.specification.active.ActiveSource;
-import org.radarcns.schema.specification.active.questionnaire.QuestionnaireSource;
+import org.radarcns.schema.specification.active.questionnaire.QuestionnaireDataTopic;
 
 import static org.radarcns.schema.validation.rules.Validator.validateNonNull;
 
@@ -39,8 +39,8 @@ public final class ActiveSourceRoles {
      * TODO.
      * @return TODO
      */
-    static Validator<QuestionnaireSource> validateAssessmentType() {
-        return validateNonNull(QuestionnaireSource::getQuestionnaireType, type -> type.equals(
+    static Validator<QuestionnaireDataTopic> validateAssessmentType() {
+        return validateNonNull(QuestionnaireDataTopic::getType, type -> type.equals(
                     ActiveSource.RadarSourceTypes.QUESTIONNAIRE.name()), ASSESSMENT_TYPE);
     }
 
@@ -49,6 +49,6 @@ public final class ActiveSourceRoles {
      * @return TODO
      */
     static Validator<ActiveSource> validateTopics() {
-        return validateNonNull(ActiveSource::getTopics, topics -> topics.size() == 1, TOPICS);
+        return validateNonNull(ActiveSource::getTopicNames, topics -> topics.count() == 1, TOPICS);
     }
 }

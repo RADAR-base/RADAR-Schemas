@@ -28,7 +28,7 @@ import java.util.Set;
 
 import static org.radarcns.schema.validation.ValidationSupport.equalsFileName;
 import static org.radarcns.schema.validation.rules.Validator.validate;
-import static org.radarcns.schema.validation.rules.Validator.validateNonNull;
+import static org.radarcns.schema.validation.rules.Validator.validateNonEmpty;
 import static org.radarcns.schema.validation.rules.Validator.validateOrNull;
 
 /**
@@ -48,10 +48,6 @@ public final class PassiveSourceRoles {
     /** Messages. */
     private static final String APP_PROVIDER = "App provider must be equal to one of the following "
             + RADAR_PROVIDERS + ".";
-    private static final String SENSORS = "Sensor list cannot be null or empty and cannot contain"
-            + " two sensors with the same name";
-    private static final String TYPE = "Passive Source Type should be the concatenation of vendor"
-            + " and name values in uppercase separated by underscore.";
     private static final String VENDOR_AND_NAME = "Vendor and name values cannot be null."
             + " The concatenation of vendor with \"_\" and name should be equal to the source file"
                 + " name in lowercase.";
@@ -85,15 +81,7 @@ public final class PassiveSourceRoles {
      * @return TODO
      */
     static Validator<PassiveSource> validateSensors() {
-        return validateNonNull(PassiveSource::getSensors, sensors -> !sensors.isEmpty()
-                && new HashSet<>(sensors).size() == sensors.size(), SENSORS);
-    }
-
-    /**
-     * TODO.
-     * @return TODO
-     */
-    static Validator<PassiveSource> validateSourceType() {
-        return validateNonNull(PassiveSource::getType, TYPE);
+        return validateNonEmpty(PassiveSource::getData, "PassiveDataTopic list cannot be null or"
+                + " empty and cannot contain two sensors with the same name");
     }
 }

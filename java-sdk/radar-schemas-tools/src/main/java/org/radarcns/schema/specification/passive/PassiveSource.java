@@ -1,5 +1,3 @@
-package org.radarcns.schema.specification.passive;
-
 /*
  * Copyright 2017 King's College London and The Hyve
  *
@@ -16,78 +14,46 @@ package org.radarcns.schema.specification.passive;
  * limitations under the License.
  */
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import org.radarcns.catalogue.SensorName;
-import org.radarcns.schema.specification.Source;
-import org.radarcns.schema.specification.Labels;
+package org.radarcns.schema.specification.passive;
 
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
-import java.util.stream.Collectors;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.radarcns.schema.Scope;
+import org.radarcns.schema.specification.AppSource;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * TODO.
  */
-public class PassiveSource extends Source {
+public class PassiveSource extends AppSource<PassiveDataTopic> {
     public enum RadarSourceTypes {
         EMPATICA_E4, PEBBLE_2, ANDROID_PHONE, BIOVOTION_VSM1
     }
 
-    private final String type;
+    @JsonProperty @NotBlank
+    private String vendor;
 
-    private final String vendor;
+    @JsonProperty @NotBlank
+    private String model;
 
-    private final String model;
+    @JsonProperty @NotEmpty
+    private List<PassiveDataTopic> data;
 
-    private final String appProvider;
-
-    private final Set<Sensor> sensors;
-
-    private final Set<Processor> processors;
-
-    private final Set<String> topics;
-
-    /**
-     * TODO.
-     * @param vendor TODO
-     * @param model TODO
-     * @param appProvider TODO
-     * @param sensors TODO
-     * @param processors TODO
-     */
-    @JsonCreator
-    @SuppressWarnings("PMD.ExcessiveParameterList")
-    public PassiveSource(
-            @JsonProperty(Labels.VENDOR) String vendor,
-            @JsonProperty(Labels.MODEL) String model,
-            @JsonProperty(Labels.DOC) String description,
-            @JsonProperty(Labels.APP_PROVIDER) String appProvider,
-            @JsonProperty(Labels.SENSORS) Set<Sensor> sensors,
-            @JsonProperty(Labels.PROCESSORS) Set<Processor> processors) {
-        super(vendor + '_' + model, description);
-
-        Objects.requireNonNull(sensors);
-        this.type = vendor + '_' + model;
-        this.vendor = vendor;
-        this.model = model;
-        this.appProvider = expandClass(appProvider);
-        this.sensors = sensors;
-        this.processors = processors == null ? new HashSet<>() : processors;
-
-        topics = new HashSet<>();
-
-        topics.addAll(this.sensors.stream()
-                .flatMap(sensor -> sensor.getTopic().getTopicNames().stream())
-                .collect(Collectors.toList()));
-        topics.addAll(this.processors.stream()
-                .flatMap(proc -> proc.getTopic().getTopicNames().stream())
-                .collect(Collectors.toList()));
+    @Override
+    public List<PassiveDataTopic> getData() {
+        return data;
     }
 
-    public String getType() {
-        return type;
+    @Override
+    public Scope getScope() {
+        return Scope.PASSIVE;
+    }
+
+    public String getName() {
+        return vendor + '_' + model;
     }
 
     public String getVendor() {
@@ -98,50 +64,14 @@ public class PassiveSource extends Source {
         return model;
     }
 
-    public String getAppProvider() {
-        return appProvider;
-    }
-
-    public Set<Sensor> getSensors() {
-        return sensors;
-    }
-
     /**
      * TODO.
-     * @param name TODO
+     * @param type TODO
      * @return TODO
      */
-    public Sensor getSensor(SensorName name) {
-        for (Sensor sensor : sensors) {
-            if (sensor.getName().name().equals(name.name())) {
-                return sensor;
-            }
-        }
-
-        throw new IllegalArgumentException(name.name() + " is not a valid sensor for " + getName());
-    }
-
-    public Set<Processor> getProcessors() {
-        return processors;
-    }
-
-    /**
-     * TODO.
-     * @param name TODO
-     * @return TODO
-     */
-    public Processor getProcessor(SensorName name) {
-        for (Processor processor : processors) {
-            if (processor.getName().equals(name.name())) {
-                return processor;
-            }
-        }
-
-        throw new IllegalArgumentException(name.name() + " is not a valid sensor for " + getName());
-    }
-
-    @Override
-    public Set<String> getTopics() {
-        return topics;
+    public PassiveDataTopic getSensor(@NotNull String type) {
+        return data.stream().filter(s -> type.equalsIgnoreCase(s.getType())).findFirst()
+                .orElseThrow(() ->  new IllegalArgumentException(
+                        type + " is not a valid sensor for " + this.getName()));
     }
 }

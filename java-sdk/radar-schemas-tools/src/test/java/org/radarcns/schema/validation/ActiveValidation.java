@@ -36,8 +36,8 @@ public class ActiveValidation {
                 NameFolder.ACTIVE.getLiteral()).resolve(
                 type.name().toLowerCase() + YAML_EXTENSION)).toUri());
 
-            QuestionnaireSource source = new YamlConfigLoader().load(file,
-                    QuestionnaireSource.class);
+            QuestionnaireDataTopic source = new YamlConfigLoader().load(file,
+                    QuestionnaireDataTopic.class);
 
             ValidationResult result = Validator.validateQuestionnaire(source, file);
             assertTrue(getMessage(file, result), result.isEmpty());

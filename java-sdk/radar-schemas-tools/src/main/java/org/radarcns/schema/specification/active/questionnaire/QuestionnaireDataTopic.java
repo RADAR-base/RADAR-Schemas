@@ -1,3 +1,5 @@
+package org.radarcns.schema.specification.active.questionnaire;
+
 /*
  * Copyright 2017 King's College London and The Hyve
  *
@@ -14,44 +16,34 @@
  * limitations under the License.
  */
 
-package org.radarcns.schema.specification.active.questionnaire;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.radarcns.catalogue.RadarWidget;
+import org.radarcns.schema.specification.DataTopic;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
+import java.util.Map;
 
 /**
  * TODO.
  */
-public class Question {
-
-    @JsonProperty @NotBlank
-    private String lead;
-
-    @JsonProperty @NotBlank
-    private String content;
+public class QuestionnaireDataTopic extends DataTopic {
+    public enum RadarSourceTypes {
+        PHQ8
+    }
 
     @JsonProperty
-    private RadarWidget widget;
+    @NotEmpty
+    private List<Question> questions;
 
-    @JsonProperty
-    private List<Response> responses;
-
-    public String getLead() {
-        return lead;
+    public List<Question> getQuestions() {
+        return questions;
     }
 
-    public String getContent() {
-        return content;
-    }
-
-    public RadarWidget getWidget() {
-        return widget;
-    }
-
-    public List<Response> getResponses() {
-        return responses;
+    @Override
+    protected void propertiesMap(Map<String, Object> properties, boolean reduced) {
+        super.propertiesMap(properties, reduced);
+        if (!reduced) {
+            properties.put("questions", questions);
+        }
     }
 }

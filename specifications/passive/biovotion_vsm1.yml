@@ -2,100 +2,76 @@
 vendor: BIOVOTION
 model: VSM1
 app_provider: .biovotion.BiovotionServiceProvider
-sensors:
-  - name: ACCELEROMETER
+data:
+  - type: ACCELEROMETER
     default_sample_rate: 51.2
     unit: G
     processing_state: RAW
     topic: android_biovotion_vsm1_acceleration
-    key: .kafka.key.KeyMeasurement
-    value: .passive.biovotion.BiovotionVsm1Acceleration
-    aggregator: .kafka.aggregator.AggregatorDoubleArray
-  - name: BATTERY
+    value_schema: .passive.biovotion.BiovotionVsm1Acceleration
+  - type: BATTERY
     default_sample_rate: 1.0
     unit: PERCENTAGE
     processing_state: RAW
     topic: android_biovotion_vsm1_battery_level
-    key: .kafka.key.KeyMeasurement
-    value: .passive.biovotion.BiovotionVsm1BatteryLevel
-    aggregator: .kafka.aggregator.AggregatorDouble
-  - name: BLOOD_PULSE_WAVE
+    value_schema: .passive.biovotion.BiovotionVsm1BatteryLevel
+  - type: BLOOD_PULSE_WAVE
     default_sample_rate: 1.0
     unit: NON_DIMENSIONAL
     processing_state: VENDOR
     topic: android_biovotion_vsm1_blood_volume_pulse
-    key: .kafka.key.KeyMeasurement
-    value: .passive.biovotion.BiovotionVsm1BloodPulseWave
-    aggregator: .kafka.aggregator.AggregatorDouble
-  - name: ENERGY
+    value_schema: .passive.biovotion.BiovotionVsm1BloodPulseWave
+  - type: ENERGY
     default_sample_rate: 1.0
     unit: CALORIES_PER_SEC
     processing_state: VENDOR
     topic: android_biovotion_vsm1_energy
-    key: .kafka.key.KeyMeasurement
-    value: .passive.biovotion.BiovotionVsm1Energy
-    aggregator: .kafka.aggregator.AggregatorDouble
-  - name: GALVANIC_SKIN_RESPONSE
+    value_schema: .passive.biovotion.BiovotionVsm1Energy
+  - type: GALVANIC_SKIN_RESPONSE
     default_sample_rate: 1.0
     unit: KILO_OHM
     processing_state: VENDOR
     topic: android_biovotion_vsm1_galvanic_skin_response
-    key: .kafka.key.KeyMeasurement
-    value: .passive.biovotion.BiovotionVsm1GalvanicSkinResponse
-    aggregator: .kafka.aggregator.AggregatorDoubleArray
-  - name: HEART_RATE
+    value_schema: .passive.biovotion.BiovotionVsm1GalvanicSkinResponse
+  - type: HEART_RATE
     default_sample_rate: 1.0
     unit: BEATS_PER_MIN
     processing_state: VENDOR
     topic: android_biovotion_vsm1_heartrate
-    key: .kafka.key.KeyMeasurement
-    value: .passive.biovotion.BiovotionVsm1HeartRate
-    aggregator: .kafka.aggregator.AggregatorDouble
-  - name: HEART_RATE_VARIABILITY
+    value_schema: .passive.biovotion.BiovotionVsm1HeartRate
+  - type: HEART_RATE_VARIABILITY
     default_sample_rate: 1.0
     unit: RMSSD_IN_MILLI_SEC
     processing_state: VENDOR
     topic: android_biovotion_vsm1_heartrate_variability
-    key: .kafka.key.KeyMeasurement
-    value: .passive.biovotion.BiovotionVsm1HeartRateVariability
-    aggregator: .kafka.aggregator.AggregatorDouble
-  - name: LED
+    value_schema: .passive.biovotion.BiovotionVsm1HeartRateVariability
+  - type: LED
     default_sample_rate: 1.0
     unit: MILLI_AMPERE
     processing_state: VENDOR
     topic: android_biovotion_vsm1_led_current
-    key: .kafka.key.KeyMeasurement
-    value: .passive.biovotion.BiovotionVsm1LedCurrent
-    aggregator: .kafka.aggregator.AggregatorDoubleArray
-  - name: PHOTOPLETHYSMOGRAPHY
+    value_schema: .passive.biovotion.BiovotionVsm1LedCurrent
+  - type: PHOTOPLETHYSMOGRAPHY
     default_sample_rate: 51.2
     unit: NON_DIMENSIONAL
     processing_state: RAW
     topic: android_biovotion_vsm1_ppg_raw
-    key: .kafka.key.KeyMeasurement
-    value: .passive.biovotion.BiovotionVsm1PpgRaw
-    aggregator: .kafka.aggregator.AggregatorDoubleArray
-  - name: RESPIRATION_RATE
+    value_schema: .passive.biovotion.BiovotionVsm1PpgRaw
+  - type: RESPIRATION_RATE
     default_sample_rate: 1.0
     unit: BEATS_PER_MIN
     processing_state: VENDOR
     topic: android_biovotion_vsm1_respiration_rate
-    key: .kafka.key.KeyMeasurement
-    value: .passive.biovotion.BiovotionVsm1RespirationRate
-    aggregator: .kafka.aggregator.AggregatorDouble
-  - name: OXYGEN_SATURATION
+    value_schema: .passive.biovotion.BiovotionVsm1RespirationRate
+  - type: OXYGEN_SATURATION
     default_sample_rate: 1.0
     unit: PERCENTAGE
     processing_state: VENDOR
     topic: android_biovotion_vsm1_oxygen_saturation
-    key: .kafka.key.KeyMeasurement
-    value: .passive.biovotion.BiovotionVsm1OxygenSaturation
-    aggregator: .kafka.aggregator.AggregatorDouble
-  - name: THERMOMETER
+    value_schema: .passive.biovotion.BiovotionVsm1OxygenSaturation
+  - type: THERMOMETER
     default_sample_rate: 1.0
     unit: CELSIUS
     processing_state: RAW
     topic: android_biovotion_vsm1_temperature
-    key: .kafka.key.KeyMeasurement
-    value: .passive.biovotion.BiovotionVsm1Temperature
-    aggregator: .kafka.aggregator.AggregatorDouble
+    value_schema: .passive.biovotion.BiovotionVsm1Temperature

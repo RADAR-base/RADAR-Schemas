@@ -22,14 +22,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.radarcns.schema.Scope;
 import org.radarcns.schema.validation.config.ExcludeConfig;
-import org.radarcns.schema.validation.rules.RadarSchemaRules;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.TreeSet;
 import java.util.stream.Stream;
 
 import static org.junit.Assert.assertEquals;
@@ -46,7 +42,6 @@ import static org.radarcns.schema.Scope.PASSIVE;
 public class SchemaValidatorTest {
     private SchemaValidator validator;
     private static final Path ROOT = Paths.get("../..").toAbsolutePath();
-    private static final Logger logger = LoggerFactory.getLogger(SchemaValidatorTest.class);
 
     @Before
     public void setUp() throws IOException {

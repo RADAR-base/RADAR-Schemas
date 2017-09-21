@@ -1,98 +1,99 @@
 #====================================== Android Phone Sensors =====================================#
 vendor: ANDROID
 model: PHONE
-sensors:
+data:
   #Phone sensors
-  - name: ACCELEROMETER
+  - type: ACCELEROMETER
     app_provider: .phone.PhoneSensorProvider
     unit: G
+    fields:
+      - name: x
+      - name: y
+      - name: z
     processing_state: RAW
     topic: android_phone_acceleration
-    key: .kafka.key.KeyMeasurement
-    value: .passive.phone.PhoneAcceleration
-    aggregator: .kafka.aggregator.AggregatorDoubleArray
-  - name: BATTERY
+    value_schema: .passive.phone.PhoneAcceleration
+  - type: BATTERY
     app_provider: .phone.PhoneSensorProvider
     unit: PERCENTAGE
     processing_state: RAW
     topic: android_phone_battery_level
-    key: .kafka.key.KeyMeasurement
-    value: .passive.phone.PhoneBatteryLevel
-    aggregator: .kafka.aggregator.AggregatorDouble
-  - name: GYROSCOPE
+    value_schema: .passive.phone.PhoneBatteryLevel
+    fields:
+      - name: batteryLevel
+  - type: GYROSCOPE
     app_provider: .phone.PhoneSensorProvider
     unit: RADAIAN_PER_SEC
     processing_state: RAW
     topic: android_phone_gyroscope
-    key: .kafka.key.KeyMeasurement
-    value: .passive.phone.PhoneGyroscope
-    aggregator: .kafka.aggregator.AggregatorDoubleArray
-  - name: LIGHT
+    value_schema: .passive.phone.PhoneGyroscope
+    fields:
+      - name: x
+      - name: y
+      - name: z
+  - type: LIGHT
     app_provider: .phone.PhoneSensorProvider
     unit: LUX
     processing_state: RAW
     topic: android_phone_light
-    key: .kafka.key.KeyMeasurement
-    value: .passive.phone.PhoneLight
-    aggregator: .kafka.aggregator.AggregatorDouble
-  - name: MAGNETIC_FIELD
+    value_schema: .passive.phone.PhoneLight
+    fields:
+      - name: light
+  - type: MAGNETIC_FIELD
     app_provider: .phone.PhoneSensorProvider
     unit: MICRO_TESLA
     processing_state: RAW
     topic: android_phone_magnetic_field
-    key: .kafka.key.KeyMeasurement
-    value: .passive.phone.PhoneMagneticField
-    aggregator: .kafka.aggregator.AggregatorDoubleArray
-  - name: STEP_COUNT
+    value_schema: .passive.phone.PhoneMagneticField
+    fields:
+      - name: x
+      - name: y
+      - name: z
+  - type: STEP_COUNT
     app_provider: .phone.PhoneSensorProvider
     unit: NON_DIMENSIONAL
     processing_state: VENDOR
     topic: android_phone_step_count
-    key: .kafka.key.KeyMeasurement
-    value: .passive.phone.PhoneStepCount
-    aggregator: .kafka.aggregator.AggregatorDouble
+    value_schema: .passive.phone.PhoneStepCount
+    fields:
+      - name: steps
   # Location
-  - name: RELATIVE_LOCATION
+  - type: RELATIVE_LOCATION
     app_provider: .phone.PhoneLocationProvider
     unit: DEGREE
     processing_state: RAW
     topic: android_phone_relative_location
-    key: .kafka.key.KeyMeasurement
-    value: .passive.phone.PhoneRelativeLocation
+    value_schema: .passive.phone.PhoneRelativeLocation
+    fields:
+      - name: longitude
+      - name: latitude
   # Log
-  - name: PHONE_CALL
+  - type: PHONE_CALL
     app_provider: .phone.PhoneLogProvider
-    unit: NON_DIMENSIONAL
     processing_state: RAW
     topic: android_phone_call
-    key: .kafka.key.KeyMeasurement
-    value: .passive.phone.PhoneCall
-  - name: PHONE_SMS
+    value_schema: .passive.phone.PhoneCall
+  - type: PHONE_SMS
     app_provider: .phone.PhoneLogProvider
     unit: NON_DIMENSIONAL
     processing_state: RAW
     topic: android_phone_sms
-    key: .kafka.key.KeyMeasurement
-    value: .passive.phone.PhoneSms
-  - name: PHONE_SMS_UNREAD
+    value_schema: .passive.phone.PhoneSms
+  - type: PHONE_SMS_UNREAD
     app_provider: .phone.PhoneLogProvider
     unit: NON_DIMENSIONAL
     processing_state: RAW
     topic: android_phone_sms_unread
-    key: .kafka.key.KeyMeasurement
-    value: .passive.phone.PhoneSmsUnread
+    value_schema: .passive.phone.PhoneSmsUnread
   # Usage
-  - name: USAGE_EVENT
+  - type: USAGE_EVENT
     app_provider: .phone.PhoneUsageProvider
-    unit: NON_DIMENSIONAL
     processing_state: RAW
     topic: android_phone_usage_event
-    key: .kafka.key.KeyMeasurement
-    value: .passive.phone.PhoneUsageEvent
-  - name: USER_INTERACTION
+    value_schema: .passive.phone.PhoneUsageEvent
+  - type: USER_INTERACTION
     app_provider: .phone.PhoneUsageProvider
     unit: NON_DIMENSIONAL
     processing_state: RAW
     topic: android_phone_user_interaction
-    key: .kafka.key.KeyMeasurement
-    value: .passive.phone.PhoneUserInteraction
+    value_schema: .passive.phone.PhoneUserInteraction

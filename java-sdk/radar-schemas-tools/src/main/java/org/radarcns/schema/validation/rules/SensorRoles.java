@@ -18,8 +18,9 @@ package org.radarcns.schema.validation.rules;
 
 import org.radarcns.catalogue.ProcessingState;
 import org.radarcns.catalogue.SensorName;
-import org.radarcns.schema.specification.passive.Sensor;
+import org.radarcns.schema.specification.passive.PassiveDataTopic;
 
+import static org.radarcns.schema.util.Utils.testOrFalse;
 import static org.radarcns.schema.validation.rules.PassiveSourceRoles.RADAR_PROVIDERS;
 import static org.radarcns.schema.validation.rules.Validator.validateNonNull;
 import static org.radarcns.schema.validation.rules.Validator.validateOrNull;
@@ -31,10 +32,10 @@ public final class SensorRoles {
     private static final String APP_PROVIDER =
             "App provider must be equal to one of the following: " + RADAR_PROVIDERS +  ".";
     private static final String DATA_TYPE =
-            "Sensor data type cannot be null and should differ from "
+            "PassiveDataTopic data type cannot be null and should differ from "
             + ProcessingState.UNKNOWN.name() + ".";
     private static final String NAME =
-            "Sensor name cannot be not null and should different from "
+            "PassiveDataTopic name cannot be not null and should different from "
             + SensorName.UNKNOWN.name() + ".";
 
     private SensorRoles() {
@@ -45,16 +46,17 @@ public final class SensorRoles {
      * TODO.
      * @return TODO
      */
-    static Validator<Sensor> validateAppProvider() {
-        return validateOrNull(Sensor::getAppProvider, RADAR_PROVIDERS::contains, APP_PROVIDER);
+    static Validator<PassiveDataTopic> validateAppProvider() {
+        return validateOrNull(PassiveDataTopic::getAppProvider, RADAR_PROVIDERS::contains,
+                APP_PROVIDER);
     }
 
     /**
      * TODO.
      * @return TODO
      */
-    static Validator<Sensor> validateDataType() {
-        return validateNonNull(Sensor::getProcessingState,
+    static Validator<PassiveDataTopic> validateDataType() {
+        return validateNonNull(PassiveDataTopic::getProcessingState,
             state -> !state.name().equals(ProcessingState.UNKNOWN.name()), DATA_TYPE);
     }
 
@@ -62,8 +64,8 @@ public final class SensorRoles {
      * TODO.
      * @return TODO
      */
-    static Validator<Sensor> validateName() {
-        return validateNonNull(Sensor::getName,
-                name -> name.name().equals(SensorName.UNKNOWN.name()), NAME);
+    static Validator<PassiveDataTopic> validateName() {
+        return validateNonNull(PassiveDataTopic::getType,
+                testOrFalse(name -> SensorName.valueOf(name) != SensorName.UNKNOWN), NAME);
     }
 }

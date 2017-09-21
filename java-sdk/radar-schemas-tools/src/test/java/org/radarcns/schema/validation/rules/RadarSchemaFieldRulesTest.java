@@ -86,7 +86,8 @@ public class RadarSchemaFieldRulesTest {
                 .fields()
                 .endRecord();
 
-        result = schemaValidator.fields(validator.validateFieldTypes(schemaValidator)).apply(schema);
+        result = schemaValidator.fields(validator.validateFieldTypes(schemaValidator))
+                .apply(schema);
 
         assertEquals(1, result.count());
 
@@ -97,7 +98,8 @@ public class RadarSchemaFieldRulesTest {
           .optionalBoolean("optional")
           .endRecord();
 
-        result = schemaValidator.fields(validator.validateFieldTypes(schemaValidator)).apply(schema);
+        result = schemaValidator.fields(validator.validateFieldTypes(schemaValidator))
+                .apply(schema);
 
         assertEquals(0, result.count());
     }

@@ -23,15 +23,10 @@ import net.sourceforge.argparse4j.inf.ArgumentParserException;
 import net.sourceforge.argparse4j.inf.Namespace;
 import net.sourceforge.argparse4j.inf.Subparser;
 import net.sourceforge.argparse4j.inf.Subparsers;
-import org.radarcns.schema.specification.KafkaActor;
-import org.radarcns.schema.specification.MonitorSource;
+import org.radarcns.schema.specification.DataTopic;
+import org.radarcns.schema.specification.DataProducer;
 import org.radarcns.schema.specification.SourceCatalogue;
-import org.radarcns.schema.specification.Topic;
-import org.radarcns.schema.specification.active.ActiveSource;
-import org.radarcns.schema.specification.active.questionnaire.QuestionnaireSource;
-import org.radarcns.schema.specification.passive.PassiveSource;
-import org.radarcns.schema.specification.passive.Processor;
-import org.radarcns.schema.specification.passive.Sensor;
+import org.radarcns.schema.specification.stream.StreamGroup;
 import org.radarcns.schema.validation.SchemaValidator;
 import org.radarcns.schema.validation.ValidationException;
 import org.radarcns.schema.validation.config.ExcludeConfig;
@@ -43,13 +38,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -71,92 +63,47 @@ public class CommandLineApp {
      * TODO.
      * @return TODO
      */
-    public SortedSet<String> getTopicsToCreate() {
-        SortedSet<String> set = new TreeSet<>();
-
-        for (Topic topic : getAllTopics()) {
-            set.add(topic.getInputTopic());
-            if (topic.hasAggregator()) {
-                topic.getOutputTopics().stream()
-                    .map(Topic.TopicMetadata::getOutput)
-                    .forEach(set::add);
-            }
-        }
-
-        return set;
+    public List<String> getTopicsToCreate() {
+        return catalogue.getTopicNames()
+                .sorted()
+                .collect(Collectors.toList());
     }
 
     /**
      * TODO.
      * @return TODO
      */
-    public Set<String> getRawTopics() {
-        Set<String> set = new HashSet<>();
-
-        for (Topic topic : getAllTopics()) {
-            set.add(topic.getInputTopic());
-        }
-
-        return set;
+    public List<String> getRawTopics() {
+        return Stream.of(
+                catalogue.getPassiveSources(),
+                catalogue.getActiveSources(),
+                catalogue.getMonitorSources())
+                .flatMap(map -> map.values().stream())
+                .flatMap(DataProducer::getTopicNames)
+                .sorted()
+                .collect(Collectors.toList());
     }
 
     /**
      * TODO.
      * @return TODO
      */
-    public Set<String> getResultsCacheTopics() {
-        Set<String> set = new HashSet<>();
-
-        for (Topic topic : getAllTopics()) {
-            if (topic.hasAggregator()) {
-                topic.getOutputTopics().stream()
-                    .map(Topic.TopicMetadata::getOutput)
-                    .forEach(set::add);
-            } else {
-                set.add(topic.getInputTopic());
-            }
-        }
-
-        return set;
-    }
-
-    private Set<Topic> getAllTopics() {
-        Set<Topic> set = new HashSet<>();
-
-        catalogue.getActiveSources().values().stream()
-            .map(ActiveSource::getTopic)
-            .forEach(set::add);
-
-        catalogue.getMonitorSources().values().stream()
-            .map(MonitorSource::getKafkaActor)
-            .map(KafkaActor::getTopic)
-            .forEach(set::add);
-
-        catalogue.getPassiveSources().values().stream()
-            .map(PassiveSource::getSensors)
-            .flatMap(Set::stream)
-            .map(Sensor::getTopic)
-            .forEach(set::add);
-
-        catalogue.getPassiveSources().values().stream()
-            .map(PassiveSource::getProcessors)
-            .flatMap(Set::stream)
-            .map(Processor::getTopic)
-            .forEach(set::add);
-
-        return set;
+    public List<String> getResultsCacheTopics() {
+        return catalogue.getStreamGroups().values().stream()
+                .flatMap(StreamGroup::getTimedTopicNames)
+                .sorted()
+                .collect(Collectors.toList());
     }
 
     /**
      * TODO.
-     * @param reduced TODO
      * @return TODO
      */
-    public String getTopicsVerbose(boolean reduced, String source) {
-        logger.info("Topic list {} {}", reduced, source);
+    public String getTopicsVerbose(boolean prettyPrint, String source) {
+        logger.info("Topic list {} {}", prettyPrint, source);
         StringBuilder result = new StringBuilder();
 
-        Map<String, Map<String, String>> map = getTopicsInfoVerbose(reduced);
+        Map<String, Map<String, String>> map = getTopicsInfoVerbose(prettyPrint);
 
         List<String> rootKeys = new ArrayList<>(map.keySet());
         Collections.sort(rootKeys);
@@ -170,9 +117,11 @@ public class CommandLineApp {
 
                 for (String details : firstLevelKeys) {
                     result.append('\t').append(details);
-                    result.append("\n\t\t")
-                            .append(map.get(key).get(details)
-                                    .replace("\n", "\n\t\t"));
+                    result.append("\n\t\t");
+                    String next = map.get(key).get(details)
+                            .replace("\n", "\n\t\t");
+                    // remove last two tabs
+                    result.append(next.substring(0, next.length() - 2));
                 }
                 result.append('\n');
             }
@@ -183,41 +132,16 @@ public class CommandLineApp {
 
     /**
      * TODO.
-     * @param reduced TODO
+     * @param prettyPrint TODO
      * @return TODO
      */
-    private Map<String, Map<String, String>> getTopicsInfoVerbose(boolean reduced) {
-        Map<String, Map<String, String>> map = new HashMap<>();
-
-        Map<String, String> details = new HashMap<>();
-        for (ActiveSource source : catalogue.getActiveSources().values()) {
-            if (source instanceof QuestionnaireSource) {
-                details.put(
-                        ((QuestionnaireSource)source).getQuestionnaireType(),
-                        source.getTopic().toString(reduced));
-            }
-        }
-        map.put(ActiveSource.RadarSourceTypes.QUESTIONNAIRE.name(), details);
-
-        details = new HashMap<>();
-        for (MonitorSource source : catalogue.getMonitorSources().values()) {
-            details.put(source.getType(),
-                    source.getKafkaActor().getTopic().toString(reduced));
-        }
-        map.put(Scope.MONITOR.name(), details);
-
-        for (PassiveSource source : catalogue.getPassiveSources().values()) {
-            details = new HashMap<>();
-            for (Sensor sensor : source.getSensors()) {
-                details.put(sensor.getName().name(), sensor.getTopic().toString(reduced));
-            }
-            for (Processor proc : source.getProcessors()) {
-                details.put(proc.getName(), proc.getTopic().toString(reduced));
-            }
-            map.put(source.getType(), details);
-        }
-
-        return map;
+    private Map<String, Map<String, String>> getTopicsInfoVerbose(boolean prettyPrint) {
+        return catalogue.getSources().stream()
+                .collect(Collectors.toMap(
+                        source -> source.getScope() + " - " + source.getName(),
+                        source -> source.getData().stream()
+                            .collect(Collectors.toMap(
+                                    DataTopic::getType, d -> d.toString(prettyPrint)))));
     }
 
     public int validateSchemas(Namespace ns) {
@@ -335,7 +259,7 @@ public class CommandLineApp {
                 } else if (ns.getBoolean("quiet")) {
                     System.out.println(String.join("\n", app.getTopicsToCreate()));
                 } else {
-                    System.out.println(app.getTopicsVerbose(false, ns.getString("match")));
+                    System.out.println(app.getTopicsVerbose(true, ns.getString("match")));
                 }
                 break;
             case "validate":

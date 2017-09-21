@@ -1,16 +1,3 @@
-package org.radarcns.schema.validation.rules;
-
-import org.radarcns.schema.specification.MonitorSource;
-import org.radarcns.schema.util.Utils;
-
-import java.nio.file.Path;
-import java.util.Collections;
-import java.util.Set;
-
-import static org.radarcns.schema.specification.SourceCatalogue.YAML_EXTENSION;
-import static org.radarcns.schema.validation.ValidationSupport.equalsFileName;
-import static org.radarcns.schema.validation.rules.Validator.validateNonNull;
-
 /*
  * Copyright 2017 King's College London and The Hyve
  *
@@ -26,6 +13,19 @@ import static org.radarcns.schema.validation.rules.Validator.validateNonNull;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+package org.radarcns.schema.validation.rules;
+
+import org.radarcns.schema.specification.monitor.MonitorSource;
+import org.radarcns.schema.util.Utils;
+
+import java.nio.file.Path;
+import java.util.Collections;
+import java.util.Set;
+
+import static org.radarcns.schema.specification.SourceCatalogue.YAML_EXTENSION;
+import static org.radarcns.schema.validation.ValidationSupport.equalsFileName;
+import static org.radarcns.schema.validation.rules.Validator.validateNonNull;
 
 /**
  * TODO.
@@ -56,7 +56,7 @@ public final class MonitorRoles {
      * @return TODO
      */
     static Validator<MonitorSource> validateSourceType(Path file) {
-        return validateNonNull(MonitorSource::getType, equalsFileName(file, YAML_EXTENSION),
+        return validateNonNull(MonitorSource::getName, equalsFileName(file, YAML_EXTENSION),
                 SOURCE_TYPE);
     }
 }

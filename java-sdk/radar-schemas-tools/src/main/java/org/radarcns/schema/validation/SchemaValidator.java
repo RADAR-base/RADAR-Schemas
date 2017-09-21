@@ -28,13 +28,13 @@ import org.radarcns.schema.validation.rules.Validator;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.Map;
-import java.util.SortedSet;
-import java.util.TreeSet;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.radarcns.schema.SchemaRepository.COMMONS_PATH;
+import static org.radarcns.schema.validation.rules.Validator.raise;
 
 public class SchemaValidator {
     public static final String AVRO_EXTENSION = "avsc";
@@ -62,9 +62,8 @@ public class SchemaValidator {
                     .filter(p -> !config.skipFile(p))
                     .flatMap(p -> {
                         if (!isAvscFile(p)) {
-                            return Stream.of(new ValidationException(
-                                    p.toAbsolutePath() + " is invalid. " + scope.getLower()
-                                            + " should contain only " + AVRO_EXTENSION + " files."));
+                            return raise(p.toAbsolutePath() + " is invalid. " + scope.getLower()
+                                            + " should contain only " + AVRO_EXTENSION + " files.");
                         }
 
                         try {
@@ -72,12 +71,11 @@ public class SchemaValidator {
 
                             return validate(schema, p, scope);
                         } catch (IOException e) {
-                            return Stream.of(new ValidationException(
-                                    "Cannot parse file " + p.toAbsolutePath(), e));
+                            return raise("Cannot parse file " + p.toAbsolutePath(), e);
                         }
                     });
         } catch (IOException ex) {
-            return Stream.of(new ValidationException("Failed to read files: " + ex, ex));
+            return raise("Failed to read files: " + ex, ex);
         }
     }
 
@@ -88,7 +86,7 @@ public class SchemaValidator {
      */
     public Stream<ValidationException> analyseFiles()
             throws IOException {
-        return Stream.of(Scope.values())
+        return Arrays.stream(Scope.values())
                 .flatMap(this::analyseFiles);
     }
 

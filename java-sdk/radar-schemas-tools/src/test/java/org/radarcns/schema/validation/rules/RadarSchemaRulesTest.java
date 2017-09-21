@@ -377,36 +377,32 @@ public class RadarSchemaRulesTest {
 
     @Test
     public void testUniqueness() {
-        String schemaTxt = "{\"namespace\": \"org.radarcns.monitor.application\", "
-                + "\"name\": \"ServerStatus\", \"type\": "
-                + "\"enum\", \"symbols\": [\"A\", \"B\"]}";
-        String schemaTxtAlt = "{\"namespace\": \"org.radarcns.monitor.application\", "
-                + "\"name\": \"ServerStatus\", \"type\": "
-                + "\"enum\", \"symbols\": [\"A\", \"B\", \"C\"]}";
-        String schemaTxt2 = "{\"namespace\": \"org.radarcns.monitor.application\", "
-                + "\"name\": \"ServerStatus2\", \"type\": "
-                + "\"enum\", \"symbols\": [\"A\", \"B\"]}";
-        String schemaTxt3 = "{\"namespace\": \"org.radarcns.monitor.applications\", "
-                + "\"name\": \"ServerStatus\", \"type\": "
-                + "\"enum\", \"symbols\": [\"A\", \"B\"]}";
+        final String prefix = "{\"namespace\": \"org.radarcns.monitor.application\", "
+                + "\"name\": \"";
+        final String infix = "\", \"type\": \"enum\", \"symbols\": ";
+        final char suffix = '}';
 
-        Schema schema = new Parser().parse(schemaTxt);
+        Schema schema = new Parser().parse(prefix + "ServerStatus"
+                + infix + "[\"A\", \"B\"]" + suffix);
         Stream<ValidationException> result = validator.validateUniqueness().apply(schema);
         assertEquals(0, result.count());
         result = validator.validateUniqueness().apply(schema);
         assertEquals(0, result.count());
 
-        Schema schemaAlt = new Parser().parse(schemaTxtAlt);
+        Schema schemaAlt = new Parser().parse(prefix + "ServerStatus"
+                + infix + "[\"A\", \"B\", \"C\"]" + suffix);
         result = validator.validateUniqueness().apply(schemaAlt);
         assertEquals(1, result.count());
         result = validator.validateUniqueness().apply(schemaAlt);
         assertEquals(1, result.count());
 
-        Schema schema2 = new Parser().parse(schemaTxt2);
+        Schema schema2 = new Parser().parse(prefix + "ServerStatus2"
+                + infix + "[\"A\", \"B\"]" + suffix);
         result = validator.validateUniqueness().apply(schema2);
         assertEquals(0, result.count());
 
-        Schema schema3 = new Parser().parse(schemaTxt3);
+        Schema schema3 = new Parser().parse(prefix + "ServerStatus"
+                + infix + "[\"A\", \"B\"]" + suffix);
         result = validator.validateUniqueness().apply(schema3);
         assertEquals(0, result.count());
         result = validator.validateUniqueness().apply(schema3);

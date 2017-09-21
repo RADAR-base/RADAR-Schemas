@@ -36,7 +36,7 @@ public final class ResponseRoles {
      * @return TODO
      */
     static Validator<Response> validateScore() {
-        return validateNonNull(Response::getScore, SCORE);
+        return validateNonNull(Response::getValue, SCORE);
     }
 
     /**

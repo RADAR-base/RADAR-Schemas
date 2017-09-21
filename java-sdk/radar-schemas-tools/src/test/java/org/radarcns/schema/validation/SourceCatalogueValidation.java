@@ -18,20 +18,20 @@ package org.radarcns.schema.validation;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.radarcns.schema.specification.DataProducer;
 import org.radarcns.schema.specification.SourceCatalogue;
-import org.radarcns.schema.specification.MonitorSource;
-import org.radarcns.schema.specification.active.ActiveSource;
-import org.radarcns.schema.specification.active.questionnaire.QuestionnaireSource;
+import org.radarcns.schema.specification.active.questionnaire.QuestionnaireDataTopic;
+import org.radarcns.schema.specification.monitor.MonitorDataTopic;
 import org.radarcns.schema.specification.passive.PassiveSource;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.radarcns.schema.specification.SourceCatalogue.BASE_PATH;
 import static org.radarcns.schema.validation.ValidationSupport.isValidTopic;
@@ -40,7 +40,6 @@ import static org.radarcns.schema.validation.ValidationSupport.isValidTopic;
  * TODO.
  */
 public class SourceCatalogueValidation {
-    private static final Logger logger = LoggerFactory.getLogger(SourceCatalogueValidation.class);
     private static SourceCatalogue catalogue;
 
     @BeforeClass
@@ -50,51 +49,46 @@ public class SourceCatalogueValidation {
 
     @Test
     public void checkActiveSourceType() {
-        assertTrue("Not all " + QuestionnaireSource.RadarSourceTypes.class.getName()
-                        + " have a specification",
-                Arrays.stream(QuestionnaireSource.RadarSourceTypes.values())
-                    .allMatch(type -> catalogue.getActiveSource(type.name()) != null));
+        Arrays.stream(QuestionnaireDataTopic.RadarSourceTypes.values())
+                .forEach(type -> assertNotNull(
+                        "Active RADAR source " + type + " does not have a specification",
+                        catalogue.getActiveSource(type.name())));
     }
 
     @Test
     public void checkMonitorSourceType() {
-        assertTrue("Not all " + MonitorSource.RadarSourceTypes.class.getName()
-                        + " have a specification",
-                Arrays.stream(MonitorSource.RadarSourceTypes.values())
-                    .allMatch(type -> catalogue.getMonitorSource(type.name()) != null));
+        Arrays.stream(MonitorDataTopic.RadarSourceTypes.values())
+                .forEach(type -> assertNotNull(
+                        "Monitor RADAR source " + type + " does not have a specification",
+                        catalogue.getMonitorSource(type.name()) != null));
     }
 
     @Test
     public void checkPassiveSourceType() {
-        assertEquals("Not all " + PassiveSource.RadarSourceTypes.class.getName()
-                        + " have a specification", 0,
-                Arrays.stream(PassiveSource.RadarSourceTypes.values())
-                        .filter(type -> catalogue.getPassiveSource(type.name()) == null)
-                        .peek(t -> logger.error("Passive source {} unknown", t))
-                        .count());
+        Arrays.stream(PassiveSource.RadarSourceTypes.values())
+                .forEach(type -> assertNotNull(
+                        "Passive RADAR source " + type + " does not have a specification",
+                        catalogue.getPassiveSource(type.name()) != null));
     }
 
     @Test
     public void validateTopicNames() {
-        catalogue.getTopics().forEach(topic ->
+        catalogue.getTopicNames().forEach(topic ->
                 assertTrue(topic + " is invalid", isValidTopic(topic)));
     }
 
     @Test
     public void validateTopics() {
-        Set<String> expected = new HashSet<>();
+        List<String> expected = Stream.of(
+                catalogue.getActiveSources(),
+                catalogue.getMonitorSources(),
+                catalogue.getPassiveSources(),
+                catalogue.getStreamGroups())
+                .flatMap(map -> map.values().stream())
+                .flatMap(DataProducer::getTopicNames)
+                .sorted()
+                .collect(Collectors.toList());
 
-        for (ActiveSource source : catalogue.getActiveSources().values()) {
-            expected.addAll(source.getTopics());
-        }
-        for (MonitorSource source : catalogue.getMonitorSources().values()) {
-            expected.addAll(source.getTopics());
-        }
-        for (PassiveSource source : catalogue.getPassiveSources().values()) {
-            expected.addAll(source.getTopics());
-        }
-
-        expected.removeAll(catalogue.getTopics());
-        assertTrue(expected.isEmpty());
+        assertEquals(expected, catalogue.getTopicNames().sorted().collect(Collectors.toList()));
     }
 }

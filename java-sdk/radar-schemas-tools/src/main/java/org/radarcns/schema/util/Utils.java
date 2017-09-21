@@ -27,6 +27,9 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Properties;
 import java.util.Set;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 /**
  * TODO.
@@ -78,6 +81,16 @@ public final class Utils {
         return projectGroup;
     }
 
+    public static String expandClass(String classShorthand) {
+        if (classShorthand == null || classShorthand.isEmpty()) {
+            return null;
+        } else if (classShorthand.charAt(0) == '.') {
+            return getProjectGroup() + classShorthand;
+        } else {
+            return classShorthand;
+        }
+    }
+
     /**
      * TODO.
      * @param aggregator TODO
@@ -114,4 +127,37 @@ public final class Utils {
         return builder.toString();
     }
 
+    public static <T, R> Function<T, Stream<R>> applyOrEmpty(ThrowingFunction<T, Stream<R>> func) {
+        return t -> {
+            try {
+                return func.apply(t);
+            } catch (Exception ex) {
+                logger.error("Failed to apply function, returning empty.", ex);
+                return Stream.empty();
+            }
+        };
+    }
+
+    public static <T> Predicate<T> testOrFalse(ThrowingPredicate<T> test) {
+        return t -> {
+            try {
+                return test.test(t);
+            } catch (Exception ex) {
+                logger.error("Failed to test predicate, returning false.", ex);
+                return false;
+            }
+        };
+    }
+
+    @FunctionalInterface
+    @SuppressWarnings("PMD.SignatureDeclareThrowsException")
+    public interface ThrowingFunction<T, R> {
+        R apply(T value) throws Exception;
+    }
+
+    @FunctionalInterface
+    @SuppressWarnings("PMD.SignatureDeclareThrowsException")
+    public interface ThrowingPredicate<T> {
+        boolean test(T value) throws Exception;
+    }
 }

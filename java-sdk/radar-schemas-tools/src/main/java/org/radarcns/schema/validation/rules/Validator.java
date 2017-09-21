@@ -53,7 +53,8 @@ public interface Validator<T> extends Function<T, Stream<ValidationException>> {
         return object -> check(predicate.test(object), message.apply(object));
     }
 
-    static <T, V> Validator<T> validate(Function<T, V> property, Predicate<V> predicate, Function<T, String> message) {
+    static <T, V> Validator<T> validate(Function<T, V> property, Predicate<V> predicate,
+            Function<T, String> message) {
         return object -> check(predicate.test(property.apply(object)), message.apply(object));
     }
 
@@ -100,6 +101,15 @@ public interface Validator<T> extends Function<T, Stream<ValidationException>> {
      * @param message TODO
      * @return TODO
      */
+    static <T, V> Validator<T> validateNonNull(Function<T, V> property, String message) {
+        return validate(o -> property.apply(o) != null, message);
+    }
+
+    /**
+     * TODO.
+     * @param message TODO
+     * @return TODO
+     */
     static <T> Validator<T> validateNonEmpty(Function<T, String> property,
             Function<T, String> message, Validator<String> validator) {
         return o -> {
@@ -125,15 +135,6 @@ public interface Validator<T> extends Function<T, Stream<ValidationException>> {
             }
             return validator.apply(val);
         };
-    }
-
-    /**
-     * TODO.
-     * @param message TODO
-     * @return TODO
-     */
-    static <T, V> Validator<T> validateNonNull(Function<T, V> property, String message) {
-        return validate(o -> property.apply(o) != null, message);
     }
 
     /**
@@ -216,6 +217,10 @@ public interface Validator<T> extends Function<T, Stream<ValidationException>> {
 
     static Stream<ValidationException> raise(String message) {
         return Stream.of(new ValidationException(message));
+    }
+
+    static Stream<ValidationException> raise(String message, Exception ex) {
+        return Stream.of(new ValidationException(message, ex));
     }
 
     static Stream<ValidationException> valid() {
