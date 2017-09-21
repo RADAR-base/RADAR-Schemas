@@ -4,8 +4,8 @@
   "name": "Acceleration",
   "doc": "Acceleration sample with gravitational constant g as unit.",
   "fields": [
-    {"name": "x", "type": [ "double" , "org.radarcns.restapi.data.Quartiles" ], "doc": "Acceleration in the x-axis (g)"},
-    {"name": "y", "type": [ "double" , "org.radarcns.restapi.data.Quartiles" ], "doc": "Acceleration in the y-axis (g)"},
-    {"name": "z", "type": [ "double" , "org.radarcns.restapi.data.Quartiles" ], "doc": "Acceleration in the z-axis (g)"}
+    {"name": "x", "type": [ "double" , "org.radarcns.restapi.data.Quartiles" ], "doc": "Acceleration in the x-axis (g)."},
+    {"name": "y", "type": [ "double" , "org.radarcns.restapi.data.Quartiles" ], "doc": "Acceleration in the y-axis (g)."},
+    {"name": "z", "type": [ "double" , "org.radarcns.restapi.data.Quartiles" ], "doc": "Acceleration in the z-axis (g)."}
   ]
 }

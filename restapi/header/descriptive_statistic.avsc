@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.restapi.header",
   "type": "enum",
   "name": "DescriptiveStatistic",
-  "doc": "Statical values",
+  "doc": "Statical values.",
   "symbols": [
     "AVERAGE" ,
     "COUNT" ,

@@ -2,6 +2,6 @@
   "namespace": "org.radarcns.restapi.source",
   "type": "enum",
   "name": "States",
-  "doc": "Set of device status",
+  "doc": "Set of device status.",
   "symbols": [ "FINE" , "OK", "WARNING", "DISCONNECTED", "UNKNOWN" ]
 }

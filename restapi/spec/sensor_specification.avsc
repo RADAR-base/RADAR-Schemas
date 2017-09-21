@@ -2,11 +2,11 @@
   "namespace": "org.radarcns.restapi.spec",
   "type": "record",
   "name": "SensorSpecification",
-  "doc": "Sensor specification",
+  "doc": "Sensor specification.",
   "fields": [
-    {"name": "name", "type": "org.radarcns.catalogue.SensorName", "doc": "Sensor name"},
-    {"name": "dataType", "type": "org.radarcns.catalogue.ProcessingState", "doc": "Explains if the values is a raw data, otherwise it reports who computes it"},
-    {"name": "frequency", "type": "double", "default": -1.0, "doc": "Number of expected samples per second"},
-    {"name": "unit", "type": "org.radarcns.catalogue.Unit", "doc": "Measurement unit used by the sensor"}
+    {"name": "name", "type": "org.radarcns.catalogue.SensorName", "doc": "Sensor name."},
+    {"name": "dataType", "type": "org.radarcns.catalogue.ProcessingState", "doc": "Explains if the values is a raw data, otherwise it reports who computes it."},
+    {"name": "frequency", "type": "double", "default": -1.0, "doc": "Number of expected samples per second."},
+    {"name": "unit", "type": "org.radarcns.catalogue.Unit", "doc": "Measurement unit used by the sensor."}
   ]
 }

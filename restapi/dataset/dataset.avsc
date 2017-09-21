@@ -4,7 +4,7 @@
   "name": "Dataset",
   "doc": "A generic collection of samples. Its body is divide in Header and Dataset: metadata and sensor data.",
   "fields": [
-    {"name": "header", "type": "org.radarcns.restapi.header.Header", "doc": "Information useful to contextualise the data set"},
-    {"name": "dataset", "type": {"type": "array", "items": "Item" }, "doc": "Collection of samples"}
+    {"name": "header", "type": "org.radarcns.restapi.header.Header", "doc": "Information useful to contextualise the data set."},
+    {"name": "dataset", "type": {"type": "array", "items": "Item" }, "doc": "Collection of samples."}
   ]
 }
