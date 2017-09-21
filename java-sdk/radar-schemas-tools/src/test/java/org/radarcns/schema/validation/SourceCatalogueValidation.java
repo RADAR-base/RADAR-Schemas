@@ -33,6 +33,7 @@ import java.util.stream.Stream;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import static org.radarcns.schema.specification.SourceCatalogue.BASE_PATH;
 import static org.radarcns.schema.validation.ValidationSupport.isValidTopic;
 
@@ -90,5 +91,18 @@ public class SourceCatalogueValidation {
                 .collect(Collectors.toList());
 
         assertEquals(expected, catalogue.getTopicNames().sorted().collect(Collectors.toList()));
+    }
+
+    @Test
+    public void validateTopicSchemas() {
+        catalogue.getSources().stream()
+                .flatMap(source -> source.getData().stream())
+                .forEach(data -> {
+                    try {
+                        assertTrue(data.getTopics().count() > 0);
+                    } catch (IOException ex) {
+                        fail("Cannot create topic from specification: " + ex);
+                    }
+                });
     }
 }

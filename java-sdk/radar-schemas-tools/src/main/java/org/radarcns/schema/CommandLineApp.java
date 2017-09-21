@@ -141,7 +141,7 @@ public class CommandLineApp {
                         source -> source.getScope() + " - " + source.getName(),
                         source -> source.getData().stream()
                             .collect(Collectors.toMap(
-                                    DataTopic::getType, d -> d.toString(prettyPrint)))));
+                                    DataTopic::getTopic, d -> d.toString(prettyPrint)))));
     }
 
     public int validateSchemas(Namespace ns) {

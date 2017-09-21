@@ -1,5 +1,3 @@
-package org.radarcns.schema.validation.util;
-
 /*
  * Copyright 2017 King's College London and The Hyve
  *
@@ -16,14 +14,12 @@ package org.radarcns.schema.validation.util;
  * limitations under the License.
  */
 
-import static junit.framework.TestCase.assertFalse;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+package org.radarcns.schema.validation.util;
 
 import org.junit.Test;
-import org.radarcns.kafka.aggregator.AggregatorDouble;
-import org.radarcns.kafka.aggregator.AggregatorDoubleArray;
 import org.radarcns.schema.util.Utils;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * TODO.
@@ -34,12 +30,4 @@ public class UtilsTest {
     public void projectGroupTest() {
         assertEquals("org.radarcns", Utils.getProjectGroup());
     }
-
-    @Test
-    public void timedAggregatorTest() {
-        assertTrue(Utils.isTimedAggregator(AggregatorDouble.class.getCanonicalName()));
-        assertTrue(Utils.isTimedAggregator(AggregatorDoubleArray.class.getCanonicalName()));
-        assertFalse(Utils.isTimedAggregator(getClass().getCanonicalName()));
-    }
-
 }

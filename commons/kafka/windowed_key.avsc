@@ -1,7 +1,7 @@
 {
-  "namespace": "org.radarcns.kafka.key",
+  "namespace": "org.radarcns.kafka",
   "type": "record",
-  "name": "KeyWindowed",
+  "name": "WindowedKey",
   "doc": "Windowed key in the RADAR-CNS project.",
   "fields": [
     {"name": "userId", "type": "string", "doc": "User Identifier created during the enrolment."},

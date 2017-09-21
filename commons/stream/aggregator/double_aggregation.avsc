@@ -1,7 +1,7 @@
 {
-  "namespace": "org.radarcns.kafka.aggregator",
+  "namespace": "org.radarcns.stream.aggregator",
   "type": "record",
-  "name": "AggregatorDouble",
+  "name": "DoubleAggregation",
   "doc": "Result of data aggregation.",
   "fields": [
     { "name": "min", "type": "double", "doc": "State the minimum between accumulated values." },

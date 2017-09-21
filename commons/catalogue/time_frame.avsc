@@ -5,7 +5,6 @@
   "doc": "Interval between two consecutive samples.",
   "symbols": [
     "TEN_SECOND" ,
-    "THIRTY_SECOND" ,
     "ONE_MIN" ,
     "TEN_MIN" ,
     "ONE_HOUR" ,

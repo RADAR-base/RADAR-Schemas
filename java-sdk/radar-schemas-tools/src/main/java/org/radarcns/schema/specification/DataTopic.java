@@ -1,12 +1,13 @@
 package org.radarcns.schema.specification;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import org.radarcns.catalogue.Unit;
 import org.radarcns.config.AvroTopicConfig;
-import org.radarcns.kafka.key.KeyMeasurement;
+import org.radarcns.kafka.MeasurementKey;
 import org.radarcns.topic.AvroTopic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +22,7 @@ import java.util.stream.Stream;
 
 import static com.fasterxml.jackson.dataformat.yaml.YAMLGenerator.Feature.MINIMIZE_QUOTES;
 import static com.fasterxml.jackson.dataformat.yaml.YAMLGenerator.Feature.WRITE_DOC_START_MARKER;
+import static org.radarcns.schema.util.Utils.expandClass;
 
 /** DataTopic topic from a data producer. */
 public class DataTopic extends AvroTopicConfig {
@@ -45,11 +47,11 @@ public class DataTopic extends AvroTopicConfig {
     private List<AppDataTopic.DataField> fields;
 
     /**
-     * DataTopic using KeyMeasurement as the default key.
+     * DataTopic using MeasurementKey as the default key.
      */
     public DataTopic() {
         // default value
-        setKeySchema(KeyMeasurement.class.getName());
+        setKeySchema(MeasurementKey.class.getName());
     }
 
     /** Get all topic names that are provided by the data. */
@@ -65,8 +67,8 @@ public class DataTopic extends AvroTopicConfig {
                 | NoSuchMethodException
                 | InvocationTargetException
                 | IllegalAccessException ex) {
-            throw new IOException("Cannot parse schemas Avro Topic " + getTopic()
-                    + ", with key_schema " + getKeySchema()
+            throw new IOException("Cannot parse Avro Topic " + getTopic()
+                    + " schemas, with key_schema " + getKeySchema()
                     + " and value_schema " + getValueSchema(), ex);
         }
     }
@@ -93,6 +95,18 @@ public class DataTopic extends AvroTopicConfig {
 
     public List<AppDataTopic.DataField> getFields() {
         return fields;
+    }
+
+    @Override
+    @JsonSetter
+    public void setKeySchema(String schema) {
+        super.setKeySchema(expandClass(schema));
+    }
+
+    @Override
+    @JsonSetter
+    public void setValueSchema(String schema) {
+        super.setValueSchema(expandClass(schema));
     }
 
     @Override

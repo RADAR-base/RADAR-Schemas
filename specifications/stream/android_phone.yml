@@ -1,40 +1,4 @@
 name: ANDROID_PHONE
-doc: Aggregation of Biovotion data
-master: .kafka.stream.biovotion.BiovotionVsm1Master
-data:
-  - input_topic: android_biovotion_vsm1_acceleration
-    value_schema: .kafka.aggregator.AggregatorDoubleArray
-    windowed: true
-  - input_topic: android_biovotion_vsm1_battery_level
-    value_schema: .kafka.aggregator.AggregatorDouble
-    windowed: true
-  - input_topic: android_biovotion_vsm1_blood_volume_pulse
-    value_schema: .kafka.aggregator.AggregatorDouble
-    windowed: true
-  - input_topic: android_biovotion_vsm1_energy
-    value_schema: .kafka.aggregator.AggregatorDouble
-    windowed: true
-  - input_topic: android_biovotion_vsm1_galvanic_skin_response
-    value_schema: .kafka.aggregator.AggregatorDoubleArray
-    windowed: true
-  - input_topic: android_biovotion_vsm1_heartrate
-    value_schema: .kafka.aggregator.AggregatorDouble
-    windowed: true
-  - input_topic: android_biovotion_vsm1_heartrate_variability
-    value_schema: .kafka.aggregator.AggregatorDouble
-    windowed: true
-  - input_topic: android_biovotion_vsm1_led_current
-    value_schema: .kafka.aggregator.AggregatorDoubleArray
-    windowed: true
-  - input_topic: android_biovotion_vsm1_ppg_raw
-    value_schema: .kafka.aggregator.AggregatorDoubleArray
-    windowed: true
-  - input_topic: android_biovotion_vsm1_respiration_rate
-    value_schema: .kafka.aggregator.AggregatorDouble
-    windowed: true
-  - input_topic: android_biovotion_vsm1_oxygen_saturation
-    value_schema: .kafka.aggregator.AggregatorDouble
-    windowed: true
-  - input_topic: android_biovotion_vsm1_temperature
-    value_schema: .kafka.aggregator.AggregatorDouble
-    windowed: true
+doc: Aggregation of Phone data
+master: .stream.phone.PhoneStreamMaster
+data: []

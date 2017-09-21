@@ -178,6 +178,14 @@ public class SourceCatalogue {
         return passiveSources.get(type);
     }
 
+    public Map<String, StreamGroup> getStreamGroups() {
+        return streamGroups;
+    }
+
+    public Set<DataProducer<?>> getSources() {
+        return sources;
+    }
+
     /**
      * TODO.
      * @return TODO
@@ -190,13 +198,5 @@ public class SourceCatalogue {
     public Stream<AvroTopic<?, ?>> getTopics() {
         return sources.stream()
                 .flatMap(DataProducer::getTopics);
-    }
-
-    public Map<String, StreamGroup> getStreamGroups() {
-        return streamGroups;
-    }
-
-    public Set<DataProducer<?>> getSources() {
-        return sources;
     }
 }

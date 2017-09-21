@@ -1,7 +1,7 @@
 {
-  "namespace": "org.radarcns.kafka.aggregator",
+  "namespace": "org.radarcns.stream.aggregator",
   "type": "record",
-  "name": "AggregatorPhoneUsage",
+  "name": "PhoneUsageAggregation",
   "doc": "Aggregate time and opening events for an app.",
   "fields": [
     {"name": "packageName", "type": "string", "doc": "Package name of the app in use."},

@@ -16,17 +16,13 @@
 
 package org.radarcns.schema.util;
 
-import org.radarcns.kafka.aggregator.AggregatorDouble;
-import org.radarcns.kafka.aggregator.AggregatorDoubleArray;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashSet;
 import java.util.Locale;
 import java.util.Properties;
-import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
@@ -39,14 +35,6 @@ public final class Utils {
     private static final String GRADLE_PROPERTIES = "exchange.properties";
     private static final String GROUP_PROPERTY = "project.group";
     private static String projectGroup;
-
-    private static final Set<String> TIMED_AGGREGATOR;
-
-    static {
-        TIMED_AGGREGATOR = new HashSet<>();
-        TIMED_AGGREGATOR.add(AggregatorDouble.class.getCanonicalName());
-        TIMED_AGGREGATOR.add(AggregatorDoubleArray.class.getCanonicalName());
-    }
 
     private Utils() {
         //Static class
@@ -89,15 +77,6 @@ public final class Utils {
         } else {
             return classShorthand;
         }
-    }
-
-    /**
-     * TODO.
-     * @param aggregator TODO
-     * @return TODO
-     */
-    public static boolean isTimedAggregator(String aggregator) {
-        return TIMED_AGGREGATOR.contains(aggregator);
     }
 
     public static String toSnakeCase(String value) {

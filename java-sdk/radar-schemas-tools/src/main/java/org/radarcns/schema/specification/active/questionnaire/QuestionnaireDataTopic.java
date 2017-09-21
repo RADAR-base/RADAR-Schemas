@@ -1,5 +1,3 @@
-package org.radarcns.schema.specification.active.questionnaire;
-
 /*
  * Copyright 2017 King's College London and The Hyve
  *
@@ -16,6 +14,8 @@ package org.radarcns.schema.specification.active.questionnaire;
  * limitations under the License.
  */
 
+package org.radarcns.schema.specification.active.questionnaire;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.radarcns.schema.specification.DataTopic;
 
@@ -31,8 +31,7 @@ public class QuestionnaireDataTopic extends DataTopic {
         PHQ8
     }
 
-    @JsonProperty
-    @NotEmpty
+    @JsonProperty @NotEmpty
     private List<Question> questions;
 
     public List<Question> getQuestions() {
