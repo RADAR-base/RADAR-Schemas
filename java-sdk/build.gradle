@@ -16,7 +16,7 @@ subprojects {
     apply plugin: 'idea'
 
     // Configuration
-    version = '0.2-alpha.2-SNAPSHOT'
+    version = '0.2-alpha.3-SNAPSHOT'
     group = 'org.radarcns'
     ext.githubRepoName = 'RADAR-CNS/RADAR-Schemas'
 
@@ -36,7 +36,12 @@ subprojects {
     }
 
     dependencies {
-        api group: 'org.apache.avro', name: 'avro', version: avroVersion
+        api (group: 'org.apache.avro', name: 'avro', version: avroVersion) {
+            exclude group: 'org.xerial.snappy', module: 'snappy-java'
+            exclude group: 'com.thoughtworks.paranamer', module: 'paranamer'
+            exclude group: 'org.apache.commons', module: 'commons-compress'
+            exclude group: 'org.tukaani', module: 'xz'
+        }
     }
 
     // publishing
