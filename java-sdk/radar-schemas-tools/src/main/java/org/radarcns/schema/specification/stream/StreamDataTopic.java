@@ -2,7 +2,7 @@ package org.radarcns.schema.specification.stream;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
-import org.radarcns.catalogue.TimeFrame;
+import org.radarcns.catalogue.TimeWindow;
 import org.radarcns.catalogue.Unit;
 import org.radarcns.config.AvroTopicConfig;
 import org.radarcns.kafka.MeasurementKey;
@@ -19,29 +19,28 @@ import java.util.stream.Stream;
 
 import static org.radarcns.schema.util.Utils.applyOrEmpty;
 
-//@JsonDeserialize(builder = StreamDataTopic.StreamDataTopicBuilder)
 public class StreamDataTopic extends DataTopic {
 
     public enum TimeLabel {
-        TEN_SECOND(TimeFrame.TEN_SECOND, TimeUnit.SECONDS.toMillis(10), "_10sec"),
-        ONE_MIN(TimeFrame.ONE_MIN, TimeUnit.MINUTES.toMillis(1), "_1min"),
-        TEN_MIN(TimeFrame.TEN_MIN, TimeUnit.MINUTES.toMillis(10), "_10min"),
-        ONE_HOUR(TimeFrame.ONE_HOUR, TimeUnit.HOURS.toMillis(1), "_1hour"),
-        ONE_DAY(TimeFrame.ONE_DAY, TimeUnit.DAYS.toMillis(1), "_1day"),
-        ONE_WEEK(TimeFrame.ONE_WEEK, TimeUnit.DAYS.toMillis(7), "_1week");
+        TEN_SECOND(TimeWindow.TEN_SECOND, TimeUnit.SECONDS.toMillis(10), "_10sec"),
+        ONE_MIN(TimeWindow.ONE_MIN, TimeUnit.MINUTES.toMillis(1), "_1min"),
+        TEN_MIN(TimeWindow.TEN_MIN, TimeUnit.MINUTES.toMillis(10), "_10min"),
+        ONE_HOUR(TimeWindow.ONE_HOUR, TimeUnit.HOURS.toMillis(1), "_1hour"),
+        ONE_DAY(TimeWindow.ONE_DAY, TimeUnit.DAYS.toMillis(1), "_1day"),
+        ONE_WEEK(TimeWindow.ONE_WEEK, TimeUnit.DAYS.toMillis(7), "_1week");
 
-        private final TimeFrame timeFrame;
+        private final TimeWindow timeWindow;
         private final long intervalInMilliSec;
         private final String label;
 
-        TimeLabel(TimeFrame timeFrame, long intervalInMilliSec, String label) {
-            this.timeFrame = timeFrame;
+        TimeLabel(TimeWindow timeWindow, long intervalInMilliSec, String label) {
+            this.timeWindow = timeWindow;
             this.intervalInMilliSec = intervalInMilliSec;
             this.label = label;
         }
 
-        public TimeFrame getTimeFrame() {
-            return timeFrame;
+        public TimeWindow getTimeWindow() {
+            return timeWindow;
         }
 
         public long getIntervalInMilliSec() {

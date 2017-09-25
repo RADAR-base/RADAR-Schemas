@@ -1,8 +1,8 @@
 {
   "namespace": "org.radarcns.catalogue",
   "type": "enum",
-  "name": "TimeFrame",
-  "doc": "Interval between two consecutive samples.",
+  "name": "TimeWindow",
+  "doc": "Time window for aggregated measurements.",
   "symbols": [
     "TEN_SECOND" ,
     "ONE_MIN" ,
