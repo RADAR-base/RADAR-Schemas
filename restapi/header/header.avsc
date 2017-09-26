@@ -7,7 +7,7 @@
     { "name": "subjectId", "type": "string", "doc": "Subject identifier." },
     { "name": "sourceId", "type": "string", "doc": "Source identifier." },
     { "name": "source", "type": "string", "doc": "Source information, it can be a device or assessment name." },
-    { "name": "type", "type": ["org.radarcns.catalogue.SensorName", "string"], "doc": "Report the sensor name or specific type of assessment." },
+    { "name": "type", "type": "string", "doc": "Report the sensor name or specific type of assessment." },
     { "name": "descriptiveStatistic", "type": "DescriptiveStatistic", "doc": "Statical value expressed by samples." },
     { "name": "unit", "type": "org.radarcns.catalogue.Unit", "doc": "Unit used by the source." },
     { "name": "timeWindow", "type": "org.radarcns.catalogue.TimeWindow", "doc": "Time interval between two consecutive samples." },

@@ -17,8 +17,9 @@
 package org.radarcns.schema.validation.rules;
 
 import org.radarcns.catalogue.ProcessingState;
-import org.radarcns.catalogue.SensorName;
 import org.radarcns.schema.specification.passive.PassiveDataTopic;
+
+import java.util.Arrays;
 
 import static org.radarcns.schema.util.Utils.testOrFalse;
 import static org.radarcns.schema.validation.rules.PassiveSourceRoles.RADAR_PROVIDERS;
@@ -35,8 +36,8 @@ public final class SensorRoles {
             "PassiveDataTopic data type cannot be null and should differ from "
             + ProcessingState.UNKNOWN.name() + ".";
     private static final String NAME =
-            "PassiveDataTopic name cannot be not null and should different from "
-            + SensorName.UNKNOWN.name() + ".";
+            "PassiveDataTopic name cannot be not null and should be one of "
+                    + Arrays.toString(PassiveDataTopic.RadarSourceDataTypes.values()) + ".";
 
     private SensorRoles() {
         // utility class
@@ -66,6 +67,10 @@ public final class SensorRoles {
      */
     static Validator<PassiveDataTopic> validateName() {
         return validateNonNull(PassiveDataTopic::getType,
-                testOrFalse(name -> SensorName.valueOf(name) != SensorName.UNKNOWN), NAME);
+                testOrFalse(name -> {
+                    // is a valid RADAR source
+                    PassiveDataTopic.RadarSourceDataTypes.valueOf(name);
+                    return true;
+                }), NAME);
     }
 }
