@@ -1,7 +1,7 @@
 {
   "namespace": "org.radarcns.kafka.key",
   "type": "record",
-  "name": "MeasurementKeyTest",
+  "name": "ObservationKeyTest",
   "doc": "Measurement key in the RADAR-CNS project.",
   "fields": [
     {"name": "userTestId", "type": "string", "doc": "User Identifier created during the enrolment."},

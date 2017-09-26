@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import org.radarcns.catalogue.Unit;
 import org.radarcns.config.AvroTopicConfig;
-import org.radarcns.kafka.MeasurementKey;
+import org.radarcns.kafka.ObservationKey;
 import org.radarcns.topic.AvroTopic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,11 +47,11 @@ public class DataTopic extends AvroTopicConfig {
     private List<AppDataTopic.DataField> fields;
 
     /**
-     * DataTopic using MeasurementKey as the default key.
+     * DataTopic using ObservationKey as the default key.
      */
     public DataTopic() {
         // default value
-        setKeySchema(MeasurementKey.class.getName());
+        setKeySchema(ObservationKey.class.getName());
     }
 
     /** Get all topic names that are provided by the data. */

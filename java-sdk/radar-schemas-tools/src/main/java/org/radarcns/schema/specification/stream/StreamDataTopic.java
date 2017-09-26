@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import org.radarcns.catalogue.Unit;
 import org.radarcns.config.AvroTopicConfig;
-import org.radarcns.kafka.MeasurementKey;
-import org.radarcns.kafka.WindowedKey;
+import org.radarcns.kafka.ObservationKey;
+import org.radarcns.kafka.AggregateKey;
 import org.radarcns.schema.specification.DataTopic;
 import org.radarcns.stream.TimeWindowMetadata;
 import org.radarcns.topic.AvroTopic;
@@ -38,8 +38,8 @@ public class StreamDataTopic extends DataTopic {
     private void setWindowed(boolean windowed) {
         this.windowed = windowed;
         if (windowed && (this.getKeySchema() == null
-                || this.getKeySchema().equals(MeasurementKey.class.getName()))) {
-            this.setKeySchema(WindowedKey.class.getName());
+                || this.getKeySchema().equals(ObservationKey.class.getName()))) {
+            this.setKeySchema(AggregateKey.class.getName());
         }
     }
 
