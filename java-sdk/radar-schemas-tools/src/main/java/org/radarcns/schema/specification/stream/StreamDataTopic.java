@@ -2,55 +2,23 @@ package org.radarcns.schema.specification.stream;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
-import org.radarcns.catalogue.TimeWindow;
 import org.radarcns.catalogue.Unit;
 import org.radarcns.config.AvroTopicConfig;
 import org.radarcns.kafka.MeasurementKey;
 import org.radarcns.kafka.WindowedKey;
 import org.radarcns.schema.specification.DataTopic;
+import org.radarcns.stream.TimeWindowMetadata;
 import org.radarcns.topic.AvroTopic;
 
 import javax.validation.constraints.NotBlank;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
 import static org.radarcns.schema.util.Utils.applyOrEmpty;
 
 public class StreamDataTopic extends DataTopic {
-
-    public enum TimeLabel {
-        TEN_SECOND(TimeWindow.TEN_SECOND, TimeUnit.SECONDS.toMillis(10), "_10sec"),
-        ONE_MIN(TimeWindow.ONE_MIN, TimeUnit.MINUTES.toMillis(1), "_1min"),
-        TEN_MIN(TimeWindow.TEN_MIN, TimeUnit.MINUTES.toMillis(10), "_10min"),
-        ONE_HOUR(TimeWindow.ONE_HOUR, TimeUnit.HOURS.toMillis(1), "_1hour"),
-        ONE_DAY(TimeWindow.ONE_DAY, TimeUnit.DAYS.toMillis(1), "_1day"),
-        ONE_WEEK(TimeWindow.ONE_WEEK, TimeUnit.DAYS.toMillis(7), "_1week");
-
-        private final TimeWindow timeWindow;
-        private final long intervalInMilliSec;
-        private final String label;
-
-        TimeLabel(TimeWindow timeWindow, long intervalInMilliSec, String label) {
-            this.timeWindow = timeWindow;
-            this.intervalInMilliSec = intervalInMilliSec;
-            this.label = label;
-        }
-
-        public TimeWindow getTimeWindow() {
-            return timeWindow;
-        }
-
-        public long getIntervalInMilliSec() {
-            return intervalInMilliSec;
-        }
-
-        public String getLabel(String topic) {
-            return topic + label;
-        }
-    }
 
     @JsonProperty
     private boolean windowed = false;
@@ -110,8 +78,8 @@ public class StreamDataTopic extends DataTopic {
 
     public Stream<String> getTopicNames() {
         if (windowed) {
-            return Arrays.stream(TimeLabel.values())
-                    .map(label -> label.getLabel(topicBase));
+            return Arrays.stream(TimeWindowMetadata.values())
+                    .map(label -> label.getTopicLabel(topicBase));
         } else {
             String currentTopic = getTopic();
             if (currentTopic == null) {
