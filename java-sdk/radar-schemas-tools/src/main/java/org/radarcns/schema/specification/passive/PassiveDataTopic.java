@@ -26,6 +26,14 @@ import java.util.Objects;
  * TODO.
  */
 public class PassiveDataTopic extends AppDataTopic {
+    public enum RadarSourceDataTypes {
+        ACCELEROMETER, BATTERY, BLOOD_VOLUME_PULSE, BLOOD_PULSE_WAVE, ELECTRODERMAL_ACTIVITY,
+        ENERGY, GALVANIC_SKIN_RESPONSE, GYROSCOPE, HEART_RATE, HEART_RATE_FILTERED,
+        HEART_RATE_VARIABILITY, INTER_BEAT_INTERVAL, LED, LIGHT, MAGNETIC_FIELD, OXYGEN_SATURATION,
+        PHONE_CALL, PHONE_SMS, PHONE_SMS_UNREAD, PHOTOPLETHYSMOGRAPHY, RELATIVE_LOCATION,
+        RESPIRATION_RATE, STEP_COUNT, THERMOMETER, USAGE_EVENT, USER_INTERACTION
+    }
+
     @JsonProperty("processing_state")
     private ProcessingState processingState;
 
@@ -38,7 +46,7 @@ public class PassiveDataTopic extends AppDataTopic {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass() || !super.equals(o)) {
+        if (!super.equals(o)) {
             return false;
         }
         PassiveDataTopic passiveData = (PassiveDataTopic) o;
