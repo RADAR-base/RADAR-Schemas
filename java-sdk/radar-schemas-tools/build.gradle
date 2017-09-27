@@ -43,6 +43,8 @@ task createStartScripts(type: CreateStartScripts) {
 // Test definition                                                           //
 //---------------------------------------------------------------------------//
 test {
+    inputs.dir "${project.rootDir}/../commons"
+    inputs.dir "${project.rootDir}/../specifications"
     testLogging {
         events "skipped", "failed"
         exceptionFormat "full"

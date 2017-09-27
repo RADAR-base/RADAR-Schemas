@@ -5,25 +5,29 @@ doc: Pebble 2 data collected over Bluetooth by a RADAR Pebble app
 app_provider: .pebble.PebbleServiceProvider
 data:
   - type: ACCELEROMETER
-    default_sample_rate: 10.0
+    sample_rate:
+      frequency: 10
     unit: G
     processing_state: RAW
     topic: android_pebble_2_acceleration
     value_schema: .passive.pebble.Pebble2Acceleration
   - type: BATTERY
-    default_sample_rate: 1.0
+    sample_rate:
+      dynamic: true
     unit: PERCENTAGE
     processing_state: RAW
     topic: android_pebble_2_battery_level
     value_schema: .passive.pebble.Pebble2BatteryLevel
   - type: HEART_RATE
-    default_sample_rate: 1.0
+    sample_rate:
+      dynamic: true
     unit: BEATS_PER_MIN
     processing_state: VENDOR
     topic: android_pebble_2_heartrate
     value_schema: .passive.pebble.Pebble2HeartRate
   - type: HEART_RATE_FILTERED
-    default_sample_rate: 1.0
+    sample_rate:
+      dynamic: true
     unit: BEATS_PER_MIN
     processing_state: VENDOR
     topic: android_pebble_2_heartrate_filtered

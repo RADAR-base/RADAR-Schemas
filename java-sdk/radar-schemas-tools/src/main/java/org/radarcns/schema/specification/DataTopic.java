@@ -34,11 +34,8 @@ public class DataTopic extends AvroTopicConfig {
     @JsonProperty
     private String doc;
 
-    @JsonProperty("default_sample_interval")
-    private Double sampleInterval;
-
-    @JsonProperty("default_sample_rate")
-    private Double sampleRate;
+    @JsonProperty("sample_rate")
+    private SampleRateConfig sampleRate;
 
     @JsonProperty
     private Unit unit;
@@ -81,11 +78,7 @@ public class DataTopic extends AvroTopicConfig {
         return doc;
     }
 
-    public Double getSampleInterval() {
-        return sampleInterval;
-    }
-
-    public Double getSampleRate() {
+    public SampleRateConfig getSampleRate() {
         return sampleRate;
     }
 
@@ -151,11 +144,8 @@ public class DataTopic extends AvroTopicConfig {
         map.put("value_schema", getValueSchema());
 
         if (!reduced) {
-            if (sampleInterval != null) {
-                map.put("default_sample_interval", sampleInterval);
-            }
             if (sampleRate != null) {
-                map.put("default_sample_rate", sampleRate);
+                map.put("sample_rate", sampleRate);
             }
             if (unit != null) {
                 map.put("unit", unit);
