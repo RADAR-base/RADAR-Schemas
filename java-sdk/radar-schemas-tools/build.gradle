@@ -83,6 +83,11 @@ pmd {
 // Publishing                                                                //
 //---------------------------------------------------------------------------//
 
+tasks.withType(Tar){
+    compression = Compression.GZIP
+    extension = 'tar.gz'
+}
+
 publishing {
     publications {
         RadarCommonsPublication(MavenPublication) {
