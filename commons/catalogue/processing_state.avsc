@@ -1,0 +1,12 @@
+{
+  "namespace": "org.radarcns.catalogue",
+  "type": "enum",
+  "name": "ProcessingState",
+  "doc": "Data directly collected form an hardware senor or that has not been pre-processed is defined RAW. Any value different from RAW states who computes the value.",
+  "symbols": [
+    "RAW" ,
+    "VENDOR",
+    "RADAR",
+    "UNKNOWN"
+  ]
+}

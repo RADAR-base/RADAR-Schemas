@@ -1,0 +1,11 @@
+{
+  "namespace": "org.radarcns.passive.phone",
+  "type": "record",
+  "name": "PhoneSmsUnread",
+  "doc": "Number of SMS messages in the inbox that have an unread status.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+    { "name": "timeReceived", "type": "double", "doc": "Device receiver timestamp in UTC (s)." },
+    { "name": "unreadSms", "type": "int", "doc": "Number of unread SMS messages currently in the inbox." }
+  ]
+}

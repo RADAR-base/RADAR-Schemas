@@ -1,0 +1,16 @@
+name: THINCIT
+assessment_type: APP
+doc: ThincIt Cognition in Depression app.
+data:
+  - type: THINCIT_CODE_BREAKER
+    topic: thincit_code_breaker
+    value_schema: .active.thincit.ThincItCodeBreaker
+  - type: THINCIT_SPOTTER
+    topic: thincit_spotter
+    value_schema: .active.thincit.ThincItSpotter
+  - type: THINCIT_SYMBOL_CHECK
+    topic: thincit_symbol_check
+    value_schema: .active.thincit.ThincItSymbolCheck
+  - type: THINCIT_TRAILS
+    topic: thincit_trails
+    value_schema: .active.thincit.ThincItTrails

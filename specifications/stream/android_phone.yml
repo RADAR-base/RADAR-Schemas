@@ -1,0 +1,4 @@
+name: ANDROID_PHONE
+doc: Aggregation of Phone data
+master: .stream.phone.PhoneStreamMaster
+data: []

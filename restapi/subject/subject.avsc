@@ -1,12 +1,12 @@
 {
-  "namespace": "org.radarcns.avro.restapi.subject",
+  "namespace": "org.radarcns.restapi.subject",
   "type": "record",
   "name": "Subject",
-  "doc": "Subject definition",
+  "doc": "Subject definition.",
   "fields": [
-    {"name": "subjectId", "type": "string", "doc": "Subject identifier"},
-    {"name": "active", "type": "boolean", "doc": "True if the subject is engaged, false otherwise. False means the subject is no longer monitored" },
-    {"name": "effectiveTimeFrame", "type": "org.radarcns.avro.restapi.header.EffectiveTimeFrame", "doc": "Timestamps of the first and the last samples received by the subject" },
-    {"name": "sources", "type": {"type": "array", "items": "org.radarcns.avro.restapi.source.Source" }, "doc": "List of sources used by the subject"}
+    {"name": "subjectId", "type": "string", "doc": "Subject identifier."},
+    {"name": "active", "type": "boolean", "doc": "True if the subject is engaged, false otherwise. False means the subject is no longer monitored." },
+    {"name": "effectiveTimeFrame", "type": "org.radarcns.restapi.header.EffectiveTimeFrame", "doc": "Timestamps of the first and the last samples received by the subject." },
+    {"name": "sources", "type": {"type": "array", "items": "org.radarcns.restapi.source.Source" }, "doc": "List of sources used by the subject."}
   ]
 }

@@ -1,0 +1,15 @@
+{
+  "namespace": "org.radarcns.stream.aggregator",
+  "type": "record",
+  "name": "DoubleAggregation",
+  "doc": "Result of data aggregation.",
+  "fields": [
+    { "name": "min", "type": "double", "doc": "State the minimum between accumulated values." },
+    { "name": "max", "type": "double", "doc": "State the maximum between accumulated values." },
+    { "name": "sum", "type": "double", "doc": "State the sum of accumulated values." },
+    { "name": "count", "type": "double", "doc": "Count the accumulated values." },
+    { "name": "avg", "type": ["null", "double"], "doc": "State the avg between accumulated values.", "default": null },
+    { "name": "quartile", "type": ["null", {"type": "array", "items": "double"}], "doc": "Quartile of accumulated values.", "default": null },
+    { "name": "iqr", "type": ["null", "double"], "doc": "State the interquartile range between accumulated values.", "default": null }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "namespace": "org.radarcns.passive.phone",
+  "type": "record",
+  "name": "PhoneSms",
+  "doc": "Data from log sent and received text messages.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+    { "name": "timeReceived", "type": "double", "doc": "Device receiver timestamp in UTC (s)." },
+    { "name": "target", "type": ["null", "bytes"], "doc": "HMAC SHA-256 one-way source/target of the SMS. This hash of a given phone number will be the same unless the app is reinstalled. If the number is unknown or anonymous, this contains null.", "default": null },
+    { "name": "type", "type": {
+      "name": "PhoneSmsType",
+      "type": "enum",
+      "doc": "Direction of an SMS.",
+      "symbols": ["INCOMING", "OUTGOING", "OTHER", "UNKNOWN"]
+      }, "doc": "Direction of the SMS.", "default": "UNKNOWN" },
+    { "name": "length", "type": ["null","int"], "doc": "Number of characters in the message (null if unknown).", "default": null },
+    { "name": "targetIsContact", "type": ["null","boolean"], "doc": "Sms sender is a known contact (null if unknown).", "default": null },
+    { "name": "targetIsNonNumeric", "type": ["null", "boolean"], "doc": "Sms sender ID is replaced by text, e.g. a company name.", "default": null },
+    { "name": "targetLength", "type": ["null", "int"], "doc": "Length of the target phone number, -1 if not collected.", "default": null }
+  ]
+}

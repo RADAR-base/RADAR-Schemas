@@ -1,0 +1,13 @@
+{
+  "namespace": "org.radarcns.passive.biovotion",
+  "type": "record",
+  "name": "BiovotionVsm1Temperature",
+  "doc": "Data from temperature sensor expressed in degrees on the Celsius (°C) scale.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+    {"name": "timeReceived", "type": "double", "doc": "Device receiver timestamp in UTC (s)." },
+    {"name": "temperature", "type": "float", "doc": "Skin temperature (°C)." },
+    {"name": "temperatureLocal", "type": "float", "doc": "Device (board) temperature (°C)." },
+    {"name": "temperatureBarometer", "type": "float", "doc": "Barometer temperature (°C)." }
+  ]
+}

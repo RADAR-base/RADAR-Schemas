@@ -1,0 +1,12 @@
+{
+  "namespace": "org.radarcns.passive.biovotion",
+  "type": "record",
+  "name": "BiovotionVsm1OxygenSaturation",
+  "doc": "Peripheral capillary oxygen saturation (SpO2) calculated by biovotion device.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+    {"name": "timeReceived", "type": "double", "doc": "Device receiver timestamp in UTC (s)." },
+    {"name": "spO2", "type": "float", "doc": "SpO2 value (0-1)." },
+    {"name": "spO2Quality", "type": "float", "doc": "SpO2 quality (0-1)." }
+  ]
+}

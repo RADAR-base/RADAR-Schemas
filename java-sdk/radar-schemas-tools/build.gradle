@@ -1,0 +1,128 @@
+plugins {
+    id 'idea'
+    id 'checkstyle'
+    id 'pmd'
+    id 'application'
+}
+
+ext.artifactName = 'radar-schemas-tools'
+ext.description = 'RADAR Schemas specification and validation tools.'
+
+targetCompatibility = '1.8'
+sourceCompatibility = '1.8'
+mainClassName = 'org.radarcns.schema.CommandLineApp'
+
+sourceSets {
+    test {
+        java.srcDir 'src/test/java'
+        resources.srcDir 'src/test/resources'
+    }
+}
+
+ext.junitVersion = '4.12'
+ext.slf4jVersion = '1.7.25'
+
+dependencies {
+    api group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.8.10'
+    api group: 'javax.validation', name: 'validation-api', version: '2.0.0.Final'
+    implementation group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-yaml', version: '2.8.10'
+    implementation project(':radar-schemas-commons')
+    implementation group: 'org.radarcns', name: 'radar-commons', version: '0.5'
+    implementation group: 'net.sourceforge.argparse4j', name: 'argparse4j', version: '0.7.0'
+
+    runtimeOnly group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.25'
+
+    testCompile group: 'junit', name: 'junit', version: junitVersion
+}
+
+task createStartScripts(type: CreateStartScripts) {
+    applicationName = 'radar-schema'
+}
+
+//---------------------------------------------------------------------------//
+// Test definition                                                           //
+//---------------------------------------------------------------------------//
+test {
+    inputs.dir "${project.rootDir}/../commons"
+    inputs.dir "${project.rootDir}/../specifications"
+    testLogging {
+        events "skipped", "failed"
+        exceptionFormat "full"
+        showExceptions = true
+        showCauses = true
+        showStackTraces = true
+        showStandardStreams = true
+    }
+}
+
+//---------------------------------------------------------------------------//
+// Style checking                                                            //
+//---------------------------------------------------------------------------//
+checkstyle {
+    // codacy version
+    toolVersion '6.16'
+    ignoreFailures false
+
+    configFile = file("$projectDir/config/checkstyle/checkstyle.xml")
+}
+
+pmd {
+    // pmd version
+    toolVersion = '5.5.2'
+    ignoreFailures = false
+
+    consoleOutput = true
+
+    ruleSets = []
+
+    ruleSetFiles = files("$projectDir/config/pmd/ruleset.xml")
+}
+
+
+//---------------------------------------------------------------------------//
+// Publishing                                                                //
+//---------------------------------------------------------------------------//
+
+publishing {
+    publications {
+        RadarCommonsPublication(MavenPublication) {
+            from components.java
+            artifact sourcesJar
+            artifact javadocJar
+            groupId project.group
+            artifactId artifactName
+            version project.version
+            pom.withXml {
+                def root = asNode()
+                root.appendNode('description', description)
+                root.appendNode('name', artifactName)
+                root.appendNode('url', githubUrl)
+                root.children().last() + pomConfig
+            }
+        }
+    }
+}
+
+bintray {
+    user = project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER')
+    key = project.hasProperty('bintrayApiKey') ? project.property('bintrayApiKey') : System.getenv('BINTRAY_API_KEY')
+    override = false
+    publications = ['RadarCommonsPublication']
+    pkg {
+        repo = project.group
+        name = artifactName
+        userOrg = 'radar-cns'
+        licenses = ['Apache-2.0']
+        websiteUrl = website
+        issueTrackerUrl = issueUrl
+        vcsUrl = githubUrl
+        githubRepo = githubRepoName
+        githubReleaseNotesFile = 'README.md'
+        version {
+            name = project.version
+            desc = description
+            vcsTag = System.getenv('TRAVIS_TAG')
+            released = new Date()
+        }
+    }
+}

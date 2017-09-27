@@ -1,0 +1,89 @@
+#===================================== Biovotion VSM1 Everion =====================================#
+vendor: BIOVOTION
+model: VSM1
+app_provider: .biovotion.BiovotionServiceProvider
+data:
+  - type: ACCELEROMETER
+    unit: G
+    processing_state: RAW
+    topic: android_biovotion_vsm1_acceleration
+    value_schema: .passive.biovotion.BiovotionVsm1Acceleration
+    sample_rate:
+      frequency: 51.2
+  - type: BATTERY
+    sample_rate:
+      frequency: 1
+    unit: PERCENTAGE
+    processing_state: RAW
+    topic: android_biovotion_vsm1_battery_level
+    value_schema: .passive.biovotion.BiovotionVsm1BatteryLevel
+  - type: BLOOD_PULSE_WAVE
+    sample_rate:
+      frequency: 1
+    unit: NON_DIMENSIONAL
+    processing_state: VENDOR
+    topic: android_biovotion_vsm1_blood_volume_pulse
+    value_schema: .passive.biovotion.BiovotionVsm1BloodPulseWave
+  - type: ENERGY
+    sample_rate:
+      frequency: 1
+    unit: CALORIES_PER_SEC
+    processing_state: VENDOR
+    topic: android_biovotion_vsm1_energy
+    value_schema: .passive.biovotion.BiovotionVsm1Energy
+  - type: GALVANIC_SKIN_RESPONSE
+    sample_rate:
+      frequency: 1
+    unit: KILO_OHM
+    processing_state: VENDOR
+    topic: android_biovotion_vsm1_galvanic_skin_response
+    value_schema: .passive.biovotion.BiovotionVsm1GalvanicSkinResponse
+  - type: HEART_RATE
+    sample_rate:
+      frequency: 1
+    unit: BEATS_PER_MIN
+    processing_state: VENDOR
+    topic: android_biovotion_vsm1_heartrate
+    value_schema: .passive.biovotion.BiovotionVsm1HeartRate
+  - type: HEART_RATE_VARIABILITY
+    sample_rate:
+      frequency: 1
+    unit: RMSSD_IN_MILLI_SEC
+    processing_state: VENDOR
+    topic: android_biovotion_vsm1_heartrate_variability
+    value_schema: .passive.biovotion.BiovotionVsm1HeartRateVariability
+  - type: LED
+    sample_rate:
+      frequency: 1
+    unit: MILLI_AMPERE
+    processing_state: VENDOR
+    topic: android_biovotion_vsm1_led_current
+    value_schema: .passive.biovotion.BiovotionVsm1LedCurrent
+  - type: PHOTOPLETHYSMOGRAPHY
+    sample_rate:
+      frequency: 51.2
+    unit: NON_DIMENSIONAL
+    processing_state: RAW
+    topic: android_biovotion_vsm1_ppg_raw
+    value_schema: .passive.biovotion.BiovotionVsm1PpgRaw
+  - type: RESPIRATION_RATE
+    sample_rate:
+      frequency: 1
+    unit: BEATS_PER_MIN
+    processing_state: VENDOR
+    topic: android_biovotion_vsm1_respiration_rate
+    value_schema: .passive.biovotion.BiovotionVsm1RespirationRate
+  - type: OXYGEN_SATURATION
+    sample_rate:
+      frequency: 1
+    unit: PERCENTAGE
+    processing_state: VENDOR
+    topic: android_biovotion_vsm1_oxygen_saturation
+    value_schema: .passive.biovotion.BiovotionVsm1OxygenSaturation
+  - type: THERMOMETER
+    sample_rate:
+      frequency: 1
+    unit: CELSIUS
+    processing_state: RAW
+    topic: android_biovotion_vsm1_temperature
+    value_schema: .passive.biovotion.BiovotionVsm1Temperature

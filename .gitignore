@@ -1,7 +1,10 @@
 .DS_Store
 build/
+out/
 .idea/
+*.iml
 .gradle/
-*.java
 .gradletasknamecache
 gradle.properties
+exchange.properties
+*.class

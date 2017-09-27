@@ -1,0 +1,18 @@
+{
+  "namespace": "org.radarcns.monitor.application",
+  "type": "record",
+  "name": "ApplicationExternalTime",
+  "doc": "Timestamp from an external source.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+    { "name": "externalTime", "type": "double", "doc": "Timestamp in UTC according to an external source (s)." },
+    { "name": "host", "type": ["null", "string"], "doc": "Hostname or IP address that time was polled from.", "default": null },
+    { "name": "protocol", "type": {
+      "name": "ExternalTimeProtocol",
+      "type": "enum",
+      "doc": "SNTP (Simple Network Time Protocol) synchronizes with a single server once, NTP (Network Time Protocol) may synchronize with multiple servers and derive some continuous measures.",
+      "symbols": ["SNTP", "NTP", "UNKNOWN"]
+      }, "doc": "Protocol for external time synchronization.", "default": "UNKNOWN" },
+    { "name": "delay", "type": ["null", "double"], "doc": "Delay between sending and receiving a message from the host (s). The lower this delay, the more precise the external timestamp is expected to be.", "default": null }
+  ]
+}

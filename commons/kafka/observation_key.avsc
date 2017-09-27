@@ -1,0 +1,11 @@
+{
+  "namespace": "org.radarcns.kafka",
+  "type": "record",
+  "name": "ObservationKey",
+  "doc": "Key of an observation.",
+  "fields": [
+    {"name": "projectId", "type": ["null", "string"], "doc": "Project identifier. Null if unknown or the user is not enrolled in a project.", "default": null},
+    {"name": "userId", "type": "string", "doc": "User Identifier created during the enrolment."},
+    {"name": "sourceId", "type": "string", "doc": "Unique identifier associated with the source."}
+  ]
+}

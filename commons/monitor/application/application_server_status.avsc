@@ -1,0 +1,15 @@
+{
+  "namespace": "org.radarcns.monitor.application",
+  "type": "record",
+  "name": "ApplicationServerStatus",
+  "doc": "Server connection status with android client.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+    { "name": "serverStatus", "type": {
+      "name": "ServerStatus",
+      "type": "enum",
+      "doc": "Server connection status.",
+      "symbols": ["CONNECTED", "DISCONNECTED", "UNKNOWN"]}, "doc": "Application server connection status.", "default": "UNKNOWN" },
+    { "name": "ipAddress", "type": ["null", "string"], "doc": "Hardware identifier of client application.", "default": null }
+  ]
+}
