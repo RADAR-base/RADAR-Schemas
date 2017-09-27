@@ -1,16 +1,16 @@
 {
-  "namespace": "org.radarcns.avro.restapi.header",
+  "namespace": "org.radarcns.restapi.header",
   "type": "record",
   "name": "Header",
   "doc": "Metadata for Dataset. It is a summary explaining what kind of information are stored in the Dataset.",
   "fields": [
-    {"name": "subjectId", "type": "string", "doc": "Subject identifier"},
-    {"name": "sourceId", "type": "string", "doc": "Source identifier"},
-    {"name": "source", "type": "org.radarcns.avro.restapi.source.SourceType", "doc": "Source type"},
-    {"name": "sensor", "type": "org.radarcns.avro.restapi.sensor.SensorType", "doc": "Sensor that has generated data"},
-    {"name": "descriptiveStatistic", "type": "DescriptiveStatistic", "doc": "Statical value expressed by samples" },
-    {"name": "unit", "type": "org.radarcns.avro.restapi.sensor.Unit", "doc": "Measurement unit with which samples are measured" },
-    {"name": "timeFrame", "type": "TimeFrame", "doc": "Time interval between two consecutive samples" },
-    {"name": "effectiveTimeFrame", "type": "EffectiveTimeFrame", "doc": "Timestamps of the first and the last samples contained in the dataset" }
+    { "name": "subjectId", "type": "string", "doc": "Subject identifier." },
+    { "name": "sourceId", "type": "string", "doc": "Source identifier." },
+    { "name": "source", "type": "string", "doc": "Source information, it can be a device or assessment name." },
+    { "name": "type", "type": "string", "doc": "Report the sensor name or specific type of assessment." },
+    { "name": "descriptiveStatistic", "type": "DescriptiveStatistic", "doc": "Statical value expressed by samples." },
+    { "name": "unit", "type": "org.radarcns.catalogue.Unit", "doc": "Unit used by the source." },
+    { "name": "timeWindow", "type": "org.radarcns.catalogue.TimeWindow", "doc": "Time interval between two consecutive samples." },
+    { "name": "effectiveTimeFrame", "type": "EffectiveTimeFrame", "doc": "Timestamps of the first and the last samples contained in the dataset." }
   ]
 }

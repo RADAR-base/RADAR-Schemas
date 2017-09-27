@@ -1,0 +1,14 @@
+{
+  "namespace": "org.radarcns.passive.biovotion",
+  "type": "record",
+  "name": "BiovotionVsm1LedCurrent",
+  "doc": "Applied current for red, green and ir leds.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+    {"name": "timeReceived", "type": "double", "doc": "Device receiver timestamp in UTC (s)." },
+    {"name": "red", "type": "float", "doc": "Current for red LED (mA)." },
+    {"name": "green", "type": "float", "doc": "Current for green LED (mA)." },
+    {"name": "ir", "type": "float", "doc": "Current for IR LED (mA)." },
+    {"name": "offset", "type": "float", "doc": "Current offset (mA)." }
+  ]
+}

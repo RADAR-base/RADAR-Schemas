@@ -1,10 +1,10 @@
 {
-  "namespace": "org.radarcns.avro.restapi.subject",
+  "namespace": "org.radarcns.restapi.subject",
   "type": "record",
   "name": "Cohort",
-  "doc": "Cohort definition",
+  "doc": "Cohort definition.",
   "fields": [
-    {"name": "studyId", "type": "int", "doc": "ID related to the study"},
-    {"name": "subjects", "type": {"type": "array", "items": "Subject" }, "doc": "List of Subject involved in the study"}
+    {"name": "studyId", "type": "int", "doc": "ID related to the study."},
+    {"name": "subjects", "type": {"type": "array", "items": "Subject" }, "doc": "List of Subject involved in the study."}
   ]
 }

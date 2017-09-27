@@ -1,0 +1,11 @@
+{
+  "namespace": "org.radarcns.passive.empatica",
+  "type": "record",
+  "name": "EmpaticaE4Temperature",
+  "doc": "Data from temperature sensor expressed degrees on the Celsius (°C) scale.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+    { "name": "timeReceived", "type": "double", "doc": "Device receiver timestamp in UTC (s)." },
+    { "name": "temperature", "type": "float", "doc": "Temperature (°C)." }
+  ]
+}

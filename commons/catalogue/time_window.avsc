@@ -1,0 +1,15 @@
+{
+  "namespace": "org.radarcns.catalogue",
+  "type": "enum",
+  "name": "TimeWindow",
+  "doc": "Time window for aggregated measurements.",
+  "symbols": [
+    "TEN_SECOND" ,
+    "ONE_MIN" ,
+    "TEN_MIN" ,
+    "ONE_HOUR" ,
+    "ONE_DAY" ,
+    "ONE_WEEK",
+    "UNKNOWN"
+    ]
+}

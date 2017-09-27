@@ -17,3 +17,7 @@ trim_trailing_whitespace = false
 # Gradle
 [*.gradle]
 indent_size = 4
+
+# Java
+[*.java]
+indent_size = 4

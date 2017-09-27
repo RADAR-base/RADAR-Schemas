@@ -1,0 +1,19 @@
+{
+  "namespace": "org.radarcns.passive.phone",
+  "type": "record",
+  "name": "PhoneUsageEvent",
+  "doc": "Event for closing or opening an app.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+    { "name": "timeReceived", "type": "double", "doc": "Device receiver timestamp in UTC (s)." },
+    { "name": "packageName", "type": "string", "doc": "Package name of the launched app." },
+    { "name": "categoryName", "type": ["null", "string"], "doc": "App category as given by the play store, null if a category is not listed or unable to be fetched.", "default": null },
+    { "name": "categoryNameFetchTime", "type": ["null", "double"], "doc": "Timestamp in UTC when the category was attempted to fetch from the play store (s), null if not fetched.", "default": null },
+    { "name": "eventType", "type": {
+      "name": "UsageEventType",
+      "type": "enum",
+      "doc": "Android activity usage event type.",
+      "symbols": ["FOREGROUND", "BACKGROUND", "CONFIG", "SHORTCUT", "INTERACTION", "OTHER", "UNKNOWN"]
+      }, "doc": "Whether the event brought app to foreground or background or neither.", "default": "UNKNOWN" }
+  ]
+}

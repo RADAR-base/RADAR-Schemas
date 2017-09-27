@@ -1,10 +1,10 @@
 {
-  "namespace": "org.radarcns.avro.restapi.dataset",
+  "namespace": "org.radarcns.restapi.dataset",
   "type": "record",
   "name": "Dataset",
   "doc": "A generic collection of samples. Its body is divide in Header and Dataset: metadata and sensor data.",
   "fields": [
-    {"name": "header", "type": "org.radarcns.avro.restapi.header.Header", "doc": "Information useful to contextualise the data set"},
-    {"name": "dataset", "type": {"type": "array", "items": "Item" }, "doc": "Collection of samples"}
+    {"name": "header", "type": "org.radarcns.restapi.header.Header", "doc": "Information useful to contextualise the data set."},
+    {"name": "dataset", "type": {"type": "array", "items": "Item" }, "doc": "Collection of samples."}
   ]
 }

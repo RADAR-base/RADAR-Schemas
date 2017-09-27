@@ -1,0 +1,13 @@
+{
+  "namespace": "org.radarcns.passive.phone",
+  "type": "record",
+  "name": "PhoneMagneticField",
+  "doc": "Data from the 3-axis magnetometer.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+    { "name": "timeReceived", "type": "double", "doc": "Device receiver timestamp in UTC (s)." },
+    { "name": "x", "type": "float", "doc": "Magnetic field in the x-axis (μT)." },
+    { "name": "y", "type": "float", "doc": "Magnetic field in the y-axis (μT)." },
+    { "name": "z", "type": "float", "doc": "Magnetic field in the z-axis (μT)." }
+  ]
+}

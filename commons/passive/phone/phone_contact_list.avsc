@@ -1,0 +1,13 @@
+{
+  "namespace": "org.radarcns.passive.phone",
+  "type": "record",
+  "name": "PhoneContactList",
+  "doc": "Data describing the number of contacts in the the list of contacts and its change since the previous check.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Device timestamp in UTC (s)."},
+    {"name": "timeReceived", "type": "double", "doc": "Device receiver timestamp in UTC (s)."},
+    {"name": "contactsAdded", "type": ["null", "int"], "default": null, "doc": "Number of new contacts added to the list of contacts since the previous measurement that was sent. The value is null if this is the first measurement or if the previous measurement is unknown to the sender."},
+    {"name": "contactsRemoved", "type": ["null", "int"], "default": null, "doc": "Number of new contacts removed from the list of contacts since the previous measurement that was sent. The value is null if this is the first measurement or if the previous measurement is unknown to the sender."},
+    {"name": "contacts", "type": "int", "doc": "Current number of contacts in the list of contacts."}
+  ]
+}

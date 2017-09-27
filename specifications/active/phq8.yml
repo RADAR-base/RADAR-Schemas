@@ -1,0 +1,105 @@
+#==================== Personal Health Questionnaire Depression Scale (PHQ-8) ======================#
+name: PHQ8
+assessment_type: QUESTIONNAIRE
+doc: Personal Health Questionnaire Depression Scale (PHQ-8) definition.
+data:
+  - type: PHQ8
+    topic: questionnaire_phq8
+    value_schema: .active.questionnaire.Questionnaire
+    questions:
+      - lead: Over the past two weeks, how often have you been bothered by any of the following problems?
+        content: Little interest or pleasure in doing things.
+        widget: RADIO
+        responses:
+          - text: Not at all
+            value: 0
+          - text: Several days
+            value: 1
+          - text: More than half the days
+            value: 2
+          - text: Nearly every day
+            value: 3
+      - lead: Over the past two weeks, how often have you been bothered by any of the following problems?
+        content: Feeling down, depressed, or hopeless.
+        widget: RADIO
+        responses:
+          - text: Not at all
+            value: 0
+          - text: Several days
+            value: 1
+          - text: More than half the days
+            value: 2
+          - text: Nearly every day
+            value: 3
+      - lead: Over the past two weeks, how often have you been bothered by any of the following problems?
+        content: Trouble falling or staying asleep, or sleeping too much.
+        widget: RADIO
+        responses:
+          - text: Not at all
+            value: 0
+          - text: Several days
+            value: 1
+          - text: More than half the days
+            value: 2
+          - text: Nearly every day
+            value: 3
+      - lead: Over the past two weeks, how often have you been bothered by any of the following problems?
+        content: Feeling tired or having little energy.
+        widget: RADIO
+        responses:
+          - text: Not at all
+            value: 0
+          - text: Several days
+            value: 1
+          - text: More than half the days
+            value: 2
+          - text: Nearly every day
+            value: 3
+      - lead: Over the past two weeks, how often have you been bothered by any of the following problems?
+        content: Poor appetite or overeating.
+        widget: RADIO
+        responses:
+          - text: Not at all
+            value: 0
+          - text: Several days
+            value: 1
+          - text: More than half the days
+            value: 2
+          - text: Nearly every day
+            value: 3
+      - lead: Over the past two weeks, how often have you been bothered by any of the following problems?
+        content: Feeling bad about yourself, or that you are a failure, or have let yourself or your family down.
+        widget: RADIO
+        responses:
+          - text: Not at all
+            value: 0
+          - text: Several days
+            value: 1
+          - text: More than half the days
+            value: 2
+          - text: Nearly every day
+            value: 3
+      - lead: Over the past two weeks, how often have you been bothered by any of the following problems?
+        content: Trouble concentrating on things, such as reading the newspaper or watching television.
+        widget: RADIO
+        responses:
+          - text: Not at all
+            value: 0
+          - text: Several days
+            value: 1
+          - text: More than half the days
+            value: 2
+          - text: Nearly every day
+            value: 3
+      - lead: Over the past two weeks, how often have you been bothered by any of the following problems?
+        content: Moving or speaking so slowly that other people could have noticed. Or the opposite – being so fidgety or restless that you have been moving around a lot more than usual.
+        widget: RADIO
+        responses:
+          - text: Not at all
+            value: 0
+          - text: Several days
+            value: 1
+          - text: More than half the days
+            value: 2
+          - text: Nearly every day
+            value: 3

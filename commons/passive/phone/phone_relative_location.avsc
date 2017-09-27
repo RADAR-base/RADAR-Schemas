@@ -1,0 +1,22 @@
+{
+  "namespace": "org.radarcns.passive.phone",
+  "type": "record",
+  "name": "PhoneRelativeLocation",
+  "doc": "Data from the gps and network location providers. The latitude and longitude are stated with an unspecified reference offset and can thus be treated as relative locations. They cannot be used to infer absolute location. This means accurate distances or angles between locations cannot be calculated since those depend on the absolute location.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+    { "name": "timeReceived", "type": "double", "doc": "Device receiver timestamp in UTC (s)." },
+    { "name": "provider", "type": {
+      "name": "LocationProvider",
+      "type": "enum",
+      "doc": "Type of provider of location data.",
+      "symbols": ["GPS", "NETWORK", "OTHER", "UNKNOWN"]
+      }, "doc": "Android provider of the location data.", "default": "UNKNOWN"},
+    { "name": "latitude", "type": ["null", "double"], "doc": "Relative latitude from an initial random reference latitude (degrees with range [-90, 90]).", "default": null },
+    { "name": "longitude", "type": ["null", "double"], "doc": "Relative longitude from an initial reference longitude (degrees with range [-180, 180]).", "default": null },
+    { "name": "altitude", "type": ["null", "float"], "doc": "Height above the WGS 84 reference ellipsoid (m).", "default": null },
+    { "name": "accuracy", "type": ["null", "float"], "doc": "The estimated horizontal accuracy of this location, radial (m). We define horizontal accuracy as the radius of 68% confidence. In other words, if you draw a circle centered at this location's latitude and longitude, and with a radius equal to the accuracy, then there is a 68% probability that the true location is inside the circle.", "default": null },
+    { "name": "speed", "type": ["null", "float"], "doc": "Speed over ground (m/s).", "default": null },
+    { "name": "bearing", "type": ["null", "float"], "doc": "The horizontal direction of travel of this device (degrees with range (0, 360]).", "default": null }
+  ]
+}

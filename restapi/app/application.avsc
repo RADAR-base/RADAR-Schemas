@@ -1,16 +1,16 @@
 {
-  "namespace": "org.radarcns.avro.restapi.app",
+  "namespace": "org.radarcns.restapi.app",
   "type": "record",
   "name": "Application",
-  "doc": "Smartphone application status",
+  "doc": "Smartphone application status.",
   "fields": [
     {"name": "ipAddress", "type": [
       "null",
-      "string" ], "doc": "Hardware identifier of client application", "default": null},
-    {"name": "uptime", "type": "double", "doc": "Time since last app start (s)"},
-    {"name": "serverStatus", "type": "org.radarcns.application.ServerStatus", "doc": "server connection status", "default": "UNKNOWN"},
-    {"name": "recordsCached", "type": "int", "doc": "number of records currently being cached", "default": -1},
-    {"name": "recordsSent", "type": "int", "doc": "number of records sent since application start"},
-    {"name": "recordsUnsent", "type": "int", "doc": "number of unsent records", "default": -1}
+      "string" ], "doc": "Hardware identifier of client application.", "default": null},
+    {"name": "uptime", "type": "double", "doc": "Time since last app start (s)."},
+    {"name": "serverStatus", "type": "org.radarcns.monitor.application.ServerStatus", "doc": "Server connection status.", "default": "UNKNOWN"},
+    {"name": "recordsCached", "type": "int", "doc": "Number of records currently being cached.", "default": -1},
+    {"name": "recordsSent", "type": "int", "doc": "Number of records sent since application start."},
+    {"name": "recordsUnsent", "type": "int", "doc": "Number of unsent records.", "default": -1}
   ]
 }
