@@ -22,8 +22,7 @@ For each Avro schema under `commons` folder checks if:
   * the `namespace` differs from null and it is a lowercase string dot separated without numeric
   * the `name` matches the .avsc file name and it is an UpperCamelCase string
   * there is documentation
-  * `symbols` match UPPER_CASE format
-  * the `UNKNOWN` symbol is present
+  * `symbols` match `UPPER_CASE` format
 - in case of `RECORD`
   * the `namespace` differs from null and it is a lowercase string dot separated without numeric
   * the `name` matches the .avsc file name and it is an UpperCamelCase string
@@ -33,7 +32,7 @@ For each Avro schema under `commons` folder checks if:
   * schemas under `monitor` folder have `time` field, and do not contain a field named either `timeCompleted` or `timeReceived`
   * schemas under `passive` folder have `time` and `timeReceived` fields, and do not have a field named `timeCompleted`
   * the record and any provided fields are documented
-  * `ENUM` fields have `UNKNOWN` as `default` value
+  * `ENUM` fields have `UNKNOWN` as `default` value, if any
   * `nullable`/`optional` fields have `null` as default value 
   
 Upon rule violation, the end user is notified with a message explaining how to fix it.
