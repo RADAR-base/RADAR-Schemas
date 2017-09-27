@@ -1,18 +1,21 @@
-# RADAR Schemas Validator
+# RADAR Schemas tools
 
 The RADAR Schemas Validator checks if the `Schema Catalog` is in a valid state.
 
 It first checks the folder structure, it has to be compliant with:
 - commons
   * active
+  * catalogue
   * kafka
   * monitor
   * passive
+  * stream
 - rest
 - specification
   * active
   * monitor
   * passive
+  * stream
   
 For each Avro schema under `commons` folder checks if:
 - in case of `ENUM`
@@ -25,7 +28,7 @@ For each Avro schema under `commons` folder checks if:
   * the `namespace` differs from null and it is a lowercase string dot separated without numeric
   * the `name` matches the .avsc file name and it is an UpperCamelCase string
   * fields is not empty
-  * the `field name` is a lowerCamelCase string and does not contain string such as `value`, `Value`, `val` and `Val`.
+  * the `field name` is a lowerCamelCase string and does not contain string such as `value`, `Value`.
   * schemas under `active` folder have `time` and `timeCompleted` fields, and do not contain a field named `timeReceived`
   * schemas under `monitor` folder have `time` field, and do not contain a field named either `timeCompleted` or `timeReceived`
   * schemas under `passive` folder have `time` and `timeReceived` fields, and do not have a field named `timeCompleted`
@@ -33,8 +36,6 @@ For each Avro schema under `commons` folder checks if:
   * `ENUM` fields have `UNKNOWN` as `default` value
   * `nullable`/`optional` fields have `null` as default value 
   
-The validation process generates a field name collision summary. It is shown to the end user only in presence of collisions.
-
 Upon rule violation, the end user is notified with a message explaining how to fix it.
 
 ## How to use
@@ -43,11 +44,11 @@ The validation is implemented as a `JUnit` test. To run the validation, simply t
 
 ## Suppress checks
 
-Record name, field name validations, and field name collision check can be suppressed modifying the [skip](src/test/resources/skip.yml) configuration file.
+Record name and field name validations can be suppressed modifying the [skip](src/test/resources/schema.yml) configuration file.
 
 `files` lists file paths that can be ignored. It can contain values like
 - entire path like `commons/active/questionnaire/questionnaire.avsc`
-- folder and subfolder `commons/active/**`: all file under `active` and all its subfolder will be skipped
+- folder and subfolder `commons/active/**/*`: all file under `active` and all its subfolder will be skipped
 - folder and subfolder `commons/active/**/*.avsc`: all file with format `avsc` under `active` and all its subfolder will be skipped
 - file name `.DS_Store`: all file named `.DS_Store` will be skipped
 - file extension `*.md`: all file with extension `*.md` will be skipped
@@ -55,7 +56,7 @@ Record name, field name validations, and field name collision check can be suppr
 ```yaml
 files:
   - path/to/avoid/README.md
-  - path/to/**
+  - path/to/**/*
   - path/to/**/README.md
   - .DS_Store
   - *.md
@@ -76,17 +77,3 @@ validation:
         - fieldnameOne
         - fieldnameTwo
 ``` 
-
-`collision` can be set to suppress collision checks:
-
-```yaml
-field_name:
-  - *
-  - schema.to.skip.*
-  - schema.to.skip.two
-``` 
-
-The schema can be specified as follow:
-- `*` turns off collision check for all schemas
-- `schema.to.skip.*` turns off collision check in package `schema.to.skip`. In case `field_name` appears in other schemas contained in a different package, the collision check will then highlight this
-- `schema.to.skip.one` turns off the collision check only for the set schema. In case `field_name` appears in other schemas, the collision check will highlight this

@@ -5,10 +5,11 @@
 [Avro schemas](https://avro.apache.org/docs/1.8.2/spec.html) used in RADAR-CNS. The schemas are organized as follows:
 
 - The `commons` directory contains all schemas used inside Kafka and data fed into Kafka.
-  - In the `passive` subdirectory, add schemas for passive data collection, like wearables.
   - In the `active` subdirectory, add schemas for active data collection, like questionnaires or assignments.
-  - In the `monitor` subdirectory, add schemas for monitoring applications that gather data.
+  - In the `catalogue` subdirectory, modify schemas for cataloguing data types.
   - In the `kafka` subdirectory, add schemas used throughtout Kafka, like record keys.
+  - In the `monitor` subdirectory, add schemas for monitoring applications that gather data.
+  - In the `passive` subdirectory, add schemas for passive data collection, like wearables.
   - In the `stream` subdirectory, add schemas used in Kafka Streams.
 - The `restapi` directory contains schemas used to get data from the RADAR-CNS REST API.
 - The `specifications` directory contains specifications of what data types are collected through which devices.

@@ -17,27 +17,7 @@
 package org.radarcns.schema;
 
 /**
- * Checks the schema catalog.
- * Checks that the tree folder structure respects the following structure:
- * <ul>
- *   <li>commons
- *    <ul>
- *      <li>active</li>
- *      <li>kafka</li>
- *      <li>monitor</li>
- *      <li>passive</li>
- *    </ul>
- *    </li>
- *   <li>rest</li>
- *   <li>specifications
- *      <ul>
- *        <li>active</li>
- *        <li>monitor</li>
- *        <li>passive</li>
- *      </ul>
- *    </li>
- * </ul>
- * At moment, the {@code restApi} does not have a well defined structure.
+ * Overview of a schema repository directories.
  */
 public final class SchemaRepository {
 
