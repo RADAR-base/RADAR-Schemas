@@ -5,19 +5,28 @@ env:
   - TERM=dumb
 
 deploy:
-  provider: releases
-  api_key: ${GH_TOKEN}
-  file_glob: true
-  file: "*/build/libs/*.jar"
-  skip_cleanup: true
-  on:
-    tags: true
+  - provider: releases
+    api_key: ${GH_TOKEN}
+    file_glob: true
+    file:
+      - "*/build/libs/*.jar"
+      - "radar-schemas-tools/build/distributions/*"
+    skip_cleanup: true
+    on:
+      tags: true
+  - provider: script
+    script: ./gradlew artifactoryPublish
+    skip_cleanup: true
+    on:
+      branch: dev
+  - provider: script
+    script: ./gradlew bintrayUpload
+    skip_cleanup: true
+    on:
+      tags: true
 
 before_install:
   - cd java-sdk
 
 before_deploy:
   - pwd
-
-after_deploy:
-  - ./gradlew bintrayUpload
