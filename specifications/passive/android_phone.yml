@@ -115,6 +115,24 @@ data:
     sample_rate:
       interval: 86400
       configurable: true
+  - type: PHONE_CONTACTS
+    app_provider: .phone.PhoneContactListProvider
+    unit: NON_DIMENSIONAL
+    processing_state: RAW
+    topic: android_phone_contacts
+    value_schema: .passive.phone.PhoneContactList
+    sample_rate:
+      interval: 86400
+      configurable: true
+  - type: PHONE_BLUETOOTH_DEVICES
+    app_provider: .phone.PhoneBluetoothService
+    unit: NON_DIMENSIONAL
+    processing_state: RAW
+    topic: android_phone_bluetooth_devices
+    value_schema: .passive.phone.PhoneBluetoothDevices
+    sample_rate:
+      interval: 3600
+      configurable: true
   # Usage
   - type: USAGE_EVENT
     app_provider: .phone.PhoneUsageProvider
