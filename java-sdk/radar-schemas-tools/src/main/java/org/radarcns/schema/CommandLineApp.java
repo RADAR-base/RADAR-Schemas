@@ -16,8 +16,6 @@
 
 package org.radarcns.schema;
 
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.JsonGenerator;
 import net.sourceforge.argparse4j.ArgumentParsers;
 import net.sourceforge.argparse4j.impl.Arguments;
 import net.sourceforge.argparse4j.inf.ArgumentParser;
@@ -25,12 +23,7 @@ import net.sourceforge.argparse4j.inf.ArgumentParserException;
 import net.sourceforge.argparse4j.inf.Namespace;
 import net.sourceforge.argparse4j.inf.Subparser;
 import net.sourceforge.argparse4j.inf.Subparsers;
-import org.apache.avro.Schema;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpPut;
-import org.apache.http.entity.StringEntity;
-import org.radarcns.schema.util.PermissiveHttpClientFactory;
+import org.radarcns.schema.registration.SchemaRegistration;
 import org.radarcns.schema.specification.DataTopic;
 import org.radarcns.schema.specification.DataProducer;
 import org.radarcns.schema.specification.SourceCatalogue;
@@ -38,12 +31,10 @@ import org.radarcns.schema.specification.stream.StreamGroup;
 import org.radarcns.schema.validation.SchemaValidator;
 import org.radarcns.schema.validation.ValidationException;
 import org.radarcns.schema.validation.config.ExcludeConfig;
-import org.radarcns.topic.AvroTopic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.io.StringWriter;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -236,7 +227,9 @@ public class CommandLineApp {
                 System.exit(app.validateSchemas(ns));
                 break;
             case "register":
-                System.exit(app.registerSchemas(ns.getString("url")) ? 0 : 1);
+                System.exit(SchemaRegistration.registerSchemas(ns.getString("url"), app.catalogue)
+                        ? 0
+                        : 1);
                 break;
             default:
                 parser.handleError(new ArgumentParserException(
@@ -262,14 +255,11 @@ public class CommandLineApp {
         ArgumentParser parser = ArgumentParsers.newArgumentParser("radar-schema")
                 .defaultHelp(true)
                 .description("Validate and list schema specifications");
-        parser.addArgument("root")
-                .nargs("?")
-                .help("Root schemas directory with a specifications and commons directory")
-                .setDefault(".");
 
         Subparsers subParsers = parser.addSubparsers().dest("subparser");
         Subparser validateParser = subParsers.addParser("validate", true)
                 .description("Validate a set of specifications");
+        addRootArgument(validateParser);
         validateParser.addArgument("-s", "--scope")
                 .help("Type of specifications to validate")
                 .choices(Scope.values());
@@ -284,6 +274,7 @@ public class CommandLineApp {
 
         Subparser listParser = subParsers.addParser("list", true)
                 .description("list topics and schemas");
+        addRootArgument(listParser);
         listParser.addArgument("-r", "--raw")
                 .help("List raw input topics")
                 .action(Arguments.storeTrue());
@@ -298,85 +289,16 @@ public class CommandLineApp {
 
         Subparser registerParser = subParsers.addParser("register", true)
                 .description("Register schemas in the schema registry");
+        addRootArgument(registerParser);
         registerParser.addArgument("-u", "--url")
                 .help("REST API URL");
         return parser;
     }
 
-    private boolean registerSchemas(String url) {
-        return setCompatibility(url, "NONE")
-                && Stream.of(
-                catalogue.getActiveSources(),
-                catalogue.getPassiveSources(),
-                catalogue.getMonitorSources())
-                .flatMap(m -> m.values().stream())
-                .flatMap(DataProducer::getTopics)
-                .allMatch(topic -> registerSchemasForTopic(topic, url))
-                && setCompatibility(url, "FULL");
-    }
-
-    private boolean registerSchemasForTopic(
-            AvroTopic<?, ?> topic, String url) {
-        return registerSchema(topic.getKeySchema(),
-                topic.getName() + "-key", url)
-                && registerSchema(topic.getValueSchema(),
-                topic.getName() + "-value", url);
-    }
-
-    private boolean registerSchema(
-            Schema schema, String subject, String url) {
-        logger.info("Registering {}", subject);
-        HttpPost request = new HttpPost(url + "/subjects/" + subject + "/versions");
-        try {
-            request.addHeader("Content-Type", "application/vnd.schemaregistry.v1+json");
-            request.setEntity(new StringEntity(schemaEntity(schema)));
-
-            HttpResponse response = PermissiveHttpClientFactory.getNewHttpClient().execute(request);
-            boolean ok = response.getStatusLine().getStatusCode() == 200;
-            if (ok) {
-                logger.info("OK");
-                return true;
-            } else {
-                logger.error(response.getStatusLine().toString());
-            }
-        } catch (Exception e) {
-            logger.error("Error registering a schema for subject " + subject, e);
-        } finally {
-            request.releaseConnection();
-        }
-        return false;
-    }
-
-    private static String schemaEntity(Schema schema) throws IOException {
-        StringWriter writer = new StringWriter();
-        JsonGenerator gen = new JsonFactory().createGenerator(writer);
-        gen.writeStartObject();
-        gen.writeStringField("schema", schema.toString());
-        gen.writeEndObject();
-        gen.flush();
-        return writer.toString();
-    }
-
-    private boolean setCompatibility(String url, String compatibility) {
-        logger.info("Setting compatibility to {}", compatibility);
-        HttpPut request = new HttpPut(url + "/config");
-        try {
-            request.addHeader("Content-Type", "application/vnd.schemaregistry.v1+json");
-            request.setEntity(new StringEntity("{\"compatibility\": \"" + compatibility + "\"}"));
-
-            HttpResponse response = PermissiveHttpClientFactory.getNewHttpClient().execute(request);
-            boolean ok = response.getStatusLine().getStatusCode() == 200;
-            if (ok) {
-                logger.info("OK");
-                return true;
-            } else {
-                logger.error(response.getStatusLine().toString());
-            }
-        } catch (Exception e) {
-            logger.error("Error changing compatibility level", e);
-        } finally {
-            request.releaseConnection();
-        }
-        return false;
+    private static void addRootArgument(Subparser subparser) {
+        subparser.addArgument("root")
+                .nargs("?")
+                .help("Root schemas directory with a specifications and commons directory")
+                .setDefault(".");
     }
 }

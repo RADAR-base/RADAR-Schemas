@@ -73,6 +73,12 @@ subprojects {
                 email 'joris@thehyve.nl'
                 organization 'The Hyve'
             }
+            developer {
+                id 'strangepleasures'
+                name 'Pavel Mikhailovskii'
+                email 'pavel@thehyve.nl'
+                organization 'The Hyve'
+            }
         }
         issueManagement {
             system 'GitHub'
