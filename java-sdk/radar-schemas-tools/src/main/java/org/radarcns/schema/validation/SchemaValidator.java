@@ -28,11 +28,15 @@ import org.radarcns.schema.validation.rules.Validator;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.AbstractMap;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static java.util.function.Function.identity;
 import static org.radarcns.schema.SchemaRepository.COMMONS_PATH;
 import static org.radarcns.schema.validation.rules.Validator.raise;
 
@@ -57,9 +61,36 @@ public class SchemaValidator {
      */
     public Stream<ValidationException> analyseFiles(Scope scope) {
         try {
-            return Files.walk(scope.getPath(root.resolve(COMMONS_PATH)))
+            List<Path> avroFiles = Files.walk(scope.getPath(root.resolve(COMMONS_PATH)))
                     .filter(Files::isRegularFile)
                     .filter(p -> !config.skipFile(p))
+                    .collect(Collectors.toList());
+
+            Map<Path, Schema> enums = avroFiles.stream()
+                    .filter(SchemaValidator::isAvscFile)
+                    .map(p -> {
+                        try {
+                            return new AbstractMap.SimpleImmutableEntry<>(p,
+                                    new Schema.Parser().parse(p.toFile()));
+                        } catch (Exception ex) {
+                            return null;
+                        }
+                    })
+                    .filter(s -> s != null && s.getValue().getType() == Schema.Type.ENUM)
+                    .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (v1, v2) -> {
+                        if (v1.equals(v2)) {
+                            return v1;
+                        } else {
+                            throw new IllegalStateException("Duplicate enum: " + v1);
+                        }
+                    }));
+
+            Collection<Path> skipEnums = enums.keySet();
+            Map<String, Schema> useTypes = enums.values().stream()
+                    .collect(Collectors.toMap(Schema::getFullName, identity()));
+
+            return avroFiles.stream()
+                    .filter(p -> !skipEnums.contains(p))
                     .flatMap(p -> {
                         if (!isAvscFile(p)) {
                             return raise(p.toAbsolutePath() + " is invalid. " + scope.getLower()
@@ -67,7 +98,9 @@ public class SchemaValidator {
                         }
 
                         try {
-                            Schema schema = new Schema.Parser().parse(p.toFile());
+                            Schema.Parser parser = new Schema.Parser();
+                            parser.addTypes(useTypes);
+                            Schema schema = parser.parse(p.toFile());
 
                             return validate(schema, p, scope);
                         } catch (IOException e) {

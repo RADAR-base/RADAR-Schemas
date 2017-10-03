@@ -1,0 +1,32 @@
+{
+  "namespace": "org.radarcns.active.thincit",
+  "type": "record",
+  "name": "ThincItCodeBreaker",
+  "doc": "THINC-it Assessment derived from Digit Symbol Substitution Test. As many trials as can be completed within 2 minutes. Each trial is a symbol/number to be matched.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Timestamp in UTC (s) when the test is submitted to the subject." },
+    { "name": "timeCompleted", "type": "double", "doc": "Timestamp in UTC (s) when the subject completes the test." },
+    { "name": "score", "type": "int", "doc": "THINC-it index score - 0 to 4000." },
+    { "name": "completed", "type": "int", "doc": "The number of completed trials." },
+    { "name": "incorrect", "type": "int", "doc": "The number of incorrect responses." },
+    { "name": "longestTrial", "type": "int", "doc": "Longest trial completion time expressed in milliseconds." },
+    { "name": "iqrCompletion", "type": "int", "doc": "Mean of trial completion times within interquartile range." },
+    { "name": "inputType", "type": "ThincItInputType", "doc": "Dominant input type used by the subject to answer.", "default": "UNKNOWN" },
+    { "name": "quarterSummaryOne", "type":
+      {
+        "type": "record",
+        "name": "ThincItCodeBreakerQuarterSummary",
+        "doc": "Trial summary for CodeBreaker assessmen.",
+        "fields": [
+          { "name": "longestTrial", "type": "int", "doc": "Longest trial completion time expressed in milliseconds." },
+          { "name": "meanTime", "type": "int", "doc": "Mean trial completion time expressed in milliseconds." },
+          { "name": "incorrect", "type": "int", "doc": "The number of incorrect responses." },
+          { "name": "inputType", "type": "ThincItInputType", "doc": "Dominant input type used by the subject to answer.", "default": "UNKNOWN" }
+        ]
+      }, "doc": "Trial summary for CodeBreaker assessment Quarter 1."},
+    { "name": "quarterSummaryTwo", "type": "ThincItCodeBreakerQuarterSummary", "doc": "Trial summary for CodeBreaker assessment Quarter 2."},
+    { "name": "quarterSummaryThree", "type": "ThincItCodeBreakerQuarterSummary", "doc": "Trial summary for CodeBreaker assessment Quarter 3."},
+    { "name": "quarterSummaryFour", "type": "ThincItCodeBreakerQuarterSummary", "doc": "Trial summary for CodeBreaker assessment Quarter 4."},
+	  { "name": "appVersion", "type": "int", "doc": "App version." }
+  ]
+}

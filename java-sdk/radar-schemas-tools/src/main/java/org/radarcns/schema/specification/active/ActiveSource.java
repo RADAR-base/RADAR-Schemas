@@ -33,8 +33,9 @@ import java.util.List;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME,
         include = JsonTypeInfo.As.PROPERTY,
         property = "assessment_type")
-@JsonSubTypes(value = @JsonSubTypes.Type(
-        name = "QUESTIONNAIRE", value = QuestionnaireSource.class))
+@JsonSubTypes(value = {
+        @JsonSubTypes.Type(name = "QUESTIONNAIRE", value = QuestionnaireSource.class),
+        @JsonSubTypes.Type(name = "APP", value = AppActiveSource.class)})
 public class ActiveSource<T extends DataTopic> extends DataProducer<T> {
     public enum RadarSourceTypes {
         QUESTIONNAIRE

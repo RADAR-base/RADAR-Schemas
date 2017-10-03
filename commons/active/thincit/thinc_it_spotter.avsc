@@ -1,0 +1,31 @@
+{
+  "namespace": "org.radarcns.active.thincit",
+  "type": "record",
+  "name": "ThincItSpotter",
+  "doc": "THINC-it Assessment derived from Choice Reaction Time test. 40 trials, or 2 minutes max. Each trial is the presentation of a left or right facing arrow.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Timestamp in UTC (s) when the test is submitted to the subject." },
+    { "name": "timeCompleted", "type": "double", "doc": "Timestamp in UTC (s) when the subject completes the test." },
+    { "name": "score", "type": "int", "doc": "THINC-it index score - 0 to 4000." },
+    { "name": "meanLatency", "type": "int", "doc": "Mean latency of correct responses expressed in milliseconds." },
+    { "name": "timeouts", "type": "int", "doc": "The number of times that a subject failed to input a response within the time limit." },
+    { "name": "anticipations", "type": "int", "doc": "The number of responses within 100ms of stimulus presentation." },
+    { "name": "incorrect", "type": "int", "doc": "The number of incorrect responses." },
+    { "name": "inputType", "type": "ThincItInputType", "doc": "Dominant input type used by the subject to answer.", "default": "UNKNOWN" },
+    { "name": "quarterSummaryOne", "type": {
+      "type": "record",
+      "name": "ThincItSpotterQuarterSummary",
+      "doc": "Trial summary for SymbolCheck assessment.",
+      "fields": [
+        { "name": "timeouts", "type": "int", "doc": "The number of times that a subject failed to input a response within the time limit." },
+        { "name": "anticipations", "type": "int", "doc": "The number of responses within 100ms of stimulus presentation." },
+        { "name": "incorrect", "type": "int", "doc": "The number of incorrect response." },
+        { "name": "inputType", "type": "ThincItInputType", "doc": "Dominant input type used by the subject to answer.", "default": "UNKNOWN" }
+      ]
+    } , "doc": "Trial summary for SymbolCheck assessment Quarter 1."},
+    { "name": "quarterSummaryTwo", "type": "ThincItSpotterQuarterSummary", "doc": "Trial summary for SymbolCheck assessment Quarter 2."},
+    { "name": "quarterSummaryThree", "type": "ThincItSpotterQuarterSummary", "doc": "Trial summary for SymbolCheck assessment Quarter 3."},
+    { "name": "quarterSummaryFour", "type": "ThincItSpotterQuarterSummary", "doc": "Trial summary for SymbolCheck assessment Quarter 4."},
+	  { "name": "appVersion", "type": "int", "doc": "App version." }
+  ]
+}
