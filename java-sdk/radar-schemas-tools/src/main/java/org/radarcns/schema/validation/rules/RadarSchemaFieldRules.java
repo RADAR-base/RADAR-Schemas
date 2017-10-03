@@ -14,7 +14,6 @@ import java.util.stream.Stream;
 import static org.radarcns.schema.validation.rules.RadarSchemaRules.validateDocumentation;
 import static org.radarcns.schema.validation.rules.Validator.check;
 import static org.radarcns.schema.validation.rules.Validator.matches;
-import static org.radarcns.schema.validation.rules.Validator.raise;
 import static org.radarcns.schema.validation.rules.Validator.valid;
 import static org.radarcns.schema.validation.rules.Validator.validateNonNull;
 
@@ -31,7 +30,6 @@ public class RadarSchemaFieldRules implements SchemaFieldRules {
 
     public RadarSchemaFieldRules() {
         defaultsValidator = new HashMap<>();
-        defaultsValidator.put(Schema.Type.RECORD, validateDefault());
         defaultsValidator.put(Schema.Type.ENUM, this::validateDefaultEnum);
         defaultsValidator.put(Schema.Type.UNION, this::validateDefaultUnion);
     }
@@ -64,41 +62,42 @@ public class RadarSchemaFieldRules implements SchemaFieldRules {
 
     @Override
     public Validator<SchemaField> validateFieldName() {
-        return validateNonNull(f -> f.getField().name(), matches(FIELD_NAME_PATTERN), messageField(
+        return validateNonNull(f -> f.getField().name(), matches(FIELD_NAME_PATTERN), message(
                 "Field name does not respect lowerCamelCase name convention."
                         + " Please avoid abbreviations and write out the field name instead."))
                 .and(validateNonNull(f -> f.getField().name(),
                         n -> FIELD_NAME_NOT_ALLOWED_SUFFIX.stream().noneMatch(n::endsWith),
-                        messageField("Field name may not end with the following values: "
+                        message("Field name may not end with the following values: "
                                 + FIELD_NAME_NOT_ALLOWED_SUFFIX + ".")));
     }
 
     @Override
     public Validator<SchemaField> validateFieldDocumentation() {
         return field -> validateDocumentation(field.getField().doc(),
-                (m, f) -> messageField(m).apply(f), field);
+                (m, f) -> message(m).apply(f), field);
     }
 
 
     private Stream<ValidationException> validateDefaultEnum(SchemaField field) {
-        return !field.getField().schema().getEnumSymbols().contains(UNKNOWN)
-                || (field.getField().defaultVal() != null
-                && field.getField().defaultVal().toString().equals(UNKNOWN)) ? valid()
-                : raise(messageField("Default is \"" + field.getField().defaultVal()
+        return check(!field.getField().schema().getEnumSymbols().contains(UNKNOWN)
+                || field.getField().defaultVal() != null
+                && field.getField().defaultVal().toString().equals(UNKNOWN),
+                message("Default is \"" + field.getField().defaultVal()
                 + "\". Any Avro enum type that has an \"UNKNOWN\" symbol must set its"
                 + " default value to \"UNKNOWN\".").apply(field));
     }
 
     private Stream<ValidationException> validateDefaultUnion(SchemaField field) {
-        return !field.getField().schema().getTypes().contains(Schema.create(Schema.Type.NULL))
-                || (field.getField().defaultVal() != null
-                && field.getField().defaultVal().equals(JsonProperties.NULL_VALUE)) ? valid()
-                : raise(messageField("Default is not null. Any nullable Avro field must"
+        return check(
+                !field.getField().schema().getTypes().contains(Schema.create(Schema.Type.NULL))
+                || field.getField().defaultVal() != null
+                && field.getField().defaultVal().equals(JsonProperties.NULL_VALUE),
+                message("Default is not null. Any nullable Avro field must"
                 + " specify have its default value set to null.").apply(field));
     }
 
     private Stream<ValidationException> validateDefaultOther(SchemaField field) {
-        return check(field.getField().defaultVal() == null, messageField(
+        return check(field.getField().defaultVal() == null, message(
                 "Default of type " + field.getField().schema().getType() + " is set to "
                 + field.getField().defaultVal() + ". The only acceptable default values are the"
                 + " \"UNKNOWN\" enum symbol and null.").apply(field));

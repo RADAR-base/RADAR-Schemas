@@ -36,7 +36,7 @@ public interface SchemaFieldRules {
                     } else if (type == Schema.Type.ENUM) {
                         return schemaRules.validateEnum().apply(schema);
                     } else if (type == Schema.Type.UNION) {
-                        return raise(messageField("Cannot have a nested union.")
+                        return raise(message("Cannot have a nested union.")
                                 .apply(field));
                     } else {
                         return valid();
@@ -44,7 +44,7 @@ public interface SchemaFieldRules {
                 });
     }
 
-    default Function<SchemaField, String> messageField(String text) {
+    default Function<SchemaField, String> message(String text) {
         return schema -> "Field " + schema.getField().name() + " in schema "
                 + schema.getSchema().getFullName() + " is invalid. " + text;
     }

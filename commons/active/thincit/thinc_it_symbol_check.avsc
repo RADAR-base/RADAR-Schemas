@@ -1,0 +1,31 @@
+{
+  "namespace": "org.radarcns.active.thincit",
+  "type": "record",
+  "name": "ThincItSymbolCheck",
+  "doc": "THINC-it Assessment derived from NBack. 40 trials, or 2 minutes max. Each obscured symbol to be recalled is a trial.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Timestamp in UTC (s) when the test is submitted to the subject." },
+    { "name": "timeCompleted", "type": "double", "doc": "Timestamp in UTC (s) when the subject completes the test." },
+    { "name": "score", "type": "int", "doc": "THINC-it index score - 0 to 4000." },
+    { "name": "completed", "type": "int", "doc": "The number of completed trials." },
+    { "name": "correct", "type": "int", "doc": "The number of correct responses." },
+    { "name": "incorrect", "type": "int", "doc": "The number of incorrect responses." },
+    { "name": "timeouts", "type": "int", "doc": "The number of times that a subject failed to input a response within the time limit." },
+    { "name": "inputType", "type": "ThincItInputType", "doc": "Dominant input type used by the subject to answer.", "default": "UNKNOWN" },
+    { "name": "quarterSummaryOne", "type": {
+      "type": "record",
+      "name": "ThincItSymbolCheckQuarterSummary",
+      "doc": "Trial summary for SymbolCheck assessmen.",
+      "fields": [
+        { "name": "correct", "type": "int", "doc": "The amount of correct responses." },
+        { "name": "incorrect", "type": "int", "doc": "The number of incorrect responses." },
+        { "name": "timeouts", "type": "int", "doc": "The number of times that a subject failed to input a response within the time limit." },
+        { "name": "inputType", "type": "ThincItInputType", "doc": "Dominant input type used by the subject to answer.", "default": "UNKNOWN" }
+      ]
+    } , "doc": "Trial summary for SymbolCheck assessment Quarter 1."},
+    { "name": "quarterSummaryTwo", "type": "ThincItSymbolCheckQuarterSummary", "doc": "Trial summary for SymbolCheck assessment Quarter 2."},
+    { "name": "quarterSummaryThree", "type": "ThincItSymbolCheckQuarterSummary", "doc": "Trial summary for SymbolCheck assessment Quarter 3."},
+    { "name": "quarterSummaryFour", "type": "ThincItSymbolCheckQuarterSummary", "doc": "Trial summary for SymbolCheck assessment Quarter 4."},
+	  { "name": "appVersion", "type": "int", "doc": "App version." }
+  ]
+}
