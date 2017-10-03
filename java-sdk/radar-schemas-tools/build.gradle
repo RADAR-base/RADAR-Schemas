@@ -29,6 +29,8 @@ dependencies {
     implementation project(':radar-schemas-commons')
     implementation group: 'org.radarcns', name: 'radar-commons', version: '0.5'
     implementation group: 'net.sourceforge.argparse4j', name: 'argparse4j', version: '0.7.0'
+    compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.3'
+
 
     runtimeOnly group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.25'
 
