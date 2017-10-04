@@ -65,16 +65,14 @@ public final class SchemaRegistration {
                 && setCompatibility(url, "FULL");
     }
 
-    private static boolean registerSchemasForTopic(
-            AvroTopic<?, ?> topic, String url) {
+    private static boolean registerSchemasForTopic(AvroTopic<?, ?> topic, String url) {
         return registerSchema(topic.getKeySchema(),
                 topic.getName() + "-key", url)
                 && registerSchema(topic.getValueSchema(),
                 topic.getName() + "-value", url);
     }
 
-    private static boolean registerSchema(
-            Schema schema, String subject, String url) {
+    private static boolean registerSchema(Schema schema, String subject, String url) {
         logger.info("Registering {}", subject);
         HttpPost request = new HttpPost(url + "/subjects/" + subject + "/versions");
         try {
