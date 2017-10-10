@@ -22,6 +22,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 import okio.BufferedSink;
+import org.apache.avro.Schema;
 import org.radarcns.config.ServerConfig;
 import org.radarcns.producer.rest.ManagedConnectionPool;
 import org.radarcns.producer.rest.ParsedSchemaMetadata;
@@ -55,8 +56,9 @@ public class SchemaRegistry implements Closeable {
     }
 
     public boolean registerSchemas(SourceCatalogue catalogue, boolean force) {
-        if (force) {
-            force = setCompatibility(Compatibility.NONE);
+        boolean forced = force;
+        if (forced) {
+            forced = setCompatibility(Compatibility.NONE);
         }
         boolean result = Stream.of(
                 catalogue.getActiveSources(),
@@ -66,7 +68,7 @@ public class SchemaRegistry implements Closeable {
                 .flatMap(DataProducer::getTopics)
                 .allMatch(this::registerSchema);
 
-        if (force) {
+        if (forced) {
             setCompatibility(Compatibility.FULL);
         }
 
@@ -75,12 +77,17 @@ public class SchemaRegistry implements Closeable {
 
     public boolean registerSchema(AvroTopic<?, ?> topic) {
         try {
-            logger.info("Registering topic {} key schema: {}", topic.getName(), topic.getKeySchema().getFullName());
-            ParsedSchemaMetadata key = new ParsedSchemaMetadata(null, null, topic.getKeySchema());
-            this.schemaClient.addSchemaMetadata(topic.getName(), false, key);
-            logger.info("Registering topic {} value schema: {}", topic.getName(), topic.getValueSchema().getFullName());
-            ParsedSchemaMetadata value = new ParsedSchemaMetadata(null, null, topic.getValueSchema());
-            this.schemaClient.addSchemaMetadata(topic.getName(), true, value);
+            Schema schema = topic.getKeySchema();
+            logger.info("Registering topic {} key schema: {}",
+                    topic.getName(), schema.getFullName());
+            ParsedSchemaMetadata metadata = new ParsedSchemaMetadata(null, null, schema);
+            this.schemaClient.addSchemaMetadata(topic.getName(), false, metadata);
+
+            schema = topic.getValueSchema();
+            logger.info("Registering topic {} value schema: {}",
+                    topic.getName(), schema.getFullName());
+            metadata = new ParsedSchemaMetadata(null, null, schema);
+            this.schemaClient.addSchemaMetadata(topic.getName(), true, metadata);
             return true;
         } catch (IOException ex) {
             logger.error("Failed to register schemas for topic {}", topic.getName(), ex);
@@ -97,7 +104,8 @@ public class SchemaRegistry implements Closeable {
                     .put(new RequestBody() {
                         @Override
                         public MediaType contentType() {
-                            return MediaType.parse("application/vnd.schemaregistry.v1+json; charset=utf-8");
+                            return MediaType.parse(
+                                    "application/vnd.schemaregistry.v1+json; charset=utf-8");
                         }
 
                         @Override
