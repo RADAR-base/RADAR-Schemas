@@ -23,7 +23,7 @@ import net.sourceforge.argparse4j.inf.ArgumentParserException;
 import net.sourceforge.argparse4j.inf.Namespace;
 import net.sourceforge.argparse4j.inf.Subparser;
 import net.sourceforge.argparse4j.inf.Subparsers;
-import org.radarcns.schema.registration.SchemaRegistration;
+import org.radarcns.schema.registration.SchemaRegistry;
 import org.radarcns.schema.specification.DataTopic;
 import org.radarcns.schema.specification.DataProducer;
 import org.radarcns.schema.specification.SourceCatalogue;
@@ -35,6 +35,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -201,6 +202,15 @@ public class CommandLineApp {
         return ExcludeConfig.load(configPath);
     }
 
+    public int registerSchemas(String url, boolean force) {
+        try (SchemaRegistry registration = new SchemaRegistry(url)) {
+            return registration.registerSchemas(catalogue, force) ? 0 : 1;
+        } catch (MalformedURLException ex) {
+            logger.error("Schema registry URL {} is invalid: {}", url, ex.toString());
+            return 1;
+        }
+    }
+
     public static void main(String... args) {
         ArgumentParser parser = getArgumentParser();
 
@@ -227,9 +237,8 @@ public class CommandLineApp {
                 System.exit(app.validateSchemas(ns));
                 break;
             case "register":
-                System.exit(SchemaRegistration.registerSchemas(ns.getString("url"), app.catalogue)
-                        ? 0
-                        : 1);
+                System.exit(app.registerSchemas(
+                        ns.getString("url"), ns.getBoolean("force")));
                 break;
             default:
                 parser.handleError(new ArgumentParserException(
@@ -289,14 +298,17 @@ public class CommandLineApp {
 
         Subparser registerParser = subParsers.addParser("register", true)
                 .description("Register schemas in the schema registry");
+        registerParser.addArgument("-f", "--force")
+                .help("Force registering schema, even if it is incompatible.")
+                .action(Arguments.storeTrue());
+        registerParser.addArgument("url")
+                .help("URL of the schema registry.");
         addRootArgument(registerParser);
-        registerParser.addArgument("-u", "--url")
-                .help("REST API URL");
         return parser;
     }
 
-    private static void addRootArgument(Subparser subparser) {
-        subparser.addArgument("root")
+    private static void addRootArgument(ArgumentParser parser) {
+        parser.addArgument("root")
                 .nargs("?")
                 .help("Root schemas directory with a specifications and commons directory")
                 .setDefault(".");
