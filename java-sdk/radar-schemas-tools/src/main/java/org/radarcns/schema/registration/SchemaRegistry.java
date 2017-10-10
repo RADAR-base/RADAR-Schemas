@@ -40,7 +40,7 @@ import java.net.MalformedURLException;
 import java.util.stream.Stream;
 
 public class SchemaRegistry implements Closeable {
-    private enum Compatibility {
+    public enum Compatibility {
         NONE, FULL, BACKWARD, FORWARD, BACKWARD_TRANSITIVE, FORWARD_TRANSITIVE, FULL_TRANSITIVE
     }
 
@@ -55,24 +55,14 @@ public class SchemaRegistry implements Closeable {
         this.httpClient = new RestClient(config, 10, ManagedConnectionPool.GLOBAL_POOL);
     }
 
-    public boolean registerSchemas(SourceCatalogue catalogue, boolean force) {
-        boolean forced = force;
-        if (forced) {
-            forced = setCompatibility(Compatibility.NONE);
-        }
-        boolean result = Stream.of(
+    public boolean registerSchemas(SourceCatalogue catalogue) {
+        return Stream.of(
                 catalogue.getActiveSources(),
                 catalogue.getPassiveSources(),
                 catalogue.getMonitorSources())
                 .flatMap(m -> m.values().stream())
                 .flatMap(DataProducer::getTopics)
                 .allMatch(this::registerSchema);
-
-        if (forced) {
-            setCompatibility(Compatibility.FULL);
-        }
-
-        return result;
     }
 
     public boolean registerSchema(AvroTopic<?, ?> topic) {
@@ -95,7 +85,7 @@ public class SchemaRegistry implements Closeable {
         }
     }
 
-    private boolean setCompatibility(Compatibility compatibility) {
+    public boolean setCompatibility(Compatibility compatibility) {
         logger.info("Setting compatibility to {}", compatibility);
 
         Request request;

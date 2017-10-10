@@ -23,6 +23,7 @@ import net.sourceforge.argparse4j.inf.ArgumentParserException;
 import net.sourceforge.argparse4j.inf.Namespace;
 import net.sourceforge.argparse4j.inf.Subparser;
 import net.sourceforge.argparse4j.inf.Subparsers;
+import org.radarcns.schema.registration.KafkaTopics;
 import org.radarcns.schema.registration.SchemaRegistry;
 import org.radarcns.schema.specification.DataTopic;
 import org.radarcns.schema.specification.DataProducer;
@@ -204,10 +205,24 @@ public class CommandLineApp {
 
     public int registerSchemas(String url, boolean force) {
         try (SchemaRegistry registration = new SchemaRegistry(url)) {
-            return registration.registerSchemas(catalogue, force) ? 0 : 1;
+            boolean forced = force;
+            if (forced) {
+                forced = registration.setCompatibility(SchemaRegistry.Compatibility.NONE);
+            }
+            int result = registration.registerSchemas(catalogue) ? 0 : 1;
+            if (forced) {
+                registration.setCompatibility(SchemaRegistry.Compatibility.FULL);
+            }
+            return result;
         } catch (MalformedURLException ex) {
             logger.error("Schema registry URL {} is invalid: {}", url, ex.toString());
             return 1;
+        }
+    }
+
+    public int createTopics(String zookeeper, int partitions, int replication) {
+        try (KafkaTopics topics = new KafkaTopics(zookeeper)) {
+            return topics.createTopics(catalogue, partitions, replication) ? 0 : 1;
         }
     }
 
@@ -239,6 +254,10 @@ public class CommandLineApp {
             case "register":
                 System.exit(app.registerSchemas(
                         ns.getString("url"), ns.getBoolean("force")));
+                break;
+            case "create":
+                System.exit(app.createTopics(ns.getString("zookeeper"),
+                        ns.getInt("partitions"), ns.getInt("replication")));
                 break;
             default:
                 parser.handleError(new ArgumentParserException(
@@ -304,6 +323,22 @@ public class CommandLineApp {
         registerParser.addArgument("url")
                 .help("URL of the schema registry.");
         addRootArgument(registerParser);
+
+
+        Subparser createParser = subParsers.addParser("create", true)
+                .description("Create all topics that are missing");
+        createParser.addArgument("-p", "--partitions")
+                .help("Number of partitions per topic")
+                .type(Integer.class)
+                .setDefault(3);
+        createParser.addArgument("-r", "--replication")
+                .help("Number of replicas per data packet.")
+                .type(Integer.class)
+                .setDefault(3);
+        registerParser.addArgument("zookeeper")
+                .help("Zookeeper hosts and ports, comma-separated.");
+        addRootArgument(registerParser);
+
         return parser;
     }
 
