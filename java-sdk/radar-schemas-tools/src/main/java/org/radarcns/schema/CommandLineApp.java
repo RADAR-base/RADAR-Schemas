@@ -282,62 +282,62 @@ public class CommandLineApp {
     private static ArgumentParser getArgumentParser() {
         ArgumentParser parser = ArgumentParsers.newArgumentParser("radar-schema")
                 .defaultHelp(true)
-                .description("Validate and list schema specifications");
+                .description("Schema tools");
 
         Subparsers subParsers = parser.addSubparsers().dest("subparser");
         Subparser validateParser = subParsers.addParser("validate", true)
-                .description("Validate a set of specifications");
+                .description("Validate a set of specifications.");
         addRootArgument(validateParser);
         validateParser.addArgument("-s", "--scope")
-                .help("Type of specifications to validate")
+                .help("type of specifications to validate")
                 .choices(Scope.values());
         validateParser.addArgument("-c", "--config")
-                .help("Configuration file to use");
+                .help("configuration file to use");
         validateParser.addArgument("-v", "--verbose")
-                .help("Verbose validation message")
+                .help("verbose validation message")
                 .action(Arguments.storeTrue());
         validateParser.addArgument("-q", "--quiet")
-                .help("Only set exit code.")
+                .help("only set exit code.")
                 .action(Arguments.storeTrue());
 
         Subparser listParser = subParsers.addParser("list", true)
                 .description("list topics and schemas");
         addRootArgument(listParser);
         listParser.addArgument("-r", "--raw")
-                .help("List raw input topics")
+                .help("list raw input topics")
                 .action(Arguments.storeTrue());
         listParser.addArgument("-q", "--quiet")
-                .help("Only print the requested topics")
+                .help("only print the requested topics")
                 .action(Arguments.storeTrue());
         listParser.addArgument("-m", "--match")
-                .help("Only print the requested topics");
+                .help("only print the requested topics");
         listParser.addArgument("-S", "--stream")
-                .help("List the output topics of Kafka Streams")
+                .help("list the output topics of Kafka Streams")
                 .action(Arguments.storeTrue());
 
         Subparser registerParser = subParsers.addParser("register", true)
-                .description("Register schemas in the schema registry");
+                .description("Register schemas in the schema registry.");
         registerParser.addArgument("-f", "--force")
-                .help("Force registering schema, even if it is incompatible.")
+                .help("force registering schema, even if it is incompatible")
                 .action(Arguments.storeTrue());
-        registerParser.addArgument("url")
-                .help("URL of the schema registry.");
+        registerParser.addArgument("schemaRegistry")
+                .help("schema registry URL");
         addRootArgument(registerParser);
 
 
         Subparser createParser = subParsers.addParser("create", true)
-                .description("Create all topics that are missing");
+                .description("Create all topics that are missing on the Kafka server.");
         createParser.addArgument("-p", "--partitions")
-                .help("Number of partitions per topic")
+                .help("number of partitions per topic")
                 .type(Integer.class)
                 .setDefault(3);
         createParser.addArgument("-r", "--replication")
-                .help("Number of replicas per data packet.")
+                .help("number of replicas per data packet")
                 .type(Integer.class)
                 .setDefault(3);
-        registerParser.addArgument("zookeeper")
-                .help("Zookeeper hosts and ports, comma-separated.");
-        addRootArgument(registerParser);
+        createParser.addArgument("zookeeper")
+                .help("zookeeper hosts and ports, comma-separated");
+        addRootArgument(createParser);
 
         return parser;
     }
