@@ -23,6 +23,8 @@ import net.sourceforge.argparse4j.inf.ArgumentParserException;
 import net.sourceforge.argparse4j.inf.Namespace;
 import net.sourceforge.argparse4j.inf.Subparser;
 import net.sourceforge.argparse4j.inf.Subparsers;
+import org.radarcns.schema.registration.KafkaTopics;
+import org.radarcns.schema.registration.SchemaRegistry;
 import org.radarcns.schema.specification.DataTopic;
 import org.radarcns.schema.specification.DataProducer;
 import org.radarcns.schema.specification.SourceCatalogue;
@@ -34,6 +36,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -43,6 +46,8 @@ import java.util.Map;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import static java.util.stream.Collectors.toList;
 
 /**
  * TODO.
@@ -61,16 +66,18 @@ public class CommandLineApp {
 
     /**
      * TODO.
+     *
      * @return TODO
      */
     public List<String> getTopicsToCreate() {
         return catalogue.getTopicNames()
                 .sorted()
-                .collect(Collectors.toList());
+                .collect(toList());
     }
 
     /**
      * TODO.
+     *
      * @return TODO
      */
     public List<String> getRawTopics() {
@@ -81,22 +88,24 @@ public class CommandLineApp {
                 .flatMap(map -> map.values().stream())
                 .flatMap(DataProducer::getTopicNames)
                 .sorted()
-                .collect(Collectors.toList());
+                .collect(toList());
     }
 
     /**
      * TODO.
+     *
      * @return TODO
      */
     public List<String> getResultsCacheTopics() {
         return catalogue.getStreamGroups().values().stream()
                 .flatMap(StreamGroup::getTimedTopicNames)
                 .sorted()
-                .collect(Collectors.toList());
+                .collect(toList());
     }
 
     /**
      * TODO.
+     *
      * @return TODO
      */
     public String getTopicsVerbose(boolean prettyPrint, String source) {
@@ -132,6 +141,7 @@ public class CommandLineApp {
 
     /**
      * TODO.
+     *
      * @param prettyPrint TODO
      * @return TODO
      */
@@ -140,8 +150,8 @@ public class CommandLineApp {
                 .collect(Collectors.toMap(
                         source -> source.getScope() + " - " + source.getName(),
                         source -> source.getData().stream()
-                            .collect(Collectors.toMap(
-                                    DataTopic::getTopic, d -> d.toString(prettyPrint)))));
+                                .collect(Collectors.toMap(
+                                        DataTopic::getTopic, d -> d.toString(prettyPrint)))));
     }
 
     public int validateSchemas(Namespace ns) {
@@ -193,47 +203,31 @@ public class CommandLineApp {
         return ExcludeConfig.load(configPath);
     }
 
+    public int registerSchemas(String url, boolean force) {
+        try (SchemaRegistry registration = new SchemaRegistry(url)) {
+            boolean forced = force;
+            if (forced) {
+                forced = registration.setCompatibility(SchemaRegistry.Compatibility.NONE);
+            }
+            int result = registration.registerSchemas(catalogue) ? 0 : 1;
+            if (forced) {
+                registration.setCompatibility(SchemaRegistry.Compatibility.FULL);
+            }
+            return result;
+        } catch (MalformedURLException ex) {
+            logger.error("Schema registry URL {} is invalid: {}", url, ex.toString());
+            return 1;
+        }
+    }
+
+    public int createTopics(String zookeeper, int partitions, int replication) {
+        try (KafkaTopics topics = new KafkaTopics(zookeeper)) {
+            return topics.createTopics(catalogue, partitions, replication) ? 0 : 1;
+        }
+    }
+
     public static void main(String... args) {
-        ArgumentParser parser = ArgumentParsers.newArgumentParser("radar-schema")
-                .defaultHelp(true)
-                .description("Validate and list schema specifications");
-
-        Subparsers subParsers = parser.addSubparsers().dest("subparser");
-        Subparser validateParser = subParsers.addParser("validate", true)
-                .description("Validate a set of specifications");
-        validateParser.addArgument("root")
-                .nargs("?")
-                .help("Root schemas directory with a specifications and commons directory")
-                .setDefault(".");
-        validateParser.addArgument("-s", "--scope")
-                .help("Type of specifications to validate")
-                .choices(Scope.values());
-        validateParser.addArgument("-c", "--config")
-                .help("Configuration file to use");
-        validateParser.addArgument("-v", "--verbose")
-                .help("Verbose validation message")
-                .action(Arguments.storeTrue());
-        validateParser.addArgument("-q", "--quiet")
-                .help("Only set exit code.")
-                .action(Arguments.storeTrue());
-
-        Subparser listParser = subParsers.addParser("list", true)
-                .description("list topics and schemas");
-        listParser.addArgument("root")
-                .nargs("?")
-                .help("Root schemas directory with a specifications and commons directory")
-                .setDefault(".");
-        listParser.addArgument("-r", "--raw")
-                .help("List raw input topics")
-                .action(Arguments.storeTrue());
-        listParser.addArgument("-q", "--quiet")
-                .help("Only print the requested topics")
-                .action(Arguments.storeTrue());
-        listParser.addArgument("-m", "--match")
-                .help("Only print the requested topics");
-        listParser.addArgument("-S", "--stream")
-                .help("List the output topics of Kafka Streams")
-                .action(Arguments.storeTrue());
+        ArgumentParser parser = getArgumentParser();
 
         Namespace ns = null;
         try {
@@ -252,18 +246,18 @@ public class CommandLineApp {
         }
         switch (ns.getString("subparser")) {
             case "list":
-                if (ns.getBoolean("raw")) {
-                    System.out.println(String.join("\n", app.getRawTopics()));
-                } else if (ns.getBoolean("stream")) {
-                    System.out.println(String.join("\n", app.getResultsCacheTopics()));
-                } else if (ns.getBoolean("quiet")) {
-                    System.out.println(String.join("\n", app.getTopicsToCreate()));
-                } else {
-                    System.out.println(app.getTopicsVerbose(true, ns.getString("match")));
-                }
+                listTopics(ns, app);
                 break;
             case "validate":
                 System.exit(app.validateSchemas(ns));
+                break;
+            case "register":
+                System.exit(app.registerSchemas(
+                        ns.getString("url"), ns.getBoolean("force")));
+                break;
+            case "create":
+                System.exit(app.createTopics(ns.getString("zookeeper"),
+                        ns.getInt("partitions"), ns.getInt("replication")));
                 break;
             default:
                 parser.handleError(new ArgumentParserException(
@@ -271,5 +265,87 @@ public class CommandLineApp {
                         parser));
                 break;
         }
+    }
+
+    private static void listTopics(Namespace ns, CommandLineApp app) {
+        if (ns.getBoolean("raw")) {
+            System.out.println(String.join("\n", app.getRawTopics()));
+        } else if (ns.getBoolean("stream")) {
+            System.out.println(String.join("\n", app.getResultsCacheTopics()));
+        } else if (ns.getBoolean("quiet")) {
+            System.out.println(String.join("\n", app.getTopicsToCreate()));
+        } else {
+            System.out.println(app.getTopicsVerbose(true, ns.getString("match")));
+        }
+    }
+
+    private static ArgumentParser getArgumentParser() {
+        ArgumentParser parser = ArgumentParsers.newArgumentParser("radar-schema")
+                .defaultHelp(true)
+                .description("Schema tools");
+
+        Subparsers subParsers = parser.addSubparsers().dest("subparser");
+        Subparser validateParser = subParsers.addParser("validate", true)
+                .description("Validate a set of specifications.");
+        addRootArgument(validateParser);
+        validateParser.addArgument("-s", "--scope")
+                .help("type of specifications to validate")
+                .choices(Scope.values());
+        validateParser.addArgument("-c", "--config")
+                .help("configuration file to use");
+        validateParser.addArgument("-v", "--verbose")
+                .help("verbose validation message")
+                .action(Arguments.storeTrue());
+        validateParser.addArgument("-q", "--quiet")
+                .help("only set exit code.")
+                .action(Arguments.storeTrue());
+
+        Subparser listParser = subParsers.addParser("list", true)
+                .description("list topics and schemas");
+        addRootArgument(listParser);
+        listParser.addArgument("-r", "--raw")
+                .help("list raw input topics")
+                .action(Arguments.storeTrue());
+        listParser.addArgument("-q", "--quiet")
+                .help("only print the requested topics")
+                .action(Arguments.storeTrue());
+        listParser.addArgument("-m", "--match")
+                .help("only print the requested topics");
+        listParser.addArgument("-S", "--stream")
+                .help("list the output topics of Kafka Streams")
+                .action(Arguments.storeTrue());
+
+        Subparser registerParser = subParsers.addParser("register", true)
+                .description("Register schemas in the schema registry.");
+        registerParser.addArgument("-f", "--force")
+                .help("force registering schema, even if it is incompatible")
+                .action(Arguments.storeTrue());
+        registerParser.addArgument("schemaRegistry")
+                .help("schema registry URL");
+        addRootArgument(registerParser);
+
+
+        Subparser createParser = subParsers.addParser("create", true)
+                .description("Create all topics that are missing on the Kafka server.");
+        createParser.addArgument("-p", "--partitions")
+                .help("number of partitions per topic")
+                .type(Integer.class)
+                .setDefault(3);
+        createParser.addArgument("-r", "--replication")
+                .help("number of replicas per data packet")
+                .type(Integer.class)
+                .setDefault(3);
+        createParser.addArgument("zookeeper")
+                .help("zookeeper hosts and ports, comma-separated");
+        addRootArgument(createParser);
+
+        return parser;
+    }
+
+    private static void addRootArgument(ArgumentParser parser) {
+        parser.addArgument("root")
+                .nargs("?")
+                .help("Root schemas directory with a specifications and commons directory")
+                .setDefault(".");
     }
 }

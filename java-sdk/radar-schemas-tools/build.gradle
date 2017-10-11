@@ -29,6 +29,10 @@ dependencies {
     implementation project(':radar-schemas-commons')
     implementation group: 'org.radarcns', name: 'radar-commons', version: '0.5'
     implementation group: 'net.sourceforge.argparse4j', name: 'argparse4j', version: '0.7.0'
+    implementation (group: 'org.apache.kafka', name: 'kafka_2.11', version: '0.10.2.1') {
+        exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+        exclude group: 'log4j', module: 'log4j'
+    }
 
     runtimeOnly group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.25'
 
