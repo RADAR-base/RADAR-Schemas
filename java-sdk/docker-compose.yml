@@ -54,7 +54,7 @@ services:
   #---------------------------------------------------------------------------#
   # Integration test                                                          #
   #---------------------------------------------------------------------------#
-  integration-test:
+  tools:
     build: .
     # Right now, only direct connections to kafka are tested
     depends_on:
