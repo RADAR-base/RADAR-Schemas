@@ -16,6 +16,9 @@
 
 package org.radarcns.schema.registration;
 
+import net.sourceforge.argparse4j.impl.Arguments;
+import net.sourceforge.argparse4j.inf.ArgumentParser;
+import net.sourceforge.argparse4j.inf.Namespace;
 import okhttp3.MediaType;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -28,8 +31,10 @@ import org.radarcns.producer.rest.ManagedConnectionPool;
 import org.radarcns.producer.rest.ParsedSchemaMetadata;
 import org.radarcns.producer.rest.RestClient;
 import org.radarcns.producer.rest.SchemaRetriever;
+import org.radarcns.schema.CommandLineApp;
 import org.radarcns.schema.specification.DataProducer;
 import org.radarcns.schema.specification.SourceCatalogue;
+import org.radarcns.schema.util.SubCommand;
 import org.radarcns.topic.AvroTopic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -131,4 +136,44 @@ public class SchemaRegistry implements Closeable {
         schemaClient.close();
         httpClient.close();
     }
+
+    public static SubCommand command() {
+        return new SubCommand() {
+            @Override
+            public String getName() {
+                return "register";
+            }
+
+            @Override
+            public int execute(Namespace options, CommandLineApp app) {
+                String url = options.get("schemaRegistry");
+                try (SchemaRegistry registration = new SchemaRegistry(url)) {
+                    boolean forced = options.getBoolean("force");
+                    if (forced) {
+                        forced = registration.setCompatibility(SchemaRegistry.Compatibility.NONE);
+                    }
+                    int result = registration.registerSchemas(app.getCatalogue()) ? 0 : 1;
+                    if (forced) {
+                        registration.setCompatibility(SchemaRegistry.Compatibility.FULL);
+                    }
+                    return result;
+                } catch (MalformedURLException ex) {
+                    logger.error("Schema registry URL {} is invalid: {}", url, ex.toString());
+                    return 1;
+                }
+            }
+
+            @Override
+            public void addParser(ArgumentParser parser) {
+                parser.description("Register schemas in the schema registry.");
+                parser.addArgument("-f", "--force")
+                        .help("force registering schema, even if it is incompatible")
+                        .action(Arguments.storeTrue());
+                parser.addArgument("schemaRegistry")
+                        .help("schema registry URL");
+                SubCommand.addRootArgument(parser);
+            }
+        };
+    }
+
 }
