@@ -103,21 +103,7 @@ public class KafkaTopics implements Closeable {
             int partitions = options.getInt("partitions");
             String zookeeper = options.getString("zookeeper");
             try (KafkaTopics topics = new KafkaTopics(zookeeper)) {
-                boolean brokersAvailable = false;
-                int sleep = 2;
-                for (int tries = 0; tries < 10; tries++) {
-                    int activeBrokers = topics.getNumberOfBrokers();
-                    brokersAvailable = activeBrokers >= brokers;
-                    if (brokersAvailable) {
-                        logger.info("Kafka brokers available. Starting topic creation.");
-                        break;
-                    }
-                    logger.warn("Only {} out of {} Kafka brokers available. Waiting {} seconds.",
-                            activeBrokers, brokers, sleep);
-                    Thread.sleep(sleep * 1000L);
-                    sleep = Math.min(MAX_SLEEP, sleep * 2);
-                }
-                if (!brokersAvailable) {
+                if (!waitForBrokers(topics, brokers)) {
                     logger.error("Kafka brokers not yet available. Aborting.");
                     return 1;
                 }
@@ -147,6 +133,25 @@ public class KafkaTopics implements Closeable {
                         + " Please check that Zookeeper is running.");
                 return 1;
             }
+        }
+
+        private boolean waitForBrokers(KafkaTopics topics, int brokers)
+                throws InterruptedException, KeeperException {
+            boolean brokersAvailable = false;
+            int sleep = 2;
+            for (int tries = 0; tries < 10; tries++) {
+                int activeBrokers = topics.getNumberOfBrokers();
+                brokersAvailable = activeBrokers >= brokers;
+                if (brokersAvailable) {
+                    logger.info("Kafka brokers available. Starting topic creation.");
+                    break;
+                }
+                logger.warn("Only {} out of {} Kafka brokers available. Waiting {} seconds.",
+                        activeBrokers, brokers, sleep);
+                Thread.sleep(sleep * 1000L);
+                sleep = Math.min(MAX_SLEEP, sleep * 2);
+            }
+            return brokersAvailable;
         }
 
         @Override
