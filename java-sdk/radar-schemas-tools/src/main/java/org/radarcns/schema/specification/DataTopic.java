@@ -13,7 +13,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -60,10 +59,7 @@ public class DataTopic extends AvroTopicConfig {
     public Stream<AvroTopic<?, ?>> getTopics() throws IOException {
         try {
             return Stream.of(parseAvroTopic());
-        } catch (ClassNotFoundException
-                | NoSuchMethodException
-                | InvocationTargetException
-                | IllegalAccessException ex) {
+        } catch (IllegalArgumentException ex) {
             throw new IOException("Cannot parse Avro Topic " + getTopic()
                     + " schemas, with key_schema " + getKeySchema()
                     + " and value_schema " + getValueSchema(), ex);
