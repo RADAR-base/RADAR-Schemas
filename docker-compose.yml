@@ -62,4 +62,4 @@ services:
       - kafka-1
       - schema-registry-1
     volumes:
-      - ../:/schemas
+      - .:/schemas

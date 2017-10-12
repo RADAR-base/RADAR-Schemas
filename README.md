@@ -34,3 +34,27 @@ In addition, schemas in the `commons` directory should follow the following guid
 ### Validation phase
 
 Avro schemas are automatically validated against RADAR-CNS guide lines while building. For more details, check [catalog validator](java-sdk/radar-schemas-tools).
+
+
+### Test setup
+
+The RADAR schema tools can be tested locally using Docker. To run the tools, first install Docker. Then run
+
+```shell
+docker-compose build
+docker-compose up -d zookeeper-1 kafka-1 schema-registry-1
+```
+Now you can run tools commands with
+```shell
+# usage
+docker-compose run --rm tools
+# validation
+docker-compose run --rm tools radar-schemas-tools validate
+# list topic information
+docker-compose run --rm tools radar-schemas-tools list
+# register schemas with the schema registry
+docker-compose run --rm tools radar-schemas-tools register http://schema-registry:8081
+# create topics with zookeeper
+docker-compose run --rm tools radar-schemas-tools create zookeeper-1:2181
+```
+
