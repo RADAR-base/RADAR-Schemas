@@ -55,11 +55,11 @@ Now you can run tools commands with
 # usage
 docker-compose run --rm tools
 # validation
-docker-compose run --rm radar-schemas-tools validate
+docker-compose run --rm tools radar-schemas-tools validate
 # list topic information
-docker-compose run --rm radar-schemas-tools list
+docker-compose run --rm tools radar-schemas-tools list
 # register schemas with the schema registry
-docker-compose run --rm radar-schemas-tools register http://schema-registry:8081
+docker-compose run --rm tools radar-schemas-tools register http://schema-registry:8081
 # create topics with zookeeper
-docker-compose run --rm radar-schemas-tools create zookeeper-1:2181
+docker-compose run --rm tools radar-schemas-tools create zookeeper-1:2181
 ```
