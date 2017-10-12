@@ -23,6 +23,7 @@ import net.sourceforge.argparse4j.inf.ArgumentParserException;
 import net.sourceforge.argparse4j.inf.Namespace;
 import net.sourceforge.argparse4j.inf.Subparsers;
 import org.radarcns.schema.registration.KafkaTopics;
+import org.radarcns.schema.registration.SchemaRegistry;
 import org.radarcns.schema.specification.DataProducer;
 import org.radarcns.schema.specification.DataTopic;
 import org.radarcns.schema.specification.SourceCatalogue;
@@ -41,6 +42,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -162,7 +164,7 @@ public class CommandLineApp {
     public static void main(String... args) {
         SortedMap<String, SubCommand> subCommands = commandsToMap(
                 KafkaTopics.command(),
-                SchemaValidator.command(),
+                SchemaRegistry.command(),
                 listCommand(),
                 SchemaValidator.command());
 
@@ -255,5 +257,15 @@ public class CommandLineApp {
                 SubCommand.addRootArgument(parser);
             }
         };
+    }
+
+    public static Pattern matchTopic(String exact, String regex) {
+        if (exact != null) {
+            return Pattern.compile("^" + Pattern.quote(exact) + "$");
+        }
+        if (regex != null) {
+            return Pattern.compile(regex);
+        }
+        return null;
     }
 }

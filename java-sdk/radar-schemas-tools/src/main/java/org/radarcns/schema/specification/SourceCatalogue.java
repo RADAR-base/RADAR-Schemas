@@ -137,11 +137,11 @@ public class SourceCatalogue {
 
     /**
      * TODO.
-     * @param type TODO
+     * @param topic TODO
      * @return TODO
      */
-    public ActiveSource getActiveSource(String type) {
-        return activeSources.get(type);
+    public ActiveSource getActiveSource(String topic) {
+        return activeSources.get(topic);
     }
 
     /**
@@ -154,11 +154,11 @@ public class SourceCatalogue {
 
     /**
      * TODO.
-     * @param type TODO
+     * @param topic TODO
      * @return TODO
      */
-    public MonitorSource getMonitorSource(String type) {
-        return monitorSources.get(type);
+    public MonitorSource getMonitorSource(String topic) {
+        return monitorSources.get(topic);
     }
 
     /**
@@ -171,11 +171,11 @@ public class SourceCatalogue {
 
     /**
      * TODO.
-     * @param type TODO
+     * @param topic TODO
      * @return TODO
      */
-    public PassiveSource getPassiveSource(String type) {
-        return passiveSources.get(type);
+    public PassiveSource getPassiveSource(String topic) {
+        return passiveSources.get(topic);
     }
 
     public Map<String, StreamGroup> getStreamGroups() {

@@ -18,7 +18,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.Closeable;
+import java.util.Optional;
 import java.util.Properties;
+import java.util.regex.Pattern;
+
+import static org.radarcns.schema.CommandLineApp.matchTopic;
 
 public class KafkaTopics implements Closeable {
     private static final Logger logger = LoggerFactory.getLogger(KafkaTopics.class);
@@ -118,7 +122,26 @@ public class KafkaTopics implements Closeable {
                     return 1;
                 }
 
-                return topics.createTopics(app.getCatalogue(), partitions, replication) ? 0 : 1;
+                Pattern pattern = matchTopic(
+                        options.getString("topic"), options.getString("match"));
+
+                if (pattern == null) {
+                    return topics.createTopics(app.getCatalogue(), partitions, replication) ? 0 : 1;
+                } else {
+                    Optional<Boolean> result = app.getCatalogue().getTopicNames()
+                            .filter(s -> pattern.matcher(s).find())
+                            .map(s -> topics.createTopic(s, partitions, replication))
+                            .reduce((a, b) -> a && b);
+                    if (!result.isPresent()) {
+                        logger.error("Topic {} does not match a known topic."
+                                        + " Find the list of acceptable topics"
+                                        + " with the `radar-schemas-tools list` command. Aborting.",
+                                pattern);
+                        return 1;
+                    } else {
+                        return result.get() ? 0 : 1;
+                    }
+                }
             } catch (InterruptedException | KeeperException e) {
                 logger.error("Cannot retrieve number of active Kafka brokers."
                         + " Please check that Zookeeper is running.");
@@ -141,6 +164,13 @@ public class KafkaTopics implements Closeable {
                     .help("number of brokers that are expected to be available.")
                     .type(Integer.class)
                     .setDefault(3);
+            parser.addArgument("-t", "--topic")
+                    .help("register the schemas of one topic")
+                    .type(String.class);
+            parser.addArgument("-m", "--match")
+                    .help("register the schemas of all topics matching the given regex"
+                            + "; does not do anything if --topic is specified")
+                    .type(String.class);
             parser.addArgument("zookeeper")
                     .help("zookeeper hosts and ports, comma-separated");
             SubCommand.addRootArgument(parser);
