@@ -23,6 +23,7 @@ import net.sourceforge.argparse4j.inf.ArgumentParserException;
 import net.sourceforge.argparse4j.inf.Namespace;
 import net.sourceforge.argparse4j.inf.Subparser;
 import net.sourceforge.argparse4j.inf.Subparsers;
+import org.apache.zookeeper.KeeperException;
 import org.radarcns.schema.registration.KafkaTopics;
 import org.radarcns.schema.registration.SchemaRegistry;
 import org.radarcns.schema.specification.DataTopic;
@@ -55,6 +56,7 @@ import static java.util.stream.Collectors.toList;
 @SuppressWarnings("PMD.SystemPrintln")
 public class CommandLineApp {
     private static final Logger logger = LoggerFactory.getLogger(CommandLineApp.class);
+    private static final int MAX_SLEEP = 32;
 
     private final SourceCatalogue catalogue;
     private final Path root;
@@ -220,9 +222,37 @@ public class CommandLineApp {
         }
     }
 
-    public int createTopics(String zookeeper, int partitions, int replication) {
+    public int createTopics(String zookeeper, int brokers, int partitions, int replication) {
+        if (brokers < replication) {
+            logger.error("Cannot assign a higher replication factor {} than number of brokers {}",
+                    replication, brokers);
+            return 1;
+        }
         try (KafkaTopics topics = new KafkaTopics(zookeeper)) {
+            boolean brokersAvailable = false;
+            int sleep = 2;
+            for (int tries = 0; tries < 10; tries++) {
+                int activeBrokers = topics.getNumberOfBrokers();
+                brokersAvailable = activeBrokers >= brokers;
+                if (brokersAvailable) {
+                    logger.info("Kafka brokers available. Starting topic creation.");
+                    break;
+                }
+                logger.warn("Only {} out of {} Kafka brokers available. Waiting {} seconds.",
+                        activeBrokers, brokers, sleep);
+                Thread.sleep(sleep * 1000L);
+                sleep = Math.min(MAX_SLEEP, sleep * 2);
+            }
+            if (!brokersAvailable) {
+                logger.error("Kafka brokers not yet available. Aborting.");
+                return 1;
+            }
+
             return topics.createTopics(catalogue, partitions, replication) ? 0 : 1;
+        } catch (InterruptedException | KeeperException e) {
+            logger.error("Cannot retrieve number of active Kafka brokers."
+                    + " Please check that Zookeeper is running.");
+            return 1;
         }
     }
 
@@ -257,6 +287,7 @@ public class CommandLineApp {
                 break;
             case "create":
                 System.exit(app.createTopics(ns.getString("zookeeper"),
+                        ns.getInt("brokers"),
                         ns.getInt("partitions"), ns.getInt("replication")));
                 break;
             default:
@@ -333,6 +364,10 @@ public class CommandLineApp {
                 .setDefault(3);
         createParser.addArgument("-r", "--replication")
                 .help("number of replicas per data packet")
+                .type(Integer.class)
+                .setDefault(3);
+        createParser.addArgument("-b", "--brokers")
+                .help("number of brokers that are expected to be available.")
                 .type(Integer.class)
                 .setDefault(3);
         createParser.addArgument("zookeeper")

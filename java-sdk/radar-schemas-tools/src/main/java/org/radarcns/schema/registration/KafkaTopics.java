@@ -8,6 +8,7 @@ import org.I0Itec.zkclient.ZkClient;
 import org.I0Itec.zkclient.ZkConnection;
 import org.I0Itec.zkclient.exception.ZkMarshallingError;
 import org.I0Itec.zkclient.serialize.ZkSerializer;
+import org.apache.zookeeper.KeeperException;
 import org.radarcns.schema.specification.SourceCatalogue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,6 +58,10 @@ public class KafkaTopics implements Closeable {
             logger.error("Failed to create topic {}", topic, ex);
             return false;
         }
+    }
+
+    public int getNumberOfBrokers() throws KeeperException, InterruptedException {
+        return zkUtils.getAllBrokersInCluster().length();
     }
 
     @Override
