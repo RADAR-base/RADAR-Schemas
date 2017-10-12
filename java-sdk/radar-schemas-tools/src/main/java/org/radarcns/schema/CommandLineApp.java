@@ -253,7 +253,7 @@ public class CommandLineApp {
                 break;
             case "register":
                 System.exit(app.registerSchemas(
-                        ns.getString("url"), ns.getBoolean("force")));
+                        ns.getString("schemaRegistry"), ns.getBoolean("force")));
                 break;
             case "create":
                 System.exit(app.createTopics(ns.getString("zookeeper"),
