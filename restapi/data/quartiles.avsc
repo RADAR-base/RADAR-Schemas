@@ -1,11 +1,11 @@
 {
-  "namespace": "org.radarcns.avro.restapi.data",
+  "namespace": "org.radarcns.restapi.data",
   "type": "record",
   "name": "Quartiles",
-  "doc": "List of quartiles",
+  "doc": "List of quartiles.",
   "fields": [
-    {"name": "first", "type": "double", "doc": "the middle number between the smallest number and the median of the data set"},
-    {"name": "second", "type": "double", "doc": "the median of the data"},
-    {"name": "third", "type": "double", "doc": "the middle value between the median and the highest value of the data set"}
+    {"name": "first", "type": "double", "doc": "The middle number between the smallest number and the median of the data set."},
+    {"name": "second", "type": "double", "doc": "The median of the data."},
+    {"name": "third", "type": "double", "doc": "The middle value between the median and the highest value of the data set."}
   ]
 }

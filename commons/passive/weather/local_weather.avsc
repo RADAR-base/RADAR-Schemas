@@ -1,0 +1,35 @@
+{
+  "namespace": "org.radarcns.passive.weather",
+  "type": "record",
+  "name": "LocalWeather",
+  "doc": "Current weather information at the location of the user.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Device timestamp in UTC (s)."},
+    {"name": "timeReceived", "type": "double", "doc": "Device receiver timestamp in UTC (s)."},
+    {"name": "sunrise", "type": ["null","int"], "doc": "Sunrise time of day in minutes after midnight. The difference with sunset is the minutes of daylight.", "default": null},
+    {"name": "sunset", "type": ["null","int"], "doc": "Sunset time of day in minutes after midnight. The difference with sunrise is the minutes of daylight.", "default": null},
+    {"name": "temperature", "type": ["null","float"], "doc": "Current ambient temperature (C).", "default": null},
+    {"name": "pressure", "type": ["null","float"], "doc": "Current atmospheric pressure on sea level (hPa).", "default": null},
+    {"name": "humidity", "type": ["null","float"], "doc": "Current humidity (%).", "default": null},
+    {"name": "cloudiness", "type": ["null","float"], "doc": "Current cloudiness (%).", "default": null},
+    {"name": "precipitation", "type": ["null","float"], "doc": "Rain or snow volume over last hours reported in 'percipitationPeriod' (mm).", "default": null},
+    {"name": "precipitationPeriod", "type": ["null","int"], "doc": "Period over which the precipitation was determined (h).", "default": null},
+    {"name": "condition", "type": {
+          "name": "WeatherCondition",
+          "type": "enum",
+          "doc": "Types of weather condition.",
+          "symbols": ["CLEAR", "CLOUDY", "DRIZZLE", "RAINY", "SNOWY", "ICY", "FOGGY", "STORM", "THUNDER", "OTHER", "UNKNOWN"]
+        },
+      "default": "UNKNOWN",
+      "doc": "Current weather condition."},
+    {"name": "source", "type": "string", "doc": "From which source/API the weather data was retrieved."},
+    {"name": "locationSource", "type": {
+          "name": "LocationType",
+          "type": "enum",
+          "doc": "How the location was determined.",
+          "symbols": ["GPS","NETWORK","CITY_NAME","OTHER", "UNKNOWN"]
+        },
+      "default": "UNKNOWN",
+      "doc": "The source of the location used to get the weather details."}
+  ]
+}

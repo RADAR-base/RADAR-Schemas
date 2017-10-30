@@ -1,0 +1,12 @@
+{
+  "namespace": "org.radarcns.passive.biovotion",
+  "type": "record",
+  "name": "BiovotionVsm1HeartRate",
+  "doc": "Heart rate calculated by biovotion device.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+    { "name": "timeReceived", "type": "double", "doc": "Device receiver timestamp in UTC (s)." },
+    { "name": "heartRate", "type": "float", "doc": "Heart rate value (bpm)." },
+    { "name": "heartRateQuality", "type": "float", "doc": "Heart rate quality (0-1)." }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "namespace": "org.radarcns.passive.phone",
+  "type": "record",
+  "name": "PhoneStepCount",
+  "doc": "Data from the step counter.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+    {"name": "timeReceived", "type": "double", "doc": "Device receiver timestamp in UTC (s)." },
+    {"name": "steps", "type": "int", "doc": "Number of steps taken between this and the previous record." }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "namespace": "org.radarcns.monitor.application",
+  "type": "record",
+  "name": "ApplicationRecordCounts",
+  "doc": "Number of records cached or created.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+    { "name": "recordsCached", "type": ["null", "int"], "doc": "Number of records currently being cached.", "default": null },
+    { "name": "recordsSent", "type": "int", "doc": "Number of records sent since application start." },
+    { "name": "recordsUnsent", "type": ["null", "int"], "doc": "Number of unsent records.", "default": null }
+  ]
+}

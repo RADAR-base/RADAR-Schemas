@@ -1,8 +1,8 @@
 {
-  "namespace": "org.radarcns.avro.restapi.header",
+  "namespace": "org.radarcns.restapi.header",
   "type": "record",
   "name": "EffectiveTimeFrame",
-  "doc": "Provide the first and the last timestamp contained in the dataset",
+  "doc": "Provide the first and the last timestamp contained in the dataset.",
   "fields": [
     {"name": "startDateTime", "type": "string", "doc": "It is a point in time (ISO8601) with UTC timezone."},
     {"name": "endDateTime", "type": "string", "doc": "It is a point in time (ISO8601) with UTC timezone."}

@@ -1,14 +1,14 @@
 {
-  "namespace": "org.radarcns.avro.restapi.dataset",
+  "namespace": "org.radarcns.restapi.dataset",
   "type": "record",
   "name": "Item",
   "doc": "Dataset item. It contains a value and its related time.",
   "fields": [
     {"name": "sample", "type": [
-      "org.radarcns.avro.restapi.data.DoubleSample" ,
-      "org.radarcns.avro.restapi.data.Acceleration",
-      "org.radarcns.questionnaire.Questionnaire"
-      ], "doc": "Sample value. For more details, check org.radarcns.avro.restapi.data.Acceleration, org.radarcns.avro.restapi.data.DoubleSample and org.radarcns.questionnaire.Questionnaire" } ,
+      "org.radarcns.restapi.data.DoubleSample" ,
+      "org.radarcns.restapi.data.Acceleration",
+      "org.radarcns.active.questionnaire.Questionnaire"
+      ], "doc": "Sample value. For more details, check org.radarcns.restapi.data.Acceleration, org.radarcns.restapi.data.DoubleSample and org.radarcns.questionnaire.Questionnaire." } ,
     {"name": "startDateTime", "type": "string", "doc": "Point in time (ISO8601) with UTC timezone. It represents the timestamp of the first sample contained inside the aggregated data."}
   ]
 }

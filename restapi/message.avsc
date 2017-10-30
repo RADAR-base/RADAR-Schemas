@@ -1,8 +1,8 @@
 {
-  "namespace": "org.radarcns.avro.restapi.avro",
+  "namespace": "org.radarcns.restapi.avro",
   "type": "record",
   "name": "Message",
-  "doc": "Message to provide information to the end user in case a function does not provide the expected result",
+  "doc": "Message to provide information to the end user in case a function does not provide the expected result.",
   "fields": [
     {"name": "message", "type": "string"}
   ]

@@ -1,0 +1,12 @@
+{
+  "namespace": "org.radarcns.passive.empatica",
+  "type": "record",
+  "name": "EmpaticaE4SensorStatus",
+  "doc": "Sensor status according to the device.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+    { "name": "timeReceived", "type": "double", "doc": "Device receiver timestamp in UTC (s)." },
+    { "name": "sensor", "type": "string", "doc": "Sensor name; one of BVP, GSR, ACC, TEMP.." },
+    { "name": "status", "type": "string", "doc": "Sensor status; one of NOT_ON_WRIST, ON_WRIST, DEAD." }
+  ]
+}

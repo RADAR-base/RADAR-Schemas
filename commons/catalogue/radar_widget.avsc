@@ -1,0 +1,11 @@
+{
+  "namespace": "org.radarcns.catalogue",
+  "type": "enum",
+  "name": "RadarWidget",
+  "doc": "User interface widget used in the Active Remote Monitor Technology to submit assessments to subjects.",
+  "symbols": [
+    "RADIO" ,
+    "SLIDER",
+    "NONE"
+  ]
+}

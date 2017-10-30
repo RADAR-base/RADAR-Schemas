@@ -1,9 +1,9 @@
 {
-  "namespace": "org.radarcns.avro.restapi.data",
+  "namespace": "org.radarcns.restapi.data",
   "type": "record",
   "name": "DoubleSample",
   "doc": "Generic sample represented by a double value. A specific schema is provided to represent quartile values.",
   "fields": [
-    {"name": "value", "type": [ "double" , "org.radarcns.avro.restapi.data.Quartiles" ], "doc": "sample value"}
+    {"name": "value", "type": [ "double" , "org.radarcns.restapi.data.Quartiles" ], "doc": "Sample value."}
   ]
 }

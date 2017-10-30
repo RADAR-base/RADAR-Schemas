@@ -1,0 +1,18 @@
+{
+  "namespace": "org.radarcns.passive.phone",
+  "type": "record",
+  "name": "PhoneBatteryLevel",
+  "doc": "Phone battery level.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Device timestamp in UTC (s)."},
+    {"name": "timeReceived", "type": "double", "doc": "Device receiver timestamp in UTC (s)."},
+    {"name": "batteryLevel", "type": "float", "doc": "Battery level from 0 to 1."},
+    {"name": "isPlugged", "type": "boolean", "doc": "Whether the phone is connected to a power source."},
+    {"name": "status", "type": {
+      "name": "BatteryStatus",
+      "type": "enum",
+      "doc": "Android device battery states.",
+      "symbols": ["CHARGING", "DISCHARGING", "NOT_CHARGING", "FULL", "UNKNOWN"]
+      }, "doc": "Android battery states.", "default": "UNKNOWN"}
+  ]
+}

@@ -5,6 +5,7 @@
 plugins {
     id 'com.commercehub.gradle.plugin.avro-base' version '0.9.0'
     id 'com.jfrog.bintray' version '1.7.3'
+    id 'com.jfrog.artifactory' version '4.4.18'
 }
 
 subprojects {
@@ -13,28 +14,36 @@ subprojects {
     apply plugin: 'com.jfrog.bintray'
     apply plugin: 'com.commercehub.gradle.plugin.avro-base'
     apply plugin: 'maven-publish'
+    apply plugin: 'idea'
 
     // Configuration
-    version = '0.2-alpha.2'
+    version = '0.2'
     group = 'org.radarcns'
     ext.githubRepoName = 'RADAR-CNS/RADAR-Schemas'
 
     targetCompatibility = '1.7'
     sourceCompatibility = '1.7'
 
-    ext.avroVersion = '1.8.1'
+    ext.avroVersion = '1.8.2'
 
-    ext.githubUrl = 'https://github.com/' + githubRepoName + '.git'
-    ext.issueUrl = 'https://github.com/' + githubRepoName + '/issues'
+    ext.githubUrl = "https://github.com/${githubRepoName}.git"
+    ext.issueUrl = "https://github.com/${githubRepoName}/issues"
     ext.website = 'http://radar-cns.org'
 
     // dependencies
     repositories {
         jcenter()
+        mavenCentral()
+        maven { url 'https://oss.jfrog.org/artifactory/oss-snapshot-local' }
     }
 
     dependencies {
-        api group: 'org.apache.avro', name: 'avro', version: avroVersion
+        api (group: 'org.apache.avro', name: 'avro', version: avroVersion) {
+            exclude group: 'org.xerial.snappy', module: 'snappy-java'
+            exclude group: 'com.thoughtworks.paranamer', module: 'paranamer'
+            exclude group: 'org.apache.commons', module: 'commons-compress'
+            exclude group: 'org.tukaani', module: 'xz'
+        }
     }
 
     // publishing
@@ -63,6 +72,12 @@ subprojects {
                 id 'blootsvoets'
                 name 'Joris Borgdorff'
                 email 'joris@thehyve.nl'
+                organization 'The Hyve'
+            }
+            developer {
+                id 'strangepleasures'
+                name 'Pavel Mikhailovskii'
+                email 'pavel@thehyve.nl'
                 organization 'The Hyve'
             }
         }
@@ -106,10 +121,12 @@ subprojects {
     }
 
     // Generated avro files
-    ext.avroOutputDir = file('src/main/java')
+    ext.avroOutputDir = file('src/generated/java')
 
-    clean {
-        delete avroOutputDir
+    idea {
+        module {
+            downloadSources = true
+        }
     }
 }
 

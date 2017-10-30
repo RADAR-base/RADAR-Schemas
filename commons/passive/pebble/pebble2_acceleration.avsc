@@ -1,0 +1,13 @@
+{
+  "namespace": "org.radarcns.passive.pebble",
+  "type": "record",
+  "name": "Pebble2Acceleration",
+  "doc": "Data from 3-axis accelerometer sensor with gravitational constant g as unit.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+    { "name": "timeReceived", "type": "double", "doc": "Device receiver timestamp in UTC (s)." },
+    { "name": "x", "type": "float", "doc": "Acceleration in the x-axis (g)." },
+    { "name": "y", "type": "float", "doc": "Acceleration in the y-axis (g)." },
+    { "name": "z", "type": "float", "doc": "Acceleration in the z-axis (g)." }
+  ]
+}

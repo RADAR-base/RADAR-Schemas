@@ -1,0 +1,13 @@
+{
+  "namespace": "org.radarcns.stream.aggregator",
+  "type": "record",
+  "name": "PhoneUsageAggregation",
+  "doc": "Aggregate time and opening events for an app.",
+  "fields": [
+    {"name": "packageName", "type": "string", "doc": "Package name of the app in use."},
+    {"name": "durationInForeground", "type":"double", "doc":"Total time in milliseconds the app was in the foreground."},
+    {"name": "timesOpen", "type":"int", "doc":"Total amount of times given app was opened in given time-frame."},
+    {"name": "categoryName", "type": ["null", "string"], "doc": "App category as given by the play store, null if a category is not listed or unable to be fetched.", "default": null},
+    {"name": "categoryNameFetchTime", "type": ["null", "double"], "doc": "Timestamp in UTC when the category was attempted to fetch from the play store (s), null if not fetched.", "default": null}
+  ]
+}
