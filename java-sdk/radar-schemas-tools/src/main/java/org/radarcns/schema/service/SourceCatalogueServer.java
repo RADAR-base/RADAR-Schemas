@@ -15,7 +15,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * This server exposes the SourceType Catalogues provided as {@link SourceCatalogue} object
+ * This server provides a webservice to share the SourceType Catalogues provided in *.yml files
+ * as {@link org.radarcns.schema.service.SourceCatalogueService.SourceTypeResponse}
  */
 public class SourceCatalogueServer implements Closeable {
 
@@ -80,7 +81,7 @@ public class SourceCatalogueServer implements Closeable {
                     .help("Port number of the SourceCatalogue Server ")
                     .type(Integer.class)
                     .setDefault(9010);
-            SubCommand.addRootArgument(parser); // is this always necessary?
+            SubCommand.addRootArgument(parser);
         }
     }
 
