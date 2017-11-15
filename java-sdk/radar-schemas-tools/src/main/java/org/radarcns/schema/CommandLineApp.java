@@ -54,6 +54,7 @@ import static java.util.stream.Collectors.toList;
  */
 @SuppressWarnings("PMD.SystemPrintln")
 public class CommandLineApp {
+
     private static final Logger logger = LoggerFactory.getLogger(CommandLineApp.class);
 
     private final SourceCatalogue catalogue;

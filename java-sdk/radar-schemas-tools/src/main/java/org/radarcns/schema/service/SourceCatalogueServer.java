@@ -15,8 +15,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * This server provides a webservice to share the SourceType Catalogues provided in *.yml files
- * as {@link org.radarcns.schema.service.SourceCatalogueService.SourceTypeResponse}
+ * This server provides a webservice to share the SourceType Catalogues provided in *.yml files as
+ * {@link org.radarcns.schema.service.SourceCatalogueService.SourceTypeResponse}
  */
 public class SourceCatalogueServer implements Closeable {
 

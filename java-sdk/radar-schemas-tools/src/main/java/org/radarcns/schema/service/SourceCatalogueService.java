@@ -16,8 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Webservice resource to share SourceCatalogues. The response has a "Source-Type-Class" header
- * that mentions the class of SourceCatalogues and the body has the SourceCatalogues in JSON format.
+ * Webservice resource to share SourceCatalogues. The response has a "Source-Type-Class" header that
+ * mentions the class of SourceCatalogues and the body has the SourceCatalogues in JSON format.
  */
 @Path("/source-types")
 @Produces(MediaType.APPLICATION_JSON)
@@ -47,24 +47,20 @@ public class SourceCatalogueService {
     @GET
     @Path("/monitor")
     public Response getMonitorSources() {
-        return  Response.ok().entity(new SourceTypeResponse(this.sourceCatalogue).monitor())
+        return Response.ok().entity(new SourceTypeResponse(this.sourceCatalogue).monitor())
                 .header(SOURCE_TYPE_CLASS_HEADER, "MONITOR").build();
     }
 
     @GET
     public Response getAllSourceTypes() {
-        return  Response.ok().entity(new SourceTypeResponse(this.sourceCatalogue).all())
+        return Response.ok().entity(new SourceTypeResponse(this.sourceCatalogue).all())
                 .header(SOURCE_TYPE_CLASS_HEADER, "ALL").build();
     }
 
     public class SourceTypeResponse {
 
         @JsonIgnore
-        private SourceCatalogue sourceCatalogue;
-
-        private SourceTypeResponse(SourceCatalogue sourceCatalogue) {
-            this.sourceCatalogue = sourceCatalogue;
-        }
+        private final SourceCatalogue sourceCatalogue;
 
         @JsonProperty("passive-source-types")
         private List<PassiveSource> passiveSources;
@@ -74,6 +70,10 @@ public class SourceCatalogueService {
 
         @JsonProperty("monitor-source-types")
         private List<MonitorSource> monitorSources;
+
+        private SourceTypeResponse(SourceCatalogue sourceCatalogue) {
+            this.sourceCatalogue = sourceCatalogue;
+        }
 
         private SourceTypeResponse passive() {
             this.passiveSources = new ArrayList<>(
@@ -87,7 +87,8 @@ public class SourceCatalogueService {
         }
 
         public SourceTypeResponse monitor() {
-            this.monitorSources = new ArrayList<>(this.sourceCatalogue.getMonitorSources().values());
+            this.monitorSources = new ArrayList<>(
+                    this.sourceCatalogue.getMonitorSources().values());
             return this;
         }
 
@@ -95,7 +96,8 @@ public class SourceCatalogueService {
             this.passiveSources = new ArrayList<>(
                     this.sourceCatalogue.getPassiveSources().values());
             this.activeSources = new ArrayList<>(this.sourceCatalogue.getActiveSources().values());
-            this.monitorSources = new ArrayList<>(this.sourceCatalogue.getMonitorSources().values());
+            this.monitorSources = new ArrayList<>(
+                    this.sourceCatalogue.getMonitorSources().values());
             return this;
         }
 
