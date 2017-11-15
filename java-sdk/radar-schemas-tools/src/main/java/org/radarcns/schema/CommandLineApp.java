@@ -24,6 +24,7 @@ import net.sourceforge.argparse4j.inf.Namespace;
 import net.sourceforge.argparse4j.inf.Subparsers;
 import org.radarcns.schema.registration.KafkaTopics;
 import org.radarcns.schema.registration.SchemaRegistry;
+import org.radarcns.schema.service.SourceCatalogueServer;
 import org.radarcns.schema.specification.DataProducer;
 import org.radarcns.schema.specification.DataTopic;
 import org.radarcns.schema.specification.SourceCatalogue;
@@ -166,7 +167,8 @@ public class CommandLineApp {
                 KafkaTopics.command(),
                 SchemaRegistry.command(),
                 listCommand(),
-                SchemaValidator.command());
+                SchemaValidator.command(),
+                SourceCatalogueServer.command());
 
         ArgumentParser parser = getArgumentParser(subCommands);
 
