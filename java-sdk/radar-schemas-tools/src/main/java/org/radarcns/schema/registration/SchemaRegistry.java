@@ -42,7 +42,11 @@ import org.slf4j.LoggerFactory;
 import java.io.Closeable;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.Optional;
+import java.util.regex.Pattern;
 import java.util.stream.Stream;
+
+import static org.radarcns.schema.CommandLineApp.matchTopic;
 
 public class SchemaRegistry implements Closeable {
     public enum Compatibility {
@@ -138,42 +142,71 @@ public class SchemaRegistry implements Closeable {
     }
 
     public static SubCommand command() {
-        return new SubCommand() {
-            @Override
-            public String getName() {
-                return "register";
-            }
-
-            @Override
-            public int execute(Namespace options, CommandLineApp app) {
-                String url = options.get("schemaRegistry");
-                try (SchemaRegistry registration = new SchemaRegistry(url)) {
-                    boolean forced = options.getBoolean("force");
-                    if (forced) {
-                        forced = registration.setCompatibility(SchemaRegistry.Compatibility.NONE);
-                    }
-                    int result = registration.registerSchemas(app.getCatalogue()) ? 0 : 1;
-                    if (forced) {
-                        registration.setCompatibility(SchemaRegistry.Compatibility.FULL);
-                    }
-                    return result;
-                } catch (MalformedURLException ex) {
-                    logger.error("Schema registry URL {} is invalid: {}", url, ex.toString());
-                    return 1;
-                }
-            }
-
-            @Override
-            public void addParser(ArgumentParser parser) {
-                parser.description("Register schemas in the schema registry.");
-                parser.addArgument("-f", "--force")
-                        .help("force registering schema, even if it is incompatible")
-                        .action(Arguments.storeTrue());
-                parser.addArgument("schemaRegistry")
-                        .help("schema registry URL");
-                SubCommand.addRootArgument(parser);
-            }
-        };
+        return new RegisterCommand();
     }
 
+    private static class RegisterCommand implements SubCommand {
+        @Override
+        public String getName() {
+            return "register";
+        }
+
+        @Override
+        public int execute(Namespace options, CommandLineApp app) {
+            String url = options.get("schemaRegistry");
+            try (SchemaRegistry registration = new SchemaRegistry(url)) {
+                boolean forced = options.getBoolean("force");
+                if (forced) {
+                    forced = registration.setCompatibility(Compatibility.NONE);
+                }
+                boolean result;
+                Pattern pattern = matchTopic(
+                        options.getString("topic"), options.getString("match"));
+
+                if (pattern == null) {
+                    result = registration.registerSchemas(app.getCatalogue());
+                } else {
+                    Optional<Boolean> didUpload = app.getCatalogue().getTopics()
+                            .filter(t -> pattern.matcher(t.getName()).find())
+                            .map(registration::registerSchema)
+                            .reduce((a, b) -> a && b);
+
+                    if (!didUpload.isPresent()) {
+                        logger.error("Topic {} does not match a known topic."
+                                + " Find the list of acceptable topics"
+                                + " with the `radar-schemas-tools list` command. Aborting.",
+                                pattern);
+                        result = false;
+                    } else {
+                        result = didUpload.get();
+                    }
+                }
+                if (forced) {
+                    registration.setCompatibility(Compatibility.FULL);
+                }
+                return result ? 0 : 1;
+            } catch (MalformedURLException ex) {
+                logger.error("Schema registry URL {} is invalid: {}", url, ex.toString());
+                return 1;
+            }
+        }
+
+        @Override
+        public void addParser(ArgumentParser parser) {
+            parser.description("Register schemas in the schema registry.");
+            parser.addArgument("-f", "--force")
+                    .help("force registering schema, even if it is incompatible")
+                    .action(Arguments.storeTrue());
+            parser.addArgument("-t", "--topic")
+                    .help("register the schemas of one topic")
+                    .type(String.class);
+            parser.addArgument("-m", "--match")
+                    .help("register the schemas of all topics matching the given regex"
+                            + "; does not do anything if --topic is specified")
+                    .type(String.class);
+            parser.addArgument("schemaRegistry")
+                    .help("schema registry URL");
+            SubCommand.addRootArgument(parser);
+        }
+    }
 }
