@@ -58,4 +58,7 @@ docker-compose run --rm tools radar-schemas-tools list
 docker-compose run --rm tools radar-schemas-tools register http://schema-registry:8081
 # create topics with zookeeper
 docker-compose run --rm tools radar-schemas-tools create zookeeper-1:2181
+# run source-catalogue webservice
+docker-compose run --rm tools radar-schemas-tools serve -p <portnumber>
+
 ```

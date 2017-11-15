@@ -26,12 +26,19 @@ public abstract class DataProducer<T extends DataTopic> {
     @JsonProperty
     private List<String> labels;
 
+    @JsonProperty
+    private String version;
+
     public String getName() {
         return name;
     }
 
     public String getDoc() {
         return doc;
+    }
+
+    public String getVersion() {
+        return version;
     }
 
     @NotNull
@@ -56,6 +63,7 @@ public abstract class DataProducer<T extends DataTopic> {
         return getData().stream().flatMap(applyOrEmpty(DataTopic::getTopics));
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -67,11 +75,12 @@ public abstract class DataProducer<T extends DataTopic> {
         DataProducer producer = (DataProducer) o;
         return Objects.equals(name, producer.name)
                 && Objects.equals(doc, producer.doc)
+                && Objects.equals(version , producer.version)
                 && Objects.equals(getData(), producer.getData());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, doc, getData());
+        return Objects.hash(name, doc, getData(), version);
     }
 }
