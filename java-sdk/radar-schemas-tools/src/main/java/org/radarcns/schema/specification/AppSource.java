@@ -3,8 +3,6 @@ package org.radarcns.schema.specification;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import java.util.Objects;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 import static org.radarcns.schema.util.Utils.expandClass;
 

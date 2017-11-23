@@ -20,7 +20,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.radarcns.schema.Scope;
 import org.radarcns.schema.specification.AppSource;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -48,14 +47,6 @@ public class PassiveSource extends AppSource<PassiveDataTopic> {
 
     public String getName() {
         return super.getVendor() + '_' + super.getModel();
-    }
-
-    public String getVendor() {
-        return super.getVendor();
-    }
-
-    public String getModel() {
-        return super.getModel();
     }
 
     /**
