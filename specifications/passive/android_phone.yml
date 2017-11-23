@@ -1,6 +1,7 @@
 #====================================== Android Phone Sensors =====================================#
 vendor: ANDROID
 model: PHONE
+version: v1
 data:
   #Phone sensors
   - type: ACCELEROMETER
