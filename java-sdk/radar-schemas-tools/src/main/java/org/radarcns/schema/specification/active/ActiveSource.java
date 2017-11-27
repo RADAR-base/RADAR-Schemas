@@ -47,6 +47,15 @@ public class ActiveSource<T extends DataTopic> extends DataProducer<T> {
     @JsonProperty
     private List<T> data;
 
+    @JsonProperty
+    private String vendor;
+
+    @JsonProperty
+    private String model;
+
+    @JsonProperty
+    private String version;
+
     public String getAssessmentType() {
         return assessmentType;
     }
@@ -59,5 +68,17 @@ public class ActiveSource<T extends DataTopic> extends DataProducer<T> {
     @Override
     public Scope getScope() {
         return Scope.ACTIVE;
+    }
+
+    public String getVendor() {
+        return vendor;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public String getVersion() {
+        return version;
     }
 }

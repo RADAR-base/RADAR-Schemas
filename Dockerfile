@@ -7,7 +7,7 @@ COPY commons /code/commons
 COPY specifications /code/specifications
 COPY restapi /code/restapi
 COPY java-sdk/gradle /code/java-sdk/gradle
-COPY java-sdk/gradle.properties java-sdk/build.gradle java-sdk/settings.gradle  java-sdk/gradlew /code/java-sdk/
+COPY java-sdk/build.gradle java-sdk/settings.gradle  java-sdk/gradlew /code/java-sdk/
 RUN ./gradlew tasks
 COPY java-sdk/radar-schemas-commons/build.gradle /code/java-sdk/radar-schemas-commons/
 COPY java-sdk/radar-schemas-commons/src /code/java-sdk/radar-schemas-commons/src

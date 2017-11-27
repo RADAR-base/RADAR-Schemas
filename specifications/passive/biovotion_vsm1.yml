@@ -1,6 +1,7 @@
 #===================================== Biovotion VSM1 Everion =====================================#
 vendor: BIOVOTION
 model: VSM1
+version: 1.0.0
 app_provider: .biovotion.BiovotionServiceProvider
 data:
   - type: ACCELEROMETER

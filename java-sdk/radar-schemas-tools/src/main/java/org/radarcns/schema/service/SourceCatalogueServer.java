@@ -76,8 +76,8 @@ public class SourceCatalogueServer implements Closeable {
 
         @Override
         public void addParser(ArgumentParser parser) {
-            parser.description("Create all topics that are missing on the Kafka server.");
-            parser.addArgument("-p" ,"-port")
+            parser.description("A web service to share source-type catalogs");
+            parser.addArgument("-p" ,"--port")
                     .help("Port number of the SourceCatalogue Server ")
                     .type(Integer.class)
                     .setDefault(9010);

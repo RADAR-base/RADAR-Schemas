@@ -20,7 +20,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.radarcns.schema.Scope;
 import org.radarcns.schema.specification.AppSource;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -32,12 +31,6 @@ public class PassiveSource extends AppSource<PassiveDataTopic> {
     public enum RadarSourceTypes {
         EMPATICA_E4, PEBBLE_2, ANDROID_PHONE, BIOVOTION_VSM1
     }
-
-    @JsonProperty @NotBlank
-    private String vendor;
-
-    @JsonProperty @NotBlank
-    private String model;
 
     @JsonProperty @NotEmpty
     private List<PassiveDataTopic> data;
@@ -53,15 +46,7 @@ public class PassiveSource extends AppSource<PassiveDataTopic> {
     }
 
     public String getName() {
-        return vendor + '_' + model;
-    }
-
-    public String getVendor() {
-        return vendor;
-    }
-
-    public String getModel() {
-        return model;
+        return super.getVendor() + '_' + super.getModel();
     }
 
     /**
