@@ -1,7 +1,7 @@
 name: THINCIT
-vendor: LUNDBECK
+vendor: THINCIT IIRC
 model: THINCIT
-version: v1
+version: 1.0.0
 assessment_type: APP
 doc: ThincIt Cognition in Depression app.
 data:

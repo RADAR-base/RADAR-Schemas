@@ -2,7 +2,7 @@
 name: PHQ8
 vendor: PHQ
 model: 8
-version: v1
+version: 1.0.0
 assessment_type: QUESTIONNAIRE
 doc: Personal Health Questionnaire Depression Scale (PHQ-8) definition.
 data:

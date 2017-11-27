@@ -76,7 +76,7 @@ public class SourceCatalogueServer implements Closeable {
 
         @Override
         public void addParser(ArgumentParser parser) {
-            parser.description("Port number of the Catalogue server.");
+            parser.description("A web service to share source-type catalogs");
             parser.addArgument("-p" ,"--port")
                     .help("Port number of the SourceCatalogue Server ")
                     .type(Integer.class)
