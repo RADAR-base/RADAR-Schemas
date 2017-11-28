@@ -24,6 +24,7 @@ import net.sourceforge.argparse4j.inf.Namespace;
 import net.sourceforge.argparse4j.inf.Subparsers;
 import org.radarcns.schema.registration.KafkaTopics;
 import org.radarcns.schema.registration.SchemaRegistry;
+import org.radarcns.schema.service.SourceCatalogueServer;
 import org.radarcns.schema.specification.DataProducer;
 import org.radarcns.schema.specification.DataTopic;
 import org.radarcns.schema.specification.SourceCatalogue;
@@ -53,6 +54,7 @@ import static java.util.stream.Collectors.toList;
  */
 @SuppressWarnings("PMD.SystemPrintln")
 public class CommandLineApp {
+
     private static final Logger logger = LoggerFactory.getLogger(CommandLineApp.class);
 
     private final SourceCatalogue catalogue;
@@ -166,7 +168,8 @@ public class CommandLineApp {
                 KafkaTopics.command(),
                 SchemaRegistry.command(),
                 listCommand(),
-                SchemaValidator.command());
+                SchemaValidator.command(),
+                SourceCatalogueServer.command());
 
         ArgumentParser parser = getArgumentParser(subCommands);
 
