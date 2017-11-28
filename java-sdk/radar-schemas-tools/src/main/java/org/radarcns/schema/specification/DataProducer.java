@@ -56,6 +56,7 @@ public abstract class DataProducer<T extends DataTopic> {
         return getData().stream().flatMap(applyOrEmpty(DataTopic::getTopics));
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

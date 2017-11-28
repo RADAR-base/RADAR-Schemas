@@ -1,6 +1,7 @@
 #====================================== Empatica E4 Wristband =====================================#
 vendor: EMPATICA
 model: E4
+version: 1.0.0
 app_provider: .empatica.E4ServiceProvider
 data:
   - type: ACCELEROMETER
