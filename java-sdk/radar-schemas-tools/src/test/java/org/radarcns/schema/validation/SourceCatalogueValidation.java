@@ -49,30 +49,6 @@ public class SourceCatalogueValidation {
     }
 
     @Test
-    public void checkActiveSourceType() {
-        Arrays.stream(QuestionnaireDataTopic.RadarSourceTypes.values())
-                .forEach(type -> assertNotNull(
-                        "Active RADAR source " + type + " does not have a specification",
-                        catalogue.getActiveSource(type.name())));
-    }
-
-    @Test
-    public void checkMonitorSourceType() {
-        Arrays.stream(MonitorDataTopic.RadarSourceTypes.values())
-                .forEach(type -> assertNotNull(
-                        "Monitor RADAR source " + type + " does not have a specification",
-                        catalogue.getMonitorSource(type.name()) != null));
-    }
-
-    @Test
-    public void checkPassiveSourceType() {
-        Arrays.stream(PassiveSource.RadarSourceTypes.values())
-                .forEach(type -> assertNotNull(
-                        "Passive RADAR source " + type + " does not have a specification",
-                        catalogue.getPassiveSource(type.name()) != null));
-    }
-
-    @Test
     public void validateTopicNames() {
         catalogue.getTopicNames().forEach(topic ->
                 assertTrue(topic + " is invalid", isValidTopic(topic)));
