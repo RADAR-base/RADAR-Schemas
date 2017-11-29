@@ -1,0 +1,152 @@
+#====================================== Android Phone Sensors =====================================#
+vendor: ANDROID
+model: PHONE
+version: v1
+data:
+  #Phone sensors
+  - type: ACCELEROMETER
+    app_provider: .phone.PhoneSensorProvider
+    unit: G
+    fields:
+      - name: x
+      - name: y
+      - name: z
+    sample_rate:
+      frequency: 5
+      configurable: true
+    processing_state: RAW
+    topic: android_phone_acceleration
+    value_schema: .passive.phone.PhoneAcceleration
+  - type: BATTERY
+    app_provider: .phone.PhoneSensorProvider
+    unit: PERCENTAGE
+    processing_state: RAW
+    topic: android_phone_battery_level
+    value_schema: .passive.phone.PhoneBatteryLevel
+    sample_rate:
+      dynamic: true
+    fields:
+      - name: batteryLevel
+  - type: GYROSCOPE
+    app_provider: .phone.PhoneSensorProvider
+    unit: RADAIAN_PER_SEC
+    processing_state: RAW
+    topic: android_phone_gyroscope
+    value_schema: .passive.phone.PhoneGyroscope
+    sample_rate:
+      frequency: 5
+      configurable: true
+    fields:
+      - name: x
+      - name: y
+      - name: z
+  - type: LIGHT
+    app_provider: .phone.PhoneSensorProvider
+    unit: LUX
+    processing_state: RAW
+    topic: android_phone_light
+    value_schema: .passive.phone.PhoneLight
+    sample_rate:
+      frequency: 5
+      configurable: true
+    fields:
+      - name: light
+  - type: MAGNETIC_FIELD
+    app_provider: .phone.PhoneSensorProvider
+    unit: MICRO_TESLA
+    processing_state: RAW
+    topic: android_phone_magnetic_field
+    value_schema: .passive.phone.PhoneMagneticField
+    sample_rate:
+      frequency: 5
+      configurable: true
+    fields:
+      - name: x
+      - name: y
+      - name: z
+  - type: STEP_COUNT
+    app_provider: .phone.PhoneSensorProvider
+    unit: NON_DIMENSIONAL
+    processing_state: VENDOR
+    topic: android_phone_step_count
+    value_schema: .passive.phone.PhoneStepCount
+    sample_rate:
+      frequency: 5
+      dynamic: true
+    fields:
+      - name: steps
+  # Location
+  - type: RELATIVE_LOCATION
+    app_provider: .phone.PhoneLocationProvider
+    unit: DEGREE
+    processing_state: RAW
+    topic: android_phone_relative_location
+    value_schema: .passive.phone.PhoneRelativeLocation
+    fields:
+      - name: longitude
+      - name: latitude
+    sample_rate:
+      interval: 600
+      configurable: true
+      dynamic: true
+  # Log
+  - type: PHONE_CALL
+    app_provider: .phone.PhoneLogProvider
+    processing_state: RAW
+    topic: android_phone_call
+    value_schema: .passive.phone.PhoneCall
+    sample_rate:
+      interval: 86400
+      configurable: true
+  - type: PHONE_SMS
+    app_provider: .phone.PhoneLogProvider
+    unit: NON_DIMENSIONAL
+    processing_state: RAW
+    topic: android_phone_sms
+    value_schema: .passive.phone.PhoneSms
+    sample_rate:
+      interval: 86400
+      configurable: true
+  - type: PHONE_SMS_UNREAD
+    app_provider: .phone.PhoneLogProvider
+    unit: NON_DIMENSIONAL
+    processing_state: RAW
+    topic: android_phone_sms_unread
+    value_schema: .passive.phone.PhoneSmsUnread
+    sample_rate:
+      interval: 86400
+      configurable: true
+  - type: PHONE_CONTACTS
+    app_provider: .phone.PhoneContactListProvider
+    unit: NON_DIMENSIONAL
+    processing_state: RAW
+    topic: android_phone_contacts
+    value_schema: .passive.phone.PhoneContactList
+    sample_rate:
+      interval: 86400
+      configurable: true
+  - type: PHONE_BLUETOOTH_DEVICES
+    app_provider: .phone.PhoneBluetoothService
+    unit: NON_DIMENSIONAL
+    processing_state: RAW
+    topic: android_phone_bluetooth_devices
+    value_schema: .passive.phone.PhoneBluetoothDevices
+    sample_rate:
+      interval: 3600
+      configurable: true
+  # Usage
+  - type: USAGE_EVENT
+    app_provider: .phone.PhoneUsageProvider
+    processing_state: RAW
+    topic: android_phone_usage_event
+    value_schema: .passive.phone.PhoneUsageEvent
+    sample_rate:
+      dynamic: true
+  - type: USER_INTERACTION
+    app_provider: .phone.PhoneUsageProvider
+    unit: NON_DIMENSIONAL
+    processing_state: RAW
+    topic: android_phone_user_interaction
+    value_schema: .passive.phone.PhoneUserInteraction
+    sample_rate:
+      dynamic: true

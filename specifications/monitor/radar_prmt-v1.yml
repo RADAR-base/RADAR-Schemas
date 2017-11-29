@@ -1,0 +1,37 @@
+name: ANDROID_PHONE
+vendor: RADAR
+model: pRMT
+version: v1
+doc: Status updates from the RADAR-CNS pRMT app.
+app_provider: .application.ApplicationServiceProvider
+data:
+  - type: EXTERNAL_TIME
+    doc: Information sent by the Android pRMT about time synchronisation with a NTS different from the default one.
+    sample_rate:
+      interval: 300
+      configurable: true
+    unit: SECOND
+    topic: application_external_time
+    value_schema: .monitor.application.ApplicationExternalTime
+  - type: RECORD_COUNTS
+    doc: Monitor used by the Android pRMT to report the number of cached and created records.
+    sample_rate:
+      interval: 300
+      configurable: true
+    topic: application_record_counts
+    value_schema: .monitor.application.ApplicationRecordCounts
+  - type: SERVER_STATUS
+    doc: Monitor used by the Android pRMT to report the server connection status between the android client and the RADAR-CNS Platform.
+    sample_rate:
+      interval: 300
+      configurable: true
+    topic: application_server_status
+    value_schema: .monitor.application.ApplicationServerStatus
+  - type: UPTIME
+    doc: Monitor used by the Android pRMT to notify the time duration since last reboot.
+    sample_rate:
+      interval: 300
+      configurable: true
+    unit: SECOND
+    topic: application_uptime
+    value_schema: .monitor.application.ApplicationUptime
