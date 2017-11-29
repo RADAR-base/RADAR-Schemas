@@ -16,26 +16,20 @@ package org.radarcns.schema.validation;
  * limitations under the License.
  */
 
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.radarcns.schema.specification.DataProducer;
-import org.radarcns.schema.specification.SourceCatalogue;
-import org.radarcns.schema.specification.active.questionnaire.QuestionnaireDataTopic;
-import org.radarcns.schema.specification.monitor.MonitorDataTopic;
-import org.radarcns.schema.specification.passive.PassiveSource;
-
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.radarcns.schema.specification.SourceCatalogue.BASE_PATH;
 import static org.radarcns.schema.validation.ValidationSupport.isValidTopic;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import org.radarcns.schema.specification.DataProducer;
+import org.radarcns.schema.specification.SourceCatalogue;
 
 /**
  * TODO.
