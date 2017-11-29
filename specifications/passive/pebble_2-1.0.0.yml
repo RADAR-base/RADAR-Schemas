@@ -1,6 +1,6 @@
 #============================================ Pebble 2 ============================================#
-vendor: PEBBLE
-model: 2
+vendor: Pebble
+model: Pebble 2
 version: 1.0.0
 doc: Pebble 2 data collected over Bluetooth by a RADAR Pebble app
 app_provider: .pebble.PebbleServiceProvider
