@@ -1,6 +1,6 @@
-name: ANDROID_PHONE
-vendor: ANDROID
-model: PHONE_MONITOR
+name: RADAR_pRMT
+vendor: RADAR
+model: pRMT
 version: 1.0.0
 doc: Status updates from the RADAR-CNS pRMT app.
 app_provider: .application.ApplicationServiceProvider

@@ -28,7 +28,7 @@ import java.util.Map;
  */
 public class QuestionnaireDataTopic extends DataTopic {
     public enum RadarSourceTypes {
-        PHQ8
+        ARMT
     }
 
     @JsonProperty @NotEmpty
