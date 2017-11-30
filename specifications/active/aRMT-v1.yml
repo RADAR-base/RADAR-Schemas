@@ -859,100 +859,100 @@ data:
             value: 6
           - text: 7 very much
             value: 7
-        - lead: Null
-          content: Think of the most important event that happened since the last beep. This event was:
-          widget: RANGE
-          responses:
-            - text: -3 Very unpleasant
-              value: -3
-            - text: -2
-              value: -2
-            - text: -1
-              value: -1
-            - text: 0
-              value: 0
-            - text: 1
-              value: 1
-            - text: 2
-              value: 2
-            - text: 3
-              value: 3 Very pleasant
-        - lead: Null
-          content: This event was:
-          widget: RANGE
-          responses:
-            - text: -3 Unimportant
-              value: -3
-            - text: -2
-              value: -2
-            - text: -1
-              value: -1
-            - text: 0
-              value: 0
-            - text: 1
-              value: 1
-            - text: 2
-              value: 2
-            - text: 3
-              value: 3 Important
-        - lead: Null
-          content: Since the last beep I had/taken
-          widget: RADIO
-          responses:
-            - text: Food
-              value: 0
-            - text: Caffeine
-              value: 1
-            - text: Nicotine
-              value: 2
-            - text: Alcohol
-              value: 3
-            - text: Medication
-              value: 4
-            - text: Substances
-              value: 5
-            - text: Nothin
-              value: 6
-        - lead: Null
-          content: This beep disturbed me
-          widget: RANGE
-          responses:
-            - text: 0 Not at all
-              value: 0
-            - text: 1
-              value: 1
-            - text: 2
-              value: 2
-            - text: 3
-              value: 3
-            - text: 4
-              value: 4
-            - text: 5
-              value: 5
-            - text: 6
-              value: 6
-            - text: 7 very much
-              value: 7
-        - lead: Null
-          content: Filling out the questionnaire has influence my mood today
-          widget: RANGE
-          responses:
-            - text: 0 Not at all
-              value: 0
-            - text: 1
-              value: 1
-            - text: 2
-              value: 2
-            - text: 3
-              value: 3
-            - text: 4
-              value: 4
-            - text: 5
-              value: 5
-            - text: 6
-              value: 6
-            - text: 7 very much
-              value: 7
+      - lead: Null
+        content: Think of the most important event that happened since the last beep. This event was
+        widget: RANGE
+        responses:
+          - text: -3 Very unpleasant
+            value: -3
+          - text: -2
+            value: -2
+          - text: -1
+            value: -1
+          - text: 0
+            value: 0
+          - text: 1
+            value: 1
+          - text: 2
+            value: 2
+          - text: 3
+            value: 3 Very pleasant
+      - lead: Null
+        content: This event was:
+        widget: RANGE
+        responses:
+          - text: -3 Unimportant
+            value: -3
+          - text: -2
+            value: -2
+          - text: -1
+            value: -1
+          - text: 0
+            value: 0
+          - text: 1
+            value: 1
+          - text: 2
+            value: 2
+          - text: 3
+            value: 3 Important
+      - lead: Null
+        content: Since the last beep I had/taken
+        widget: RADIO
+        responses:
+          - text: Food
+            value: 0
+          - text: Caffeine
+            value: 1
+          - text: Nicotine
+            value: 2
+          - text: Alcohol
+            value: 3
+          - text: Medication
+            value: 4
+          - text: Substances
+            value: 5
+          - text: Nothin
+            value: 6
+      - lead: Null
+        content: This beep disturbed me
+        widget: RANGE
+        responses:
+          - text: 0 Not at all
+            value: 0
+          - text: 1
+            value: 1
+          - text: 2
+            value: 2
+          - text: 3
+            value: 3
+          - text: 4
+            value: 4
+          - text: 5
+            value: 5
+          - text: 6
+            value: 6
+          - text: 7 very much
+            value: 7
+      - lead: Null
+        content: Filling out the questionnaire has influence my mood today
+        widget: RANGE
+        responses:
+          - text: 0 Not at all
+            value: 0
+          - text: 1
+            value: 1
+          - text: 2
+            value: 2
+          - text: 3
+            value: 3
+          - text: 4
+            value: 4
+          - text: 5
+            value: 5
+          - text: 6
+            value: 6
+          - text: 7 very much
+            value: 7
 
   - type: RSES
     topic: questionnaire_rses

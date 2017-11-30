@@ -860,7 +860,7 @@ data:
           - text: 7 very much
             value: 7
       - lead: Null
-        content: Think of the most important event that happened since the last beep. This event was:
+        content: Think of the most important event that happened since the last beep. This event was 
         widget: RANGE
         responses:
           - text: -3 Very unpleasant
