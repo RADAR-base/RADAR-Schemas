@@ -1,0 +1,48 @@
+#====================================== Empatica E4 Wristband =====================================#
+vendor: EMPATICA
+model: E4
+version: v1
+app_provider: .empatica.E4ServiceProvider
+data:
+  - type: ACCELEROMETER
+    sample_rate:
+      frequency: 32
+    unit: G
+    processing_state: RAW
+    topic: android_empatica_e4_acceleration
+    value_schema: .passive.empatica.EmpaticaE4Acceleration
+  - type: BATTERY
+    sample_rate:
+      dynamic: true
+    unit: PERCENTAGE
+    processing_state: RAW
+    topic: android_empatica_e4_battery_level
+    value_schema: .passive.empatica.EmpaticaE4BatteryLevel
+  - type: BLOOD_VOLUME_PULSE
+    sample_rate:
+      frequency: 32
+    unit: NANO_WATT
+    processing_state: RAW
+    topic: android_empatica_e4_blood_volume_pulse
+    value_schema: .passive.empatica.EmpaticaE4BloodVolumePulse
+  - type: ELECTRODERMAL_ACTIVITY
+    sample_rate:
+      frequency: 4
+    unit: MICRO_SIEMENS
+    processing_state: RAW
+    topic: android_empatica_e4_electrodermal_activity
+    value_schema: .passive.empatica.EmpaticaE4ElectroDermalActivity
+  - type: INTER_BEAT_INTERVAL
+    sample_rate:
+      dynamic: true
+    unit: BEATS_PER_MIN
+    processing_state: VENDOR
+    topic: android_empatica_e4_inter_beat_interval
+    value_schema: .passive.empatica.EmpaticaE4InterBeatInterval
+  - type: THERMOMETER
+    sample_rate:
+      frequency: 4
+    unit: CELSIUS
+    processing_state: RAW
+    topic: android_empatica_e4_temperature
+    value_schema: .passive.empatica.EmpaticaE4Temperature
