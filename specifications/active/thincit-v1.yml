@@ -17,3 +17,6 @@ data:
   - type: THINCIT_TRAILS
     topic: thincit_trails
     value_schema: .active.thincit.ThincItTrails
+  - type: THINCIT_PDQ5
+    topic: thincit_pdq5
+    value_schema: .active.thincit.ThincItPDQ5
