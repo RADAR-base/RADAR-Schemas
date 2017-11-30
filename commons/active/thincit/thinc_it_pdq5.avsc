@@ -1,7 +1,7 @@
 {
   "namespace": "org.radarcns.active.thincit",
   "type": "record",
-  "name": "ThincItPDQ5",
+  "name": "ThincItPdq5",
   "doc": "THINC-it Assessment derived from PDQ5.",
   "fields": [
     { "name": "time", "type": "double", "doc": "Timestamp in UTC (s) when the test is submitted to the subject." },
