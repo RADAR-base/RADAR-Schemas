@@ -6,6 +6,7 @@
   "symbols": [
     "RADIO" ,
     "SLIDER",
-    "NONE"
+    "NONE",
+    "RANGE"
   ]
 }
