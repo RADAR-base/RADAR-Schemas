@@ -1,0 +1,29 @@
+{
+  "namespace": "org.radarcns.active.thincit",
+  "type": "record",
+  "name": "ThincItPdq",
+  "doc": "THINC-it Assessment derived from PDQ5.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Timestamp in UTC (s) when the test is submitted to the subject." },
+    { "name": "timeCompleted", "type": "double", "doc": "Timestamp in UTC (s) when the subject completes the test." },
+    { "name": "score", "type": "int", "doc": "THINC-it index score - 0 to 4000." },
+    { "name": "questionOne", "type": ["null",
+      {
+        "type": "enum",
+        "name": "ThincItPdqQuestion",
+        "doc": "PDQ5 question.",
+        "symbols": [
+            "NEVER",
+            "RARELY",
+            "SOMETIMES",
+            "OFTEN",
+            "VERYOFTEN"
+        ]
+      }], "doc": "PDQ5 Question 1.", "default": null},
+    { "name": "questionTwo", "type": ["null", "ThincItPdqQuestion"], "doc": "PDQ5 Question 2.", "default": null},
+    { "name": "questionThree", "type": ["null", "ThincItPdqQuestion"], "doc": "PDQ5 Question 3.", "default": null},
+    { "name": "questionFour", "type": ["null", "ThincItPdqQuestion"], "doc": "PDQ5 Question 4.", "default": null},
+    { "name": "questionFive", "type": ["null", "ThincItPdqQuestion"], "doc": "PDQ5 Question 5.", "default": null},
+      { "name": "appVersion", "type": "int", "doc": "App version." }
+  ]
+}
