@@ -20,10 +20,10 @@
             "VERYOFTEN"
         ]
       }], "doc": "PDQ5 Question 1.", "default": null},
-    { "name": "questionTwo", "type": "ThincItPdqQuestion", "doc": "PDQ5 Question 2."},
-    { "name": "questionThree", "type": "ThincItPdqQuestion", "doc": "PDQ5 Question 3."},
-    { "name": "questionFour", "type": "ThincItPdqQuestion", "doc": "PDQ5 Question 4."},
-    { "name": "questionFive", "type": "ThincItPdqQuestion", "doc": "PDQ5 Question 5."},
+    { "name": "questionTwo", "type": ["null", "ThincItPdqQuestion"], "doc": "PDQ5 Question 2.", "default": null},
+    { "name": "questionThree", "type": ["null", "ThincItPdqQuestion"], "doc": "PDQ5 Question 3.", "default": null},
+    { "name": "questionFour", "type": ["null", "ThincItPdqQuestion"], "doc": "PDQ5 Question 4.", "default": null},
+    { "name": "questionFive", "type": ["null", "ThincItPdqQuestion"], "doc": "PDQ5 Question 5.", "default": null},
       { "name": "appVersion", "type": "int", "doc": "App version." }
   ]
 }
