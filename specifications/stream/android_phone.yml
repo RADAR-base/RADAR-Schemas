@@ -1,4 +1,15 @@
 name: ANDROID_PHONE
 doc: Aggregation of Phone data
 master: .stream.phone.PhoneStreamMaster
-data: []
+data:
+  - input_topic: android_phone_acceleration
+    value_schema: .stream.aggregator.DoubleArrayAggregation
+    windowed: true
+  - input_topic: android_phone_usage_event
+    value_schema: .passive.phone.PhoneUsageEvent
+  - input_topic: android_phone_usage_event_output
+    value_schema: .stream.aggregator.PhoneUsageAggregation
+    windowed: true
+  - input_topic: android_phone_battery_level
+    value_schema: .stream.aggregator.DoubleAggregation
+    windowed: true
