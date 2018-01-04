@@ -80,7 +80,8 @@ public class KafkaTopics implements Closeable {
                 Thread.sleep(sleep * 1000L);
                 sleep = Math.min(MAX_SLEEP, sleep * 2);
             } else {
-                logger.error("Only {} out of {} Kafka brokers available. Failed to wait on all brokers.",
+                logger.error("Only {} out of {} Kafka brokers available."
+                                + " Failed to wait on all brokers.",
                         activeBrokers, brokers, sleep);
             }
         }
