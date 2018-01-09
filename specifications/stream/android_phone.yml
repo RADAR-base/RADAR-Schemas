@@ -11,5 +11,5 @@ data:
     value_schema: .stream.aggregator.PhoneUsageAggregate
     windowed: true
   - input_topic: android_phone_battery_level
-    value_schema: .stream.aggregator.DoubleAggregate
+    value_schema: .stream.aggregator.NumericAggregate
     windowed: true
