@@ -3,38 +3,38 @@ doc: Aggregation of Biovotion data
 master: .kafka.stream.biovotion.BiovotionVsm1Master
 data:
   - input_topic: android_biovotion_vsm1_acceleration
-    value_schema: .stream.aggregator.DoubleArrayAggregation
+    value_schema: .stream.aggregator.AggregateList
     windowed: true
   - input_topic: android_biovotion_vsm1_battery_level
-    value_schema: .stream.aggregator.DoubleAggregation
+    value_schema: .stream.aggregator.NumericAggregate
     windowed: true
   - input_topic: android_biovotion_vsm1_blood_volume_pulse
-    value_schema: .stream.aggregator.DoubleAggregation
+    value_schema: .stream.aggregator.NumericAggregate
     windowed: true
   - input_topic: android_biovotion_vsm1_energy
-    value_schema: .stream.aggregator.DoubleAggregation
+    value_schema: .stream.aggregator.NumericAggregate
     windowed: true
   - input_topic: android_biovotion_vsm1_galvanic_skin_response
-    value_schema: .stream.aggregator.DoubleArrayAggregation
+    value_schema: .stream.aggregator.AggregateList
     windowed: true
   - input_topic: android_biovotion_vsm1_heartrate
-    value_schema: .stream.aggregator.DoubleAggregation
+    value_schema: .stream.aggregator.NumericAggregate
     windowed: true
   - input_topic: android_biovotion_vsm1_heartrate_variability
-    value_schema: .stream.aggregator.DoubleAggregation
+    value_schema: .stream.aggregator.NumericAggregate
     windowed: true
   - input_topic: android_biovotion_vsm1_led_current
-    value_schema: .stream.aggregator.DoubleArrayAggregation
+    value_schema: .stream.aggregator.AggregateList
     windowed: true
   - input_topic: android_biovotion_vsm1_ppg_raw
-    value_schema: .stream.aggregator.DoubleArrayAggregation
+    value_schema: .stream.aggregator.AggregateList
     windowed: true
   - input_topic: android_biovotion_vsm1_respiration_rate
-    value_schema: .stream.aggregator.DoubleAggregation
+    value_schema: .stream.aggregator.NumericAggregate
     windowed: true
   - input_topic: android_biovotion_vsm1_oxygen_saturation
-    value_schema: .stream.aggregator.DoubleAggregation
+    value_schema: .stream.aggregator.NumericAggregate
     windowed: true
   - input_topic: android_biovotion_vsm1_temperature
-    value_schema: .stream.aggregator.DoubleAggregation
+    value_schema: .stream.aggregator.NumericAggregate
     windowed: true
