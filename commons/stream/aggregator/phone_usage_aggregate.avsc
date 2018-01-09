@@ -1,8 +1,9 @@
 {
   "namespace": "org.radarcns.stream.aggregator",
   "type": "record",
-  "name": "PhoneUsageAggregation",
+  "name": "PhoneUsageAggregate",
   "doc": "Aggregate time and opening events for an app.",
+  "version": "1.0.0",
   "fields": [
     {"name": "packageName", "type": "string", "doc": "Package name of the app in use."},
     {"name": "durationInForeground", "type":"double", "doc":"Total time in milliseconds the app was in the foreground."},
