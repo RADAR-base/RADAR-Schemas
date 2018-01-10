@@ -3,13 +3,13 @@ doc: Aggregation of Phone data
 master: .stream.phone.PhoneStreamMaster
 data:
   - input_topic: android_phone_acceleration
-    value_schema: .stream.aggregator.DoubleArrayAggregation
+    value_schema: .stream.aggregator.AggregateList
     windowed: true
   - input_topic: android_phone_usage_event
     value_schema: .passive.phone.PhoneUsageEvent
   - input_topic: android_phone_usage_event_output
-    value_schema: .stream.aggregator.PhoneUsageAggregation
+    value_schema: .stream.aggregator.PhoneUsageAggregate
     windowed: true
   - input_topic: android_phone_battery_level
-    value_schema: .stream.aggregator.DoubleAggregation
+    value_schema: .stream.aggregator.NumericAggregate
     windowed: true

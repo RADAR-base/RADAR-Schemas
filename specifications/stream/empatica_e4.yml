@@ -3,29 +3,29 @@ doc: Aggregation and conversion of Empatica E4 data
 master: .kafka.stream.biovotion.EmpaticaE4Master
 data:
   - input_topic: android_empatica_e4_acceleration
-    value_schema: .stream.aggregator.DoubleArrayAggregation
+    value_schema: .stream.aggregator.AggregateList
     windowed: true
   - input_topic: android_empatica_e4_battery_level
-    value_schema: .stream.aggregator.DoubleAggregation
+    value_schema: .stream.aggregator.NumericAggregate
     windowed: true
   - input_topic: android_empatica_e4_blood_volume_pulse
-    value_schema: .stream.aggregator.DoubleAggregation
+    value_schema: .stream.aggregator.NumericAggregate
     windowed: true
   - input_topic: android_empatica_e4_electrodermal_activity
-    value_schema: .stream.aggregator.DoubleAggregation
+    value_schema: .stream.aggregator.NumericAggregate
     windowed: true
   - input_topic: android_empatica_e4_inter_beat_interval
-    value_schema: .stream.aggregator.DoubleAggregation
+    value_schema: .stream.aggregator.NumericAggregate
     windowed: true
   - input_topic: android_empatica_e4_temperature
-    value_schema: .stream.aggregator.DoubleAggregation
+    value_schema: .stream.aggregator.NumericAggregate
     windowed: true
   - type: HEART_RATE
     unit: BEATS_PER_MIN
     input_topic: android_empatica_e4_inter_beat_interval
     topic_base: android_empatica_e4_heart_rate
     windowed: true
-    value_schema: .stream.aggregator.DoubleAggregation
+    value_schema: .stream.aggregator.NumericAggregate
   - input_topic: android_empatica_e4_heartrate
-    value_schema: .stream.aggregator.DoubleAggregation
+    value_schema: .stream.aggregator.NumericAggregate
     windowed: true

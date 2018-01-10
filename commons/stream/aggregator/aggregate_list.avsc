@@ -1,0 +1,10 @@
+{
+  "namespace": "org.radarcns.stream.aggregator",
+  "type": "record",
+  "name": "AggregateList",
+  "doc": "A list of aggregated data, each item aggregating over a single field.",
+  "version": "1.0.0",
+  "fields": [
+    { "name": "fields", "type": {"type": "array", "items": "NumericAggregate" }, "doc": "Aggregates of each of the underlying elements." }
+  ]
+}
