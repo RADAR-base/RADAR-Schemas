@@ -1,0 +1,16 @@
+{
+  "namespace": "org.radarcns.stream.aggregator",
+  "type": "record",
+  "name": "NumericAggregate",
+  "doc": "Basic statistics on a numeric value type.",
+  "version": "1.0.0",
+  "fields": [
+    { "name": "name", "type": "string", "doc": "Name of the field that has been aggregated over." },
+    { "name": "min", "type": "double", "doc": "State the minimum between accumulated values." },
+    { "name": "max", "type": "double", "doc": "State the maximum between accumulated values." },
+    { "name": "sum", "type": "double", "doc": "State the sum of accumulated values." },
+    { "name": "count", "type": "int", "doc": "Count the accumulated values." },
+    { "name": "mean", "type": ["null", "double"], "doc": "State the arithmetic mean between accumulated values.", "default": null },
+    { "name": "quartile", "type": ["null", {"type": "array", "items": "double"}], "doc": "Quartile of accumulated values.", "default": null }
+  ]
+}

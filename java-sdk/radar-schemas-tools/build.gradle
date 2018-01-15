@@ -5,6 +5,8 @@ plugins {
     id 'application'
 }
 
+apply plugin: 'com.jfrog.artifactory'
+
 ext.artifactName = 'radar-schemas-tools'
 ext.description = 'RADAR Schemas specification and validation tools.'
 
@@ -36,9 +38,11 @@ dependencies {
     implementation group: 'org.eclipse.jetty', name: 'jetty-server', version: jettyVersion
     implementation group: 'org.eclipse.jetty', name: 'jetty-servlet', version: jettyVersion
     implementation group: 'org.glassfish.jersey.core', name: 'jersey-server', version: jerseyVersion
-    implementation group: 'org.glassfish.jersey.containers', name: 'jersey-container-servlet-core', version: jerseyVersion
-    implementation group: 'org.glassfish.jersey.media', name: 'jersey-media-json-jackson', version: jerseyVersion
 
+    // source catalogue service annotations
+    api group: 'org.glassfish.jersey.containers', name: 'jersey-container-servlet-core', version: jerseyVersion
+
+    runtimeOnly group: 'org.glassfish.jersey.media', name: 'jersey-media-json-jackson', version: jerseyVersion
     runtimeOnly group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.25'
 
     testCompile group: 'junit', name: 'junit', version: junitVersion
@@ -139,4 +143,20 @@ bintray {
             released = new Date()
         }
     }
+}
+
+artifactory {
+    contextUrl = 'https://oss.jfrog.org/artifactory'
+    publish {
+        repository {
+            repoKey = 'oss-snapshot-local'
+            username = project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER')
+            password = project.hasProperty('bintrayApiKey') ? project.property('bintrayApiKey') : System.getenv('BINTRAY_API_KEY')
+            maven = true
+        }
+    }
+}
+
+artifactoryPublish {
+    publications('RadarCommonsPublication')
 }

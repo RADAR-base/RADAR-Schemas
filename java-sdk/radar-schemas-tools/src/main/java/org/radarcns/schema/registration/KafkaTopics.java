@@ -24,12 +24,19 @@ import java.util.regex.Pattern;
 
 import static org.radarcns.schema.CommandLineApp.matchTopic;
 
+/**
+ * Registers Kafka topics with Zookeeper.
+ */
 public class KafkaTopics implements Closeable {
     private static final Logger logger = LoggerFactory.getLogger(KafkaTopics.class);
     private static final int MAX_SLEEP = 32;
 
     private final ZkUtils zkUtils;
 
+    /**
+     * Create Kafka topics registration object with given Zookeeper.
+     * @param zookeeper comma-separated list of Zookeeper 'hostname:port'.
+     */
     public KafkaTopics(String zookeeper) {
         ZkClient zkClient = new ZkClient(zookeeper, 15_000, 10_000);
 
@@ -48,11 +55,58 @@ public class KafkaTopics implements Closeable {
         zkUtils = new ZkUtils(zkClient, new ZkConnection(zookeeper), false);
     }
 
+    /**
+     * Wait for brokers to become available. This uses a polling mechanism,
+     * waiting for at most 200 seconds.
+     * @param brokers number of brokers to wait for
+     * @return whether the brokers where available
+     * @throws InterruptedException
+     * @throws KeeperException
+     */
+    public boolean waitForBrokers(int brokers) throws InterruptedException, KeeperException {
+        boolean brokersAvailable = false;
+        int sleep = 2;
+        for (int tries = 0; tries < 10; tries++) {
+            int activeBrokers = getNumberOfBrokers();
+            brokersAvailable = activeBrokers >= brokers;
+            if (brokersAvailable) {
+                logger.info("Kafka brokers available. Starting topic creation.");
+                break;
+            }
+
+            if (tries < 9) {
+                logger.warn("Only {} out of {} Kafka brokers available. Waiting {} seconds.",
+                        activeBrokers, brokers, sleep);
+                Thread.sleep(sleep * 1000L);
+                sleep = Math.min(MAX_SLEEP, sleep * 2);
+            } else {
+                logger.error("Only {} out of {} Kafka brokers available."
+                                + " Failed to wait on all brokers.",
+                        activeBrokers, brokers, sleep);
+            }
+        }
+        return brokersAvailable;
+    }
+
+    /**
+     * Create all topics in a catalogue.
+     * @param catalogue source catalogue to extract topic names from
+     * @param partitions number of partitions per topic
+     * @param replication number of replicas for a topic
+     * @return whether the whole catalogue was registered
+     */
     public boolean createTopics(SourceCatalogue catalogue, int partitions, int replication) {
         return catalogue.getTopicNames()
                 .allMatch(topic -> createTopic(topic, partitions, replication));
     }
 
+    /**
+     * Create a single topic.
+     * @param topic name of the topic to create
+     * @param partitions number of partitions per topic
+     * @param replication number of replicas for a topic
+     * @return whether the topic was registered
+     */
     public boolean createTopic(String topic, int partitions, int replication) {
         Properties props = new Properties();
         try {
@@ -79,6 +133,9 @@ public class KafkaTopics implements Closeable {
         zkUtils.close();
     }
 
+    /**
+     * Create a KafkaTopics command to register topics from the command line.
+     */
     public static SubCommand command() {
         return new KafkaTopicsCommand();
     }
@@ -103,7 +160,7 @@ public class KafkaTopics implements Closeable {
             int partitions = options.getInt("partitions");
             String zookeeper = options.getString("zookeeper");
             try (KafkaTopics topics = new KafkaTopics(zookeeper)) {
-                if (!waitForBrokers(topics, brokers)) {
+                if (!topics.waitForBrokers(brokers)) {
                     logger.error("Kafka brokers not yet available. Aborting.");
                     return 1;
                 }
@@ -133,25 +190,6 @@ public class KafkaTopics implements Closeable {
                         + " Please check that Zookeeper is running.");
                 return 1;
             }
-        }
-
-        private boolean waitForBrokers(KafkaTopics topics, int brokers)
-                throws InterruptedException, KeeperException {
-            boolean brokersAvailable = false;
-            int sleep = 2;
-            for (int tries = 0; tries < 10; tries++) {
-                int activeBrokers = topics.getNumberOfBrokers();
-                brokersAvailable = activeBrokers >= brokers;
-                if (brokersAvailable) {
-                    logger.info("Kafka brokers available. Starting topic creation.");
-                    break;
-                }
-                logger.warn("Only {} out of {} Kafka brokers available. Waiting {} seconds.",
-                        activeBrokers, brokers, sleep);
-                Thread.sleep(sleep * 1000L);
-                sleep = Math.min(MAX_SLEEP, sleep * 2);
-            }
-            return brokersAvailable;
         }
 
         @Override
