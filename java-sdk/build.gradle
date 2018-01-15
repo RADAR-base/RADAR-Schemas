@@ -130,7 +130,20 @@ subprojects {
     }
 }
 
+task downloadDependencies {
+    description "Pre-downloads *most* dependencies"
+    doLast {
+        configurations.getAsMap().each { name, config ->
+            println "Retrieving dependencies for $name"
+            try {
+                config.files
+            } catch (e) {
+                project.logger.info e.message // some cannot be resolved, silentlyish skip them
+            }
+        }
+    }
+}
+
 task wrapper(type: Wrapper) {
-    gradleVersion = '4.1'
-    distributionType 'all'
+    gradleVersion '4.4'
 }

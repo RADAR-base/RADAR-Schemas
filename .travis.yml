@@ -4,6 +4,15 @@ jdk:
 env:
   - TERM=dumb
 
+cache:
+  directories:
+    - $HOME/.gradle/caches/jars-1
+    - $HOME/.gradle/caches/jars-2
+    - $HOME/.gradle/caches/jars-3
+    - $HOME/.gradle/caches/modules-2/files-2.1/
+    - $HOME/.gradle/native
+    - $HOME/.gradle/wrapper
+
 deploy:
   - provider: releases
     api_key: ${GH_TOKEN}
@@ -27,6 +36,4 @@ deploy:
 
 before_install:
   - cd java-sdk
-
-before_deploy:
-  - pwd
+  - ./gradlew downloadDependencies
