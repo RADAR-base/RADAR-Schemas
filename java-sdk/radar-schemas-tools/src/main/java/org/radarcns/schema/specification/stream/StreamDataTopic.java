@@ -1,35 +1,38 @@
 package org.radarcns.schema.specification.stream;
 
+import static org.radarcns.schema.util.Utils.applyOrEmpty;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
-import org.radarcns.catalogue.Unit;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Stream;
 import org.radarcns.config.AvroTopicConfig;
-import org.radarcns.kafka.ObservationKey;
 import org.radarcns.kafka.AggregateKey;
+import org.radarcns.kafka.ObservationKey;
 import org.radarcns.schema.specification.DataTopic;
 import org.radarcns.stream.TimeWindowMetadata;
 import org.radarcns.topic.AvroTopic;
 
-import javax.validation.constraints.NotBlank;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.Map;
-import java.util.stream.Stream;
-
-import static org.radarcns.schema.util.Utils.applyOrEmpty;
-
 public class StreamDataTopic extends DataTopic {
 
+    /** Whether the stream is a windowed stream with standard TimeWindow windows. */
     @JsonProperty
     private boolean windowed = false;
 
-    @JsonProperty
-    private Unit unit;
+    /** Input topic for the stream. */
+    @JsonProperty("input_topics")
+    private final List<String> inputTopics = new ArrayList<>();
 
-    @JsonProperty("input_topic")
-    @NotBlank
-    private String inputTopic;
-
+    /**
+     * Base topic name for output topics. If windowed, output topics would become
+     * {@code [topicBase]_[time-frame]}, otherwise it becomes {@code [topicBase]_output}.
+     * If a fixed topic is set, this will override the topic base for non-windowed topics.
+     */
     @JsonProperty("topic_base")
     private String topicBase;
 
@@ -43,18 +46,23 @@ public class StreamDataTopic extends DataTopic {
         }
     }
 
-    @JsonSetter
+    @JsonSetter("input_topic")
     @SuppressWarnings("PMD.UnusedPrivateMethod")
     private void setInputTopic(String inputTopic) {
         if (topicBase == null) {
             topicBase = inputTopic;
         }
-        this.inputTopic = inputTopic;
+        if (!this.inputTopics.isEmpty()) {
+            throw new IllegalStateException("Input topics already set");
+        }
+        this.inputTopics.add(inputTopic);
     }
 
     public String getTopic() {
         if (windowed) {
             return topicBase + "_<time-frame>";
+        } else if (super.getTopic() != null) {
+            return super.getTopic();
         } else {
             return topicBase + "_output";
         }
@@ -64,18 +72,24 @@ public class StreamDataTopic extends DataTopic {
         return windowed;
     }
 
-    public String getInputTopic() {
-        return inputTopic;
+    public List<String> getInputTopics() {
+        return inputTopics;
     }
 
-    public Unit getUnit() {
-        return unit;
+    @JsonSetter
+    @SuppressWarnings("PMD.UnusedPrivateMethod")
+    private void setInputTopics(Collection<? extends String> topics) {
+        if (!this.inputTopics.isEmpty()) {
+            throw new IllegalStateException("Input topics already set");
+        }
+        this.inputTopics.addAll(topics);
     }
 
     public String getTopicBase() {
         return topicBase;
     }
 
+    @Override
     public Stream<String> getTopicNames() {
         if (windowed) {
             return Arrays.stream(TimeWindowMetadata.values())
@@ -111,15 +125,10 @@ public class StreamDataTopic extends DataTopic {
 
     @Override
     protected void propertiesMap(Map<String, Object> properties, boolean reduce) {
-        properties.put("input_topic", inputTopic);
+        properties.put("input_topics", inputTopics);
         properties.put("windowed", windowed);
         if (!reduce) {
-            if (!topicBase.equals(inputTopic)) {
-                properties.put("topic_base", topicBase);
-            }
-            if (unit != null) {
-                properties.put("unit", unit);
-            }
+            properties.put("topic_base", topicBase);
         }
     }
 }
