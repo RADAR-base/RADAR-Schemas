@@ -1,22 +1,20 @@
 package org.radarcns.schema.specification.stream;
 
+import static org.radarcns.schema.util.Utils.applyOrEmpty;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
-import org.radarcns.catalogue.Unit;
-import org.radarcns.config.AvroTopicConfig;
-import org.radarcns.kafka.ObservationKey;
-import org.radarcns.kafka.AggregateKey;
-import org.radarcns.schema.specification.DataTopic;
-import org.radarcns.stream.TimeWindowMetadata;
-import org.radarcns.topic.AvroTopic;
-
-import javax.validation.constraints.NotBlank;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.stream.Stream;
-
-import static org.radarcns.schema.util.Utils.applyOrEmpty;
+import org.radarcns.catalogue.Unit;
+import org.radarcns.config.AvroTopicConfig;
+import org.radarcns.kafka.AggregateKey;
+import org.radarcns.kafka.ObservationKey;
+import org.radarcns.schema.specification.DataTopic;
+import org.radarcns.stream.TimeWindowMetadata;
+import org.radarcns.topic.AvroTopic;
 
 public class StreamDataTopic extends DataTopic {
 
@@ -27,11 +25,13 @@ public class StreamDataTopic extends DataTopic {
     private Unit unit;
 
     @JsonProperty("input_topic")
-    @NotBlank
     private String inputTopic;
 
     @JsonProperty("topic_base")
     private String topicBase;
+
+    @JsonProperty
+    private String topic;
 
     @JsonSetter
     @SuppressWarnings("PMD.UnusedPrivateMethod")
@@ -55,6 +55,8 @@ public class StreamDataTopic extends DataTopic {
     public String getTopic() {
         if (windowed) {
             return topicBase + "_<time-frame>";
+        } else if (topic != null) {
+            return topic;
         } else {
             return topicBase + "_output";
         }

@@ -1,0 +1,12 @@
+name: STREAM_STATISTICS
+doc: Statistics about the streaming data.
+data:
+  - topic: statistics_e4
+    value_schema: .kafka.AggregateKey
+    doc: Statistics about E4 devices.
+  - topic: statistics_android
+    value_schema: .kafka.AggregateKey
+    doc: Statistics about Android devices.
+  - topic: statistics_biovotion
+    value_schema: .kafka.AggregateKey
+    doc: Statistics about Biovotion devices.
