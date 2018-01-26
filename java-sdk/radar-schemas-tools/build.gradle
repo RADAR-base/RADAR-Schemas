@@ -3,9 +3,8 @@ plugins {
     id 'checkstyle'
     id 'pmd'
     id 'application'
+    id 'com.jfrog.artifactory'
 }
-
-apply plugin: 'com.jfrog.artifactory'
 
 ext.artifactName = 'radar-schemas-tools'
 ext.description = 'RADAR Schemas specification and validation tools.'
@@ -23,8 +22,9 @@ sourceSets {
 
 ext.junitVersion = '4.12'
 ext.slf4jVersion = '1.7.25'
-ext.jettyVersion = '9.4.7.v20170914'
-ext.jerseyVersion = '2.9'
+ext.jettyVersion = '9.4.8.v20171121'
+ext.jerseyVersion = '2.26'
+
 dependencies {
     api group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.8.10'
     api group: 'javax.validation', name: 'validation-api', version: '2.0.0.Final'
@@ -116,6 +116,11 @@ publishing {
                 root.appendNode('name', artifactName)
                 root.appendNode('url', githubUrl)
                 root.children().last() + pomConfig
+                root.dependencies.'*'.findAll() {
+                    it.artifactId.text() == 'slf4j-simple'
+                }.each() {
+                    it.parent().remove(it)
+                }
             }
         }
     }

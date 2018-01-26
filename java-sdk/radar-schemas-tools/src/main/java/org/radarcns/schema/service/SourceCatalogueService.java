@@ -23,79 +23,80 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 public class SourceCatalogueService {
 
-    private static final String SOURCE_TYPE_CLASS_HEADER = "Source-Type-Class";
     private final SourceCatalogue sourceCatalogue;
 
     SourceCatalogueService(SourceCatalogue sourceCatalogue) {
         this.sourceCatalogue = sourceCatalogue;
     }
 
+    /** Get all passive sources from the source catalogue. */
     @GET
     @Path("/passive")
     public Response getPassiveSources() {
-        return Response.ok().entity(new SourceTypeResponse(this.sourceCatalogue).passive())
-                .header(SOURCE_TYPE_CLASS_HEADER, "PASSIVE").build();
+        return Response.ok()
+                .entity(new SourceTypeResponse(this.sourceCatalogue).addPassive())
+                .build();
     }
 
+    /** Get all passive sources from the source catalogue. */
     @GET
     @Path("/active")
     public Response getActiveSources() {
-        return Response.ok().entity(new SourceTypeResponse(this.sourceCatalogue).active())
-                .header(SOURCE_TYPE_CLASS_HEADER, "ACTIVE").build();
+        return Response.ok()
+                .entity(new SourceTypeResponse(this.sourceCatalogue).addActive())
+                .build();
     }
 
+    /** Get all monitor sources from the source catalogue. */
     @GET
     @Path("/monitor")
     public Response getMonitorSources() {
-        return Response.ok().entity(new SourceTypeResponse(this.sourceCatalogue).monitor())
-                .header(SOURCE_TYPE_CLASS_HEADER, "MONITOR").build();
+        return Response.ok()
+                .entity(new SourceTypeResponse(this.sourceCatalogue).addMonitor())
+                .build();
     }
 
+    /** Get all sources from the source catalogue. */
     @GET
     public Response getAllSourceTypes() {
-        return Response.ok().entity(new SourceTypeResponse(this.sourceCatalogue).all())
-                .header(SOURCE_TYPE_CLASS_HEADER, "ALL").build();
+        return Response.ok()
+                .entity(new SourceTypeResponse(this.sourceCatalogue)
+                        .addPassive()
+                        .addActive()
+                        .addMonitor())
+                .build();
     }
 
+    /** Response with source types. */
     public class SourceTypeResponse {
-
         @JsonIgnore
         private final SourceCatalogue sourceCatalogue;
 
-        @JsonProperty("passive-source-types")
+        @JsonProperty("addPassive-source-types")
         private List<PassiveSource> passiveSources;
 
-        @JsonProperty("active-source-types")
+        @JsonProperty("addActive-source-types")
         private List<ActiveSource> activeSources;
 
-        @JsonProperty("monitor-source-types")
+        @JsonProperty("addMonitor-source-types")
         private List<MonitorSource> monitorSources;
 
         private SourceTypeResponse(SourceCatalogue sourceCatalogue) {
             this.sourceCatalogue = sourceCatalogue;
         }
 
-        private SourceTypeResponse passive() {
+        private SourceTypeResponse addPassive() {
             this.passiveSources = new ArrayList<>(
                     this.sourceCatalogue.getPassiveSources().values());
             return this;
         }
 
-        public SourceTypeResponse active() {
+        private SourceTypeResponse addActive() {
             this.activeSources = new ArrayList<>(this.sourceCatalogue.getActiveSources().values());
             return this;
         }
 
-        public SourceTypeResponse monitor() {
-            this.monitorSources = new ArrayList<>(
-                    this.sourceCatalogue.getMonitorSources().values());
-            return this;
-        }
-
-        private SourceTypeResponse all() {
-            this.passiveSources = new ArrayList<>(
-                    this.sourceCatalogue.getPassiveSources().values());
-            this.activeSources = new ArrayList<>(this.sourceCatalogue.getActiveSources().values());
+        private SourceTypeResponse addMonitor() {
             this.monitorSources = new ArrayList<>(
                     this.sourceCatalogue.getMonitorSources().values());
             return this;

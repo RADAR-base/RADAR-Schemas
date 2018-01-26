@@ -1,5 +1,9 @@
 # RADAR Schemas tools
 
+A number of tools are provided with RADAR-Schemas. They are most easily accessed by using the docker
+image as described in the main readme. Below is more information about the schema validation that
+the tools can perform.
+
 The RADAR Schemas Validator checks if the `Schema Catalog` is in a valid state.
 
 It first checks the folder structure, it has to be compliant with:
@@ -70,9 +74,8 @@ All tests are enable by default.
 
 ```yaml
 validation:
-  schema_to_skip:
-    - record_name_check: [ ENABLE | DISABLE ]
-      fields:
+  org.radarcns.passive.biovotion.BiovotionVSMSpO2:
+    - fields:
         - fieldnameOne
         - fieldnameTwo
 ``` 

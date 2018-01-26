@@ -48,6 +48,9 @@ import java.util.stream.Stream;
 
 import static org.radarcns.schema.CommandLineApp.matchTopic;
 
+/**
+ * Schema registry interface.
+ */
 public class SchemaRegistry implements Closeable {
     public enum Compatibility {
         NONE, FULL, BACKWARD, FORWARD, BACKWARD_TRANSITIVE, FORWARD_TRANSITIVE, FULL_TRANSITIVE
@@ -57,6 +60,11 @@ public class SchemaRegistry implements Closeable {
     private final SchemaRetriever schemaClient;
     private final RestClient httpClient;
 
+    /**
+     * Schema registry for given URL. If this is https, unsafe certificates are accepted.
+     * @param baseUrl URL of the schema registry
+     * @throws MalformedURLException if given URL is invalid.
+     */
     public SchemaRegistry(String baseUrl) throws MalformedURLException {
         ServerConfig config = new ServerConfig(baseUrl);
         config.setUnsafe(true);
@@ -64,6 +72,11 @@ public class SchemaRegistry implements Closeable {
         this.httpClient = new RestClient(config, 10, ManagedConnectionPool.GLOBAL_POOL);
     }
 
+    /**
+     * Register all schemas in a source catalogue. Stream sources are ignored.
+     * @param catalogue schema catalogue to read schemas from
+     * @return whether all schemas were successfully registered.
+     */
     public boolean registerSchemas(SourceCatalogue catalogue) {
         return Stream.of(
                 catalogue.getActiveSources(),
@@ -74,6 +87,7 @@ public class SchemaRegistry implements Closeable {
                 .allMatch(this::registerSchema);
     }
 
+    /** Register the schema of a single topic. */
     public boolean registerSchema(AvroTopic<?, ?> topic) {
         try {
             Schema schema = topic.getKeySchema();
@@ -94,6 +108,11 @@ public class SchemaRegistry implements Closeable {
         }
     }
 
+    /**
+     * Set the compatibility level of the schema registry.
+     * @param compatibility target compatibility level.
+     * @return whether the request was successful.
+     */
     public boolean setCompatibility(Compatibility compatibility) {
         logger.info("Setting compatibility to {}", compatibility);
 
@@ -136,11 +155,13 @@ public class SchemaRegistry implements Closeable {
         }
     }
 
+    @Override
     public void close() {
         schemaClient.close();
         httpClient.close();
     }
 
+    /** Return the schema registry as a subcommand. */
     public static SubCommand command() {
         return new RegisterCommand();
     }

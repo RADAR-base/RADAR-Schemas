@@ -28,7 +28,7 @@ import java.util.regex.Pattern;
 
 import static org.radarcns.schema.SchemaRepository.COMMONS_PATH;
 import static org.radarcns.schema.util.Utils.getProjectGroup;
-import static org.radarcns.schema.util.Utils.toSnakeCase;
+import static org.radarcns.schema.util.Utils.snakeToCamelCase;
 
 /**
  * TODO.
@@ -92,7 +92,7 @@ public final class ValidationSupport {
     public static String getRecordName(Path path) {
         Objects.requireNonNull(path);
 
-        return toSnakeCase(path.getFileName().toString());
+        return snakeToCamelCase(path.getFileName().toString());
     }
 
     /**

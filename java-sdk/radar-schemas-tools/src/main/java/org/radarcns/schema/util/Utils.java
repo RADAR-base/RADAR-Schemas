@@ -69,6 +69,11 @@ public final class Utils {
         return projectGroup;
     }
 
+    /**
+     * Expand a class name with the group name if it starts with a dot.
+     * @param classShorthand class name, possibly starting with a dot as a shorthand.
+     * @return class name or {@code null} if null or empty.
+     */
     public static String expandClass(String classShorthand) {
         if (classShorthand == null || classShorthand.isEmpty()) {
             return null;
@@ -79,7 +84,14 @@ public final class Utils {
         }
     }
 
-    public static String toSnakeCase(String value) {
+    /**
+     * Converts given file name from snake_case to CamelCase. This will cause underscores to be
+     * removed, and the next character to be uppercase. This only converts the value up to the
+     * first dot encountered.
+     * @param value file name in snake_case
+     * @return main part of file name in CamelCase.
+     */
+    public static String snakeToCamelCase(String value) {
         char[] fileName = value.toCharArray();
 
         StringBuilder builder = new StringBuilder(fileName.length);
@@ -106,6 +118,7 @@ public final class Utils {
         return builder.toString();
     }
 
+    /** Apply a throwing function, and if it throws, log it and let it return an empty Stream. */
     public static <T, R> Function<T, Stream<R>> applyOrEmpty(ThrowingFunction<T, Stream<R>> func) {
         return t -> {
             try {
@@ -117,6 +130,7 @@ public final class Utils {
         };
     }
 
+    /** Test a throwing predicate, and if it throws, log it and let it return false. */
     public static <T> Predicate<T> testOrFalse(ThrowingPredicate<T> test) {
         return t -> {
             try {
@@ -128,15 +142,36 @@ public final class Utils {
         };
     }
 
+    /**
+     * Function that may throw an exception.
+     * @param <T> type of value taken.
+     * @param <R> type of value returned.
+     */
     @FunctionalInterface
     @SuppressWarnings("PMD.SignatureDeclareThrowsException")
     public interface ThrowingFunction<T, R> {
+        /**
+         * Apply containing function.
+         * @param value value to apply function to.
+         * @return result of the function.
+         * @throws Exception if the function fails.
+         */
         R apply(T value) throws Exception;
     }
 
+    /**
+     * Predicate that may throw an exception.
+     * @param <T> type of value taken.
+     */
     @FunctionalInterface
     @SuppressWarnings("PMD.SignatureDeclareThrowsException")
     public interface ThrowingPredicate<T> {
+        /**
+         * Test containing predicate.
+         * @param value value to test predicate for.
+         * @return whether the predicate tests true.
+         * @throws Exception if the predicate fails to evaluate.
+         */
         boolean test(T value) throws Exception;
     }
 }
