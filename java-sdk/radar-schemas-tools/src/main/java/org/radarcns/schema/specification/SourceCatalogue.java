@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+import java.nio.file.InvalidPathException;
 import org.radarcns.schema.Scope;
 import org.radarcns.schema.specification.active.ActiveSource;
 import org.radarcns.schema.specification.stream.StreamGroup;
@@ -80,6 +81,14 @@ public class SourceCatalogue {
         sources.addAll(streamGroups.values());
     }
 
+    /**
+     * Load the source catalogue based at the given root directory.
+     * @param root Directory containing a specifications subdirectory.
+     * @return parsed source catalogue.
+     * @throws InvalidPathException if the {@code specifications} directory cannot be found in given
+     *                              root.
+     * @throws IOException if the source catalogue could not be read.
+     */
     public static SourceCatalogue load(Path root) throws IOException {
         Path specRoot = root.resolve("specifications");
 
@@ -195,6 +204,7 @@ public class SourceCatalogue {
                 .flatMap(DataProducer::getTopicNames);
     }
 
+    /** Get all topics in the catalogue. */
     public Stream<AvroTopic<?, ?>> getTopics() {
         return sources.stream()
                 .flatMap(DataProducer::getTopics);

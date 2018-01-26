@@ -48,6 +48,9 @@ import static java.util.function.Function.identity;
 import static org.radarcns.schema.SchemaRepository.COMMONS_PATH;
 import static org.radarcns.schema.validation.rules.Validator.raise;
 
+/**
+ * Validator for a set of RADAR-Schemas.
+ */
 public class SchemaValidator {
     public static final String AVRO_EXTENSION = "avsc";
 
@@ -56,6 +59,11 @@ public class SchemaValidator {
     private final Validator<SchemaMetadata> validator;
     private final SchemaMetadataRules rules;
 
+    /**
+     * Schema validator for given RADAR-Schemas directory.
+     * @param root RADAR-Schemas directory.
+     * @param config configuration to exclude certain schemas or fields from validation.
+     */
     public SchemaValidator(Path root, ExcludeConfig config) {
         this.config = config;
         this.root = root;
@@ -131,16 +139,15 @@ public class SchemaValidator {
                 .flatMap(this::analyseFiles);
     }
 
+    /** Validate a single schema in given path. */
     public Stream<ValidationException> validate(Schema schema, Path path, Scope scope) {
         return validator.apply(new SchemaMetadata(schema, scope, path));
     }
 
-    public static Stream<String> formatStream(Stream<ValidationException> exceptionStream) {
-        return exceptionStream.map(ex -> "Validation FAILED:\n" + ex.getMessage() + "\n\n");
-    }
-
+    /** Formats a stream of validation exceptions. */
     public static String format(Stream<ValidationException> exceptionStream) {
-        return SchemaValidator.formatStream(exceptionStream)
+        return exceptionStream
+                .map(ex -> "Validation FAILED:\n" + ex.getMessage() + "\n\n")
                 .collect(Collectors.joining());
     }
 
@@ -149,7 +156,7 @@ public class SchemaValidator {
      * @param file TODO
      * @return TODO
      */
-    public static boolean isAvscFile(Path file) {
+    private static boolean isAvscFile(Path file) {
         return ValidationSupport.matchesExtension(file, AVRO_EXTENSION);
     }
 
@@ -170,6 +177,7 @@ public class SchemaValidator {
         return ((RadarSchemaRules) rules.getSchemaRules()).getSchemaStore();
     }
 
+    /** Schema validator as a command. */
     public static SubCommand command() {
         return new SchemaValidatorCommand();
     }

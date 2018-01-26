@@ -108,6 +108,11 @@ public class DataTopic extends AvroTopicConfig {
         return toString(false);
     }
 
+    /**
+     * Convert the topic to String, either as dense string or as verbose YAML string.
+     * @param prettyString Whether the result should be a verbose pretty-printed string.
+     * @return topic as a string.
+     */
     public String toString(boolean prettyString) {
         String name = getClass().getSimpleName();
         // preserves insertion order

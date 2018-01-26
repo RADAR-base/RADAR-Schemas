@@ -31,6 +31,9 @@ public class PassiveValidation {
 
     private static Map<PassiveSource.RadarSourceTypes, ValidationSupport.Package> converter;
 
+    /**
+     * Set up converters.
+     */
     @BeforeClass
     public static void initConverter() {
         converter = new HashMap<>();
