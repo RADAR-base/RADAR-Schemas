@@ -20,6 +20,7 @@
     "RADAIAN_PER_SEC",
     "RMSSD_IN_MILLI_SEC",
     "SECOND",
+    "MICRO_VOLT",
     "UNKNOWN"
   ]
 }

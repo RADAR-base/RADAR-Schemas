@@ -1,0 +1,13 @@
+{
+  "namespace": "org.radarcns.passive.emotion",
+  "type": "record",
+  "name": "EmotionFarosEcg",
+  "doc": "Data from eMotion Faros' multi-channel electrocardiography electrodes. Not all Faros models possess the same number of channels, so the second and third channels are optional.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+    { "name": "timeReceived", "type": "double", "doc": "Device receiver timestamp in UTC (s)." } ,
+    { "name": "ecgChannel1", "type": "float", "doc": "ECG signal from the first channel (µV)." },
+    { "name": "ecgChannel2", "type": ["null", "float"], "doc": "ECG signal from the second channel (µV). Null if the device does not have at least two channels.", "default": null },
+    { "name": "ecgChannel3", "type": ["null", "float"], "doc": "ECG signal from the first channel (µV). Null if the device does not have at least two three channels.", "default": null }
+  ]
+}
