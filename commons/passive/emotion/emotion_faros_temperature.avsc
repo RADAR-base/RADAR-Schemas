@@ -1,0 +1,11 @@
+{
+  "namespace": "org.radarcns.passive.emotion",
+  "type": "record",
+  "name": "EmotionFarosTemperature",
+  "doc": "Data from an eMotion Faros' temperature sensor.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+    {"name": "timeReceived", "type": "double", "doc": "Device receiver timestamp in UTC (s)." },
+    {"name": "temperature", "type": "float", "doc": "Skin temperature (°C) converted from analog-to-digital converter (ADC) values. Conversion is reliable between 35 and 45 degrees Celcius." }
+  ]
+}
