@@ -25,6 +25,7 @@ public class StreamGroup extends DataProducer<StreamDataTopic> {
         return Scope.STREAM;
     }
 
+    /** Get only the topic names that are the output of a timed stream. */
     public Stream<String> getTimedTopicNames() {
         return data.stream().flatMap(StreamDataTopic::getTimedTopicNames);
     }

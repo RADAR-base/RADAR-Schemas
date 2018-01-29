@@ -24,21 +24,32 @@ public interface SchemaRules {
     /** Checks that the symbols of enums have the required format. */
     Validator<Schema> validateSymbols();
 
-    /** Checks that schemas should have a {@code time} field. */
+    /**
+     * Checks that schemas should have a {@code time} field.
+     */
     Validator<Schema> validateTime();
 
-    /** Checks that schemas should have a {@code timeCompleted} field. */
+    /**
+     * Checks that schemas should have a {@code timeCompleted} field.
+     */
     Validator<Schema> validateTimeCompleted();
 
-    /** Checks that schemas should not have a {@code timeCompleted} field. */
+    /**
+     * Checks that schemas should not have a {@code timeCompleted} field.
+     */
     Validator<Schema> validateNotTimeCompleted();
 
-    /** Checks that schemas should have a {@code timeReceived} field. */
+    /**
+     * Checks that schemas should have a {@code timeReceived} field.
+     */
     Validator<Schema> validateTimeReceived();
 
-    /** Checks that schemas should not have a {@code timeReceived} field. */
+    /**
+     * Checks that schemas should not have a {@code timeReceived} field.
+     */
     Validator<Schema> validateNotTimeReceived();
 
+    /** Validate an enum. */
     default Validator<Schema> validateEnum() {
         return validateUniqueness()
                 .and(validateNameSpace())
@@ -57,7 +68,7 @@ public interface SchemaRules {
     }
 
     /**
-     * Validates record schemas of an active source
+     * Validates record schemas of an active source.
      * @return TODO
      */
     default Validator<Schema> validateActiveSource() {

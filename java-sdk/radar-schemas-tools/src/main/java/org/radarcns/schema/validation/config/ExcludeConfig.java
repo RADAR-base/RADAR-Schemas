@@ -1,5 +1,3 @@
-package org.radarcns.schema.validation.config;
-
 /*
  * Copyright 2017 King's College London and The Hyve
  *
@@ -15,6 +13,8 @@ package org.radarcns.schema.validation.config;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+package org.radarcns.schema.validation.config;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSetter;
@@ -59,7 +59,7 @@ public class ExcludeConfig {
     private static final String FILE_NAME = "schema.yml";
 
     /** Wild card to suppress check for entire package. */
-    public static final String WILD_CARD_PACKAGE = ".*";
+    private static final String WILD_CARD_PACKAGE = ".*";
 
     /** Regex for validating the yml file. */
     public static final String VALID_INPUT_REGEX = "^[a-z][a-zA-Z0-9.*]*$";
@@ -101,29 +101,6 @@ public class ExcludeConfig {
      */
     private static boolean validateClass(Stream<String> stream) {
         return stream.allMatch(value -> value.matches(VALID_INPUT_REGEX));
-    }
-
-    /**
-     * TODO.
-     * @param schema TODO
-     * @return TODO
-     */
-    public boolean contains(Schema schema) {
-        return validation.containsKey(schema.getNamespace() + WILD_CARD_PACKAGE)
-                || validation.containsKey(schema.getFullName());
-    }
-
-    /**
-     * TODO.
-     * @param schema TODO
-     * @return TODO
-     */
-    public boolean isNameRecordEnable(Schema schema) {
-        ConfigItem item = validation.get(schema.getFullName()) == null
-                ? validation.get(schema.getNamespace() + WILD_CARD_PACKAGE)
-                : validation.get(schema.getFullName());
-
-        return item == null || item.isNameRecordDisable();
     }
 
     /**
@@ -170,6 +147,7 @@ public class ExcludeConfig {
         setFiles(Arrays.asList(files));
     }
 
+    /** Set the files to be excluded. */
     @JsonSetter("files")
     public void setFiles(Collection<String> files) {
         FileSystem fs = FileSystems.getDefault();
@@ -202,6 +180,7 @@ public class ExcludeConfig {
         return Collections.unmodifiableSet(files);
     }
 
+    /** Set the validation to be excluded. */
     @JsonSetter("validation")
     public void setValidation(Map<String, ConfigItem> validation) {
         //Validate validation key map

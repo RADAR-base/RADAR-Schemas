@@ -10,15 +10,28 @@ import static org.radarcns.schema.validation.rules.Validator.check;
 import static org.radarcns.schema.validation.rules.Validator.raise;
 import static org.radarcns.schema.validation.rules.Validator.valid;
 
+/** Rules for schemas with metadata in RADAR-Schemas. */
 public class RadarSchemaMetadataRules implements SchemaMetadataRules {
     private final SchemaRules schemaRules;
     private final Path root;
     private final ExcludeConfig config;
 
+    /**
+     * Rules for schemas with metadata in RADAR-Schemas. {@link RadarSchemaRules} is used as schema
+     * rules implementation.
+     * @param root directory of RADAR-Schemas
+     * @param config configuration for excluding schemas from validation.
+     */
     public RadarSchemaMetadataRules(Path root, ExcludeConfig config) {
         this(root, config, new RadarSchemaRules(config));
     }
 
+    /**
+     * Rules for schemas with metadata in RADAR-Schemas.
+     * @param root directory of RADAR-Schemas
+     * @param config configuration for excluding schemas from validation.
+     * @param schemaRules schema rules implementation.
+     */
     public RadarSchemaMetadataRules(Path root, ExcludeConfig config, SchemaRules schemaRules) {
         this.schemaRules = schemaRules;
         this.config = config;

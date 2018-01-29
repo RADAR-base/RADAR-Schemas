@@ -5,15 +5,24 @@ import org.radarcns.schema.Scope;
 
 import java.nio.file.Path;
 
+/**
+ * Schema with metadata.
+ */
 public class SchemaMetadata {
     private final Schema schema;
     private final Scope scope;
     private final Path path;
 
+    /**
+     * Schema with {@code null} metadata.
+     */
     public SchemaMetadata(Schema schema) {
         this(schema, null, null);
     }
 
+    /**
+     * Schema with metadata.
+     */
     public SchemaMetadata(Schema schema, Scope scope, Path path) {
         this.schema = schema;
         this.scope = scope;
@@ -30,9 +39,5 @@ public class SchemaMetadata {
 
     public Schema getSchema() {
         return schema;
-    }
-
-    public SchemaMetadata withSubSchema(Schema schema) {
-        return new SchemaMetadata(schema, scope, path);
     }
 }

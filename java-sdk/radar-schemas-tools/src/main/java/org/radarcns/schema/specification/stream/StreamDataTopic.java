@@ -4,7 +4,6 @@ import static org.radarcns.schema.util.Utils.applyOrEmpty;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -58,6 +57,7 @@ public class StreamDataTopic extends DataTopic {
         this.inputTopics.add(inputTopic);
     }
 
+    /** Get human readable output topic. */
     public String getTopic() {
         if (windowed) {
             return topicBase + "_<time-frame>";
@@ -72,6 +72,7 @@ public class StreamDataTopic extends DataTopic {
         return windowed;
     }
 
+    /** Get the input topics. */
     public List<String> getInputTopics() {
         return inputTopics;
     }
@@ -104,7 +105,8 @@ public class StreamDataTopic extends DataTopic {
         }
     }
 
-    public Stream<AvroTopic<?, ?>> getTopics() throws IOException {
+    @Override
+    public Stream<AvroTopic<?, ?>> getTopics() {
         return getTopicNames()
                 .flatMap(applyOrEmpty(topic -> {
                     AvroTopicConfig config = new AvroTopicConfig();
@@ -115,6 +117,7 @@ public class StreamDataTopic extends DataTopic {
                 }));
     }
 
+    /** Get only topic names that are used with the fixed time windows. */
     public Stream<String> getTimedTopicNames() {
         if (windowed) {
             return getTopicNames();

@@ -17,6 +17,9 @@ import static org.radarcns.schema.validation.rules.Validator.matches;
 import static org.radarcns.schema.validation.rules.Validator.valid;
 import static org.radarcns.schema.validation.rules.Validator.validateNonNull;
 
+/**
+ * Rules for RADAR-Schemas schema fields.
+ */
 public class RadarSchemaFieldRules implements SchemaFieldRules {
     private static final String UNKNOWN = "UNKNOWN";
     private static final List<String> FIELD_NAME_NOT_ALLOWED_SUFFIX = Arrays.asList(
@@ -28,6 +31,9 @@ public class RadarSchemaFieldRules implements SchemaFieldRules {
 
     private final Map<Schema.Type, Validator<SchemaField>> defaultsValidator;
 
+    /**
+     * Rules for RADAR-Schemas schema fields.
+     */
     public RadarSchemaFieldRules() {
         defaultsValidator = new HashMap<>();
         defaultsValidator.put(Schema.Type.ENUM, this::validateDefaultEnum);

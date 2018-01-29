@@ -50,7 +50,7 @@ import java.util.stream.Stream;
 import static java.util.stream.Collectors.toList;
 
 /**
- * TODO.
+ * Command line app containing a source catalogue.
  */
 @SuppressWarnings("PMD.SystemPrintln")
 public class CommandLineApp {
@@ -60,6 +60,12 @@ public class CommandLineApp {
     private final SourceCatalogue catalogue;
     private final Path root;
 
+    /**
+     * Command line app started at a RADAR-Schemas root. The source catalogue is read from the
+     * {@code specifications} directory in that root.
+     * @param root path to the root of a RADAR-Schemas directory.
+     * @throws IOException if the source catalogue cannot be loaded.
+     */
     public CommandLineApp(Path root) throws IOException {
         this.root = root;
         this.catalogue = SourceCatalogue.load(root);
@@ -163,6 +169,7 @@ public class CommandLineApp {
                                         DataTopic::getTopic, d -> d.toString(prettyPrint)))));
     }
 
+    /** Command to execute. */
     public static void main(String... args) {
         SortedMap<String, SubCommand> subCommands = commandsToMap(
                 KafkaTopics.command(),
@@ -221,6 +228,7 @@ public class CommandLineApp {
         return map;
     }
 
+    /** Command to list the topics. */
     private static SubCommand listCommand() {
         return new SubCommand() {
             @Override
@@ -262,13 +270,21 @@ public class CommandLineApp {
         };
     }
 
+    /**
+     * Create a pattern to match given topic. If the exact match is non-null, it is returned
+     * as an exact match, otherwise if regex is non-null, it is used, and otherwise
+     * {@code null} is returned.
+     * @param exact string that should be exactly matched.
+     * @param regex string that should be matched as a regex.
+     * @return pattern or {@code null} if both exact and regex are {@code null}.
+     */
     public static Pattern matchTopic(String exact, String regex) {
         if (exact != null) {
             return Pattern.compile("^" + Pattern.quote(exact) + "$");
-        }
-        if (regex != null) {
+        } else if (regex != null) {
             return Pattern.compile(regex);
+        } else {
+            return null;
         }
-        return null;
     }
 }
