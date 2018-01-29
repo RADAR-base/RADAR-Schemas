@@ -1,0 +1,11 @@
+{
+  "namespace": "org.radarcns.passive.emotion",
+  "type": "record",
+  "name": "EmotionFarosInterBeatInterval",
+  "doc": "Time between two successive R-peaks (RR-interval), as calculated by a eMotion Faros device from the ECG signal. You can compute the heart rate as (60 / ibi).",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+    {"name": "timeReceived", "type": "double", "doc": "Device receiver timestamp in UTC (s)." },
+    {"name": "interBeatInterval", "type": "float", "doc": "Duration (s) of the detected inter beat interval." }
+  ]
+}
