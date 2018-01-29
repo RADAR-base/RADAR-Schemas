@@ -27,18 +27,23 @@ import static org.radarcns.schema.util.Utils.expandClass;
 public class DataTopic extends AvroTopicConfig {
     private static final Logger logger = LoggerFactory.getLogger(DataTopic.class);
 
+    /** Type of topic. Its meaning is class-specific.*/
     @JsonProperty
     private String type;
 
+    /** Documentation string for this topic. */
     @JsonProperty
     private String doc;
 
+    /** Sampling rate, how frequently messages are expected to be sent on average. */
     @JsonProperty("sample_rate")
     private SampleRateConfig sampleRate;
 
+    /** Output unit. */
     @JsonProperty
     private Unit unit;
 
+    /** Record fields that the given unit applies to. */
     @JsonProperty
     private List<AppDataTopic.DataField> fields;
 
@@ -103,6 +108,11 @@ public class DataTopic extends AvroTopicConfig {
         return toString(false);
     }
 
+    /**
+     * Convert the topic to String, either as dense string or as verbose YAML string.
+     * @param prettyString Whether the result should be a verbose pretty-printed string.
+     * @return topic as a string.
+     */
     public String toString(boolean prettyString) {
         String name = getClass().getSimpleName();
         // preserves insertion order
@@ -126,6 +136,11 @@ public class DataTopic extends AvroTopicConfig {
         }
     }
 
+    /**
+     * Turns this topic into an descriptive properties map.
+     * @param map properties to add to.
+     * @param reduced whether to set a reduced set of properties, to decrease verbosity.
+     */
     protected void propertiesMap(Map<String, Object> map, boolean reduced) {
         map.put("type", type);
         if (!reduced && doc != null) {

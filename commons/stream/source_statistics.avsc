@@ -1,0 +1,11 @@
+{
+  "namespace": "org.radarcns.stream",
+  "type": "record",
+  "name": "SourceStatistics",
+  "doc": "Statistics about single sources.",
+  "version": "1.0.0",
+  "fields": [
+    { "name": "timeStart", "type": "double", "doc": "First time (seconds since the UNIX Epoch) that a source streamed any data." },
+    { "name": "timeEnd", "type": "double", "doc": "Last time (seconds since the UNIX Epoch) that a source streamed any data." }
+  ]
+}

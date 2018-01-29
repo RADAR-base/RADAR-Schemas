@@ -1,0 +1,24 @@
+name: STREAM_STATISTICS
+doc: Statistics about the streaming data.
+data:
+  - topic: source_statistics_empatica_e4
+    input_topics:
+      - android_empatica_e4_blood_volume_pulse_1min
+    value_schema: .stream.SourceStatistics
+    doc: Statistics about E4 devices.
+  - topic: source_statistics_radar_prmt
+    input_topics:
+      - android_phone_acceleration_1min
+      - android_phone_bluetooth_devices
+      - android_phone_sms
+      - android_phone_call
+      - android_phone_contacts
+      - android_phone_usage_event
+      - android_phone_relative_location
+    value_schema: .stream.SourceStatistics
+    doc: Statistics about Android devices.
+  - topic: source_statistics_biovotion_vsm1
+    input_topics:
+      - android_biovotion_vsm1_acceleration_1min
+    value_schema: .stream.SourceStatistics
+    doc: Statistics about Biovotion devices.

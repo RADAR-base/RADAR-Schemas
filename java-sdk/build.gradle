@@ -17,7 +17,7 @@ subprojects {
     apply plugin: 'idea'
 
     // Configuration
-    version = '0.3'
+    version = '0.3.1'
     group = 'org.radarcns'
     ext.githubRepoName = 'RADAR-CNS/RADAR-Schemas'
 
@@ -128,17 +128,17 @@ subprojects {
             downloadSources = true
         }
     }
-}
 
-task downloadDependencies {
-    description "Pre-downloads *most* dependencies"
-    doLast {
-        configurations.getAsMap().each { name, config ->
-            println "Retrieving dependencies for $name"
-            try {
-                config.files
-            } catch (e) {
-                project.logger.info e.message // some cannot be resolved, silentlyish skip them
+    task downloadDependencies {
+        description "Pre-downloads *most* dependencies"
+        doLast {
+            configurations.getAsMap().each { name, config ->
+                println "Retrieving dependencies for $name"
+                try {
+                    config.files
+                } catch (e) {
+                    project.logger.info e.message // some cannot be resolved, silentlyish skip them
+                }
             }
         }
     }

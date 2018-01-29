@@ -26,18 +26,24 @@ import java.nio.file.Path;
 import static org.radarcns.schema.SchemaRepository.SPECIFICATIONS_PATH;
 
 /**
- * TODO.
+ * Validates RADAR-Schemas specifications.
  */
 public class SpecificationsValidator {
     public static final String YML_EXTENSION = "yml";
     private final ExcludeConfig config;
     private final Path root;
 
+    /**
+     * Specifications validator for given RADAR-Schemas directory.
+     * @param root RADAR-Schemas directory.
+     * @param config configuration to exclude certain schemas or fields from validation.
+     */
     public SpecificationsValidator(Path root, ExcludeConfig config) {
         this.root = root;
         this.config = config;
     }
 
+    /** Check that all files in the specifications directory are YAML files. */
     public boolean specificationsAreYmlFiles(Scope scope) throws IOException {
         return Files.walk(scope.getPath(root.resolve(SPECIFICATIONS_PATH)))
                     .filter(Files::isRegularFile)

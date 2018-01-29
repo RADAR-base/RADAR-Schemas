@@ -20,6 +20,7 @@ public interface SchemaFieldRules {
     /** Checks field default values. */
     Validator<SchemaField> validateDefault();
 
+    /** Get a validator for a field. */
     default Validator<SchemaField> getValidator(SchemaRules schemaRules) {
         return validateFieldTypes(schemaRules)
                 .and(validateFieldName())
@@ -27,6 +28,7 @@ public interface SchemaFieldRules {
                 .and(validateFieldDocumentation());
     }
 
+    /** Get a validator for a union inside a record. */
     default Validator<SchemaField> validateInternalUnion(SchemaRules schemaRules) {
         return field -> field.getField().schema().getTypes().stream()
                 .flatMap(schema -> {
@@ -44,6 +46,7 @@ public interface SchemaFieldRules {
                 });
     }
 
+    /** A message function for a field, ending with given text. */
     default Function<SchemaField, String> message(String text) {
         return schema -> "Field " + schema.getField().name() + " in schema "
                 + schema.getSchema().getFullName() + " is invalid. " + text;

@@ -1,5 +1,11 @@
 package org.radarcns.schema.registration;
 
+import static org.radarcns.schema.CommandLineApp.matchTopic;
+
+import java.io.Closeable;
+import java.util.Optional;
+import java.util.Properties;
+import java.util.regex.Pattern;
 import kafka.admin.AdminUtils;
 import kafka.admin.RackAwareMode;
 import kafka.utils.ZKStringSerializer;
@@ -8,21 +14,14 @@ import net.sourceforge.argparse4j.inf.ArgumentParser;
 import net.sourceforge.argparse4j.inf.Namespace;
 import org.I0Itec.zkclient.ZkClient;
 import org.I0Itec.zkclient.ZkConnection;
+import org.I0Itec.zkclient.exception.ZkException;
 import org.I0Itec.zkclient.exception.ZkMarshallingError;
 import org.I0Itec.zkclient.serialize.ZkSerializer;
-import org.apache.zookeeper.KeeperException;
 import org.radarcns.schema.CommandLineApp;
 import org.radarcns.schema.specification.SourceCatalogue;
 import org.radarcns.schema.util.SubCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.Closeable;
-import java.util.Optional;
-import java.util.Properties;
-import java.util.regex.Pattern;
-
-import static org.radarcns.schema.CommandLineApp.matchTopic;
 
 /**
  * Registers Kafka topics with Zookeeper.
@@ -60,10 +59,11 @@ public class KafkaTopics implements Closeable {
      * waiting for at most 200 seconds.
      * @param brokers number of brokers to wait for
      * @return whether the brokers where available
-     * @throws InterruptedException
-     * @throws KeeperException
+     * @throws InterruptedException when waiting for the brokers is interrepted.
+     * @throws ZkException if the Zookeeper instance cannot be reached or returns an unexpected
+     *                     result.
      */
-    public boolean waitForBrokers(int brokers) throws InterruptedException, KeeperException {
+    public boolean waitForBrokers(int brokers) throws InterruptedException, ZkException {
         boolean brokersAvailable = false;
         int sleep = 2;
         for (int tries = 0; tries < 10; tries++) {
@@ -124,7 +124,7 @@ public class KafkaTopics implements Closeable {
         }
     }
 
-    public int getNumberOfBrokers() throws KeeperException, InterruptedException {
+    public int getNumberOfBrokers() throws ZkException {
         return zkUtils.getAllBrokersInCluster().length();
     }
 
@@ -185,8 +185,8 @@ public class KafkaTopics implements Closeable {
                         return result.get() ? 0 : 1;
                     }
                 }
-            } catch (InterruptedException | KeeperException e) {
-                logger.error("Cannot retrieve number of active Kafka brokers."
+            } catch (InterruptedException | ZkException e) {
+                logger.error("Cannot retrieve number of addActive Kafka brokers."
                         + " Please check that Zookeeper is running.");
                 return 1;
             }
