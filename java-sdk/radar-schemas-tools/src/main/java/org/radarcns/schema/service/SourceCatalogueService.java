@@ -72,13 +72,13 @@ public class SourceCatalogueService {
         @JsonIgnore
         private final SourceCatalogue sourceCatalogue;
 
-        @JsonProperty("addPassive-source-types")
+        @JsonProperty("passive-source-types")
         private List<PassiveSource> passiveSources;
 
-        @JsonProperty("addActive-source-types")
+        @JsonProperty("active-source-types")
         private List<ActiveSource> activeSources;
 
-        @JsonProperty("addMonitor-source-types")
+        @JsonProperty("monitor-source-types")
         private List<MonitorSource> monitorSources;
 
         private SourceTypeResponse(SourceCatalogue sourceCatalogue) {
