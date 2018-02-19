@@ -1,8 +1,8 @@
 {
-  "namespace": "org.radarcns.passive.emotion",
+  "namespace": "org.radarcns.passive.bittium",
   "type": "record",
-  "name": "EmotionFarosTemperature",
-  "doc": "Data from an eMotion Faros' temperature sensor.",
+  "name": "BittiumFarosTemperature",
+  "doc": "Data from an Bittium Faros' temperature sensor.",
   "fields": [
     {"name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
     {"name": "timeReceived", "type": "double", "doc": "Device receiver timestamp in UTC (s)." },
