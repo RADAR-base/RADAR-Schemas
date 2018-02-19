@@ -150,3 +150,13 @@ data:
     value_schema: .passive.phone.PhoneUserInteraction
     sample_rate:
       dynamic: true
+  # Weather
+  - type: WEATHER
+    app_provider: .weather.WeatherApiProvider
+    unit: NON_DIMENSIONAL
+    processing_state: RAW
+    topic: android_local_weather
+    value_schema: .passive.weather.LocalWeather
+    sample_rate:
+      interval: 10800
+      configurable: true
