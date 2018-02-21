@@ -6,6 +6,6 @@
   "fields": [
     {"name": "time", "type": "double", "doc": "Device timestamp in UTC (s)."},
     { "name": "timeCompleted", "type": "double", "doc": "Timestamp in UTC (s) when subject completes the audio questionnaire." },
-    {"name": "data", "type": ["string", "null"], "doc": "Audio features computed by openSMILE recorded in Base64 format.", "default": null}
+    {"name": "data", "type": ["null", "string"], "doc": "Audio features computed by openSMILE recorded in Base64 format.", "default": null}
   ]
 }
