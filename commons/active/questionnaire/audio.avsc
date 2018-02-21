@@ -1,0 +1,11 @@
+{
+  "namespace": "org.radarcns.active.questionnaire",
+  "type": "record",
+  "name": "Audio",
+  "doc": "Audio data collected by aRMT app and processed using openSMILE.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Device timestamp in UTC (s)."},
+    { "name": "timeCompleted", "type": "double", "doc": "Timestamp in UTC (s) when subject completes the audio questionnaire." },
+    {"name": "data", "type": ["string", "null"], "doc": "Audio features computed by openSMILE recorded in Base64 format.", "default": null}
+  ]
+}

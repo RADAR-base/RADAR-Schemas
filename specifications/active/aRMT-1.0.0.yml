@@ -898,7 +898,7 @@ data:
           - text: 3
             value: 3 Very pleasant
       - lead: Null
-        content: This event was 
+        content: This event was
         widget: RANGE
         responses:
           - text: -3 Unimportant
@@ -1098,3 +1098,6 @@ data:
             value: 2
           - text: Strongly agree
             value: 3
+  - type: AUDIO
+    topic: questionnaire_audio
+    value_schema: .active.questionnaire.Audio
