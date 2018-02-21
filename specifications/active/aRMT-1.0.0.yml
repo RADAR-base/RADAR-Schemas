@@ -1100,4 +1100,4 @@ data:
             value: 3
   - type: AUDIO
     topic: questionnaire_audio
-    value_schema: .active.questionnaire.Audio
+    value_schema: .active.opensmile.OpenSmile2AudioAnalysis

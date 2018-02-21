@@ -1,7 +1,7 @@
 {
-  "namespace": "org.radarcns.active.questionnaire",
+  "namespace": "org.radarcns.active.opensmile",
   "type": "record",
-  "name": "Audio",
+  "name": "OpenSmile2AudioAnalysis",
   "doc": "Audio data collected by aRMT app and processed using openSMILE.",
   "fields": [
     {"name": "time", "type": "double", "doc": "Device timestamp in UTC (s)."},
