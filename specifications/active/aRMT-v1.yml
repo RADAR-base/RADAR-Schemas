@@ -1078,6 +1078,3 @@ data:
             value: 2
           - text: Strongly agree
             value: 3
-  - type: AUDIO
-    topic: questionnaire_audio
-    value_schema: .active.opensmile.OpenSmile2AudioAnalysis
