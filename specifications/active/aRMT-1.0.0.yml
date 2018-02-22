@@ -472,8 +472,8 @@ data:
           - text: 7 very much
             value: 7
       - lead: Null
-        content: What am I doing (just before the beep)?
-        widget: RADIO
+        content: What am I doing?
+        widget: CHECKBOX
         responses:
           - text: nothing
             value: 0
@@ -659,7 +659,7 @@ data:
             value: 6
       - lead: Null
         content: Who am I with?
-        widget: RADIO
+        widget: CHECKBOX
         responses:
           - text: Alone
             value: 0
