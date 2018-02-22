@@ -5,9 +5,8 @@
   "doc": "Audio data collected by aRMT app and processed using openSMILE.",
   "fields": [
     {"name": "time", "type": "double", "doc": "Device timestamp in UTC (s)."},
-    { "name": "timeCompleted", "type": "double", "doc": "Timestamp in UTC (s) when subject completes the audio questionnaire." },
-    {"name": "config", "type": ["null", "string"], "doc": "OpenSMILE configuration file.", "default": null},
-    {"name": "format", "type": ["null", "string"], "doc": "Format of the recorded data.", "default": null},
-    {"name": "data", "type": ["null", "string"], "doc": "Audio features computed by openSMILE.", "default": null}
+    { "name": "timeCompleted", "type": "double", "doc": "Timestamp in UTC (s) when subject completed the audio questionnaire." },
+    {"name": "config", "type": "string", "doc": "Contents of an OpenSMILE configuration file." },
+    {"name": "data", "type": ["null", "string"], "doc": "Audio features computed by openSMILE in plain text.", "default": null}
   ]
 }
