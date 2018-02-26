@@ -2,7 +2,7 @@
 name: aRMT
 vendor: RADAR
 model: aRMT-App
-version: 1.0.0
+version: 1.1.0
 assessment_type: QUESTIONNAIRE
 doc: aRMT Questionnaires definition. Includes Personal Health Questionnaire Depression Scale (PHQ-8), Experience sampling method (ESM) and RSES.
 data:
@@ -1098,3 +1098,6 @@ data:
             value: 2
           - text: Strongly agree
             value: 3
+  - type: AUDIO
+    topic: questionnaire_audio
+    value_schema: .active.opensmile.OpenSmile2AudioRecording
