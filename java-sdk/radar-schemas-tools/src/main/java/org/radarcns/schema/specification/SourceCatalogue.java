@@ -127,6 +127,11 @@ public class SourceCatalogue {
                         filename = filename.substring(0, lastPeriod);
                     }
                     try {
+                        String filename = f.getFileName().toString();
+                        int extensionIndex = filename.lastIndexOf('.');
+                        if (extensionIndex != -1) {
+                            filename = filename.substring(0, extensionIndex);
+                        }
                         return new AbstractMap.SimpleImmutableEntry<>(
                                 filename.toUpperCase(Locale.ENGLISH),
                                 reader.<T>readValue(f.toFile()));
