@@ -121,11 +121,14 @@ public class SourceCatalogue {
         return Files.walk(baseFolder)
                 .filter(Files::isRegularFile)
                 .map(f -> {
+                    String filename = f.getFileName().toString();
+                    int lastPeriod = filename.lastIndexOf('.');
+                    if (lastPeriod != -1) {
+                        filename = filename.substring(0, lastPeriod);
+                    }
                     try {
                         return new AbstractMap.SimpleImmutableEntry<>(
-                                f.getFileName().toString()
-                                        .split("\\.")[0]
-                                        .toUpperCase(Locale.ENGLISH),
+                                filename.toUpperCase(Locale.ENGLISH),
                                 reader.<T>readValue(f.toFile()));
                     } catch (IOException ex) {
                         logger.error("Failed to load configuration {}", f, ex);
