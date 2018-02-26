@@ -53,7 +53,7 @@ public enum TimeWindowMetadata {
                 return ONE_DAY;
             case ONE_WEEK:
                 return ONE_WEEK;
-            case UNKNOWN:
+            default:
                 return null;
         }
     }
