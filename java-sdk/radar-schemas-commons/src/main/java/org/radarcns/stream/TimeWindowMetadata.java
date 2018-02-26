@@ -1,9 +1,7 @@
 package org.radarcns.stream;
 
-import java.util.NoSuchElementException;
-import org.radarcns.catalogue.TimeWindow;
-
 import java.util.concurrent.TimeUnit;
+import org.radarcns.catalogue.TimeWindow;
 
 /** TimeWindow labels and window time period. */
 public enum TimeWindowMetadata {
