@@ -122,16 +122,11 @@ public class SourceCatalogue {
                 .filter(Files::isRegularFile)
                 .map(f -> {
                     String filename = f.getFileName().toString();
-                    int lastPeriod = filename.lastIndexOf('.');
-                    if (lastPeriod != -1) {
-                        filename = filename.substring(0, lastPeriod);
+                    int extensionIndex = filename.lastIndexOf('.');
+                    if (extensionIndex != -1) {
+                        filename = filename.substring(0, extensionIndex);
                     }
                     try {
-                        String filename = f.getFileName().toString();
-                        int extensionIndex = filename.lastIndexOf('.');
-                        if (extensionIndex != -1) {
-                            filename = filename.substring(0, extensionIndex);
-                        }
                         return new AbstractMap.SimpleImmutableEntry<>(
                                 filename.toUpperCase(Locale.ENGLISH),
                                 reader.<T>readValue(f.toFile()));

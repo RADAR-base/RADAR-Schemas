@@ -30,15 +30,15 @@ public class QuestionnaireDataTopic extends DataTopic {
     }
 
     @JsonProperty
-    private URL url;
+    private URL questionnaireDefinitionUrl;
 
-    public URL getUrl() {
-        return url;
+    public URL getQuestionnaireDefinitionUrl() {
+        return questionnaireDefinitionUrl;
     }
 
     @Override
     protected void propertiesMap(Map<String, Object> props, boolean reduced) {
         super.propertiesMap(props, reduced);
-        props.put("url", url);
+        props.put("questionnaireDefinitionUrl", questionnaireDefinitionUrl);
     }
 }
