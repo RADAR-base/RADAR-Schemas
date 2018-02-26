@@ -1,5 +1,6 @@
 package org.radarcns.stream;
 
+import java.util.NoSuchElementException;
 import org.radarcns.catalogue.TimeWindow;
 
 import java.util.concurrent.TimeUnit;
@@ -33,5 +34,29 @@ public enum TimeWindowMetadata {
 
     public String getTopicLabel(String topic) {
         return topic + label;
+    }
+
+    /**
+     * Get the timewindow metadata for given TimeWindow.
+     * @param timeWindow time window to look up
+     * @return metadata or {@code null} if given TimeWindow is unknown.
+     */
+    public static TimeWindowMetadata getMetadata(TimeWindow timeWindow) {
+        switch (timeWindow) {
+            case TEN_SECOND:
+                return TEN_SECOND;
+            case ONE_MIN:
+                return ONE_MIN;
+            case TEN_MIN:
+                return TEN_MIN;
+            case ONE_HOUR:
+                return ONE_HOUR;
+            case ONE_DAY:
+                return ONE_DAY;
+            case ONE_WEEK:
+                return ONE_WEEK;
+            case UNKNOWN:
+                return null;
+        }
     }
 }
