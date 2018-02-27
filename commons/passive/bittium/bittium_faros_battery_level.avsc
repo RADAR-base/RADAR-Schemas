@@ -1,0 +1,12 @@
+{
+  "namespace": "org.radarcns.passive.bittium",
+  "type": "record",
+  "name": "BittiumFarosBatteryLevel",
+  "doc": "Battery level of a Bittium Faros device.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+    { "name": "timeReceived", "type": "double", "doc": "Device receiver timestamp in UTC (s)." },
+    { "name": "batteryLevel", "type": "float", "doc": "Battery level from 0 to 1. Note that the battery level is a rough estimate." },
+    { "name": "exact", "type": "boolean", "doc": "Whether the batteryLevel can be taken as an exact value. True if the battery level is an exact representation, false if it is just an estimate based on the battery status (CRITICAL/LOW/MEDIUM/HIGH)." }
+  ]
+}

@@ -1,8 +1,8 @@
 {
-  "namespace": "org.radarcns.passive.emotion",
+  "namespace": "org.radarcns.passive.bittium",
   "type": "record",
-  "name": "EmotionFarosAcceleration",
-  "doc": "Data from 3-axis accelerometer sensor of a eMotion Faros device.",
+  "name": "BittiumFarosAcceleration",
+  "doc": "Data from 3-axis accelerometer sensor of a Bittium Faros device.",
   "fields": [
     { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
     { "name": "timeReceived", "type": "double", "doc": "Device receiver timestamp in UTC (s)." } ,

@@ -1,8 +1,8 @@
 {
-  "namespace": "org.radarcns.passive.emotion",
+  "namespace": "org.radarcns.passive.bittium",
   "type": "record",
-  "name": "EmotionFarosEcg",
-  "doc": "Data from eMotion Faros' multi-channel electrocardiography electrodes. Not all Faros models possess the same number of channels, so the second and third channels are optional.",
+  "name": "BittiumFarosEcg",
+  "doc": "Data from Bittium Faros' multi-channel electrocardiography electrodes. Not all Faros models possess the same number of channels, so the second and third channels are optional.",
   "fields": [
     { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
     { "name": "timeReceived", "type": "double", "doc": "Device receiver timestamp in UTC (s)." } ,
