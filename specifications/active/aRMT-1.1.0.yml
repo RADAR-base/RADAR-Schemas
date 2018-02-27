@@ -9,19 +9,19 @@ data:
   - type: THINC-IT
     topic: notification_thinc_it
     value_schema: .active.notification.Notification
-    questions_definition_url: https://github.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/blob/master/questionnaires/thinc_it/thinc_it_armt.json
+    questionnaire_definition_url: https://github.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/blob/master/questionnaires/thinc_it/thinc_it_armt.json
   - type: ROMBERG_TEST
     topic: task_romberg_test
     value_schema: .active.task.Task
-    questions_definition_url: https://github.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/blob/master/questionnaires/romberg_test/romberg_test_armt.json
+    questionnaire_definition_url: https://github.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/blob/master/questionnaires/romberg_test/romberg_test_armt.json
   - type: 2MW_TEST
     topic: task_2MW_test
     value_schema: .active.task.Task
-    questions_definition_url: https://github.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/blob/master/questionnaires/2MW_test/2MW_test_armt.json
+    questionnaire_definition_url: https://github.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/blob/master/questionnaires/2MW_test/2MW_test_armt.json
   - type: TANDEM_WALKING_TEST
     topic: task_tandem_walking_test
     value_schema: .active.task.Task
-    questions_definition_url: https://github.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/blob/master/questionnaires/tandem_walking_test/tandem_walking_test_armt.json
+    questionnaire_definition_url: https://github.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/blob/master/questionnaires/tandem_walking_test/tandem_walking_test_armt.json
   - type: PHQ8
     topic: questionnaire_phq8
     value_schema: .active.questionnaire.Questionnaire
