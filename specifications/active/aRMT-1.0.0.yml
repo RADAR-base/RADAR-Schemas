@@ -6,46 +6,6 @@ version: 1.0.0
 assessment_type: QUESTIONNAIRE
 doc: aRMT Questionnaires definition. Includes Personal Health Questionnaire Depression Scale (PHQ-8), Experience sampling method (ESM) and RSES.
 data:
-  - type: THINC-IT
-    topic: notification_thinc_it
-    value_schema: .active.notification.Notification
-    questions:
-      - lead: Time for Thinc-it
-        content: It's time to complete the Thinc-it app.
-        widget: INFO
-  - type: ROMBERG_TEST
-    topic: task_romberg_test
-    value_schema: .active.task.Task
-    questions:
-      - lead: Romberg's Test
-        content: It's time to complete the Thinc-it app.
-        widget: INFO
-      - lead: Romberg's Test
-        content: Keep your eyes open.
-        widget: TIMED
-      - lead: Romberg's Test
-        content: Close your eyes.
-        widget: TIMED
-  - type: 2MW_TEST
-    topic: task_2MW_test
-    value_schema: .active.task.Task
-    questions:
-      - lead: 2MW Test
-        content: Null
-        widget: INFO
-      - lead: 2MW Test
-        content: Walk back and forth.
-        widget: TIMED
-  - type: TANDEM_WALKING_TEST
-    topic: task_tandem_walking_test
-    value_schema: .active.task.Task
-    questions:
-      - lead: Tandem Walking Test
-        content: Null
-        widget: INFO
-      - lead: Tandem Walking Test
-        content: Null
-        widget: INFO
   - type: PHQ8
     topic: questionnaire_phq8
     value_schema: .active.questionnaire.Questionnaire
