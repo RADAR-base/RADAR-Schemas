@@ -6,7 +6,7 @@
   "fields": [
     { "name": "time", "type": "double", "doc": "Timestamp in UTC (s) when the task is submitted to the subject." },
     { "name": "timeCompleted", "type": "double", "doc": "Timestamp in UTC (s) when subject marks the task as complete." },
-    { "name": "name", "type": "string", "doc": "task names." },
+    { "name": "name", "type": "string", "doc": "Task names." },
     { "name": "version", "type": "string", "doc": "It reports the task version stated in the JSON specification." },
     { "name": "answers", "type": {
       "type": "array",
