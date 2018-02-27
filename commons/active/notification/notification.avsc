@@ -1,0 +1,24 @@
+{
+  "namespace": "org.radarcns.active.notification",
+  "type": "record",
+  "name": "Notification",
+  "doc": "General schema for notifications. Check the specification folder to see how the notification has been defined. For each NotificationType there is a JSON file reporting the questions set and possible answers if available.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Timestamp in UTC (s) when the notification is submitted to the subject." },
+    { "name": "timeCompleted", "type": "double", "doc": "Timestamp in UTC (s) when subject marks the notification as complete." },
+    { "name": "name", "type": "string", "doc": "Notifications names." },
+    { "name": "version", "type": "string", "doc": "It reports the notification version stated in the JSON specification." },
+    { "name": "answers", "type": {
+      "type": "array",
+      "items": {
+        "name": "Answer",
+        "type": "record",
+        "doc": "Notification answer.",
+         "fields": [
+           { "name": "value", "type": ["int", "string", "double"], "doc": "Subject answer." },
+           { "name": "startTime", "type": "double", "doc": "Timestamp in UTC (s) when the notification is shown." },
+           { "name": "endTime", "type": "double", "doc": "Timestamp in UTC (s)  when the notification is answered." }
+         ]
+       }}, "doc": "Answers list. The answers order must follow the notification order."}
+  ]
+}

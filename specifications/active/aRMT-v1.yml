@@ -9,6 +9,9 @@ data:
   - type: PHQ8
     topic: questionnaire_phq8
     value_schema: .active.questionnaire.Questionnaire
+  - type: ESM
+    topic: questionnaire_esm
+    value_schema: .active.questionnaire.Questionnaire
   - type: RSES
     topic: questionnaire_rses
     value_schema: .active.questionnaire.Questionnaire
