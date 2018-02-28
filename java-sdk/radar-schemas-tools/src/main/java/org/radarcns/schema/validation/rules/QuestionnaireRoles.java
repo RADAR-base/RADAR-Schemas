@@ -16,21 +16,17 @@
 
 package org.radarcns.schema.validation.rules;
 
-import org.radarcns.schema.specification.active.questionnaire.QuestionnaireDataTopic;
-
-import java.nio.file.Path;
-
 import static org.radarcns.schema.specification.SourceCatalogue.YAML_EXTENSION;
 import static org.radarcns.schema.validation.ValidationSupport.equalsFileName;
-import static org.radarcns.schema.validation.rules.Validator.validateNonEmpty;
 import static org.radarcns.schema.validation.rules.Validator.validateNonNull;
+
+import java.nio.file.Path;
+import org.radarcns.schema.specification.active.questionnaire.QuestionnaireDataTopic;
 
 /**
  * TODO.
  */
 public final class QuestionnaireRoles {
-
-    private static final String QUESTIONS = "Questions list cannot null or empty.";
     private static final String QUESTIONNAIRE_TYPE = "Questionnaire Type cannot be null"
             + " and should match with the configuration file name.";
 
@@ -46,13 +42,5 @@ public final class QuestionnaireRoles {
         return validateNonNull(QuestionnaireDataTopic::getType,
                 equalsFileName(file, YAML_EXTENSION),
                 QUESTIONNAIRE_TYPE);
-    }
-
-    /**
-     * TODO.
-     * @return TODO
-     */
-    static Validator<QuestionnaireDataTopic> validateQuestions() {
-        return validateNonEmpty(QuestionnaireDataTopic::getQuestions, QUESTIONS);
     }
 }
