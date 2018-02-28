@@ -6,7 +6,7 @@ data:
       - android_empatica_e4_blood_volume_pulse_1min
     value_schema: .stream.SourceStatistics
     doc: Statistics about E4 devices.
-  - topic: source_statistics_radar_prmt
+  - topic: source_statistics_android_phone
     input_topics:
       - android_phone_acceleration_1min
       - android_phone_bluetooth_devices
