@@ -32,7 +32,7 @@ data:
     questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/esm/esm_armt.json
   - type: AUDIO
     topic: questionnaire_audio
-    value_schema: .active.opensmile.OpenSmile2AudioAnalysis
+    value_schema: .active.opensmile.OpenSmile2AudioRecording
   - type: RSES
     topic: questionnaire_rses
     value_schema: .active.questionnaire.Questionnaire
