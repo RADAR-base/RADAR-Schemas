@@ -1,0 +1,13 @@
+{
+  "namespace": "org.radarcns.active.opensmile",
+  "name": "OpenSmile2AudioRecording",
+  "type": "record",
+  "doc": "Audio recording part of the RADAR aRMT app.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Device timestamp when the audio recording was started (s since the Unix Epoch)." },
+    { "name": "timeCompleted", "type": "double", "doc": "Device timestamp when the audio recording was completed (s since the Unix Epoch)." },
+    { "name": "mediaType", "type": "string", "doc": "Media type of the audio recording format. For example, audio/wav for a WAV recording. See https://www.iana.org/assignments/media-types/media-types.xhtml#audio for the list of standardized audio media types."},
+    { "name": "data", "type": "string", "doc": "Base64 encoded contents of the recorded audio file." },
+    { "name": "reciteText", "type": ["null", "string"], "doc": "Text that was supposed to be recited as part of the recording.", "default": null }
+  ]
+}
