@@ -17,11 +17,9 @@
 package org.radarcns.schema.specification.active.questionnaire;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.radarcns.schema.specification.DataTopic;
-
-import javax.validation.constraints.NotEmpty;
-import java.util.List;
+import java.net.URL;
 import java.util.Map;
+import org.radarcns.schema.specification.DataTopic;
 
 /**
  * TODO.
@@ -31,18 +29,16 @@ public class QuestionnaireDataTopic extends DataTopic {
         ARMT
     }
 
-    @JsonProperty @NotEmpty
-    private List<Question> questions;
+    @JsonProperty
+    private URL questionnaireDefinitionUrl;
 
-    public List<Question> getQuestions() {
-        return questions;
+    public URL getQuestionnaireDefinitionUrl() {
+        return questionnaireDefinitionUrl;
     }
 
     @Override
-    protected void propertiesMap(Map<String, Object> properties, boolean reduced) {
-        super.propertiesMap(properties, reduced);
-        if (!reduced) {
-            properties.put("questions", questions);
-        }
+    protected void propertiesMap(Map<String, Object> props, boolean reduced) {
+        super.propertiesMap(props, reduced);
+        props.put("questionnaireDefinitionUrl", questionnaireDefinitionUrl);
     }
 }

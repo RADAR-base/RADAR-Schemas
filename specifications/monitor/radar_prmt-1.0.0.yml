@@ -35,3 +35,11 @@ data:
     unit: SECOND
     topic: application_uptime
     value_schema: .monitor.application.ApplicationUptime
+  - type: TIMEZONE
+    doc: Local time zone that the device is running in.
+    sample_rate:
+      interval: 86400
+      configurable: true
+    unit: SECOND
+    topic: application_time_zone
+    value_schema: .monitor.application.ApplicationTimeZone

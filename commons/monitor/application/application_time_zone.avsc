@@ -1,0 +1,10 @@
+{
+  "namespace": "org.radarcns.monitor.application",
+  "name": "ApplicationTimeZone",
+  "type": "record",
+  "doc": "Local time zone that the device is running in.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+    { "name": "offset", "type": "int", "doc": "Offset from UTC (s)." }
+  ]
+}

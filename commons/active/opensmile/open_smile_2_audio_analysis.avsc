@@ -1,0 +1,13 @@
+{
+  "namespace": "org.radarcns.active.opensmile",
+  "type": "record",
+  "name": "OpenSmile2AudioAnalysis",
+  "doc": "Audio data collected by aRMT app and processed using openSMILE.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Device timestamp in UTC (s)."},
+    { "name": "timeCompleted", "type": "double", "doc": "Timestamp in UTC (s) when subject completed the audio questionnaire." },
+    {"name": "config", "type": "string", "doc": "Contents of an OpenSMILE configuration file." },
+    {"name": "data", "type": ["null", "string"], "doc": "Audio features computed by openSMILE in plain text.", "default": null},
+    { "name": "reciteText", "type": ["null", "string"], "doc": "Text that was supposed to be recited as part of the recording.", "default": null }
+  ]
+}

@@ -17,7 +17,7 @@ subprojects {
     apply plugin: 'idea'
 
     // Configuration
-    version = '0.3.1'
+    version = '0.3.2'
     group = 'org.radarcns'
     ext.githubRepoName = 'RADAR-CNS/RADAR-Schemas'
 
