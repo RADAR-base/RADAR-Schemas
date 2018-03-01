@@ -1,0 +1,30 @@
+{
+  "namespace": "org.radarcns.passive.fitbit",
+  "type": "record",
+  "name": "FitbitIntradayHeartRate",
+  "doc": "Intra day heart rate data from fitbit device",
+    "fields": [
+        {
+            "name": "type",
+            "type": "string",
+            "doc": "Type of data coming from fitbit intraday API, (e.g. heart rate)"
+        },
+        {
+            "name": "datasetInterval",
+            "type": "int",
+            "doc":  "Chronological window size (e.g. 1)"
+        },{
+            "name": "datasetType",
+            "type": "string",
+            "doc": "Chronological window unit (e.g. 'minute')"
+        },{
+            "name": "time",
+            "type": "string",
+            "doc": "Hours, minutes, seconds of start of interval (e.g. 00:33:00)"
+        },{
+            "name": "value",
+            "type": "int",
+            "doc":"Heart rate BPM value"
+        }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "namespace": "org.radarcns.passive.fitbit",
+  "type": "record",
+  "name": "FitbitSleepStages",
+  "doc": "Fitbit 'stages' sleep data as defined at https://dev.fitbit.com/build/reference/web-api/sleep/",
+  "fields": [
+        {
+            "name": "type",
+            "type": "string",
+            "doc": "Type of data coming from fitbit intraday API, (e.g. sleep classic)"
+        },{
+            "name": "level",
+            "type": "string",
+            "doc": "Level of sleep, 'deep', 'light', 'rem', or 'awake'"
+        },{
+            "name": "dateTime",
+            "type": "string",
+            "doc": "Hours, minutes, seconds of start of interval"
+        },{
+            "name": "seconds",
+            "type": "int",
+            "doc":"Duration at this sleep characteristic in secondse"
+        }
+  ]
+}
