@@ -1,7 +1,7 @@
 #===================================== Biovotion VSM1 Everion =====================================#
 vendor: BIOVOTION
 model: VSM1
-version: 1.0.0
+version: 1.0.1
 app_provider: .biovotion.BiovotionServiceProvider
 data:
   - type: ACCELEROMETER
@@ -9,15 +9,38 @@ data:
     processing_state: RAW
     topic: android_biovotion_vsm1_acceleration
     value_schema: .passive.biovotion.BiovotionVsm1Acceleration
+    fields:
+      - name: x
+        type: ACCELERATION
+        unit: G
+      - name: y
+        type: ACCELERATION
+        unit: G
+      - name: z
+        type: ACCELERATION
+        unit: G
     sample_rate:
       frequency: 51.2
   - type: BATTERY
     sample_rate:
       frequency: 1
-    unit: PERCENTAGE
+    unit: FRACTION
     processing_state: RAW
     topic: android_biovotion_vsm1_battery_level
     value_schema: .passive.biovotion.BiovotionVsm1BatteryLevel
+    fields:
+      - name: batteryLevel
+        type: CHARGE
+        unit: FRACTION
+      - name: batteryChargeRate
+        type: RATE
+        unit: FRACTION_PER_HOUR
+      - name: batteryVoltage
+        type: POTENTIAL_DIFFERENCE
+        unit: VOLTAGE
+      - name: batteryStatus
+        type: ENUM
+        unit: NON_DIMENSIONAL
   - type: BLOOD_PULSE_WAVE
     sample_rate:
       frequency: 1
@@ -25,6 +48,13 @@ data:
     processing_state: VENDOR
     topic: android_biovotion_vsm1_blood_volume_pulse
     value_schema: .passive.biovotion.BiovotionVsm1BloodPulseWave
+    fields:
+      - name: bloodPulseWave
+        type: DATA
+        unit: NON_DIMENSIONAL
+      - name: bloodPulseWaveQuality
+        type: QUALITY
+        unit: FRACTION
   - type: ENERGY
     sample_rate:
       frequency: 1
@@ -32,6 +62,13 @@ data:
     processing_state: VENDOR
     topic: android_biovotion_vsm1_energy
     value_schema: .passive.biovotion.BiovotionVsm1Energy
+    fields:
+      - name: energyExpenditure
+        type: RATE
+        unit: CALORIE_PER_SECOND
+      - name: energyExpenditureQuality
+        type: QUALITY
+        unit: FRACTION
   - type: GALVANIC_SKIN_RESPONSE
     sample_rate:
       frequency: 1
@@ -39,6 +76,13 @@ data:
     processing_state: VENDOR
     topic: android_biovotion_vsm1_galvanic_skin_response
     value_schema: .passive.biovotion.BiovotionVsm1GalvanicSkinResponse
+    fields:
+      - name: galvanicSkinResponseAmplitude
+        type: ELECTRODERMAL_ACTIVITY
+        unit: KILO_OHM
+      - name: galvanicSkinResponsePhase
+        type: PHASE
+        unit: NON_DIMENSIONAL
   - type: HEART_RATE
     sample_rate:
       frequency: 1
@@ -46,6 +90,13 @@ data:
     processing_state: VENDOR
     topic: android_biovotion_vsm1_heartrate
     value_schema: .passive.biovotion.BiovotionVsm1HeartRate
+    fields:
+      - name: heartRate
+        type: RATE
+        unit: BEATS_PER_MIN
+      - name: heartRateQuality
+        type: QUALITY
+        unit: FRACTION
   - type: HEART_RATE_VARIABILITY
     sample_rate:
       frequency: 1
@@ -53,6 +104,13 @@ data:
     processing_state: VENDOR
     topic: android_biovotion_vsm1_heartrate_variability
     value_schema: .passive.biovotion.BiovotionVsm1HeartRateVariability
+    fields:
+      - name: heartRateVariability
+        type: DATA
+        unit: MILLI_SECOND
+      - name: heartRateVariabilityQuality
+        type: QUALITY
+        unit: FRACTION
   - type: LED
     sample_rate:
       frequency: 1
@@ -60,6 +118,19 @@ data:
     processing_state: VENDOR
     topic: android_biovotion_vsm1_led_current
     value_schema: .passive.biovotion.BiovotionVsm1LedCurrent
+    fields:
+      - name: red
+        type: CURRENT
+        unit: MILLI_AMPERE
+      - name: green
+        type: CURRENT
+        unit: MILLI_AMPERE
+      - name: ir
+        type: CURRENT
+        unit: MILLI_AMPERE
+      - name: offset
+        type: OFFSET
+        unit: MILLI_AMPERE
   - type: PHOTOPLETHYSMOGRAPHY
     sample_rate:
       frequency: 51.2
@@ -67,6 +138,19 @@ data:
     processing_state: RAW
     topic: android_biovotion_vsm1_ppg_raw
     value_schema: .passive.biovotion.BiovotionVsm1PpgRaw
+    fields:
+      - name: red
+        type: ADC_RESPONSE
+        unit: NON_DIMENSIONAL
+      - name: green
+        type: ADC_RESPONSE
+        unit: NON_DIMENSIONAL
+      - name: ir
+        type: ADC_RESPONSE
+        unit: NON_DIMENSIONAL
+      - name: dark
+        type: ADC_RESPONSE
+        unit: NON_DIMENSIONAL
   - type: RESPIRATION_RATE
     sample_rate:
       frequency: 1
@@ -74,6 +158,13 @@ data:
     processing_state: VENDOR
     topic: android_biovotion_vsm1_respiration_rate
     value_schema: .passive.biovotion.BiovotionVsm1RespirationRate
+    fields:
+      - name: respirationRate
+        type: RATE
+        unit: BEATS_PER_MIN
+      - name: respirationRateQuality
+        type: QUALITY
+        unit: FRACTION
   - type: OXYGEN_SATURATION
     sample_rate:
       frequency: 1
@@ -81,6 +172,13 @@ data:
     processing_state: VENDOR
     topic: android_biovotion_vsm1_oxygen_saturation
     value_schema: .passive.biovotion.BiovotionVsm1OxygenSaturation
+    fields:
+      - name: spO2
+        type: DATA
+        unit: FRACTION
+      - name: spO2Quality
+        type: QUALITY
+        unit: FRACTION
   - type: THERMOMETER
     sample_rate:
       frequency: 1
@@ -88,3 +186,13 @@ data:
     processing_state: RAW
     topic: android_biovotion_vsm1_temperature
     value_schema: .passive.biovotion.BiovotionVsm1Temperature
+    fields:
+      - name: temperature
+        type: TEMPERATURE
+        unit: CELSIUS
+      - name: temperatureLocal
+        type: TEMPERATURE
+        unit: CELSIUS
+      - name: temperatureBarometer
+        type: TEMPERATURE
+        unit: CELSIUS

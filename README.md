@@ -1,5 +1,8 @@
 # RADAR-Schemas
 
+This branch extends the specifications under the `specification` directory to include all field names and units, with nominal field types.
+This is a work in progress and the specifications are liable to change without regard for compatibility.
+
 [![Build Status](https://travis-ci.org/RADAR-CNS/RADAR-Schemas.svg?branch=master)](https://travis-ci.org/RADAR-CNS/RADAR-Schemas)
 
 [Avro schemas](https://avro.apache.org/docs/1.8.2/spec.html) used in RADAR-CNS. The schemas are organized as follows:

@@ -1,7 +1,7 @@
 #====================================== Android Phone Sensors =====================================#
 vendor: ANDROID
 model: PHONE
-version: 1.0.0
+version: 1.0.1
 data:
   #Phone sensors
   - type: ACCELEROMETER
@@ -9,8 +9,14 @@ data:
     unit: G
     fields:
       - name: x
+        type: ACCELERATION
+        unit: G
       - name: y
+        type: ACCELERATION
+        unit: G
       - name: z
+        type: ACCELERATION
+        unit: G
     sample_rate:
       frequency: 5
       configurable: true
@@ -19,7 +25,7 @@ data:
     value_schema: .passive.phone.PhoneAcceleration
   - type: BATTERY
     app_provider: .phone.PhoneSensorProvider
-    unit: PERCENTAGE
+    unit: FRACTION
     processing_state: RAW
     topic: android_phone_battery_level
     value_schema: .passive.phone.PhoneBatteryLevel
@@ -27,6 +33,14 @@ data:
       dynamic: true
     fields:
       - name: batteryLevel
+        type: CHARGE
+        unit: FRACTION
+      - name: isPlugged
+        type: BOOL
+        unit: BOOL
+      - name: status
+        type: ENUM
+        unit: NON_DIMENSIONAL
   - type: GYROSCOPE
     app_provider: .phone.PhoneSensorProvider
     unit: RADAIAN_PER_SEC
@@ -38,8 +52,14 @@ data:
       configurable: true
     fields:
       - name: x
+        type: GYRATION
+        unit: RADIAN_PER_SEC
       - name: y
+        type: GYRATION
+        unit: RADIAN_PER_SEC
       - name: z
+        type: GYRATION
+        unit: RADIAN_PER_SEC
   - type: LIGHT
     app_provider: .phone.PhoneSensorProvider
     unit: LUX
@@ -51,6 +71,8 @@ data:
       configurable: true
     fields:
       - name: light
+        type: ILLUMINANCE
+        unit: LUX
   - type: MAGNETIC_FIELD
     app_provider: .phone.PhoneSensorProvider
     unit: MICRO_TESLA
@@ -62,8 +84,14 @@ data:
       configurable: true
     fields:
       - name: x
+        type: MAGNETIC_FIELD
+        unit: MICRO_TESLA
       - name: y
+        type: MAGNETIC_FIELD
+        unit: MICRO_TESLA
       - name: z
+        type: MAGNETIC_FIELD
+        unit: MICRO_TESLA
   - type: STEP_COUNT
     app_provider: .phone.PhoneSensorProvider
     unit: NON_DIMENSIONAL
@@ -75,6 +103,7 @@ data:
       dynamic: true
     fields:
       - name: steps
+        unit: NON_DIMENSIONAL
   # Location
   - type: RELATIVE_LOCATION
     app_provider: .phone.PhoneLocationProvider
@@ -83,8 +112,27 @@ data:
     topic: android_phone_relative_location
     value_schema: .passive.phone.PhoneRelativeLocation
     fields:
+      - name: LocationProvider
+        type: ENUM
+        unit: NON_DIMENSIONAL
       - name: longitude
+        type: LONGITUDE
+        unit: DEGREE
       - name: latitude
+        type: LATITUDE
+        unit: DEGREE
+      - name: altitude
+        type: DISTANCE
+        unit: METRE
+      - name: accuracy
+        type: QUALITY
+        unit: METRE
+      - name: speed
+        type: VELOCITY
+        unit: METRE_PER_SECOND
+      - name: bearing
+        type: DIRECTION
+        unit: DEGREE
     sample_rate:
       interval: 600
       configurable: true
@@ -95,6 +143,25 @@ data:
     processing_state: RAW
     topic: android_phone_call
     value_schema: .passive.phone.PhoneCall
+    fields:
+      - name: duration
+        type: DURATION
+        unit: SECOND
+      - name: target
+        type: ID
+        unit: NON_DIMENSIONAL 
+      - name: type
+        type: ENUM
+        unit: NON_DIMENSIONAL
+      - name: targetIsContact
+        type: BOOL
+        unit: BOOL
+      - name: targetIsNonNumeric
+        type: BOOL
+        unit: BOOL
+      - name: targetLength
+        type: COUNT
+        unit: NON_DIMENSIONAL
     sample_rate:
       interval: 86400
       configurable: true
@@ -104,6 +171,25 @@ data:
     processing_state: RAW
     topic: android_phone_sms
     value_schema: .passive.phone.PhoneSms
+    fields:
+      - name: target
+        type: ID
+        unit: NON_DIMENSIONAL
+      - name: type
+        type: ENUM
+        unit: NON_DIMENSIONAL
+      - name: length
+        type: COUNT
+        unit: NON_DIMENSIONAL
+      - name: targetIsContact
+        type: BOOL
+        unit: BOOL
+      - name: targetIsNonNumeric
+        type: BOOL
+        unit: BOOL
+      - name: targetLength
+        type: COUNT
+        unit: NON_DIMENSIONAL
     sample_rate:
       interval: 86400
       configurable: true
@@ -113,15 +199,29 @@ data:
     processing_state: RAW
     topic: android_phone_sms_unread
     value_schema: .passive.phone.PhoneSmsUnread
+    fields:
+      - name: unreadSms
+        type: COUNT
+        unit: NON_DIMENSIONAL
     sample_rate:
       interval: 86400
       configurable: true
-  - type: PHONE_CONTACTS
+  - type: PHONE_CONTACT_LIST
     app_provider: .phone.PhoneContactListProvider
     unit: NON_DIMENSIONAL
     processing_state: RAW
-    topic: android_phone_contacts
+    topic: android_phone_contact_list
     value_schema: .passive.phone.PhoneContactList
+    fields:
+      - name: contactsAdded
+        type: COUNT
+        unit: NON_DIMENSIONAL
+      - name: contactsRemoved
+        type: COUNT
+        unit: NON_DIMENSIONAL
+      - name: contacts
+        type: COUNT
+        unit: NON_DIMENSIONAL
     sample_rate:
       interval: 86400
       configurable: true
@@ -131,6 +231,16 @@ data:
     processing_state: RAW
     topic: android_phone_bluetooth_devices
     value_schema: .passive.phone.PhoneBluetoothDevices
+    fields:
+      - name: pairedDevice
+        type: COUNT
+        unit: NON_DIMENSIONAL
+      - name: nearbyDevices
+        type: COUNT
+        unit: NON_DIMENSIONAL
+      - name: bluetoothEnabled
+        type: BOOL
+        unit: BOOL
     sample_rate:
       interval: 3600
       configurable: true
@@ -140,6 +250,19 @@ data:
     processing_state: RAW
     topic: android_phone_usage_event
     value_schema: .passive.phone.PhoneUsageEvent
+    fields:
+      - name: packageName
+        type: ID
+        unit: NON_DIMENSIONAL
+      - name: categoryName
+        type: ID
+        unit: NON_DIMENSIONAL
+      - name: categoryNameFetchTime
+        type: TIMESTAMP
+        unit: SECOND
+      - name: eventType
+        type: ENUM
+        unit: NON_DIMENSIONAL
     sample_rate:
       dynamic: true
   - type: USER_INTERACTION
@@ -148,6 +271,10 @@ data:
     processing_state: RAW
     topic: android_phone_user_interaction
     value_schema: .passive.phone.PhoneUserInteraction
+    fields:
+      - name: interactionState
+        type: ENUM
+        unit: NON_DIMENSIONAL
     sample_rate:
       dynamic: true
   # Weather
@@ -157,6 +284,40 @@ data:
     processing_state: RAW
     topic: android_local_weather
     value_schema: .passive.weather.LocalWeather
+    fields:
+      - name: sunrise
+        type: TIMESTAMP
+        unit: SECOND
+      - name: sunset
+        type: TIMESTAMP
+        unit: SECOND
+      - name: temperature
+        type: TEMPERATURE
+        unit: CELSIUS
+      - name: pressure
+        type: PRESSURE
+        unit: HECTOPASCAL
+      - name: humidity
+        type: HUMIDITY
+        unit: PERCENTAGE
+      - name: cloudiness
+        type: CLOUD_COVER
+        unit: PERCENTAGE
+      - name: precipitation
+        type: LENGTH
+        unit: MILLI_METRE
+      - name: precipitationPeriod
+        type: DURATION
+        unit: HOUR
+      - name: condition
+        type: WEATHER_CONDITION
+        unit: NON_DIMENSIONAL
+      - name: source
+        type: SOURCE
+        unit: NON_DIMENSIONAL
+      - name: locationSource
+        type: SOURCE
+        unit: NON_DIMENSIONAL
     sample_rate:
       interval: 10800
       configurable: true

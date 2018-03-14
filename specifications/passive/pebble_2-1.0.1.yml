@@ -1,7 +1,7 @@
 #============================================ Pebble 2 ============================================#
 vendor: Pebble
 model: Pebble 2
-version: 1.0.0
+version: 1.0.1
 doc: Pebble 2 data collected over Bluetooth by a RADAR Pebble app
 app_provider: .pebble.PebbleServiceProvider
 data:
@@ -12,6 +12,16 @@ data:
     processing_state: RAW
     topic: android_pebble_2_acceleration
     value_schema: .passive.pebble.Pebble2Acceleration
+    fields:
+      - name: x
+        type: ACCELERATION
+        unit: G
+      - name: y
+        type: ACCELERATION
+        unit: G
+      - name: z
+        type: ACCELERATION
+        unit: G
   - type: BATTERY
     sample_rate:
       dynamic: true
@@ -19,6 +29,16 @@ data:
     processing_state: RAW
     topic: android_pebble_2_battery_level
     value_schema: .passive.pebble.Pebble2BatteryLevel
+    fields:
+      - name: batteryLevel
+        type: CHARGE
+        unit: FRACTION
+      - name: batteryIsPlugged
+        type: BOOL
+        unit: BOOL
+      - name: batteryIsCharging
+        type: BOOL
+        unit: BOOL
   - type: HEART_RATE
     sample_rate:
       dynamic: true
@@ -26,6 +46,10 @@ data:
     processing_state: VENDOR
     topic: android_pebble_2_heartrate
     value_schema: .passive.pebble.Pebble2HeartRate
+    fields:
+      - name: heartRate
+        type: RATE
+        unit: BEATS_PER_MIN
   - type: HEART_RATE_FILTERED
     sample_rate:
       dynamic: true
@@ -33,3 +57,7 @@ data:
     processing_state: VENDOR
     topic: android_pebble_2_heartrate_filtered
     value_schema: .passive.pebble.Pebble2HeartRateFiltered
+    fields:
+      - name: heartRate
+        type: RATE
+        unit: BEATS_PER_MIN
