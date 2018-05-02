@@ -8,6 +8,7 @@ data:
   - input_topic: android_phone_usage_event
     value_schema: .passive.phone.PhoneUsageEvent
   - input_topic: android_phone_usage_event_output
+    output_topic: android_phone_usage_event_aggregated
     value_schema: .stream.aggregator.PhoneUsageAggregate
     windowed: true
   - input_topic: android_phone_battery_level
