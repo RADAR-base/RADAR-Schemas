@@ -1,0 +1,16 @@
+name: RADAR-FITBIT-CONNECTOR
+doc: Spec for Radar fitbit connector. The schema should be registered via the connector.
+master: .stream.phone.PhoneStreamMaster
+data:
+  - schema_registration: false
+    topic: fitbit_intraday_heart_rate
+    value_schema: .passive.fitbit.FitbitIntradayHeartRate
+  - schema_registration: false
+    topic: fitbit_intraday_steps
+    value_schema: .passive.fitbit.FitbitIntradaySteps
+  - schema_registration: false
+    topic: fitbit_sleep_pattern
+    value_schema: .passive.fitbit.FitbitSleepPattern
+  - schema_registration: false
+    topic: fitbit_sleep_stage
+    value_schema: .passive.fitbit.FitbitSleepStage

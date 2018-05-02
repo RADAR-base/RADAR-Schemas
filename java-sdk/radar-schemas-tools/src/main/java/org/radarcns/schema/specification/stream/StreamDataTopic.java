@@ -35,6 +35,9 @@ public class StreamDataTopic extends DataTopic {
     @JsonProperty("topic_base")
     private String topicBase;
 
+    @JsonProperty("output_topic")
+    private String outputTopic;
+
     @JsonSetter
     @SuppressWarnings("PMD.UnusedPrivateMethod")
     private void setWindowed(boolean windowed) {
@@ -59,6 +62,10 @@ public class StreamDataTopic extends DataTopic {
 
     /** Get human readable output topic. */
     public String getTopic() {
+        if (outputTopic != null) {
+            topicBase = outputTopic;
+            return topicBase;
+        }
         if (windowed) {
             return topicBase + "_<time-frame>";
         } else if (super.getTopic() != null) {
