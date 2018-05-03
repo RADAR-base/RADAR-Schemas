@@ -73,7 +73,7 @@ public class SchemaRegistry implements Closeable {
     }
 
     /**
-     * Register all schemas in a source catalogue. Stream sources are ignored.
+     * Register all schemas in a source catalogue. Stream and connector sources are ignored.
      * @param catalogue schema catalogue to read schemas from
      * @return whether all schemas were successfully registered.
      */

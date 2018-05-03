@@ -54,7 +54,8 @@ public class SourceCatalogueValidation {
                 catalogue.getActiveSources(),
                 catalogue.getMonitorSources(),
                 catalogue.getPassiveSources(),
-                catalogue.getStreamGroups())
+                catalogue.getStreamGroups(),
+                catalogue.getConnectorSources())
                 .flatMap(map -> map.values().stream())
                 .flatMap(DataProducer::getTopicNames)
                 .sorted()

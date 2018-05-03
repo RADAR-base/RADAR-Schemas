@@ -60,6 +60,16 @@ public class StreamDataTopic extends DataTopic {
         this.inputTopics.add(inputTopic);
     }
 
+    public String getOutputTopic() {
+        return outputTopic;
+    }
+
+    @JsonSetter("output_topic")
+    @SuppressWarnings("PMD.UnusedPrivateMethod")
+    private void setOutputTopic(String outputTopic) {
+        this.outputTopic = outputTopic;
+    }
+
     /** Get human readable output topic. */
     public String getTopic() {
         if (outputTopic != null) {

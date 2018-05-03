@@ -24,6 +24,7 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import java.nio.file.InvalidPathException;
 import org.radarcns.schema.Scope;
 import org.radarcns.schema.specification.active.ActiveSource;
+import org.radarcns.schema.specification.connector.ConnectorSource;
 import org.radarcns.schema.specification.stream.StreamGroup;
 import org.radarcns.schema.specification.monitor.MonitorSource;
 import org.radarcns.schema.specification.passive.PassiveSource;
@@ -59,6 +60,7 @@ public class SourceCatalogue {
     private final Map<String, ActiveSource<?>> activeSources;
     private final Map<String, MonitorSource> monitorSources;
     private final Map<String, PassiveSource> passiveSources;
+    private final Map<String, ConnectorSource> connectorSources;
     private final Map<String, StreamGroup> streamGroups;
 
     private final Set<DataProducer<?>> sources;
@@ -67,11 +69,13 @@ public class SourceCatalogue {
     SourceCatalogue(Map<String, ActiveSource<?>> activeSources,
             Map<String, MonitorSource> monitorSources,
             Map<String, PassiveSource> passiveSources,
-            Map<String, StreamGroup> streamGroups) {
+            Map<String, StreamGroup> streamGroups,
+                    Map<String, ConnectorSource> connectorSources) {
         this.activeSources = activeSources;
         this.monitorSources = monitorSources;
         this.passiveSources = passiveSources;
         this.streamGroups = streamGroups;
+        this.connectorSources = connectorSources;
 
         sources = new HashSet<>();
 
@@ -79,6 +83,7 @@ public class SourceCatalogue {
         sources.addAll(monitorSources.values());
         sources.addAll(passiveSources.values());
         sources.addAll(streamGroups.values());
+        sources.addAll(connectorSources.values());
     }
 
     /**
@@ -107,7 +112,8 @@ public class SourceCatalogue {
             initSources(mapper.readerFor(ActiveSource.class), specRoot, Scope.ACTIVE),
             initSources(mapper.readerFor(MonitorSource.class), specRoot, Scope.MONITOR),
             initSources(mapper.readerFor(PassiveSource.class), specRoot, Scope.PASSIVE),
-            initSources(mapper.readerFor(StreamGroup.class), specRoot, Scope.STREAM));
+            initSources(mapper.readerFor(StreamGroup.class), specRoot, Scope.STREAM),
+            initSources(mapper.readerFor(ConnectorSource.class), specRoot, Scope.CONNECTOR));
     }
 
     private static <T> Map<String, T> initSources(ObjectReader reader, Path root, Scope scope)
@@ -205,6 +211,14 @@ public class SourceCatalogue {
     public Stream<String> getTopicNames() {
         return sources.stream()
                 .flatMap(DataProducer::getTopicNames);
+    }
+
+    /**
+     * TODO.
+     * @return TODO
+     */
+    public Map<String, ConnectorSource> getConnectorSources() {
+        return connectorSources;
     }
 
     /** Get all topics in the catalogue. */

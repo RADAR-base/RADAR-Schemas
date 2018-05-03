@@ -1,16 +1,15 @@
 name: RADAR-FITBIT-CONNECTOR
-doc: Spec for Radar fitbit connector. The schema should be registered via the connector.
-master: .stream.phone.PhoneStreamMaster
+doc: Spec for Radar fitbit connector. The schemas should be registered via the connector.
 data:
-  - schema_registration: false
+  - doc: The intraday time series for heart rate.
     topic: fitbit_intraday_heart_rate
-    value_schema: .passive.fitbit.FitbitIntradayHeartRate
-  - schema_registration: false
+    value_schema: .connector.fitbit.FitbitIntradayHeartRate
+  - doc: The intraday time series for Steps.
     topic: fitbit_intraday_steps
-    value_schema: .passive.fitbit.FitbitIntradaySteps
-  - schema_registration: false
+    value_schema: .connector.fitbit.FitbitIntradaySteps
+  - doc: Sleep data with 60-second granularity. 'Sleep Pattern' levels include asleep, restless, and awake.
     topic: fitbit_sleep_pattern
-    value_schema: .passive.fitbit.FitbitSleepPattern
-  - schema_registration: false
+    value_schema: .connector.fitbit.FitbitSleepPattern
+  - doc: Sleep data with 30-second granularity. 'Sleep Stages' levels include deep, light, rem, and wake.
     topic: fitbit_sleep_stage
-    value_schema: .passive.fitbit.FitbitSleepStage
+    value_schema: .connector.fitbit.FitbitSleepStage
