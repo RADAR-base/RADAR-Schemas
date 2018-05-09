@@ -17,8 +17,10 @@ import org.radarcns.schema.specification.DataTopic;
 import org.radarcns.stream.TimeWindowMetadata;
 import org.radarcns.topic.AvroTopic;
 
+/**
+ * Topic used for Kafka Streams.
+ */
 public class StreamDataTopic extends DataTopic {
-
     /** Whether the stream is a windowed stream with standard TimeWindow windows. */
     @JsonProperty
     private boolean windowed = false;
@@ -34,9 +36,6 @@ public class StreamDataTopic extends DataTopic {
      */
     @JsonProperty("topic_base")
     private String topicBase;
-
-    @JsonProperty("output_topic")
-    private String outputTopic;
 
     @JsonSetter
     @SuppressWarnings("PMD.UnusedPrivateMethod")
@@ -60,22 +59,8 @@ public class StreamDataTopic extends DataTopic {
         this.inputTopics.add(inputTopic);
     }
 
-    public String getOutputTopic() {
-        return outputTopic;
-    }
-
-    @JsonSetter("output_topic")
-    @SuppressWarnings("PMD.UnusedPrivateMethod")
-    private void setOutputTopic(String outputTopic) {
-        this.outputTopic = outputTopic;
-    }
-
     /** Get human readable output topic. */
     public String getTopic() {
-        if (outputTopic != null) {
-            topicBase = outputTopic;
-            return topicBase;
-        }
         if (windowed) {
             return topicBase + "_<time-frame>";
         } else if (super.getTopic() != null) {

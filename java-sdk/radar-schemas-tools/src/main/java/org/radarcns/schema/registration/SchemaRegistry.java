@@ -44,7 +44,6 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.Optional;
 import java.util.regex.Pattern;
-import java.util.stream.Stream;
 
 import static org.radarcns.schema.CommandLineApp.matchTopic;
 
@@ -78,11 +77,8 @@ public class SchemaRegistry implements Closeable {
      * @return whether all schemas were successfully registered.
      */
     public boolean registerSchemas(SourceCatalogue catalogue) {
-        return Stream.of(
-                catalogue.getActiveSources(),
-                catalogue.getPassiveSources(),
-                catalogue.getMonitorSources())
-                .flatMap(m -> m.values().stream())
+        return catalogue.getSources().stream()
+                .filter(DataProducer::doRegisterSchema)
                 .flatMap(DataProducer::getTopics)
                 .allMatch(this::registerSchema);
     }

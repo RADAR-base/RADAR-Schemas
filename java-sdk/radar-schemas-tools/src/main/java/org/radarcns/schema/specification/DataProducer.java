@@ -13,6 +13,10 @@ import java.util.stream.Stream;
 
 import static org.radarcns.schema.util.Utils.applyOrEmpty;
 
+/**
+ * A producer of data to Kafka, generally mapping to a source.
+ * @param <T> type of data that is produced.
+ */
 public abstract class DataProducer<T extends DataTopic> {
     @JsonProperty @NotBlank
     private String name;
@@ -25,6 +29,14 @@ public abstract class DataProducer<T extends DataTopic> {
 
     @JsonProperty
     private List<String> labels;
+
+    /**
+     * If true, register the schema during kafka initialization, otherwise, the producer should do
+     * that itself. The default is true, set in the constructor of subclasses to use a different
+     * default.
+     */
+    @JsonProperty("register_schema")
+    protected boolean registerSchema = true;
 
     public String getName() {
         return name;
@@ -56,6 +68,9 @@ public abstract class DataProducer<T extends DataTopic> {
         return getData().stream().flatMap(applyOrEmpty(DataTopic::getTopics));
     }
 
+    public boolean doRegisterSchema() {
+        return registerSchema;
+    }
 
     @Override
     public boolean equals(Object o) {

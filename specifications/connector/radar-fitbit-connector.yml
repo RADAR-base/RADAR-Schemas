@@ -1,5 +1,6 @@
 name: RADAR-FITBIT-CONNECTOR
-doc: Spec for Radar fitbit connector. The schemas should be registered via the connector.
+doc: Spec for Radar fitbit connector.
+register_schema: true
 data:
   - doc: The intraday time series for heart rate.
     topic: fitbit_intraday_heart_rate
