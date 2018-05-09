@@ -70,7 +70,7 @@ public class SourceCatalogue {
             Map<String, MonitorSource> monitorSources,
             Map<String, PassiveSource> passiveSources,
             Map<String, StreamGroup> streamGroups,
-                    Map<String, ConnectorSource> connectorSources) {
+            Map<String, ConnectorSource> connectorSources) {
         this.activeSources = activeSources;
         this.monitorSources = monitorSources;
         this.passiveSources = passiveSources;
