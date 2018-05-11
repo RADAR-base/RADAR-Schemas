@@ -17,8 +17,10 @@ import org.radarcns.schema.specification.DataTopic;
 import org.radarcns.stream.TimeWindowMetadata;
 import org.radarcns.topic.AvroTopic;
 
+/**
+ * Topic used for Kafka Streams.
+ */
 public class StreamDataTopic extends DataTopic {
-
     /** Whether the stream is a windowed stream with standard TimeWindow windows. */
     @JsonProperty
     private boolean windowed = false;

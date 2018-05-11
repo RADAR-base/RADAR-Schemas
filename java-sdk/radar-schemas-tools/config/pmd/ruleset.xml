@@ -10,6 +10,7 @@
 
   <rule ref="rulesets/java/strings.xml">
     <exclude name="ConsecutiveAppendsShouldReuse"/>
+    <exclude name="AvoidDuplicateLiterals"/>
   </rule>
 
   <rule ref="rulesets/java/unusedcode.xml">
