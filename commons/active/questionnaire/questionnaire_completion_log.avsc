@@ -6,6 +6,6 @@
   "fields": [
     { "name": "time", "type": "double", "doc": "Timestamp in UTC (s) when the questionnaire completion log is submitted." },
     { "name": "name", "type": "string", "doc": "Questionnaire name." },
-    { "name": "isComplete", "type": "string", "doc": "It reports the questionnaire completion status. Could be true or false." }
+    { "name": "completionPercentage", "type": "double", "doc": "Percentage of the questionnaire completed. 0 for not at all complete and 100 for full completion."}
   ]
 }
