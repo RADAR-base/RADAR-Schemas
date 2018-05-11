@@ -74,7 +74,6 @@ public interface SchemaRules {
     default Validator<Schema> validateActiveSource() {
         return validateRecord()
                 .and(validateTime()
-                .and(validateTimeCompleted())
                 .and(validateNotTimeReceived()));
     }
 
