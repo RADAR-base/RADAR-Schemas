@@ -38,4 +38,4 @@ data:
     questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/rses/rses_armt.json
   - type: COMPLETION_LOG
     topic: questionnaire_completion_log
-    value_schema: .active.questionnaire.QuestionnaireCompletionLog
+    value_schema: .monitor.questionnaire.QuestionnaireCompletionLog

@@ -1,5 +1,5 @@
 {
-  "namespace": "org.radarcns.active.questionnaire",
+  "namespace": "org.radarcns.monitor.questionnaire",
   "type": "record",
   "name": "QuestionnaireCompletionLog",
   "doc": "Schema for reporting the completion status of a questionnaire. This will help in calculating the compliance.",
