@@ -1,0 +1,13 @@
+{
+  "namespace": "org.radarcns.connector.fitbit",
+  "type": "record",
+  "name": "FitbitSleepPattern",
+  "doc": "Classic sleep data as defined at https://dev.fitbit.com/build/reference/web-api/sleep/.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+    { "name": "timeReceived", "type": "double", "doc": "Time that the data was received from the Fitbit API (seconds since the Unix Epoch)." },
+    { "name": "level", "type": "string", "doc": "Level of sleep, 'awake', 'restless', or 'asleep'." },
+    { "name": "timezoneOffset", "type": "int", "doc": "Offset from UTC (s)." },
+    { "name": "sleepDuration", "type": "int", "doc":"Duration at this sleep characteristic in seconds." }
+  ]
+}

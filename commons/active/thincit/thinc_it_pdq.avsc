@@ -7,7 +7,7 @@
     { "name": "time", "type": "double", "doc": "Timestamp in UTC (s) when the test is submitted to the subject." },
     { "name": "timeCompleted", "type": "double", "doc": "Timestamp in UTC (s) when the subject completes the test." },
     { "name": "score", "type": "int", "doc": "THINC-it index score - 0 to 4000." },
-    { "name": "questionOne", "type": ["null",
+    { "name": "questionOne", "type":
       {
         "type": "enum",
         "name": "ThincItPdqQuestion",
@@ -19,11 +19,11 @@
             "OFTEN",
             "VERYOFTEN"
         ]
-      }], "doc": "PDQ5 Question 1.", "default": null},
-    { "name": "questionTwo", "type": ["null", "ThincItPdqQuestion"], "doc": "PDQ5 Question 2.", "default": null},
-    { "name": "questionThree", "type": ["null", "ThincItPdqQuestion"], "doc": "PDQ5 Question 3.", "default": null},
-    { "name": "questionFour", "type": ["null", "ThincItPdqQuestion"], "doc": "PDQ5 Question 4.", "default": null},
-    { "name": "questionFive", "type": ["null", "ThincItPdqQuestion"], "doc": "PDQ5 Question 5.", "default": null},
+      }, "doc": "PDQ5 Question 1."},
+    { "name": "questionTwo", "type": "ThincItPdqQuestion", "doc": "PDQ5 Question 2."},
+    { "name": "questionThree", "type": "ThincItPdqQuestion", "doc": "PDQ5 Question 3."},
+    { "name": "questionFour", "type": "ThincItPdqQuestion", "doc": "PDQ5 Question 4."},
+    { "name": "questionFive", "type": "ThincItPdqQuestion", "doc": "PDQ5 Question 5."},
       { "name": "appVersion", "type": "int", "doc": "App version." }
   ]
 }
