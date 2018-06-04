@@ -44,6 +44,7 @@ dependencies {
 
     runtimeOnly group: 'org.glassfish.jersey.media', name: 'jersey-media-json-jackson', version: jerseyVersion
     runtimeOnly group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.25'
+    runtimeOnly group: 'org.glassfish.jersey.inject', name: 'jersey-hk2', version: jerseyVersion 
 
     testCompile group: 'junit', name: 'junit', version: junitVersion
 }
