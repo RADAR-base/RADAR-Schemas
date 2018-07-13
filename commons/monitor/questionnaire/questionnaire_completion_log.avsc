@@ -1,0 +1,11 @@
+{
+  "namespace": "org.radarcns.monitor.questionnaire",
+  "type": "record",
+  "name": "QuestionnaireCompletionLog",
+  "doc": "Schema for reporting the completion status of a questionnaire. This will help in calculating the compliance.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Timestamp in UTC (s) when the questionnaire completion log is submitted." },
+    { "name": "name", "type": "string", "doc": "Questionnaire name." },
+    { "name": "completionPercentage", "type": [ "null", "double"], "doc": "Percentage of the questionnaire completed. 0 for not at all complete and 100 for full completion. Null if no completion value possible." , "default": null }
+  ]
+}

@@ -9,19 +9,29 @@ import static org.radarcns.schema.validation.rules.Validator.raise;
 public interface SchemaRules {
     SchemaFieldRules getFieldRules();
 
-    /** Checks that schemas are unique compared to already validated schemas. */
+    /**
+     * Checks that schemas are unique compared to already validated schemas.
+     */
     Validator<Schema> validateUniqueness();
 
-    /** Checks schema namespace format. */
+    /**
+     * Checks schema namespace format.
+     */
     Validator<Schema> validateNameSpace();
 
-    /** Checks schema name format. */
+    /**
+     * Checks schema name format.
+     */
     Validator<Schema> validateName();
 
-    /** Checks schema documentation presence and format. */
+    /**
+     * Checks schema documentation presence and format.
+     */
     Validator<Schema> validateSchemaDocumentation();
 
-    /** Checks that the symbols of enums have the required format. */
+    /**
+     * Checks that the symbols of enums have the required format.
+     */
     Validator<Schema> validateSymbols();
 
     /**
@@ -49,7 +59,9 @@ public interface SchemaRules {
      */
     Validator<Schema> validateNotTimeReceived();
 
-    /** Validate an enum. */
+    /**
+     * Validate an enum.
+     */
     default Validator<Schema> validateEnum() {
         return validateUniqueness()
                 .and(validateNameSpace())
@@ -58,7 +70,9 @@ public interface SchemaRules {
                 .and(validateName());
     }
 
-    /** Validate a record that is defined inline. */
+    /**
+     * Validate a record that is defined inline.
+     */
     default Validator<Schema> validateRecord() {
         return validateUniqueness()
                 .and(validateNameSpace())
@@ -69,6 +83,7 @@ public interface SchemaRules {
 
     /**
      * Validates record schemas of an active source.
+     *
      * @return TODO
      */
     default Validator<Schema> validateActiveSource() {
@@ -80,6 +95,7 @@ public interface SchemaRules {
 
     /**
      * Validates schemas of monitor sources.
+     *
      * @return TODO
      */
     default Validator<Schema> validateMonitor() {

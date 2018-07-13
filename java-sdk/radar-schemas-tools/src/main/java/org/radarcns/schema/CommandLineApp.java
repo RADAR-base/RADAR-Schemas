@@ -91,7 +91,8 @@ public class CommandLineApp {
         return Stream.of(
                 catalogue.getPassiveSources(),
                 catalogue.getActiveSources(),
-                catalogue.getMonitorSources())
+                catalogue.getMonitorSources(),
+                catalogue.getConnectorSources())
                 .flatMap(map -> map.values().stream())
                 .flatMap(DataProducer::getTopicNames)
                 .sorted()
