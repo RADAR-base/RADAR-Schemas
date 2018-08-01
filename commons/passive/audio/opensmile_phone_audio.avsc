@@ -1,12 +1,12 @@
 {
   "namespace": "org.radarcns.passive.audio",
   "type": "record",
-  "name": "OpenSmile2PhoneAudio",
+  "name": "Opensmile2PhoneAudio",
   "doc": "Audio data collected by a phone audio input and processed using openSMILE 2.x.",
   "fields": [
-    {"name": "time", "type": "double", "doc": "device timestamp in UTC (s)"},
-    {"name": "timeReceived", "type": "double", "doc": "device receiver timestamp in UTC (s)"},
-    {"name": "config", "type": "string", "doc": "openSMILE configuration file"},
-    {"name": "data", "type": "string", "doc": "audio features computed by openSMILE recorded in Base64 format"}
+    {"name": "time", "type": "double", "doc": "Device time since the Unix Epoch at start of recording (s)."},
+    {"name": "timeReceived", "type": "double", "doc": "Device time since the Unix Epoch when recording is processed (s)."},
+    {"name": "config", "type": "string", "doc": "OpenSMILE configuration file."},
+    {"name": "data", "type": "string", "doc": "Audio features computed by openSMILE recorded in Base64 format."}
   ]
 }
