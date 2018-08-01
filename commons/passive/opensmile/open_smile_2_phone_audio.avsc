@@ -1,7 +1,7 @@
 {
-  "namespace": "org.radarcns.passive.audio",
+  "namespace": "org.radarcns.passive.opensmile",
   "type": "record",
-  "name": "OpenSmilePhoneAudio",
+  "name": "OpenSmile2PhoneAudio",
   "doc": "Audio data collected by a phone audio input and processed using openSMILE 2.x.",
   "fields": [
     {"name": "time", "type": "double", "doc": "Device time since the Unix Epoch at start of recording (s)."},
