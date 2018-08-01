@@ -1,0 +1,13 @@
+#====================================== Android Phone Sensors =====================================#
+vendor: OPENSMILE 
+model: AUDIO
+version: 1.0.0
+data:
+  - type: AUDIO
+    app_provider: org.radarcns.audio.AudioServiceProvider
+    sample_rate:
+      interval: 3600
+      configurable: true
+    topic: android_processed_audio
+    value_schema: org.radarcns.passive.opensmile.OpenSmile2PhoneAudio
+
