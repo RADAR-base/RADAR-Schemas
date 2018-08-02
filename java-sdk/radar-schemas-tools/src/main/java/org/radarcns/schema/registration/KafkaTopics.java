@@ -10,6 +10,7 @@ import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import kafka.cluster.Broker;
 import kafka.zk.KafkaZkClient;
 import kafka.zookeeper.ZooKeeperClientException;
 import net.sourceforge.argparse4j.inf.ArgumentParser;
@@ -56,34 +57,42 @@ public class KafkaTopics implements Closeable {
         boolean brokersAvailable = false;
         int sleep = 2;
         int numTries = 20;
+
         for (int tries = 0; tries < numTries; tries++) {
-            int activeBrokers = getNumberOfBrokers();
-            brokersAvailable = activeBrokers >= brokers;
+            List<Broker> brokerList;
+            try {
+                // convert Scala sequence of servers to Java
+                brokerList = JavaConverters$.MODULE$
+                        .seqAsJavaList(zkClient.getAllBrokersInCluster());
+            } catch (ZooKeeperClientException ex) {
+                logger.warn("Failed to reach zookeeper");
+                brokerList = Collections.emptyList();
+            }
+
+            brokersAvailable = brokerList.size() >= brokers;
             if (brokersAvailable) {
                 logger.info("Kafka brokers available. Starting topic creation.");
+
+                String bootstrapServers = brokerList.stream()
+                        .map(b -> b.endPoints().mkString(","))
+                        .collect(Collectors.joining(","));
+
+                kafkaClient = AdminClient.create(Collections.singletonMap(
+                        BOOTSTRAP_SERVERS_CONFIG, bootstrapServers));
                 break;
             }
 
             if (tries < numTries - 1) {
                 logger.warn("Only {} out of {} Kafka brokers available. Waiting {} seconds.",
-                        activeBrokers, brokers, sleep);
+                        brokerList.size(), brokers, sleep);
                 Thread.sleep(sleep * 1000L);
                 sleep = Math.min(MAX_SLEEP, sleep * 2);
             } else {
                 logger.error("Only {} out of {} Kafka brokers available."
                                 + " Failed to wait on all brokers.",
-                        activeBrokers, brokers, sleep);
+                        brokerList.size(), brokers, sleep);
             }
         }
-
-        // convert Scala sequence of servers to Java
-        String bootstrapServers = JavaConverters$.MODULE$
-                .seqAsJavaList(zkClient.getAllBrokersInCluster()).stream()
-                .map(b -> b.endPoints().mkString(","))
-                .collect(Collectors.joining(","));
-
-        kafkaClient = AdminClient.create(Collections.singletonMap(
-                BOOTSTRAP_SERVERS_CONFIG, bootstrapServers));
 
         return brokersAvailable;
     }
