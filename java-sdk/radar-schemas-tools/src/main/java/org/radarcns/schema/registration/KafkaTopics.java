@@ -55,7 +55,8 @@ public class KafkaTopics implements Closeable {
             ZooKeeperClientException {
         boolean brokersAvailable = false;
         int sleep = 2;
-        for (int tries = 0; tries < 10; tries++) {
+        int numTries = 20;
+        for (int tries = 0; tries < numTries; tries++) {
             int activeBrokers = getNumberOfBrokers();
             brokersAvailable = activeBrokers >= brokers;
             if (brokersAvailable) {
@@ -63,7 +64,7 @@ public class KafkaTopics implements Closeable {
                 break;
             }
 
-            if (tries < 9) {
+            if (tries < numTries - 1) {
                 logger.warn("Only {} out of {} Kafka brokers available. Waiting {} seconds.",
                         activeBrokers, brokers, sleep);
                 Thread.sleep(sleep * 1000L);
