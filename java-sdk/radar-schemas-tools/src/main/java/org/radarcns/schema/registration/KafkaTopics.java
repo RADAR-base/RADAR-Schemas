@@ -75,6 +75,7 @@ public class KafkaTopics implements Closeable {
             }
         }
 
+        // convert Scala sequence of servers to Java
         String bootstrapServers = JavaConverters$.MODULE$
                 .seqAsJavaList(zkClient.getAllBrokersInCluster()).stream()
                 .map(b -> b.endPoints().mkString(","))
