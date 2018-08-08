@@ -208,8 +208,9 @@ public class CommandLineApp {
     }
 
     private static ArgumentParser getArgumentParser(SortedMap<String, SubCommand> subCommands) {
-        ArgumentParser parser = ArgumentParsers.newArgumentParser("radar-schema")
-                .defaultHelp(true)
+        ArgumentParser parser = ArgumentParsers.newFor("radar-schema")
+                .addHelp(true)
+                .build()
                 .description("Schema tools");
 
         Subparsers subParsers = parser.addSubparsers().dest("subparser");
