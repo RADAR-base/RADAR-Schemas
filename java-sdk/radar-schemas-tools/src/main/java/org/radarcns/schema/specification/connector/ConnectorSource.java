@@ -16,6 +16,15 @@ public class ConnectorSource extends DataProducer<DataTopic> {
     @JsonProperty
     private List<DataTopic> data;
 
+    @JsonProperty
+    private String vendor;
+
+    @JsonProperty
+    private String model;
+
+    @JsonProperty
+    private String version;
+
     public ConnectorSource() {
         registerSchema = false;
     }
@@ -28,5 +37,17 @@ public class ConnectorSource extends DataProducer<DataTopic> {
     @Override
     public Scope getScope() {
         return Scope.CONNECTOR;
+    }
+
+    public String getVendor() {
+        return vendor;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public String getVersion() {
+        return version;
     }
 }

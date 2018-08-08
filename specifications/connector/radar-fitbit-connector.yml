@@ -1,4 +1,7 @@
 name: RADAR-FITBIT-CONNECTOR
+vendor: RADAR-base
+model: radar-connect-fitbit-source
+version: 0.1.0-SNAPSHOT
 doc: Spec for Radar fitbit connector. Schemas should be registered in the connector.
 data:
   - doc: The intraday time series for heart rate.

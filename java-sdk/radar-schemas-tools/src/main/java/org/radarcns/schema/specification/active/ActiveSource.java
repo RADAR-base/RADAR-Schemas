@@ -1,5 +1,3 @@
-package org.radarcns.schema.specification.active;
-
 /*
  * Copyright 2017 King's College London and The Hyve
  *
@@ -16,6 +14,8 @@ package org.radarcns.schema.specification.active;
  * limitations under the License.
  */
 
+package org.radarcns.schema.specification.active;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -30,9 +30,7 @@ import java.util.List;
 /**
  * TODO.
  */
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME,
-        include = JsonTypeInfo.As.PROPERTY,
-        property = "assessment_type")
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "assessment_type")
 @JsonSubTypes(value = {
         @JsonSubTypes.Type(name = "QUESTIONNAIRE", value = QuestionnaireSource.class),
         @JsonSubTypes.Type(name = "APP", value = AppActiveSource.class)})
@@ -41,7 +39,8 @@ public class ActiveSource<T extends DataTopic> extends DataProducer<T> {
         QUESTIONNAIRE
     }
 
-    @JsonProperty("assessment_type") @NotBlank
+    @JsonProperty("assessment_type")
+    @NotBlank
     private String assessmentType;
 
     @JsonProperty

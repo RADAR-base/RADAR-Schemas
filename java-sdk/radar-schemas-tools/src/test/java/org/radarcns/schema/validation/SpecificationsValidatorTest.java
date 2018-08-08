@@ -32,4 +32,14 @@ public class SpecificationsValidatorTest {
     public void passiveIsYml() throws IOException {
         assertTrue(validator.specificationsAreYmlFiles(Scope.PASSIVE));
     }
+
+    @Test
+    public void connectorIsYml() throws IOException {
+        assertTrue(validator.specificationsAreYmlFiles(Scope.CONNECTOR));
+    }
+
+    @Test
+    public void streamIsYml() throws IOException {
+        assertTrue(validator.specificationsAreYmlFiles(Scope.STREAM));
+    }
 }

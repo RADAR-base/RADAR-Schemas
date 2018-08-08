@@ -1,5 +1,3 @@
-package org.radarcns.schema.validation;
-
 /*
  * Copyright 2017 King's College London and The Hyve
  *
@@ -15,6 +13,8 @@ package org.radarcns.schema.validation;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+package org.radarcns.schema.validation;
 
 import org.radarcns.schema.Scope;
 import org.radarcns.schema.validation.config.ExcludeConfig;
@@ -46,8 +46,7 @@ public class SpecificationsValidator {
     /** Check that all files in the specifications directory are YAML files. */
     public boolean specificationsAreYmlFiles(Scope scope) throws IOException {
         return Files.walk(scope.getPath(root.resolve(SPECIFICATIONS_PATH)))
-                    .filter(Files::isRegularFile)
-                    .filter(p -> !config.skipFile(p))
+                    .filter(p -> Files.isRegularFile(p) && !config.skipFile(p))
                     .allMatch(SpecificationsValidator::isYmlFile);
     }
 

@@ -84,7 +84,7 @@ checkstyle {
     toolVersion '6.16'
     ignoreFailures false
 
-    configFile = file("$projectDir/config/checkstyle/checkstyle.xml")
+    configFile = file("$rootDir/config/checkstyle/checkstyle.xml")
 }
 
 pmd {
@@ -96,7 +96,7 @@ pmd {
 
     ruleSets = []
 
-    ruleSetFiles = files("$projectDir/config/pmd/ruleset.xml")
+    ruleSetFiles = files("$rootDir/config/pmd/ruleset.xml")
 }
 
 
