@@ -1,27 +1,26 @@
 package org.radarcns.schema.specification;
 
+import static com.fasterxml.jackson.dataformat.yaml.YAMLGenerator.Feature.MINIMIZE_QUOTES;
+import static com.fasterxml.jackson.dataformat.yaml.YAMLGenerator.Feature.WRITE_DOC_START_MARKER;
+import static org.radarcns.schema.util.Utils.expandClass;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-import org.radarcns.catalogue.Unit;
-import org.radarcns.config.AvroTopicConfig;
-import org.radarcns.kafka.ObservationKey;
-import org.radarcns.topic.AvroTopic;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.IOException;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
-
-import static com.fasterxml.jackson.dataformat.yaml.YAMLGenerator.Feature.MINIMIZE_QUOTES;
-import static com.fasterxml.jackson.dataformat.yaml.YAMLGenerator.Feature.WRITE_DOC_START_MARKER;
-import static org.radarcns.schema.util.Utils.expandClass;
+import org.radarcns.catalogue.Unit;
+import org.radarcns.config.AvroTopicConfig;
+import org.radarcns.kafka.ObservationKey;
+import org.radarcns.topic.AvroTopic;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /** DataTopic topic from a data producer. */
 public class DataTopic extends AvroTopicConfig {

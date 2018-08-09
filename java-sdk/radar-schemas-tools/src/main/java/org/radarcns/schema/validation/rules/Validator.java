@@ -17,13 +17,12 @@
 
 package org.radarcns.schema.validation.rules;
 
-import org.radarcns.schema.validation.ValidationException;
-
 import java.util.Collection;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
+import org.radarcns.schema.validation.ValidationException;
 
 /**
  * TODO.

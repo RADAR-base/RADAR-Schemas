@@ -1,10 +1,9 @@
 package org.radarcns.schema.validation.rules;
 
-import org.apache.avro.Schema;
+import static org.radarcns.schema.validation.rules.Validator.raise;
 
 import java.util.function.Function;
-
-import static org.radarcns.schema.validation.rules.Validator.raise;
+import org.apache.avro.Schema;
 
 public interface SchemaRules {
     SchemaFieldRules getFieldRules();

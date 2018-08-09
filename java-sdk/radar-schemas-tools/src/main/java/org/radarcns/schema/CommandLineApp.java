@@ -16,6 +16,20 @@
 
 package org.radarcns.schema;
 
+import static java.util.stream.Collectors.toList;
+
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import net.sourceforge.argparse4j.ArgumentParsers;
 import net.sourceforge.argparse4j.impl.Arguments;
 import net.sourceforge.argparse4j.inf.ArgumentParser;
@@ -33,21 +47,6 @@ import org.radarcns.schema.util.SubCommand;
 import org.radarcns.schema.validation.SchemaValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import static java.util.stream.Collectors.toList;
 
 /**
  * Command line app containing a source catalogue.
@@ -138,7 +137,7 @@ public class CommandLineApp {
                     String next = map.get(key).get(details)
                             .replace("\n", "\n\t\t");
                     // remove last two tabs
-                    result.append(next.substring(0, next.length() - 2));
+                    result.append(next, 0, next.length() - 2);
                 }
                 result.append('\n');
             }

@@ -19,13 +19,12 @@ package org.radarcns.schema.specification.active;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import org.radarcns.schema.Scope;
-import org.radarcns.schema.specification.DataTopic;
-import org.radarcns.schema.specification.DataProducer;
-import org.radarcns.schema.specification.active.questionnaire.QuestionnaireSource;
-
-import javax.validation.constraints.NotBlank;
 import java.util.List;
+import javax.validation.constraints.NotBlank;
+import org.radarcns.schema.Scope;
+import org.radarcns.schema.specification.DataProducer;
+import org.radarcns.schema.specification.DataTopic;
+import org.radarcns.schema.specification.active.questionnaire.QuestionnaireSource;
 
 /**
  * TODO.

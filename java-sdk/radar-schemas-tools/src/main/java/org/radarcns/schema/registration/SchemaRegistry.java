@@ -16,6 +16,13 @@
 
 package org.radarcns.schema.registration;
 
+import static org.radarcns.schema.CommandLineApp.matchTopic;
+
+import java.io.Closeable;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.util.Optional;
+import java.util.regex.Pattern;
 import net.sourceforge.argparse4j.impl.Arguments;
 import net.sourceforge.argparse4j.inf.ArgumentParser;
 import net.sourceforge.argparse4j.inf.Namespace;
@@ -38,14 +45,6 @@ import org.radarcns.schema.util.SubCommand;
 import org.radarcns.topic.AvroTopic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.Closeable;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.util.Optional;
-import java.util.regex.Pattern;
-
-import static org.radarcns.schema.CommandLineApp.matchTopic;
 
 /**
  * Schema registry interface.

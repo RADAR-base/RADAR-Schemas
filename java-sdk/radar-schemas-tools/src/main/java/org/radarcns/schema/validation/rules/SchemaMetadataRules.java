@@ -1,8 +1,7 @@
 package org.radarcns.schema.validation.rules;
 
-import org.apache.avro.Schema;
-
 import java.util.function.Function;
+import org.apache.avro.Schema;
 
 public interface SchemaMetadataRules {
     SchemaRules getSchemaRules();

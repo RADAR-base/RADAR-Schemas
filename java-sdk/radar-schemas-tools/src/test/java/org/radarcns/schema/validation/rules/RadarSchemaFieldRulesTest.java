@@ -16,6 +16,14 @@
 
 package org.radarcns.schema.validation.rules;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.radarcns.schema.validation.rules.RadarSchemaFieldRules.FIELD_NAME_PATTERN;
+import static org.radarcns.schema.validation.rules.Validator.matches;
+
+import java.nio.file.Paths;
+import java.util.stream.Stream;
 import org.apache.avro.Schema;
 import org.apache.avro.Schema.Parser;
 import org.apache.avro.SchemaBuilder;
@@ -24,16 +32,6 @@ import org.junit.Test;
 import org.radarcns.schema.validation.ValidationException;
 import org.radarcns.schema.validation.ValidationSupport;
 import org.radarcns.schema.validation.config.ExcludeConfig;
-
-import java.io.IOException;
-import java.nio.file.Paths;
-import java.util.stream.Stream;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.radarcns.schema.validation.rules.RadarSchemaFieldRules.FIELD_NAME_PATTERN;
-import static org.radarcns.schema.validation.rules.Validator.matches;
 
 /**
  * TODO.
@@ -50,7 +48,7 @@ public class RadarSchemaFieldRulesTest {
     private RadarSchemaRules schemaValidator;
 
     @Before
-    public void setUp() throws IOException {
+    public void setUp() {
         validator = new RadarSchemaFieldRules();
         schemaValidator = new RadarSchemaRules(new ExcludeConfig(), validator);
     }

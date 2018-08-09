@@ -16,19 +16,9 @@
 
 package org.radarcns.schema.validation;
 
-import net.sourceforge.argparse4j.impl.Arguments;
-import net.sourceforge.argparse4j.inf.ArgumentParser;
-import net.sourceforge.argparse4j.inf.Namespace;
-import org.apache.avro.Schema;
-import org.radarcns.schema.CommandLineApp;
-import org.radarcns.schema.Scope;
-import org.radarcns.schema.util.SubCommand;
-import org.radarcns.schema.validation.config.ExcludeConfig;
-import org.radarcns.schema.validation.rules.RadarSchemaMetadataRules;
-import org.radarcns.schema.validation.rules.RadarSchemaRules;
-import org.radarcns.schema.validation.rules.SchemaMetadata;
-import org.radarcns.schema.validation.rules.SchemaMetadataRules;
-import org.radarcns.schema.validation.rules.Validator;
+import static java.util.function.Function.identity;
+import static org.radarcns.schema.SchemaRepository.COMMONS_PATH;
+import static org.radarcns.schema.validation.rules.Validator.raise;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -43,10 +33,19 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import static java.util.function.Function.identity;
-import static org.radarcns.schema.SchemaRepository.COMMONS_PATH;
-import static org.radarcns.schema.validation.rules.Validator.raise;
+import net.sourceforge.argparse4j.impl.Arguments;
+import net.sourceforge.argparse4j.inf.ArgumentParser;
+import net.sourceforge.argparse4j.inf.Namespace;
+import org.apache.avro.Schema;
+import org.radarcns.schema.CommandLineApp;
+import org.radarcns.schema.Scope;
+import org.radarcns.schema.util.SubCommand;
+import org.radarcns.schema.validation.config.ExcludeConfig;
+import org.radarcns.schema.validation.rules.RadarSchemaMetadataRules;
+import org.radarcns.schema.validation.rules.RadarSchemaRules;
+import org.radarcns.schema.validation.rules.SchemaMetadata;
+import org.radarcns.schema.validation.rules.SchemaMetadataRules;
+import org.radarcns.schema.validation.rules.Validator;
 
 /**
  * Validator for a set of RADAR-Schemas.
@@ -236,7 +235,7 @@ public class SchemaValidator {
 
 
         private Stream<ValidationException> validateSchemas(String scopeString,
-                SchemaValidator validator) throws IOException {
+                SchemaValidator validator) {
             if (scopeString == null) {
                 return validator.analyseFiles();
             } else {

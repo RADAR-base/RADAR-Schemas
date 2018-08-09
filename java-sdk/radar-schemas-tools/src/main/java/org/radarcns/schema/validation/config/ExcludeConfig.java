@@ -21,11 +21,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-import org.apache.avro.Schema;
-import org.radarcns.schema.validation.rules.SchemaField;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.FileSystem;
@@ -37,13 +32,17 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import org.apache.avro.Schema;
+import org.radarcns.schema.validation.rules.SchemaField;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * TODO.
@@ -62,11 +61,10 @@ public class ExcludeConfig {
     private static final String WILD_CARD_PACKAGE = ".*";
 
     /** Regex for validating the yml file. */
-    public static final String VALID_INPUT_REGEX = "^[a-z][a-zA-Z0-9.*]*$";
+    public static final Pattern VALID_INPUT_PATTERN = Pattern.compile("[a-z][a-zA-Z0-9.*]*");
 
     @JsonIgnore
     private final Collection<PathMatcher> matchers = new ArrayList<>();
-    private final Set<String> files = new HashSet<>();
     private final Map<String, ConfigItem> validation = new HashMap<>();
     private Path root;
 
@@ -99,8 +97,8 @@ public class ExcludeConfig {
      * @param stream TODO
      * @return TODO
      */
-    private static boolean validateClass(Stream<String> stream) {
-        return stream.allMatch(value -> value.matches(VALID_INPUT_REGEX));
+    private static boolean invalidClass(Stream<String> stream) {
+        return stream.anyMatch(value -> !VALID_INPUT_PATTERN.matcher(value).matches());
     }
 
     /**
@@ -169,26 +167,20 @@ public class ExcludeConfig {
             throw new IllegalArgumentException("Invalid exclude config.");
         }
         if (!files.isEmpty()) {
-            this.files.clear();
             this.matchers.clear();
         }
-        this.files.addAll(files);
         this.matchers.addAll(pathMatchers);
-    }
-
-    public Set<String> getFiles() {
-        return Collections.unmodifiableSet(files);
     }
 
     /** Set the validation to be excluded. */
     @JsonSetter("validation")
     public void setValidation(Map<String, ConfigItem> validation) {
         //Validate validation key map
-        if (!validateClass(validation.keySet().stream())) {
+        if (invalidClass(validation.keySet().stream())) {
             throw new IllegalArgumentException("Validation map keys are invalid");
         }
 
-        if (!validateClass(validation.values().stream()
+        if (invalidClass(validation.values().stream()
                         .map(ConfigItem::getFields)
                         .flatMap(Set::stream))) {
             throw new IllegalArgumentException("Validation map values are not valid.");

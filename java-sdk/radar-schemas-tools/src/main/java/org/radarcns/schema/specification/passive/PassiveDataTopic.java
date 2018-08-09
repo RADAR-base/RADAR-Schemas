@@ -17,23 +17,14 @@
 package org.radarcns.schema.specification.passive;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.Objects;
 import org.radarcns.catalogue.ProcessingState;
 import org.radarcns.schema.specification.AppDataTopic;
-
-import java.util.Objects;
 
 /**
  * TODO.
  */
 public class PassiveDataTopic extends AppDataTopic {
-    public enum RadarSourceDataTypes {
-        ACCELEROMETER, BATTERY, BLOOD_VOLUME_PULSE, BLOOD_PULSE_WAVE, ELECTRODERMAL_ACTIVITY,
-        ENERGY, GALVANIC_SKIN_RESPONSE, GYROSCOPE, HEART_RATE, HEART_RATE_FILTERED,
-        HEART_RATE_VARIABILITY, INTER_BEAT_INTERVAL, LED, LIGHT, MAGNETIC_FIELD, OXYGEN_SATURATION,
-        PHONE_CALL, PHONE_SMS, PHONE_BLUETOOTH_DEVICES, PHONE_SMS_UNREAD, PHONE_CONTACTS,
-        PHOTOPLETHYSMOGRAPHY, RELATIVE_LOCATION, RESPIRATION_RATE, STEP_COUNT, THERMOMETER,
-        USAGE_EVENT, USER_INTERACTION
-    }
 
     @JsonProperty("processing_state")
     private ProcessingState processingState;

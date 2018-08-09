@@ -25,10 +25,6 @@ import org.radarcns.schema.specification.DataTopic;
  * TODO.
  */
 public class QuestionnaireDataTopic extends DataTopic {
-    public enum RadarSourceTypes {
-        ARMT
-    }
-
     @JsonProperty
     private URL questionnaireDefinitionUrl;
 

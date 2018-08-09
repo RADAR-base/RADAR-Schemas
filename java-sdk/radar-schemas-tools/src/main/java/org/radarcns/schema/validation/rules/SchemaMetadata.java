@@ -1,9 +1,8 @@
 package org.radarcns.schema.validation.rules;
 
+import java.nio.file.Path;
 import org.apache.avro.Schema;
 import org.radarcns.schema.Scope;
-
-import java.nio.file.Path;
 
 /**
  * Schema with metadata.
@@ -12,13 +11,6 @@ public class SchemaMetadata {
     private final Schema schema;
     private final Scope scope;
     private final Path path;
-
-    /**
-     * Schema with {@code null} metadata.
-     */
-    public SchemaMetadata(Schema schema) {
-        this(schema, null, null);
-    }
 
     /**
      * Schema with metadata.
