@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import kafka.cluster.Broker;
+import kafka.cluster.EndPoint;
 import kafka.zk.KafkaZkClient;
 import kafka.zookeeper.ZooKeeperClientException;
 import net.sourceforge.argparse4j.inf.ArgumentParser;
@@ -24,6 +25,7 @@ import org.radarcns.schema.util.SubCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import scala.collection.JavaConverters$;
+import scala.collection.Seq;
 
 /**
  * Registers Kafka topics with Zookeeper.
@@ -62,8 +64,8 @@ public class KafkaTopics implements Closeable {
             List<Broker> brokerList;
             try {
                 // convert Scala sequence of servers to Java
-                brokerList = JavaConverters$.MODULE$
-                        .seqAsJavaList(zkClient.getAllBrokersInCluster());
+                brokerList = asStream(zkClient.getAllBrokersInCluster())
+                        .collect(Collectors.toList());
             } catch (ZooKeeperClientException ex) {
                 logger.warn("Failed to reach zookeeper");
                 brokerList = Collections.emptyList();
@@ -74,7 +76,9 @@ public class KafkaTopics implements Closeable {
                 logger.info("Kafka brokers available. Starting topic creation.");
 
                 String bootstrapServers = brokerList.stream()
-                        .map(b -> b.endPoints().mkString(","))
+                        .map(Broker::endPoints)
+                        .flatMap(KafkaTopics::asStream)
+                        .map(EndPoint::connectionString)
                         .collect(Collectors.joining(","));
 
                 kafkaClient = AdminClient.create(Collections.singletonMap(
@@ -95,6 +99,10 @@ public class KafkaTopics implements Closeable {
         }
 
         return brokersAvailable;
+    }
+
+    private static <T> Stream<T> asStream(Seq<T> stream) {
+        return JavaConverters$.MODULE$.seqAsJavaList(stream).stream();
     }
 
     /**
