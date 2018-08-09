@@ -1,19 +1,17 @@
 package org.radarcns.schema.service;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.radarcns.schema.specification.SourceCatalogue;
-import org.radarcns.schema.specification.active.ActiveSource;
-import org.radarcns.schema.specification.monitor.MonitorSource;
-import org.radarcns.schema.specification.passive.PassiveSource;
-
+import java.util.ArrayList;
+import java.util.List;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import java.util.ArrayList;
-import java.util.List;
+import org.radarcns.schema.specification.SourceCatalogue;
+import org.radarcns.schema.specification.active.ActiveSource;
+import org.radarcns.schema.specification.connector.ConnectorSource;
+import org.radarcns.schema.specification.monitor.MonitorSource;
+import org.radarcns.schema.specification.passive.PassiveSource;
 
 /**
  * Webservice resource to share SourceCatalogues. The response has a "Source-Type-Class" header that
@@ -32,46 +30,44 @@ public class SourceCatalogueService {
     /** Get all passive sources from the source catalogue. */
     @GET
     @Path("/passive")
-    public Response getPassiveSources() {
-        return Response.ok()
-                .entity(new SourceTypeResponse(this.sourceCatalogue).addPassive())
-                .build();
+    public SourceTypeResponse getPassiveSources() {
+        return new SourceTypeResponse().addPassive();
     }
 
     /** Get all passive sources from the source catalogue. */
     @GET
     @Path("/active")
-    public Response getActiveSources() {
-        return Response.ok()
-                .entity(new SourceTypeResponse(this.sourceCatalogue).addActive())
-                .build();
+    public SourceTypeResponse getActiveSources() {
+        return new SourceTypeResponse().addActive();
     }
 
     /** Get all monitor sources from the source catalogue. */
     @GET
     @Path("/monitor")
-    public Response getMonitorSources() {
-        return Response.ok()
-                .entity(new SourceTypeResponse(this.sourceCatalogue).addMonitor())
-                .build();
+    public SourceTypeResponse getMonitorSources() {
+        return new SourceTypeResponse().addMonitor();
+    }
+
+
+    /** Get all connector sources from the source catalogue. */
+    @GET
+    @Path("/connector")
+    public SourceTypeResponse getConnectorSources() {
+        return new SourceTypeResponse().addConnector();
     }
 
     /** Get all sources from the source catalogue. */
     @GET
-    public Response getAllSourceTypes() {
-        return Response.ok()
-                .entity(new SourceTypeResponse(this.sourceCatalogue)
-                        .addPassive()
-                        .addActive()
-                        .addMonitor())
-                .build();
+    public SourceTypeResponse getAllSourceTypes() {
+        return new SourceTypeResponse()
+                .addPassive()
+                .addActive()
+                .addMonitor()
+                .addConnector();
     }
 
     /** Response with source types. */
     public class SourceTypeResponse {
-        @JsonIgnore
-        private final SourceCatalogue sourceCatalogue;
-
         @JsonProperty("passive-source-types")
         private List<PassiveSource> passiveSources;
 
@@ -81,24 +77,26 @@ public class SourceCatalogueService {
         @JsonProperty("monitor-source-types")
         private List<MonitorSource> monitorSources;
 
-        private SourceTypeResponse(SourceCatalogue sourceCatalogue) {
-            this.sourceCatalogue = sourceCatalogue;
-        }
+        @JsonProperty("connector-source-types")
+        private List<ConnectorSource> connectorSources;
 
         private SourceTypeResponse addPassive() {
-            this.passiveSources = new ArrayList<>(
-                    this.sourceCatalogue.getPassiveSources().values());
+            this.passiveSources = new ArrayList<>(sourceCatalogue.getPassiveSources().values());
             return this;
         }
 
         private SourceTypeResponse addActive() {
-            this.activeSources = new ArrayList<>(this.sourceCatalogue.getActiveSources().values());
+            this.activeSources = new ArrayList<>(sourceCatalogue.getActiveSources().values());
             return this;
         }
 
         private SourceTypeResponse addMonitor() {
-            this.monitorSources = new ArrayList<>(
-                    this.sourceCatalogue.getMonitorSources().values());
+            this.monitorSources = new ArrayList<>(sourceCatalogue.getMonitorSources().values());
+            return this;
+        }
+
+        private SourceTypeResponse addConnector() {
+            this.connectorSources = new ArrayList<>(sourceCatalogue.getConnectorSources().values());
             return this;
         }
 
@@ -112,6 +110,10 @@ public class SourceCatalogueService {
 
         public List<MonitorSource> getMonitorSources() {
             return monitorSources;
+        }
+
+        public List<ConnectorSource> getConnectorSources() {
+            return connectorSources;
         }
     }
 }

@@ -94,7 +94,7 @@ public class SchemaValidator {
                     })
                     .filter(s -> s != null && s.getValue().getType() == Schema.Type.ENUM)
                     .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (v1, v2) -> {
-                        if (v1.equals(v2)) {
+                        if (v1 == v2) {
                             return v1;
                         } else {
                             throw new IllegalStateException("Duplicate enum: " + v1);
@@ -131,10 +131,8 @@ public class SchemaValidator {
 
     /**
      * TODO.
-     * @throws IOException TODO.
      */
-    public Stream<ValidationException> analyseFiles()
-            throws IOException {
+    public Stream<ValidationException> analyseFiles() {
         return Arrays.stream(Scope.values())
                 .flatMap(this::analyseFiles);
     }

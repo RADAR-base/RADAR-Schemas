@@ -6,9 +6,6 @@ plugins {
     id 'com.jfrog.artifactory'
 }
 
-ext.artifactName = 'radar-schemas-tools'
-ext.description = 'RADAR Schemas specification and validation tools.'
-
 targetCompatibility = '1.8'
 sourceCompatibility = '1.8'
 mainClassName = 'org.radarcns.schema.CommandLineApp'
@@ -20,19 +17,29 @@ sourceSets {
     }
 }
 
-ext.junitVersion = '4.12'
-ext.slf4jVersion = '1.7.25'
-ext.jettyVersion = '9.4.8.v20171121'
-ext.jerseyVersion = '2.26'
+ext {
+    artifactName = 'radar-schemas-tools'
+    description = 'RADAR Schemas specification and validation tools.'
+
+    argparseVersion = '0.8.1'
+    jacksonVersion = '2.9.6'
+    jerseyVersion = '2.27'
+    jettyVersion = '9.4.11.v20180605'
+    junitVersion = '4.12'
+    kafkaVersion = '2.0.0'
+    radarCommonsVersion = '0.9.0'
+    slf4jVersion = '1.7.25'
+}
 
 dependencies {
-    api group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.8.10'
+    api group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: jacksonVersion
     api group: 'javax.validation', name: 'validation-api', version: '2.0.0.Final'
-    implementation group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-yaml', version: '2.8.10'
+    implementation group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-yaml', version: jacksonVersion
     implementation project(':radar-schemas-commons')
-    implementation group: 'org.radarcns', name: 'radar-commons', version: '0.6-alpha.1'
-    implementation group: 'net.sourceforge.argparse4j', name: 'argparse4j', version: '0.7.0'
-    implementation (group: 'org.apache.kafka', name: 'kafka_2.11', version: '0.11.0.1') {
+    implementation group: 'org.radarcns', name: 'radar-commons', version: radarCommonsVersion
+    implementation group: 'org.radarcns', name: 'radar-commons-server', version: radarCommonsVersion
+    implementation group: 'net.sourceforge.argparse4j', name: 'argparse4j', version: argparseVersion
+    implementation (group: 'org.apache.kafka', name: 'kafka_2.12', version: kafkaVersion) {
         exclude group: 'org.slf4j', module: 'slf4j-log4j12'
     }
     implementation group: 'org.eclipse.jetty', name: 'jetty-server', version: jettyVersion
@@ -43,7 +50,7 @@ dependencies {
     api group: 'org.glassfish.jersey.containers', name: 'jersey-container-servlet-core', version: jerseyVersion
 
     runtimeOnly group: 'org.glassfish.jersey.media', name: 'jersey-media-json-jackson', version: jerseyVersion
-    runtimeOnly group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.25'
+    runtimeOnly group: 'org.slf4j', name: 'slf4j-simple', version: slf4jVersion
     runtimeOnly group: 'org.glassfish.jersey.inject', name: 'jersey-hk2', version: jerseyVersion 
 
     testCompile group: 'junit', name: 'junit', version: junitVersion
@@ -77,7 +84,7 @@ checkstyle {
     toolVersion '6.16'
     ignoreFailures false
 
-    configFile = file("$projectDir/config/checkstyle/checkstyle.xml")
+    configFile = file("$rootDir/config/checkstyle/checkstyle.xml")
 }
 
 pmd {
@@ -89,7 +96,7 @@ pmd {
 
     ruleSets = []
 
-    ruleSetFiles = files("$projectDir/config/pmd/ruleset.xml")
+    ruleSetFiles = files("$rootDir/config/pmd/ruleset.xml")
 }
 
 
@@ -104,13 +111,11 @@ tasks.withType(Tar){
 
 publishing {
     publications {
-        RadarCommonsPublication(MavenPublication) {
+        RadarToolsPublication(MavenPublication) {
             from components.java
             artifact sourcesJar
             artifact javadocJar
-            groupId project.group
             artifactId artifactName
-            version project.version
             pom.withXml {
                 def root = asNode()
                 root.appendNode('description', description)
@@ -128,10 +133,10 @@ publishing {
 }
 
 bintray {
-    user = project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER')
-    key = project.hasProperty('bintrayApiKey') ? project.property('bintrayApiKey') : System.getenv('BINTRAY_API_KEY')
-    override = false
-    publications = ['RadarCommonsPublication']
+    user project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER')
+    key project.hasProperty('bintrayApiKey') ? project.property('bintrayApiKey') : System.getenv('BINTRAY_API_KEY')
+    override false
+    publications 'RadarToolsPublication'
     pkg {
         repo = project.group
         name = artifactName
@@ -164,5 +169,5 @@ artifactory {
 }
 
 artifactoryPublish {
-    publications('RadarCommonsPublication')
+    publications('RadarToolsPublication')
 }

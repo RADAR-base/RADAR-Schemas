@@ -37,5 +37,5 @@ data:
       dynamic: true
     unit: CELSIUS
     processing_state: VENDOR
-    topic: android_bittium_faros_acceleration
+    topic: android_bittium_faros_temperature
     value_schema: .passive.bittium.BittiumFarosTemperature
