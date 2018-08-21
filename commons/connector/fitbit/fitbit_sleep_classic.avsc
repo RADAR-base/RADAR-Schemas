@@ -1,0 +1,14 @@
+{
+  "namespace": "org.radarcns.connector.fitbit",
+  "type": "record",
+  "name": "FitbitSleepClassic",
+  "doc": "Classic sleep data as defined at https://dev.fitbit.com/build/reference/web-api/sleep/. This is generally returned for devices without a heart rate sensor. Deduce absolute times using the timezone at the time of the measurement.",
+  "fields": [
+    { "name": "dateTime", "type": "string", "doc": "ISO 6801 formatted local date time of device (yyyy-MM-ddTHH:mm:ss)." },
+    { "name": "timeReceived", "type": "double", "doc": "Time that the data was received from the Fitbit API (seconds since the Unix Epoch)." },
+    { "name": "duration", "type": "int", "doc": "Duration at this sleep characteristic in seconds." },
+    { "name": "level", "type":
+      { "name": "FitbitSleepClassicLevel", "type": "enum", "symbols": ["AWAKE", "RESTLESS", "ASLEEP", "UNKNOWN"], "doc": "Level of sleep as computed by Fitbit."},
+      "doc": "Level of sleep as computed by Fitbit.", "default": "UNKNOWN" }
+  ]
+}

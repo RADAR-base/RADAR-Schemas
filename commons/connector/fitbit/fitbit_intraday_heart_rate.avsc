@@ -3,11 +3,10 @@
   "type": "record",
   "name": "FitbitIntradayHeartRate",
   "doc": "Intra day heart rate data from fitbit device.",
-    "fields": [
-      { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
-      { "name": "timeReceived", "type": "double", "doc": "Time that the data was received from the Fitbit API (seconds since the Unix Epoch)." },
-      { "name": "timeInterval", "type": "int", "doc":  "Chronological window size (s)." },
-      { "name": "timezoneOffset", "type": "int", "doc": "Offset from UTC (s)." },
-      { "name": "heartRate", "type": "int", "doc":"Heart rate value (bpm)."}
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+    { "name": "timeReceived", "type": "double", "doc": "Time that the data was received from the Fitbit API (seconds since the Unix Epoch)." },
+    { "name": "timeInterval", "type": "int", "doc":  "Chronological window size (s)." },
+    { "name": "heartRate", "type": "int", "doc":"Heart rate value (bpm)."}
   ]
 }
