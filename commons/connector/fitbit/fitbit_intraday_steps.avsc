@@ -6,7 +6,7 @@
   "fields": [
     { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
     { "name": "timeReceived", "type": "double", "doc": "Time that the data was received from the Fitbit API (seconds since the Unix Epoch)." },
-    { "name": "timeInterval", "type": "int", "doc":  "Chronological window size (s)." },
-    { "name": "steps", "type": "int", "doc":"Steps taken in this period."}
+    { "name": "timeInterval", "type": "int", "doc": "Chronological window size (s)." },
+    { "name": "steps", "type": "int", "doc": "Steps taken in this period."}
   ]
 }
