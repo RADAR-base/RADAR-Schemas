@@ -16,14 +16,13 @@
 
 package org.radarcns.schema.validation;
 
-import org.radarcns.schema.Scope;
-import org.radarcns.schema.validation.config.ExcludeConfig;
+import static org.radarcns.schema.SchemaRepository.SPECIFICATIONS_PATH;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-
-import static org.radarcns.schema.SchemaRepository.SPECIFICATIONS_PATH;
+import org.radarcns.schema.Scope;
+import org.radarcns.schema.validation.config.ExcludeConfig;
 
 /**
  * Validates RADAR-Schemas specifications.

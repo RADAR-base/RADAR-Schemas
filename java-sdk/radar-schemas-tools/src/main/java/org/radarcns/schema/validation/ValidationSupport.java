@@ -16,7 +16,9 @@ package org.radarcns.schema.validation;
  * limitations under the License.
  */
 
-import org.radarcns.schema.Scope;
+import static org.radarcns.schema.SchemaRepository.COMMONS_PATH;
+import static org.radarcns.schema.util.Utils.getProjectGroup;
+import static org.radarcns.schema.util.Utils.snakeToCamelCase;
 
 import java.nio.file.Path;
 import java.util.Collection;
@@ -25,10 +27,7 @@ import java.util.Objects;
 import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import static org.radarcns.schema.SchemaRepository.COMMONS_PATH;
-import static org.radarcns.schema.util.Utils.getProjectGroup;
-import static org.radarcns.schema.util.Utils.snakeToCamelCase;
+import org.radarcns.schema.Scope;
 
 /**
  * TODO.

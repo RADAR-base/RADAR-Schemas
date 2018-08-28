@@ -16,18 +16,6 @@ package org.radarcns.schema.validation;
  * limitations under the License.
  */
 
-import org.apache.avro.Schema;
-import org.apache.avro.SchemaBuilder;
-import org.junit.Before;
-import org.junit.Test;
-import org.radarcns.schema.Scope;
-import org.radarcns.schema.validation.config.ExcludeConfig;
-
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.stream.Stream;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import static org.radarcns.schema.Scope.ACTIVE;
@@ -35,6 +23,17 @@ import static org.radarcns.schema.Scope.CATALOGUE;
 import static org.radarcns.schema.Scope.KAFKA;
 import static org.radarcns.schema.Scope.MONITOR;
 import static org.radarcns.schema.Scope.PASSIVE;
+
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.stream.Stream;
+import org.apache.avro.Schema;
+import org.apache.avro.SchemaBuilder;
+import org.junit.Before;
+import org.junit.Test;
+import org.radarcns.schema.Scope;
+import org.radarcns.schema.validation.config.ExcludeConfig;
 
 /**
  * TODO.

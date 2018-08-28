@@ -57,28 +57,16 @@ subprojects {
         }
         developers {
             developer {
-                id 'herkulano'
-                name 'Herculano Campos'
-                email 'herculano@goldenarm.com'
-                organization 'Golden Arm Inc.'
-            }
-            developer {
-                id 'fnobilia'
-                name 'Francesco Nobilia'
-                email 'francesco.nobilia@kcl.ac.uk'
-                organization 'King\'s College London'
-            }
-            developer {
                 id 'blootsvoets'
                 name 'Joris Borgdorff'
                 email 'joris@thehyve.nl'
                 organization 'The Hyve'
             }
             developer {
-                id 'strangepleasures'
-                name 'Pavel Mikhailovskii'
-                email 'pavel@thehyve.nl'
-                organization 'The Hyve'
+                id 'yatharthranjan'
+                name 'Yatharth Ranjan'
+                email 'yatharth.ranjan@kcl.ac.uk'
+                organization 'King\'s College London'
             }
         }
         issueManagement {
@@ -86,7 +74,7 @@ subprojects {
             url issueUrl
         }
         organization {
-            name 'RADAR-CNS'
+            name 'RADAR-base'
             url website
         }
         scm {

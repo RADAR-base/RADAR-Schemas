@@ -16,20 +16,19 @@
 
 package org.radarcns.schema.validation.rules;
 
-import org.radarcns.schema.specification.SourceCatalogue;
-import org.radarcns.schema.specification.passive.PassiveSource;
-import org.radarcns.schema.util.Utils;
+import static org.radarcns.schema.validation.ValidationSupport.equalsFileName;
+import static org.radarcns.schema.validation.rules.Validator.validate;
+import static org.radarcns.schema.validation.rules.Validator.validateNonEmpty;
+import static org.radarcns.schema.validation.rules.Validator.validateOrNull;
 
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-
-import static org.radarcns.schema.validation.ValidationSupport.equalsFileName;
-import static org.radarcns.schema.validation.rules.Validator.validate;
-import static org.radarcns.schema.validation.rules.Validator.validateNonEmpty;
-import static org.radarcns.schema.validation.rules.Validator.validateOrNull;
+import org.radarcns.schema.specification.SourceCatalogue;
+import org.radarcns.schema.specification.passive.PassiveSource;
+import org.radarcns.schema.util.Utils;
 
 /**
  * TODO.

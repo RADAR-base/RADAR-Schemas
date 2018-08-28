@@ -16,10 +16,10 @@
 
 package org.radarcns.schema.validation.rules;
 
+import static org.radarcns.schema.validation.rules.Validator.validateNonNull;
+
 import org.radarcns.schema.specification.active.ActiveSource;
 import org.radarcns.schema.specification.active.questionnaire.QuestionnaireDataTopic;
-
-import static org.radarcns.schema.validation.rules.Validator.validateNonNull;
 
 /**
  * TODO.

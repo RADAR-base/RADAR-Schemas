@@ -16,10 +16,10 @@
 
 package org.radarcns.schema.validation.util;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
 import org.radarcns.schema.util.Utils;
-
-import static org.junit.Assert.assertEquals;
 
 /**
  * TODO.

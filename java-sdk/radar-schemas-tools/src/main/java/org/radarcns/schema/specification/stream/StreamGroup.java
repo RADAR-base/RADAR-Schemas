@@ -1,12 +1,11 @@
 package org.radarcns.schema.specification.stream;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.radarcns.schema.Scope;
-import org.radarcns.schema.specification.DataProducer;
-
-import javax.validation.constraints.NotEmpty;
 import java.util.List;
 import java.util.stream.Stream;
+import javax.validation.constraints.NotEmpty;
+import org.radarcns.schema.Scope;
+import org.radarcns.schema.specification.DataProducer;
 
 /**
  * Data producer for Kafka Streams. This data topic does not register schemas to the schema registry

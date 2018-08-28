@@ -2,7 +2,6 @@ package org.radarcns.schema.validation.config;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
-
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Locale;

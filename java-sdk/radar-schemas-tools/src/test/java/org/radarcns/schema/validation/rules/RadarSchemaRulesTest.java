@@ -16,17 +16,6 @@
 
 package org.radarcns.schema.validation.rules;
 
-import org.apache.avro.Schema;
-import org.apache.avro.Schema.Parser;
-import org.apache.avro.SchemaBuilder;
-import org.junit.Before;
-import org.junit.Test;
-import org.radarcns.schema.validation.ValidationException;
-import org.radarcns.schema.validation.config.ExcludeConfig;
-
-import java.io.IOException;
-import java.util.stream.Stream;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -34,6 +23,16 @@ import static org.radarcns.schema.validation.rules.RadarSchemaRules.ENUM_SYMBOL_
 import static org.radarcns.schema.validation.rules.RadarSchemaRules.NAMESPACE_PATTERN;
 import static org.radarcns.schema.validation.rules.RadarSchemaRules.RECORD_NAME_PATTERN;
 import static org.radarcns.schema.validation.rules.Validator.matches;
+
+import java.io.IOException;
+import java.util.stream.Stream;
+import org.apache.avro.Schema;
+import org.apache.avro.Schema.Parser;
+import org.apache.avro.SchemaBuilder;
+import org.junit.Before;
+import org.junit.Test;
+import org.radarcns.schema.validation.ValidationException;
+import org.radarcns.schema.validation.config.ExcludeConfig;
 
 /**
  * TODO.

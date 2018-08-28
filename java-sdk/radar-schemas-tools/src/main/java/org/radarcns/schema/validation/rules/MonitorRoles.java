@@ -16,16 +16,15 @@
 
 package org.radarcns.schema.validation.rules;
 
-import org.radarcns.schema.specification.monitor.MonitorSource;
-import org.radarcns.schema.util.Utils;
+import static org.radarcns.schema.specification.SourceCatalogue.YAML_EXTENSION;
+import static org.radarcns.schema.validation.ValidationSupport.equalsFileName;
+import static org.radarcns.schema.validation.rules.Validator.validateNonNull;
 
 import java.nio.file.Path;
 import java.util.Collections;
 import java.util.Set;
-
-import static org.radarcns.schema.specification.SourceCatalogue.YAML_EXTENSION;
-import static org.radarcns.schema.validation.ValidationSupport.equalsFileName;
-import static org.radarcns.schema.validation.rules.Validator.validateNonNull;
+import org.radarcns.schema.specification.monitor.MonitorSource;
+import org.radarcns.schema.util.Utils;
 
 /**
  * TODO.

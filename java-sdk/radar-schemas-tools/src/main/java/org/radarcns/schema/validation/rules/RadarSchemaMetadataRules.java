@@ -1,14 +1,13 @@
 package org.radarcns.schema.validation.rules;
 
-import org.apache.avro.Schema;
-import org.radarcns.schema.validation.ValidationSupport;
-import org.radarcns.schema.validation.config.ExcludeConfig;
-
-import java.nio.file.Path;
-
 import static org.radarcns.schema.validation.rules.Validator.check;
 import static org.radarcns.schema.validation.rules.Validator.raise;
 import static org.radarcns.schema.validation.rules.Validator.valid;
+
+import java.nio.file.Path;
+import org.apache.avro.Schema;
+import org.radarcns.schema.validation.ValidationSupport;
+import org.radarcns.schema.validation.config.ExcludeConfig;
 
 /** Rules for schemas with metadata in RADAR-Schemas. */
 public class RadarSchemaMetadataRules implements SchemaMetadataRules {

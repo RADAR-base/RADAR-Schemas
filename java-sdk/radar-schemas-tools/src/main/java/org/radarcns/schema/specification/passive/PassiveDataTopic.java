@@ -17,10 +17,9 @@
 package org.radarcns.schema.specification.passive;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.Objects;
 import org.radarcns.catalogue.ProcessingState;
 import org.radarcns.schema.specification.AppDataTopic;
-
-import java.util.Objects;
 
 /**
  * TODO.

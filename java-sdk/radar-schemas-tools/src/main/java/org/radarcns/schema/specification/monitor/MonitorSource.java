@@ -1,10 +1,9 @@
 package org.radarcns.schema.specification.monitor;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.List;
 import org.radarcns.schema.Scope;
 import org.radarcns.schema.specification.AppSource;
-
-import java.util.List;
 
 public class MonitorSource extends AppSource<MonitorDataTopic> {
     @JsonProperty

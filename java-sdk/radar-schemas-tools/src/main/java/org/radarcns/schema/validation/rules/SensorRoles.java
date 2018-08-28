@@ -16,15 +16,14 @@
 
 package org.radarcns.schema.validation.rules;
 
-import org.radarcns.catalogue.ProcessingState;
-import org.radarcns.schema.specification.passive.PassiveDataTopic;
-
-import java.util.Arrays;
-
 import static org.radarcns.schema.util.Utils.testOrFalse;
 import static org.radarcns.schema.validation.rules.PassiveSourceRoles.RADAR_PROVIDERS;
 import static org.radarcns.schema.validation.rules.Validator.validateNonNull;
 import static org.radarcns.schema.validation.rules.Validator.validateOrNull;
+
+import java.util.Arrays;
+import org.radarcns.catalogue.ProcessingState;
+import org.radarcns.schema.specification.passive.PassiveDataTopic;
 
 /**
  * TODO.

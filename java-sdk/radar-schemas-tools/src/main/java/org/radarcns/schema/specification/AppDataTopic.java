@@ -1,11 +1,10 @@
 package org.radarcns.schema.specification;
 
+import static org.radarcns.schema.util.Utils.expandClass;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
-
 import java.util.Map;
-
-import static org.radarcns.schema.util.Utils.expandClass;
 
 public class AppDataTopic extends DataTopic {
     @JsonProperty("app_provider")
