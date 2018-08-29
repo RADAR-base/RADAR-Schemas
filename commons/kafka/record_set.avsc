@@ -4,9 +4,11 @@
     "type": "record",
     "doc": "Abbreviated record set, meant for binary data transfers of larger sets of data. It just contains a source ID and the record values. The record keys are deduced from authentication parameters. Field names are reduced to a single character for a smaller data footprint. This method of data transfer requires that the data actually adheres to the relevant schemas.",
     "fields": [
-        {"name": "k", "type": "int", "doc": "Key schema version for the given topic."},
-        {"name": "v", "type": "int", "doc": "Value schema version for the given topic."},
-        {"name": "s", "type": "string", "doc": "Source ID of the sent data."},
-        {"name": "d", "type": {"type": "array", "items": "bytes", "doc": "Binary serialized Avro records."}, "doc": "Collected data. This should just contain the value records."}
+        {"name": "keySchemaVersion", "type": "int", "doc": "Key schema version for the given topic."},
+        {"name": "valueSchemaVersion", "type": "int", "doc": "Value schema version for the given topic."},
+        {"name": "projectId", "type": ["null", "string"], "doc": "Project ID of the sent data. If null, it is attempted to be deduced from the credentials.", "default": null},
+        {"name": "userId", "type": ["null", "string"], "doc": "Source ID of the sent data. If null, it is attempted to be deduced from the credentials.", "default": null},
+        {"name": "sourceId", "type": "string", "doc": "Source ID of the sent data."},
+        {"name": "data", "type": {"type": "array", "items": "bytes", "doc": "Binary serialized Avro records."}, "doc": "Collected data. This should just contain the value records."}
     ]
 }
