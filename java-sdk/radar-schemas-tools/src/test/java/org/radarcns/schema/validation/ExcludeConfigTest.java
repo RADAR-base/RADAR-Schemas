@@ -18,7 +18,7 @@ package org.radarcns.schema.validation;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.radarcns.schema.validation.config.ExcludeConfig.VALID_INPUT_REGEX;
+import static org.radarcns.schema.validation.config.ExcludeConfig.VALID_INPUT_PATTERN;
 
 import java.nio.file.Paths;
 import org.junit.Test;
@@ -73,11 +73,12 @@ public class ExcludeConfigTest {
 
     @Test
     public void testGeneralRegex() {
-        assertTrue("avg".matches(VALID_INPUT_REGEX));
-        assertTrue("x".matches(VALID_INPUT_REGEX));
-        assertTrue("org.radarcns.passive.phone.PhoneCall".matches(VALID_INPUT_REGEX));
-        assertTrue("org.radarcns.active.*".matches(VALID_INPUT_REGEX));
-        assertFalse("org.radarcns.passive.phone.PhoneCall as ENUM".matches(VALID_INPUT_REGEX));
-        assertFalse("*".matches(VALID_INPUT_REGEX));
+        assertTrue(VALID_INPUT_PATTERN.matcher("avg").matches());
+        assertTrue(VALID_INPUT_PATTERN.matcher("x").matches());
+        assertTrue(VALID_INPUT_PATTERN.matcher("org.radarcns.passive.phone.PhoneCall").matches());
+        assertTrue(VALID_INPUT_PATTERN.matcher("org.radarcns.active.*").matches());
+        assertFalse(VALID_INPUT_PATTERN
+                .matcher("org.radarcns.passive.phone.PhoneCall as ENUM").matches());
+        assertFalse(VALID_INPUT_PATTERN.matcher("*").matches());
     }
 }

@@ -24,7 +24,6 @@ import static org.radarcns.schema.validation.rules.RadarSchemaRules.NAMESPACE_PA
 import static org.radarcns.schema.validation.rules.RadarSchemaRules.RECORD_NAME_PATTERN;
 import static org.radarcns.schema.validation.rules.Validator.matches;
 
-import java.io.IOException;
 import java.util.stream.Stream;
 import org.apache.avro.Schema;
 import org.apache.avro.Schema.Parser;
@@ -48,7 +47,7 @@ public class RadarSchemaRulesTest {
     private RadarSchemaRules validator;
 
     @Before
-    public void setUp() throws IOException {
+    public void setUp() {
         ExcludeConfig config = new ExcludeConfig();
         validator = new RadarSchemaRules(config);
     }

@@ -13,13 +13,6 @@ public class SchemaMetadata {
     private final Path path;
 
     /**
-     * Schema with {@code null} metadata.
-     */
-    public SchemaMetadata(Schema schema) {
-        this(schema, null, null);
-    }
-
-    /**
      * Schema with metadata.
      */
     public SchemaMetadata(Schema schema, Scope scope, Path path) {

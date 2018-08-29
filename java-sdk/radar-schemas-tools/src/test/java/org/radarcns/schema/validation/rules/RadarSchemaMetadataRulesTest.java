@@ -23,7 +23,6 @@ import static org.radarcns.schema.Scope.MONITOR;
 import static org.radarcns.schema.Scope.PASSIVE;
 import static org.radarcns.schema.specification.SourceCatalogue.BASE_PATH;
 
-import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
@@ -45,7 +44,7 @@ public class RadarSchemaMetadataRulesTest {
     private RadarSchemaMetadataRules validator;
 
     @Before
-    public void setUp() throws IOException {
+    public void setUp() {
         ExcludeConfig config = new ExcludeConfig();
         validator = new RadarSchemaMetadataRules(BASE_PATH, config);
     }

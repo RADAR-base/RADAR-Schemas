@@ -32,7 +32,7 @@ class ConfigItem {
     private enum CheckStatus {
         DISABLE, ENABLE;
 
-        private String name;
+        private final String name;
 
         CheckStatus() {
             this.name = this.name().toLowerCase(Locale.ENGLISH);
@@ -51,15 +51,6 @@ class ConfigItem {
 
     public ConfigItem() {
       // POJO initializer
-    }
-
-    /**
-     * TODO.
-     *
-     * @return TODO
-     */
-    boolean isNameRecordDisable() {
-        return nameRecordCheck.getName().equals(CheckStatus.DISABLE.getName());
     }
 
     /**

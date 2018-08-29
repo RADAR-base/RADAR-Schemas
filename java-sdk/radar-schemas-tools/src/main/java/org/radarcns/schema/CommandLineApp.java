@@ -137,7 +137,7 @@ public class CommandLineApp {
                     String next = map.get(key).get(details)
                             .replace("\n", "\n\t\t");
                     // remove last two tabs
-                    result.append(next.substring(0, next.length() - 2));
+                    result.append(next, 0, next.length() - 2);
                 }
                 result.append('\n');
             }

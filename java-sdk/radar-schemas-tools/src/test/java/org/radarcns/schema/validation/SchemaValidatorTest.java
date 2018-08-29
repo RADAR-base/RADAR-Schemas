@@ -1,5 +1,3 @@
-package org.radarcns.schema.validation;
-
 /*
  * Copyright 2017 King's College London and The Hyve
  *
@@ -15,6 +13,8 @@ package org.radarcns.schema.validation;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+package org.radarcns.schema.validation;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -49,31 +49,31 @@ public class SchemaValidatorTest {
     }
 
     @Test
-    public void active() throws IOException {
+    public void active() {
         testScope(ACTIVE);
     }
 
     @Test
-    public void monitor() throws IOException {
+    public void monitor() {
         testScope(MONITOR);
     }
 
     @Test
-    public void passive() throws IOException {
+    public void passive() {
         testScope(PASSIVE);
     }
 
     @Test
-    public void kafka() throws IOException {
+    public void kafka() {
         testScope(KAFKA);
     }
 
     @Test
-    public void catalogue() throws IOException {
+    public void catalogue() {
         testScope(CATALOGUE);
     }
 
-    private void testScope(Scope scope) throws IOException {
+    private void testScope(Scope scope) {
         String result = SchemaValidator.format(validator.analyseFiles(scope));
 
         if (!result.isEmpty()) {

@@ -21,7 +21,6 @@ import java.io.InputStream;
 import java.util.Locale;
 import java.util.Properties;
 import java.util.function.Function;
-import java.util.function.Predicate;
 import java.util.stream.Stream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -129,18 +128,6 @@ public final class Utils {
         };
     }
 
-    /** Test a throwing predicate, and if it throws, log it and let it return false. */
-    public static <T> Predicate<T> testOrFalse(ThrowingPredicate<T> test) {
-        return t -> {
-            try {
-                return test.test(t);
-            } catch (Exception ex) {
-                logger.error("Failed to test predicate, returning false.", ex);
-                return false;
-            }
-        };
-    }
-
     /**
      * Function that may throw an exception.
      * @param <T> type of value taken.
@@ -156,21 +143,5 @@ public final class Utils {
          * @throws Exception if the function fails.
          */
         R apply(T value) throws Exception;
-    }
-
-    /**
-     * Predicate that may throw an exception.
-     * @param <T> type of value taken.
-     */
-    @FunctionalInterface
-    @SuppressWarnings("PMD.SignatureDeclareThrowsException")
-    public interface ThrowingPredicate<T> {
-        /**
-         * Test containing predicate.
-         * @param value value to test predicate for.
-         * @return whether the predicate tests true.
-         * @throws Exception if the predicate fails to evaluate.
-         */
-        boolean test(T value) throws Exception;
     }
 }

@@ -27,10 +27,6 @@ import org.radarcns.schema.specification.AppSource;
  * TODO.
  */
 public class PassiveSource extends AppSource<PassiveDataTopic> {
-    public enum RadarSourceTypes {
-        EMPATICA_E4, PEBBLE_2, ANDROID_PHONE, BIOVOTION_VSM1
-    }
-
     @JsonProperty @NotEmpty
     private List<PassiveDataTopic> data;
 

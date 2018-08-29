@@ -22,7 +22,6 @@ import static org.junit.Assert.assertTrue;
 import static org.radarcns.schema.validation.rules.RadarSchemaFieldRules.FIELD_NAME_PATTERN;
 import static org.radarcns.schema.validation.rules.Validator.matches;
 
-import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
 import org.apache.avro.Schema;
@@ -49,7 +48,7 @@ public class RadarSchemaFieldRulesTest {
     private RadarSchemaRules schemaValidator;
 
     @Before
-    public void setUp() throws IOException {
+    public void setUp() {
         validator = new RadarSchemaFieldRules();
         schemaValidator = new RadarSchemaRules(new ExcludeConfig(), validator);
     }

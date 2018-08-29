@@ -235,7 +235,7 @@ public class SchemaValidator {
 
 
         private Stream<ValidationException> validateSchemas(String scopeString,
-                SchemaValidator validator) throws IOException {
+                SchemaValidator validator) {
             if (scopeString == null) {
                 return validator.analyseFiles();
             } else {

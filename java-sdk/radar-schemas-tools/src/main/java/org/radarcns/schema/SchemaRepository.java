@@ -22,7 +22,6 @@ package org.radarcns.schema;
 public final class SchemaRepository {
 
     public static final String COMMONS_PATH = "commons";
-    public static final String REST_API_PATH = "restapi";
     public static final String SPECIFICATIONS_PATH = "specifications";
 
     private SchemaRepository() {
