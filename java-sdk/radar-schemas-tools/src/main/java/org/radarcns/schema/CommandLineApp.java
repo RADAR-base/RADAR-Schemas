@@ -16,15 +16,10 @@
 
 package org.radarcns.schema;
 
-import static java.util.stream.Collectors.toList;
-
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.Comparator;
 import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.regex.Pattern;
@@ -75,10 +70,8 @@ public class CommandLineApp {
      *
      * @return TODO
      */
-    public List<String> getTopicsToCreate() {
-        return catalogue.getTopicNames()
-                .sorted()
-                .collect(toList());
+    public Stream<String> getTopicsToCreate() {
+        return catalogue.getTopicNames();
     }
 
     /**
@@ -86,16 +79,14 @@ public class CommandLineApp {
      *
      * @return TODO
      */
-    public List<String> getRawTopics() {
+    public Stream<String> getRawTopics() {
         return Stream.of(
                 catalogue.getPassiveSources(),
                 catalogue.getActiveSources(),
                 catalogue.getMonitorSources(),
                 catalogue.getConnectorSources())
                 .flatMap(map -> map.values().stream())
-                .flatMap(DataProducer::getTopicNames)
-                .sorted()
-                .collect(toList());
+                .flatMap(DataProducer::getTopicNames);
     }
 
     /**
@@ -103,47 +94,9 @@ public class CommandLineApp {
      *
      * @return TODO
      */
-    public List<String> getResultsCacheTopics() {
+    public Stream<String> getResultsCacheTopics() {
         return catalogue.getStreamGroups().values().stream()
-                .flatMap(StreamGroup::getTimedTopicNames)
-                .sorted()
-                .collect(toList());
-    }
-
-    /**
-     * TODO.
-     *
-     * @return TODO
-     */
-    public String getTopicsVerbose(boolean prettyPrint, String source) {
-        logger.info("Topic list {} {}", prettyPrint, source);
-        StringBuilder result = new StringBuilder();
-
-        Map<String, Map<String, String>> map = getTopicsInfoVerbose(prettyPrint);
-
-        List<String> rootKeys = new ArrayList<>(map.keySet());
-        Collections.sort(rootKeys);
-
-        for (String key : rootKeys) {
-            if (source == null || key.equalsIgnoreCase(source)) {
-                result.append(key).append('\n');
-
-                List<String> firstLevelKeys = new ArrayList<>(map.get(key).keySet());
-                Collections.sort(firstLevelKeys);
-
-                for (String details : firstLevelKeys) {
-                    result.append('\t').append(details);
-                    result.append("\n\t\t");
-                    String next = map.get(key).get(details)
-                            .replace("\n", "\n\t\t");
-                    // remove last two tabs
-                    result.append(next, 0, next.length() - 2);
-                }
-                result.append('\n');
-            }
-        }
-
-        return result.toString();
+                .flatMap(StreamGroup::getTimedTopicNames);
     }
 
     public SourceCatalogue getCatalogue() {
@@ -160,13 +113,20 @@ public class CommandLineApp {
      * @param prettyPrint TODO
      * @return TODO
      */
-    private Map<String, Map<String, String>> getTopicsInfoVerbose(boolean prettyPrint) {
-        return catalogue.getSources().stream()
-                .collect(Collectors.toMap(
-                        source -> source.getScope() + " - " + source.getName(),
-                        source -> source.getData().stream()
-                                .collect(Collectors.toMap(
-                                        DataTopic::getTopic, d -> d.toString(prettyPrint)))));
+    public Stream<String> getTopicsVerbose(boolean prettyPrint, String source) {
+        return catalogue.getSources().parallelStream()
+                .filter(s -> source == null
+                        || source.equalsIgnoreCase(s.getScope() + " - " + s.getName()))
+                .map(s -> s.getScope() + " - " + s.getName() + "\n"
+                        + s.getData().stream()
+                                .sorted(Comparator.comparing(DataTopic::getTopic))
+                                .map(t -> {
+                                    String details = t.toString(prettyPrint);
+                                    details = details.substring(0, details.length() - 1)
+                                            .replace("\n", "\n    ");
+                                    return "  " + t.getTopic() + "\n    " + details;
+                                })
+                                .collect(Collectors.joining("\n")));
     }
 
     /** Command to execute. */
@@ -239,16 +199,18 @@ public class CommandLineApp {
 
             @Override
             public int execute(Namespace options, CommandLineApp app) {
+                Stream<String> out;
                 if (options.getBoolean("raw")) {
-                    System.out.println(String.join("\n", app.getRawTopics()));
+                    out = app.getRawTopics();
                 } else if (options.getBoolean("stream")) {
-                    System.out.println(String.join("\n", app.getResultsCacheTopics()));
+                    out = app.getResultsCacheTopics();
                 } else if (options.getBoolean("quiet")) {
-                    System.out.println(String.join("\n", app.getTopicsToCreate()));
+                    out = app.getTopicsToCreate();
                 } else {
-                    System.out.println(app.getTopicsVerbose(true,
-                            options.getString("match")));
+                    out = app.getTopicsVerbose(true, options.getString("match"));
                 }
+                System.out.println(out.sorted().distinct()
+                        .collect(Collectors.joining("\n")));
                 return 0;
             }
 
