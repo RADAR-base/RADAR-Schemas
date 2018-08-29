@@ -24,10 +24,6 @@ import java.nio.file.Paths;
 import org.junit.Test;
 import org.radarcns.schema.validation.config.ExcludeConfig;
 
-import java.nio.file.Paths;
-import org.junit.Test;
-import org.radarcns.schema.validation.config.ExcludeConfig;
-
 /**
  * TODO.
  */
@@ -81,7 +77,8 @@ public class ExcludeConfigTest {
         assertTrue(VALID_INPUT_PATTERN.matcher("x").matches());
         assertTrue(VALID_INPUT_PATTERN.matcher("org.radarcns.passive.phone.PhoneCall").matches());
         assertTrue(VALID_INPUT_PATTERN.matcher("org.radarcns.active.*").matches());
-        assertFalse(VALID_INPUT_PATTERN.matcher("org.radarcns.passive.phone.PhoneCall as ENUM").matches());
+        assertFalse(VALID_INPUT_PATTERN
+                .matcher("org.radarcns.passive.phone.PhoneCall as ENUM").matches());
         assertFalse(VALID_INPUT_PATTERN.matcher("*").matches());
     }
 }
