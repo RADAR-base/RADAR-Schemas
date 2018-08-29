@@ -18,10 +18,10 @@ package org.radarcns.schema.registration;
 
 import static org.radarcns.schema.CommandLineApp.matchTopic;
 
-import java.io.Closeable;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 import net.sourceforge.argparse4j.impl.Arguments;
 import net.sourceforge.argparse4j.inf.ArgumentParser;
@@ -34,7 +34,6 @@ import okhttp3.ResponseBody;
 import okio.BufferedSink;
 import org.apache.avro.Schema;
 import org.radarcns.config.ServerConfig;
-import org.radarcns.producer.rest.ManagedConnectionPool;
 import org.radarcns.producer.rest.ParsedSchemaMetadata;
 import org.radarcns.producer.rest.RestClient;
 import org.radarcns.producer.rest.SchemaRetriever;
@@ -49,7 +48,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Schema registry interface.
  */
-public class SchemaRegistry implements Closeable {
+public class SchemaRegistry {
     public enum Compatibility {
         NONE, FULL, BACKWARD, FORWARD, BACKWARD_TRANSITIVE, FORWARD_TRANSITIVE, FULL_TRANSITIVE
     }
@@ -67,7 +66,10 @@ public class SchemaRegistry implements Closeable {
         ServerConfig config = new ServerConfig(baseUrl);
         config.setUnsafe(true);
         this.schemaClient = new SchemaRetriever(config, 10);
-        this.httpClient = new RestClient(config, 10, ManagedConnectionPool.GLOBAL_POOL);
+        this.httpClient = RestClient.global()
+            .timeout(10, TimeUnit.SECONDS)
+            .server(config)
+            .build();
     }
 
     /**
@@ -150,12 +152,6 @@ public class SchemaRegistry implements Closeable {
         }
     }
 
-    @Override
-    public void close() {
-        schemaClient.close();
-        httpClient.close();
-    }
-
     /** Return the schema registry as a subcommand. */
     public static SubCommand command() {
         return new RegisterCommand();
@@ -170,7 +166,8 @@ public class SchemaRegistry implements Closeable {
         @Override
         public int execute(Namespace options, CommandLineApp app) {
             String url = options.get("schemaRegistry");
-            try (SchemaRegistry registration = new SchemaRegistry(url)) {
+            try {
+                SchemaRegistry registration = new SchemaRegistry(url);
                 boolean forced = options.getBoolean("force");
                 if (forced) {
                     forced = registration.setCompatibility(Compatibility.NONE);

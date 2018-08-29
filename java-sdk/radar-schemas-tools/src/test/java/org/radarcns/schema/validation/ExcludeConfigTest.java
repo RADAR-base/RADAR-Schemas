@@ -24,6 +24,10 @@ import java.nio.file.Paths;
 import org.junit.Test;
 import org.radarcns.schema.validation.config.ExcludeConfig;
 
+import java.nio.file.Paths;
+import org.junit.Test;
+import org.radarcns.schema.validation.config.ExcludeConfig;
+
 /**
  * TODO.
  */
