@@ -1,8 +1,10 @@
 package org.radarcns.schema.validation.rules;
 
-import org.apache.avro.JsonProperties;
-import org.apache.avro.Schema;
-import org.radarcns.schema.validation.ValidationException;
+import static org.radarcns.schema.validation.rules.RadarSchemaRules.validateDocumentation;
+import static org.radarcns.schema.validation.rules.Validator.check;
+import static org.radarcns.schema.validation.rules.Validator.matches;
+import static org.radarcns.schema.validation.rules.Validator.valid;
+import static org.radarcns.schema.validation.rules.Validator.validateNonNull;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -10,12 +12,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
-
-import static org.radarcns.schema.validation.rules.RadarSchemaRules.validateDocumentation;
-import static org.radarcns.schema.validation.rules.Validator.check;
-import static org.radarcns.schema.validation.rules.Validator.matches;
-import static org.radarcns.schema.validation.rules.Validator.valid;
-import static org.radarcns.schema.validation.rules.Validator.validateNonNull;
+import org.apache.avro.JsonProperties;
+import org.apache.avro.Schema;
+import org.radarcns.schema.validation.ValidationException;
 
 /**
  * Rules for RADAR-Schemas schema fields.

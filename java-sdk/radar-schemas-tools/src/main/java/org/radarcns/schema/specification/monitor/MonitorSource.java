@@ -1,17 +1,17 @@
 package org.radarcns.schema.specification.monitor;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.List;
 import org.radarcns.schema.Scope;
+import org.radarcns.schema.specification.AppDataTopic;
 import org.radarcns.schema.specification.AppSource;
 
-import java.util.List;
-
-public class MonitorSource extends AppSource<MonitorDataTopic> {
+public class MonitorSource extends AppSource<AppDataTopic> {
     @JsonProperty
-    private List<MonitorDataTopic> data;
+    private List<AppDataTopic> data;
 
     @Override
-    public List<MonitorDataTopic> getData() {
+    public List<AppDataTopic> getData() {
         return data;
     }
 

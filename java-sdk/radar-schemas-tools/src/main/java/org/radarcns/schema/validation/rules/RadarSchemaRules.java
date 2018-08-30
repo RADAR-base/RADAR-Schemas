@@ -16,10 +16,13 @@
 
 package org.radarcns.schema.validation.rules;
 
-import org.apache.avro.Schema;
-import org.apache.avro.Schema.Type;
-import org.radarcns.schema.validation.ValidationException;
-import org.radarcns.schema.validation.config.ExcludeConfig;
+import static org.radarcns.schema.validation.rules.Validator.check;
+import static org.radarcns.schema.validation.rules.Validator.matches;
+import static org.radarcns.schema.validation.rules.Validator.raise;
+import static org.radarcns.schema.validation.rules.Validator.valid;
+import static org.radarcns.schema.validation.rules.Validator.validate;
+import static org.radarcns.schema.validation.rules.Validator.validateNonEmpty;
+import static org.radarcns.schema.validation.rules.Validator.validateNonNull;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -28,14 +31,10 @@ import java.util.Objects;
 import java.util.function.BiFunction;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
-
-import static org.radarcns.schema.validation.rules.Validator.check;
-import static org.radarcns.schema.validation.rules.Validator.matches;
-import static org.radarcns.schema.validation.rules.Validator.raise;
-import static org.radarcns.schema.validation.rules.Validator.valid;
-import static org.radarcns.schema.validation.rules.Validator.validate;
-import static org.radarcns.schema.validation.rules.Validator.validateNonEmpty;
-import static org.radarcns.schema.validation.rules.Validator.validateNonNull;
+import org.apache.avro.Schema;
+import org.apache.avro.Schema.Type;
+import org.radarcns.schema.validation.ValidationException;
+import org.radarcns.schema.validation.config.ExcludeConfig;
 
 /**
  * Schema validation rules enforced for the RADAR-Schemas repository.

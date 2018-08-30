@@ -1,11 +1,10 @@
 package org.radarcns.schema.validation.rules;
 
-import org.apache.avro.Schema;
-
-import java.util.function.Function;
-
 import static org.radarcns.schema.validation.rules.Validator.raise;
 import static org.radarcns.schema.validation.rules.Validator.valid;
+
+import java.util.function.Function;
+import org.apache.avro.Schema;
 
 public interface SchemaFieldRules {
     /** Recursively checks field types. */

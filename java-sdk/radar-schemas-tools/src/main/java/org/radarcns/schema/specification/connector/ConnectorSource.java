@@ -1,11 +1,10 @@
 package org.radarcns.schema.specification.connector;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.List;
 import org.radarcns.schema.Scope;
 import org.radarcns.schema.specification.DataProducer;
 import org.radarcns.schema.specification.DataTopic;
-
-import java.util.List;
 
 /**
  * Data producer for third-party connectors. This data topic does not register schemas to the schema

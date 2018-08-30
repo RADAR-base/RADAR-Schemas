@@ -1,5 +1,3 @@
-package org.radarcns.schema.validation;
-
 /*
  * Copyright 2017 King's College London and The Hyve
  *
@@ -16,17 +14,7 @@ package org.radarcns.schema.validation;
  * limitations under the License.
  */
 
-import org.apache.avro.Schema;
-import org.apache.avro.SchemaBuilder;
-import org.junit.Before;
-import org.junit.Test;
-import org.radarcns.schema.Scope;
-import org.radarcns.schema.validation.config.ExcludeConfig;
-
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.stream.Stream;
+package org.radarcns.schema.validation;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -35,6 +23,17 @@ import static org.radarcns.schema.Scope.CATALOGUE;
 import static org.radarcns.schema.Scope.KAFKA;
 import static org.radarcns.schema.Scope.MONITOR;
 import static org.radarcns.schema.Scope.PASSIVE;
+
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.stream.Stream;
+import org.apache.avro.Schema;
+import org.apache.avro.SchemaBuilder;
+import org.junit.Before;
+import org.junit.Test;
+import org.radarcns.schema.Scope;
+import org.radarcns.schema.validation.config.ExcludeConfig;
 
 /**
  * TODO.
@@ -50,31 +49,31 @@ public class SchemaValidatorTest {
     }
 
     @Test
-    public void active() throws IOException {
+    public void active() {
         testScope(ACTIVE);
     }
 
     @Test
-    public void monitor() throws IOException {
+    public void monitor() {
         testScope(MONITOR);
     }
 
     @Test
-    public void passive() throws IOException {
+    public void passive() {
         testScope(PASSIVE);
     }
 
     @Test
-    public void kafka() throws IOException {
+    public void kafka() {
         testScope(KAFKA);
     }
 
     @Test
-    public void catalogue() throws IOException {
+    public void catalogue() {
         testScope(CATALOGUE);
     }
 
-    private void testScope(Scope scope) throws IOException {
+    private void testScope(Scope scope) {
         String result = SchemaValidator.format(validator.analyseFiles(scope));
 
         if (!result.isEmpty()) {

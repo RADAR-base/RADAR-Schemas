@@ -1,14 +1,13 @@
 package org.radarcns.schema.validation;
 
+import static org.junit.Assert.assertTrue;
+import static org.radarcns.schema.specification.SourceCatalogue.BASE_PATH;
+
+import java.io.IOException;
 import org.junit.Before;
 import org.junit.Test;
 import org.radarcns.schema.Scope;
 import org.radarcns.schema.validation.config.ExcludeConfig;
-
-import java.io.IOException;
-
-import static org.junit.Assert.assertTrue;
-import static org.radarcns.schema.specification.SourceCatalogue.BASE_PATH;
 
 public class SpecificationsValidatorTest {
     private SpecificationsValidator validator;

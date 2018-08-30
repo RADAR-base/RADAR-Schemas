@@ -1,0 +1,10 @@
+{
+  "namespace": "org.radarcns.connector.fitbit",
+  "type": "record",
+  "name": "FitbitTimeZone",
+  "doc": "Fitbit profile time zone at the current time. This can be used to estimate the UTC time for the Sleep API.",
+  "fields": [
+    { "name": "timeReceived", "type": "double", "doc": "Time that the data was received from the Fitbit API (seconds since the Unix Epoch)." },
+    { "name": "timeZoneOffset", "type": ["null", "int"], "doc": "Offset from UTC (s). If unknown, this is null.", "default": null }
+  ]
+}

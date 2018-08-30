@@ -16,6 +16,16 @@
 
 package org.radarcns.schema.validation.rules;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.radarcns.schema.SchemaRepository.COMMONS_PATH;
+import static org.radarcns.schema.Scope.MONITOR;
+import static org.radarcns.schema.Scope.PASSIVE;
+import static org.radarcns.schema.specification.SourceCatalogue.BASE_PATH;
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.stream.Stream;
 import org.apache.avro.Schema;
 import org.apache.avro.SchemaBuilder;
 import org.junit.Before;
@@ -24,18 +34,6 @@ import org.radarcns.schema.validation.SchemaValidator;
 import org.radarcns.schema.validation.ValidationException;
 import org.radarcns.schema.validation.ValidationSupport;
 import org.radarcns.schema.validation.config.ExcludeConfig;
-
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.stream.Stream;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.radarcns.schema.SchemaRepository.COMMONS_PATH;
-import static org.radarcns.schema.Scope.MONITOR;
-import static org.radarcns.schema.Scope.PASSIVE;
-import static org.radarcns.schema.specification.SourceCatalogue.BASE_PATH;
 
 /**
  * TODO.
@@ -46,7 +44,7 @@ public class RadarSchemaMetadataRulesTest {
     private RadarSchemaMetadataRules validator;
 
     @Before
-    public void setUp() throws IOException {
+    public void setUp() {
         ExcludeConfig config = new ExcludeConfig();
         validator = new RadarSchemaMetadataRules(BASE_PATH, config);
     }

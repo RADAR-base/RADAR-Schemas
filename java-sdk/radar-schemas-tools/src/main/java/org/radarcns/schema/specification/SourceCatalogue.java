@@ -21,19 +21,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-import java.nio.file.InvalidPathException;
-import org.radarcns.schema.Scope;
-import org.radarcns.schema.specification.active.ActiveSource;
-import org.radarcns.schema.specification.connector.ConnectorSource;
-import org.radarcns.schema.specification.stream.StreamGroup;
-import org.radarcns.schema.specification.monitor.MonitorSource;
-import org.radarcns.schema.specification.passive.PassiveSource;
-import org.radarcns.topic.AvroTopic;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.AbstractMap;
@@ -45,6 +35,15 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import org.radarcns.schema.Scope;
+import org.radarcns.schema.specification.active.ActiveSource;
+import org.radarcns.schema.specification.connector.ConnectorSource;
+import org.radarcns.schema.specification.monitor.MonitorSource;
+import org.radarcns.schema.specification.passive.PassiveSource;
+import org.radarcns.schema.specification.stream.StreamGroup;
+import org.radarcns.topic.AvroTopic;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * TODO.

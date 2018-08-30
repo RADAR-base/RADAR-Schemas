@@ -1,5 +1,3 @@
-package org.radarcns.schema.validation;
-
 /*
  * Copyright 2017 King's College London and The Hyve
  *
@@ -16,19 +14,18 @@ package org.radarcns.schema.validation;
  * limitations under the License.
  */
 
-import org.radarcns.schema.Scope;
-
-import java.nio.file.Path;
-import java.util.Collection;
-import java.util.Locale;
-import java.util.Objects;
-import java.util.function.Predicate;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+package org.radarcns.schema.validation;
 
 import static org.radarcns.schema.SchemaRepository.COMMONS_PATH;
 import static org.radarcns.schema.util.Utils.getProjectGroup;
 import static org.radarcns.schema.util.Utils.snakeToCamelCase;
+
+import java.nio.file.Path;
+import java.util.Locale;
+import java.util.Objects;
+import java.util.function.Predicate;
+import java.util.regex.Pattern;
+import org.radarcns.schema.Scope;
 
 /**
  * TODO.
@@ -97,99 +94,11 @@ public final class ValidationSupport {
 
     /**
      * TODO.
-     * @param className TODO.
-     * @return TODO.
-     */
-    public static boolean isValidClass(String className) {
-        try {
-            Class.forName(className).newInstance();
-            return true;
-        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
-            return false;
-        }
-    }
-
-    /**
-     * TODO.
      * @param topicName TODO
      * @return TODO
      */
     public static boolean isValidTopic(String topicName) {
         return topicName != null && TOPIC_PATTERN.matcher(topicName).matches();
-    }
-
-    /**
-     * TODO.
-     * @param topicName TODO
-     * @return TODO
-     */
-    public static String isValidTopicVerbose(String topicName) {
-        if (topicName == null || topicName.trim().isEmpty()) {
-            return "Topic is not specified.";
-        }
-        Matcher matcher = TOPIC_PATTERN.matcher(topicName);
-        if (matcher.find()) {
-            StringBuilder builder = new StringBuilder();
-            builder.append("Kafka topic name is invalid (fix the string between brackets): \"");
-
-            int start = matcher.start();
-            int end = matcher.end();
-            if (start > 0) {
-                builder.append('[')
-                        .append(topicName.substring(0, start))
-                        .append(']');
-            }
-            builder.append(topicName.substring(start, end));
-            while (matcher.find()) {
-                start = matcher.start();
-                builder.append('[')
-                        .append(topicName.substring(end, start))
-                        .append(']');
-                end = matcher.end();
-                builder.append(topicName.substring(start, end));
-            }
-            if (end < topicName.length()) {
-                builder.append('[')
-                        .append(topicName.substring(end, topicName.length()))
-                        .append(']');
-            }
-
-            return builder
-                    .append(". Use lower case alphanumeric strings with underscores.")
-                    .toString();
-        } else {
-            return "Use lower case alphanumeric strings with underscores for Kafka topics";
-        }
-    }
-
-    /**
-     * TODO.
-     * @param topicNames TODO
-     * @return TODO
-     */
-    public static String isValidTopicsVerbose(Collection<String> topicNames) {
-        Objects.requireNonNull(topicNames);
-
-        StringBuilder reason = new StringBuilder(topicNames.size() * 100);
-        boolean first = true;
-        String temp;
-        for (String value : topicNames) {
-            temp = isValidTopicVerbose(value);
-            if (!temp.isEmpty()) {
-                if (first) {
-                    reason.append(temp);
-                    first = false;
-                } else {
-                    reason.append('\n');
-                }
-            }
-        }
-
-        if (first) {
-            return "";
-        }
-
-        return reason.toString();
     }
 
     /**
@@ -228,9 +137,5 @@ public final class ValidationSupport {
 
             return str.equalsIgnoreCase(fileName);
         };
-    }
-
-    public static boolean nonEmpty(Collection<?> c) {
-        return c != null && !c.isEmpty();
     }
 }

@@ -2,7 +2,6 @@ package org.radarcns.schema.validation.config;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
-
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Locale;
@@ -33,7 +32,7 @@ class ConfigItem {
     private enum CheckStatus {
         DISABLE, ENABLE;
 
-        private String name;
+        private final String name;
 
         CheckStatus() {
             this.name = this.name().toLowerCase(Locale.ENGLISH);
@@ -52,15 +51,6 @@ class ConfigItem {
 
     public ConfigItem() {
       // POJO initializer
-    }
-
-    /**
-     * TODO.
-     *
-     * @return TODO
-     */
-    boolean isNameRecordDisable() {
-        return nameRecordCheck.getName().equals(CheckStatus.DISABLE.getName());
     }
 
     /**

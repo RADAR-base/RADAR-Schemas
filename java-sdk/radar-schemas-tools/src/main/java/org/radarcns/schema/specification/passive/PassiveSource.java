@@ -17,21 +17,16 @@
 package org.radarcns.schema.specification.passive;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.radarcns.schema.Scope;
-import org.radarcns.schema.specification.AppSource;
-
+import java.util.List;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.util.List;
+import org.radarcns.schema.Scope;
+import org.radarcns.schema.specification.AppSource;
 
 /**
  * TODO.
  */
 public class PassiveSource extends AppSource<PassiveDataTopic> {
-    public enum RadarSourceTypes {
-        EMPATICA_E4, PEBBLE_2, ANDROID_PHONE, BIOVOTION_VSM1
-    }
-
     @JsonProperty @NotEmpty
     private List<PassiveDataTopic> data;
 
