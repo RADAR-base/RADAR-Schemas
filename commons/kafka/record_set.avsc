@@ -7,7 +7,7 @@
         {"name": "keySchemaVersion", "type": "int", "doc": "Key schema version for the given topic."},
         {"name": "valueSchemaVersion", "type": "int", "doc": "Value schema version for the given topic."},
         {"name": "projectId", "type": ["null", "string"], "doc": "Project ID of the sent data. If null, it is attempted to be deduced from the credentials.", "default": null},
-        {"name": "userId", "type": ["null", "string"], "doc": "Source ID of the sent data. If null, it is attempted to be deduced from the credentials.", "default": null},
+        {"name": "userId", "type": ["null", "string"], "doc": "User ID of the sent data. If null, it is attempted to be deduced from the credentials.", "default": null},
         {"name": "sourceId", "type": "string", "doc": "Source ID of the sent data."},
         {"name": "data", "type": {"type": "array", "items": "bytes", "doc": "Binary serialized Avro records."}, "doc": "Collected data. This should just contain the value records."}
     ]

@@ -11,9 +11,6 @@ dependencies {
     // Commons schemas (backend, passive remote monitoring app)
     compile 'org.radarcns:radar-schemas-commons:0.4.0'
 
-    // REST API schemas (REST API, testing)
-    compile 'org.radarcns:radar-schemas-restapi:0.4.0'
-
     // Questionnaire schemas (active remote monitoring app)
     compile 'org.radarcns:radar-schemas-tools:0.4.0'
 }
@@ -24,20 +21,13 @@ The generated code each refers to a single schema. The classes of Avro records w
 
 ```java
 public class Deserialize {
-   public static void main(String args[]) throws Exception {
+   public PhoneBatteryLevel deserializeBatteryLevel(InputStream json) throws Exception {
       //Instantiating the Schema.Parser class.
       DatumReader<PhoneBatteryLevel> datumReader = new SpecificDatumReader<>(PhoneBatteryLevel.class);
-      DataFileReader<PhoneBatteryLevel> dataFileReader = new DataFileReader<>(new File("/path/to/mydata.avro"), datumReader);
-
-      System.out.println("Reading phone battery levels");
-      PhoneBatteryLevel batteryLevel = null;
-      while (dataFileReader.hasNext()) {
-         batteryLevel = dataFileReader.next(batteryLevel);
-         System.out.println("Phone battery level: " + batteryLevel);
-      }
-      System.out.println("Done");
+      Decoder decoder = new DecoderFactory().jsonDecoder(PhoneBatteryLevel.getClassSchema(), outputStream);
+      return datumReader.read(null, decoder);
    }
 }
 ```
 
-Alternatively, use `org.radarcns.data.SpecificRecordEncoder` and `org.radarcns.data.SpecificRecordDecoder` from the `radar-commons` package.
+Alternatively, use `org.radarcns.data.SpecificRecordEncoder` and `org.radarcns.data.SpecificRecordDecoder` from the [`radar-commons`](https://github.com/RADAR-base/radar-commons) package.
