@@ -39,3 +39,11 @@ data:
   - type: COMPLETION_LOG
     topic: questionnaire_completion_log
     value_schema: .monitor.questionnaire.QuestionnaireCompletionLog
+  - type: PDQ
+    topic: questionnaire_perceived_deficits_questionnaire
+    value_schema: .active.questionnaire.Questionnaire
+    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/perceived_deficits_questionnaire/perceived_deficits_questionnaire_armt.json
+  - type: PDDS
+    topic: questionnaire_patient_determined_disease_step
+    value_schema: .active.questionnaire.Questionnaire
+    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/patient_determined_disease_step/patient_determined_disease_step_armt.json
