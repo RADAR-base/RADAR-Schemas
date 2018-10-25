@@ -5,7 +5,7 @@ version: 0.1.0
 data:
   #Phone sensors
   - type: PPG
-    app_provider: .passive.ppg.PhonePpgProvider
+    app_provider: org.radarbase.passive.ppg.PhonePpgProvider
     fields:
       - name: red
       - name: green
