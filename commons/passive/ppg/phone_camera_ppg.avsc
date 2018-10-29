@@ -1,8 +1,8 @@
 {
     "namespace": "org.radarcns.passive.ppg",
-    "name": "PhonePpg",
+    "name": "PhoneCameraPpg",
     "type": "record",
-    "doc": "PPG collected using a phone camera. This ranges over a sample of the image in a camera preview.",
+    "doc": "PPG collected using a phone camera. This ranges over a sample of the image in a camera preview. The number of pixels in the preview image may have been determined by Android and/or the hardware vendor by downsampling from the number of pixels provided by the hardware sensor.",
     "fields": [
         { "name": "time", "type": "double", "doc": "Phone time since the Unix Epoch (seconds)." },
         { "name": "timeReceived", "type": "double", "doc": "Processed time since the Unix Epoch (seconds)." },

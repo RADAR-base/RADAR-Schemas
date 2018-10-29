@@ -14,4 +14,4 @@ data:
       dynamic: true
     processing_state: RADAR
     topic: android_phone_ppg
-    value_schema: .passive.ppg.PhonePpg
+    value_schema: .passive.ppg.PhoneCameraPpg
