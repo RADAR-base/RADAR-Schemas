@@ -232,7 +232,7 @@ public class KafkaTopics implements Closeable {
             parser.addArgument("-r", "--replication")
                     .help("number of replicas per data packet")
                     .type(Short.class)
-                    .setDefault(3);
+                    .setDefault((short) 3);
             parser.addArgument("-b", "--brokers")
                     .help("number of brokers that are expected to be available.")
                     .type(Integer.class)

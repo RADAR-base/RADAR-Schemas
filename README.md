@@ -11,7 +11,6 @@
   - In the `monitor` subdirectory, add schemas for monitoring applications that gather data.
   - In the `passive` subdirectory, add schemas for passive data collection, like wearables.
   - In the `stream` subdirectory, add schemas used in Kafka Streams.
-- The `restapi` directory contains schemas used to get data from the RADAR-CNS REST API.
 - The `specifications` directory contains specifications of what data types are collected through which devices.
 - Java SDKs for each of the components are provided in the `java-sdk` folder, see installation instructions there. They are automatically generated from the Avro schemas using the Avro 1.8.2 specification.
 
