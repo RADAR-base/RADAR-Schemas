@@ -5,9 +5,11 @@ WORKDIR /code/java-sdk
 
 COPY commons /code/commons
 COPY specifications /code/specifications
-COPY restapi /code/restapi
 COPY java-sdk/gradle /code/java-sdk/gradle
 COPY java-sdk/build.gradle java-sdk/settings.gradle  java-sdk/gradlew /code/java-sdk/
+
+ENV GRADLE_OPTS -Dorg.gradle.daemon=false
+
 RUN ./gradlew tasks
 COPY java-sdk/radar-schemas-commons/build.gradle /code/java-sdk/radar-schemas-commons/
 COPY java-sdk/radar-schemas-commons/src /code/java-sdk/radar-schemas-commons/src

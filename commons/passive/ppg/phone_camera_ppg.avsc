@@ -1,0 +1,14 @@
+{
+    "namespace": "org.radarcns.passive.ppg",
+    "name": "PhoneCameraPpg",
+    "type": "record",
+    "doc": "PPG collected using a phone camera. This ranges over a sample of the image in a camera preview. The number of pixels in the preview image may have been determined by Android and/or the hardware vendor by downsampling from the number of pixels provided by the hardware sensor.",
+    "fields": [
+        { "name": "time", "type": "double", "doc": "Phone time since the Unix Epoch (seconds)." },
+        { "name": "timeReceived", "type": "double", "doc": "Processed time since the Unix Epoch (seconds)." },
+        { "name": "sampleSize", "type": "int", "doc": "Number of pixels that were evaluated to get the current value." },
+        { "name": "red", "type": "float", "doc": "Red component detected in a sample of the camera preview. The range is 0 (no saturation) to 1 (full saturation)." },
+        { "name": "green", "type": "float", "doc": "Green component detected in a sample of the camera preview. The range is 0 (no saturation) to 1 (full saturation)." },
+        { "name": "blue", "type": "float", "doc": "Blue component detected in a sample of the camera preview. The range is 0 (no saturation) to 1 (full saturation)." }
+    ]
+}

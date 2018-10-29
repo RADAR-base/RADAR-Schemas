@@ -127,8 +127,18 @@ public class KafkaTopics implements Closeable {
         try {
             Set<String> existingTopics = kafkaClient.listTopics().names().get();
 
+            logger.info("Creating topics. Topics marked with [*] already exist.");
+
             List<NewTopic> newTopics = topics
-                    .filter(t -> !existingTopics.contains(t))
+                    .filter(t -> {
+                        if (existingTopics.contains(t)) {
+                            logger.info("[*] {}", t);
+                            return false;
+                        } else {
+                            logger.info("[ ] {}", t);
+                            return true;
+                        }
+                    })
                     .map(t -> new NewTopic(t, partitions, replication))
                     .collect(Collectors.toList());
 
@@ -222,7 +232,7 @@ public class KafkaTopics implements Closeable {
             parser.addArgument("-r", "--replication")
                     .help("number of replicas per data packet")
                     .type(Short.class)
-                    .setDefault(3);
+                    .setDefault((short) 3);
             parser.addArgument("-b", "--brokers")
                     .help("number of brokers that are expected to be available.")
                     .type(Integer.class)
