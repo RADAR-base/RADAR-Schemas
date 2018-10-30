@@ -132,6 +132,8 @@ public class KafkaTopics implements Closeable {
             logger.info("Creating topics. Topics marked with [*] already exist.");
 
             List<NewTopic> newTopics = topics
+                    .sorted()
+                    .distinct()
                     .filter(t -> {
                         if (existingTopics.contains(t)) {
                             logger.info("[*] {}", t);
