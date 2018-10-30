@@ -4,8 +4,9 @@
   "name": "Questionnaire",
   "doc": "General schema for questionnaire. Check the specification folder to see how the questionnaire has been defined. For each QuestionnaireType there is a JSON file reporting the questions set and possible answers if available.",
   "fields": [
-    { "name": "time", "type": "double", "doc": "Timestamp in UTC (s) when the questionnaire is submitted to the subject." },
-    { "name": "timeCompleted", "type": "double", "doc": "Timestamp in UTC (s) when subject marks the questionnaire as." },
+    { "name": "time", "type": "double", "doc": "Timestamp in UTC (s) when the questionnaire is started by the subject." },
+    { "name": "timeCompleted", "type": "double", "doc": "Timestamp in UTC (s) when the questionnaire is completed by the subject." },
+    { "name": "timeNotification", "type": ["null", "double"], "doc": "Timestamp in UTC (s) when the notification to complete the questionnaire is sent.", "default": null },
     { "name": "name", "type": "string", "doc": "Questionnaire names." },
     { "name": "version", "type": "string", "doc": "It reports the questionnaire version stated in the JSON specification." },
     { "name": "answers", "type": {
@@ -15,7 +16,7 @@
         "type": "record",
         "doc": "Questionnaire answer.",
          "fields": [
-           { "name": "questionId", "type": ["null", "string"], "doc": "Unique identifier for the specific question.", "default": null }, 
+           { "name": "questionId", "type": ["null", "string"], "doc": "Unique identifier for the specific question.", "default": null },
            { "name": "value", "type": ["int", "string", "double"], "doc": "Subject answer." },
            { "name": "startTime", "type": "double", "doc": "Timestamp in UTC (s) when the question is shown." },
            { "name": "endTime", "type": "double", "doc": "Timestamp in UTC (s)  when the question is answered." }
