@@ -1,0 +1,17 @@
+#====================================== Android Phone Sensors =====================================#
+vendor: RATE-AF
+model: PPG
+version: 0.1.0
+data:
+  #Phone sensors
+  - type: PPG
+    app_provider: org.radarbase.passive.ppg.PhonePpgProvider
+    fields:
+      - name: red
+      - name: green
+      - name: blue
+    sample_rate:
+      dynamic: true
+    processing_state: RADAR
+    topic: android_phone_ppg
+    value_schema: .passive.ppg.PhoneCameraPpg

@@ -1,7 +1,7 @@
 name: aRMT
 vendor: RADAR
 model: aRMT-App
-version: 1.2.0
+version: 1.3.0
 assessment_type: QUESTIONNAIRE
 doc: aRMT Questionnaires definition. Includes Personal Health Questionnaire Depression Scale (PHQ-8), Experience sampling method (ESM) and RSES and other data.
 data:
@@ -39,3 +39,11 @@ data:
   - type: COMPLETION_LOG
     topic: questionnaire_completion_log
     value_schema: .monitor.questionnaire.QuestionnaireCompletionLog
+  - type: PDQ
+    topic: questionnaire_perceived_deficits_questionnaire
+    value_schema: .active.questionnaire.Questionnaire
+    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/perceived_deficits_questionnaire/perceived_deficits_questionnaire_armt.json
+  - type: PDDS
+    topic: questionnaire_patient_determined_disease_step
+    value_schema: .active.questionnaire.Questionnaire
+    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/patient_determined_disease_step/patient_determined_disease_step_armt.json
