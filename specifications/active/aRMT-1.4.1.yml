@@ -1,7 +1,7 @@
 name: aRMT
 vendor: RADAR
 model: aRMT-App
-version: 1.4.0
+version: 1.4.1
 assessment_type: QUESTIONNAIRE
 doc: aRMT Questionnaires definition. Includes Personal Health Questionnaire Depression Scale (PHQ-8), Experience sampling method (ESM) and RSES and other data.
 data:
@@ -10,17 +10,17 @@ data:
     value_schema: .active.notification.Notification
     questionnaire_definition_url: https://github.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/blob/master/questionnaires/thinc_it/thinc_it_armt.json
   - type: ROMBERG_TEST
-    doc: The value of the task is in milliseconds (ms)
+    doc: The value of the task is in milliseconds (ms).
     topic: task_romberg_test
     value_schema: .active.task.Task
     questionnaire_definition_url: https://github.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/blob/master/questionnaires/romberg_test/romberg_test_armt.json
   - type: 2MW_TEST
-    doc: The value of the task is in milliseconds (ms)
+    doc: The value of the task is in milliseconds (ms).
     topic: task_2MW_test
     value_schema: .active.task.Task
     questionnaire_definition_url: https://github.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/blob/master/questionnaires/2MW_test/2MW_test_armt.json
   - type: TANDEM_WALKING_TEST
-    doc: The value of the task is in milliseconds (ms)
+    doc: The value of the task is in milliseconds (ms).
     topic: task_tandem_walking_test
     value_schema: .active.task.Task
     questionnaire_definition_url: https://github.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/blob/master/questionnaires/tandem_walking_test/tandem_walking_test_armt.json
