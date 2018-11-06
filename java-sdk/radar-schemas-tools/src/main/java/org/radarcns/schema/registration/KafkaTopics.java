@@ -74,6 +74,8 @@ public class KafkaTopics implements Closeable {
             brokersAvailable = brokerList.size() >= brokers;
             if (brokersAvailable) {
                 logger.info("Kafka brokers available. Starting topic creation.");
+                // wait for 5sec before proceeding with topic creation
+                Thread.sleep(5000L);
 
                 String bootstrapServers = brokerList.stream()
                         .map(Broker::endPoints)
