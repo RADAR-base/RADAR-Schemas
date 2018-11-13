@@ -85,7 +85,8 @@ public class SchemaRegistry {
                 .sorted(Comparator.comparing(AvroTopic::getName))
                 .distinct()
                 .peek(t -> logger.info("Registering topic {} schemas: {} - {}",
-                        t.getName(), t.getKeySchema().getFullName(), t.getValueSchema().getFullName()))
+                        t.getName(), t.getKeySchema().getFullName(),
+                        t.getValueSchema().getFullName()))
                 .allMatch(this::registerSchema);
     }
 
