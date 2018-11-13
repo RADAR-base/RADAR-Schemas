@@ -12,7 +12,7 @@
     {"name": "durationActive", "type": "float", "doc": "Duration of the part of the activity where the participant was active (s)."},
     {"name": "id", "type": "long", "doc": "Activity log ID."},
     {"name": "name", "type": ["null", "string"], "doc": "Activity name. Null if none or unknown.", "default": null},
-    {"name": "logType", "type": "string", "doc": "Type of log, e.g. manual."},
+    {"name": "logType", "type": ["null", "string"], "doc": "Type of log, e.g. manual. Null if unknown.", "default": null},
     {"name": "type", "type": "long", "doc": "Fitbit-generated ID of the type of activity."},
     {"name": "source", "type": ["null", "FitbitSource"], "doc": "Source of the data. Null if unknown.", "default": null},
     {"name": "manualDataEntry", "type": ["null", "FitbitManualDataEntry"], "doc": "Indicates what values of this record are entered manually. Null if unknown.", "default": null},

@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.fitbit",
   "name": "FitbitActivityHeartRate",
   "type": "record",
-  "doc": "Aggregate heart rate as measured over an activity. The heart rates are divided amongst so-called heart rate zones. A heart rate zone is a range of heart rates and it does not overlap with other heart rate zones. These zones are called, in order of increasing heart rate, 'Out of Range', 'Fat Burn', 'Cardio', and 'Peak'.",
+  "doc": "Aggregate heart rate as measured over an activity. The heart rates are divided amongst so-called heart rate zones. A heart rate zone is a range of heart rates and it does not overlap with other heart rate zones. These zones are called, in order of increasing heart rate, 'Out of Range', 'Fat Burn', 'Cardio', and 'Peak'. Fitbit uses the common formula of 220 minus your age to estimate your maximum heart rate. The 'Out of Range' zone has heart rates up to 50 percent of maximum heart rate, the 'Fat Burn' has heart rates up to 70 percent of maximum heart rate, 'Cardio' up to 85 percent of maximum heart rate and the 'Peak' range has heart rates higher than that.",
   "fields": [
     {"name": "mean", "type": ["null", "int"], "doc": "Mean heart rate over the duration of an activity (bpm). Null if unknown.", "default": null},
     {"name": "min", "type": ["null", "int"], "doc": "Minimum heart rate for the duration of an activity (bpm). Null if unknown.", "default": null},
