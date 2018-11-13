@@ -20,6 +20,7 @@ import static org.radarcns.schema.CommandLineApp.matchTopic;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.Comparator;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
@@ -81,6 +82,11 @@ public class SchemaRegistry {
         return catalogue.getSources().stream()
                 .filter(DataProducer::doRegisterSchema)
                 .flatMap(DataProducer::getTopics)
+                .sorted(Comparator.comparing(AvroTopic::getName))
+                .distinct()
+                .peek(t -> logger.info("Registering topic {} schemas: {} - {}",
+                        t.getName(), t.getKeySchema().getFullName(),
+                        t.getValueSchema().getFullName()))
                 .allMatch(this::registerSchema);
     }
 
@@ -88,14 +94,10 @@ public class SchemaRegistry {
     public boolean registerSchema(AvroTopic<?, ?> topic) {
         try {
             Schema schema = topic.getKeySchema();
-            logger.info("Registering topic {} key schema: {}",
-                    topic.getName(), schema.getFullName());
             ParsedSchemaMetadata metadata = new ParsedSchemaMetadata(null, null, schema);
             this.schemaClient.addSchemaMetadata(topic.getName(), false, metadata);
 
             schema = topic.getValueSchema();
-            logger.info("Registering topic {} value schema: {}",
-                    topic.getName(), schema.getFullName());
             metadata = new ParsedSchemaMetadata(null, null, schema);
             this.schemaClient.addSchemaMetadata(topic.getName(), true, metadata);
             return true;
