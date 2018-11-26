@@ -7,10 +7,11 @@ data:
     windowed: true
   - input_topic: android_phone_usage_event
     value_schema: .passive.phone.PhoneUsageEvent
+    windowed: false
   - topic: android_phone_usage_event_aggregated
     input_topic: android_phone_usage_event_output
     value_schema: .stream.aggregator.PhoneUsageAggregate
-    windowed: true
+    windowed: false
   - input_topic: android_phone_battery_level
     value_schema: .stream.aggregator.NumericAggregate
     windowed: true

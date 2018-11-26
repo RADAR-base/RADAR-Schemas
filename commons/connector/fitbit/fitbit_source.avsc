@@ -1,0 +1,12 @@
+{
+  "namespace": "org.radarcns.connector.fitbit",
+  "name": "FitbitSource",
+  "type": "record",
+  "doc": "A single fitbit source, e.g. a watch or an app.",
+  "fields": [
+    {"name": "id", "type": "string", "doc": "Source id."},
+    {"name": "name", "type": ["null", "string"], "doc": "Source name. Null if unknown.", "default": null},
+    {"name": "type", "type": ["null", "string"], "doc": "Source type. Null if unknown.", "default": null},
+    {"name": "url", "type": ["null", "string"], "doc": "Source URL. Null if unknown.", "default": null}
+  ]
+}

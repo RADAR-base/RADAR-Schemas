@@ -1,0 +1,26 @@
+{
+  "namespace": "org.radarcns.connector.fitbit",
+  "name": "FitbitActivityLogRecord",
+  "type": "record",
+  "doc": "Fitbit Activity Log record, containing the aggregate data of a single activity. This data is preprocessed by Fitbit, using algorithms based on the intraday data.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Start time of the activity, time since the Unix Epoch (s)."},
+    {"name": "timeReceived", "type": "double", "doc": "Time that this record was collected by a connector. Start time of the activity, seconds since the Unix Epoch (s)."},
+    {"name": "timeZoneOffset", "type": "int", "doc": "Time zone offset compared to UTC (s)."},
+    {"name": "timeLastModified", "type": "double", "doc": "Time when the record was last modified, time since the Unix Epoch (s)."},
+    {"name": "duration", "type": "float", "doc": "Duration of the activity (s)."},
+    {"name": "durationActive", "type": "float", "doc": "Duration of the part of the activity where the participant was active (s)."},
+    {"name": "id", "type": "long", "doc": "Activity log ID."},
+    {"name": "name", "type": ["null", "string"], "doc": "Activity name. Null if none or unknown.", "default": null},
+    {"name": "logType", "type": ["null", "string"], "doc": "Type of log, e.g. manual. Null if unknown.", "default": null},
+    {"name": "type", "type": "long", "doc": "Fitbit-generated ID of the type of activity."},
+    {"name": "source", "type": ["null", "FitbitSource"], "doc": "Source of the data. Null if unknown.", "default": null},
+    {"name": "manualDataEntry", "type": ["null", "FitbitManualDataEntry"], "doc": "Indicates what values of this record are entered manually. Null if unknown.", "default": null},
+    {"name": "energy", "type": ["null", "float"], "doc": "Estimated of energy expended during the activity (kJ). Null if unknown.", "default": null},
+    {"name": "levels", "type": ["null", "FitbitActivityLevels"], "doc": "Levels of activity. Null if unknown.", "default": null},
+    {"name": "heartRate", "type": ["null", "FitbitActivityHeartRate"], "doc": "Heart rate aggregate information collected during the activity. Null if unknown.", "default": null},
+    {"name": "steps", "type": ["null", "int"], "doc": "Number of steps made during the activity. Null if unknown or if the type of activity is not step-based.", "default": null},
+    {"name": "distance", "type": ["null", "float"], "doc": "Distance covered during the activity (km). Null if unknown or if the type of activity is not distance-based.", "default": null},
+    {"name": "speed", "type": ["null", "double"], "doc": "Mean speed during the activity (km/h). Null if unknown or if the type of activity is not distance-based.", "default": null}
+  ]
+}

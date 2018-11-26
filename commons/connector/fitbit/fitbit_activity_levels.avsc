@@ -1,0 +1,12 @@
+{
+  "namespace": "org.radarcns.connector.fitbit",
+  "name": "FitbitActivityLevels",
+  "type": "record",
+  "doc": "Aggregate activity levels during an activity.",
+  "fields": [
+    {"name": "durationSedentary", "type": ["null", "int"], "doc": "Duration that the activity level was considered sedentary (s). Null if unknown.", "default": null},
+    {"name": "durationLightly", "type": ["null", "int"], "doc": "Duration that the activity level was considered light (s). Null if unknown.", "default": null},
+    {"name": "durationFairly", "type": ["null", "int"], "doc": "Duration that the activity level was considered fair (s). Null if unknown.", "default": null},
+    {"name": "durationVery", "type": ["null", "int"], "doc": "Duration that the activity level was considered very high (s). Null if unknown.", "default": null}
+  ]
+}

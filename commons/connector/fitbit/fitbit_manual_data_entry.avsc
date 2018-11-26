@@ -1,0 +1,11 @@
+{
+  "namespace": "org.radarcns.connector.fitbit",
+  "name": "FitbitManualDataEntry",
+  "type": "record",
+  "doc": "Indicates values in an activity log that are entered manually by the user, instead of being automatically collected by a device.",
+  "fields": [
+    {"name": "distance", "type": ["null", "boolean"], "doc": "Whether the distance field was manually entered. Null if unknown.", "default": null},
+    {"name": "energy", "type": ["null", "boolean"], "doc": "Whether the energy field was manually entered. Null if unknown.", "default": null},
+    {"name": "steps", "type": ["null", "boolean"], "doc": "Whether the steps field was manually entered. Null if unknown.", "default": null}
+  ]
+}

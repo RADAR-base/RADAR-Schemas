@@ -19,3 +19,6 @@ data:
   - doc: User profile timezone.
     topic: connect_fitbit_time_zone
     value_schema: .connector.fitbit.FitbitTimeZone
+  - doc: Aggregate activity log.
+    topic: connect_fitbit_activity_log
+    value_schema: .connector.fitbit.FitbitActivityLogRecord
