@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.active.notification",
   "type": "record",
   "name": "Notification",
-  "doc": "General schema for notifications. Check the specification folder to see how the notification has been defined. For each NotificationType there is a JSON file reporting the questions set and possible answers if available.",
+  "doc": "NOTE: THIS SCHEMA IS DEPRACATED. PLEASE USE org.radarcns.active.questionnaire.Questionnaire. General schema for notifications. Check the specification folder to see how the notification has been defined. For each NotificationType there is a JSON file reporting the questions set and possible answers if available.",
   "fields": [
     { "name": "time", "type": "double", "doc": "Timestamp in UTC (s) when the notification is submitted to the subject." },
     { "name": "timeCompleted", "type": "double", "doc": "Timestamp in UTC (s) when subject marks the notification as complete." },
