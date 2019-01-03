@@ -1,0 +1,21 @@
+{
+  "namespace": "org.radarcns.monitor.application",
+  "type": "record",
+  "name": "ApplicationDeviceInfo",
+  "doc": "Device information where the application is running.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Device timestamp as time since the Unix Epoch (s)." },
+    { "name": "manufacturer", "type": ["null", "string"], "doc": "Manufacturer of the device. Null if unknown.", "default": null },
+    { "name": "model", "type": ["null", "string"], "doc": "Model of the device. Null if unknown.", "default": null },
+    { "name": "operatingSystem", "type": {
+      "name": "OperatingSystem",
+      "type": "enum",
+      "symbols": ["ANDROID", "IOS", "MACOS", "WINDOWS", "LINUX", "BSD", "OTHER", "UNKNOWN"],
+      "doc": "Operating system types."
+      }, "doc": "Operating system that the application is running on.", "default": "UNKNOWN"},
+    { "name": "operatingSystemVersion", "type": ["null", "string"], "doc": "Operating system version as readable string. Null if unknown.", "default": null },
+    { "name": "operatingSystemVersionCode", "type": ["null", "int"], "doc": "Operating system unique version number. Null if unknown.", "default": null },
+    { "name": "appVersion", "type": ["null", "string"], "doc": "App version as a readable string. Null if unknown.", "default": null },
+    { "name": "appVersionCode", "type": ["null", "int"], "doc": "Unique app version number. Null if unknown.", "default": null }
+  ]
+}
