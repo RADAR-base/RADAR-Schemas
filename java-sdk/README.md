@@ -9,10 +9,10 @@ repositories {
 
 dependencies {
     // Commons schemas (backend, passive remote monitoring app)
-    compile 'org.radarcns:radar-schemas-commons:0.4.1'
+    compile 'org.radarcns:radar-schemas-commons:0.4.2'
 
     // Questionnaire schemas (active remote monitoring app)
-    compile 'org.radarcns:radar-schemas-tools:0.4.1'
+    compile 'org.radarcns:radar-schemas-tools:0.4.2'
 }
 ```
 Usually, you only need to include the schemas you actually need in your dependencies.
