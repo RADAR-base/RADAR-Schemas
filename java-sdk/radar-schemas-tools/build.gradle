@@ -22,13 +22,13 @@ ext {
     description = 'RADAR Schemas specification and validation tools.'
 
     argparseVersion = '0.8.1'
-    jacksonVersion = '2.9.6'
+    jacksonVersion = '2.9.8'
     jerseyVersion = '2.27'
-    jettyVersion = '9.4.11.v20180605'
+    jettyVersion = '9.4.14.v20181114'
     junitVersion = '4.12'
-    kafkaVersion = '2.0.0'
-    okHttpVersion = '3.11.0'
-    radarCommonsVersion = '0.10.0'
+    kafkaVersion = '2.1.0'
+    okHttpVersion = '3.12.0'
+    radarCommonsVersion = '0.11.3'
     slf4jVersion = '1.7.25'
 }
 
@@ -53,7 +53,7 @@ dependencies {
 
     runtimeOnly group: 'org.glassfish.jersey.media', name: 'jersey-media-json-jackson', version: jerseyVersion
     runtimeOnly group: 'org.slf4j', name: 'slf4j-simple', version: slf4jVersion
-    runtimeOnly group: 'org.glassfish.jersey.inject', name: 'jersey-hk2', version: jerseyVersion 
+    runtimeOnly group: 'org.glassfish.jersey.inject', name: 'jersey-hk2', version: jerseyVersion
 
     testCompile group: 'junit', name: 'junit', version: junitVersion
 }
