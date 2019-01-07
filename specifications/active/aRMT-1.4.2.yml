@@ -1,0 +1,57 @@
+name: aRMT
+vendor: RADAR
+model: aRMT-App
+version: 1.4.2
+assessment_type: QUESTIONNAIRE
+doc: aRMT Questionnaires definition. Includes Personal Health Questionnaire Depression Scale (PHQ-8), Experience sampling method (ESM) and RSES and other data.
+data:
+  - type: THINC-IT
+    topic: notification_thinc_it
+    value_schema: .active.questionnaire.Questionnaire
+    questionnaire_definition_url: https://github.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/blob/master/questionnaires/thinc_it/thinc_it_armt.json
+  - type: ROMBERG_TEST
+    doc: The value of the task is in milliseconds (ms).
+    topic: task_romberg_test
+    value_schema: .active.task.Task
+    questionnaire_definition_url: https://github.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/blob/master/questionnaires/romberg_test/romberg_test_armt.json
+  - type: 2MW_TEST
+    doc: The value of the task is in milliseconds (ms).
+    topic: task_2MW_test
+    value_schema: .active.task.Task
+    questionnaire_definition_url: https://github.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/blob/master/questionnaires/2MW_test/2MW_test_armt.json
+  - type: TANDEM_WALKING_TEST
+    doc: The value of the task is in milliseconds (ms).
+    topic: task_tandem_walking_test
+    value_schema: .active.task.Task
+    questionnaire_definition_url: https://github.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/blob/master/questionnaires/tandem_walking_test/tandem_walking_test_armt.json
+  - type: PHQ8
+    topic: questionnaire_phq8
+    value_schema: .active.questionnaire.Questionnaire
+    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/phq8/phq8_armt.json
+  - type: ESM
+    topic: questionnaire_esm
+    value_schema: .active.questionnaire.Questionnaire
+    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/esm/esm_armt.json
+  - type: AUDIO
+    topic: questionnaire_audio
+    value_schema: .active.opensmile.OpenSmile2AudioRecording
+  - type: RSES
+    topic: questionnaire_rses
+    value_schema: .active.questionnaire.Questionnaire
+    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/rses/rses_armt.json
+  - type: PDQ
+    topic: questionnaire_perceived_deficits_questionnaire
+    value_schema: .active.questionnaire.Questionnaire
+    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/perceived_deficits_questionnaire/perceived_deficits_questionnaire_armt.json
+  - type: PDDS
+    topic: questionnaire_patient_determined_disease_step
+    value_schema: .active.questionnaire.Questionnaire
+    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/patient_determined_disease_step/patient_determined_disease_step_armt.json
+  - type: COMPLETION_LOG
+    doc: Information about the completeness of each questionnaire.
+    topic: questionnaire_completion_log
+    value_schema: .monitor.questionnaire.QuestionnaireCompletionLog
+  - type: TIMEZONE
+    doc: Timezone information sent along with each questionnaire.
+    topic: questionnaire_timezone
+    value_schema: .monitor.application.ApplicationTimeZone
