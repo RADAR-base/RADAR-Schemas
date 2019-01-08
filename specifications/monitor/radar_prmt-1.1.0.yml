@@ -1,7 +1,7 @@
 name: RADAR_pRMT
 vendor: RADAR
 model: pRMT
-version: 1.0.0
+version: 1.1.0
 doc: Status updates from the RADAR-CNS pRMT app.
 app_provider: .application.ApplicationServiceProvider
 data:
@@ -43,3 +43,10 @@ data:
     unit: SECOND
     topic: application_time_zone
     value_schema: .monitor.application.ApplicationTimeZone
+  - type: DEVICE_INFO
+    doc: Device information where the app is installed
+    sample_rate:
+      interval: 300
+      configurable: true
+    topic: application_device_info
+    value_schema: .monitor.application.ApplicationDeviceInfo
