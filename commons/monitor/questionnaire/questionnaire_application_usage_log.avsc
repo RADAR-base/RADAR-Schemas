@@ -5,15 +5,11 @@
   "doc": "Schema of reporting events when opening the app, clicking notifications, and starting and finish questionnaires.",
   "fields": [
     { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
-    { "name": "timeReceived", "type": "double", "doc": "Device receiver timestamp in UTC (s)." },
-    { "name": "packageName", "type": "string", "doc": "Package name of the launched app." },
-    { "name": "categoryName", "type": ["null", "string"], "doc": "App category as given by the play store, null if a category is not listed or unable to be fetched.", "default": null },
-    { "name": "categoryNameFetchTime", "type": ["null", "double"], "doc": "Timestamp in UTC when the category was attempted to fetch from the play store (s), null if not fetched.", "default": null },
     { "name": "eventType", "type": {
       "name": "UsageEventType",
       "type": "enum",
       "doc": "Android activity usage event type.",
-      "symbols": ["APP_OPEN_NOTIFICATION", "APP_OPEN_DIRECTLY", "APP_FOREGROUND_NOTIFICATION", "QUESTIONNAIRE_STARTED", "QUESTIONNAIRE_COMPLETED", "OTHER", "UNKNOWN"]
-      }, "doc": "Whether the app was opened directly or by clicking a notification, a questionnaire was started or completed, etc.", "default": "UNKNOWN" }
+      "symbols": ["APP_OPEN_NOTIFICATION", "APP_OPEN_DIRECTLY", "APP_FOREGROUND_NOTIFICATION", "QUESTIONNAIRE_STARTED", "QUESTIONNAIRE_COMPLETED", "QUESTIONNAIRE_CLOSED", "OTHER", "UNKNOWN"]
+      }, "doc": "Whether the app was opened directly or by clicking a notification, a questionnaire was started, completed, closed, etc.", "default": "UNKNOWN" }
   ]
 }
