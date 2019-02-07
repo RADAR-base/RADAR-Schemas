@@ -32,6 +32,10 @@ ext {
     slf4jVersion = '1.7.25'
 }
 
+repositories {
+    maven { url 'http://packages.confluent.io/maven/' }
+}
+
 dependencies {
     api group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: jacksonVersion
     api group: 'javax.validation', name: 'validation-api', version: '2.0.0.Final'
@@ -47,6 +51,8 @@ dependencies {
     implementation group: 'org.eclipse.jetty', name: 'jetty-server', version: jettyVersion
     implementation group: 'org.eclipse.jetty', name: 'jetty-servlet', version: jettyVersion
     implementation group: 'org.glassfish.jersey.core', name: 'jersey-server', version: jerseyVersion
+    implementation group: 'io.confluent', name: 'kafka-connect-avro-converter', version: '5.1.0'
+    implementation group: 'org.apache.kafka', name: 'connect-json', version: '2.1.0-cp1'
 
     // source catalogue service annotations
     api group: 'org.glassfish.jersey.containers', name: 'jersey-container-servlet-core', version: jerseyVersion
