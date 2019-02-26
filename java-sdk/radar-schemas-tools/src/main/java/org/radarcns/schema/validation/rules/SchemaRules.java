@@ -74,11 +74,14 @@ public interface SchemaRules {
      */
     default Validator<Schema> validateRecord() {
         return validateUniqueness()
+                .and(validateAvroData())
                 .and(validateNameSpace())
                 .and(validateName())
                 .and(validateSchemaDocumentation())
                 .and(fields(getFieldRules().getValidator(this)));
     }
+
+    Validator<Schema> validateAvroData();
 
     /**
      * Validates record schemas of an active source.

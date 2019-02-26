@@ -23,30 +23,38 @@ ext {
 
     argparseVersion = '0.8.1'
     jacksonVersion = '2.9.8'
-    jerseyVersion = '2.27'
-    jettyVersion = '9.4.14.v20181114'
+    jerseyVersion = '2.28'
+    jettyVersion = '9.4.15.v20190215'
     junitVersion = '4.12'
-    kafkaVersion = '2.1.0'
-    okHttpVersion = '3.12.0'
-    radarCommonsVersion = '0.11.3'
-    slf4jVersion = '1.7.25'
+    kafkaVersion = '2.1.1'
+    okHttpVersion = '3.13.1'
+    radarCommonsVersion = '0.12.0-SNAPSHOT'
+    slf4jVersion = '1.7.26'
+}
+
+repositories {
+    jcenter()
+    maven { url 'http://packages.confluent.io/maven/' }
+    maven { url 'https://oss.jfrog.org/artifactory/oss-snapshot-local' }
 }
 
 dependencies {
     api group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: jacksonVersion
     api group: 'javax.validation', name: 'validation-api', version: '2.0.0.Final'
+    api (group: 'org.apache.kafka', name: 'kafka_2.12', version: kafkaVersion) {
+        exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+    }
     implementation group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-yaml', version: jacksonVersion
     implementation project(':radar-schemas-commons')
     implementation group: 'org.radarcns', name: 'radar-commons', version: radarCommonsVersion
     implementation group: 'org.radarcns', name: 'radar-commons-server', version: radarCommonsVersion
     implementation group: 'net.sourceforge.argparse4j', name: 'argparse4j', version: argparseVersion
-    implementation (group: 'org.apache.kafka', name: 'kafka_2.12', version: kafkaVersion) {
-        exclude group: 'org.slf4j', module: 'slf4j-log4j12'
-    }
     implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: okHttpVersion
     implementation group: 'org.eclipse.jetty', name: 'jetty-server', version: jettyVersion
     implementation group: 'org.eclipse.jetty', name: 'jetty-servlet', version: jettyVersion
     implementation group: 'org.glassfish.jersey.core', name: 'jersey-server', version: jerseyVersion
+    implementation group: 'io.confluent', name: 'kafka-connect-avro-converter', version: '5.1.0'
+    implementation group: 'org.apache.kafka', name: 'connect-json', version: '2.1.0-cp1'
 
     // source catalogue service annotations
     api group: 'org.glassfish.jersey.containers', name: 'jersey-container-servlet-core', version: jerseyVersion
@@ -55,7 +63,7 @@ dependencies {
     runtimeOnly group: 'org.slf4j', name: 'slf4j-simple', version: slf4jVersion
     runtimeOnly group: 'org.glassfish.jersey.inject', name: 'jersey-hk2', version: jerseyVersion
 
-    testCompile group: 'junit', name: 'junit', version: junitVersion
+    testImplementation group: 'junit', name: 'junit', version: junitVersion
 }
 
 task createStartScripts(type: CreateStartScripts) {
@@ -108,7 +116,7 @@ pmd {
 
 tasks.withType(Tar){
     compression = Compression.GZIP
-    extension = 'tar.gz'
+    archiveExtension.set('tar.gz')
 }
 
 publishing {
