@@ -1,5 +1,8 @@
 apply plugin: 'com.jfrog.artifactory'
 
+targetCompatibility = '1.7'
+sourceCompatibility = '1.7'
+
 ext.artifactName = 'radar-schemas-commons'
 ext.description = 'RADAR Schemas Commons SDK'
 
@@ -7,6 +10,11 @@ sourceSets {
     main {
         java.srcDir avroOutputDir
     }
+}
+
+repositories {
+    jcenter()
+    maven { url 'https://oss.jfrog.org/artifactory/oss-snapshot-local' }
 }
 
 //---------------------------------------------------------------------------//

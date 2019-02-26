@@ -24,11 +24,12 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.AbstractMap;
 import java.util.Arrays;
-import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
@@ -37,6 +38,7 @@ import net.sourceforge.argparse4j.impl.Arguments;
 import net.sourceforge.argparse4j.inf.ArgumentParser;
 import net.sourceforge.argparse4j.inf.Namespace;
 import org.apache.avro.Schema;
+import org.apache.avro.Schema.Parser;
 import org.radarcns.schema.CommandLineApp;
 import org.radarcns.schema.Scope;
 import org.radarcns.schema.util.SubCommand;
@@ -78,55 +80,75 @@ public class SchemaValidator {
         try {
             List<Path> avroFiles = Files.walk(scope.getPath(root.resolve(COMMONS_PATH)))
                     .filter(Files::isRegularFile)
+                    .filter(SchemaValidator::isAvscFile)
                     .filter(p -> !config.skipFile(p))
                     .collect(Collectors.toList());
 
-            Map<Path, Schema> enums = avroFiles.stream()
-                    .filter(SchemaValidator::isAvscFile)
-                    .map(p -> {
-                        try {
-                            return new AbstractMap.SimpleImmutableEntry<>(p,
-                                    new Schema.Parser().parse(p.toFile()));
-                        } catch (Exception ex) {
-                            return null;
-                        }
-                    })
-                    .filter(s -> s != null && s.getValue().getType() == Schema.Type.ENUM)
-                    .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (v1, v2) -> {
-                        if (v1 == v2) {
-                            return v1;
-                        } else {
-                            throw new IllegalStateException("Duplicate enum: " + v1);
-                        }
-                    }));
+            Map<String, SchemaMetadata> schemas = new HashMap<>();
+            int prevSize = -1;
 
-            Collection<Path> skipEnums = enums.keySet();
-            Map<String, Schema> useTypes = enums.values().stream()
-                    .collect(Collectors.toMap(Schema::getFullName, identity()));
+            // Recursively parse all schemas.
+            // If the parsed schema size does not change anymore, the final schemas cannot be parsed
+            // at all.
+            while (prevSize != schemas.size()) {
+                prevSize = schemas.size();
+                Map<String, Schema> useTypes = schemas.entrySet().stream()
+                        .collect(Collectors.toMap(Entry::getKey, e -> e.getValue().getSchema()));
+                Set<Path> ignoreFiles = schemas.values().stream()
+                        .map(SchemaMetadata::getPath)
+                        .collect(Collectors.toSet());
 
-            return avroFiles.stream()
-                    .filter(p -> !skipEnums.contains(p))
-                    .flatMap(p -> {
-                        if (!isAvscFile(p)) {
-                            return raise(p.toAbsolutePath() + " is invalid. " + scope.getLower()
-                                            + " should contain only " + AVRO_EXTENSION + " files.");
-                        }
-
-                        try {
-                            Schema.Parser parser = new Schema.Parser();
+                schemas.putAll(avroFiles.stream()
+                        .filter(p -> !ignoreFiles.contains(p))
+                        .map(p -> {
+                            Parser parser = new Parser();
                             parser.addTypes(useTypes);
-                            Schema schema = parser.parse(p.toFile());
+                            try {
+                                return new SchemaMetadata(parser.parse(p.toFile()), scope, p);
+                            } catch (Exception ex) {
+                                return null;
+                            }
+                        })
+                        .filter(Objects::nonNull)
+                        .collect(Collectors.toMap(
+                                m -> m.getSchema().getFullName(),
+                                identity(),
+                                (v1, v2) -> {
+                                    if (v1.equals(v2)) {
+                                        return v1;
+                                    } else {
+                                        throw new IllegalStateException("Duplicate enum: " + v1);
+                                    }
+                                })));
+            }
 
-                            return validate(schema, p, scope);
-                        } catch (IOException e) {
-                            return raise("Cannot parse file " + p.toAbsolutePath(), e);
-                        }
-                    });
+            Set<Path> ignoreFiles = schemas.values().stream()
+                    .map(SchemaMetadata::getPath)
+                    .collect(Collectors.toSet());
+            Map<String, Schema> useTypes = schemas.entrySet().stream()
+                    .collect(Collectors.toMap(Entry::getKey, e -> e.getValue().getSchema()));
+
+            return Stream.concat(
+                    avroFiles.stream()
+                            .filter(p -> !ignoreFiles.contains(p))
+                            .map(p -> {
+                                Parser parser = new Parser();
+                                parser.addTypes(useTypes);
+                                try {
+                                    parser.parse(p.toFile());
+                                    return null;
+                                } catch (Exception ex) {
+                                    return new ValidationException("Cannot parse schema", ex);
+                                }
+                            })
+                            .filter(Objects::nonNull),
+                    schemas.values().stream()
+                            .flatMap(this::validate)
+            );
         } catch (IOException ex) {
             return raise("Failed to read files: " + ex, ex);
         }
     }
-
 
     /**
      * TODO.
@@ -138,7 +160,12 @@ public class SchemaValidator {
 
     /** Validate a single schema in given path. */
     public Stream<ValidationException> validate(Schema schema, Path path, Scope scope) {
-        return validator.apply(new SchemaMetadata(schema, scope, path));
+        return validate(new SchemaMetadata(schema, scope, path));
+    }
+
+    /** Validate a single schema in given path. */
+    public Stream<ValidationException> validate(SchemaMetadata schemaMetadata) {
+        return validator.apply(schemaMetadata);
     }
 
     /** Formats a stream of validation exceptions. */

@@ -16,6 +16,9 @@
 
 package org.radarcns.schema.validation.rules;
 
+import static io.confluent.connect.avro.AvroDataConfig.CONNECT_META_DATA_CONFIG;
+import static io.confluent.connect.avro.AvroDataConfig.ENHANCED_AVRO_SCHEMA_SUPPORT_CONFIG;
+import static io.confluent.connect.avro.AvroDataConfig.SCHEMAS_CACHE_SIZE_CONFIG;
 import static org.radarcns.schema.validation.rules.Validator.check;
 import static org.radarcns.schema.validation.rules.Validator.matches;
 import static org.radarcns.schema.validation.rules.Validator.raise;
@@ -24,6 +27,8 @@ import static org.radarcns.schema.validation.rules.Validator.validate;
 import static org.radarcns.schema.validation.rules.Validator.validateNonEmpty;
 import static org.radarcns.schema.validation.rules.Validator.validateNonNull;
 
+import io.confluent.connect.avro.AvroData;
+import io.confluent.connect.avro.AvroDataConfig;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -40,7 +45,6 @@ import org.radarcns.schema.validation.config.ExcludeConfig;
  * Schema validation rules enforced for the RADAR-Schemas repository.
  */
 public class RadarSchemaRules implements SchemaRules {
-
     static final String TIME = "time";
     private static final String TIME_RECEIVED = "timeReceived";
     private static final String TIME_COMPLETED = "timeCompleted";
@@ -199,6 +203,27 @@ public class RadarSchemaRules implements SchemaRules {
     public Validator<Schema> validateNotTimeReceived() {
         return validate(s -> s.getField(TIME_RECEIVED), Objects::isNull,
                 messageSchema("\"" + TIME_RECEIVED + "\" is allow only in PASSIVE schemas."));
+    }
+
+    @Override
+    public Validator<Schema> validateAvroData() {
+        return schema -> {
+            AvroDataConfig avroConfig = new AvroDataConfig.Builder()
+                    .with(CONNECT_META_DATA_CONFIG, false)
+                    .with(SCHEMAS_CACHE_SIZE_CONFIG, 10)
+                    .with(ENHANCED_AVRO_SCHEMA_SUPPORT_CONFIG, true)
+                    .build();
+            AvroData encoder = new AvroData(10);
+            AvroData decoder = new AvroData(avroConfig);
+            try {
+                org.apache.kafka.connect.data.Schema connectSchema = encoder
+                        .toConnectSchema(schema);
+                Schema originalSchema = decoder.fromConnectSchema(connectSchema);
+                return check(schema.equals(originalSchema), "Schema changed by validation");
+            } catch (Exception ex) {
+                return raise("Failed to convert schema back to itself");
+            }
+        };
     }
 
     @Override
