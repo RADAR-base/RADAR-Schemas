@@ -16,6 +16,9 @@
 
 package org.radarcns.schema.validation.rules;
 
+import static io.confluent.connect.avro.AvroDataConfig.CONNECT_META_DATA_CONFIG;
+import static io.confluent.connect.avro.AvroDataConfig.ENHANCED_AVRO_SCHEMA_SUPPORT_CONFIG;
+import static io.confluent.connect.avro.AvroDataConfig.SCHEMAS_CACHE_SIZE_CONFIG;
 import static org.radarcns.schema.validation.rules.Validator.check;
 import static org.radarcns.schema.validation.rules.Validator.matches;
 import static org.radarcns.schema.validation.rules.Validator.raise;
@@ -206,9 +209,9 @@ public class RadarSchemaRules implements SchemaRules {
     public Validator<Schema> validateAvroData() {
         return schema -> {
             AvroDataConfig avroConfig = new AvroDataConfig.Builder()
-                    .with("connect.meta.data", false)
-                    .with("schemas.cache.config", 10)
-                    .with("enhanced.avro.schema.support", true)
+                    .with(CONNECT_META_DATA_CONFIG, false)
+                    .with(SCHEMAS_CACHE_SIZE_CONFIG, 10)
+                    .with(ENHANCED_AVRO_SCHEMA_SUPPORT_CONFIG, true)
                     .build();
             AvroData encoder = new AvroData(10);
             AvroData decoder = new AvroData(avroConfig);
