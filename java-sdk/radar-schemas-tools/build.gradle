@@ -23,17 +23,19 @@ ext {
 
     argparseVersion = '0.8.1'
     jacksonVersion = '2.9.8'
-    jerseyVersion = '2.27'
-    jettyVersion = '9.4.14.v20181114'
+    jerseyVersion = '2.28'
+    jettyVersion = '9.4.15.v20190215'
     junitVersion = '4.12'
-    kafkaVersion = '2.1.0'
-    okHttpVersion = '3.12.0'
-    radarCommonsVersion = '0.11.3'
-    slf4jVersion = '1.7.25'
+    kafkaVersion = '2.1.1'
+    okHttpVersion = '3.13.1'
+    radarCommonsVersion = '0.12.0-SNAPSHOT'
+    slf4jVersion = '1.7.26'
 }
 
 repositories {
+    jcenter()
     maven { url 'http://packages.confluent.io/maven/' }
+    maven { url 'https://oss.jfrog.org/artifactory/oss-snapshot-local' }
 }
 
 dependencies {
@@ -61,7 +63,7 @@ dependencies {
     runtimeOnly group: 'org.slf4j', name: 'slf4j-simple', version: slf4jVersion
     runtimeOnly group: 'org.glassfish.jersey.inject', name: 'jersey-hk2', version: jerseyVersion
 
-    testCompile group: 'junit', name: 'junit', version: junitVersion
+    testImplementation group: 'junit', name: 'junit', version: junitVersion
 }
 
 task createStartScripts(type: CreateStartScripts) {
@@ -114,7 +116,7 @@ pmd {
 
 tasks.withType(Tar){
     compression = Compression.GZIP
-    extension = 'tar.gz'
+    archiveExtension.set('tar.gz')
 }
 
 publishing {
