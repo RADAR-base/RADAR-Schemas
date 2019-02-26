@@ -39,14 +39,14 @@ repositories {
 dependencies {
     api group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: jacksonVersion
     api group: 'javax.validation', name: 'validation-api', version: '2.0.0.Final'
+    api (group: 'org.apache.kafka', name: 'kafka_2.12', version: kafkaVersion) {
+        exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+    }
     implementation group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-yaml', version: jacksonVersion
     implementation project(':radar-schemas-commons')
     implementation group: 'org.radarcns', name: 'radar-commons', version: radarCommonsVersion
     implementation group: 'org.radarcns', name: 'radar-commons-server', version: radarCommonsVersion
     implementation group: 'net.sourceforge.argparse4j', name: 'argparse4j', version: argparseVersion
-    implementation (group: 'org.apache.kafka', name: 'kafka_2.12', version: kafkaVersion) {
-        exclude group: 'org.slf4j', module: 'slf4j-log4j12'
-    }
     implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: okHttpVersion
     implementation group: 'org.eclipse.jetty', name: 'jetty-server', version: jettyVersion
     implementation group: 'org.eclipse.jetty', name: 'jetty-servlet', version: jettyVersion
