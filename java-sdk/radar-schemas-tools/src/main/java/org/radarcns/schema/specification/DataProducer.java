@@ -1,6 +1,6 @@
 package org.radarcns.schema.specification;
 
-import static org.radarcns.schema.util.Utils.applyOrEmpty;
+import static org.radarcns.schema.util.SchemaUtils.applyOrEmpty;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;

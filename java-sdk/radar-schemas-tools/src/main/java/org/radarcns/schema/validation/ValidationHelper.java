@@ -16,9 +16,8 @@
 
 package org.radarcns.schema.validation;
 
-import static org.radarcns.schema.SchemaRepository.COMMONS_PATH;
-import static org.radarcns.schema.util.Utils.getProjectGroup;
-import static org.radarcns.schema.util.Utils.snakeToCamelCase;
+import static org.radarcns.schema.util.SchemaUtils.getProjectGroup;
+import static org.radarcns.schema.util.SchemaUtils.snakeToCamelCase;
 
 import java.nio.file.Path;
 import java.util.Locale;
@@ -30,7 +29,9 @@ import org.radarcns.schema.Scope;
 /**
  * TODO.
  */
-public final class ValidationSupport {
+public final class ValidationHelper {
+    public static final String COMMONS_PATH = "commons";
+    public static final String SPECIFICATIONS_PATH = "specifications";
 
     /** Package names. */
     public enum Package {
@@ -57,7 +58,7 @@ public final class ValidationSupport {
     private static final Pattern TOPIC_PATTERN = Pattern.compile(
             "[A-Za-z][a-z0-9-]*(_[A-Za-z0-9-]+)*");
 
-    private ValidationSupport() {
+    private ValidationHelper() {
         //Static class
     }
 
@@ -74,11 +75,12 @@ public final class ValidationSupport {
         }
         Path relativePath = rootPath.relativize(schemaPath);
 
-        String expected = getProjectGroup() + '.' + scope.getLower();
+        StringBuilder builder = new StringBuilder(50);
+        builder.append(getProjectGroup()).append('.').append(scope.getLower());
         if (relativePath.getNameCount() > 1) {
-            expected = expected + '.' + relativePath.getName(0);
+            builder.append('.').append(relativePath.getName(0));
         }
-        return expected;
+        return builder.toString();
     }
 
     /**

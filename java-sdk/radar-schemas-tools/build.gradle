@@ -6,9 +6,18 @@ plugins {
     id 'com.jfrog.artifactory'
 }
 
-targetCompatibility = '1.8'
-sourceCompatibility = '1.8'
+targetCompatibility = '1.11'
+sourceCompatibility = '1.11'
 mainClassName = 'org.radarcns.schema.CommandLineApp'
+
+configurations {
+    implementation {
+        exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+    }
+    runtimeOnly {
+        exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+    }
+}
 
 sourceSets {
     test {
@@ -26,6 +35,7 @@ ext {
     jerseyVersion = '2.28'
     jettyVersion = '9.4.15.v20190215'
     junitVersion = '4.12'
+    confluentVersion = '5.1.2'
     kafkaVersion = '2.1.1'
     okHttpVersion = '3.13.1'
     radarCommonsVersion = '0.12.0-SNAPSHOT'
@@ -41,9 +51,7 @@ repositories {
 dependencies {
     api group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: jacksonVersion
     api group: 'javax.validation', name: 'validation-api', version: '2.0.0.Final'
-    api (group: 'org.apache.kafka', name: 'kafka_2.12', version: kafkaVersion) {
-        exclude group: 'org.slf4j', module: 'slf4j-log4j12'
-    }
+    api group: 'org.apache.kafka', name: 'kafka_2.12', version: kafkaVersion
     implementation group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-yaml', version: jacksonVersion
     implementation project(':radar-schemas-commons')
     implementation group: 'org.radarcns', name: 'radar-commons', version: radarCommonsVersion
@@ -53,8 +61,9 @@ dependencies {
     implementation group: 'org.eclipse.jetty', name: 'jetty-server', version: jettyVersion
     implementation group: 'org.eclipse.jetty', name: 'jetty-servlet', version: jettyVersion
     implementation group: 'org.glassfish.jersey.core', name: 'jersey-server', version: jerseyVersion
-    implementation group: 'io.confluent', name: 'kafka-connect-avro-converter', version: '5.1.0'
-    implementation group: 'org.apache.kafka', name: 'connect-json', version: '2.1.0-cp1'
+    implementation group: 'io.confluent', name: 'kafka-connect-avro-converter', version: confluentVersion
+    implementation group: 'io.confluent', name: 'kafka-schema-registry', version: confluentVersion
+    implementation group: 'org.apache.kafka', name: 'connect-json', version: kafkaVersion
 
     // source catalogue service annotations
     api group: 'org.glassfish.jersey.containers', name: 'jersey-container-servlet-core', version: jerseyVersion
@@ -99,8 +108,10 @@ checkstyle {
 
 pmd {
     // pmd version
-    toolVersion = '5.5.2'
+    toolVersion = '6.12.0'
     ignoreFailures = false
+
+    sourceSets = [sourceSets.main]
 
     consoleOutput = true
 
