@@ -1,6 +1,6 @@
 package org.radarcns.schema.specification.stream;
 
-import static org.radarcns.schema.util.Utils.applyOrEmpty;
+import static org.radarcns.schema.util.SchemaUtils.applyOrEmpty;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
@@ -60,13 +60,14 @@ public class StreamDataTopic extends DataTopic {
     }
 
     /** Get human readable output topic. */
+    @Override
     public String getTopic() {
         if (windowed) {
             return topicBase + "_<time-frame>";
-        } else if (super.getTopic() != null) {
-            return super.getTopic();
-        } else {
+        } else if (super.getTopic() == null) {
             return topicBase + "_output";
+        } else {
+            return super.getTopic();
         }
     }
 

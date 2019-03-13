@@ -30,7 +30,7 @@ import org.apache.avro.SchemaBuilder;
 import org.junit.Before;
 import org.junit.Test;
 import org.radarcns.schema.validation.ValidationException;
-import org.radarcns.schema.validation.ValidationSupport;
+import org.radarcns.schema.validation.ValidationHelper;
 import org.radarcns.schema.validation.config.ExcludeConfig;
 
 /**
@@ -56,9 +56,9 @@ public class RadarSchemaFieldRulesTest {
     @Test
     public void fileNameTest() {
         assertEquals("Questionnaire",
-                ValidationSupport.getRecordName(Paths.get("/path/to/questionnaire.avsc")));
+                ValidationHelper.getRecordName(Paths.get("/path/to/questionnaire.avsc")));
         assertEquals("ApplicationExternalTime",
-                ValidationSupport.getRecordName(
+                ValidationHelper.getRecordName(
                         Paths.get("/path/to/application_external_time.avsc")));
     }
 

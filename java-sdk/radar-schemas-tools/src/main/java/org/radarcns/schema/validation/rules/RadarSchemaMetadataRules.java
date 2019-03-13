@@ -6,7 +6,7 @@ import static org.radarcns.schema.validation.rules.Validator.valid;
 
 import java.nio.file.Path;
 import org.apache.avro.Schema;
-import org.radarcns.schema.validation.ValidationSupport;
+import org.radarcns.schema.validation.ValidationHelper;
 import org.radarcns.schema.validation.config.ExcludeConfig;
 
 /** Rules for schemas with metadata in RADAR-Schemas. */
@@ -51,7 +51,7 @@ public class RadarSchemaMetadataRules implements SchemaMetadataRules {
     private Validator<SchemaMetadata> validateNamespaceSchemaLocation() {
         return metadata -> {
             try {
-                String expected = ValidationSupport.getNamespace(
+                String expected = ValidationHelper.getNamespace(
                         root, metadata.getPath(), metadata.getScope());
                 String namespace = metadata.getSchema().getNamespace();
 
@@ -68,7 +68,7 @@ public class RadarSchemaMetadataRules implements SchemaMetadataRules {
 
     private Validator<SchemaMetadata> validateNameSchemaLocation() {
         return metadata -> {
-            String expected = ValidationSupport.getRecordName(metadata.getPath());
+            String expected = ValidationHelper.getRecordName(metadata.getPath());
 
             return expected.equalsIgnoreCase(metadata.getSchema().getName()) ? valid() : raise(
                     message("Record name should match file name. Expected record name is \""
