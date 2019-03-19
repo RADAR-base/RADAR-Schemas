@@ -22,6 +22,8 @@ import java.util.Objects;
  * TODO.
  */
 public class ValidationException extends RuntimeException {
+    private static long serialVersionUID = 1;
+
     public ValidationException(String message) {
         super(message);
     }

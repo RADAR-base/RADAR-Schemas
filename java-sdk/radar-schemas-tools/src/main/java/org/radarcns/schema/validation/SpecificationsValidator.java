@@ -16,7 +16,7 @@
 
 package org.radarcns.schema.validation;
 
-import static org.radarcns.schema.SchemaRepository.SPECIFICATIONS_PATH;
+import static org.radarcns.schema.validation.ValidationHelper.SPECIFICATIONS_PATH;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -50,6 +50,6 @@ public class SpecificationsValidator {
     }
 
     private static boolean isYmlFile(Path path) {
-        return ValidationSupport.matchesExtension(path, YML_EXTENSION);
+        return ValidationHelper.matchesExtension(path, YML_EXTENSION);
     }
 }

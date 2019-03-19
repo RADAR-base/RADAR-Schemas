@@ -28,13 +28,13 @@ import org.slf4j.LoggerFactory;
 /**
  * TODO.
  */
-public final class Utils {
-    private static final Logger logger = LoggerFactory.getLogger(Utils.class);
+public final class SchemaUtils {
+    private static final Logger logger = LoggerFactory.getLogger(SchemaUtils.class);
     private static final String GRADLE_PROPERTIES = "exchange.properties";
     private static final String GROUP_PROPERTY = "project.group";
     private static String projectGroup;
 
-    private Utils() {
+    private SchemaUtils() {
         //Static class
     }
 

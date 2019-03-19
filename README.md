@@ -59,4 +59,8 @@ docker-compose run --rm tools radar-schemas-tools register http://schema-registr
 docker-compose run --rm tools radar-schemas-tools create zookeeper-1:2181
 # run source-catalogue webservice
 docker-compose run --rm tools radar-schemas-tools serve -p <portnumber>
+# back up the _schemas topic
+docker-compose run --rm tools radar-schemas-tools schema-topic --backup -f schema.json -b 1 zookeeper-1:2181
+# ensure the validity of the _schemas topic
+docker-compose run --rm tools radar-schemas-tools schema-topic --ensure -f schema.json -b 1 -r 1 zookeeper-1:2181
 ```

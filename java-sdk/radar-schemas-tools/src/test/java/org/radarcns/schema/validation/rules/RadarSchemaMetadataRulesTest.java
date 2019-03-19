@@ -18,7 +18,7 @@ package org.radarcns.schema.validation.rules;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.radarcns.schema.SchemaRepository.COMMONS_PATH;
+import static org.radarcns.schema.validation.ValidationHelper.COMMONS_PATH;
 import static org.radarcns.schema.Scope.MONITOR;
 import static org.radarcns.schema.Scope.PASSIVE;
 import static org.radarcns.schema.specification.SourceCatalogue.BASE_PATH;
@@ -32,7 +32,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.radarcns.schema.validation.SchemaValidator;
 import org.radarcns.schema.validation.ValidationException;
-import org.radarcns.schema.validation.ValidationSupport;
+import org.radarcns.schema.validation.ValidationHelper;
 import org.radarcns.schema.validation.config.ExcludeConfig;
 
 /**
@@ -52,9 +52,9 @@ public class RadarSchemaMetadataRulesTest {
     @Test
     public void fileNameTest() {
         assertEquals("Questionnaire",
-                ValidationSupport.getRecordName(Paths.get("/path/to/questionnaire.avsc")));
+                ValidationHelper.getRecordName(Paths.get("/path/to/questionnaire.avsc")));
         assertEquals("ApplicationExternalTime",
-                ValidationSupport.getRecordName(
+                ValidationHelper.getRecordName(
                         Paths.get("/path/to/application_external_time.avsc")));
     }
 

@@ -16,6 +16,9 @@
 
 package org.radarcns.schema.validation.config;
 
+import static java.util.function.Predicate.not;
+import static org.radarcns.schema.validation.rules.Validator.matches;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -28,9 +31,7 @@ import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.nio.file.PathMatcher;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -68,17 +69,13 @@ public class ExcludeConfig {
     private final Map<String, ConfigItem> validation = new HashMap<>();
     private Path root;
 
-    public ExcludeConfig() {
-        // POJO initializer
-    }
-
     /** Load the ExcludeConfig from file. */
     public static ExcludeConfig load(Path path) throws IOException {
         YAMLFactory factory = new YAMLFactory();
         ObjectReader reader = new ObjectMapper(factory)
                 .readerFor(ExcludeConfig.class);
         if (path == null) {
-            ClassLoader loader = ExcludeConfig.class.getClassLoader();
+            ClassLoader loader = Thread.currentThread().getContextClassLoader();
             try (InputStream in = loader.getResourceAsStream(FILE_NAME)) {
                 if (in == null) {
                     logger.debug("Not loading any configuration");
@@ -98,7 +95,7 @@ public class ExcludeConfig {
      * @return TODO
      */
     private static boolean invalidClass(Stream<String> stream) {
-        return stream.anyMatch(value -> !VALID_INPUT_PATTERN.matcher(value).matches());
+        return stream.anyMatch(not(matches(VALID_INPUT_PATTERN)));
     }
 
     /**
@@ -142,7 +139,7 @@ public class ExcludeConfig {
     }
 
     public void setFiles(String... files) {
-        setFiles(Arrays.asList(files));
+        setFiles(List.of(files));
     }
 
     /** Set the files to be excluded. */
@@ -193,7 +190,7 @@ public class ExcludeConfig {
     }
 
     public Map<String, ConfigItem> getValidation() {
-        return Collections.unmodifiableMap(validation);
+        return new HashMap<>(validation);
     }
 
     public Path getRoot() {
