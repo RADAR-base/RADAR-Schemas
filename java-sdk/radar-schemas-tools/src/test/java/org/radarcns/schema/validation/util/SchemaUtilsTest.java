@@ -19,15 +19,15 @@ package org.radarcns.schema.validation.util;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
-import org.radarcns.schema.util.Utils;
+import org.radarcns.schema.util.SchemaUtils;
 
 /**
  * TODO.
  */
-public class UtilsTest {
+public class SchemaUtilsTest {
 
     @Test
     public void projectGroupTest() {
-        assertEquals("org.radarcns", Utils.getProjectGroup());
+        assertEquals("org.radarcns", SchemaUtils.getProjectGroup());
     }
 }

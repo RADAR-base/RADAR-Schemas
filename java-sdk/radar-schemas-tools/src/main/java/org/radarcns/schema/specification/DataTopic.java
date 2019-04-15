@@ -2,7 +2,7 @@ package org.radarcns.schema.specification;
 
 import static com.fasterxml.jackson.dataformat.yaml.YAMLGenerator.Feature.MINIMIZE_QUOTES;
 import static com.fasterxml.jackson.dataformat.yaml.YAMLGenerator.Feature.WRITE_DOC_START_MARKER;
-import static org.radarcns.schema.util.Utils.expandClass;
+import static org.radarcns.schema.util.SchemaUtils.expandClass;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
@@ -10,7 +10,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import java.io.IOException;
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -119,13 +118,12 @@ public class DataTopic extends AvroTopicConfig {
         propertiesMap(properties, !prettyString);
 
         if (prettyString) {
-            Map<String, Object> completeMap = Collections.singletonMap(name, properties);
             YAMLFactory factory = new YAMLFactory();
             factory.configure(WRITE_DOC_START_MARKER, false);
             factory.configure(MINIMIZE_QUOTES, true);
             ObjectMapper mapper = new ObjectMapper(factory);
             try {
-                return mapper.writeValueAsString(completeMap);
+                return mapper.writeValueAsString(Map.of(name, properties));
             } catch (JsonProcessingException ex) {
                 logger.error("Failed to convert data to YAML", ex);
                 return name + properties;

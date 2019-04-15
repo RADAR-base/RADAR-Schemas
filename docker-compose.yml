@@ -6,7 +6,7 @@ services:
   # Zookeeper Cluster                                                         #
   #---------------------------------------------------------------------------#
   zookeeper-1:
-    image: confluentinc/cp-zookeeper:5.0.0
+    image: confluentinc/cp-zookeeper:5.1.2
     environment:
       ZOOKEEPER_SERVER_ID: 1
       ZOOKEEPER_CLIENT_PORT: 2181
@@ -19,17 +19,16 @@ services:
   # Kafka Cluster                                                             #
   #---------------------------------------------------------------------------#
   kafka-1:
-    image: confluentinc/cp-kafka:5.0.0
+    image: confluentinc/cp-kafka:5.1.2
     depends_on:
       - zookeeper-1
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper-1:2181
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-1:9092
-      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
       KAFKA_GROUP_MIN_SESSION_TIMEOUT_MS: 5000
-      KAFKA_INTER_BROKER_PROTOCOL_VERSION: 0.11.0
-      KAFKA_LOG_MESSAGE_FORMAT_VERSION: 0.11.0
+      KAFKA_INTER_BROKER_PROTOCOL_VERSION: 2.1
+      KAFKA_LOG_MESSAGE_FORMAT_VERSION: 2.1
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
@@ -40,7 +39,7 @@ services:
   # Schema Registry                                                           #
   #---------------------------------------------------------------------------#
   schema-registry-1:
-    image: confluentinc/cp-schema-registry:5.0.0
+    image: confluentinc/cp-schema-registry:5.1.2
     depends_on:
       - zookeeper-1
       - kafka-1
@@ -60,6 +59,5 @@ services:
     depends_on:
       - zookeeper-1
       - kafka-1
-      - schema-registry-1
     volumes:
       - .:/schemas
