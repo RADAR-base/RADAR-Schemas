@@ -1,8 +1,5 @@
 apply plugin: 'com.jfrog.artifactory'
 
-targetCompatibility = '1.7'
-sourceCompatibility = '1.7'
-
 ext.artifactName = 'radar-schemas-commons'
 ext.description = 'RADAR Schemas Commons SDK'
 
