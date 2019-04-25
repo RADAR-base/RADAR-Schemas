@@ -10,12 +10,12 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
-import org.radarcns.config.AvroTopicConfig;
+import org.radarbase.config.AvroTopicConfig;
 import org.radarcns.kafka.AggregateKey;
 import org.radarcns.kafka.ObservationKey;
 import org.radarcns.schema.specification.DataTopic;
 import org.radarcns.stream.TimeWindowMetadata;
-import org.radarcns.topic.AvroTopic;
+import org.radarbase.topic.AvroTopic;
 
 /**
  * Topic used for Kafka Streams.
