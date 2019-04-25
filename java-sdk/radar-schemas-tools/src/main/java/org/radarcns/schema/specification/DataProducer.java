@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import org.radarcns.schema.Scope;
-import org.radarcns.topic.AvroTopic;
+import org.radarbase.topic.AvroTopic;
 
 /**
  * A producer of data to Kafka, generally mapping to a source.

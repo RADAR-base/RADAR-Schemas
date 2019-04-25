@@ -38,13 +38,14 @@ ext {
     confluentVersion = '5.2.1'
     kafkaVersion = '2.2.0-cp2'
     okHttpVersion = '3.14.1'
-    radarCommonsVersion = '0.12.0-SNAPSHOT'
+    radarCommonsVersion = '0.12.0'
     slf4jVersion = '1.7.26'
 }
 
 repositories {
     jcenter()
     maven { url 'http://packages.confluent.io/maven/' }
+    maven { url  "https://dl.bintray.com/radar-base/org.radarbase" }
     maven { url 'https://oss.jfrog.org/artifactory/oss-snapshot-local' }
 }
 
@@ -55,8 +56,8 @@ dependencies {
 
     implementation group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-yaml', version: jacksonVersion
     implementation project(':radar-schemas-commons')
-    implementation group: 'org.radarcns', name: 'radar-commons', version: radarCommonsVersion
-    implementation group: 'org.radarcns', name: 'radar-commons-server', version: radarCommonsVersion
+    implementation group: 'org.radarbase', name: 'radar-commons', version: radarCommonsVersion
+    implementation group: 'org.radarbase', name: 'radar-commons-server', version: radarCommonsVersion
     implementation group: 'net.sourceforge.argparse4j', name: 'argparse4j', version: argparseVersion
     implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: okHttpVersion
     implementation group: 'org.eclipse.jetty', name: 'jetty-server', version: jettyVersion

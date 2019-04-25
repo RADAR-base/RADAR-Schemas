@@ -39,7 +39,7 @@ import org.radarcns.schema.specification.connector.ConnectorSource;
 import org.radarcns.schema.specification.monitor.MonitorSource;
 import org.radarcns.schema.specification.passive.PassiveSource;
 import org.radarcns.schema.specification.stream.StreamGroup;
-import org.radarcns.topic.AvroTopic;
+import org.radarbase.topic.AvroTopic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
