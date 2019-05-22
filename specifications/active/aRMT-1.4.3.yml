@@ -34,13 +34,13 @@ data:
     questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/esm/esm_armt.json
   - type: AUDIO
     topic: questionnaire_audio
-    value_schema: .active.opensmile.OpenSmile2AudioRecording
+    value_schema: .active.questionnaire.Questionnaire
   - type: AUDIO_2
     topic: questionnaire_audio
-    value_schema: .active.opensmile.OpenSmile2AudioRecording
+    value_schema: .active.questionnaire.Questionnaire
   - type: AUDIO_3
     topic: questionnaire_audio
-    value_schema: .active.opensmile.OpenSmile2AudioRecording
+    value_schema: .active.questionnaire.Questionnaire
   - type: RSES
     topic: questionnaire_rses
     value_schema: .active.questionnaire.Questionnaire
