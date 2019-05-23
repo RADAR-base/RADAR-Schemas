@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.active.opensmile",
   "name": "OpenSmile2AudioRecording",
   "type": "record",
-  "doc": "Audio recording part of the RADAR aRMT app.",
+  "doc": "NOTE: THIS SCHEMA IS DEPRACATED. PLEASE USE org.radarcns.active.questionnaire.Questionnaire. Audio recording part of the RADAR aRMT app.",
   "fields": [
     { "name": "time", "type": "double", "doc": "Device timestamp when the audio recording was started (s since the Unix Epoch)." },
     { "name": "timeCompleted", "type": "double", "doc": "Device timestamp when the audio recording was completed (s since the Unix Epoch)." },
