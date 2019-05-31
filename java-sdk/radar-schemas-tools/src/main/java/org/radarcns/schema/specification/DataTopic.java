@@ -15,9 +15,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 import org.radarcns.catalogue.Unit;
-import org.radarcns.config.AvroTopicConfig;
+import org.radarbase.config.AvroTopicConfig;
 import org.radarcns.kafka.ObservationKey;
-import org.radarcns.topic.AvroTopic;
+import org.radarbase.topic.AvroTopic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
