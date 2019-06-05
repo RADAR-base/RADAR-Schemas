@@ -6,8 +6,8 @@ plugins {
     id 'com.jfrog.artifactory'
 }
 
-targetCompatibility = '1.11'
-sourceCompatibility = '1.11'
+targetCompatibility = JavaVersion.VERSION_11
+sourceCompatibility = JavaVersion.VERSION_11
 mainClassName = 'org.radarcns.schema.CommandLineApp'
 
 configurations {
