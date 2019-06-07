@@ -2,10 +2,11 @@
   "namespace": "org.radarcns.passive.phone",
   "type": "record",
   "name": "PhoneRelativeLocation",
-  "doc": "Data from the gps and network location providers. The latitude and longitude are stated with an unspecified reference offset and can thus be treated as relative locations. They cannot be used to infer absolute location. This means accurate distances or angles between locations cannot be calculated since those depend on the absolute location.",
+  "doc": "Data from the gps and network location providers. The latitude and longitude are optionally offset with an unspecified reference location and can thus be treated as relative locations. In that case, a location cannot be used to infer absolute location. This means accurate distances or angles between locations cannot be calculated since those depend on the absolute location. The reference location has a random longitude and a latitude that deviates at most 4 degrees in each direction to the initial location.",
   "fields": [
     { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
     { "name": "timeReceived", "type": "double", "doc": "Device receiver timestamp in UTC (s)." },
+    { "name": "offsetReference", "type": ["null", "int"], "doc": "Arbitrary reference to the offset. As long as the offset remains equal, so does this reference. If this reference is 0, no offset is used and the contained latitude and longitude can be considered absolute. If this is null, the location is relative to an offset but the offset is unknown: it may vary between different measurements with null reference. Offset references cannot be compared between users.", "default": null},
     { "name": "provider", "type": {
       "name": "LocationProvider",
       "type": "enum",

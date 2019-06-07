@@ -34,15 +34,15 @@ import okhttp3.Response;
 import okhttp3.ResponseBody;
 import okio.BufferedSink;
 import org.apache.avro.Schema;
-import org.radarcns.config.ServerConfig;
-import org.radarcns.producer.rest.ParsedSchemaMetadata;
-import org.radarcns.producer.rest.RestClient;
-import org.radarcns.producer.rest.SchemaRetriever;
+import org.radarbase.config.ServerConfig;
+import org.radarbase.producer.rest.ParsedSchemaMetadata;
+import org.radarbase.producer.rest.RestClient;
+import org.radarbase.producer.rest.SchemaRetriever;
 import org.radarcns.schema.CommandLineApp;
 import org.radarcns.schema.specification.DataProducer;
 import org.radarcns.schema.specification.SourceCatalogue;
 import org.radarcns.schema.util.SubCommand;
-import org.radarcns.topic.AvroTopic;
+import org.radarbase.topic.AvroTopic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -112,7 +112,7 @@ public class SchemaRegistry {
      * @param compatibility target compatibility level.
      * @return whether the request was successful.
      */
-    public boolean setCompatibility(Compatibility compatibility) {
+    public boolean putCompatibility(Compatibility compatibility) {
         logger.info("Setting compatibility to {}", compatibility);
 
         Request request;
@@ -172,7 +172,7 @@ public class SchemaRegistry {
                 SchemaRegistry registration = new SchemaRegistry(url);
                 boolean forced = options.getBoolean("force");
                 if (forced) {
-                    forced = registration.setCompatibility(Compatibility.NONE);
+                    forced = registration.putCompatibility(Compatibility.NONE);
                 }
                 boolean result;
                 Pattern pattern = matchTopic(
@@ -186,18 +186,18 @@ public class SchemaRegistry {
                             .map(registration::registerSchema)
                             .reduce((a, b) -> a && b);
 
-                    if (!didUpload.isPresent()) {
+                    if (didUpload.isPresent()) {
+                        result = didUpload.get();
+                    } else {
                         logger.error("Topic {} does not match a known topic."
                                 + " Find the list of acceptable topics"
                                 + " with the `radar-schemas-tools list` command. Aborting.",
                                 pattern);
                         result = false;
-                    } else {
-                        result = didUpload.get();
                     }
                 }
                 if (forced) {
-                    registration.setCompatibility(Compatibility.FULL);
+                    registration.putCompatibility(Compatibility.FULL);
                 }
                 return result ? 0 : 1;
             } catch (MalformedURLException ex) {

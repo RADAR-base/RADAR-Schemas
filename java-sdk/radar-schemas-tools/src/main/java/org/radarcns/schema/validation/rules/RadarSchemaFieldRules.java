@@ -6,8 +6,7 @@ import static org.radarcns.schema.validation.rules.Validator.matches;
 import static org.radarcns.schema.validation.rules.Validator.valid;
 import static org.radarcns.schema.validation.rules.Validator.validateNonNull;
 
-import java.util.Arrays;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -21,7 +20,7 @@ import org.radarcns.schema.validation.ValidationException;
  */
 public class RadarSchemaFieldRules implements SchemaFieldRules {
     private static final String UNKNOWN = "UNKNOWN";
-    private static final List<String> FIELD_NAME_NOT_ALLOWED_SUFFIX = Arrays.asList(
+    private static final List<String> FIELD_NAME_NOT_ALLOWED_SUFFIX = List.of(
             "value", "Value");
 
     // lowerCamelCase
@@ -34,7 +33,7 @@ public class RadarSchemaFieldRules implements SchemaFieldRules {
      * Rules for RADAR-Schemas schema fields.
      */
     public RadarSchemaFieldRules() {
-        defaultsValidator = new HashMap<>();
+        defaultsValidator = new EnumMap<>(Schema.Type.class);
         defaultsValidator.put(Schema.Type.ENUM, this::validateDefaultEnum);
         defaultsValidator.put(Schema.Type.UNION, this::validateDefaultUnion);
     }

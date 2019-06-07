@@ -17,7 +17,8 @@
 package org.radarcns.schema.validation;
 
 import static java.util.function.Function.identity;
-import static org.radarcns.schema.SchemaRepository.COMMONS_PATH;
+import static java.util.function.Predicate.not;
+import static org.radarcns.schema.validation.ValidationHelper.COMMONS_PATH;
 import static org.radarcns.schema.validation.rules.Validator.raise;
 
 import java.io.IOException;
@@ -81,7 +82,7 @@ public class SchemaValidator {
             List<Path> avroFiles = Files.walk(scope.getPath(root.resolve(COMMONS_PATH)))
                     .filter(Files::isRegularFile)
                     .filter(SchemaValidator::isAvscFile)
-                    .filter(p -> !config.skipFile(p))
+                    .filter(not(config::skipFile))
                     .collect(Collectors.toList());
 
             Map<String, SchemaMetadata> schemas = new HashMap<>();
@@ -99,8 +100,9 @@ public class SchemaValidator {
                         .collect(Collectors.toSet());
 
                 schemas.putAll(avroFiles.stream()
-                        .filter(p -> !ignoreFiles.contains(p))
+                        .filter(not(ignoreFiles::contains))
                         .map(p -> {
+                            @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
                             Parser parser = new Parser();
                             parser.addTypes(useTypes);
                             try {
@@ -130,7 +132,7 @@ public class SchemaValidator {
 
             return Stream.concat(
                     avroFiles.stream()
-                            .filter(p -> !ignoreFiles.contains(p))
+                            .filter(not(ignoreFiles::contains))
                             .map(p -> {
                                 Parser parser = new Parser();
                                 parser.addTypes(useTypes);
@@ -181,7 +183,7 @@ public class SchemaValidator {
      * @return TODO
      */
     private static boolean isAvscFile(Path file) {
-        return ValidationSupport.matchesExtension(file, AVRO_EXTENSION);
+        return ValidationHelper.matchesExtension(file, AVRO_EXTENSION);
     }
 
     /**

@@ -1,8 +1,6 @@
 language: java
 jdk:
-  - oraclejdk8
-env:
-  - TERM=dumb
+  - oraclejdk11
 
 cache:
   directories:

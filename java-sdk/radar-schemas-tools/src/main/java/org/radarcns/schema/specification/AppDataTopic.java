@@ -1,6 +1,6 @@
 package org.radarcns.schema.specification;
 
-import static org.radarcns.schema.util.Utils.expandClass;
+import static org.radarcns.schema.util.SchemaUtils.expandClass;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;

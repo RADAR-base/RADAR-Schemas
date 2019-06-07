@@ -40,6 +40,7 @@ public class PassiveSource extends AppSource<PassiveDataTopic> {
         return Scope.PASSIVE;
     }
 
+    @Override
     public String getName() {
         return super.getVendor() + '_' + super.getModel();
     }
