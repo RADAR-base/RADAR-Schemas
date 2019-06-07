@@ -1,4 +1,4 @@
-FROM openjdk:8-jdk-alpine
+FROM openjdk:11-jdk-slim
 
 RUN mkdir -p /code/java-sdk
 WORKDIR /code/java-sdk
@@ -13,12 +13,12 @@ ENV GRADLE_OPTS -Dorg.gradle.daemon=false
 RUN ./gradlew tasks
 COPY java-sdk/radar-schemas-commons/build.gradle /code/java-sdk/radar-schemas-commons/
 COPY java-sdk/radar-schemas-commons/src /code/java-sdk/radar-schemas-commons/src
-RUN ./gradlew :radar-schemas-commons:classes
+RUN ./gradlew :radar-schemas-commons:jar
 COPY java-sdk/radar-schemas-tools/build.gradle /code/java-sdk/radar-schemas-tools/
 COPY java-sdk/radar-schemas-tools/src /code/java-sdk/radar-schemas-tools/src
 RUN ./gradlew distTar && cd radar-schemas-tools/build/distributions && tar xzf radar-schemas-tools*.tar.gz
 
-FROM openjdk:8-jre-alpine
+FROM openjdk:11-jre-slim
 
 COPY --from=0 /code/java-sdk/radar-schemas-tools/build/distributions/radar-schemas-tools-*/lib/* /usr/lib/
 COPY --from=0 /code/java-sdk/radar-schemas-tools/build/distributions/radar-schemas-tools-*/bin/radar-schemas-tools /usr/bin/

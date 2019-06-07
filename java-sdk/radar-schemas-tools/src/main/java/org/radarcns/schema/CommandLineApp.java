@@ -32,6 +32,7 @@ import net.sourceforge.argparse4j.inf.ArgumentParserException;
 import net.sourceforge.argparse4j.inf.Namespace;
 import net.sourceforge.argparse4j.inf.Subparsers;
 import org.radarcns.schema.registration.KafkaTopics;
+import org.radarcns.schema.registration.SchemaTopicManager;
 import org.radarcns.schema.registration.SchemaRegistry;
 import org.radarcns.schema.service.SourceCatalogueServer;
 import org.radarcns.schema.specification.DataProducer;
@@ -46,7 +47,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Command line app containing a source catalogue.
  */
-@SuppressWarnings("PMD.SystemPrintln")
+@SuppressWarnings({"PMD.SystemPrintln", "PMD.DoNotCallSystemExit"})
 public class CommandLineApp {
 
     private static final Logger logger = LoggerFactory.getLogger(CommandLineApp.class);
@@ -136,7 +137,8 @@ public class CommandLineApp {
                 SchemaRegistry.command(),
                 listCommand(),
                 SchemaValidator.command(),
-                SourceCatalogueServer.command());
+                SourceCatalogueServer.command(),
+                SchemaTopicManager.command());
 
         ArgumentParser parser = getArgumentParser(subCommands);
 
@@ -157,12 +159,12 @@ public class CommandLineApp {
         }
 
         SubCommand command = subCommands.get(ns.getString("subparser"));
-        if (command != null) {
-            System.exit(command.execute(ns, app));
-        } else {
+        if (command == null) {
             parser.handleError(new ArgumentParserException(
                     "Subcommand " + ns.getString("subparser") + " not implemented",
                     parser));
+        } else {
+            System.exit(command.execute(ns, app));
         }
     }
 

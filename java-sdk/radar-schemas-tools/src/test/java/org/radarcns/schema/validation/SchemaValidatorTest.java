@@ -20,6 +20,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import static org.radarcns.schema.Scope.ACTIVE;
 import static org.radarcns.schema.Scope.CATALOGUE;
+import static org.radarcns.schema.Scope.CONNECTOR;
 import static org.radarcns.schema.Scope.KAFKA;
 import static org.radarcns.schema.Scope.MONITOR;
 import static org.radarcns.schema.Scope.PASSIVE;
@@ -71,6 +72,11 @@ public class SchemaValidatorTest {
     @Test
     public void catalogue() {
         testScope(CATALOGUE);
+    }
+
+    @Test
+    public void connector() {
+        testScope(CONNECTOR);
     }
 
     private void testScope(Scope scope) {

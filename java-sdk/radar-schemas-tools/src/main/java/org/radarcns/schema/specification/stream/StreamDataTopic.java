@@ -1,6 +1,6 @@
 package org.radarcns.schema.specification.stream;
 
-import static org.radarcns.schema.util.Utils.applyOrEmpty;
+import static org.radarcns.schema.util.SchemaUtils.applyOrEmpty;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
@@ -10,12 +10,12 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
-import org.radarcns.config.AvroTopicConfig;
+import org.radarbase.config.AvroTopicConfig;
 import org.radarcns.kafka.AggregateKey;
 import org.radarcns.kafka.ObservationKey;
 import org.radarcns.schema.specification.DataTopic;
 import org.radarcns.stream.TimeWindowMetadata;
-import org.radarcns.topic.AvroTopic;
+import org.radarbase.topic.AvroTopic;
 
 /**
  * Topic used for Kafka Streams.
@@ -60,13 +60,14 @@ public class StreamDataTopic extends DataTopic {
     }
 
     /** Get human readable output topic. */
+    @Override
     public String getTopic() {
         if (windowed) {
             return topicBase + "_<time-frame>";
-        } else if (super.getTopic() != null) {
-            return super.getTopic();
-        } else {
+        } else if (super.getTopic() == null) {
             return topicBase + "_output";
+        } else {
+            return super.getTopic();
         }
     }
 

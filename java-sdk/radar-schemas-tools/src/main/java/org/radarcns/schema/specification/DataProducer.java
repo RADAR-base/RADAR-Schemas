@@ -1,6 +1,6 @@
 package org.radarcns.schema.specification;
 
-import static org.radarcns.schema.util.Utils.applyOrEmpty;
+import static org.radarcns.schema.util.SchemaUtils.applyOrEmpty;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import org.radarcns.schema.Scope;
-import org.radarcns.topic.AvroTopic;
+import org.radarbase.topic.AvroTopic;
 
 /**
  * A producer of data to Kafka, generally mapping to a source.

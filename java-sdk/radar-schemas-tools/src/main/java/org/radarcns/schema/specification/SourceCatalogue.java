@@ -26,8 +26,6 @@ import java.nio.file.Files;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.AbstractMap;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
@@ -41,7 +39,7 @@ import org.radarcns.schema.specification.connector.ConnectorSource;
 import org.radarcns.schema.specification.monitor.MonitorSource;
 import org.radarcns.schema.specification.passive.PassiveSource;
 import org.radarcns.schema.specification.stream.StreamGroup;
-import org.radarcns.topic.AvroTopic;
+import org.radarbase.topic.AvroTopic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -120,7 +118,7 @@ public class SourceCatalogue {
         Path baseFolder = scope.getPath(root);
         if (baseFolder == null) {
             logger.info(scope + " sources folder not present");
-            return Collections.emptyMap();
+            return Map.of();
         }
 
         return Files.walk(baseFolder)
@@ -132,7 +130,7 @@ public class SourceCatalogue {
                         filename = filename.substring(0, extensionIndex);
                     }
                     try {
-                        return new AbstractMap.SimpleImmutableEntry<>(
+                        return Map.entry(
                                 filename.toUpperCase(Locale.ENGLISH),
                                 reader.<T>readValue(f.toFile()));
                     } catch (IOException ex) {
