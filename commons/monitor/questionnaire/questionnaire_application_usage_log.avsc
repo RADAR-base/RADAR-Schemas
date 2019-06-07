@@ -9,7 +9,7 @@
       "name": "UsageEventType",
       "type": "enum",
       "doc": "Android activity usage event type.",
-      "symbols": ["APP_OPEN_NOTIFICATION", "APP_OPEN_DIRECTLY", "APP_FOREGROUND_NOTIFICATION", "QUESTIONNAIRE_STARTED", "QUESTIONNAIRE_COMPLETED", "QUESTIONNAIRE_CLOSED", "OTHER", "UNKNOWN"]
+      "symbols": ["NOTIFICATION_OPEN", "APP_OPEN", "NOTIFICATION_FOREGROUND", "QUESTIONNAIRE_STARTED", "QUESTIONNAIRE_FINISHED", "QUESTIONNAIRE_CLOSED", "OTHER", "UNKNOWN"]
       }, "doc": "Whether the app was opened directly or by clicking a notification, a questionnaire was started, completed, closed, etc.", "default": "UNKNOWN" }
   ]
 }
