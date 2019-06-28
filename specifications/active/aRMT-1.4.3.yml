@@ -35,12 +35,19 @@ data:
   - type: AUDIO
     topic: questionnaire_audio
     value_schema: .active.questionnaire.Questionnaire
+    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/audio/audio_armt.json
   - type: AUDIO_2
     topic: questionnaire_audio
     value_schema: .active.questionnaire.Questionnaire
+    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/audio_2/audio_2_armt.json
   - type: AUDIO_3
     topic: questionnaire_audio
     value_schema: .active.questionnaire.Questionnaire
+    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/audio_3/audio_3_armt.json
+  - type: AUDIO_4
+    topic: questionnaire_audio
+    value_schema: .active.questionnaire.Questionnaire
+    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/audio_4/audio_4_armt.json
   - type: RSES
     topic: questionnaire_rses
     value_schema: .active.questionnaire.Questionnaire
