@@ -1,0 +1,10 @@
+{
+  "namespace": "org.radarbase.iot.sensors",
+  "type": "record",
+  "name": "CoralEnviroHumidity",
+  "doc": "Schema for recording data from Google coral environment sensor board's Humidity sensor",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Timestamp in UTC (s) when the data is recorded by the sensor." },
+    { "name": "value", "type": "double", "doc": "Value of the sensor output." }
+    ]
+}
