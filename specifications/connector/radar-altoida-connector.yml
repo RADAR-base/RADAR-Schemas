@@ -1,0 +1,37 @@
+#====================================== Altoida Phone Sensors =====================================#
+vendor: Altoida
+model: altoida.app
+version: 1.0.0
+data:
+  #Phone sensors
+  - doc: Data from the accelerometer sensor of 3 axis in G.
+    topic: altoida_accelerometer
+    value_schema: .connector.altoida.ACC
+  - doc: Data from the rotational position of the phone in radians.
+    topic: altoida_attitude
+    value_schema: .connector.aloida.ATT
+  - doc: Data from gravity sensor of 3 axis in meters per square second.
+    topic: altoida_gravity
+    value_schema: .connector.altoida.GRA
+  - doc: Data from magnetometer sensor in micro Tesla.
+    topic: altoida_magnetometer
+    value_schema: .connector.altoida.MAG
+  - doc: Data from normal vectors in 2d orientation.
+    topic: altoida_normal
+    value_schema: .connector.altoida.NORMAL
+
+  # Object information
+  - doc: Data about if an object was placed or found, what object is was and ?? something unkown??
+    topic: altoida_diag
+    value_schema: .connector.altoida.DIAG
+  - doc: Data about the what object was placed and where it was placed.
+    topic: altoida_objects
+    value_schema: .connector.altoiga.OBJECTS
+  - doc: path take to placed object in meters.
+    topic: aloida_path
+    value_schema: connector.altoida.PATH
+
+  # LOG
+  - doc: Data logs of actions taken during test
+    topic: altoida_tag
+    value_schema: connector.altoida.TAG
