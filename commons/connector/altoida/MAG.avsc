@@ -4,7 +4,7 @@
   "name": "PhoneMagnetometer",
   "doc": "Data from 3-axis magnetometer sensor micro Tesla units (µT)",
   "fields": [
-    {"name": "TIMESTAMP, "type": "double", "doc": "timestamp in unix time"},
+    {"name": "TIMESTAMP", "type": "double", "doc": "timestamp in unix time"},
     {"name": "X", "type": "float", "doc": "earths magnetic field along the x-axis in µT"},
     {"name": "Y", "type": "float", "doc": "earths magnetic field along the y-axis in µT"},
     {"name": "Z", "type": "float", "doc": "earths magnetic field along the z-axis in µT"},
