@@ -1,0 +1,14 @@
+{
+  "namespace": "radarcns.connector.altoida",
+  "type": "record",
+  "name": "AltoidaMagnetometer",
+  "doc": "Data from 3-axis magnetometer sensor micro Tesla units (µT).",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Timestamp in unix time acquired locally from the device."},
+    {"name": "timeRecieved", "type": "double", "doc": "Timestamp in unix time received from Altoida API."},
+    {"name": "x", "type": "float", "doc": "Earths magnetic field along the x-axis in µT."},
+    {"name": "y", "type": "float", "doc": "Earths magnetic field along the y-axis in µT."},
+    {"name": "z", "type": "float", "doc": "Earths magnetic field along the z-axis in µT."},
+    {"name": "accuracy", "type": "string", "doc": "Accuracy of measurement magnetometer high , ?? (medium??) and low??."}
+  ]
+}

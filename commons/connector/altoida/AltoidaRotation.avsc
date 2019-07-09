@@ -1,0 +1,13 @@
+{
+  "namespace": "radarcns.connector.altoida",
+  "type": "record",
+  "name": "AltoidaRotation",
+  "doc": "Data from 3-axis rotation sensor.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Timestamp in unix time acquired locally from the device."},
+    {"name": "timeRecieved", "type": "double", "doc": "Timestamp in unix time received from Altoida API."},
+    {"name": "x", "type": "float", "doc": "Rotation of the x-axis."},
+    {"name": "y", "type": "float", "doc": "Rotation of the y-axis."},
+    {"name": "z", "type": "float", "doc": "Rotation of the z-axis."}
+  ]
+}
