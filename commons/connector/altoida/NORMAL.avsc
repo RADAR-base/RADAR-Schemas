@@ -1,0 +1,11 @@
+{
+  "namespace": "radarcns.connector.altoida",
+  "type": "record",
+  "name": "PhoneNormalVector",
+  "doc": "Normal vector uses the x and y plane in the 2d orientation of a horizontal plane of the device",
+  "fields": [
+    {"name": "TIMESTAMP", "type": "double", "doc": "timestamp in unix time"},
+    {"name": "X", "type": "", "doc": "????"},
+    {"name": "Y", "type": "", "doc": "????"}
+  ]
+}

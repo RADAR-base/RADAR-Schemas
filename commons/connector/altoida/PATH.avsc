@@ -1,0 +1,12 @@
+{
+  "namespace": "radarcns.connector.altoida",
+  "type": "record",
+  "name": "PhonePath",
+  "doc": "Data of 3-axis distance travel in meters???(m) to find?? or place?? an object",
+  "fields": [
+    {"name": "TIMESTAMP", "type": "double", "doc": "timestamp in unix time"},
+    {"name": "X", "type": "float", "doc": "distance travelled along the x axis (m)"},
+    {"name": "Y", "type": "float", "doc": "distance travelled along the y axis (m)"},
+    {"name": "Z", "type": "float ", "doc": "distance travelled along the z axis (m)"}
+  ]
+}

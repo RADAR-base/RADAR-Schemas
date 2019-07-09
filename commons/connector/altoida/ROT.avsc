@@ -1,0 +1,12 @@
+{
+  "namespace": "radarcns.connector.altoida",
+  "type": "record",
+  "name": "PhoneRotation",
+  "doc": "Data from 3-axis rotation sensor sensor with radians as unit??.",
+  "fields": [
+    {"name": "TIMESTAMP", "type": "double", "doc": "timestamp in unix time"},
+    {"name": "X", "type": "float", "doc": "rotation of the x-axis (radians)???"},
+    {"name": "Y", "type": "float", "doc": "rotation of the y-axis (radians)??"},
+    {"name": "Z", "type": "float", "doc": "rotation of the z-axis (radians)??"}
+  ]
+}

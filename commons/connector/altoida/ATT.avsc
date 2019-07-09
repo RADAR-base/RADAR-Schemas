@@ -1,0 +1,12 @@
+{
+  "namespace": "radarcns.connector.altoida",
+  "type": "record",
+  "name": "PhoneAttitude",
+  "doc": "Data from 3-axis, the attitude sensor provides the rotational position of the device in radians as unit.",
+  "fields": [
+    {"name": "TIMESTAMP", "type": "double", "doc": "timestamp in unix time"},
+    {"name": "PITCH", "type": "float", "doc": "rotation of the x-axis (radians)"},
+    {"name": "ROLL", "type": "float", "doc": "rotation of the y-axis (radians)"},
+    {"name": "YAW", "type": "float", "doc": "rotation of the z-axis (radians)"}
+  ]
+}

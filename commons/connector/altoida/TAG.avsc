@@ -1,0 +1,12 @@
+{
+  "namespace": "radarcns.connector.altoida",
+  "type": "record",
+  "name": "PhoneTagLog",
+  "doc": "logs of actions taken during test tag show the actions taken.
+  payload show addition information about the actions taken",
+  "fields": [
+    {"name": "TIMESTAMP", "type": "double", "doc": "timestamp in unix time"},
+    {"name": "TAG", "type": "string", "doc": "Log of actions taken during test"},
+    {"name": "PAYLOAD", "type": "string", "doc": "extra information about action taken"}
+  ]
+}
