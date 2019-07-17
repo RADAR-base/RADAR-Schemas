@@ -11,6 +11,6 @@
       "doc": "Android activity usage event type.",
       "symbols": ["NOTIFICATION_OPEN", "APP_OPEN", "NOTIFICATION_FOREGROUND", "QUESTIONNAIRE_STARTED", "QUESTIONNAIRE_FINISHED", "QUESTIONNAIRE_CLOSED", "OTHER", "UNKNOWN"]
       }, "doc": "Whether the app was opened directly or by clicking a notification, a questionnaire was started, completed, closed, etc.", "default": "UNKNOWN" },
-    { "name": "questionnaireType", "type": "string", "doc": "Questionnaire type or name." },
+    { "name": "questionnaireType", "type": ["null", "string"], "doc": "Questionnaire type or name.", "default": null },
   ]
 }
