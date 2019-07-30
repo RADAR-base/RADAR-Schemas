@@ -5,7 +5,7 @@
 plugins {
     id 'com.commercehub.gradle.plugin.avro-base' version '0.16.0'
     id 'com.jfrog.bintray' version '1.8.4' apply false
-    id 'com.jfrog.artifactory' version '4.9.5' apply false
+    id 'com.jfrog.artifactory' version '4.9.8' apply false
 }
 
 subprojects {
@@ -128,5 +128,5 @@ subprojects {
 }
 
 wrapper {
-    gradleVersion '5.4'
+    gradleVersion '5.5.1'
 }

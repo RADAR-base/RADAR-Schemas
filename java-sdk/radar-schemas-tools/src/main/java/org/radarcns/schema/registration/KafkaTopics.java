@@ -30,6 +30,7 @@ import org.radarcns.schema.specification.SourceCatalogue;
 import org.radarcns.schema.util.SubCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import scala.Option;
 import scala.collection.JavaConverters$;
 import scala.collection.Seq;
 
@@ -53,7 +54,7 @@ public class KafkaTopics implements Closeable {
     public KafkaTopics(@NotNull String zookeeper) {
         this.zkClient = KafkaZkClient
                 .apply(zookeeper, false, 15_000, 10_000, 30, Time.SYSTEM, "kafka.server",
-                        "SessionExpireListener");
+                        "SessionExpireListener", Option.apply("radar-schemas"));
         bootstrapServers = null;
         initialized = false;
     }
