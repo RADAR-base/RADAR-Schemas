@@ -1,16 +1,21 @@
 {
   "namespace": "org.radarcns.monitor.questionnaire",
   "type": "record",
-  "name": "QuestionnaireApplicationUsageLog",
-  "doc": "Schema of reporting events when opening the app, clicking notifications, and starting and finish questionnaires.",
+  "name": "QuestionnaireApplicationInteractionEvent",
+  "doc": "Schema of reporting events for user interaction with the questionnaire application. This describes significant user interactions, such as response to notifications and starting or completing questionnaires.",
   "fields": [
     { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
     { "name": "eventType", "type": {
-      "name": "UsageEventType",
+      "name": "InteractionEventType",
       "type": "enum",
-      "doc": "Android activity usage event type.",
-      "symbols": ["NOTIFICATION_OPEN", "APP_OPEN", "NOTIFICATION_FOREGROUND", "QUESTIONNAIRE_STARTED", "QUESTIONNAIRE_FINISHED", "QUESTIONNAIRE_CLOSED", "OTHER", "UNKNOWN"]
-      }, "doc": "Whether the app was opened directly or by clicking a notification, a questionnaire was started, completed, closed, etc.", "default": "UNKNOWN" },
-    { "name": "questionnaireType", "type": ["null", "string"], "doc": "Questionnaire type or name.", "default": null },
+      "doc": "Questionnaire app activity usage event type.",
+      "symbols": ["NOTIFICATION_OPEN", "APP_OPEN", "QUESTIONNAIRE_STARTED", "QUESTIONNAIRE_FINISHED", "QUESTIONNAIRE_CLOSED", "OTHER", "UNKNOWN"]
+      }, 
+      "doc": "NOTIFICATION_OPEN = When a user presses the notification to open the app,
+              APP_OPEN = When a user opens the app directly,
+              QUESTIONNAIRE_STARTED = When a user starts a questionnaire,
+              QUESTIONNAIRE_FINISHED = When a user completes a questionnaire,
+              QUESTIONNAIRE_CLOSED = When a user closes a questionnaire without completing it,", "default": "UNKNOWN" },
+    { "name": "questionnaireType", "type": ["null", "string"], "doc": "Questionnaire type or name.", "default": null }
   ]
 }
