@@ -1,9 +1,0 @@
-{
-  "namespace": "radarcns.connector.altoida",
-  "type": "record",
-  "name": "AltoidaVersion",
-  "doc": "Data that contains one column with the version name",
-  "fields": [
-    {"name": "VERSION_NUMBER", "type": "None", "doc": "empty series version number given in column name"}
-  ]
-}
