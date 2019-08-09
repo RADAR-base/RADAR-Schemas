@@ -1,0 +1,13 @@
+{
+  "namespace": "org.radarcns.connector.altoida.AltoidaPath",
+  "type": "record",
+  "name": "AltoidaPath",
+  "doc": "Data of 3-axis distance travel in meters (m) to find?? or place?? an object.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Timestamp in unix time acquired locally from the device."},
+    {"name": "timeReceived", "type": "double", "doc": "Timestamp in unix time received from Altoida API."},
+    {"name": "x", "type": "float", "doc": "Distance to fixed point along the x axis (m)."},
+    {"name": "y", "type": "float", "doc": "Distance to fixed point along the y axis (m)."},
+    {"name": "z", "type": "float ", "doc": "Distance to fixed point along the z axis (m)."}
+  ]
+}

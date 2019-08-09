@@ -1,11 +1,11 @@
 {
-   "namespace": "radarcns.connector.altoida",
+   "namespace": "org.radarcns.connector.altoida.AltoidaDiag",
    "type": "record",
    "name": "AltoidaDiag",
    "doc": "Data from the what object was placed or found and ????.",
    "fields": [
      {"name": "time", "type": "double", "doc": "Timestamp in unix time acquired locally from the device."},
-     {"name": "timeRecieved", "type": "double", "doc": "Timestamp in unix time received from Altoida API."},
+     {"name": "timeReceived", "type": "double", "doc": "Timestamp in unix time received from Altoida API."},
      {"name": "object_action", "type": "string", "doc": "Indicates whether the object is placed or found."},
      {"name": "object_type", "type": "string", "doc": "Name of the object: star, heart or teddy."},
      {"name": "contrast", "type": "float", "doc": "??????"},

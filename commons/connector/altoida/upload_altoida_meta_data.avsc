@@ -1,5 +1,5 @@
 {
-  "namespace": "radarcns.connector.altoida",
+  "namespace": "org.radarcns.connector.altoida.AltoidaMetaData",
   "type": "record",
   "name": "AltoidaMetaData",
   "doc": "Data that contains one column with the version name",

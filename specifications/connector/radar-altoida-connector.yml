@@ -4,34 +4,42 @@ model: altoida.app
 version: 1.0.0
 data:
   #Phone sensors
-  - doc: Data from the accelerometer sensor of 3 axis in G.
-    topic: altoida_accelerometer
-    value_schema: .connector.altoida.ACC
-  - doc: Data from the rotational position of the phone in radians.
-    topic: altoida_attitude
-    value_schema: .connector.aloida.ATT
-  - doc: Data from gravity sensor of 3 axis in meters per square second.
-    topic: altoida_gravity
-    value_schema: .connector.altoida.GRA
-  - doc: Data from magnetometer sensor in micro Tesla.
-    topic: altoida_magnetometer
-    value_schema: .connector.altoida.MAG
-  - doc: Data from normal vectors in 2d orientation.
-    topic: altoida_normal
-    value_schema: .connector.altoida.NORMAL
+  - doc: Data from the accelerometer sensor of 3 axis in G. Original file name ends with _ACC.csv
+    topic: upload_altoida_acceleration
+    value_schema: .connector.altoida.AltoidaAcceleration
+  - doc: Data from the rotational position of the phone in radians. Original file name ends with _ATT.csv
+    topic: upload_altoida_attitude
+    value_schema: .connector.altoida.AltoidaAttitude
+  - doc: Data from gravity sensor of 3 axis in meters per square second. Original file name ends with _GRA.csv
+    topic: upload_altoida_gravity
+    value_schema: .connector.altoida.AltoidaGravity
+  - doc: Data from magnetometer sensor in micro Tesla. Original file name ends with _MAG.csv
+    topic: upload_altoida_magnetometer
+    value_schema: .connector.altoida.AltoidaMagnetometer
+  - doc: Data from normal vectors in 2d orientation. Original file name ends with _NORMAL.csv
+    topic: upload_altoida_normal_vector
+    value_schema: .connector.altoida.AltoidaNormal
+  - doc: Data from 3-axis rotation sensor. Original file name ends with _ROT.csv
+    topic: upload_altoida_rotation
+    value_schema: .connector.altoida.AltoidaRotation
 
   # Object information
-  - doc: Data about if an object was placed or found, what object is was and ?? something unkown??
-    topic: altoida_diag
-    value_schema: .connector.altoida.DIAG
-  - doc: Data about the what object was placed and where it was placed.
-    topic: altoida_objects
-    value_schema: .connector.altoiga.OBJECTS
-  - doc: path take to placed object in meters.
-    topic: aloida_path
-    value_schema: connector.altoida.PATH
+  - doc: Data about if an object was placed or found, what object is was and ?? something unkown??. Orginal file name ends with _DIAG.csv
+    topic: upload_altoida_diag
+    value_schema: .connector.altoida.AltoidaDiag
+  - doc: Data about the what object was placed and where it was placed.  Orginal file name ends with _OBJECTS.csv
+    topic: upload_altoida_objects
+    value_schema: .connector.altoida.AltoidaObjects
+  - doc: path take to placed object in meters.  Orginal file name ends with _PATH.csv
+    topic: upload_altoida_path
+    value_schema: .connector.altoida.AltoidaPath
 
-  # LOG
-  - doc: Data logs of actions taken during test
-    topic: altoida_tag
-    value_schema: connector.altoida.TAG
+  # Action
+  - doc: Data logs of actions taken during test. Original file name ends with _TAG.csv
+    topic: upload_altoida_action
+    value_schema: .connector.altoida.AltoidaAction
+
+  # Version
+  - doc: String with the version. Original file name ends with _VERSION.csv
+    topic: upload_altoida_meta_data
+    value_schema: .connector.altoida.AltoidaMetaData
