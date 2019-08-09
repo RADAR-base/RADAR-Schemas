@@ -68,3 +68,7 @@ data:
     doc: Timezone information sent along with each questionnaire.
     topic: questionnaire_timezone
     value_schema: .monitor.application.ApplicationTimeZone
+  - type: APP_EVENT
+    doc: Questionnaire application interaction event.
+    topic: questionnaire_app_event
+    value_schema: .monitor.questionnaire.QuestionnaireApplicationInteractionEvent
