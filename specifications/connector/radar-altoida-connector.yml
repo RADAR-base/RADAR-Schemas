@@ -20,7 +20,7 @@ data:
     value_schema: .connector.altoida.AltoidaMagnetometer
   - doc: Data from normal vectors in 2d orientation. Original file name ends with _NORMAL.csv
     topic: connect_upload_altoida_normal_vector
-    value_schema: .connector.altoida.AltoidaNormal
+    value_schema: .connector.altoida.AltoidaNormalVector
   - doc: Data from 3-axis rotation sensor. Original file name ends with _ROT.csv
     topic: connect_upload_altoida_rotation
     value_schema: .connector.altoida.AltoidaRotation

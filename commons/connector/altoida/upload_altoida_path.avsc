@@ -8,6 +8,6 @@
     {"name": "timeReceived", "type": "double", "doc": "Timestamp in unix time received from Altoida API."},
     {"name": "x", "type": "float", "doc": "Distance to fixed point along the x axis (m)."},
     {"name": "y", "type": "float", "doc": "Distance to fixed point along the y axis (m)."},
-    {"name": "z", "type": "float ", "doc": "Distance to fixed point along the z axis (m)."}
+    {"name": "z", "type": "float", "doc": "Distance to fixed point along the z axis (m)."}
   ]
 }

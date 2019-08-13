@@ -6,7 +6,7 @@
   "fields": [
     {"name": "time", "type": "double", "doc": "Timestamp in unix time acquired locally from the device."},
     {"name": "timeReceived", "type": "double", "doc": "Timestamp in unix time received from Altoida API."},
-    {"name": "x", "type": "", "doc": "orientation on x plane."},
-    {"name": "y", "type": "", "doc": "orientation on y plane."}
+    {"name": "x", "type": "double", "doc": "orientation on x plane."},
+    {"name": "y", "type": "double", "doc": "orientation on y plane."}
   ]
 }
