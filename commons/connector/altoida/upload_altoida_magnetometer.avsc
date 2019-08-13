@@ -1,5 +1,5 @@
 {
-  "namespace": "org.radarcns.connector.altoida.AltoidaMagnetometer",
+  "namespace": "org.radarcns.connector.altoida",
   "type": "record",
   "name": "AltoidaMagnetometer",
   "doc": "Data from 3-axis magnetometer sensor micro Tesla units (µT).",

@@ -1,5 +1,5 @@
 {
-  "namespace": "org.radarcns.connector.altoida.AltoidaNormalVector",
+  "namespace": "org.radarcns.connector.altoida",
   "type": "record",
   "name": "AltoidaNormalVector",
   "doc": "Normal vector uses the x and y plane in the 2d orientation of a horizontal plane of the device",

@@ -1,12 +1,12 @@
 {
-  "namespace": "org.radarcns.connector.altoida.AltoidaAction",
+  "namespace": "org.radarcns.connector.altoida",
   "type": "record",
   "name": "AltoidaAction",
   "doc": "Logs of actions taken.",
   "fields": [
     {"name": "time", "type": "double", "doc": "Timestamp in unix time acquired locally from the device."},
     {"name": "timeReceived", "type": "double", "doc": "Timestamp in unix time received from Altoida API."},
-    {"name": "logActions", "type": "string", "doc": "Log of actions taken during test."},
-    {"name": "extraInfoActions", "type": "string", "doc": "Extra information about action taken."}
+    {"name": "logAction", "type": "string", "doc": "Log of actions taken during test."},
+    {"name": "extraInfoAction", "type": "string", "doc": "Extra information about action taken."}
   ]
 }

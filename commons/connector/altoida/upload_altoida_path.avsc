@@ -1,5 +1,5 @@
 {
-  "namespace": "org.radarcns.connector.altoida.AltoidaPath",
+  "namespace": "org.radarcns.connector.altoida",
   "type": "record",
   "name": "AltoidaPath",
   "doc": "Data of 3-axis distance travel in meters (m) to find?? or place?? an object.",

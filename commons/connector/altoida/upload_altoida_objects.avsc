@@ -1,7 +1,7 @@
 {
-  "namespace": "org.radarcns.connector.altoida.AltoidaObjects",
+  "namespace": "org.radarcns.connector.altoida",
   "type": "record",
-  "name": "AltoidaObjects",
+  "name": "AltoidaObject",
   "doc": "Data from 3-axis in indicating the rotation?? of the placed object ",
   "fields": [
     {"name": "time", "type": "double", "doc": "Timestamp in unix time acquired locally from the device."},
