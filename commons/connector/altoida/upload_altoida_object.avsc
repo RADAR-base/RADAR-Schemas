@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.altoida",
   "type": "record",
   "name": "UploadAltoidaObject",
-  "doc": "Data from 3-axis in indicating the rotation of the placed object.",
+  "doc": "Data from 3-axis indicating the orientation of the placed object.",
   "fields": [
     {"name": "time", "type": "double", "doc": "Timestamp in unix time acquired locally from the device."},
     {"name": "timeReceived", "type": "double", "doc": "Timestamp in unix time received from Altoida API."},

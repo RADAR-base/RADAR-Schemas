@@ -6,42 +6,42 @@ version: 1.0.0
 doc: Spec for Radar altoida connector. Schemas should be registered in the connector.
 data:
   #Phone sensors
-  - doc: Data from the accelerometer sensor of 3 axis in g. Original file name ends with _ACC.csv
+  - doc: Data from 3-axis accelerometer sensor with gravitational constant g as unit. Original file name ends with _ACC.csv
     topic: connect_upload_altoida_acceleration
     value_schema: .connector.altoida.UploadAltoidaAcceleration
-  - doc: Data from the rotational position of the phone in radians. Original file name ends with _ATT.csv
+  - doc: Data from 3-axis, the attitude sensor provides the rotational position of the device with radians as unit. Original file name ends with _ATT.csv
     topic: connect_upload_altoida_attitude
     value_schema: .connector.altoida.UploadAltoidaAttitude
-  - doc: Data from gravity sensor of 3 axis in g. Original file name ends with _GRA.csv
+  - doc: Data from 3-axis gravity sensor with gravitational constant g as unit. Original file name ends with _GRA.csv
     topic: connect_upload_altoida_gravity
     value_schema: .connector.altoida.UploadAltoidaGravity
-  - doc: Data from magnetometer sensor in micro Tesla. Original file name ends with _MAG.csv
+  - doc: Data from 3-axis magnetometer sensor in micro Tesla. Original file name ends with _MAG.csv
     topic: connect_upload_altoida_magnetometer
     value_schema: .connector.altoida.UploadAltoidaMagnetometer
-  - doc: Data from normal vectors in 2d orientation. Original file name ends with _NORMAL.csv
-    topic: connect_upload_altoida_normal_vector
-    value_schema: .connector.altoida.UploadAltoidaNormalVector
-  - doc: Data from 3-axis rotation sensor. Original file name ends with _ROT.csv
+  - doc: Data of location where the user touched the touchscreen on an x and y axis. These values are calculated from the center of the screen in centimeters (cm). Original file name ends with _NORMAL.csv
+    topic: connect_upload_altoida_touchscreen
+    value_schema: .connector.altoida.UploadAltoidaTouchscreen
+  - doc: Data from 3-axis rotation sensor with radians as unit. Original file name ends with _ROT.csv
     topic: connect_upload_altoida_rotation
     value_schema: .connector.altoida.UploadAltoidaRotation
 
   # Object information
-  - doc: Data about if an object was placed or found, what object is was and ?? something unkown??. Orginal file name ends with _DIAG.csv
+  - doc: Data indicating what object was placed or found. Orginal file name ends with _DIAG.csv
     topic: connect_upload_altoida_diag
     value_schema: .connector.altoida.UploadAltoidaDiag
-  - doc: Data about the what object was placed and where it was placed.  Orginal file name ends with _OBJECTS.csv
+  - doc: Data from 3-axis indicating the orientation of the placed object. Orginal file name ends with _OBJECTS.csv
     topic: connect_upload_altoida_object
     value_schema: .connector.altoida.UploadAltoidaObject
-  - doc: path take to placed object in meters.  Orginal file name ends with _PATH.csv
+  - doc: Data of 3-axis distance to an object in meters(m). Orginal file name ends with _PATH.csv
     topic: connect_upload_altoida_path
     value_schema: .connector.altoida.UploadAltoidaPath
 
   # Action
-  - doc: Data logs of actions taken during test. Original file name ends with _TAG.csv
+  - doc: Logs of actions taken. Original file name ends with _TAG.csv
     topic: connect_upload_altoida_action
     value_schema: .connector.altoida.UploadAltoidaAction
 
   # Version
-  - doc: String with the version. Original file name ends with _VERSION.csv
+  - doc: Data that contains one column with the version name as type string. Original file name ends with _VERSION.csv
     topic: connect_upload_altoida_metadata
     value_schema: .connector.altoida.UploadAltoidaMetadata

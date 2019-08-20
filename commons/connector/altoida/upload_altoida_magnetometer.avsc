@@ -9,6 +9,6 @@
     {"name": "x", "type": "float", "doc": "Earths magnetic field along the x-axis in µT."},
     {"name": "y", "type": "float", "doc": "Earths magnetic field along the y-axis in µT."},
     {"name": "z", "type": "float", "doc": "Earths magnetic field along the z-axis in µT."},
-    {"name": "accuracy", "type": "string", "doc": "Accuracy of measurement magnetometer high , ?? (medium??) and low??."}
+    {"name": "accuracy", "type": "string", "doc": "Accuracy of measurement magnetometer low, medium, high and uncalibrated."}
   ]
 }
