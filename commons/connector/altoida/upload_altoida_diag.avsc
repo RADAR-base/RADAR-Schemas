@@ -1,16 +1,16 @@
 {
    "namespace": "org.radarcns.connector.altoida",
    "type": "record",
-   "name": "AltoidaDiag",
+   "name": "UploadAltoidaDiag",
    "doc": "Data from the what object was placed or found and ????.",
    "fields": [
      {"name": "time", "type": "double", "doc": "Timestamp in unix time acquired locally from the device."},
      {"name": "timeReceived", "type": "double", "doc": "Timestamp in unix time received from Altoida API."},
      {"name": "objectAction", "type": "string", "doc": "Indicates whether the object is placed or found."},
      {"name": "objectType", "type": "string", "doc": "Name of the object: star, heart or teddy."},
-     {"name": "contrast", "type": "float", "doc": "??????"},
-     {"name": "movement", "type": "float", "doc": "????"},
-     {"name": "angle", "type": "float", "doc": ""},
-     {"name": "features", "type": "float", "doc": "?????"}
+     {"name": "contrast", "type": "float", "doc": "Unkown."},
+     {"name": "movement", "type": "float", "doc": "Unkown."},
+     {"name": "angle", "type": "float", "doc": "Unkown."},
+     {"name": "features", "type": "float", "doc": "Unkown."}
    ]
  }

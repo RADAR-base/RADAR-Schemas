@@ -1,7 +1,7 @@
 {
   "namespace": "org.radarcns.connector.altoida",
   "type": "record",
-  "name": "AltoidaAcceleration",
+  "name": "UploadAltoidaAcceleration",
   "doc": "Data from 3-axis accelerometer sensor with gravitational constant g as unit.",
   "fields": [
     {"name": "time", "type": "double", "doc": "Timestamp in unix time acquired locally from the device."},

@@ -1,7 +1,7 @@
 {
   "namespace": "org.radarcns.connector.altoida",
   "type": "record",
-  "name": "AltoidaPath",
+  "name": "UploadAltoidaPath",
   "doc": "Data of 3-axis distance travel in meters (m) to find?? or place?? an object.",
   "fields": [
     {"name": "time", "type": "double", "doc": "Timestamp in unix time acquired locally from the device."},

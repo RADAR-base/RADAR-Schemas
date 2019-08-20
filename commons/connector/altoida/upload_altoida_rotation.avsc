@@ -1,7 +1,7 @@
 {
   "namespace": "org.radarcns.connector.altoida",
   "type": "record",
-  "name": "AltoidaRotation",
+  "name": "UploadAltoidaRotation",
   "doc": "Data from 3-axis rotation sensor.",
   "fields": [
     {"name": "time", "type": "double", "doc": "Timestamp in unix time acquired locally from the device."},

@@ -1,12 +1,12 @@
 {
   "namespace": "org.radarcns.connector.altoida",
   "type": "record",
-  "name": "AltoidaNormalVector",
-  "doc": "Normal vector uses the x and y plane in the 2d orientation of a horizontal plane of the device",
+  "name": "UploadAltoidaNormalVector",
+  "doc": "Normal vector uses the x and y plane in the 2d orientation of a horizontal plane of the device.",
   "fields": [
     {"name": "time", "type": "double", "doc": "Timestamp in unix time acquired locally from the device."},
     {"name": "timeReceived", "type": "double", "doc": "Timestamp in unix time received from Altoida API."},
-    {"name": "x", "type": "double", "doc": "orientation on x plane."},
-    {"name": "y", "type": "double", "doc": "orientation on y plane."}
+    {"name": "x", "type": "double", "doc": "Orientation on x plane, units unknown."},
+    {"name": "y", "type": "double", "doc": "Orientation on y plane, unit unknown."}
   ]
 }
