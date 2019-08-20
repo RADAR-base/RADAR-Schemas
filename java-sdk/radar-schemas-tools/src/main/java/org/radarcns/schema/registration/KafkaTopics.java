@@ -30,6 +30,7 @@ import org.radarcns.schema.specification.SourceCatalogue;
 import org.radarcns.schema.util.SubCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import scala.Option;
 import scala.collection.JavaConverters$;
 import scala.collection.Seq;
 
@@ -53,7 +54,7 @@ public class KafkaTopics implements Closeable {
     public KafkaTopics(@NotNull String zookeeper) {
         this.zkClient = KafkaZkClient
                 .apply(zookeeper, false, 15_000, 10_000, 30, Time.SYSTEM, "kafka.server",
-                        "SessionExpireListener");
+                        "SessionExpireListener", Option.apply("radar-schemas"));
         bootstrapServers = null;
         initialized = false;
     }
@@ -76,7 +77,6 @@ public class KafkaTopics implements Closeable {
             numBrokers = brokerList.size();
 
             if (numBrokers >= brokers) {
-                logger.info("Kafka brokers available. Waiting for topics to become available.");
                 // wait for 5sec before proceeding with topic creation
                 bootstrapServers = brokerList.stream()
                         .map(Broker::endPoints)
@@ -84,6 +84,7 @@ public class KafkaTopics implements Closeable {
                         .map(EndPoint::connectionString)
                         .collect(Collectors.joining(","));
 
+                logger.info("Creating Kafka client with bootstrap servers {}", bootstrapServers);
                 kafkaClient = AdminClient.create(Map.of(
                         BOOTSTRAP_SERVERS_CONFIG, bootstrapServers));
             } else if (tries < numTries - 1) {
@@ -116,6 +117,7 @@ public class KafkaTopics implements Closeable {
      */
     public boolean refreshTopics() throws InterruptedException {
         ensureInitialized();
+        logger.info("Waiting for topics to become available.");
         int sleep = 10;
         int numTries = 10;
 

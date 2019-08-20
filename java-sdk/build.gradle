@@ -5,7 +5,7 @@
 plugins {
     id 'com.commercehub.gradle.plugin.avro-base' version '0.16.0'
     id 'com.jfrog.bintray' version '1.8.4' apply false
-    id 'com.jfrog.artifactory' version '4.9.5' apply false
+    id 'com.jfrog.artifactory' version '4.9.8' apply false
 }
 
 subprojects {
@@ -17,7 +17,7 @@ subprojects {
     apply plugin: 'idea'
 
     // Configuration
-    version = '0.5.1'
+    version = '0.5.2-SNAPSHOT'
     group = 'org.radarcns'
     ext.githubRepoName = 'RADAR-base/RADAR-Schemas'
 
@@ -27,8 +27,8 @@ subprojects {
     ext.issueUrl = "https://github.com/${githubRepoName}/issues"
     ext.website = 'http://radar-cns.org'
 
-    targetCompatibility = '1.8'
-    sourceCompatibility = '1.8'
+    targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = JavaVersion.VERSION_1_8
 
     // dependencies
 
@@ -128,5 +128,5 @@ subprojects {
 }
 
 wrapper {
-    gradleVersion '5.4'
+    gradleVersion '5.5.1'
 }
