@@ -6,13 +6,13 @@ version: 1.0.0
 doc: Spec for Radar altoida connector. Schemas should be registered in the connector.
 data:
   #Phone sensors
-  - doc: Data from the accelerometer sensor of 3 axis in G. Original file name ends with _ACC.csv
+  - doc: Data from the accelerometer sensor of 3 axis in g. Original file name ends with _ACC.csv
     topic: connect_upload_altoida_acceleration
     value_schema: .connector.altoida.AltoidaAcceleration
   - doc: Data from the rotational position of the phone in radians. Original file name ends with _ATT.csv
     topic: connect_upload_altoida_attitude
     value_schema: .connector.altoida.AltoidaAttitude
-  - doc: Data from gravity sensor of 3 axis in meters per square second. Original file name ends with _GRA.csv
+  - doc: Data from gravity sensor of 3 axis in g. Original file name ends with _GRA.csv
     topic: connect_upload_altoida_gravity
     value_schema: .connector.altoida.AltoidaGravity
   - doc: Data from magnetometer sensor in micro Tesla. Original file name ends with _MAG.csv
@@ -44,4 +44,4 @@ data:
   # Version
   - doc: String with the version. Original file name ends with _VERSION.csv
     topic: connect_upload_altoida_meta_data
-    value_schema: .connector.altoida.AltoidaMetaData
+    value_schema: .connector.altoida.AltoidaMetadata
