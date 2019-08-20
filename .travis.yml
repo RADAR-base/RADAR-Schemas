@@ -35,3 +35,6 @@ deploy:
 before_install:
   - cd java-sdk
   - ./gradlew downloadDependencies
+
+install:
+  - ./gradlew assemble --stacktrace

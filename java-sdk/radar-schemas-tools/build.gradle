@@ -6,8 +6,8 @@ plugins {
     id 'com.jfrog.artifactory'
 }
 
-targetCompatibility = '1.11'
-sourceCompatibility = '1.11'
+targetCompatibility = JavaVersion.VERSION_11
+sourceCompatibility = JavaVersion.VERSION_11
 mainClassName = 'org.radarcns.schema.CommandLineApp'
 
 configurations {
@@ -31,13 +31,14 @@ ext {
     description = 'RADAR Schemas specification and validation tools.'
 
     argparseVersion = '0.8.1'
-    jacksonVersion = '2.9.9'
+    jacksonVersion = '2.9.9.1'
+    jacksonYamlVersion = '2.9.9'
     jerseyVersion = '2.28'
     jettyVersion = '9.4.17.v20190418'
     junitVersion = '4.12'
-    confluentVersion = '5.2.1'
-    kafkaVersion = '2.2.0-cp2'
-    okHttpVersion = '3.14.1'
+    confluentVersion = '5.3.0'
+    kafkaVersion = '2.3.0'
+    okHttpVersion = '4.0.0'
     radarCommonsVersion = '0.12.1'
     slf4jVersion = '1.7.26'
 }
@@ -54,7 +55,7 @@ dependencies {
     api group: 'javax.validation', name: 'validation-api', version: '2.0.0.Final'
     api group: 'org.apache.kafka', name: 'kafka_2.12', version: kafkaVersion
 
-    implementation group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-yaml', version: jacksonVersion
+    implementation group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-yaml', version: jacksonYamlVersion
     implementation project(':radar-schemas-commons')
     implementation group: 'org.radarbase', name: 'radar-commons', version: radarCommonsVersion
     implementation group: 'org.radarbase', name: 'radar-commons-server', version: radarCommonsVersion
