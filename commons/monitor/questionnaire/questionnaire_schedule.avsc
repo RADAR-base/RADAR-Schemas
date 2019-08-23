@@ -1,0 +1,22 @@
+{
+  "namespace": "org.radarcns.monitor.questionnaire",
+  "type": "record",
+  "name": "QuestionnaireSchedule",
+  "doc": "General schema for a questionnaire schedule.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Timestamp in UTC (s) when the schedule is generated." },
+    { "name": "version", "type": "string", "doc": "It reports the schedule version stated in the JSON specification." },
+    { "name": "tasks", "type": {
+      "type": "array",
+      "items": {
+        "name": "Task",
+        "type": "record",
+        "doc": "Task to complete.",
+         "fields": [
+           { "name": "name", "type": ["null", "string"], "doc": "Name of the questionnaire." },
+           { "name": "timestamp", "type": "double", "doc": "Timestamp in UTC (s) when the questionnaire notification is sent." },
+           { "name": "timeCompleted", "type": ["null", "double"], "doc": "Timestamp in UTC (s) when the questionnaire was completed (if it was completed).", "default": null }
+         ]
+       }}, "doc": "List of tasks to be completed by the user."}
+  ]
+}
