@@ -1,7 +1,7 @@
 {
-   "namespace": "org.radarcns.connector.altoida",
+   "namespace": "org.radarcns.connector.upload.altoida",
    "type": "record",
-   "name": "UploadAltoidaDiag",
+   "name": "AltoidaDiag",
    "doc": "Data indicating what object was placed or found.",
    "fields": [
      {"name": "time", "type": "double", "doc": "Timestamp in unix time acquired locally from the device."},

@@ -1,7 +1,7 @@
 {
-  "namespace": "org.radarcns.connector.altoida",
+  "namespace": "org.radarcns.connector.upload.altoida",
   "type": "record",
-  "name": "UploadAltoidaTouchscreen",
+  "name": "AltoidaTouchscreen",
   "doc": "Data of location where the user touched the touchscreen on an x and y axis. These values are calculated from the center of the screen in centimeters (cm).",
   "fields": [
     {"name": "time", "type": "double", "doc": "Timestamp in unix time acquired locally from the device."},

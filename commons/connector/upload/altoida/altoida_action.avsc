@@ -1,7 +1,7 @@
 {
-  "namespace": "org.radarcns.connector.altoida",
+  "namespace": "org.radarcns.connector.upload.altoida",
   "type": "record",
-  "name": "UploadAltoidaAction",
+  "name": "AltoidaAction",
   "doc": "Logs of actions taken.",
   "fields": [
     {"name": "time", "type": "double", "doc": "Timestamp in unix time acquired locally from the device."},
