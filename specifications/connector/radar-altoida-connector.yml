@@ -8,7 +8,7 @@ data:
   - doc: Data from 3-axis accelerometer sensor with gravitational constant g as unit. Original file name ends with _ACC.csv
     topic: connect_upload_altoida_acceleration
     value_schema: .connector.upload.altoida.AltoidaAcceleration
-  - doc: Data from 3-axis, the attitude sensor provides the rotational position of the device with radians as unit. Original file name ends with _ATT.csv
+  - doc: Data from 3-axis, the attitude sensor provides the orientation of the device (with respect to the north pole) with radians as unit. Original file name ends with _ATT.csv
     topic: connect_upload_altoida_attitude
     value_schema: .connector.upload.altoida.AltoidaAttitude
   - doc: Data from 3-axis gravity sensor with gravitational constant g as unit. Original file name ends with _GRA.csv
