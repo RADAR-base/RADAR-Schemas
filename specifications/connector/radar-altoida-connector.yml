@@ -26,8 +26,8 @@ data:
 
   # Object information
   - doc: Data indicating what object was placed or found. Orginal file name ends with _DIAG.csv
-    topic: connect_upload_altoida_diag
-    value_schema: .connector.upload.altoida.AltoidaDiag
+    topic: connect_upload_altoida_diagnostics
+    value_schema: .connector.upload.altoida.AltoidaDiagnostics
   - doc: Data from 3-axis indicating the orientation of the placed object. Orginal file name ends with _OBJECTS.csv
     topic: connect_upload_altoida_object
     value_schema: .connector.upload.altoida.AltoidaObject
