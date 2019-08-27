@@ -1,0 +1,46 @@
+#====================================== Altoida Phone Sensors =====================================#
+name: RADAR-ALTOIDA-CONNECTOR
+vendor: Altoida
+model: altoida.app
+version: 1.0.0
+doc: Spec for RADAR-base altoida connector. Schemas should be registered in the connector.
+data:
+  - doc: Data from 3-axis accelerometer sensor with gravitational constant g as unit. Original file name ends with _ACC.csv
+    topic: connect_upload_altoida_acceleration
+    value_schema: .connector.upload.altoida.AltoidaAcceleration
+  - doc: Data from 3-axis, the attitude sensor provides the orientation of the device (with respect to the north pole) with radians as unit. Original file name ends with _ATT.csv
+    topic: connect_upload_altoida_attitude
+    value_schema: .connector.upload.altoida.AltoidaAttitude
+  - doc: Data from 3-axis gravity sensor with gravitational constant g as unit. Original file name ends with _GRA.csv
+    topic: connect_upload_altoida_gravity
+    value_schema: .connector.upload.altoida.AltoidaGravity
+  - doc: Data from 3-axis magnetometer sensor in micro Tesla. Original file name ends with _MAG.csv
+    topic: connect_upload_altoida_magnetometer
+    value_schema: .connector.upload.altoida.AltoidaMagnetometer
+  - doc: Data of location where the user touched the touchscreen on an x and y axis. These values are calculated from the center of the screen in centimeters (cm). Original file name ends with _NORMAL.csv
+    topic: connect_upload_altoida_touchscreen
+    value_schema: .connector.upload.altoida.AltoidaTouchscreen
+  - doc: Data from 3-axis rotation sensor with radians as unit. Original file name ends with _ROT.csv
+    topic: connect_upload_altoida_rotation
+    value_schema: .connector.upload.altoida.AltoidaRotation
+
+  # Object information
+  - doc: Data indicating what object was placed or found. Orginal file name ends with _DIAG.csv
+    topic: connect_upload_altoida_diagnostics
+    value_schema: .connector.upload.altoida.AltoidaDiagnostics
+  - doc: Data from 3-axis indicating the orientation of the placed object. Orginal file name ends with _OBJECTS.csv
+    topic: connect_upload_altoida_object
+    value_schema: .connector.upload.altoida.AltoidaObject
+  - doc: Data of 3-axis distance to an object in meters(m). Orginal file name ends with _PATH.csv
+    topic: connect_upload_altoida_path
+    value_schema: .connector.upload.altoida.AltoidaPath
+
+  # Action
+  - doc: Logs of actions taken. Original file name ends with _TAG.csv
+    topic: connect_upload_altoida_action
+    value_schema: .connector.upload.altoida.AltoidaAction
+
+  # Version
+  - doc: Data that contains one column with the version name as type string. Original file name ends with _VERSION.csv
+    topic: connect_upload_altoida_metadata
+    value_schema: .connector.upload.altoida.AltoidaMetadata

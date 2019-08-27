@@ -1,0 +1,14 @@
+{
+  "namespace": "org.radarcns.connector.upload.altoida",
+  "type": "record",
+  "name": "AltoidaObject",
+  "doc": "Data from 3-axis indicating the orientation of the placed object.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Timestamp in unix time acquired locally from the device."},
+    {"name": "timeReceived", "type": "double", "doc": "Timestamp in unix time received from Altoida API."},
+    {"name": "object", "type": "string", "doc": "Name of object: star, heart or teddy."},
+    {"name": "x", "type": "float", "doc": "Rotation of the x-axis (radians)."},
+    {"name": "y", "type": "float", "doc": "Rotation of the y-axis (radians)."},
+    {"name": "z", "type": "float", "doc": "Rotation of the z-axis (radians)."}
+  ]
+}
