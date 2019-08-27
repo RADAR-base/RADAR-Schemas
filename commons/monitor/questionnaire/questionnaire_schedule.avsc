@@ -13,10 +13,10 @@
         "type": "record",
         "doc": "Task to complete.",
          "fields": [
-           { "name": "name", "type": ["null", "string"], "doc": "Name of the questionnaire." },
+           { "name": "name", "type": ["null", "string"], "doc": "Name of the questionnaire.", "default": null },
            { "name": "timestamp", "type": "double", "doc": "Timestamp in UTC (s) when the questionnaire notification is sent." },
            { "name": "timeCompleted", "type": ["null", "double"], "doc": "Timestamp in UTC (s) when the questionnaire was completed (if it was completed).", "default": null }
          ]
-       }}, "doc": "List of tasks to be completed by the user."}
+       }}, "doc": "List of tasks to be completed by the user." }
   ]
 }
