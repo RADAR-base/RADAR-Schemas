@@ -1,0 +1,13 @@
+{
+  "namespace": "org.radarcns.connector.upload.altoida",
+  "type": "record",
+  "name": "AltoidaRotation",
+  "doc": "Data from 3-axis rotation sensor with radians as unit.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Timestamp in unix time acquired locally from the device."},
+    {"name": "timeReceived", "type": "double", "doc": "Timestamp in unix time received from Altoida API."},
+    {"name": "x", "type": "float", "doc": "Rotation of the x-axis in radians."},
+    {"name": "y", "type": "float", "doc": "Rotation of the y-axis in radians."},
+    {"name": "z", "type": "float", "doc": "Rotation of the z-axis in radians."}
+  ]
+}
