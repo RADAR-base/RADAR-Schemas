@@ -6,7 +6,7 @@ WORKDIR /code/java-sdk
 COPY commons /code/commons
 COPY specifications /code/specifications
 COPY java-sdk/gradle /code/java-sdk/gradle
-COPY java-sdk/build.gradle java-sdk/settings.gradle  java-sdk/gradlew /code/java-sdk/
+COPY java-sdk/build.gradle java-sdk/settings.gradle java-sdk/gradlew /code/java-sdk/
 
 ENV GRADLE_OPTS -Dorg.gradle.daemon=false
 
@@ -23,7 +23,7 @@ FROM openjdk:11-jdk-slim
 
 ENV KAFKA_SCHEMA_REGISTRY=http://schema-registry-1:8081
 ENV KAFKA_NUM_PARTITIONS=3
-ENV KAFKA_NUM_REPLICATION=2
+ENV KAFKA_NUM_REPLICATION=3
 ENV KAFKA_NUM_BROKERS=3
 ENV KAFKA_ZOOKEEPER_CONNECT=zookeeper-1:2181
 
