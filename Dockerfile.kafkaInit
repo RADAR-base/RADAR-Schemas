@@ -19,7 +19,7 @@ COPY java-sdk/radar-schemas-tools/src /code/java-sdk/radar-schemas-tools/src
 RUN ./gradlew distTar && cd radar-schemas-tools/build/distributions && tar xzf radar-schemas-tools*.tar.gz
 
 
-FROM openjdk:8-alpine
+FROM openjdk:11-jdk-slim
 
 ENV KAFKA_SCHEMA_REGISTRY=http://schema-registry-1:8081
 ENV KAFKA_NUM_PARTITIONS=3
@@ -27,22 +27,17 @@ ENV KAFKA_NUM_REPLICATION=2
 ENV KAFKA_NUM_BROKERS=3
 ENV KAFKA_ZOOKEEPER_CONNECT=zookeeper-1:2181
 
-RUN apk add --no-cache \
-  bash \
-  curl \
-  rsync \
-  tar
+RUN apt-get update && apt-get install -y --no-install-recommends \
+		curl \
+		rsync \
+	&& rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /schema/merged /schema/java/src /schema/java/classes /usr/share/java
 
 WORKDIR /schema
 
-ENV JQ_VERSION=1.5
-RUN curl -L#o /usr/bin/jq https://github.com/stedolan/jq/releases/download/jq-${JQ_VERSION}/jq-linux64 \
-    && chmod +x /usr/bin/jq
 RUN curl -#o /usr/share/java/avro-tools.jar \
- "$(curl -s http://www.apache.org/dyn/closer.cgi/avro/\?as_json \
-  | jq --raw-output ".preferred")avro/avro-1.8.2/java/avro-tools-1.8.2.jar"
+ "http://archive.apache.org/dist/avro/avro-1.8.2/java/avro-tools-1.8.2.jar"
 
 RUN mkdir original/
 
