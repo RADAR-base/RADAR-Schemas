@@ -1,0 +1,13 @@
+{
+  "namespace": "org.radarcns.connector.upload.altoida",
+  "type": "record",
+  "name": "AltoidaGravity",
+  "doc": "Data from 3-axis gravity sensor gravitational constant g as unit.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Timestamp in unix time acquired locally from the device."},
+    {"name": "timeReceived", "type": "double", "doc": "Timestamp in unix time received from Altoida API."},
+    {"name": "x", "type": "float", "doc": "Force of gravity along the x-axis (g)."},
+    {"name": "y", "type": "float", "doc": "Force of gravity along the y-axis (g)."},
+    {"name": "z", "type": "float", "doc": "Force of gravity along the z-axis (g)."}
+  ]
+}

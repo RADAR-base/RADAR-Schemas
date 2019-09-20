@@ -1,0 +1,11 @@
+{
+  "namespace": "org.radarcns.connector.upload.altoida",
+  "type": "record",
+  "name": "AltoidaMetadata",
+  "doc": "Data that contains one column with the version name as type string.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Timestamp in unix time acquired locally from the device."},
+    {"name": "timeReceived", "type": "double", "doc": "Timestamp in unix time received from Altoida API."},
+    {"name": "version", "type": "string", "doc": "Version number."}
+  ]
+}
