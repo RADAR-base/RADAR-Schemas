@@ -27,6 +27,6 @@ printf "===> Dependent schemas:\n${DEPENDENT}\n"
 java -jar "${AVRO_TOOLS}" compile -string schema ${INDEPENDENT} ${DEPENDENT} java/src 2>/dev/null
 find java/src -name "*.java" -print0 | xargs -0 javac -cp /usr/lib/*:java/classes -d java/classes -sourcepath java/src 
 # Update the radar schemas so the tools find the new classes in classpath
-jar uf /usr/lib/radar-schemas-commons-${RADAR_SCHEMAS_VERSION}.jar -C java/classes .
+jar uf /usr/lib/radar-schemas-commons-*.jar -C java/classes .
 
 exec "$@"

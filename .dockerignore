@@ -1,3 +1,4 @@
+java-sdk/**/build
 **/.idea
 java-sdk/**/.gradle
 java-sdk/**/out
