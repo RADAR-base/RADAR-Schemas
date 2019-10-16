@@ -5,10 +5,10 @@
   "doc": "Data that contains one column with the version name as type string.",
   "fields": [
     {"name": "time", "type": "double", "doc": "Timestamp in unix time acquired locally from the device."},
-    {"name": "timeReceived", "type": "double", "doc": "Timestamp in unix time received from upload"},
-    {"name": "deviceId", "type": "string", "doc": "Version number."}
-    {"name": "exerciseCode", "type": "string", "doc": "Exercise code from axivity."}
-    {"name": "bodyLocation", "type": "short", "doc": "Body location recorded on the axivity device."}
+    {"name": "timeReceived", "type": "double", "doc": "Timestamp in unix time received from upload."},
+    {"name": "deviceId", "type": "string", "doc": "Version number."},
+    {"name": "exerciseCode", "type": "string", "doc": "Exercise code from axivity."},
+    {"name": "bodyLocation", "type": "int", "doc": "Body location recorded on the axivity device."},
     {"name": "studyCode", "type": "string", "doc": "Study code recorded on the axivity device."}
   ]
 }
