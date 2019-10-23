@@ -1,0 +1,15 @@
+{
+  "namespace": "org.radarcns.connector.upload.altoida",
+  "name": "AltoidaTappingTestAggregate",
+  "type": "record",
+  "doc": "Aggregate for a test on tapping the screen.",
+  "fields": [
+    { "name": "mean", "type": "float", "doc": "Mean test value."},
+    { "name": "variance", "type": "float", "doc": "Variance of test values."},
+    { "name": "count", "type": "int", "doc": "Number of tests performed."},
+    { "name": "reactionTime", "type": "float", "doc": "Mean time to react by the user (s)."},
+    { "name": "rate", "type": "float", "doc": "Number of tests performed per second."},
+    { "name": "duration", "type": "float", "doc": "Mean duration of a test (s)."},
+    { "name": "fullDuration", "type": "float", "doc": "Total amount of time performing tests (s)."}
+  ]
+}

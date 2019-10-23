@@ -1,0 +1,17 @@
+{
+  "namespace": "org.radarcns.connector.upload.altoida",
+  "type": "record",
+  "name": "AltoidaSummary",
+  "doc": "Summary and aggregates of a full test with Altoida.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Timestamp in unix time acquired locally from the device."},
+    {"name": "timeReceived", "type": "double", "doc": "Timestamp in unix time received from Altoida API."},
+    {"name": "label", "type": "string", "doc": "Test name."},
+    {"name": "testCount", "type": "int", "doc": "Number of tests that were run."},
+    {"name": "result", "type": "int", "doc": "Number of tests that were run."},
+    {"name": "groundTruth", "type": "boolean", "doc": "Whether this test can be considered the ground truth."},
+    {"name": "bitMetrics", "type": "AltoidaSummaryMetrics", "doc": "Metrics from ???."},
+    {"name": "dotMetrics", "type": "AltoidaSummaryMetrics", "doc": "Metrics from ???."},
+    {"name": "nmi", "type": "double", "doc": "Metric of ???."}
+  ]
+}
