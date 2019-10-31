@@ -11,6 +11,6 @@
     {"name": "surface", "type": "float", "doc": "Diameter of the touch area in cm."},
     {"name": "accelerometer", "type": "float", "doc": "Acceleration exerted by the finger hitting the screen."},
     {"name": "combined", "type": "float", "doc": "An overall value of touch pressure formed from a linear combination of the previous columns."},
-    {"name": "hit", "type": "float", "doc": "Hit value."}
+    {"name": "hit", "type": "boolean", "doc": "whether the touch hit a button or not. 1 if the touch served a purpose basically, 0 otherwise."}
   ]
 }
