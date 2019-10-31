@@ -1,16 +1,16 @@
 {
   "namespace": "org.radarcns.connector.upload.altoida",
   "type": "record",
-  "name": "AltoidaMagneticField",
+  "name": "AltoidaTouch",
   "doc": "Location where the user touched the touchscreen on an x and y axis. These values are calculated from the center of the screen in centimeters (cm).",
   "fields": [
     {"name": "time", "type": "double", "doc": "Timestamp in unix time acquired locally from the device."},
     {"name": "timeReceived", "type": "double", "doc": "Timestamp in unix time received from Altoida API."},
-    {"name": "x", "type": "float", "doc": "Earths magnetic field along the x-axis in µT."},
-    {"name": "y", "type": "float", "doc": "Earths magnetic field along the y-axis in µT."},
-    {"name": "surface", "type": "float", "doc": "Earths magnetic field along the z-axis in µT."},
-    {"name": "accuracy", "type": "float", "doc": "Accuracy of measurement magnetometer low, medium, high and uncalibrated."}
-    {"name": "combined", "type": "float", "doc": "Accuracy of measurement magnetometer low, medium, high and uncalibrated."}
-    {"name": "hit", "type": "float", "doc": "Accuracy of measurement magnetometer low, medium, high and uncalibrated."}
+    {"name": "x", "type": "float", "doc": "Distance from the center of the screen in (cm)s on x-axis."},
+    {"name": "y", "type": "float", "doc": "Distance from the center of the screen in (cm)s on y-axis."},
+    {"name": "surface", "type": "float", "doc": "Diameter of the touch area in cm."},
+    {"name": "accelerometer", "type": "float", "doc": "Acceleration exerted by the finger hitting the screen."},
+    {"name": "combined", "type": "float", "doc": "An overall value of touch pressure formed from a linear combination of the previous columns."},
+    {"name": "hit", "type": "float", "doc": "Hit value."}
   ]
 }
