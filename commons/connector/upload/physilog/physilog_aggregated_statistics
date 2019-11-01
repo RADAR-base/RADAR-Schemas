@@ -1,0 +1,19 @@
+{
+  "namespace": "org.radarcns.connector.upload.physilog",
+  "type": "record",
+  "name": "PhysilogAggregatedStatistics",
+  "doc": "Summary of aggregated statistics of the physilog test analysis.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Timestamp in unix time acquired locally from the device."},
+    {"name": "timeReceived", "type": "double", "doc": "Timestamp in unix time received from Physilog device."},
+    {"name": "iqr", "type": "float", "doc": "Interquartile range value of the dataset."},
+    {"name": "max", "type": "float", "doc": "Maximum value of the dataset."},
+    {"name": "mean", "type": "float", "doc": "Mean value of the dataset."},
+    {"name": "meadian", "type": "float", "doc": "Meadian value of the dataset."},
+    {"name": "min", "type": "float", "doc": "Minimum value of the dataset."},
+    {"name": "ration", "type": "string", "doc": "Ratio of what?"},
+    {"name": "significantDigit", "type": "int", "doc": "Significant digit of computed values."},
+    {"name": "std", "type": "int", "doc": "Standard deviation value of the dataset."},
+    {"name": "unit", "type": "string", "doc": "Unit of the dataset.. Why units???."}
+  ]
+}
