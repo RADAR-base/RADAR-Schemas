@@ -12,8 +12,9 @@
     {"name": "meadian", "type": "float", "doc": "Meadian value of the dataset."},
     {"name": "min", "type": "float", "doc": "Minimum value of the dataset."},
     {"name": "ratio", "type": "string", "doc": "Ratio scale of the dataset."},
-    {"name": "significantDigit", "type": "int", "doc": "Significant digit of computed values."},
+    {"name": "significantDigit", "type": "int", "doc": "How many digits after the comma should be displayed on the reports."},
     {"name": "std", "type": "float", "doc": "Standard deviation value of the dataset."},
-    {"name": "unit", "type": "string", "doc": "Unit of the dataset.. Why units???."}
+    {"name": "unit", "type": "string", "doc": "Unit of the data."},
+    {"name": "propertyType", "type": "double", "doc": " type of the parameter to group them together in different categories e/g values are general, temporal, spatial and clearance."}
   ]
 }

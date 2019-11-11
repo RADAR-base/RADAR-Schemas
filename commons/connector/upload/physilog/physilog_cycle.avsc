@@ -6,6 +6,7 @@
   "fields": [
     {"name": "time", "type": "double", "doc": "Timestamp in unix time acquired locally from the device."},
     {"name": "timeReceived", "type": "double", "doc": "Timestamp in unix time received from Physilog device."},
+    {"name": "cycleIndex", "type": "double", "doc": "Index of the cycle."},
     {"name": "healStrikeLeft", "type": "double", "doc": "Heal strike from Left foot in (seconds)."},
     {"name": "healStrikeRight", "type": "double", "doc": "Heal strike from Right foot in (seconds)."},
     {"name": "gaitCycleTimeLeft", "type": "double", "doc": "Gait cycle time from Left foot in (seconds)."},
@@ -22,8 +23,8 @@
     {"name": "footFlatRatioRight", "type": "double", "doc": "Foot flat ratio from Right foot in (% of stance)."},
     {"name": "pushRatioLeft", "type": "double", "doc": "Push ratio from Left foot in (% of stance)."},
     {"name": "pushRatioRight", "type": "double", "doc": "Push ration from Right foot in (% of stance)."},
-    {"name": "DSL", "type": "double", "doc": "something ????? from Left foot in (% of cycle duration)."},
-    {"name": "DSR", "type": "double", "doc": "something ????? from Right foot in (% of cycle duration)."},
+    {"name": "doubleSupportLeft", "type": "double", "doc": "Double support, meaning the percentage of the gait cycle when both feet are on the ground from Left foot in (% of cycle duration)."},
+    {"name": "doubleSupportRight", "type": "double", "doc": "Double support, meaning the percentage of the gait cycle when both feet are on the ground from  Right foot in (% of cycle duration)."},
     {"name": "strideLengthLeft", "type": "double", "doc": "Stride length from Left foot in (meters)."},
     {"name": "strideLengthRight", "type": "double", "doc": "Stride length from Right foot in (meters)."},
     {"name": "speedLeft", "type": "double", "doc": "Gait speed from Left foot in (meters/s)."},
