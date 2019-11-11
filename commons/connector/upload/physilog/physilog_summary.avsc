@@ -13,16 +13,6 @@
     {"name": "discardedCycles", "type": "int", "doc": "Total amount of cycles discarded from the test."},
     {"name": "analysedCycles", "type": "int", "doc": "Total amount of cycles performed during the test."},
     {"name": "turningCycles", "type": "int", "doc": "Total amount of cycles performed to make turns."},
-    {"name": "distance", "type": "double", "doc": "Distance walked during the test in (m)???."},
-    {"name": "speed", "type": {
-       "type": "array",
-       "items": "string"
-       }, "doc": "List of filenames of raw data analysed for this report."},
-    {"name": "discardInit", "type": "int", "doc": "???."},
-    {"name": "shoeSize", "type": "double", "doc": "Shoe size of the participant."},
-    {"name": "discardTurn", "type": "boolean", "doc": "Whether to discard turns in this test."},
-    {"name": "resultV", "type": "double", "doc": "Result value in???."},
-    {"name": "softwareVersion", "type": "string", "doc": "Version of the Gait UP software used."},
-    {"name": "firmwareVersion", "type": "string", "doc": "Version of the Gait UP firmware used."}
+    {"name": "distance", "type": "double", "doc": "Distance walked during the test in (m)???."}
   ]
 }

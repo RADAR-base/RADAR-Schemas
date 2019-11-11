@@ -11,7 +11,7 @@
     {"name": "mean", "type": "float", "doc": "Mean value of the dataset."},
     {"name": "meadian", "type": "float", "doc": "Meadian value of the dataset."},
     {"name": "min", "type": "float", "doc": "Minimum value of the dataset."},
-    {"name": "ration", "type": "string", "doc": "Ratio of what?."},
+    {"name": "ratio", "type": "string", "doc": "Ratio scale of the dataset."},
     {"name": "significantDigit", "type": "int", "doc": "Significant digit of computed values."},
     {"name": "std", "type": "float", "doc": "Standard deviation value of the dataset."},
     {"name": "unit", "type": "string", "doc": "Unit of the dataset.. Why units???."}
