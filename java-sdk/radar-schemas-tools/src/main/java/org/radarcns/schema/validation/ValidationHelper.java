@@ -77,8 +77,8 @@ public final class ValidationHelper {
 
         StringBuilder builder = new StringBuilder(50);
         builder.append(getProjectGroup()).append('.').append(scope.getLower());
-        if (relativePath.getNameCount() > 1) {
-            builder.append('.').append(relativePath.getName(0));
+        for (int i = 0; i < relativePath.getNameCount() - 1; i++) {
+            builder.append('.').append(relativePath.getName(i));
         }
         return builder.toString();
     }
