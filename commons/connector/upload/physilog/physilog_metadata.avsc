@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.upload.physilog",
   "type": "record",
   "name": "PhysilogMetadata",
-  "doc": "Metadata about the physilog test and study, participant. Represents the "info" part of the report.",
+  "doc": "Metadata about the physilog recordings and study participant (Represents the info part of the report).",
   "fields": [
     {"name": "time", "type": "double", "doc": "Timestamp in unix time acquired locally from the device."},
     {"name": "timeReceived", "type": "double", "doc": "Timestamp in unix time received from Physilog device."},
