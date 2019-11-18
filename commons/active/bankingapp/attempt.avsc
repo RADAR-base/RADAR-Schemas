@@ -1,7 +1,7 @@
 {
   "namespace": "org.radarcns.active.bankingapp",
   "type": "record",
-  "name": "BankingAppEvent",
+  "name": "BankingAppAttempt",
   "doc": "A Banking App Attempt to complete a transaction, which can contain a PIN, an Amount and a Confirm/Cancel Transaction event. It can also time out or end.",
   "fields": [
     { "name": "uid", "type": "string", "doc": "Unique ID for an Attempt"},
