@@ -13,7 +13,8 @@
       "type": {
           "name" : "CorrectnessEnum",
           "type": "enum", 
-          "symbols": ["CORRECT", "WRONG"]
+          "symbols": ["CORRECT", "WRONG"],
+          "doc": "The validity of input submitted."
       }, 
       "doc": "The validity of the user's input submitted."
     },
@@ -21,7 +22,8 @@
       "type": {
           "name": "InputEnum",
           "type": "enum", 
-          "symbols": ["PIN", "AMOUNT", "CANCELLED", "CONFIRMED"]
+          "symbols": ["PIN", "AMOUNT", "CANCELLED", "CONFIRMED"],
+          "doc": "The type of submitted input."
       }, 
       "doc": "The type of submitted input."}
     ]
