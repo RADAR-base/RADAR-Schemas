@@ -8,7 +8,25 @@
     { "name": "startTime", "type": "string", "doc": "ISO 6801 formatted local date time of device (yyyy-MM-ddTHH:mm:ss)." },
     { "name": "endTime", "type": "string", "doc": "ISO 6801 formatted local date time of device (yyyy-MM-ddTHH:mm:ss)." },
     { "name": "duration", "type": "double", "doc": "Duration of the activity (ms)."},
-    { "name": "completion", "type": "enum", "symbols": ["Completed", "NotCompleted"], "doc": "Shows whether the attempt is completed or not completed" },
-    { "name": "result", "type": "enum", "symbols": ["CorrectConfirmed", "CorrectCancelled", "WrongConfirmed", "WrongCancelled", "TimeOut", "End"], "doc": "Shows the result of the attempt which can be Correct Cancelled, Correct Cancelled, Wrong Confirmed, Wrong Cancelled, Timed Out, Ended"}
+    { "name": "completion",
+      "type": {
+        "name": "completionEnum",
+        "type": "enum",
+        "symbols":["Completed", "NotCompleted"]
+      },
+      "doc": "Shows whether the attempt is completed or not completed"
+    },
+    { "name": "result", "type": {
+      "name": "resultEnum",
+        "type": "enum",
+        "symbols":
+          ["CorrectConfirmed",
+            "CorrectCancelled",
+            "WrongConfirmed",
+            "WrongCancelled",
+            "TimeOut",
+            "End"]
+    },
+    "doc": "Shows the result of the attempt which can be Correct Cancelled, Correct Cancelled, Wrong Confirmed, Wrong Cancelled, Timed Out, Ended"}
     ]
 }
