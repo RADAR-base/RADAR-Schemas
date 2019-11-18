@@ -1,27 +1,27 @@
 {
   "namespace": "org.radarcns.active.bankingapp",
   "type": "record",
-  "name": "BankingAppEvent",
+  "name": "Event",
   "doc": "A Banking App Event, which is either a correct or wrong submission of a PIN number, an amount to withdraw, a cancelled or confirmed transaction. Notably, this allows us to distinguish between a wrong confirmed transaction or a correct cancelled transaction etc.",
   "fields": [
-    { "name": "uid", "type": "string", "doc": "Unique ID for an Event"},
-    { "name": "startTime", "type": "string", "doc": "ISO 6801 formatted local date time of device (yyyy-MM-ddTHH:mm:ss)." },
-    { "name": "endTime", "type": "string", "doc": "ISO 6801 formatted local date time of device (yyyy-MM-ddTHH:mm:ss)." },
+    { "name": "uid", "type": "string", "doc": "Unique ID for an Event."},
+    { "name": "startTime", "type": "double", "doc": "ISO 6801 formatted local date time of device (yyyy-MM-ddTHH:mm:ss)." },
+    { "name": "timeCompleted", "type": "double", "doc": "ISO 6801 formatted local date time of device (yyyy-MM-ddTHH:mm:ss)." },
     { "name": "duration", "type": "double", "doc": "Duration of the activity (ms)."},
-    { "name": "attempt_id", "type":"string", "doc": "The uid of attempt record that the event is related to."},
+    { "name": "attemptId", "type":"string", "doc": "The uid of attempt record that the event is related to."},
     { "name": "correctness", 
         "type": {
-          "name" : "correctnessEnum",
+          "name" : "CorrectnessEnum",
           "type": "enum", 
-          "symbols": ["Correct", "Wrong"]
+          "symbols": ["CORRECT", "WRONG"]
       }, 
-      "doc": "The validity of the user's input submitted"
+      "doc": "The validity of the user's input submitted."
     },
-    { "name": "input_type", 
+    { "name": "inputType", 
         "type": {
-          "name": "input_typeEnum",
+          "name": "InputEnum",
           "type": "enum", 
-          "symbols": ["Pin", "Amount", "Cancelled", "Confirmed"]
+          "symbols": ["PIN", "AMOUNT", "CANCELLED", "CONFIRMED"]
       }, 
       "doc": "The type of submitted input."}
     ]
