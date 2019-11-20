@@ -27,7 +27,7 @@
             "WRONGCONFIRMED",
             "WRONGCANCELLED",
             "TIMEOUT",
-            "END"],
+            "EXIT"],
         "doc": "Attempt: Correct Cancelled, Correct Cancelled, Wrong Confirmed, Wrong Cancelled, Timed Out, Ended."
     	},
     	"doc": "Shows the result of the attempt which can be Correct Cancelled, Correct Cancelled, Wrong Confirmed, Wrong Cancelled, Timed Out, Ended."}
