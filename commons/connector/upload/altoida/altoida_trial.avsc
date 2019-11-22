@@ -6,8 +6,8 @@
   "fields": [
     {"name": "placeDuration", "type": "float", "doc": "Time the user required to place the object (s)."},
     {"name": "findDuration", "type": "float", "doc": "Time the user required to find the object (s)."},
-    {"name": "angularChange", "type": ["float", "null"], "doc": "Distribution of the angular change when finding the object (radians)."},
-    {"name": "walkTurnAnalysis", "type": ["float", "null"], "doc": "Distribution of average angle the user turned during one step when finding the object (radians)."},
-    {"name": "pathComplexity", "type": ["float", "null"], "doc": "Path complexity when finding the object (m)."}
+    {"name": "angularChange", "type": ["float", "null"], "doc": "Distribution of the angular change when finding the object (radians).", "default": null},
+    {"name": "walkTurnAnalysis", "type": ["float", "null"], "doc": "Distribution of average angle the user turned during one step when finding the object (radians).", "default": null},
+    {"name": "pathComplexity", "type": ["float", "null"], "doc": "Path complexity when finding the object (m).", "default": null}
   ]
 }

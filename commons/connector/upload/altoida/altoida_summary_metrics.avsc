@@ -27,7 +27,7 @@
     {"name": "findSkipDurations", "type": "float", "doc": "Mean time the user tried before skipping an object in seconds."},
     {"name": "skipButtonCount", "type": "float", "doc": "Number of times the user pressed the skip button."},
     {"name": "countdownFail", "type": "float", "doc": "Number of countdown fails."},
-    {"name": "stepCountPFRatio", "type": "float", "doc": "Distribution of the ratio between the steps needed for finding the objects over the steps needed for placing them."},
+    {"name": "stepCountRatio", "type": "float", "doc": "Distribution of the ratio between the steps needed for finding the objects over the steps needed for placing them."},
     {"name": "stepDelayP", "type": "float", "doc": "Mean delay between steps when placing objects (s)."},
     {"name": "stepDelayF", "type": "float", "doc": "Mean delay between steps when finding objects (s)."},
     {"name": "stepVarianceP", "type": "float", "doc": "Variance of delays between steps when placing objects."},
