@@ -1,0 +1,29 @@
+{
+  "namespace": "org.radarcns.active.banking",
+  "type": "record",
+  "name": "BankingAttempt",
+  "doc": "A Banking App Attempt to complete a transaction, which can contain a PIN, an Amount and a Confirm/Cancel Transaction event. It can also time out or end.",
+  "fields": [
+    { "name": "uid", "type": "string", "doc": "Unique ID for an Attempt."},
+    { "name": "time", "type": "double", "doc": "Time since the Unix Epoch (seconds)." },
+    { "name": "timeCompleted", "type": "double", "doc": "Time since the Unix Epoch (seconds)." },
+    { "name": "duration", "type": "double", "doc": "Duration of the activity (seconds)."},
+    { "name": "isComplete", "type":"boolean", "doc": "Describes if the Attempt was conpleted or not"},
+    { "name": "result", 
+      "type": {
+      	"name": "AttemptResult",
+        "type": "enum",
+        "symbols":
+          [ "CORRECT_CONFIRMED",
+            "CORRECT_CANCELLED",
+            "WRONG_CONFIRMED",
+            "WRONG_CANCELLED",
+            "TIME_OUT",
+            "EXIT",
+            "UNKNOWN" ],
+        "default": "UNKNOWN",
+        "doc": "Attempt: Correct inputs (both pin & amount) Cancelled attempt, Correct inputs Cancelled attempt, Wrong input (at least one of two) Confirmed attempt, Wrong input Cancelled attempt, attempt timed Out, attempt Ended prematurely."
+    	},
+    	"doc": "Shows the result of the attempt which can be Correct Cancelled, Correct Cancelled, Wrong Confirmed, Wrong Cancelled, Timed Out, Ended."}
+    ]
+}

@@ -1,0 +1,23 @@
+{
+  "namespace": "org.radarcns.active.banking",
+  "type": "record",
+  "name": "BankingEvent",
+  "doc": "A Banking App Event, which is either a correct or wrong submission of a PIN number, an amount to withdraw, a cancelled or confirmed transaction. Notably, this allows us to distinguish between a wrong confirmed transaction or a correct cancelled transaction etc.",
+  "fields": [
+    { "name": "uid", "type": "string", "doc": "Unique ID for an Event."},
+    { "name": "time", "type": "double", "doc": "Time since the Unix Epoch (seconds)." },
+    { "name": "timeCompleted", "type": "double", "doc": "Time since the Unix Epoch (seconds)." },
+    { "name": "duration", "type": "double", "doc": "Duration of the activity (seconds)."},
+    { "name": "attemptId", "type":"string", "doc": "The uid of attempt record that the event is related to."},
+    { "name": "isCorrect", "type": "boolean", "doc": "Describes if the input Pin or Amount is correct."},
+    { "name": "inputType", 
+      "type": {
+          "name": "InputTypeValue",
+          "type": "enum", 
+          "symbols": ["PIN", "AMOUNT", "CANCELLED_ATTEMPT", "CONFIRMED_ATTEMPT", "UNKNOWN"],
+          "doc": "PIN input, amount imput, cancelled attempt, confirmed attempt",
+          "default": "UNKNOWN"
+      }, 
+      "doc": "The type of submitted input: PIN or Amount."}
+    ]
+}
