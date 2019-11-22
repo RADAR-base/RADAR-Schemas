@@ -8,7 +8,7 @@
     { "name": "time", "type": "double", "doc": "Time since the Unix Epoch (seconds)." },
     { "name": "timeCompleted", "type": "double", "doc": "Time since the Unix Epoch (seconds)." },
     { "name": "duration", "type": "double", "doc": "Duration of the activity (seconds)."},
-    { "name": "isComplete", "type":"boolean", "doc": "Describes if the Attempt was conpleted or not"},
+    { "name": "isComplete", "type":"boolean", "doc": "Describes if the Attempt was completed or not."},
     { "name": "result", 
       "type": {
       	"name": "AttemptResult",
@@ -24,6 +24,7 @@
         "default": "UNKNOWN",
         "doc": "Attempt: Correct inputs (both pin & amount) Cancelled attempt, Correct inputs Cancelled attempt, Wrong input (at least one of two) Confirmed attempt, Wrong input Cancelled attempt, attempt timed Out, attempt Ended prematurely."
     	},
+      "default": "UNKNOWN",
     	"doc": "Shows the result of the attempt which can be Correct Cancelled, Correct Cancelled, Wrong Confirmed, Wrong Cancelled, Timed Out, Ended."}
     ]
 }

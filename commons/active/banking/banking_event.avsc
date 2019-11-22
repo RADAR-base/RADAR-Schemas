@@ -15,9 +15,10 @@
           "name": "InputTypeValue",
           "type": "enum", 
           "symbols": ["PIN", "AMOUNT", "CANCELLED_ATTEMPT", "CONFIRMED_ATTEMPT", "UNKNOWN"],
-          "doc": "PIN input, amount imput, cancelled attempt, confirmed attempt",
-          "default": "UNKNOWN"
+          "doc": "PIN input, Amount imput, cancelled attempt, confirmed attempt."
       }, 
+      "default": "UNKNOWN",
       "doc": "The type of submitted input: PIN or Amount."}
+
     ]
 }
