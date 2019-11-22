@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.upload.altoida",
   "type": "record",
   "name": "AltoidaSummary",
-  "doc": "Summary and aggregates of a full test with Altoida.",
+  "doc": "Summary and aggregates of a full test with Altoida. Original file is named as export.csv.",
   "fields": [
     {"name": "time", "type": "double", "doc": "Timestamp in unix time acquired locally from the device."},
     {"name": "timeReceived", "type": "double", "doc": "Timestamp in unix time received from Altoida API."},
