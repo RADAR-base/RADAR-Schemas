@@ -29,6 +29,9 @@ data:
   - doc: Data from 3-axis rotation sensor with radians as unit. Original file name ends with _ROT.csv
     topic: connect_upload_altoida_rotation
     value_schema: .connector.upload.altoida.AltoidaRotation
+  - doc: Eye blinking event data of the Aldoida app usert. Original file name ends with _BLINK.csv
+    topic: connect_upload_altoida_blink
+    value_schema: .connector.upload.altoida.AltoidaBlink
 
   # Object information
   - doc: Data indicating what object was placed or found. Orginal file name ends with _DIAG.csv
