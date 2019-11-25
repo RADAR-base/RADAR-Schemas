@@ -19,6 +19,5 @@
       }, 
       "default": "UNKNOWN",
       "doc": "The type of submitted input: PIN or Amount."}
-
     ]
 }

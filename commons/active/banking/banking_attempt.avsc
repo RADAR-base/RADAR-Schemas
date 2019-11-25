@@ -20,7 +20,7 @@
             "WRONG_CANCELLED",
             "TIME_OUT",
             "EXIT",
-            "UNKNOWN" ],
+            "UNKNOWN"],
         "default": "UNKNOWN",
         "doc": "Attempt: Correct inputs (both pin & amount) Cancelled attempt, Correct inputs Cancelled attempt, Wrong input (at least one of two) Confirmed attempt, Wrong input Cancelled attempt, attempt timed Out, attempt Ended prematurely."
     	},
