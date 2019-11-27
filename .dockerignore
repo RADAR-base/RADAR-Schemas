@@ -1,6 +1,6 @@
 java-sdk/**/build
 **/.idea
-java-sdk/**/.gradle
+java-sdk/.gradle
 java-sdk/**/out
 java-sdk/**/src/test
 .git
