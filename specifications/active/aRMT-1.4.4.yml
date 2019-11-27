@@ -84,6 +84,26 @@ data:
     topic: questionnaire_technology_assessment_measurement_fast_form
     value_schema: .active.questionnaire.Questionnaire
     questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/technology_assessment_measurement_fast_form/technology_assessment_measurement_fast_form_armt.json
+  - type: BAARS_IV
+    topic: questionnaire_baars_iv
+    value_schema: .active.questionnaire.Questionnaire
+    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/baars_iv/baars_iv_armt.json
+  - type: ARI_SELF
+    topic: questionnaire_ari_self
+    value_schema: .active.questionnaire.Questionnaire
+    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/ari_self/ari_self_armt.json
+  - type: GAD7
+    topic: questionnaire_gad7
+    value_schema: .active.questionnaire.Questionnaire
+    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/gad7/gad7_armt.json
+  - type: RPQ
+    topic: questionnaire_rpq
+    value_schema: .active.questionnaire.Questionnaire
+    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/rpq/rpq_armt.json
+  - type: ART_COGNITIVE_TEST
+    topic: questionnaire_art_cognitive_test
+    value_schema: .active.questionnaire.Questionnaire
+    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/art_cognitive_test/art_cognitive_test_armt.json
   - type: COMPLETION_LOG
     doc: Information about the completeness of each questionnaire.
     topic: questionnaire_completion_log
