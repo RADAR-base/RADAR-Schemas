@@ -9,6 +9,15 @@ data:
   - doc: Summary and analytics from a set of trials and tests
     topic: connect_upload_altoida_summary
     value_schema: .connector.upload.altoida.AltoidaSummary
+  - doc: Summary and analytics from Back in Time (BIT) trails and tests
+    topic: connect_upload_altoida_bit_metrics
+    value_schema: .connector.upload.altoida.AltoidaSummaryMetrics
+  - doc: Summary and analytics from DOT and tests
+    topic: connect_upload_altoida_dot_metrics
+    value_schema: .connector.upload.altoida.AltoidaSummaryMetrics
+  - doc: Results provided based on nine domains analysed by Altoida
+    topic: connect_upload_altoida_domain_result
+    value_schema: .connector.upload.altoida.AltoidaDomainResult
 
     # Sensors
   - doc: Data from 3-axis accelerometer sensor with gravitational constant g as unit. Original file name ends with _ACC.csv
