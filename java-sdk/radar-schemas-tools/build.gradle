@@ -45,7 +45,7 @@ ext {
 
 repositories {
     jcenter()
-    maven { url 'http://packages.confluent.io/maven/' }
+    maven { url 'https://packages.confluent.io/maven/' }
     maven { url  "https://dl.bintray.com/radar-base/org.radarbase" }
     maven { url 'https://oss.jfrog.org/artifactory/oss-snapshot-local' }
 }
