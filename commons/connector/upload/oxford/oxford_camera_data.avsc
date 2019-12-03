@@ -15,6 +15,6 @@
     {"name": "colorBalance", "type": "OxfordCameraRgb", "doc": "If the test is based on additional biomarkers -1=unknown, 0=healthy, 1= at risk, 2=MCI/AB+, 3=MCI/AB-."},
     {"name": "luminanceMean", "type": "int", "doc": "Mean luminance over all pixels of the image ."},
     {"name": "exposure", "type": "int", "doc": "If the test is based on additional biomarkers -1=unknown, 0=healthy, 1= at risk, 2=MCI/AB+, 3=MCI/AB-."},
-    {"name": "gain", "type": "int", "doc": "If the test is based on additional biomarkers -1=unknown, 0=healthy, 1= at risk, 2=MCI/AB+, 3=MCI/AB-."}
+    {"name": "gain", "type": "float", "doc": "If the test is based on additional biomarkers -1=unknown, 0=healthy, 1= at risk, 2=MCI/AB+, 3=MCI/AB-."}
   ]
 }
