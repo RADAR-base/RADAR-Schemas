@@ -1,0 +1,24 @@
+{
+  "namespace": "org.radarcns.connector.upload.oxford",
+  "type": "record",
+  "name": "OxfordCameraData",
+  "doc": "Entry for an image collected by Oxford's wearable camera.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Timestamp in unix time acquired locally from the device."},
+    {"name": "timeReceived", "type": "double", "doc": "Timestamp in unix time received from Altoida API."},
+    {"name": "name", "type": "string", "doc": "Image name."},
+    {"name": "acceleration", "type": "OxfordCameraAxes", "doc": "Acceleration of the camera when the image was recorded."},
+    {"name": "magneticField", "type": "OxfordCameraAxes", "doc": "Magnetic field of the camera when the image was recorded."},
+    {"name": "orientation", "type": "OxfordCameraAxes", "doc": "Orientation of the camera when the image was recorded."},
+    {"name": "temperature", "type": "float", "doc": "Ambient temperature when the image was recorded (celcius)."},
+    {"name": "meanRed", "type": "int", "doc": "Mean red saturation over all pixels of the image in an RGB color space (0 - 255)."},
+    {"name": "meanGreen", "type": "int", "doc": "Mean green saturation over all pixels of the image in an RGB color space (0 - 255)."},
+    {"name": "meanBlue", "type": "int", "doc": "Mean blue saturation over all pixels of the image in an RGB color space (0 - 255)."},
+    {"name": "meanLuminance", "type": "int", "doc": "Mean luminance over all pixels of the image ."},
+    {"name": "balanceRed", "type": "int", "doc": "If the test is based on additional biomarkers -1=unknown, 0=healthy, 1= at risk, 2=MCI/AB+, 3=MCI/AB-."},
+    {"name": "balanceGreen", "type": "int", "doc": "If the test is based on additional biomarkers -1=unknown, 0=healthy, 1= at risk, 2=MCI/AB+, 3=MCI/AB-."},
+    {"name": "balanceBlue", "type": "int", "doc": "If the test is based on additional biomarkers -1=unknown, 0=healthy, 1= at risk, 2=MCI/AB+, 3=MCI/AB-."},
+    {"name": "exposure", "type": "int", "doc": "If the test is based on additional biomarkers -1=unknown, 0=healthy, 1= at risk, 2=MCI/AB+, 3=MCI/AB-."},
+    {"name": "gain", "type": "int", "doc": "If the test is based on additional biomarkers -1=unknown, 0=healthy, 1= at risk, 2=MCI/AB+, 3=MCI/AB-."}
+  ]
+}

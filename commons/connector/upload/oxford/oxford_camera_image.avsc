@@ -1,0 +1,12 @@
+{
+  "namespace": "org.radarcns.connector.upload.oxford",
+  "type": "record",
+  "name": "OxfordCameraImage",
+  "doc": "Image captured by Oxford's wearable camera. This only contains a reference to the actual image data.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Timestamp in unix time acquired locally from the device."},
+    {"name": "timeReceived", "type": "double", "doc": "Timestamp in unix time received from Altoida API."},
+    {"name": "name", "type": "string", "doc": "Image name."},
+    {"name": "url", "type": "string", "doc": "URL where image is stored."}
+  ]
+}
