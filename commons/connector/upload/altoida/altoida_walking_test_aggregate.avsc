@@ -1,0 +1,21 @@
+{
+  "namespace": "org.radarcns.connector.upload.altoida",
+  "name": "AltoidaWalkingTestAggregate",
+  "type": "record",
+  "doc": "Aggregate data of a walking test.",
+  "fields": [
+    { "name": "mean", "type": "float", "doc": "Mean test value."},
+    { "name": "variance", "type": "float", "doc": "Variance of test values."},
+    { "name": "timeRatioWithin", "type": "float", "doc": "Ratio of time spent within the specified area."},
+    { "name": "distRatioWithin", "type": "float", "doc": "Ratio of distance spent within the specified area."},
+    { "name": "distWithin", "type": "float", "doc": "Distance spent within the specified area (cm)."},
+    { "name": "distTotal", "type": "float", "doc": "Total distance moved in test (cm)."},
+    { "name": "angleSum", "type": ["null", "float"], "doc": "Sum of angular movement (radians). Null if not applicable.", "default": null},
+    { "name": "directionalChanges", "type": ["null", "int"], "doc": "Number of times the movement changed direction. Null if not applicable.", "default": null},
+    { "name": "verticalProgress", "type": ["null", "float"], "doc": "Vertical ratio of the serpentine that was completed. Null if not applicable.", "default": null},
+    { "name": "speed", "type": "float", "doc": "Average speed of movement (cm/s)."},
+    { "name": "speedAccuracyRatio", "type": "float", "doc": "Speed accuracy ratio (s)."},
+    { "name": "duration", "type": "float", "doc": "Mean duration of a test (s)."},
+    { "name": "fullDuration", "type": "float", "doc": "Total amount of time performing tests (s)."}
+  ]
+}
