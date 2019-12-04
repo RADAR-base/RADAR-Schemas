@@ -17,7 +17,7 @@ subprojects {
     apply plugin: 'idea'
 
     // Configuration
-    version = '0.5.4-SNAPSHOT'
+    version = '0.5.5-SNAPSHOT'
     group = 'org.radarcns'
     ext.githubRepoName = 'RADAR-base/RADAR-Schemas'
 
@@ -128,5 +128,5 @@ subprojects {
 }
 
 wrapper {
-    gradleVersion '5.5.1'
+    gradleVersion '6.0.1'
 }
