@@ -1,0 +1,12 @@
+{
+  "namespace": "org.radarcns.connector.upload.altoida",
+  "type": "record",
+  "name": "AltoidaEyeTracking",
+  "doc": "Position where users eye movement on the screen is detected. These values are calculated from the center of the screen in centimeters (cm).",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Timestamp in unix time acquired locally from the device."},
+    {"name": "timeReceived", "type": "double", "doc": "Timestamp in unix time received from Altoida API."},
+    {"name": "x", "type": ["null", "float"], "doc": "X coordinate of the eye position.", "default": null},
+    {"name": "y", "type": ["null", "float"], "doc": "Y coordinate of the eye position.", "default": null}
+  ]
+}
