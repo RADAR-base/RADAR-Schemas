@@ -13,7 +13,7 @@
           "name": "GenderType",
           "type": "enum",
           "doc": "Gender types provided by Altoida.",
-          "symbols": ["MALE", "FEMALE", "OTHER"]}, "doc": "Gender of the participant.", "default": "OTHER"},
+          "symbols": ["MALE", "FEMALE", "OTHER", "UNKNOWN"]}, "doc": "Gender of the participant.", "default": "UNKNOWN"},
     {"name": "classification", "type": ["null", {
               "name": "Classification",
               "type": "enum",
