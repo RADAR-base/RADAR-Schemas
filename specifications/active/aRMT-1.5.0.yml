@@ -80,10 +80,10 @@ data:
     topic: questionnaire_morning_assessment
     value_schema: .active.questionnaire.Questionnaire
     questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/morning_assessment/morning_assessment_armt.json
-  - type: TECHNOLOGY_ASSESSMENT_MEASUREMENT_FAST_FORM
-    topic: questionnaire_technology_assessment_measurement_fast_form
+  - type: TAM
+    topic: questionnaire_tam
     value_schema: .active.questionnaire.Questionnaire
-    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/technology_assessment_measurement_fast_form/technology_assessment_measurement_fast_form_armt.json
+    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/tam/tam_armt.json
   - type: BAARS_IV
     topic: questionnaire_baars_iv
     value_schema: .active.questionnaire.Questionnaire
