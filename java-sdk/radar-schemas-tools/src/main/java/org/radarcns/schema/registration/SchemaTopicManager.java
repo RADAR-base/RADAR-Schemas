@@ -8,6 +8,7 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.time.Duration;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +21,8 @@ import javax.validation.constraints.NotNull;
 import net.sourceforge.argparse4j.impl.action.StoreConstArgumentAction;
 import net.sourceforge.argparse4j.inf.ArgumentParser;
 import net.sourceforge.argparse4j.inf.Namespace;
+import org.apache.kafka.clients.admin.AlterConfigOp;
+import org.apache.kafka.clients.admin.AlterConfigOp.OpType;
 import org.apache.kafka.clients.admin.AlterConfigsResult;
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
@@ -380,7 +383,9 @@ public class SchemaTopicManager implements Closeable {
     private void commitBackup(SchemaTopicBackup backup)
             throws ExecutionException, InterruptedException, KeeperException {
         AlterConfigsResult alterResult = topics.getKafkaClient()
-                .alterConfigs(Map.of(topicResource, backup.getConfig()));
+                .incrementalAlterConfigs(Map.of(topicResource, backup.getConfig().entries().stream()
+                    .map(e -> new AlterConfigOp(e, OpType.SET))
+                    .collect(Collectors.toList())));
 
         try (KafkaProducer<byte[], byte[]> producer = new KafkaProducer<>(getProducerProps())) {
             List<Future<RecordMetadata>> futures = backup.getRecords().stream()
