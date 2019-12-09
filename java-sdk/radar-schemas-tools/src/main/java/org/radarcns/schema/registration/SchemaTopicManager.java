@@ -8,7 +8,6 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.time.Duration;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -384,8 +383,8 @@ public class SchemaTopicManager implements Closeable {
             throws ExecutionException, InterruptedException, KeeperException {
         AlterConfigsResult alterResult = topics.getKafkaClient()
                 .incrementalAlterConfigs(Map.of(topicResource, backup.getConfig().entries().stream()
-                    .map(e -> new AlterConfigOp(e, OpType.SET))
-                    .collect(Collectors.toList())));
+                        .map(e -> new AlterConfigOp(e, OpType.SET))
+                        .collect(Collectors.toList())));
 
         try (KafkaProducer<byte[], byte[]> producer = new KafkaProducer<>(getProducerProps())) {
             List<Future<RecordMetadata>> futures = backup.getRecords().stream()
