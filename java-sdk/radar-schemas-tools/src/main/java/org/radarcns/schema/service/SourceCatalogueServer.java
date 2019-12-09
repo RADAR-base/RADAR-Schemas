@@ -40,7 +40,6 @@ public class SourceCatalogueServer implements Closeable {
 
     @SuppressWarnings("PMD.SignatureDeclareThrowsException")
     private void start(SourceCatalogue sourceCatalogue) throws Exception {
-
         ResourceConfig config = new ResourceConfig();
         config.register(new SourceCatalogueService(sourceCatalogue));
         ServletHolder servlet = new ServletHolder(new ServletContainer(config));
