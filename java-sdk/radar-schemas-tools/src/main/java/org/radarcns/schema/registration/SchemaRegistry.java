@@ -172,7 +172,9 @@ public class SchemaRegistry {
                 SchemaRegistry registration = new SchemaRegistry(url);
                 boolean forced = options.getBoolean("force");
                 if (forced) {
-                    forced = registration.putCompatibility(Compatibility.NONE);
+                    if (!registration.putCompatibility(Compatibility.NONE)) {
+                        return 1;
+                    }
                 }
                 boolean result;
                 Pattern pattern = matchTopic(
