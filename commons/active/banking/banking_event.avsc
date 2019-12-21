@@ -4,7 +4,6 @@
   "name": "BankingEvent",
   "doc": "A Banking App Event, which is either a correct or wrong submission of a PIN number, an amount to withdraw, a cancelled or confirmed transaction. Notably, this allows us to distinguish between a wrong confirmed transaction or a correct cancelled transaction etc.",
   "fields": [
-    { "name": "eventId", "type": "string", "doc": "Unique ID for an Event." },
     { "name": "time", "type": "double", "doc": "Time since the Unix Epoch (seconds)." },
     { "name": "timeCompleted", "type": "double", "doc": "Time since the Unix Epoch (seconds)." },
     { "name": "duration", "type": "double", "doc": "Duration of the activity (seconds)."},
