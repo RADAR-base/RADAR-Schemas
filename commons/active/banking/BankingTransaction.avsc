@@ -29,8 +29,8 @@
     "type": {
       "type": "enum",
       "name": "TransactionResult",
-      "doc": "CORRECT_CONFIRMED: Correct inputs (both pin & amount), Confirmed Transaction, CORRECT_CANCELLED: Correct inputs Cancelled Transaction, WRONG_CONFIRMED: Wrong input (at least one of two) Confirmed Transaction, WRONG_CANCELLED: Wrong input Cancelled Transaction, TIME_OUT: Transaction timed Out, EXIT: Transaction Ended prematurely.",
-      "symbols" : [ "CORRECT_CONFIRMED", "CORRECT_CANCELLED", "WRONG_CONFIRMED", "WRONG_CANCELLED", "TIME_OUT", "EXIT", "UNKNOWN" ]
+      "doc": "CORRECT_CONFIRMED: both inputs Correct- Confirmed Transaction, CORRECT_CANCELLED: Correct inputs - Cancelled Transaction, WRONG_CONFIRMED:   (at least one of two inputs Wrong) - Confirmed Transaction, WRONG_CANCELLED: Wrong input Cancelled Transaction, TIME_OUT: Transaction timed Out, EXIT: Transaction Ended prematurely.",
+      "symbols" : [ "CORRECT_CONFIRMED", "CORRECT_CANCELLED", "WRONG_CONFIRMED", "WRONG_CANCELLED", "TIME_OUT", "EXIT", "UNKNOWN"]
     },
     "doc": "Shows the result of the Transaction which can be Correct Cancelled, Correct Cancelled, Wrong Confirmed, Wrong Cancelled, Timed Out, Ended.",
     "default": "UNKNOWN"
