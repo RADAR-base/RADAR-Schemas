@@ -22,8 +22,7 @@
             "TIME_OUT",
             "EXIT",
             "UNKNOWN"],
-        "doc": "CORRECT_CONFIRMED: Correct inputs (both pin & amount), Confirmed Transaction, CORRECT_CANCELLED: Correct inputs Cancelled Transaction, WRONG_CONFIRMED: Wrong input (at least one of two) Confirmed Transaction, WRONG_CANCELLED: Wrong input Cancelled Transaction, TIME_OUT: Transaction timed Out, EXIT: Transaction Ended prematurely.",
-        "default": "UNKNOWN"
+        "doc": "CORRECT_CONFIRMED: Correct inputs (both pin & amount), Confirmed Transaction, CORRECT_CANCELLED: Correct inputs Cancelled Transaction, WRONG_CONFIRMED: Wrong input (at least one of two) Confirmed Transaction, WRONG_CANCELLED: Wrong input Cancelled Transaction, TIME_OUT: Transaction timed Out, EXIT: Transaction Ended prematurely."
     	},
     	"doc": "Shows the result of the Transaction which can be Correct Cancelled, Correct Cancelled, Wrong Confirmed, Wrong Cancelled, Timed Out, Ended.",
       "default": "UNKNOWN"
