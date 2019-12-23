@@ -6,7 +6,7 @@
   "fields": [
     { "name": "transactionId", "type": "string", "doc": "Unique ID for an Transaction." },
     { "name": "time", "type": "double", "doc": "Time since the Unix Epoch (seconds), time stores the time a transaction has started." },
-    { "name": "timeCompleted", "type": "double", time stores the time a transaction has been completed." },
+    { "name": "timeCompleted", "type": "double", "doc": "time stores the time a transaction has been completed." },
     { "name": "duration", "type": "double", "doc": "Duration of the activity (seconds)." },
     { "name": "isComplete", "type":["null","boolean"], "doc": "True if the result is CORRECT_CONFIRMED, WRONG_CONFIRMED, CORRECT_CANCELLED or WRONG_CANCELLED. False if TIME_OUT or EXIT.", "default": null },
     { "name": "transactionResult", 
