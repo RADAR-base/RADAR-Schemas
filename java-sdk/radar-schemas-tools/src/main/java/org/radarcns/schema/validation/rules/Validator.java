@@ -20,6 +20,7 @@ package org.radarcns.schema.validation.rules;
 import java.util.Collection;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 import org.radarcns.schema.validation.ValidationException;
@@ -30,6 +31,10 @@ import org.radarcns.schema.validation.ValidationException;
 public interface Validator<T> extends Function<T, Stream<ValidationException>> {
     static Stream<ValidationException> check(boolean test, String message) {
         return test ? valid() : raise(message);
+    }
+
+    static Stream<ValidationException> check(boolean test, Supplier<String> message) {
+        return test ? valid() : raise(message.get());
     }
 
     /**
