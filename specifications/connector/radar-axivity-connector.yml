@@ -3,7 +3,7 @@ name: RADAR-AXIVITY-CONNECTOR
 vendor: Axivity
 model: Axivity.device
 version: 1.0.0
-doc: Spec for RADAR-base Axivity data upload connector. Schemas should be registered in the connector.
+doc: Spec for RADAR-base Axivity data upload connector. Schemas should be registered in the connector. Information on the raw data can be found at https://github.com/digitalinteraction/openmovement/tree/master/Docs/ax3.
 data:
   - doc: Data from 3-axis accelerometer sensor with gravitational constant g as unit. Data extracted from CWA binary file.
     topic: connect_upload_axivity_acceleration
