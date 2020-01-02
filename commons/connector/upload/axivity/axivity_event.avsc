@@ -10,6 +10,6 @@
           "name": "AxivityEventType",
           "type": "enum",
           "doc": "Event types recorded from the axivity device.",
-          "symbols": ["RESUME", "SINGLE_TAP", "DOUBLE_TAP", "FIFO_OVERFLOW", "BUFFER_OVERFLOW", "UNHANDLED_INTERRUPT", "UNKNOWN"]}, "doc": "Event of the block.", "default": "UNKNOWN"},
+          "symbols": ["RESUME", "SINGLE_TAP", "DOUBLE_TAP", "FIFO_OVERFLOW", "BUFFER_OVERFLOW", "UNHANDLED_INTERRUPT", "UNKNOWN"]}, "doc": "Event of the block.", "default": "UNKNOWN"}
   ]
 }

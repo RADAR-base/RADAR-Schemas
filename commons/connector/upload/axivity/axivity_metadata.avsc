@@ -7,6 +7,6 @@
     {"name": "time", "type": "double", "doc": "Timestamp in unix time acquired locally from the device."},
     {"name": "timeReceived", "type": "double", "doc": "Timestamp in unix time received from upload."},
     {"name": "annotationName", "type": "string", "doc": "Name of the annotation from cwa metadata."},
-    {"name": "annotationValue", "type": "string", "doc": "Value available for this annotation in the scwa metadata."}
+    {"name": "annotationData", "type": "string", "doc": "Value available for this annotation in the cwa metadata."}
   ]
 }
