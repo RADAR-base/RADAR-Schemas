@@ -9,17 +9,21 @@ data:
     topic: connect_upload_axivity_acceleration
     value_schema: .connector.upload.axivity.AxivityAcceleration
 
-  - doc: Battery level information of axivity device extracted from from CWA binary file.
-    topic: connect_upload_axivity_battery
-    value_schema: .connector.upload.axivity.AxivityBattery
+  - doc: Battery level information of axivity device extracted from CWA Block.
+    topic: connect_upload_axivity_battery_level
+    value_schema: .connector.upload.axivity.AxivityBatteryLevel
 
-  - doc: Ambient light data extracted from from CWA binary file.
+  - doc: Ambient light data extracted from a CWA Block.
     topic: connect_upload_axivity_light
     value_schema: .connector.upload.axivity.AxivityLight
 
-  - doc: Temperature data extracted from from CWA binary file.
+  - doc: Temperature data extracted from CWA Block.
     topic: connect_upload_axivity_temperature
     value_schema: .connector.upload.axivity.AxivityLight
+
+  - doc: Event data extracted from from a CWA Block.
+    topic: connect_upload_axivity_event
+    value_schema: .connector.upload.axivity.AxivityEvent
 
   # meta-data
   - doc: Data that contains additional meta-data of the recording. Data extracted from the header of CWA binary file.

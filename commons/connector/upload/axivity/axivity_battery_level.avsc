@@ -1,7 +1,7 @@
 {
   "namespace": "org.radarcns.connector.upload.axivity",
   "type": "record",
-  "name": "AxivityBattery",
+  "name": "AxivityBatteryLevel",
   "doc": "Battery level data from Axivity device.",
   "fields": [
     {"name": "time", "type": "double", "doc": "Timestamp in unix time acquired locally from the device."},
