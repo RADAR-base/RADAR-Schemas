@@ -1,0 +1,11 @@
+{
+  "namespace": "org.radarcns.connector.upload.oxford",
+  "type": "record",
+  "name": "OxfordCameraRgb",
+  "doc": "Color in sRGB color space.",
+  "fields": [
+    {"name": "red", "type": "float", "doc": "Red value."},
+    {"name": "green", "type": "float", "doc": "Green value."},
+    {"name": "blue", "type": "float", "doc": "Blue value."}
+  ]
+}

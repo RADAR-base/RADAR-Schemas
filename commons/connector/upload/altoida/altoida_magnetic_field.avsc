@@ -1,7 +1,7 @@
 {
   "namespace": "org.radarcns.connector.upload.altoida",
   "type": "record",
-  "name": "AltoidaMagnetometer",
+  "name": "AltoidaMagneticField",
   "doc": "Data from 3-axis magnetometer sensor micro Tesla units (µT).",
   "fields": [
     {"name": "time", "type": "double", "doc": "Timestamp in unix time acquired locally from the device."},
