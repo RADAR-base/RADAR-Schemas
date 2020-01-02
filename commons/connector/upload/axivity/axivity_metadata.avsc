@@ -6,9 +6,7 @@
   "fields": [
     {"name": "time", "type": "double", "doc": "Timestamp in unix time acquired locally from the device."},
     {"name": "timeReceived", "type": "double", "doc": "Timestamp in unix time received from upload."},
-    {"name": "deviceId", "type": "string", "doc": "Version number."},
-    {"name": "exerciseCode", "type": "string", "doc": "Exercise code from axivity."},
-    {"name": "bodyLocation", "type": "int", "doc": "Body location recorded on the axivity device."},
-    {"name": "studyCode", "type": "string", "doc": "Study code recorded on the axivity device."}
+    {"name": "annotationName", "type": "string", "doc": "Name of the annotation from cwa metadata."},
+    {"name": "annotationData", "type": "string", "doc": "Value available for this annotation in the cwa metadata."}
   ]
 }
