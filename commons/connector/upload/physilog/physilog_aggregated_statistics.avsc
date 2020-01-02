@@ -4,17 +4,22 @@
   "name": "PhysilogAggregatedStatistics",
   "doc": "Summary of aggregated statistics of the physilog test analysis.",
   "fields": [
-    {"name": "time", "type": "double", "doc": "Timestamp in unix time acquired locally from the device."},
-    {"name": "timeReceived", "type": "double", "doc": "Timestamp in unix time received from Physilog device."},
-    {"name": "iqr", "type": "float", "doc": "Interquartile range value of the dataset."},
-    {"name": "max", "type": "float", "doc": "Maximum value of the dataset."},
-    {"name": "mean", "type": "float", "doc": "Mean value of the dataset."},
-    {"name": "meadian", "type": "float", "doc": "Meadian value of the dataset."},
-    {"name": "min", "type": "float", "doc": "Minimum value of the dataset."},
-    {"name": "ratio", "type": "string", "doc": "Ratio scale of the dataset."},
-    {"name": "significantDigit", "type": "int", "doc": "How many digits after the comma should be displayed on the reports."},
-    {"name": "std", "type": "float", "doc": "Standard deviation value of the dataset."},
-    {"name": "unit", "type": "string", "doc": "Unit of the data."},
-    {"name": "propertyType", "type": "double", "doc": " type of the parameter to group them together in different categories e/g values are general, temporal, spatial and clearance."}
+    {"name": "time", "type": "float", "doc": "Timestamp in unix time acquired locally from the device."},
+    {"name": "timeReceived", "type": "float", "doc": "Timestamp in unix time received from Physilog device."},
+    {"name": "cv", "type": ["null", "float"], "doc": "Coefficient of variability.", "default": null},
+    {"name": "iqr", "type": ["null", "float"], "doc": "Interquartile range value of the dataset.", "default": null},
+    {"name": "max", "type": ["null", "float"], "doc": "Maximum value of the dataset.", "default": null},
+    {"name": "mean", "type": ["null", "float"], "doc": "Mean value of the dataset.", "default": null},
+    {"name": "meadian", "type": ["null", "float"], "doc": "Meadian value of the dataset.", "default": null},
+    {"name": "min", "type": ["null", "float"], "doc": "Minimum value of the dataset.", "default": null},
+    {"name": "ratio", "type": ["null", "string"], "doc": "Ratio scale of the dataset.", "default": null},
+    {"name": "significantDigit", "type": ["null", "int"], "doc": "How many digits after the comma should be displayed on the reports.", "default": null},
+    {"name": "std", "type": ["null", "float"], "doc": "Standard deviation value of the dataset.", "default": null},
+    {"name": "unit", "type": ["null", "string"], "doc": "Unit of the data.", "default": null},
+    {"name": "propertyType", "type": {
+              "name": "PropertyType",
+              "type": "enum",
+              "doc": "Type of the parameter to group them together in different categories.",
+              "symbols": ["GENERAL", "TEMPORAL", "SPATIAL", "CLEARANCE", "UNKNOWN"]}, "doc": "Type of the property.", "default": "UNKNOWN"}
   ]
 }

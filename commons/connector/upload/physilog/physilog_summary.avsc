@@ -6,14 +6,13 @@
   "fields": [
     {"name": "time", "type": "double", "doc": "Timestamp in unix time acquired locally from the device."},
     {"name": "timeReceived", "type": "double", "doc": "Timestamp in unix time received from Physilog device."},
-    {"name": "testTime", "type": "double", "doc": "Time taken to perform the test in (second)s."},
-    {"name": "gaitTime", "type": "double", "doc": "Time of gait activity during the test in (second)s."},
-    {"name": "turnTime", "type": "double", "doc": "Time took to turn in (seconds)"},
+    {"name": "testTime", "type": "double", "doc": "Time taken to perform the test in seconds."},
+    {"name": "gaitTime", "type": "double", "doc": "Time of gait activity during the test in seconds."},
+    {"name": "turnTime", "type": "double", "doc": "Time took to turn in seconds."},
     {"name": "totalCycles", "type": "int", "doc": "Total amount of cycles analysed from the test."},
     {"name": "discardedCycles", "type": "int", "doc": "Total amount of cycles discarded from the test."},
     {"name": "analysedCycles", "type": "int", "doc": "Total amount of cycles performed during the test."},
     {"name": "turningCycles", "type": "int", "doc": "Total amount of cycles performed to make turns."},
-    {"name": "distance", "type": "double", "doc": "Distance walked during the recording in (meters)s."},
-    {"name": "propertyType", "type": "double", "doc": "Type of the parameter to group them together in different categories e/g values are general, temporal, spatial and clearance."}
+    {"name": "distance", "type": "double", "doc": "Distance walked during the recording in meters."}
   ]
 }
