@@ -28,6 +28,6 @@ data:
     topic: connect_upload_physilog_cycle
     value_schema: .connector.upload.physilog.PhysilogCycle
 
-  - doc: Cycle data extracted from the physilog test analysis.
+  - doc: Summary of cycle data computed from the physilog analysis.
     topic: connect_upload_physilog_cycle_aggregated
     value_schema: .connector.upload.physilog.PhysilogCycleAggregate
