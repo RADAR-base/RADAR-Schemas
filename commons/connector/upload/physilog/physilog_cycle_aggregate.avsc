@@ -1,7 +1,7 @@
 {
   "namespace": "org.radarcns.connector.upload.physilog",
   "type": "record",
-  "name": "PhysilogCycleSummary",
+  "name": "PhysilogCycleAggregate",
   "doc": "Statistical Summary of the physilog test analysis. More information can be found at https://gaitup.com/products-features/3d-gait-analysis-system/.",
   "fields": [
     {"name": "time", "type": "double", "doc": "Timestamp in unix time acquired locally from the device."},
