@@ -11,7 +11,7 @@ data:
     topic: certh_banking_app_event
     value_schema: .active.banking.BankingEvent
   - type: TRANSACTION
-    doc: Transaction in Banking App. This captures a full transaction: inputting a PIN number, then an amount and then a confirmation or cancellation.
+    doc: Transaction in Banking App. This captures a full transaction inputting a PIN number, then an amount and then a confirmation or cancellation.
     topic: certh_banking_app_transaction
     value_schema: .active.banking.BankingTransaction
 
