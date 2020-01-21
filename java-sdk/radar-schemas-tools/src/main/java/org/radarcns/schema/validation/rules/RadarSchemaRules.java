@@ -222,7 +222,10 @@ public class RadarSchemaRules implements SchemaRules {
                 org.apache.kafka.connect.data.Schema connectSchema = encoder
                         .toConnectSchema(schema);
                 Schema originalSchema = decoder.fromConnectSchema(connectSchema);
-                return check(schema.equals(originalSchema), "Schema changed by validation");
+                return check(schema.equals(originalSchema),
+                        () -> "Schema changed by validation: "
+                            + schema.toString(true) + " is not equal to "
+                            + originalSchema.toString(true));
             } catch (Exception ex) {
                 return raise("Failed to convert schema back to itself");
             }
