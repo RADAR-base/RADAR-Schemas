@@ -116,3 +116,11 @@ data:
     doc: Questionnaire application interaction event.
     topic: questionnaire_app_event
     value_schema: .monitor.questionnaire.QuestionnaireApplicationInteractionEvent
+  - type: ESM_DynaMORE
+    topic: questionnaire_ESM_DynaMORE
+    value_schema: .active.questionnaire.Questionnaire
+    questionnaire_definition_url: https://raw.githubusercontent.com/JeroenDMW/RADAR-REDCap-aRMT-Definitions/master/questionnaires/ESM_DynaMORE/ESM_DynaMORE_armt.json
+  - type: ESM_DynaMORE_Evening
+    topic: questionnaire_ESM_DynaMORE_Evening
+    value_schema: .active.questionnaire.Questionnaire
+    questionnaire_definition_url: https://raw.githubusercontent.com/JeroenDMW/RADAR-REDCap-aRMT-Definitions/master/questionnaires/ESM_DynaMORE_Evening/ESM_DynaMORE_Evening_armt.json
