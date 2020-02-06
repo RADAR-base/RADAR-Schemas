@@ -6,7 +6,7 @@
   "fields": [
     {"name": "time", "type": "double", "doc": "Time since Unix Epoch as reported by the device (s)."},
     {"name": "timeReceived", "type": "double", "doc": "Time this record was processed (s)."},
-    {"name": "name", "type": "string", "doc": "Image name."},
+    {"name": "name", "type": "string", "doc": "File name."},
     {"name": "url", "type": "string", "doc": "URI where image is stored."}
   ]
 }
