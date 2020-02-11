@@ -1,0 +1,11 @@
+#====================================== Altoida Phone Sensors =====================================#
+name: RADAR-PHYSILOG5-UPLOAD-CONNECTOR
+vendor: Gait UP
+model: Physilog5
+version: 1.0.0
+doc: Spec for RADAR-base connector for Physilog 5 data upload connector.
+data:
+    # Summary
+  - doc: Binary file reference.
+    topic: connect_upload_physilog_binary_data_reference
+    value_schema: .connector.upload.physilog.PhysilogBinaryDataReference
