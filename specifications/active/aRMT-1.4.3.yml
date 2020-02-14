@@ -80,3 +80,7 @@ data:
     topic: questionnaire_esm_dynamore_evening
     value_schema: .active.questionnaire.Questionnaire
     questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/ESM_DynaMORE_Evening/ESM_DynaMORE_Evening_armt.json
+  - type: ESM_DYNAMORE_MORNING
+    topic: questionnaire_esm_dynamore_morning
+    value_schema: .active.questionnaire.Questionnaire
+    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/ESM_DynaMORE_Morning/ESM_DynaMORE_Morning_armt.json
