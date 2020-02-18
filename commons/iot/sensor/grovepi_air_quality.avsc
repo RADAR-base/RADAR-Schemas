@@ -2,7 +2,7 @@
   "namespace": "org.radarbase.iot.sensor",
   "type": "record",
   "name": "GrovePiAirQualitySensor",
-  "doc": "Schema for recording data from Mock sensor",
+  "doc": "Schema for recording data from GrovePi Air Quality sensor",
   "fields": [
     { "name": "time", "type": "double", "doc": "Timestamp in UTC (s) when the data is recorded by the sensor." },
     { "name": "value", "type": "double", "doc": "Value of the sensor output." },

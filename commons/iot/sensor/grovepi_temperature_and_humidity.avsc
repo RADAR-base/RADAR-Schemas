@@ -1,0 +1,11 @@
+{
+  "namespace": "org.radarbase.iot.sensor",
+  "type": "record",
+  "name": "GrovePiTemperatureAndHumiditySensor",
+  "doc": "Schema for recording data from GrovePi Temperature And Humidity Sensor.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Timestamp in UTC (s) when the data is recorded by the sensor." },
+    { "name": "temperature", "type": "double", "doc": "Value of the temperature output from sensor in degree celsius." },
+    { "name": "humidity", "type": "double", "doc": "Value of the humidity output from sensor measured as a percentage." }
+    ]
+}
