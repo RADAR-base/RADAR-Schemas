@@ -1,0 +1,11 @@
+{
+  "namespace": "org.radarbase.iot.sensor",
+  "type": "record",
+  "name": "GrovePiPIRMotionSensor",
+  "doc": "Schema for recording data from GrovePi PIR motion sensor",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Timestamp in UTC (s) when the data is recorded by the sensor." },
+    { "name": "value", "type": "int", "doc": "Value of the sensor output. Should be either 1 for HIGH or 0 for LOW." },
+    { "name": "motion", "type": "string", "doc": "Classified value of motion sensor." }
+    ]
+}
