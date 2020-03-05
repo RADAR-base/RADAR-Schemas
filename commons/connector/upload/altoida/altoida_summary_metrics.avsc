@@ -4,6 +4,8 @@
   "type": "record",
   "doc": "Metrics from a set of tests.",
   "fields": [
+    {"name": "time", "type": "double", "doc": "Timestamp in unix time acquired locally from the device."},
+    {"name": "timeReceived", "type": "double", "doc": "Timestamp in unix time received from Altoida API."},
     {"name": "audioHighReactionTimes", "type": "float", "doc": "Distribution of reaction times to high tone(s)."},
     {"name": "audioHighAccuracy", "type": "float", "doc": "Distribution of deviation from speaker button center (cm)."},
     {"name": "audioLowReactions", "type": "int", "doc": "Distributions of number of reactions to low tones."},
