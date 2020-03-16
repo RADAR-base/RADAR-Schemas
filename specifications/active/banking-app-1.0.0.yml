@@ -1,0 +1,17 @@
+#==================== BankingApp Specification ======================#
+name: BankingApp
+vendor: CERTH
+model: BankingApp
+version: 1.0.0
+assessment_type: APP
+doc: Banking App schemas and topics
+data:
+  - type: APP_EVENT
+    doc: A Banking App Event, which is either a correct or wrong submission of a PIN number, an amount to withdraw, a cancelled or confirmed transaction. Notably, this allows us to distinguish between a wrong confirmed transaction or a correct cancelled transaction etc.
+    topic: certh_banking_app_event
+    value_schema: .active.banking.BankingEvent
+  - type: TRANSACTION
+    doc: Transaction in Banking App. This captures a full transaction inputting a PIN number, then an amount and then a confirmation or cancellation.
+    topic: certh_banking_app_transaction
+    value_schema: .active.banking.BankingTransaction
+
