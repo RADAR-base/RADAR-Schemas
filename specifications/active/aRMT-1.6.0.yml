@@ -112,14 +112,14 @@ data:
     topic: questionnaire_covid19_symptoms
     value_schema: .active.questionnaire.Questionnaire
     questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/covid19_symptoms/covid19_symptoms_armt.json
-  - type: COVID19_RADARCNS_BASELINE
-    topic: questionnaire_covid19_radarcns_baseline
+  - type: CNS_COVID19_BASELINE
+    topic: questionnaire_cns_covid19_baseline
     value_schema: .active.questionnaire.Questionnaire
-    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/covid19_radarcns_baseline/covid19_radarcns_baseline_armt.json
-  - type: COVID19_RADARCNS_FOLLOWUP
-    topic: questionnaire_covid19_radarcns_followup
+    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/cns_covid19_baseline/cns_covid19_baseline_armt.json
+  - type: CNS_COVID19_FOLLOWUP
+    topic: questionnaire_cns_covid19_followup
     value_schema: .active.questionnaire.Questionnaire
-    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/covid19_radarcns_followup/covid19_radarcns_followup_armt.json
+    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/cns_covid19_followup/cns_covid19_followup_armt.json
   - type: COMPLETION_LOG
     doc: Information about the completeness of each questionnaire.
     topic: questionnaire_completion_log
