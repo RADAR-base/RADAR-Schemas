@@ -1,0 +1,28 @@
+{
+   "name":"GarminGenericCalories",
+   "type":"record",
+   "namespace":"org.radarcns.passive.garmin",
+   "doc":"Gives the information about the calories consumed.",
+   "fields":[
+      {
+         "name":"currentActiveCalories",
+         "type":"int",
+         "doc":"Current active calories."
+      },
+      {
+         "name":"currentTotalCalories",
+         "type":"int",
+         "doc":"Current total calories."
+      },
+      {
+         "name":"time",
+         "type":"double",
+         "doc":"Last updated time."
+      },
+      {
+         "name":"timeReceived",
+         "type":"double",
+         "doc":"Device receiver timestamp in UTC (s)."
+      }
+   ]
+}

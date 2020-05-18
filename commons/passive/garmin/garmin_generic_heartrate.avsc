@@ -1,0 +1,43 @@
+{
+   "name":"GarminGenericHeartRate",
+   "type":"record",
+   "namespace":"org.radarcns.passive.garmin",
+   "doc":"Provides the data about real time Heart rate data.",
+   "fields":[
+      {
+         "name":"currentHeartRate",
+         "type":"int",
+         "doc":"Current heart rate."
+      },
+      {
+         "name":"currentRestingHeartRate",
+         "type":"int",
+         "doc":"Current resting heart rate."
+      },
+      {
+         "name":"dailyHighHeartRate",
+         "type":"int",
+         "doc":"Daily high heart rate."
+      },
+      {
+         "name":"dailyLowHeartRate",
+         "type":"int",
+         "doc":"Daily low heart rate."
+      },
+      {
+         "name":"heartRateSource",
+         "type":"string",
+         "doc":"Heart rate source."
+      },
+      {
+         "name":"time",
+         "type":"double",
+         "doc":"Last updated time."
+      },
+      {
+         "name":"timeReceived",
+         "type":"double",
+         "doc":"Device receiver timestamp in UTC (s)."
+      }
+   ]
+}
