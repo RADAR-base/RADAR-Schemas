@@ -5,20 +5,23 @@
    "doc":"Data from accelerometer sensor.",
    "fields":[
       {
+
          "name":"time",
          "type":"double",
          "doc":"Device timestamp in UTC (s)."
       },
+       {
+
+               "name":"timeReceived",
+               "type":"double",
+               "doc":"Device receiver timestamp in UTC (s)."
+            },
       {
          "name":"timestamp13",
          "type":"double",
-         "doc":"Device timestamp13 in UTC (s)."
+         "doc":"A timestamp13 value which is a 13 bit local time, the time when this sample was gathered from the Garmin device (useful for calculating jitter in the streaming data)."
       },
-      {
-         "name":"timeReceived",
-         "type":"double",
-         "doc":"Device receiver timestamp in UTC (s)."
-      },
+
       {
          "name":"x",
          "type":"float",
@@ -35,9 +38,9 @@
          "doc":"Acceleration in the z-axis (g)."
       },
       {
-         "name":"actualSamplingRate",
+         "name":"samplingRate",
          "type" : "int",
-         "doc":"Actual sampling rate."
+         "doc": "Sampling rate."
       }
    ]
 }

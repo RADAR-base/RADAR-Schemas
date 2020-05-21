@@ -4,20 +4,21 @@
    "namespace":"org.radarcns.passive.garmin",
    "doc":"Provides the data about real time Respiration data.",
    "fields":[
+       {
+            "name":"time",
+            "type":"double",
+            "doc":"Last updated time."
+         },
+         {
+            "name":"timeReceived",
+            "type":"double",
+            "doc":"Device receiver timestamp in UTC (s)."
+         },
       {
          "name":"respirationRate",
          "type":"int",
-         "doc":"Respiration rate."
-      },
-      {
-         "name":"time",
-         "type":"double",
-         "doc":"Last updated time."
-      },
-      {
-         "name":"timeReceived",
-         "type":"double",
-         "doc":"Device receiver timestamp in UTC (s)."
+         "doc":"Respiration rate in BPM."
       }
+
    ]
 }

@@ -4,20 +4,21 @@
    "namespace":"org.radarcns.passive.garmin",
    "doc":"Provides the data about real time Stress data.",
    "fields":[
+        {
+            "name":"time",
+            "type":"double",
+            "doc":"Last updated time."
+         },
+         {
+            "name":"timeReceived",
+            "type":"double",
+            "doc":"Device receiver timestamp in UTC (s)."
+         },
       {
          "name":"stressScore",
          "type":"int",
-         "doc":"Stress score."
-      },
-      {
-         "name":"time",
-         "type":"double",
-         "doc":"Last updated time."
-      },
-      {
-         "name":"timeReceived",
-         "type":"double",
-         "doc":"Device receiver timestamp in UTC (s)."
+         "doc":"Stress score as calculated by Garmin device. Value is in between 1 to 100."
       }
+
    ]
 }

@@ -4,40 +4,43 @@
    "namespace":"org.radarcns.passive.garmin",
    "doc":"Provides the data about real time Heart rate data.",
    "fields":[
+
+      {
+            "name":"time",
+            "type":"double",
+            "doc":"Last updated time."
+         },
+         {
+            "name":"timeReceived",
+            "type":"double",
+            "doc":"Device receiver timestamp in UTC (s)."
+         },
+
       {
          "name":"currentHeartRate",
          "type":"int",
-         "doc":"Current heart rate."
+         "doc":"Current heart rate (bpm)."
       },
       {
          "name":"currentRestingHeartRate",
          "type":"int",
-         "doc":"Current resting heart rate."
+         "doc":"Current resting heart rate (bpm)."
       },
       {
          "name":"dailyHighHeartRate",
          "type":"int",
-         "doc":"Daily high heart rate."
+         "doc":"Daily high heart rate (bpm)."
       },
       {
          "name":"dailyLowHeartRate",
          "type":"int",
-         "doc":"Daily low heart rate."
+         "doc":"Daily low heart rate (bpm)."
       },
       {
          "name":"heartRateSource",
          "type":"string",
-         "doc":"Heart rate source."
-      },
-      {
-         "name":"time",
-         "type":"double",
-         "doc":"Last updated time."
-      },
-      {
-         "name":"timeReceived",
-         "type":"double",
-         "doc":"Device receiver timestamp in UTC (s)."
+         "doc":"Heart rate source. Possible values are NO_SOURCE, HR_STRAP, OHR_NO_LOCK, OHR_LOCKED."
       }
+
    ]
 }

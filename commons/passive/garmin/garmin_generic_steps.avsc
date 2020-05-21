@@ -2,27 +2,28 @@
    "name":"GarminGenericSteps",
    "type":"record",
    "namespace":"org.radarcns.passive.garmin",
-   "doc":"Steps provides the data about real time steps.",
+   "doc":"Steps provides the data about real time steps since midnight.",
    "fields":[
+       {
+            "name":"time",
+            "type":"double",
+            "doc":"Last updated time."
+         },
+         {
+            "name":"timeReceived",
+            "type":"double",
+            "doc":"Device receiver timestamp in UTC (s)."
+         },
       {
-         "name":"currentStepCount",
+         "name":"stepCount",
          "type":"int",
-         "doc":"Current step count."
+         "doc":"Step count since midnight as calculated by Garmin device."
       },
       {
-         "name":"currentStepGoal",
+         "name":"stepGoal",
          "type":"int",
-         "doc":"Current step goal."
-      },
-      {
-         "name":"time",
-         "type":"double",
-         "doc":"Last updated time."
-      },
-      {
-         "name":"timeReceived",
-         "type":"double",
-         "doc":"Device receiver timestamp in UTC (s)."
+         "doc":"Step goal per day."
       }
+
    ]
 }

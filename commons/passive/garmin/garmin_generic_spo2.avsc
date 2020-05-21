@@ -2,22 +2,22 @@
    "name":"GarminGenericSpo2",
    "type":"record",
    "namespace":"org.radarcns.passive.garmin",
-   "doc":"Provides the real time Spo2 data.",
+   "doc":"Provides the real time SpO2 data.",
    "fields":[
+       {
+            "name":"time",
+            "type":"double",
+            "doc":"Last updated time."
+         },
+         {
+            "name":"timeReceived",
+            "type":"double",
+            "doc":"Device receiver timestamp in UTC (s)."
+         },
       {
-         "name":"spo2Reading",
+         "name":"spO2",
          "type":"int",
-         "doc":"SPO2 reading."
-      },
-      {
-         "name":"time",
-         "type":"double",
-         "doc":"Last updated time."
-      },
-      {
-         "name":"timeReceived",
-         "type":"double",
-         "doc":"Device receiver timestamp in UTC (s)."
+         "doc":"SpO2 reading as received from Garmin device in %."
       }
    ]
 }
