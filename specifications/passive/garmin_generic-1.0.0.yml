@@ -86,5 +86,12 @@ data:
         processing_state: VENDOR
         topic: android_garmin_generic_accelerometer
         value_schema: .passive.garmin.GarminGenericAccelerometer
-
+ -
+        type: DEVICEINFO
+        sample_rate:
+            dynamic: true
+        unit: NON_DIMENSIONAL
+        processing_state: VENDOR
+        topic: android_garmin_generic_device_info
+        value_schema: .passive.garmin.GarminGenericDeviceInfo
 
