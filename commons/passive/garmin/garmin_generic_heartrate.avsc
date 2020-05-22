@@ -17,14 +17,14 @@
          },
 
       {
-         "name":"currentHeartRate",
+         "name":"heartRate",
          "type":"int",
-         "doc":"Current heart rate (bpm)."
+         "doc":"Heart rate (bpm)."
       },
       {
-         "name":"currentRestingHeartRate",
+         "name":"restingHeartRate",
          "type":"int",
-         "doc":"Current resting heart rate (bpm)."
+         "doc":"Resting heart rate (bpm)."
       },
       {
          "name":"dailyHighHeartRate",

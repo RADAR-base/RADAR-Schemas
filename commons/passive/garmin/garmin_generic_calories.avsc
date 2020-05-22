@@ -16,14 +16,14 @@
             "doc":"Device receiver timestamp in UTC (s)."
          },
       {
-         "name":"currentActiveCalories",
+         "name":"activeCalories",
          "type":"int",
-         "doc":"Current active calories."
+         "doc":"Active calories."
       },
       {
-         "name":"currentTotalCalories",
+         "name":"totalCalories",
          "type":"int",
-         "doc":"Current total calories."
+         "doc":"Total calories."
       }
 
    ]
