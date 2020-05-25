@@ -24,7 +24,7 @@
     {
       "name": "connectionState",
       "type": "string",
-       "doc":"Connection state values. TBD - Mayur to update probable values received from Garmin."
+       "doc":"Connection state values. Possible states - DISCONNECTED, CONNECTING, CONNECTED."
     },
     {
       "name": "deviceModel",
