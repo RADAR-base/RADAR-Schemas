@@ -4,7 +4,7 @@ vendor: Garmin
 model: Generic
 version: 1.0.0
 app_provider: .garmin.GenericServiceProvider
-doc: Data provided using Garmin companion SKD. Supported model are listed on Garmin site - https://developer.garmin.com/health-sdk/overview/
+doc: Data provided using Garmin companion SDK. Supported model are listed on Garmin site - https://developer.garmin.com/health-sdk/overview/
 data:
     -
         type: STEPS
