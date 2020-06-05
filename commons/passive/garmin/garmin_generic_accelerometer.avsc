@@ -16,11 +16,6 @@
                "type":"double",
                "doc":"Device receiver timestamp in UTC (s)."
             },
-      {
-         "name":"timestamp13",
-         "type":"double",
-         "doc":"A timestamp13 value which is a 13 bit local time, the time when this sample was gathered from the Garmin device (useful for calculating jitter in the streaming data)."
-      },
 
       {
          "name":"x",
@@ -40,7 +35,7 @@
       {
          "name":"samplingRate",
          "type" : "int",
-         "doc": "Sampling rate."
+         "doc": "Sampling rate (samples per second)."
       }
    ]
 }

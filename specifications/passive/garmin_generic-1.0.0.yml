@@ -1,5 +1,4 @@
-#====================================== Garmin all device =====================================#
-
+#====================================== Garmin device =====================================#
 vendor: Garmin
 model: Generic
 version: 1.0.0
@@ -86,7 +85,7 @@ data:
         processing_state: VENDOR
         topic: android_garmin_generic_accelerometer
         value_schema: .passive.garmin.GarminGenericAccelerometer
- -
+    -
         type: DEVICEINFO
         sample_rate:
             dynamic: true
