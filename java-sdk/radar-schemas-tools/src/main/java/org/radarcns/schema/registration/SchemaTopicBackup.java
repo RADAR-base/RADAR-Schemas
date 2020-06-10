@@ -187,11 +187,11 @@ public class SchemaTopicBackup {
         }
 
         public byte[] getKey() {
-            return key;
+            return Arrays.copyOf(key, key.length);
         }
 
         public byte[] getValue() {
-            return value;
+            return Arrays.copyOf(value, value.length);
         }
 
         @Override
