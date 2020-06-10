@@ -1,0 +1,48 @@
+{
+   "name":"GarminGenericHeartRate",
+   "type":"record",
+   "namespace":"org.radarcns.passive.garmin",
+   "doc":"Provides the data about real time Heart rate data.",
+   "fields":[
+
+      {
+            "name":"time",
+            "type":"double",
+            "doc":"Last updated time."
+         },
+         {
+            "name":"timeReceived",
+            "type":"double",
+            "doc":"Device receiver timestamp in UTC (s)."
+         },
+
+      {
+         "name":"heartRate",
+         "type":"int",
+         "doc":"Heart rate (bpm)."
+      },
+      {
+         "name":"restingHeartRate",
+         "type":"int",
+         "doc":"Resting heart rate (bpm)."
+      },
+      {
+         "name":"dailyHighHeartRate",
+         "type":"int",
+         "doc":"Daily high heart rate (bpm). High and low heart rate are simply the highest and lowest individual HR values recorded daily up to a given point, when the RestingHeartRate message is written. Resting heart rate itself is calculated algorithmically based on recordings taken during periods of sustained low motion. 'Daily' values provided by the SDK are always reset at midnight of the local user-day."
+      },
+      {
+         "name":"dailyLowHeartRate",
+         "type":"int",
+         "doc":"Daily low heart rate (bpm). High and low heart rate are simply the highest and lowest individual HR values recorded daily up to a given point, when the RestingHeartRate message is written. Resting heart rate itself is calculated algorithmically based on recordings taken during periods of sustained low motion. 'Daily' values provided by the SDK are always reset at midnight of the local user-day."
+      },
+
+     {"name": "heartRateSource", "type": {
+            "name": "Source",
+            "type": "enum",
+            "doc": "Possible connection state values - UNKNOWN (heart rate is recorded with value for source that is not understood), NO_SOURCE (Heart rate is received but no source is recorded), HR_STRAP(hear rate is read from heart rate strap), OHR_NO_LOCK (Indicates that the reading is from watch with optical heart rate sensor not locked), OHR_LOCKED (Indicates that the reading is from watch with optical heart rate sensor locked).",
+            "symbols": [ "UNKNOWN", "NO_SOURCE", "HR_STRAP", "OHR_NO_LOCK" , "OHR_LOCKED"]
+            }, "doc": "Source from where the heart rate is measured.", "default": "UNKNOWN"}
+
+   ]
+}

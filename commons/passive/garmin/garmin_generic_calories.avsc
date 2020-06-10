@@ -1,0 +1,30 @@
+{
+   "name":"GarminGenericCalories",
+   "type":"record",
+   "namespace":"org.radarcns.passive.garmin",
+   "doc":"Gives the information about the calories consumed.",
+   "fields":[
+
+       {
+            "name":"time",
+            "type":"double",
+            "doc":"Last updated time."
+         },
+         {
+            "name":"timeReceived",
+            "type":"double",
+            "doc":"Device receiver timestamp in UTC (s)."
+         },
+      {
+         "name":"activeCalories",
+         "type":"int",
+         "doc":"Active calorie numbers are what is burned throughout the day only while doing physical, non-sedentary, activity such as walking or working out. Garmin devices calculate active calories based on the activity level, type of activity, age, height, weight, gender, and heart rate (if available)."
+      },
+      {
+         "name":"totalCalories",
+         "type":"int",
+         "doc":"Total calories."
+      }
+
+   ]
+}
