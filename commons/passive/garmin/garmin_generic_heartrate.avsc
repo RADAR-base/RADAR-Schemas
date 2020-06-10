@@ -36,11 +36,13 @@
          "type":"int",
          "doc":"Daily low heart rate (bpm)."
       },
-      {
-         "name":"heartRateSource",
-         "type":"string",
-         "doc":"Heart rate source. Possible values are NO_SOURCE, HR_STRAP, OHR_NO_LOCK, OHR_LOCKED."
-      }
+
+     {"name": "heartRateSource", "type": {
+            "name": "Source",
+            "type": "enum",
+            "doc": "Possible connection state values - UNKNOWN, NO_SOURCE, HR_STRAP, OHR_NO_LOCK, OHR_LOCKED.",
+            "symbols": ["NO_SOURCE", "HR_STRAP", "OHR_NO_LOCK" , "OHR_LOCKED"]
+            }, "doc": "Source from where the heart rate is measured.", "default": "UNKNOWN"}
 
    ]
 }
