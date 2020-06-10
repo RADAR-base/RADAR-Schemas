@@ -1,0 +1,96 @@
+#====================================== Garmin device =====================================#
+vendor: Garmin
+model: Generic
+version: 1.0.0
+app_provider: .garmin.GenericServiceProvider
+doc: Data provided using Garmin companion SDK. Supported model are listed on Garmin site - https://developer.garmin.com/health-sdk/overview/
+data:
+    -
+        type: STEPS
+        sample_rate:
+            dynamic: true
+        unit: NON_DIMENSIONAL
+        processing_state: VENDOR
+        topic: android_garmin_generic_steps
+        value_schema: .passive.garmin.GarminGenericSteps
+    -
+        type: HEART_RATE_VARIABILITY
+        sample_rate:
+            dynamic: true
+        unit: SECOND
+        processing_state: VENDOR
+        topic: android_garmin_generic_heart_rate_variability
+        value_schema: .passive.garmin.GarminGenericHeartRateVariability
+    -
+        type: STRESS
+        sample_rate:
+            dynamic: true
+        unit: NON_DIMENSIONAL
+        processing_state: VENDOR
+        topic: android_garmin_generic_stress
+        value_schema: .passive.garmin.GarminGenericStress
+    -
+        type: ASCENT
+        sample_rate:
+            dynamic: true
+        unit: NON_DIMENSIONAL
+        processing_state: VENDOR
+        topic: android_garmin_generic_ascent
+        value_schema: .passive.garmin.GarminGenericAscent
+    -
+        type: SPO2
+        sample_rate:
+            dynamic: true
+        unit: NON_DIMENSIONAL
+        processing_state: VENDOR
+        topic: android_garmin_generic_spo2
+        value_schema: .passive.garmin.GarminGenericSpo2
+    -
+        type: RESPIRATION
+        sample_rate:
+            dynamic: true
+        unit: NON_DIMENSIONAL
+        processing_state: VENDOR
+        topic: android_garmin_generic_respiration
+        value_schema: .passive.garmin.GarminGenericRespiration
+    -
+        type: HEART_RATE
+        sample_rate:
+            dynamic: true
+        unit: NON_DIMENSIONAL
+        processing_state: VENDOR
+        topic: android_garmin_generic_heart_rate
+        value_schema: .passive.garmin.GarminGenericHeartRate
+    -
+        type: INTENSITY
+        sample_rate:
+            dynamic: true
+        unit: NON_DIMENSIONAL
+        processing_state: VENDOR
+        topic: android_garmin_generic_intensity
+        value_schema: .passive.garmin.GarminGenericIntensity
+    -
+        type: CALORIES
+        sample_rate:
+            dynamic: true
+        unit: NON_DIMENSIONAL
+        processing_state: VENDOR
+        topic: android_garmin_generic_calories
+        value_schema: .passive.garmin.GarminGenericCalories
+    -
+        type: ACCELEROMETER
+        sample_rate:
+            dynamic: true
+        unit: NON_DIMENSIONAL
+        processing_state: VENDOR
+        topic: android_garmin_generic_accelerometer
+        value_schema: .passive.garmin.GarminGenericAccelerometer
+    -
+        type: DEVICEINFO
+        sample_rate:
+            dynamic: true
+        unit: NON_DIMENSIONAL
+        processing_state: VENDOR
+        topic: android_garmin_generic_device_info
+        value_schema: .passive.garmin.GarminGenericDeviceInfo
+

@@ -17,6 +17,7 @@ import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javax.validation.constraints.NotNull;
+import kafka.zk.ZkVersion;
 import net.sourceforge.argparse4j.impl.action.StoreConstArgumentAction;
 import net.sourceforge.argparse4j.inf.ArgumentParser;
 import net.sourceforge.argparse4j.inf.Namespace;
@@ -36,8 +37,6 @@ import org.apache.kafka.common.PartitionInfo;
 import org.apache.kafka.common.TopicPartition;
 import org.apache.kafka.common.config.ConfigResource;
 import org.apache.zookeeper.KeeperException;
-import org.apache.zookeeper.KeeperException.NoNodeException;
-import org.apache.zookeeper.ZooKeeper;
 import org.radarcns.schema.CommandLineApp;
 import org.radarcns.schema.util.SubCommand;
 import org.slf4j.Logger;
@@ -307,7 +306,8 @@ public class SchemaTopicManager implements Closeable {
                 // ignore
             }
             retries++;
-        } while (retries < 10);
+        }
+        while (retries < 10);
 
         if (partitions == null || partitions.isEmpty()) {
             throw new IllegalArgumentException("Unable to subscribe to the Kafka topic "
@@ -358,23 +358,22 @@ public class SchemaTopicManager implements Closeable {
     }
 
     private void ensureSchemaRegistryNotRunning() throws KeeperException, InterruptedException {
-        ZooKeeper zookeeper = topics.getZkClient().currentZooKeeper();
         try {
-            if (zookeeper.exists("/schema_registry/schema_registry_master", false) != null) {
+            if (topics.getZkClient().pathExists("/schema_registry/schema_registry_master")) {
                 throw new IllegalStateException(
                         "Cannot restore schemas while the schema registry is running.");
             }
-        } catch (NoNodeException ex) {
-            // no action
+        } catch (Exception ex) {
+            logger.error("Cannot check whether schema registry master exists", ex);
         }
         logger.info("No zookeeper nodes for Schema Registry.");
     }
 
     private void resetSchemaRegistryId() throws KeeperException, InterruptedException {
-        ZooKeeper zookeeper = topics.getZkClient().currentZooKeeper();
         try {
-            zookeeper.delete("/schema_registry/schema_registry_id", -1);
-        } catch (NoNodeException ex) {
+            topics.getZkClient().deletePath("/schema_registry/schema_registry_id",
+                    ZkVersion.MatchAnyVersion(), false);
+        } catch (Exception ex) {
             logger.info("No schema registry ID listed in zookeeper.");
         }
     }

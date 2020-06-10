@@ -1,0 +1,26 @@
+{
+   "name":"GarminGenericHeartRateVariability",
+   "type":"record",
+   "namespace":"org.radarcns.passive.garmin",
+   "doc":"Provides the variation in the time interval between consecutive heartbeats.",
+   "fields":[
+
+
+         {
+            "name":"time",
+            "type":"double",
+            "doc":"Last updated time."
+         },
+         {
+            "name":"timeReceived",
+            "type":"double",
+            "doc":"Device receiver timestamp in UTC (s)."
+         },
+      {
+         "name":"heartRateVariability",
+         "type":"int",
+         "doc":"Heart rate variability received from Garmin device in milliseconds."
+      }
+
+   ]
+}

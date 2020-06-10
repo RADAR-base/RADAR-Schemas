@@ -1,0 +1,49 @@
+{
+   "name":"GarminGenericAscent",
+   "type":"record",
+   "namespace":"org.radarcns.passive.garmin",
+   "doc":"Provides the real time Ascent data i.e Floor related data.",
+   "fields":[
+       {
+            "name":"time",
+            "type":"double",
+            "doc":"Last updated time."
+         },
+         {
+            "name":"timeReceived",
+            "type":"double",
+            "doc":"Device receiver timestamp in UTC (s)."
+         },
+      {
+         "name":"floorsClimbed",
+         "type":"int",
+         "doc":"Number of floors climbed since midnight as computed by Garmin."
+      },
+      {
+         "name":"floorsDescended",
+         "type":"int",
+         "doc":"Number of floors descended since midnight as computed by Garmin."
+      },
+      {
+         "name":"metersClimbed",
+         "type":"int",
+         "doc":"Total number of distance climbed in meters since midnight as computed by Garmin."
+      },
+      {
+         "name":"metersDescended",
+         "type":"int",
+         "doc":"Total number of distance descended in meters since midnight as computed by Garmin."
+      },
+      {
+         "name":"floorsClimbedGoal",
+         "type":"int",
+         "doc":"Floors climbed goal."
+      },
+      {
+         "name":"metersClimbedGoal",
+         "type":"int",
+         "doc":"Meters climbed goal."
+      }
+
+   ]
+}
