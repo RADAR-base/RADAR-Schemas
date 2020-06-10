@@ -17,7 +17,7 @@
       {
          "name":"stepCount",
          "type":"int",
-         "doc":"Step count since midnight as calculated by Garmin device."
+         "doc":"Step count since midnight as calculated by Garmin device. 'Daily' values provided by the SDK are always reset at midnight of the local user-day."
       },
       {
          "name":"stepGoal",

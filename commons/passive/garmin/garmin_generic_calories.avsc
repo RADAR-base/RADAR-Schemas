@@ -18,7 +18,7 @@
       {
          "name":"activeCalories",
          "type":"int",
-         "doc":"Active calories."
+         "doc":"Active calorie numbers are what is burned throughout the day only while doing physical, non-sedentary, activity such as walking or working out. Garmin devices calculate active calories based on the activity level, type of activity, age, height, weight, gender, and heart rate (if available)."
       },
       {
          "name":"totalCalories",
