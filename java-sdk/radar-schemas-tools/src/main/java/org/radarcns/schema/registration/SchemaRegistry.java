@@ -138,8 +138,8 @@ public class SchemaRegistry {
             return false;
         }
 
-        try (Response response = httpClient.request(request)) {
-            ResponseBody body = response.body();
+        try (Response response = httpClient.request(request);
+                ResponseBody body = response.body()) {
             if (response.isSuccessful()) {
                 logger.info("Compatibility set to {}", compatibility);
                 return true;
@@ -221,6 +221,8 @@ public class SchemaRegistry {
                     .type(String.class);
             parser.addArgument("schemaRegistry")
                     .help("schema registry URL");
+            parser.addArgument("-a", "--authorization")
+                    .help("Client key and password to authorize with.");
             SubCommand.addRootArgument(parser);
         }
     }
