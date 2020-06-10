@@ -144,6 +144,7 @@ public class ExcludeConfig {
 
     /** Set the files to be excluded. */
     @JsonSetter("files")
+    @SuppressWarnings("PMD.CloseResource")  // File system should not be closed
     public void setFiles(Collection<String> files) {
         FileSystem fs = FileSystems.getDefault();
         List<PathMatcher> pathMatchers = files.stream()
