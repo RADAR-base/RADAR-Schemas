@@ -40,8 +40,8 @@
      {"name": "heartRateSource", "type": {
             "name": "Source",
             "type": "enum",
-            "doc": "Possible connection state values - UNKNOWN, NO_SOURCE, HR_STRAP, OHR_NO_LOCK, OHR_LOCKED.",
-            "symbols": ["NO_SOURCE", "HR_STRAP", "OHR_NO_LOCK" , "OHR_LOCKED"]
+            "doc": "Possible connection state values - UNKNOWN (heart rate is recorded with value for source that is not understood), NO_SOURCE (Heart rate is received but no source is recorded), HR_STRAP(hear rate is read from heart rate strap), OHR_NO_LOCK (Indicates that the reading is from watch with optical heart rate sensor not locked), OHR_LOCKED (Indicates that the reading is from watch with optical heart rate sensor locked).",
+            "symbols": [ "UNKNOWN", "NO_SOURCE", "HR_STRAP", "OHR_NO_LOCK" , "OHR_LOCKED"]
             }, "doc": "Source from where the heart rate is measured.", "default": "UNKNOWN"}
 
    ]
