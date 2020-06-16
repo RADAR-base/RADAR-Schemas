@@ -54,7 +54,7 @@ public class KafkaTopics implements Closeable {
     public KafkaTopics(@NotNull String zookeeper) {
         this.zkClient = KafkaZkClient
                 .apply(zookeeper, false, 15_000, 10_000, 30, Time.SYSTEM, "kafka.server",
-                        "SessionExpireListener", Option.apply("radar-schemas"));
+                        "SessionExpireListener", Option.apply("radar-schemas"), Option.empty());
         bootstrapServers = null;
         initialized = false;
     }
@@ -64,10 +64,10 @@ public class KafkaTopics implements Closeable {
      * waiting for at most 200 seconds.
      * @param brokers number of brokers to wait for
      * @return whether the brokers where available
-     * @throws InterruptedException when waiting for the brokers is interrepted.
+     * @throws InterruptedException when waiting for the brokers is interrupted.
+     * @throws ZooKeeperClientException if Zookeeper cannot be initialized.
      */
-    public boolean initialize(int brokers) throws InterruptedException,
-            ZooKeeperClientException {
+    public boolean initialize(int brokers) throws InterruptedException {
         int sleep = 2;
         int numTries = 20;
         int numBrokers = 0;
@@ -111,7 +111,7 @@ public class KafkaTopics implements Closeable {
     }
 
     /**
-     * Refresh the list of topics from Kafka
+     * Refresh the list of topics from Kafka.
      * @return {@code true} if the update succeeded, {@code false} otherwise.
      * @throws InterruptedException if the request was interrupted.
      */
@@ -232,7 +232,13 @@ public class KafkaTopics implements Closeable {
         }
     }
 
-    public int getNumberOfBrokers() throws ZooKeeperClientException {
+    /**
+     * Get current number of Kafka brokers according to Zookeeper.
+     *
+     * @return number of Kafka brokers
+     * @throws ZooKeeperClientException if zookeeper cannot connect
+     */
+    public int getNumberOfBrokers() {
         return zkClient.getAllBrokersInCluster().length();
     }
 
