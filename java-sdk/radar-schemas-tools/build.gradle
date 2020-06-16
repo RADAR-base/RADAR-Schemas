@@ -39,7 +39,7 @@ ext {
     confluentVersion = '5.5.0'
     kafkaVersion = '2.5.0'
     okHttpVersion = '4.7.2'
-    radarCommonsVersion = '0.12.2'
+    radarCommonsVersion = '0.12.3'
     slf4jVersion = '1.7.30'
     javaxValidationVersion = '2.0.1.Final'
 }
@@ -56,6 +56,8 @@ dependencies {
     api group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: jacksonVersion
     api group: 'javax.validation', name: 'validation-api', version: javaxValidationVersion
     api group: 'org.apache.kafka', name: 'kafka_2.12', version: kafkaVersion
+    // temporary version override to avoid netty vulnerability. Can be removed as soon as Kafka has an updated dependency
+    implementation group: 'org.apache.zookeeper', name: 'zookeeper', version: '3.5.8'
 
     implementation group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-yaml', version: jacksonYamlVersion
     implementation project(':radar-schemas-commons')
