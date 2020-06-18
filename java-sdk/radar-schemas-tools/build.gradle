@@ -31,8 +31,8 @@ ext {
     description = 'RADAR Schemas specification and validation tools.'
 
     argparseVersion = '0.8.1'
-    jacksonVersion = '2.11.0'
-    jacksonYamlVersion = '2.11.0'
+    jacksonVersion = '2.10.4'
+    jacksonYamlVersion = '2.10.4'
     jerseyVersion = '2.31'
     jettyVersion = '9.4.29.v20200521'
     junitVersion = '4.13'
@@ -53,13 +53,21 @@ repositories {
 }
 
 dependencies {
-    api group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: jacksonVersion
     api group: 'javax.validation', name: 'validation-api', version: javaxValidationVersion
     api group: 'org.apache.kafka', name: 'kafka_2.12', version: kafkaVersion
     // temporary version override to avoid netty vulnerability. Can be removed as soon as Kafka has an updated dependency
     implementation group: 'org.apache.zookeeper', name: 'zookeeper', version: '3.5.8'
 
-    implementation group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-yaml', version: jacksonYamlVersion
+    api ("com.fasterxml.jackson.core:jackson-databind") {
+      version {
+        strictly jacksonVersion
+      }
+    }
+    implementation ("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml") {
+      version {
+        strictly jacksonYamlVersion
+      }
+    }
     implementation project(':radar-schemas-commons')
     implementation group: 'org.radarbase', name: 'radar-commons', version: radarCommonsVersion
     implementation group: 'org.radarbase', name: 'radar-commons-server', version: radarCommonsVersion
