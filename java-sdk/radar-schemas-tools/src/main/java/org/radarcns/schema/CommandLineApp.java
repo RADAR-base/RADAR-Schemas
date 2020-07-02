@@ -31,6 +31,7 @@ import net.sourceforge.argparse4j.inf.ArgumentParser;
 import net.sourceforge.argparse4j.inf.ArgumentParserException;
 import net.sourceforge.argparse4j.inf.Namespace;
 import net.sourceforge.argparse4j.inf.Subparsers;
+import org.radarcns.schema.registration.ConfluentCloudTopics;
 import org.radarcns.schema.registration.KafkaTopics;
 import org.radarcns.schema.registration.SchemaTopicManager;
 import org.radarcns.schema.registration.SchemaRegistry;
@@ -134,6 +135,7 @@ public class CommandLineApp {
     public static void main(String... args) {
         SortedMap<String, SubCommand> subCommands = commandsToMap(
                 KafkaTopics.command(),
+                ConfluentCloudTopics.command(),
                 SchemaRegistry.command(),
                 listCommand(),
                 SchemaValidator.command(),
