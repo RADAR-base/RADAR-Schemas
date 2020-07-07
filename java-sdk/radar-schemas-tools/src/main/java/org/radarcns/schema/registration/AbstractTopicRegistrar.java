@@ -25,14 +25,6 @@ public abstract class AbstractTopicRegistrar implements TopicRegistrar {
     private static final Logger logger = LoggerFactory.getLogger(AbstractTopicRegistrar.class);
     private Set<String> topics;
 
-    /**
-     * Create all topics in a catalogue based on pattern provided.
-     *
-     * @param catalogue   source catalogue to extract topic names from.
-     * @param partitions  number of partitions per topic.
-     * @param replication number of replicas for a topic.
-     * @return 0 if execution was successful. 1 otherwise.
-     */
     @Override
     public int createTopics(@NotNull SourceCatalogue catalogue, int partitions, short replication,
             String topic, String match) {
@@ -70,14 +62,7 @@ public abstract class AbstractTopicRegistrar implements TopicRegistrar {
         return createTopics(catalogue.getTopicNames(), partitions, replication);
     }
 
-    /**
-     * Create a single topic.
-     *
-     * @param topics      names of the topic to create.
-     * @param partitions  number of partitions per topic.
-     * @param replication number of replicas for a topic.
-     * @return whether the topic was registered.
-     */
+
     @Override
     public boolean createTopics(Stream<String> topics, int partitions, short replication) {
         ensureInitialized();
@@ -105,12 +90,6 @@ public abstract class AbstractTopicRegistrar implements TopicRegistrar {
         }
     }
 
-    /**
-     * Refresh the list of topics from Kafka.
-     *
-     * @return {@code true} if the update succeeded, {@code false} otherwise.
-     * @throws InterruptedException if the request was interrupted.
-     */
     @Override
     public boolean refreshTopics() throws InterruptedException {
         ensureInitialized();
@@ -165,6 +144,11 @@ public abstract class AbstractTopicRegistrar implements TopicRegistrar {
         }
     }
 
+    /**
+     * Returns an instance of {@code AdminClient} for use.
+     *
+     * @return instance of AdminClient.
+     */
     abstract AdminClient getKafkaClient();
 
 }

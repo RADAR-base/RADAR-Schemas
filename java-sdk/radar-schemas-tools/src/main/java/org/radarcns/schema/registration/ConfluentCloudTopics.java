@@ -2,10 +2,10 @@ package org.radarcns.schema.registration;
 
 import static org.radarbase.util.Strings.isNullOrEmpty;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Properties;
 import javax.validation.constraints.NotNull;
@@ -21,17 +21,19 @@ import org.slf4j.LoggerFactory;
 public class ConfluentCloudTopics extends AbstractTopicRegistrar {
     private static final Logger logger = LoggerFactory.getLogger(ConfluentCloudTopics.class);
 
-    private AdminClient kafkaClient;
+    private final AdminClient kafkaClient;
 
     /**
      * Create Kafka topics registration object with given Confluent Cloud bootstrap server
      * configurations.
      *
-     * @param cloudConfig Confluent cloud config file loaded from configurations.
+     * @param configPath File path of the Confluent-cloud config .
      */
-    public ConfluentCloudTopics(@NotNull Properties cloudConfig) {
-        logger.info("Creating Kafka client with bootstrap servers {}", cloudConfig);
-        this.kafkaClient = AdminClient.create(cloudConfig);
+    public ConfluentCloudTopics(@NotNull String configPath) throws IOException {
+
+        logger.info("Creating Kafka client with bootstrap servers {}", configPath);
+
+        this.kafkaClient = AdminClient.create(loadConfig(configPath));
     }
 
     @Override
@@ -40,11 +42,25 @@ public class ConfluentCloudTopics extends AbstractTopicRegistrar {
         return kafkaClient;
     }
 
+    @Override
     public void ensureInitialized() {
         if (this.kafkaClient != null) {
             throw new IllegalStateException("Kafka client is not initialized yet");
         }
     }
+
+    private Properties loadConfig(final String configFile) throws IOException {
+        Path filePath = Paths.get(configFile);
+        if (!Files.exists(filePath)) {
+            throw new IOException(configFile + " not found.");
+        }
+        final Properties cfg = new Properties();
+        try (InputStream inputStream = Files.newInputStream(filePath)) {
+            cfg.load(inputStream);
+        }
+        return cfg;
+    }
+
 
     /**
      * Create a ConfluentCloudTopics command to register topics from the command line.
@@ -63,23 +79,19 @@ public class ConfluentCloudTopics extends AbstractTopicRegistrar {
         @Override
         public int execute(Namespace options, CommandLineApp app) {
             String configPath = options.getString("config-path");
+            if (isNullOrEmpty(configPath)) {
+                throw new IllegalArgumentException("--config-path not found. Confluent "
+                        + "cloud config path cannot be empty");
+            }
             short replication = options.getShort("replication");
             int partitions = options.getInt("partitions");
 
-            if (isNullOrEmpty(configPath)) {
-                throw new IllegalArgumentException(
-                    "--config-path not found. Confluent " + "cloud config path cannot be empty");
-            }
-
-            try {
-                Properties config = loadConfig(configPath);
-                ConfluentCloudTopics topics = new ConfluentCloudTopics(config);
-
+            try (TopicRegistrar topics = new ConfluentCloudTopics(configPath)) {
                 return topics.createTopics(app.getCatalogue(), partitions, replication,
-                    options.getString("topic"), options.getString("match"));
+                        options.getString("topic"), options.getString("match"));
 
             } catch (IOException e) {
-                e.printStackTrace();
+                logger.error("Could not load config file", e);
                 return 1;
             }
         }
@@ -103,15 +115,5 @@ public class ConfluentCloudTopics extends AbstractTopicRegistrar {
         }
     }
 
-    private static Properties loadConfig(final String configFile) throws IOException {
-        if (!Files.exists(Paths.get(configFile))) {
-            throw new IOException(configFile + " not found.");
-        }
-        final Properties cfg = new Properties();
-        try (InputStream inputStream = new FileInputStream(configFile)) {
-            cfg.load(inputStream);
-        }
-        return cfg;
-    }
 
 }

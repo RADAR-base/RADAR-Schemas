@@ -134,6 +134,7 @@ public class KafkaTopics extends AbstractTopicRegistrar {
     }
 
     @NotNull
+    @Override
     public AdminClient getKafkaClient() {
         ensureInitialized();
         return kafkaClient;
