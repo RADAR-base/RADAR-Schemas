@@ -25,6 +25,7 @@ import java.util.Comparator;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
+
 import net.sourceforge.argparse4j.impl.Arguments;
 import net.sourceforge.argparse4j.inf.ArgumentParser;
 import net.sourceforge.argparse4j.inf.Namespace;
@@ -39,11 +40,11 @@ import okio.BufferedSink;
 import org.radarbase.config.ServerConfig;
 import org.radarbase.producer.rest.RestClient;
 import org.radarbase.producer.rest.SchemaRetriever;
+import org.radarbase.topic.AvroTopic;
 import org.radarcns.schema.CommandLineApp;
 import org.radarcns.schema.specification.DataProducer;
 import org.radarcns.schema.specification.SourceCatalogue;
 import org.radarcns.schema.util.SubCommand;
-import org.radarbase.topic.AvroTopic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -183,8 +184,7 @@ public class SchemaRegistry {
                 if (isNullOrEmpty(apiKey) || isNullOrEmpty(apiSecret)) {
                     logger.info("Initializing standard SchemaRegistration ...");
                     registration = new SchemaRegistry(url);
-                }
-                else {
+                } else {
                     logger.info("Initializing SchemaRegistration with authentication...");
                     registration = new SchemaRegistry(url, apiKey, apiSecret);
                 }
