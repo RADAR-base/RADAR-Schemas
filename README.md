@@ -89,6 +89,6 @@ docker-compose run --rm tools radar-schemas-tools cc-topic-create -c path-to-jav
 2. Register schemas on Confluent Cloud schema registry
 
 ```
-docker-compose run --rm tools radar-schemas-tools SR_ENDPOINT -u SR_API_KEY -p SR_API_SECRET
+docker-compose run --rm tools radar-schemas-tools register SR_ENDPOINT -u SR_API_KEY -p SR_API_SECRET
 
 ```
