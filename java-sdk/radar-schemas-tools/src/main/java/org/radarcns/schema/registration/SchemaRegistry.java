@@ -21,6 +21,7 @@ import static org.radarcns.schema.CommandLineApp.matchTopic;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.Comparator;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
@@ -66,11 +67,11 @@ public class SchemaRegistry {
     public SchemaRegistry(String baseUrl) throws MalformedURLException {
         ServerConfig config = new ServerConfig(baseUrl);
         config.setUnsafe(true);
-        this.schemaClient = new SchemaRetriever(config, 10);
         this.httpClient = RestClient.global()
             .timeout(10, TimeUnit.SECONDS)
             .server(config)
             .build();
+        this.schemaClient = new SchemaRetriever(this.httpClient);
     }
 
     /**
@@ -93,13 +94,8 @@ public class SchemaRegistry {
     /** Register the schema of a single topic. */
     public boolean registerSchema(AvroTopic<?, ?> topic) {
         try {
-            Schema schema = topic.getKeySchema();
-            ParsedSchemaMetadata metadata = new ParsedSchemaMetadata(null, null, schema);
-            this.schemaClient.addSchemaMetadata(topic.getName(), false, metadata);
-
-            schema = topic.getValueSchema();
-            metadata = new ParsedSchemaMetadata(null, null, schema);
-            this.schemaClient.addSchemaMetadata(topic.getName(), true, metadata);
+            this.schemaClient.addSchema(topic.getName(), false, topic.getKeySchema());
+            this.schemaClient.addSchema(topic.getName(), true, topic.getValueSchema());
             return true;
         } catch (IOException ex) {
             logger.error("Failed to register schemas for topic {}", topic.getName(), ex);
