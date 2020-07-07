@@ -16,27 +16,27 @@
 
 package org.radarcns.schema.registration;
 
+import static org.radarbase.util.Strings.isNullOrEmpty;
 import static org.radarcns.schema.CommandLineApp.matchTopic;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.Comparator;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 import net.sourceforge.argparse4j.impl.Arguments;
 import net.sourceforge.argparse4j.inf.ArgumentParser;
 import net.sourceforge.argparse4j.inf.Namespace;
+import okhttp3.Credentials;
+import okhttp3.Headers;
 import okhttp3.MediaType;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 import okio.BufferedSink;
-import org.apache.avro.Schema;
 import org.radarbase.config.ServerConfig;
-import org.radarbase.producer.rest.ParsedSchemaMetadata;
 import org.radarbase.producer.rest.RestClient;
 import org.radarbase.producer.rest.SchemaRetriever;
 import org.radarcns.schema.CommandLineApp;
@@ -71,6 +71,19 @@ public class SchemaRegistry {
             .timeout(10, TimeUnit.SECONDS)
             .server(config)
             .build();
+        this.schemaClient = new SchemaRetriever(this.httpClient);
+    }
+
+    public SchemaRegistry(String baseUrl, String apiKey, String apiSecret)
+            throws MalformedURLException {
+        ServerConfig config = new ServerConfig(baseUrl);
+        config.setUnsafe(true);
+        String credential = Credentials.basic(apiKey, apiSecret);
+        this.httpClient = RestClient.global()
+                .timeout(10, TimeUnit.SECONDS)
+                .server(config)
+                .headers(Headers.of("Authorization", credential))
+                .build();
         this.schemaClient = new SchemaRetriever(this.httpClient);
     }
 
@@ -164,8 +177,19 @@ public class SchemaRegistry {
         @Override
         public int execute(Namespace options, CommandLineApp app) {
             String url = options.get("schemaRegistry");
+            String apiKey = options.getString("api-key");
+            String apiSecret = options.getString("api-secret");
             try {
-                SchemaRegistry registration = new SchemaRegistry(url);
+                SchemaRegistry registration;
+                if (isNullOrEmpty(apiKey) || isNullOrEmpty(apiSecret)) {
+                    logger.info("Initializing standard SchemaRegistration ...");
+                    registration = new SchemaRegistry(url);
+                }
+                else {
+                    logger.info("Initializing SchemaRegistration with authentication...");
+                    registration = new SchemaRegistry(url, apiKey, apiSecret);
+                }
+
                 boolean forced = options.getBoolean("force");
                 if (forced && !registration.putCompatibility(Compatibility.NONE)) {
                     return 1;
@@ -217,8 +241,10 @@ public class SchemaRegistry {
                     .type(String.class);
             parser.addArgument("schemaRegistry")
                     .help("schema registry URL");
-            parser.addArgument("-a", "--authorization")
-                    .help("Client key and password to authorize with.");
+            parser.addArgument("-u", "--api-key")
+                    .help("Client password to authorize with.");
+            parser.addArgument("-p", "--api-secret")
+                    .help("Client key to authorize with.");
             SubCommand.addRootArgument(parser);
         }
     }
