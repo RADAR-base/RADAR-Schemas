@@ -50,7 +50,7 @@ COPY --from=builder /code ./original
 VOLUME /schema/conf
 VOLUME /etc/confluent/
 # Copy bash file
-COPY ./docker/topic_init.sh ./docker/init.sh ./docker/list_aggregated.sh ./docker/list_raw.sh /usr/bin/
+COPY ./docker/topic_init.sh ./docker/init.sh ./docker/cc_topic_init.sh ./docker/list_aggregated.sh ./docker/list_raw.sh /usr/bin/
 RUN chmod +x /usr/bin/*.sh
 
 ENTRYPOINT ["init.sh"]
