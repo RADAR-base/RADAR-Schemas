@@ -1,0 +1,29 @@
+{
+  "namespace": "org.radarcns.connector.upload.altoida",
+  "type": "record",
+  "name": "AltoidaSummary",
+  "doc": "Summary and aggregates of a full test with Altoida. Original file is named as export.csv.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Timestamp in unix time acquired locally from the device."},
+    {"name": "timeReceived", "type": "double", "doc": "Timestamp in unix time received from Altoida API."},
+    {"name": "label", "type": "string", "doc": "Label name of session as entered in the app."},
+    {"name": "age", "type": "int", "doc": "Age of the participant in years."},
+    {"name": "yearsOfEducation", "type": "int", "doc": "Years of education in years."},
+    {"name": "gender", "type": {
+          "name": "GenderType",
+          "type": "enum",
+          "doc": "Gender types provided by Altoida.",
+          "symbols": ["MALE", "FEMALE", "OTHER", "UNKNOWN"]}, "doc": "Gender of the participant.", "default": "UNKNOWN"},
+    {"name": "classification", "type": ["null", {
+              "name": "Classification",
+              "type": "enum",
+              "doc": "Classifications provided by Altoida.",
+              "symbols": ["HEALTHY", "AT_RISK", "MCI_DUE_TO_AD"]}], "doc": "Classification based on the analysis  0=healthy, 1=at risk, 2=MCI due to AD.", "default": null},
+    {"name": "nmi", "type": "double", "doc": "NMI value of the test,a value in 0-100, where 0-33.3 is class 2, 33.3-66.6 is class 1, 66.6-100 is class 0."},
+    {"name": "groundTruth", "type": {
+              "name": "GroundTruth",
+              "type": "enum",
+              "doc": "GroundTruth supported by Altoida.",
+              "symbols": ["UNKNOWN", "HEALTHY", "AT_RISK", "MCI_OR_AB_PLUS", "MCI_OR_AB_MINUS"]}, "doc": "If the test is based on additional biomarkers -1=unknown, 0=healthy, 1= at risk, 2=MCI/AB+, 3=MCI/AB-.", "default": "UNKNOWN"}
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "namespace": "org.radarcns.connector.upload.axivity",
+  "type": "record",
+  "name": "AxivityAcceleration",
+  "doc": "Data from 3-axis accelerometer sensor with gravitational constant g as unit.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Interpolated Timestamp in unix time from the CWA data."},
+    {"name": "timeReceived", "type": "double", "doc": "Timestamp in unix time received from upload."},
+    {"name": "x", "type": "float", "doc": "Acceleration in the x-axis (g)."},
+    {"name": "y", "type": "float", "doc": "Acceleration in the y-axis (g)."},
+    {"name": "z", "type": "float", "doc": "Acceleration in the z-axis (g)."}
+  ]
+}

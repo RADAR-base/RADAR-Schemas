@@ -1,0 +1,11 @@
+{
+  "namespace": "org.radarcns.connector.upload.oxford",
+  "type": "record",
+  "name": "OxfordCameraAxes",
+  "doc": "Three-axes reference system.",
+  "fields": [
+    {"name": "x", "type": "float", "doc": "X coordinate value."},
+    {"name": "y", "type": "float", "doc": "Y coordinate value."},
+    {"name": "z", "type": "float", "doc": "Z coordinate value."}
+  ]
+}

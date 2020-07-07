@@ -1,0 +1,29 @@
+{
+   "name":"GarminGenericSteps",
+   "type":"record",
+   "namespace":"org.radarcns.passive.garmin",
+   "doc":"Steps provides the data about real time steps since midnight.",
+   "fields":[
+       {
+            "name":"time",
+            "type":"double",
+            "doc":"Last updated time."
+         },
+         {
+            "name":"timeReceived",
+            "type":"double",
+            "doc":"Device receiver timestamp in UTC (s)."
+         },
+      {
+         "name":"stepCount",
+         "type":"int",
+         "doc":"Step count since midnight as calculated by Garmin device. 'Daily' values provided by the SDK are always reset at midnight of the local user-day."
+      },
+      {
+         "name":"stepGoal",
+         "type":"int",
+         "doc":"Step goal per day."
+      }
+
+   ]
+}

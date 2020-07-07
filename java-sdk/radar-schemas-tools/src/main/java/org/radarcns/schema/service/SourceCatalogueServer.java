@@ -40,7 +40,6 @@ public class SourceCatalogueServer implements Closeable {
 
     @SuppressWarnings("PMD.SignatureDeclareThrowsException")
     private void start(SourceCatalogue sourceCatalogue) throws Exception {
-
         ResourceConfig config = new ResourceConfig();
         config.register(new SourceCatalogueService(sourceCatalogue));
         ServletHolder servlet = new ServletHolder(new ServletContainer(config));
@@ -63,15 +62,13 @@ public class SourceCatalogueServer implements Closeable {
         @Override
         public int execute(Namespace options, CommandLineApp app) {
             int partitions = options.getInt("port");
-            SourceCatalogueServer service = new SourceCatalogueServer(partitions);
-            try {
+            try (SourceCatalogueServer service = new SourceCatalogueServer(partitions)) {
                 service.start(app.getCatalogue());
+                return 0;
             } catch (Exception e) {
                 logger.error("Cannot start server ", e);
                 return 1;
             }
-            service.close();
-            return 0;
         }
 
         @Override

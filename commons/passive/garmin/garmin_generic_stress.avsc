@@ -1,0 +1,24 @@
+{
+   "name":"GarminGenericStress",
+   "type":"record",
+   "namespace":"org.radarcns.passive.garmin",
+   "doc":"Provides the data about real time Stress data. When using the stress level feature, the device uses heart rate data to determine the interval between each heart beat. The variable length of time in between each heart beat is regulated by the body's autonomic nervous system. The less variability between beats equals higher stress levels, whereas the increase in variability indicates less stress.",
+   "fields":[
+        {
+            "name":"time",
+            "type":"double",
+            "doc":"Last updated time."
+         },
+         {
+            "name":"timeReceived",
+            "type":"double",
+            "doc":"Device receiver timestamp in UTC (s)."
+         },
+      {
+         "name":"stressScore",
+         "type":"int",
+         "doc":"Stress score as calculated by Garmin device. Value is in between 1 to 100. where 1 is a very low stress state and 100 is a very high stress state."
+      }
+
+   ]
+}
