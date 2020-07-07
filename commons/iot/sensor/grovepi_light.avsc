@@ -1,0 +1,11 @@
+{
+  "namespace": "org.radarbase.iot.sensor",
+  "type": "record",
+  "name": "GrovePiLightSensor",
+  "doc": "Schema for recording data from GrovePi Light Sensor.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Timestamp in UTC (s) when the data is recorded by the sensor." },
+    { "name": "value", "type": "double", "doc": "Value of the light output from sensor as voltage." },
+    { "name": "resistance", "type": "double", "doc": "Value of the resistance of sensor in K. The higher the resistance, the lower the amount of light." }
+    ]
+}
