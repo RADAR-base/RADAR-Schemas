@@ -67,7 +67,7 @@ public class SchemaRegistry {
      */
     public SchemaRegistry(String baseUrl) throws MalformedURLException {
         ServerConfig config = new ServerConfig(baseUrl);
-        config.setUnsafe(true);
+        config.setUnsafe(false);
         this.httpClient = RestClient.global()
             .timeout(10, TimeUnit.SECONDS)
             .server(config)
