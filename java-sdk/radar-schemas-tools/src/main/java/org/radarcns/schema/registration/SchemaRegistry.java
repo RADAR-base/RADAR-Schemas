@@ -78,11 +78,10 @@ public class SchemaRegistry {
             throws MalformedURLException {
         ServerConfig config = new ServerConfig(baseUrl);
         config.setUnsafe(true);
-        String credential = Credentials.basic(apiKey, apiSecret);
         this.httpClient = RestClient.global()
                 .timeout(10, TimeUnit.SECONDS)
                 .server(config)
-                .headers(Headers.of("Authorization", credential))
+                .headers(Headers.of("Authorization", Credentials.basic(apiKey, apiSecret)))
                 .build();
         this.schemaClient = new SchemaRetriever(this.httpClient);
     }
