@@ -5,7 +5,6 @@ import static org.radarbase.util.Strings.isNullOrEmpty;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Properties;
 import javax.validation.constraints.NotNull;
@@ -38,24 +37,17 @@ public class ConfluentCloudTopics extends AbstractTopicRegistrar {
 
     @Override
     AdminClient getKafkaClient() {
-        ensureInitialized();
         return kafkaClient;
     }
 
     @Override
     public void ensureInitialized() {
-        if (this.kafkaClient != null) {
-            throw new IllegalStateException("Kafka client is not initialized yet");
-        }
+        // instance is already initialized at object creation.
     }
 
     private Properties loadConfig(final String configFile) throws IOException {
-        Path filePath = Paths.get(configFile);
-        if (!Files.exists(filePath)) {
-            throw new IOException(configFile + " not found.");
-        }
         final Properties cfg = new Properties();
-        try (InputStream inputStream = Files.newInputStream(filePath)) {
+        try (InputStream inputStream = Files.newInputStream(Paths.get(configFile))) {
             cfg.load(inputStream);
         }
         return cfg;
