@@ -14,6 +14,14 @@
 - The `specifications` directory contains specifications of what data types are collected through which devices.
 - Java SDKs for each of the components are provided in the `java-sdk` folder, see installation instructions there. They are automatically generated from the Avro schemas using the Avro 1.8.2 specification.
 
+## Usage
+
+This project can be used in RADAR-base by using the `radarbase/kafka-init` Docker image. The schemas and specifications can be extended by locally creating a directory structure that includes a `commons` and `specifications` directory and mounting it to the image, to the `/schema/conf/commons` and `/schema/conf/specifications` directories, respectively. Existing specifications can be excluded from your deployment by mounting a file at `/etc/radar-schemas/specifications.exclude`, with on each line a file pattern that can be excluded. The pattern should start from the `specifications` directory as parent directory. Example file contents:
+```
+active/*
+passive/biovotion*
+```
+
 ## Contributing
 
 The Avro schemas should follow the [Google JSON style guide](https://google.github.io/styleguide/jsoncstyleguide.xml).
@@ -64,3 +72,4 @@ docker-compose run --rm tools radar-schemas-tools schema-topic --backup -f schem
 # ensure the validity of the _schemas topic
 docker-compose run --rm tools radar-schemas-tools schema-topic --ensure -f schema.json -b 1 -r 1 zookeeper-1:2181
 ```
+
