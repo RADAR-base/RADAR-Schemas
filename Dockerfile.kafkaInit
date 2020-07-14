@@ -27,6 +27,7 @@ ENV KAFKA_NUM_PARTITIONS=3
 ENV KAFKA_NUM_REPLICATION=3
 ENV KAFKA_NUM_BROKERS=3
 ENV KAFKA_ZOOKEEPER_CONNECT=zookeeper-1:2181
+ENV CC_CONFIG_FILE_PATH=/etc/confluent/java-config.properties
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
 		curl \
@@ -47,8 +48,9 @@ COPY --from=builder /code/java-sdk/radar-schemas-tools/build/distributions/radar
 COPY --from=builder /code ./original
 
 VOLUME /schema/conf
+VOLUME /etc/confluent/
 # Copy bash file
-COPY ./docker/topic_init.sh ./docker/init.sh ./docker/list_aggregated.sh ./docker/list_raw.sh /usr/bin/
+COPY ./docker/topic_init.sh ./docker/init.sh ./docker/cc_topic_init.sh ./docker/list_aggregated.sh ./docker/list_raw.sh /usr/bin/
 RUN chmod +x /usr/bin/*.sh
 
 ENTRYPOINT ["init.sh"]
