@@ -86,11 +86,6 @@ docker-compose run --rm tools radar-schemas-tools schema-topic --ensure -f schem
     sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username="{{ CLUSTER_API_KEY }}" password="{{ CLUSTER_API_SECRET }}";
     ssl.endpoint.identification.algorithm=https
     sasl.mechanism=PLAIN
-
-    # Confluent Cloud Schema Registry
-    schema.registry.url=https://{{ SR_ENDPOINT }}
-    basic.auth.credentials.source=USER_INFO
-    schema.registry.basic.auth.user.info={{ SR_API_KEY }}:{{ SR_API_SECRET }}
     ```
     1.2. Run `cc-topic-create` command
 
