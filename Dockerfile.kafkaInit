@@ -48,6 +48,7 @@ COPY --from=builder /code ./original
 
 VOLUME /schema/conf
 # Copy bash file
+COPY ./docker/specifications.exclude /etc/radar-schemas/specifications.exclude
 COPY ./docker/topic_init.sh ./docker/init.sh ./docker/list_aggregated.sh ./docker/list_raw.sh /usr/bin/
 RUN chmod +x /usr/bin/*.sh
 

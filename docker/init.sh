@@ -7,6 +7,13 @@ AVRO_TOOLS=/usr/share/java/avro-tools.jar
 rsync -a /schema/original/commons /schema/original/specifications /schema/merged
 rsync -a /schema/conf/ /schema/merged
 
+EXCLUDE_FILE=${EXCLUDE_FILE:-/etc/radar-schemas/specifications.exclude}
+if [ -f "$EXCLUDE_FILE" ]; then
+  while read -r exclude; do
+    rm /schema/merged/specifications/$exclude
+  done < "$EXCLUDE_FILE"
+fi
+
 # Compiling updated schemas
 echo "Compiling schemas..." >&2
 
@@ -25,8 +32,10 @@ printf "===> Independent schemas:\n${INDEPENDENT}\n"
 printf "===> Dependent schemas:\n${DEPENDENT}\n"
 
 java -jar "${AVRO_TOOLS}" compile -string schema ${INDEPENDENT} ${DEPENDENT} java/src 2>/dev/null
-find java/src -name "*.java" -print0 | xargs -0 javac -cp /usr/lib/*:java/classes -d java/classes -sourcepath java/src 
+find java/src -name "*.java" -print0 | xargs -0 javac -cp /usr/lib/*:java/classes -d java/classes -sourcepath java/src
 # Update the radar schemas so the tools find the new classes in classpath
 jar uf /usr/lib/radar-schemas-commons-*.jar -C java/classes .
 
-exec "$@"
+if [ $# != 0 ]; then
+  exec "$@"
+fi
