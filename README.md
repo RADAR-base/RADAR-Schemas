@@ -73,3 +73,33 @@ docker-compose run --rm tools radar-schemas-tools schema-topic --backup -f schem
 docker-compose run --rm tools radar-schemas-tools schema-topic --ensure -f schema.json -b 1 -r 1 zookeeper-1:2181
 ```
 
+### Using radar-schema-tools with Confluent Cloud
+
+1. Create topics on Confluent Cloud 
+
+    1.1. Create a `java-config.properties` file. A Confluent Cloud config for Java application based on this [template](https://github.com/confluentinc/configuration-templates/blob/master/clients/cloud/java-sr.config).
+
+        ```properties
+        # Kafka
+        bootstrap.servers={{ BROKER_ENDPOINT }}
+        security.protocol=SASL_SSL
+        sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username="{{ CLUSTER_API_KEY }}" password="{{ CLUSTER_API_SECRET }}";
+        ssl.endpoint.identification.algorithm=https
+        sasl.mechanism=PLAIN
+
+        # Confluent Cloud Schema Registry
+        schema.registry.url=https://{{ SR_ENDPOINT }}
+        basic.auth.credentials.source=USER_INFO
+        schema.registry.basic.auth.user.info={{ SR_API_KEY }}:{{ SR_API_SECRET }}
+        ```
+    1.2. Run `cc-topic-create` command
+
+        ```
+        docker run --rm -v "$PWD/java-config.properties:/schema/conf/java.properties" radarbase/kafka-init radar-schemas-tools cc-topic-create -c java-config.properties
+        ```
+        
+2. Register schemas on Confluent Cloud schema registry
+
+    ```
+    docker run --rm radarbase/kafka-init radar-schemas-tools register SR_ENDPOINT -u SR_API_KEY -p SR_API_SECRET
+    ```
