@@ -70,9 +70,10 @@ public class ConfluentCloudTopics extends AbstractTopicRegistrar {
 
         @Override
         public int execute(Namespace options, CommandLineApp app) {
-            String configPath = options.getString("config-path");
+            String configPath = options.getString("config");
+            logger.debug("Config path is {}", configPath);
             if (isNullOrEmpty(configPath)) {
-                throw new IllegalArgumentException("--config-path not found. Confluent "
+                throw new IllegalArgumentException("--config not found. Confluent "
                         + "cloud config path cannot be empty");
             }
             short replication = options.getShort("replication");
@@ -91,7 +92,7 @@ public class ConfluentCloudTopics extends AbstractTopicRegistrar {
         @Override
         public void addParser(ArgumentParser parser) {
             parser.description("Create all topics that are missing on the Confluent Cloud env.");
-            parser.addArgument("-c", "--config-path").help("File path for Confluent cloud config")
+            parser.addArgument("-c", "--config").help("File path for Confluent cloud config")
                 .type(String.class);
             parser.addArgument("-p", "--partitions").help("number of partitions per topic")
                 .type(Integer.class).setDefault(3);

@@ -65,6 +65,7 @@ public class CommandLineApp {
     public CommandLineApp(Path root) throws IOException {
         this.root = root;
         this.catalogue = SourceCatalogue.load(root);
+        logger.info("radar-schema-tools is initialized with root directory {}", this.root);
     }
 
     /**

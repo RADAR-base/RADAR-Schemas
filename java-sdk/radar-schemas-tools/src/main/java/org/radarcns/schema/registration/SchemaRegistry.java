@@ -177,8 +177,8 @@ public class SchemaRegistry {
         @Override
         public int execute(Namespace options, CommandLineApp app) {
             String url = options.get("schemaRegistry");
-            String apiKey = options.getString("api-key");
-            String apiSecret = options.getString("api-secret");
+            String apiKey = options.getString("api_key");
+            String apiSecret = options.getString("api_secret");
             try {
                 SchemaRegistry registration;
                 if (isNullOrEmpty(apiKey) || isNullOrEmpty(apiSecret)) {

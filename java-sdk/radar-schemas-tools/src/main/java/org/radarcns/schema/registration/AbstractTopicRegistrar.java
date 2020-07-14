@@ -64,13 +64,14 @@ public abstract class AbstractTopicRegistrar implements TopicRegistrar {
 
 
     @Override
-    public boolean createTopics(Stream<String> topics, int partitions, short replication) {
+    public boolean createTopics(Stream<String> topicsToCreate, int partitions, short replication) {
         ensureInitialized();
         try {
+            refreshTopics();
             logger.info("Creating topics. Topics marked with [*] already exist.");
 
-            List<NewTopic> newTopics = topics.sorted().distinct().filter(t -> {
-                if (this.topics.contains(t)) {
+            List<NewTopic> newTopics = topicsToCreate.sorted().distinct().filter(t -> {
+                if (this.topics != null && this.topics.contains(t)) {
                     logger.info("[*] {}", t);
                     return false;
                 } else {
@@ -81,7 +82,10 @@ public abstract class AbstractTopicRegistrar implements TopicRegistrar {
 
             if (!newTopics.isEmpty()) {
                 getKafkaClient().createTopics(newTopics).all().get();
+                logger.info("Created {} topics. Requesting to refresh topics", newTopics.size());
                 refreshTopics();
+            } else {
+                logger.info("All of the topics are already created.");
             }
             return true;
         } catch (Exception ex) {
