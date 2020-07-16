@@ -2,6 +2,7 @@ package org.radarcns.schema.specification.stream;
 
 import static org.radarcns.schema.util.SchemaUtils.applyOrEmpty;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import java.util.ArrayList;
@@ -93,6 +94,7 @@ public class StreamDataTopic extends DataTopic {
         return topicBase;
     }
 
+    @JsonIgnore
     @Override
     public Stream<String> getTopicNames() {
         if (windowed) {
@@ -108,6 +110,7 @@ public class StreamDataTopic extends DataTopic {
         }
     }
 
+    @JsonIgnore
     @Override
     public Stream<AvroTopic<?, ?>> getTopics() {
         return getTopicNames()
@@ -121,6 +124,7 @@ public class StreamDataTopic extends DataTopic {
     }
 
     /** Get only topic names that are used with the fixed time windows. */
+    @JsonIgnore
     public Stream<String> getTimedTopicNames() {
         if (windowed) {
             return getTopicNames();
