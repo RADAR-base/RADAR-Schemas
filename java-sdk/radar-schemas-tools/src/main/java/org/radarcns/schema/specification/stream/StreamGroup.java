@@ -1,5 +1,6 @@
 package org.radarcns.schema.specification.stream;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 import java.util.stream.Stream;
@@ -34,6 +35,7 @@ public class StreamGroup extends DataProducer<StreamDataTopic> {
     }
 
     /** Get only the topic names that are the output of a timed stream. */
+    @JsonIgnore
     public Stream<String> getTimedTopicNames() {
         return data.stream().flatMap(StreamDataTopic::getTimedTopicNames);
     }

@@ -2,6 +2,7 @@ package org.radarcns.schema.specification;
 
 import static org.radarcns.schema.util.SchemaUtils.applyOrEmpty;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 import java.util.Map;
@@ -59,10 +60,12 @@ public abstract class DataProducer<T extends DataTopic> {
         return properties;
     }
 
+    @JsonIgnore
     public Stream<String> getTopicNames() {
         return getData().stream().flatMap(DataTopic::getTopicNames);
     }
 
+    @JsonIgnore
     public Stream<AvroTopic<?, ?>> getTopics() {
         return getData().stream().flatMap(applyOrEmpty(DataTopic::getTopics));
     }
