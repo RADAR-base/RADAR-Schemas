@@ -132,10 +132,10 @@ data:
     topic: questionnaire_art_covid19_followup
     value_schema: .active.questionnaire.Questionnaire
     questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/art_covid19_followup/art_covid19_followup_armt.json
-  - type: MEDICATION_USE
-    topic: questionnaire_medication_use
+  - type: ADHD_MEDICATION_USE
+    topic: questionnaire_adhd_medication_use
     value_schema: .active.questionnaire.Questionnaire
-    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/medication_use/medication_use_armt.json  
+    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/adhd_medication_use/adhd_medication_use_armt.json  
   - type: COMPLETION_LOG
     doc: Information about the completeness of each questionnaire.
     topic: questionnaire_completion_log
