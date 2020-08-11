@@ -153,6 +153,11 @@ public class CommandLineApp {
             System.exit(1);
         }
 
+        if (ns.getBoolean("help")) {
+            parser.printHelp();
+            System.exit(0);
+        }
+
         CommandLineApp app = null;
         try {
             app = new CommandLineApp(Paths.get(ns.getString("root")).toAbsolutePath());
@@ -172,7 +177,7 @@ public class CommandLineApp {
     }
 
     private static ArgumentParser getArgumentParser(SortedMap<String, SubCommand> subCommands) {
-        ArgumentParser parser = ArgumentParsers.newFor("radar-schema")
+        ArgumentParser parser = ArgumentParsers.newFor("radar-schemas-tools")
                 .addHelp(true)
                 .build()
                 .description("Schema tools");

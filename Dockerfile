@@ -1,4 +1,4 @@
-FROM openjdk:11-jdk-slim
+FROM openjdk:11-jdk-slim as builder
 
 RUN mkdir -p /code/java-sdk
 WORKDIR /code/java-sdk
@@ -6,7 +6,7 @@ WORKDIR /code/java-sdk
 COPY commons /code/commons
 COPY specifications /code/specifications
 COPY java-sdk/gradle /code/java-sdk/gradle
-COPY java-sdk/build.gradle java-sdk/settings.gradle  java-sdk/gradlew /code/java-sdk/
+COPY java-sdk/build.gradle java-sdk/settings.gradle java-sdk/gradlew /code/java-sdk/
 
 ENV GRADLE_OPTS -Dorg.gradle.daemon=false
 
@@ -20,8 +20,8 @@ RUN ./gradlew distTar && cd radar-schemas-tools/build/distributions && tar xzf r
 
 FROM openjdk:11-jre-slim
 
-COPY --from=0 /code/java-sdk/radar-schemas-tools/build/distributions/radar-schemas-tools-*/lib/* /usr/lib/
-COPY --from=0 /code/java-sdk/radar-schemas-tools/build/distributions/radar-schemas-tools-*/bin/radar-schemas-tools /usr/bin/
+COPY --from=builder /code/java-sdk/radar-schemas-tools/build/distributions/radar-schemas-tools-*/lib/* /usr/lib/
+COPY --from=builder /code/java-sdk/radar-schemas-tools/build/distributions/radar-schemas-tools-*/bin/radar-schemas-tools /usr/bin/
 
 WORKDIR /schemas
 VOLUME /schemas
