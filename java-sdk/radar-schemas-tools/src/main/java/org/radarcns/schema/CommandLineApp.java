@@ -153,7 +153,7 @@ public class CommandLineApp {
             System.exit(1);
         }
 
-        if (ns.getBoolean("help")) {
+        if (ns.getBoolean("help") != null && ns.getBoolean("help")) {
             parser.printHelp();
             System.exit(0);
         }
