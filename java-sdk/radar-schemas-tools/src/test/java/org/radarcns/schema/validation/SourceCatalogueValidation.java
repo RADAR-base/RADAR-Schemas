@@ -17,17 +17,21 @@
 package org.radarcns.schema.validation;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.radarcns.schema.specification.SourceCatalogue.BASE_PATH;
 import static org.radarcns.schema.validation.ValidationHelper.isValidTopic;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.junit.BeforeClass;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ErrorCollector;
 import org.radarcns.schema.specification.DataProducer;
 import org.radarcns.schema.specification.SourceCatalogue;
 
@@ -36,6 +40,9 @@ import org.radarcns.schema.specification.SourceCatalogue;
  */
 public class SourceCatalogueValidation {
     private static SourceCatalogue catalogue;
+
+    @Rule
+    public ErrorCollector errorCollector = new ErrorCollector();
 
     @BeforeClass
     public static void setUp() throws IOException {
@@ -73,6 +80,21 @@ public class SourceCatalogueValidation {
                         assertTrue(data.getTopics().count() > 0);
                     } catch (IOException ex) {
                         fail("Cannot create topic from specification: " + ex);
+                    }
+                });
+    }
+
+    @Test
+    public void validateSerialization() {
+        ObjectMapper mapper = new ObjectMapper();
+        catalogue.getSources()
+                .forEach(source -> {
+                    try {
+                        String json = mapper.writeValueAsString(source);
+                        assertFalse(json.contains("\"parallel\":false"));
+                    } catch (Exception ex) {
+                        errorCollector.addError(new IllegalArgumentException(
+                                "Source " + source + " is not valid", ex));
                     }
                 });
     }

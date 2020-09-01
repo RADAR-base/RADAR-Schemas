@@ -1,20 +1,13 @@
 package org.radarcns.schema.registration;
 
 import static org.apache.kafka.clients.admin.AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG;
-import static org.radarcns.schema.CommandLineApp.matchTopic;
 
-import java.io.Closeable;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javax.validation.constraints.NotNull;
+
 import kafka.cluster.Broker;
 import kafka.cluster.EndPoint;
 import kafka.zk.KafkaZkClient;
@@ -22,11 +15,8 @@ import kafka.zookeeper.ZooKeeperClientException;
 import net.sourceforge.argparse4j.inf.ArgumentParser;
 import net.sourceforge.argparse4j.inf.Namespace;
 import org.apache.kafka.clients.admin.AdminClient;
-import org.apache.kafka.clients.admin.ListTopicsOptions;
-import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.common.utils.Time;
 import org.radarcns.schema.CommandLineApp;
-import org.radarcns.schema.specification.SourceCatalogue;
 import org.radarcns.schema.util.SubCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,24 +27,23 @@ import scala.collection.Seq;
 /**
  * Registers Kafka topics with Zookeeper.
  */
-public class KafkaTopics implements Closeable {
+public class KafkaTopics extends AbstractTopicRegistrar {
     private static final Logger logger = LoggerFactory.getLogger(KafkaTopics.class);
-    private static final int MAX_SLEEP = 32;
 
     private final KafkaZkClient zkClient;
     private AdminClient kafkaClient;
     private String bootstrapServers;
-    private Set<String> topics;
     private boolean initialized;
 
     /**
      * Create Kafka topics registration object with given Zookeeper.
+     *
      * @param zookeeper comma-separated list of Zookeeper 'hostname:port'.
      */
     public KafkaTopics(@NotNull String zookeeper) {
         this.zkClient = KafkaZkClient
                 .apply(zookeeper, false, 15_000, 10_000, 30, Time.SYSTEM, "kafka.server",
-                        "SessionExpireListener", Option.apply("radar-schemas"));
+                        "SessionExpireListener", Option.apply("radar-schemas"), Option.empty());
         bootstrapServers = null;
         initialized = false;
     }
@@ -62,12 +51,13 @@ public class KafkaTopics implements Closeable {
     /**
      * Wait for brokers to become available. This uses a polling mechanism,
      * waiting for at most 200 seconds.
+     *
      * @param brokers number of brokers to wait for
      * @return whether the brokers where available
-     * @throws InterruptedException when waiting for the brokers is interrepted.
+     * @throws InterruptedException     when waiting for the brokers is interrupted.
+     * @throws ZooKeeperClientException if Zookeeper cannot be initialized.
      */
-    public boolean initialize(int brokers) throws InterruptedException,
-            ZooKeeperClientException {
+    public boolean initialize(int brokers) throws InterruptedException {
         int sleep = 2;
         int numTries = 20;
         int numBrokers = 0;
@@ -88,15 +78,13 @@ public class KafkaTopics implements Closeable {
                 kafkaClient = AdminClient.create(Map.of(
                         BOOTSTRAP_SERVERS_CONFIG, bootstrapServers));
             } else if (tries < numTries - 1) {
-                logger.warn(
-                        "Only {} out of {} Kafka brokers available. Waiting {} seconds.",
+                logger.warn("Only {} out of {} Kafka brokers available. Waiting {} seconds.",
                         numBrokers, brokers, sleep);
                 Thread.sleep(sleep * 1000L);
                 sleep = Math.min(MAX_SLEEP, sleep * 2);
             } else {
                 logger.error("Only {} out of {} Kafka brokers available."
-                                + " Failed to wait on all brokers.",
-                        numBrokers, brokers);
+                        + " Failed to wait on all brokers.", numBrokers, brokers);
             }
         }
 
@@ -104,68 +92,17 @@ public class KafkaTopics implements Closeable {
         return initialized && refreshTopics();
     }
 
-    private void ensureInitialized() {
+    @Override
+    public void ensureInitialized() {
         if (!initialized) {
             throw new IllegalStateException("Manager is not initialized yet");
         }
     }
 
-    /**
-     * Refresh the list of topics from Kafka
-     * @return {@code true} if the update succeeded, {@code false} otherwise.
-     * @throws InterruptedException if the request was interrupted.
-     */
-    public boolean refreshTopics() throws InterruptedException {
-        ensureInitialized();
-        logger.info("Waiting for topics to become available.");
-        int sleep = 10;
-        int numTries = 10;
-
-        topics = null;
-        ListTopicsOptions opts = new ListTopicsOptions().listInternal(true);
-        for (int tries = 0; tries < numTries; tries++) {
-            try {
-                topics = kafkaClient.listTopics(opts).names()
-                        .get(sleep, TimeUnit.SECONDS);
-            } catch (ExecutionException e) {
-                logger.error("Failed to list topics from brokers: {}."
-                                + " Trying again after {} seconds.",
-                        e.toString(), sleep);
-                Thread.sleep(sleep * 1000L);
-                sleep = Math.min(MAX_SLEEP, sleep * 2);
-                continue;
-            } catch (TimeoutException e) {
-                // do nothing
-            }
-            if (topics != null && !topics.isEmpty()) {
-                break;
-            }
-            if (tries < numTries - 1) {
-                logger.warn("Topics not listed yet after {} seconds", sleep);
-            } else {
-                logger.error("Topics have not become available. Failed to wait on Kafka.");
-            }
-            sleep = Math.min(MAX_SLEEP, sleep * 2);
-        }
-
-        if (topics == null || topics.isEmpty()) {
-            return false;
-        } else {
-            Thread.sleep(5000L);
-            return true;
-        }
-    }
-
-    public Set<String> getTopics() {
-        ensureInitialized();
-        return Collections.unmodifiableSet(topics);
-    }
-
     private List<Broker> currentBrokers() {
         try {
             // convert Scala sequence of servers to Java
-            return asStream(zkClient.getAllBrokersInCluster())
-                    .collect(Collectors.toList());
+            return asStream(zkClient.getAllBrokersInCluster()).collect(Collectors.toList());
         } catch (ZooKeeperClientException ex) {
             logger.warn("Failed to reach zookeeper");
             return List.of();
@@ -182,57 +119,12 @@ public class KafkaTopics implements Closeable {
     }
 
     /**
-     * Create all topics in a catalogue.
-     * @param catalogue source catalogue to extract topic names from
-     * @param partitions number of partitions per topic
-     * @param replication number of replicas for a topic
-     * @return whether the whole catalogue was registered
+     * Get current number of Kafka brokers according to Zookeeper.
+     *
+     * @return number of Kafka brokers
+     * @throws ZooKeeperClientException if zookeeper cannot connect
      */
-    public boolean createTopics(@NotNull SourceCatalogue catalogue, int partitions,
-            short replication) {
-        ensureInitialized();
-        return createTopics(catalogue.getTopicNames(), partitions, replication);
-    }
-
-    /**
-     * Create a single topic.
-     * @param topics names of the topic to create
-     * @param partitions number of partitions per topic
-     * @param replication number of replicas for a topic
-     * @return whether the topic was registered
-     */
-    public boolean createTopics(Stream<String> topics, int partitions, short replication) {
-        ensureInitialized();
-        try {
-            logger.info("Creating topics. Topics marked with [*] already exist.");
-
-            List<NewTopic> newTopics = topics
-                    .sorted()
-                    .distinct()
-                    .filter(t -> {
-                        if (this.topics.contains(t)) {
-                            logger.info("[*] {}", t);
-                            return false;
-                        } else {
-                            logger.info("[ ] {}", t);
-                            return true;
-                        }
-                    })
-                    .map(t -> new NewTopic(t, partitions, replication))
-                    .collect(Collectors.toList());
-
-            if (!newTopics.isEmpty()) {
-                kafkaClient.createTopics(newTopics).all().get();
-                refreshTopics();
-            }
-            return true;
-        } catch (Exception ex) {
-            logger.error("Failed to create topics {}", ex.toString());
-            return false;
-        }
-    }
-
-    public int getNumberOfBrokers() throws ZooKeeperClientException {
+    public int getNumberOfBrokers() {
         return zkClient.getAllBrokersInCluster().length();
     }
 
@@ -242,6 +134,7 @@ public class KafkaTopics implements Closeable {
     }
 
     @NotNull
+    @Override
     public AdminClient getKafkaClient() {
         ensureInitialized();
         return kafkaClient;
@@ -249,10 +142,8 @@ public class KafkaTopics implements Closeable {
 
     @Override
     public void close() {
+        super.close();
         zkClient.close();
-        if (kafkaClient != null) {
-            kafkaClient.close();
-        }
     }
 
     /**
@@ -275,7 +166,7 @@ public class KafkaTopics implements Closeable {
 
             if (brokers < replication) {
                 logger.error("Cannot assign a replication factor {}"
-                                + " higher than number of brokers {}", replication, brokers);
+                        + " higher than number of brokers {}", replication, brokers);
                 return 1;
             }
 
@@ -286,28 +177,9 @@ public class KafkaTopics implements Closeable {
                     logger.error("Kafka brokers not yet available. Aborting.");
                     return 1;
                 }
-
-                Pattern pattern = matchTopic(
+                return topics.createTopics(app.getCatalogue(), partitions, replication,
                         options.getString("topic"), options.getString("match"));
 
-                if (pattern == null) {
-                    return topics.createTopics(app.getCatalogue(), partitions, replication) ? 0 : 1;
-                } else {
-                    List<String> topicNames = app.getCatalogue().getTopicNames()
-                            .filter(s -> pattern.matcher(s).find())
-                            .collect(Collectors.toList());
-
-                    if (topicNames.isEmpty()) {
-                        logger.error("Topic {} does not match a known topic."
-                                        + " Find the list of acceptable topics"
-                                        + " with the `radar-schemas-tools list` command. Aborting.",
-                                pattern);
-                        return 1;
-                    }
-
-                    return topics.createTopics(topicNames.stream(), partitions, replication)
-                            ? 0 : 1;
-                }
             } catch (InterruptedException | ZooKeeperClientException e) {
                 logger.error("Cannot retrieve number of addActive Kafka brokers."
                         + " Please check that Zookeeper is running.");

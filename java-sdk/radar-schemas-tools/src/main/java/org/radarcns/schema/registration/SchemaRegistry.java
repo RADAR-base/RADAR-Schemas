@@ -16,6 +16,7 @@
 
 package org.radarcns.schema.registration;
 
+import static org.radarbase.util.Strings.isNullOrEmpty;
 import static org.radarcns.schema.CommandLineApp.matchTopic;
 
 import java.io.IOException;
@@ -24,25 +25,26 @@ import java.util.Comparator;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
+
 import net.sourceforge.argparse4j.impl.Arguments;
 import net.sourceforge.argparse4j.inf.ArgumentParser;
 import net.sourceforge.argparse4j.inf.Namespace;
+import okhttp3.Credentials;
+import okhttp3.Headers;
 import okhttp3.MediaType;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 import okio.BufferedSink;
-import org.apache.avro.Schema;
 import org.radarbase.config.ServerConfig;
-import org.radarbase.producer.rest.ParsedSchemaMetadata;
 import org.radarbase.producer.rest.RestClient;
 import org.radarbase.producer.rest.SchemaRetriever;
+import org.radarbase.topic.AvroTopic;
 import org.radarcns.schema.CommandLineApp;
 import org.radarcns.schema.specification.DataProducer;
 import org.radarcns.schema.specification.SourceCatalogue;
 import org.radarcns.schema.util.SubCommand;
-import org.radarbase.topic.AvroTopic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -65,12 +67,24 @@ public class SchemaRegistry {
      */
     public SchemaRegistry(String baseUrl) throws MalformedURLException {
         ServerConfig config = new ServerConfig(baseUrl);
-        config.setUnsafe(true);
-        this.schemaClient = new SchemaRetriever(config, 10);
+        config.setUnsafe(false);
         this.httpClient = RestClient.global()
             .timeout(10, TimeUnit.SECONDS)
             .server(config)
             .build();
+        this.schemaClient = new SchemaRetriever(this.httpClient);
+    }
+
+    public SchemaRegistry(String baseUrl, String apiKey, String apiSecret)
+            throws MalformedURLException {
+        ServerConfig config = new ServerConfig(baseUrl);
+        config.setUnsafe(true);
+        this.httpClient = RestClient.global()
+                .timeout(10, TimeUnit.SECONDS)
+                .server(config)
+                .headers(Headers.of("Authorization", Credentials.basic(apiKey, apiSecret)))
+                .build();
+        this.schemaClient = new SchemaRetriever(this.httpClient);
     }
 
     /**
@@ -93,13 +107,8 @@ public class SchemaRegistry {
     /** Register the schema of a single topic. */
     public boolean registerSchema(AvroTopic<?, ?> topic) {
         try {
-            Schema schema = topic.getKeySchema();
-            ParsedSchemaMetadata metadata = new ParsedSchemaMetadata(null, null, schema);
-            this.schemaClient.addSchemaMetadata(topic.getName(), false, metadata);
-
-            schema = topic.getValueSchema();
-            metadata = new ParsedSchemaMetadata(null, null, schema);
-            this.schemaClient.addSchemaMetadata(topic.getName(), true, metadata);
+            this.schemaClient.addSchema(topic.getName(), false, topic.getKeySchema());
+            this.schemaClient.addSchema(topic.getName(), true, topic.getValueSchema());
             return true;
         } catch (IOException ex) {
             logger.error("Failed to register schemas for topic {}", topic.getName(), ex);
@@ -138,8 +147,8 @@ public class SchemaRegistry {
             return false;
         }
 
-        try (Response response = httpClient.request(request)) {
-            ResponseBody body = response.body();
+        try (Response response = httpClient.request(request);
+                ResponseBody body = response.body()) {
             if (response.isSuccessful()) {
                 logger.info("Compatibility set to {}", compatibility);
                 return true;
@@ -168,8 +177,18 @@ public class SchemaRegistry {
         @Override
         public int execute(Namespace options, CommandLineApp app) {
             String url = options.get("schemaRegistry");
+            String apiKey = options.getString("api_key");
+            String apiSecret = options.getString("api_secret");
             try {
-                SchemaRegistry registration = new SchemaRegistry(url);
+                SchemaRegistry registration;
+                if (isNullOrEmpty(apiKey) || isNullOrEmpty(apiSecret)) {
+                    logger.info("Initializing standard SchemaRegistration ...");
+                    registration = new SchemaRegistry(url);
+                } else {
+                    logger.info("Initializing SchemaRegistration with authentication...");
+                    registration = new SchemaRegistry(url, apiKey, apiSecret);
+                }
+
                 boolean forced = options.getBoolean("force");
                 if (forced && !registration.putCompatibility(Compatibility.NONE)) {
                     return 1;
@@ -221,6 +240,10 @@ public class SchemaRegistry {
                     .type(String.class);
             parser.addArgument("schemaRegistry")
                     .help("schema registry URL");
+            parser.addArgument("-u", "--api-key")
+                    .help("Client password to authorize with.");
+            parser.addArgument("-p", "--api-secret")
+                    .help("Client key to authorize with.");
             SubCommand.addRootArgument(parser);
         }
     }
