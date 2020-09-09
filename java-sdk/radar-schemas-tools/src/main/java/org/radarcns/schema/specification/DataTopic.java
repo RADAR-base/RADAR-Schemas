@@ -4,6 +4,7 @@ import static com.fasterxml.jackson.dataformat.yaml.YAMLGenerator.Feature.MINIMI
 import static com.fasterxml.jackson.dataformat.yaml.YAMLGenerator.Feature.WRITE_DOC_START_MARKER;
 import static org.radarcns.schema.util.SchemaUtils.expandClass;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -54,11 +55,13 @@ public class DataTopic extends AvroTopicConfig {
     }
 
     /** Get all topic names that are provided by the data. */
+    @JsonIgnore
     public Stream<String> getTopicNames() {
         return Stream.of(getTopic());
     }
 
     /** Get all Avro topics that are provided by the data. */
+    @JsonIgnore
     public Stream<AvroTopic<?, ?>> getTopics() throws IOException {
         try {
             return Stream.of(parseAvroTopic());

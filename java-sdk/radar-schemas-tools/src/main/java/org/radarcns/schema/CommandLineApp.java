@@ -31,6 +31,7 @@ import net.sourceforge.argparse4j.inf.ArgumentParser;
 import net.sourceforge.argparse4j.inf.ArgumentParserException;
 import net.sourceforge.argparse4j.inf.Namespace;
 import net.sourceforge.argparse4j.inf.Subparsers;
+import org.radarcns.schema.registration.ConfluentCloudTopics;
 import org.radarcns.schema.registration.KafkaTopics;
 import org.radarcns.schema.registration.SchemaTopicManager;
 import org.radarcns.schema.registration.SchemaRegistry;
@@ -64,6 +65,7 @@ public class CommandLineApp {
     public CommandLineApp(Path root) throws IOException {
         this.root = root;
         this.catalogue = SourceCatalogue.load(root);
+        logger.info("radar-schema-tools is initialized with root directory {}", this.root);
     }
 
     /**
@@ -134,6 +136,7 @@ public class CommandLineApp {
     public static void main(String... args) {
         SortedMap<String, SubCommand> subCommands = commandsToMap(
                 KafkaTopics.command(),
+                ConfluentCloudTopics.command(),
                 SchemaRegistry.command(),
                 listCommand(),
                 SchemaValidator.command(),
@@ -148,6 +151,11 @@ public class CommandLineApp {
         } catch (ArgumentParserException e) {
             parser.handleError(e);
             System.exit(1);
+        }
+
+        if (ns.getBoolean("help") != null && ns.getBoolean("help")) {
+            parser.printHelp();
+            System.exit(0);
         }
 
         CommandLineApp app = null;
@@ -169,7 +177,7 @@ public class CommandLineApp {
     }
 
     private static ArgumentParser getArgumentParser(SortedMap<String, SubCommand> subCommands) {
-        ArgumentParser parser = ArgumentParsers.newFor("radar-schema")
+        ArgumentParser parser = ArgumentParsers.newFor("radar-schemas-tools")
                 .addHelp(true)
                 .build()
                 .description("Schema tools");

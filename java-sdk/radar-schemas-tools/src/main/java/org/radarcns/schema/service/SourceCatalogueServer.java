@@ -28,18 +28,23 @@ public class SourceCatalogueServer implements Closeable {
         this.server = new Server(serverPort);
     }
 
+    @SuppressWarnings("PMD.SignatureDeclareThrowsException")
+    public void stop() throws Exception {
+        this.server.stop();
+    }
+
     @Override
     public void close() {
         try {
             this.server.join();
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
             logger.error("Cannot stop server", e);
         }
         server.destroy();
     }
 
     @SuppressWarnings("PMD.SignatureDeclareThrowsException")
-    private void start(SourceCatalogue sourceCatalogue) throws Exception {
+    public void start(SourceCatalogue sourceCatalogue) throws Exception {
         ResourceConfig config = new ResourceConfig();
         config.register(new SourceCatalogueService(sourceCatalogue));
         ServletHolder servlet = new ServletHolder(new ServletContainer(config));

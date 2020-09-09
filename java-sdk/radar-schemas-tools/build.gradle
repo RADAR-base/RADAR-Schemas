@@ -39,7 +39,7 @@ ext {
     confluentVersion = '5.5.0'
     kafkaVersion = '2.5.0'
     okHttpVersion = '4.7.2'
-    radarCommonsVersion = '0.12.3'
+    radarCommonsVersion = '0.13.0'
     slf4jVersion = '1.7.30'
     javaxValidationVersion = '2.0.1.Final'
 }
