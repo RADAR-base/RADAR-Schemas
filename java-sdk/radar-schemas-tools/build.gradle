@@ -31,14 +31,14 @@ ext {
     description = 'RADAR Schemas specification and validation tools.'
 
     argparseVersion = '0.8.1'
-    jacksonVersion = '2.10.4'
-    jacksonYamlVersion = '2.10.4'
-    jerseyVersion = '2.31'
-    jettyVersion = '9.4.29.v20200521'
+    jacksonVersion = '2.11.3'
+    jacksonModuleVersion = '2.11.3'
+    jerseyVersion = '2.32'
+    jettyVersion = '9.4.33.v20201020'
     junitVersion = '4.13'
-    confluentVersion = '5.5.0'
-    kafkaVersion = '2.5.0'
-    okHttpVersion = '4.7.2'
+    confluentVersion = '5.5.2'
+    kafkaVersion = '2.5.1'
+    okHttpVersion = '4.9.0'
     radarCommonsVersion = '0.13.0'
     slf4jVersion = '1.7.30'
     javaxValidationVersion = '2.0.1.Final'
@@ -55,19 +55,17 @@ repositories {
 dependencies {
     api group: 'javax.validation', name: 'validation-api', version: javaxValidationVersion
     api group: 'org.apache.kafka', name: 'kafka_2.12', version: kafkaVersion
-    // temporary version override to avoid netty vulnerability. Can be removed as soon as Kafka has an updated dependency
-    implementation group: 'org.apache.zookeeper', name: 'zookeeper', version: '3.5.8'
 
-    api ("com.fasterxml.jackson.core:jackson-databind") {
-      version {
-        strictly jacksonVersion
-      }
-    }
-    implementation ("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml") {
-      version {
-        strictly jacksonYamlVersion
-      }
-    }
+    api ("com.fasterxml.jackson.core:jackson-databind:$jacksonVersion")
+    implementation ("com.fasterxml.jackson.module:jackson-module-jaxb-annotations:$jacksonModuleVersion")
+    implementation ("com.fasterxml.jackson.jaxrs:jackson-jaxrs-base:$jacksonModuleVersion")
+    implementation ("com.fasterxml.jackson.module:jackson-module-parameter-names:$jacksonModuleVersion")
+    implementation ("com.fasterxml.jackson.datatype:jackson-datatype-guava:$jacksonModuleVersion")
+    implementation ("com.fasterxml.jackson.datatype:jackson-datatype-jdk8:$jacksonModuleVersion")
+    implementation ("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jacksonModuleVersion")
+    implementation ("com.fasterxml.jackson.dataformat:jackson-dataformat-csv:$jacksonModuleVersion")
+    implementation ("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:$jacksonModuleVersion")
+    implementation("com.fasterxml.jackson.module:jackson-module-scala_2.12:$jacksonModuleVersion")
     implementation project(':radar-schemas-commons')
     implementation group: 'org.radarbase', name: 'radar-commons', version: radarCommonsVersion
     implementation group: 'org.radarbase', name: 'radar-commons-server', version: radarCommonsVersion
