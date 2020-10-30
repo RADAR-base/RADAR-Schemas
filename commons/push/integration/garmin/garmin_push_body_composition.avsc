@@ -1,0 +1,18 @@
+{
+  "namespace": "org.radarcns.push.integration.garmin",
+  "name": "GarminBodyComposition",
+  "type": "record",
+  "doc": "Body Composition summaries contain information about the user’s biometric data, like weight or body mass index. This data can be generated three ways. Users can manually enter their weight on Garmin Connect. This results in a summary with only time and weight. Users may also connect their MyFitnessPal account to their Garmin Connect account and update their weight on MyFitnessPal. This results in a summary that also just has a time and weight. Finally, a user might have a Garmin Index body composition scale and sync data from this device. This will generate a summary with all possible biometric fields.",
+  "fields": [
+    {"name": "summaryId", "type": "string", "doc": "Unique identifier for the summary."},
+    {"name": "time", "type": "double", "doc": "Start time of the activity in seconds since January 1, 1970, 00:00:00 UTC (Unix timestamp)."},
+    {"name": "timeReceived", "type": "double", "doc": "Time that this record was collected by a service in seconds since the Unix Epoch (s)."},
+    {"name": "muscleMassInGrams", "type": ["null", "int"], "doc": "Muscle mass in grams.", "default": null},
+    {"name": "boneMassInGrams", "type": ["null", "int"], "doc": "Bone mass in grams.", "default": null},
+    {"name": "measurementTimeOffsetInSeconds", "type": ["null", "int"], "doc": "Offset in seconds to add to time to derive the 'local' time of the device that captured the data.", "default": null},
+    {"name": "bodyWaterInPercent", "type": ["null", "double"], "doc": "Percentage of body water (range 0.0 - 100.0).", "default": null},
+    {"name": "bodyFatInPercent", "type": ["null", "double"], "doc": "Percentage of body fat. (range 0.0 - 100.0).", "default": null},
+    {"name": "bodyMassIndex", "type": ["null", "double"], "doc": "Body mass index, or BMI.", "default": null},
+    {"name": "weightInGrams", "type": ["null", "int"], "doc": "Weight in grams.", "default": null}
+  ]
+}

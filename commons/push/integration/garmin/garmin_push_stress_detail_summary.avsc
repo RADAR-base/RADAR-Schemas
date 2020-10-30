@@ -1,0 +1,16 @@
+{
+  "namespace": "org.radarcns.push.integration.garmin",
+  "name": "GarminStressDetailSummary",
+  "type": "record",
+  "doc": "Stress Details summaries contain the user’s stress level values for a given day. Stress levels are provided as 3-minute averages of the real-time stress scores generated on the device with values ranging from 1 to 100. A value of -1 means there was not enough data to detect stress, and -2 means there was too much motion (e.g. the user was walking or running). Scores between 1 and 25 are considered “rest” (i.e. not stressful), 26-50 as “low” stress, 51-75 “medium” stress, and 76- 100 as “high” stress. These numbers are derived based on a combination of many device sensors and will automatically adjust to the wearer of the device and gain accuracy over time as the stress algorithms learn the user’s natural biometric norms. Stress values from the Health API are exactly the stress values shown on Garmin Connect.",
+  "fields": [
+    {"name": "summaryId", "type": "string", "doc": "Unique identifier for the summary."},
+    {"name": "time", "type": "double", "doc": "Start time of the activity in seconds since January 1, 1970, 00:00:00 UTC (Unix timestamp)."},
+    {"name": "timeReceived", "type": "double", "doc": "Time that this record was collected by a service in seconds since the Unix Epoch (s)."},
+    {"name": "startTimeOffsetInSeconds", "type": ["null", "int"], "doc": "Offset in seconds to add to time to derive the 'local' time of the device that captured the data.", "default": null},
+    {"name": "calendarDate", "type": ["null", "string"], "doc": "The calendar date this summary would be displayed on in Garmin Connect. The date format is ‘yyyy-mm-dd’.", "default": null},
+    {"name": "durationInSeconds", "type": ["null", "int"], "doc": "Length of the monitoring period in seconds. 86400 once a full day is complete, but less if a user syncs mid-day.", "default": null},
+    {"name": "timeOffsetStressLevelValues", "type": { "type": "map", "values": "double", "default": {}}, "doc": "Collection of mappings between offset from start time (in seconds) to a stress level value recorded for that time."},
+    {"name": "timeOffsetBodyBatteryValues", "type": { "type": "map", "values": "double", "default": {}}, "doc": "Collection of mappings between offset from start time (in seconds) to a body battery value recorded for that time. Information on and a list of devices that support Body Battery are available here: https://support.garmin.com/ms-MY/?faq=2qczgfbN00AIMJbX33dRq9."}
+  ]
+}
