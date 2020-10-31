@@ -9,8 +9,6 @@
     {"name": "timeReceived", "type": "double", "doc": "Time that this record was collected by a service in seconds since the Unix Epoch (s)."},
     {"name": "startTimeOffsetInSeconds", "type": ["null", "int"], "doc": "Offset in seconds to add to time to derive the 'local' time of the device that captured the data.", "default": null},
     {"name": "calendarDate", "type": ["null", "string"], "doc": "The calendar date this summary would be displayed on in Garmin Connect. The date format is ‘yyyy-mm-dd’.", "default": null},
-    {"name": "durationInSeconds", "type": ["null", "int"], "doc": "Length of the monitoring period in seconds. 86400 once a full day is complete, but less if a user syncs mid-day.", "default": null},
-    {"name": "timeOffsetStressLevelValues", "type": { "type": "map", "values": "double", "default": {}}, "doc": "Collection of mappings between offset from start time (in seconds) to a stress level value recorded for that time."},
-    {"name": "timeOffsetBodyBatteryValues", "type": { "type": "map", "values": "double", "default": {}}, "doc": "Collection of mappings between offset from start time (in seconds) to a body battery value recorded for that time. Information on and a list of devices that support Body Battery are available here: https://support.garmin.com/ms-MY/?faq=2qczgfbN00AIMJbX33dRq9."}
+    {"name": "durationInSeconds", "type": ["null", "int"], "doc": "Length of the monitoring period in seconds. 86400 once a full day is complete, but less if a user syncs mid-day.", "default": null}
   ]
 }
