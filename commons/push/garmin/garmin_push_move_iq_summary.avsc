@@ -1,0 +1,16 @@
+{
+  "namespace": "org.radarcns.push.garmin",
+  "name": "GarminMoveIQSummary",
+  "type": "record",
+  "doc": "Move IQ Event summaries are a feed of activities which have been automatically detected by the device based on movement patterns, like running or biking. These are not activities initiated by the user. Please note that wellness data, like steps and distance, from Move IQ events are already included in the Daily and Epoch summaries. Due to their automatically-detected nature, Move IQ events are not considered a fitness activity, do not contain the same details as activities, and cannot be edited by the user with Garmin Connect. These events should be considered a labeled-timespan on top of normal Daily or Epoch summary details, matching their representation within Garmin Connect. For more feature-level information on Move IQ events, please see: https://support.garmin.com/faqSearch/en- US/faq/content/zgFpy8MShkArqAxCug5wC6 . Move IQ activities are also known as Automatic Activity Detection in older devices or documentation.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Start time of the activity in seconds since January 1, 1970, 00:00:00 UTC (Unix timestamp)."},
+    {"name": "timeReceived", "type": "double", "doc": "Time that this record was collected by a service in seconds since the Unix Epoch (s)."},
+    {"name": "summaryId", "type": "string", "doc": "Unique identifier for the summary."},
+    {"name": "date", "type": ["null", "string"], "doc": "The calendar date this summary would be displayed on in Garmin Connect in the local time zone of the device. The date format is ‘yyyy-mm-dd’.", "default": null},
+    {"name": "offset", "type": ["null", "int"], "doc": "Offset in seconds to add to time to derive the 'local' time of the device that captured the data.", "default": null},
+    {"name": "activityType", "type": ["null", "string"], "doc": "The activity type that has been identified for this timespan. e.g - SEDENTARY, SLEEP, RUNNING, CYCLING, WALKING, etc.", "default": null},
+    {"name": "duration", "type": ["null", "int"], "doc": "The duration of the measurement period in seconds.", "default": null},
+    {"name": "activitySubType", "type": ["null", "string"], "doc": "The activity subtype that has been identified for this timespan.", "default": null}
+  ]
+}
