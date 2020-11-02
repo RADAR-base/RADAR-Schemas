@@ -1,5 +1,5 @@
 {
-  "namespace": "org.radarcns.push.integration.garmin",
+  "namespace": "org.radarcns.push.garmin",
   "name": "GarminSleepLevel",
   "type": "record",
   "doc": "Sleep level time ranges, currently deep, light, rem and awake. Time ranges are represented as unix timestamps in seconds. Usually associated with Sleep Summary data using the summaryId field.",

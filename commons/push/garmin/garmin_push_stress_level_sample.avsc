@@ -1,5 +1,5 @@
 {
-  "namespace": "org.radarcns.push.integration.garmin",
+  "namespace": "org.radarcns.push.garmin",
   "name": "GarminStressLevelSample",
   "type": "record",
   "doc": "Stress levels are provided as 3-minute averages of the real-time stress scores generated on the device with values ranging from 1 to 100. A value of -1 means there was not enough data to detect stress, and -2 means there was too much motion (e.g. the user was walking or running). Scores between 1 and 25 are considered “rest” (i.e. not stressful), 26-50 as “low” stress, 51-75 “medium” stress, and 76- 100 as “high” stress. These numbers are derived based on a combination of many device sensors and will automatically adjust to the wearer of the device and gain accuracy over time as the stress algorithms learn the user’s natural biometric norms. Usually assocaited with Stress Details Summary using the summaryId. Stress values from the Health API are exactly the stress values shown on Garmin Connect.",

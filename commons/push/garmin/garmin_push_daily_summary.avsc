@@ -1,5 +1,5 @@
 {
-  "namespace": "org.radarcns.push.integration.garmin",
+  "namespace": "org.radarcns.push.garmin",
   "name": "GarminDailySummary",
   "type": "record",
   "doc": "Daily summaries offer a high-level view of the user’s entire day. They generally correspond to the data found on the “My Day” section of Garmin Connect. Daily summaries are the most commonly used and are often the foundation of a Health API integration.",

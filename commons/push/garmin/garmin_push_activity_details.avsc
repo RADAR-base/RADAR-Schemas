@@ -1,5 +1,5 @@
 {
-  "namespace": "org.radarcns.push.integration.garmin",
+  "namespace": "org.radarcns.push.garmin",
   "name": "GarminActivityDetails",
   "type": "record",
   "doc": "Fitness activity details summaries represent detailed information about discrete fitness activities, such as running or swimming, that are specifically and intentionally started by the user on their device. All wellness data, like steps and distance, contained in the activity are already represented in the Daily summary and in the corresponding Epoch summaries, so Activity Detail summaries should only be used for programs that wish to treat specific activity types in different ways, such as giving the user extra credit for going swimming three times in the same week. Activity details summaries include all data recorded by the device as part of the Fitness Activity, including GPS coordinates and all recorded sensor data. ",

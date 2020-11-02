@@ -1,5 +1,5 @@
 {
-  "namespace": "org.radarcns.push.integration.garmin",
+  "namespace": "org.radarcns.push.garmin",
   "name": "GarminActivitySummary",
   "type": "record",
   "doc": "Fitness activity summaries represent high-level information from discrete fitness activities, such as running or swimming, that are specifically and intentionally started by the user on their device. All wellness data, like steps and distance, contained in the Activity are already represented in the Daily summary and in the corresponding Epoch summaries, so Activity summaries should only be used for programs that wish to treat specific activity types in different ways, such as giving the user extra credit for going swimming three times in the same week.",

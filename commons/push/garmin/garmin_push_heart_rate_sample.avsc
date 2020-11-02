@@ -1,5 +1,5 @@
 {
-  "namespace": "org.radarcns.push.integration.garmin",
+  "namespace": "org.radarcns.push.garmin",
   "name": "GarminHeartRateSample",
   "type": "record",
   "doc": "Mapping between time (in seconds) to a heart rate value recorded for the time, in beats per minute. Each entry is a representative sample of the previous 15 seconds from the given time. Lack of entry for a given time should be interpreted as no data available. These are accompanied with the Dailies data and can be associated using the summaryId.",

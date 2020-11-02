@@ -1,5 +1,5 @@
 {
-  "namespace": "org.radarcns.push.integration.garmin",
+  "namespace": "org.radarcns.push.garmin",
   "name": "GarminBodyComposition",
   "type": "record",
   "doc": "Body Composition summaries contain information about the user’s biometric data, like weight or body mass index. This data can be generated three ways. Users can manually enter their weight on Garmin Connect. This results in a summary with only time and weight. Users may also connect their MyFitnessPal account to their Garmin Connect account and update their weight on MyFitnessPal. This results in a summary that also just has a time and weight. Finally, a user might have a Garmin Index body composition scale and sync data from this device. This will generate a summary with all possible biometric fields.",

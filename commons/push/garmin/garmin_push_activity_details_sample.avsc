@@ -1,5 +1,5 @@
 {
-  "namespace": "org.radarcns.push.integration.garmin",
+  "namespace": "org.radarcns.push.garmin",
   "name": "GarminActivityDetailsSample",
   "type": "record",
   "doc": "Each activity detail contains an activity summary and an optional list of samples. The samples list will be empty if the activity is manual or details are not supported by the device. Samples may be as frequent as once per second, and values should be considered valid until the next sample. In all cases, movingDurationInSeconds is less than or equal to timerDurationInSeconds is less than or equal to clockDurationInSeconds.",
