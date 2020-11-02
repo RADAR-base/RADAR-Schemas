@@ -9,7 +9,7 @@
     {"name": "summaryId", "type": "string", "doc": "Unique identifier for the summary that this sample is associated with."},
     {"name": "airTemperature", "type": ["null", "float"], "doc": "Air Temperature in Celcius.", "default": null},
     {"name": "heartRate", "type": ["null", "int"], "doc": "Heart rate in beats per minute.", "default": null},
-    {"name": "speed", "type": ["null", "double"], "doc": "Speed in Meters Per Second.", "default": null},
+    {"name": "speed", "type": ["null", "float"], "doc": "Speed in Meters Per Second.", "default": null},
     {"name": "stepsPerMinute", "type": ["null", "float"], "doc": "Number of steps per minute.", "default": null},
     {"name": "totalDistance", "type": ["null", "float"], "doc": "Total Distance in Meters.", "default": null},
     {"name": "timerDuration", "type": ["null", "int"], "doc": "The amount of 'timer time' in an activity.", "default": null},

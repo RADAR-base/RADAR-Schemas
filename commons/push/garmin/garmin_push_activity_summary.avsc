@@ -11,7 +11,7 @@
     {"name": "activityType", "type": ["null", "string"], "doc": "Text description of the activity type.  e.g - SEDENTARY, SLEEP, RUNNING, CYCLING, WALKING, etc.", "default": null},
     {"name": "duration", "type": ["null", "int"], "doc": "Length of the monitoring period in seconds. 86400 once a full day is complete, but less if a user syncs mid-day.", "default": null},
     {"name": "averageBikeCadence", "type": ["null", "float"], "doc": "Average Bike Cadence in rounds per minute.", "default": null},
-    {"name": "maxBikeCadenceInRounds", "type": ["null", "float"], "doc": "Maximum Bike Cadence in rounds per minute.", "default": null},
+    {"name": "maxBikeCadence", "type": ["null", "float"], "doc": "Maximum Bike Cadence in rounds per minute.", "default": null},
     {"name": "distance", "type": ["null", "float"], "doc": "Distance traveled in meters.", "default": null},
     {"name": "averageRunCadence", "type": ["null", "float"], "doc": "Average Run Cadence in Steps per minute.", "default": null},
     {"name": "maxRunCadence", "type": ["null", "float"], "doc": "Maximum Run Cadence in Steps per minute.", "default": null},
