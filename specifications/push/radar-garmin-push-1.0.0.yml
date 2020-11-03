@@ -1,7 +1,7 @@
 name: RADAR-GARMIN-PUSH
 vendor: RADAR-base
 model: radar-push-garmin
-version: 0.1.0
+version: 1.0.0
 doc: Spec for Radar Push integration for Garmin Health API.
 data:
   - doc: Daily summaries offer a high-level view of the user’s entire day.
@@ -40,7 +40,7 @@ data:
   - doc: Each activity detail contains an activity summary and an optional list of samples. The samples list will be empty if the activity is manual or details are not supported by the device. Samples may be as frequent as once per second, and values should be considered valid until the next sample.
     topic: push_garmin_activity_detail_sample
     value_schema: .push.garmin.GarminActivityDetailsSample
-  - doc: Body battery value recorded for the time. Usually assocaited with Stress Details Summary using summaryId. Information on and a list of devices that support Body Battery are available here: https://support.garmin.com/ms-MY/?faq=2qczgfbN00AIMJbX33dRq9.
+  - doc: Body battery value recorded for the time. Usually assocaited with Stress Details Summary using summaryId. Information on and a list of devices that support Body Battery are available here- https://support.garmin.com/ms-MY/?faq=2qczgfbN00AIMJbX33dRq9.
     topic: push_garmin_body_battery_sample
     value_schema: .push.garmin.GarminBodyBatterySample
   - doc: Mapping between time (in seconds) to a heart rate value recorded for the time, in beats per minute. Each entry is a representative sample of the previous 15 seconds from the given time. Lack of entry for a given time should be interpreted as no data available. These are accompanied with the Daily summary data and can be associated using the summaryId.
