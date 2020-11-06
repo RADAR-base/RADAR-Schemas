@@ -8,7 +8,7 @@
     {"name": "timeReceived", "type": "double", "doc": "Timestamp in unix time received from Altoida API."},
     {"name": "audioHighReactionTimes", "type": "float", "doc": "Distribution of reaction times to high tone(s)."},
     {"name": "audioHighAccuracy", "type": "float", "doc": "Distribution of deviation from speaker button center (cm)."},
-    {"name": "audioLowReactions", "type": "int", "doc": "Distributions of number of reactions to low tones."},
+    {"name": "audioLowReactions", "type": ["null","int"], "doc": "Distributions of number of reactions to low tones."},
     {"name": "audioIgnoredHighTonePercentage", "type": "float", "doc": "Distribution of ratio of high tones ignored."},
     {"name": "audioPrematureToneButtonPresses", "type": "int", "doc": "Distribution of number of premature tone button presses."},
     {"name": "randomScreenPressesDuringPlacement", "type": "int", "doc": "Distribution of number of random screen presses during the placement phase."},
