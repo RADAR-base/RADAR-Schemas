@@ -1,0 +1,14 @@
+{
+  "namespace": "org.radarcns.push.garmin",
+  "name": "GarminRespiration",
+  "type": "record",
+  "doc": "Respiration is a feature (https://www8.garmin.com/manuals/webhelp/vivoactive4_4S/EN-US/GUID-252F74B6-C24B-495B-8E73-4BD595CA7FE3.html) available on some Garmin devices that tracks breathing rate throughout the day, during sleep, and during activities such as breathwork and yoga. There maybe multiple records of respiration values for the same summaryId. These may also be associated with Sleep summaries using summaryId.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Start time of the activity in seconds since January 1, 1970, 00:00:00 UTC (Unix timestamp)."},
+    {"name": "timeReceived", "type": "double", "doc": "Time that this record was collected by a service in seconds since the Unix Epoch (s)."},
+    {"name": "summaryId", "type": "string", "doc": "Unique identifier for the summary."},
+    {"name": "startTimeOffset", "type": ["null", "int"], "doc": "Offset in seconds to add to time to derive the 'local' time of the device that captured the data.", "default": null},
+    {"name": "duration", "type": ["null", "int"], "doc": "Length of the monitoring period in seconds. 86400 once a full day is complete, but less if a user syncs mid-day.", "default": null},
+    {"name": "respiration", "type": ["null", "float"], "doc": "Respiration measurement in breaths per minute.","default": null}
+  ]
+}
