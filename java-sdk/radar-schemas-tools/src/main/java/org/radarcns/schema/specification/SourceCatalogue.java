@@ -38,6 +38,7 @@ import org.radarcns.schema.specification.active.ActiveSource;
 import org.radarcns.schema.specification.connector.ConnectorSource;
 import org.radarcns.schema.specification.monitor.MonitorSource;
 import org.radarcns.schema.specification.passive.PassiveSource;
+import org.radarcns.schema.specification.push.PushSource;
 import org.radarcns.schema.specification.stream.StreamGroup;
 import org.radarbase.topic.AvroTopic;
 import org.slf4j.Logger;
@@ -59,6 +60,7 @@ public class SourceCatalogue {
     private final Map<String, PassiveSource> passiveSources;
     private final Map<String, ConnectorSource> connectorSources;
     private final Map<String, StreamGroup> streamGroups;
+    private final Map<String, PushSource> pushSources;
 
     private final Set<DataProducer<?>> sources;
 
@@ -67,12 +69,14 @@ public class SourceCatalogue {
             Map<String, MonitorSource> monitorSources,
             Map<String, PassiveSource> passiveSources,
             Map<String, StreamGroup> streamGroups,
-            Map<String, ConnectorSource> connectorSources) {
+            Map<String, ConnectorSource> connectorSources,
+            Map<String, PushSource> pushSources) {
         this.activeSources = activeSources;
         this.monitorSources = monitorSources;
         this.passiveSources = passiveSources;
         this.streamGroups = streamGroups;
         this.connectorSources = connectorSources;
+        this.pushSources = pushSources;
 
         sources = new HashSet<>();
 
@@ -81,6 +85,7 @@ public class SourceCatalogue {
         sources.addAll(passiveSources.values());
         sources.addAll(streamGroups.values());
         sources.addAll(connectorSources.values());
+        sources.addAll(pushSources.values());
     }
 
     /**
@@ -110,7 +115,8 @@ public class SourceCatalogue {
             initSources(mapper.readerFor(MonitorSource.class), specRoot, Scope.MONITOR),
             initSources(mapper.readerFor(PassiveSource.class), specRoot, Scope.PASSIVE),
             initSources(mapper.readerFor(StreamGroup.class), specRoot, Scope.STREAM),
-            initSources(mapper.readerFor(ConnectorSource.class), specRoot, Scope.CONNECTOR));
+            initSources(mapper.readerFor(ConnectorSource.class), specRoot, Scope.CONNECTOR),
+            initSources(mapper.readerFor(PushSource.class), specRoot, Scope.PUSH));
     }
 
     private static <T> Map<String, T> initSources(ObjectReader reader, Path root, Scope scope)
@@ -216,6 +222,10 @@ public class SourceCatalogue {
      */
     public Map<String, ConnectorSource> getConnectorSources() {
         return connectorSources;
+    }
+
+    public Map<String, PushSource> getPushSources() {
+        return pushSources;
     }
 
     /** Get all topics in the catalogue. */
