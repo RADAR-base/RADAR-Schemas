@@ -5,7 +5,7 @@ import java.nio.file.Path;
 import java.util.Locale;
 
 public enum Scope {
-    ACTIVE, KAFKA, CATALOGUE, MONITOR, PASSIVE, STREAM, CONNECTOR;
+    ACTIVE, KAFKA, CATALOGUE, MONITOR, PASSIVE, STREAM, CONNECTOR, PUSH;
 
     private final String lower;
 

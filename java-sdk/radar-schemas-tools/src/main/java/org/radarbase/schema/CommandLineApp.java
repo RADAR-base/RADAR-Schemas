@@ -87,7 +87,8 @@ public class CommandLineApp {
                 catalogue.getPassiveSources(),
                 catalogue.getActiveSources(),
                 catalogue.getMonitorSources(),
-                catalogue.getConnectorSources())
+                catalogue.getConnectorSources(),
+                catalogue.getPushSources())
                 .flatMap(map -> map.values().stream())
                 .flatMap(DataProducer::getTopicNames);
     }
