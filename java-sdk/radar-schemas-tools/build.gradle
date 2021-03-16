@@ -45,7 +45,7 @@ ext {
     confluentVersion = '5.5.0'
     kafkaVersion = '2.5.0'
     okHttpVersion = '4.7.2'
-    radarCommonsVersion = '0.13.0'
+    radarCommonsVersion = '0.13.1'
     slf4jVersion = '1.7.30'
     javaxValidationVersion = '2.0.1.Final'
 }
@@ -55,7 +55,6 @@ repositories {
     maven { url 'https://packages.confluent.io/maven/' }
     maven { url "https://jitpack.io" }
     maven { url = "https://oss.sonatype.org/content/repositories/snapshots/" }
-    maven { url  "https://dl.bintray.com/radar-base/org.radarbase" }
 }
 
 dependencies {
