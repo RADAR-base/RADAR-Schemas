@@ -33,14 +33,17 @@ data:
     value_schema: .active.questionnaire.Questionnaire
     questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/esm/esm_armt.json
   - type: AUDIO
+    doc: A speech questionnaire that contain two parts, a scripted text part where users will record themselves reading a text aloud, and an unscripted text part where users will record themselves answering a question.
     topic: questionnaire_audio
     value_schema: .active.questionnaire.Questionnaire
     questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/audio/audio_armt.json
   - type: AUDIO_2
+    doc: A speech questionnaire that contain two parts, a scripted text part where users will record themselves reading a text aloud, and an unscripted text part where users will record themselves answering a question.
     topic: questionnaire_audio
     value_schema: .active.questionnaire.Questionnaire
     questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/audio_2/audio_2_armt.json
   - type: AUDIO_3
+    doc: A speech questionnaire that contain two parts, a scripted text part where users will record themselves reading a text aloud, and an unscripted text part where users will record themselves answering a question.
     topic: questionnaire_audio
     value_schema: .active.questionnaire.Questionnaire
     questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/audio_3/audio_3_armt.json
@@ -149,14 +152,17 @@ data:
     value_schema: .active.questionnaire.Questionnaire
     questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/sleep_questions/sleep_questions_armt.json
   - type: AUDIO_WITHOUT_UNSCRIPTED
+    doc: A speech questionnaire similar to the AUDIO questionnaire but without the second unscripted task.
     topic: questionnaire_audio_without_unscripted
     value_schema: .active.questionnaire.Questionnaire
     questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/audio_without_unscripted/audio_without_unscripted_armt.json
   - type: AUDIO_WITHOUT_UNSCRIPTED_2
+    doc: A speech questionnaire similar to the AUDIO questionnaire but without the second unscripted task.
     topic: questionnaire_audio_without_unscripted_2
     value_schema: .active.questionnaire.Questionnaire
     questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/audio_without_unscripted_2/audio_without_unscripted_armt.json
   - type: AUDIO_WITHOUT_UNSCRIPTED_3
+    doc: A speech questionnaire similar to the AUDIO questionnaire but without the second unscripted task.
     topic: questionnaire_audio_without_unscripted_3
     value_schema: .active.questionnaire.Questionnaire
     questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/audio_without_unscripted_3/audio_without_unscripted_armt.json
