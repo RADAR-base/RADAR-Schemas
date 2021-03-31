@@ -181,7 +181,7 @@ data:
     value_schema: .active.questionnaire.Questionnaire
     questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/ralpmh_covid_symptoms/ralpmh_covid_symptoms_armt.json
   - type: LIPF
-    topic: questionnaire_
+    topic: questionnaire_lipf
     value_schema: .active.questionnaire.Questionnaire
     questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/lipf/lipf_armt.json
   - type: COMPLETION_LOG
