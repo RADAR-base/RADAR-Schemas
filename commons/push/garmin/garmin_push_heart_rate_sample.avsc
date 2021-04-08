@@ -1,0 +1,12 @@
+{
+  "namespace": "org.radarcns.push.garmin",
+  "name": "GarminHeartRateSample",
+  "type": "record",
+  "doc": "Mapping between time (in seconds) to a heart rate value recorded for the time, in beats per minute. Each entry is a representative sample of the previous 15 seconds from the given time. Lack of entry for a given time should be interpreted as no data available. These are accompanied with the Dailies data and can be associated using the summaryId.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Start time of the sample in seconds since January 1, 1970, 00:00:00 UTC (Unix timestamp)."},
+    {"name": "timeReceived", "type": "double", "doc": "Time this sample was recieved by the push service in seconds since January 1, 1970, 00:00:00 UTC (Unix timestamp)."},
+    {"name": "summaryId", "type": "string", "doc": "Unique identifier for the summary that this sample is associated with."},
+    {"name": "heartRate", "type": ["null", "float"], "doc": "Heart rate in beats per minute.", "default": null}
+    ]
+}
