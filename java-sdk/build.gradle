@@ -18,8 +18,6 @@ subprojects {
     group = 'org.radarbase'
     ext.githubRepoName = 'RADAR-base/RADAR-Schemas'
 
-    ext.avroVersion = '1.9.2'
-
     ext.githubUrl = "https://github.com/${githubRepoName}.git"
     ext.issueUrl = "https://github.com/${githubRepoName}/issues"
     ext.website = 'http://radar-base.org'
@@ -27,8 +25,28 @@ subprojects {
     targetCompatibility = JavaVersion.VERSION_1_8
     sourceCompatibility = JavaVersion.VERSION_1_8
 
-    // dependencies
+    ext {
+        avroVersion = '1.9.2'
+        argparseVersion = '0.8.1'
+        jacksonVersion = '2.11.4'
+        jacksonModuleVersion = '2.11.4'
+        radarJerseyVersion = "0.5.0"
 
+        junitVersion = '4.13'
+        confluentVersion = '5.5.3'
+        kafkaVersion = '2.5.1'
+        okHttpVersion = '4.9.1'
+        radarCommonsVersion = '0.13.1'
+        slf4jVersion = '1.7.30'
+        javaxValidationVersion = '2.0.1.Final'
+    }
+
+    repositories {
+        mavenCentral()
+        maven { url 'https://packages.confluent.io/maven/' }
+    }
+
+    // dependencies
     dependencies {
         api (group: 'org.apache.avro', name: 'avro', version: avroVersion) {
             exclude group: 'org.xerial.snappy', module: 'snappy-java'
@@ -63,5 +81,5 @@ subprojects {
 }
 
 wrapper {
-    gradleVersion '6.6.1'
+    gradleVersion '6.8.3'
 }

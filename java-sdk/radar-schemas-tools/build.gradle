@@ -22,138 +22,67 @@ configurations {
 }
 
 sourceSets {
-    test {
-        java.srcDir 'src/test/java'
-        resources.srcDir 'src/test/resources'
-    }
     application {
         compileClasspath += sourceSets.main.output
         runtimeClasspath += sourceSets.main.output
     }
 }
 
-ext {
-    artifactName = 'radar-schemas-tools'
-    description = 'RADAR Schemas specification and validation tools.'
+description = 'RADAR Schemas specification and validation tools.'
 
-    argparseVersion = '0.8.1'
-    jacksonVersion = '2.11.3'
-    jacksonModuleVersion = '2.11.3'
-    jerseyVersion = '2.32'
-    jettyVersion = '9.4.33.v20201020'
-    junitVersion = '4.13'
-    confluentVersion = '5.5.3'
-    kafkaVersion = '2.5.1'
-    okHttpVersion = '4.9.0'
-    radarCommonsVersion = '0.13.1'
-    slf4jVersion = '1.7.30'
-    javaxValidationVersion = '2.0.1.Final'
-}
+ext.artifactName = 'radar-schemas-tools'
 
 repositories {
-    mavenCentral()
-    maven { url 'https://packages.confluent.io/maven/' }
     maven { url "https://jitpack.io" }
-    maven { url = "https://oss.sonatype.org/content/repositories/snapshots/" }
 }
 
 dependencies {
-    api group: 'javax.validation', name: 'validation-api', version: javaxValidationVersion
     api group: 'org.apache.kafka', name: 'kafka_2.12', version: kafkaVersion
 
-    api ("com.fasterxml.jackson.core:jackson-databind:$jacksonVersion")
+    implementation project(':radar-schemas-commons')
+    implementation project(':radar-schemas-core')
+
+    implementation group: 'org.radarbase', name: 'radar-commons-server', version: radarCommonsVersion
+
     implementation ("com.fasterxml.jackson.module:jackson-module-jaxb-annotations:$jacksonModuleVersion")
     implementation ("com.fasterxml.jackson.jaxrs:jackson-jaxrs-base:$jacksonModuleVersion")
     implementation ("com.fasterxml.jackson.module:jackson-module-parameter-names:$jacksonModuleVersion")
     implementation ("com.fasterxml.jackson.datatype:jackson-datatype-guava:$jacksonModuleVersion")
-    implementation ("com.fasterxml.jackson.datatype:jackson-datatype-jdk8:$jacksonModuleVersion")
-    implementation ("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jacksonModuleVersion")
     implementation ("com.fasterxml.jackson.dataformat:jackson-dataformat-csv:$jacksonModuleVersion")
-    implementation ("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:$jacksonModuleVersion")
     implementation("com.fasterxml.jackson.module:jackson-module-scala_2.12:$jacksonModuleVersion")
-    implementation project(':radar-schemas-commons')
-    implementation group: 'org.radarbase', name: 'radar-commons', version: radarCommonsVersion
-    implementation group: 'org.radarbase', name: 'radar-commons-server', version: radarCommonsVersion
+
     implementation group: 'net.sourceforge.argparse4j', name: 'argparse4j', version: argparseVersion
     implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: okHttpVersion
-    implementation group: 'org.eclipse.jetty', name: 'jetty-server', version: jettyVersion
-    implementation group: 'org.eclipse.jetty', name: 'jetty-servlet', version: jettyVersion
-    implementation group: 'org.glassfish.jersey.core', name: 'jersey-server', version: jerseyVersion
+
     implementation group: 'io.confluent', name: 'kafka-connect-avro-converter', version: confluentVersion
     implementation group: 'io.confluent', name: 'kafka-schema-registry', version: confluentVersion
     implementation group: 'org.apache.kafka', name: 'connect-json', version: kafkaVersion
 
-    // source catalogue service annotations
-    api group: 'org.glassfish.jersey.containers', name: 'jersey-container-servlet-core', version: jerseyVersion
-
-    runtimeOnly group: 'org.glassfish.jersey.media', name: 'jersey-media-json-jackson', version: jerseyVersion
     applicationRuntimeOnly group: 'org.slf4j', name: 'slf4j-simple', version: slf4jVersion
-    runtimeOnly group: 'org.glassfish.jersey.inject', name: 'jersey-hk2', version: jerseyVersion
 
     testImplementation group: 'junit', name: 'junit', version: junitVersion
 }
 
 application {
-    mainClassName = 'org.radarbase.schema.CommandLineApp'
+    mainClass.set('org.radarbase.schema.CommandLineApp')
 }
 
 run {
     classpath = sourceSets.application.runtimeClasspath
 }
 
-task createStartScripts(type: CreateStartScripts) {
+startScripts {
     applicationName = 'radar-schema'
 }
-
-//---------------------------------------------------------------------------//
-// Test definition                                                           //
-//---------------------------------------------------------------------------//
-test {
-    inputs.dir "${project.rootDir}/../commons"
-    inputs.dir "${project.rootDir}/../specifications"
-    testLogging {
-        events "skipped", "failed"
-        exceptionFormat "full"
-        showExceptions = true
-        showCauses = true
-        showStackTraces = true
-        showStandardStreams = true
-    }
-}
-
-//---------------------------------------------------------------------------//
-// Style checking                                                            //
-//---------------------------------------------------------------------------//
-checkstyle {
-    // codacy version
-    toolVersion '8.31'
-    ignoreFailures false
-
-    configFile = file("$rootDir/config/checkstyle/checkstyle.xml")
-}
-
-pmd {
-    // pmd version
-    toolVersion = '6.23.0'
-    ignoreFailures = false
-
-    sourceSets = [sourceSets.main]
-
-    consoleOutput = true
-
-    ruleSets = []
-
-    ruleSetFiles = files("$rootDir/config/pmd/ruleset.xml")
-}
-
 
 //---------------------------------------------------------------------------//
 // Publishing                                                                //
 //---------------------------------------------------------------------------//
 
-tasks.withType(Tar){
+tasks.withType(Tar) {
     compression = Compression.GZIP
     archiveExtension.set('tar.gz')
 }
 
 apply from: "$rootDir/gradle/publishing.gradle"
+apply from: "$rootDir/gradle/testing.gradle"

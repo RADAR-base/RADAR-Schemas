@@ -1,0 +1,112 @@
+plugins {
+    id 'idea'
+    id 'checkstyle'
+    id 'pmd'
+    id 'application'
+}
+
+targetCompatibility = JavaVersion.VERSION_11
+sourceCompatibility = JavaVersion.VERSION_11
+
+configurations {
+    implementation {
+        exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+    }
+    runtimeOnly {
+        exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+    }
+    applicationCompileOnly.extendsFrom(compileOnly)
+    applicationImplementation.extendsFrom(implementation)
+    applicationRuntimeOnly.extendsFrom(runtimeOnly)
+    testRuntimeOnly.extendsFrom(applicationRuntimeOnly)
+}
+
+sourceSets {
+    application {
+        compileClasspath += sourceSets.main.output
+        runtimeClasspath += sourceSets.main.output
+    }
+}
+
+ext.artifactName = 'radar-schemas-catalog-server'
+description = 'RADAR Schemas specification and validation tools.'
+
+repositories {
+    maven { url  "https://dl.bintray.com/radar-cns/org.radarcns" }
+    maven { url  "https://dl.bintray.com/radar-base/org.radarbase" }
+}
+
+dependencies {
+    implementation("org.radarbase:radar-jersey:$radarJerseyVersion")
+    implementation project(':radar-schemas-core')
+    implementation group: 'net.sourceforge.argparse4j', name: 'argparse4j', version: argparseVersion
+
+    applicationRuntimeOnly group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
+
+    testImplementation group: 'junit', name: 'junit', version: junitVersion
+
+    testImplementation group: 'com.squareup.okhttp3', name: 'okhttp', version: okHttpVersion
+}
+
+application {
+    mainClass.set('org.radarbase.schema.service.SourceCatalogueServer')
+}
+
+run {
+    classpath = sourceSets.application.runtimeClasspath
+}
+
+startScripts {
+    applicationName = 'radar-catalog-server'
+}
+
+//---------------------------------------------------------------------------//
+// Test definition                                                           //
+//---------------------------------------------------------------------------//
+test {
+    inputs.dir "${project.rootDir}/../commons"
+    inputs.dir "${project.rootDir}/../specifications"
+    testLogging {
+        events "skipped", "failed"
+        exceptionFormat "full"
+        showExceptions = true
+        showCauses = true
+        showStackTraces = true
+        showStandardStreams = true
+    }
+}
+
+//---------------------------------------------------------------------------//
+// Style checking                                                            //
+//---------------------------------------------------------------------------//
+checkstyle {
+    // codacy version
+    toolVersion '8.31'
+    ignoreFailures false
+
+    configFile = file("$rootDir/config/checkstyle/checkstyle.xml")
+}
+
+pmd {
+    // pmd version
+    toolVersion = '6.23.0'
+    ignoreFailures = false
+
+    sourceSets = [sourceSets.main]
+
+    consoleOutput = true
+
+    ruleSets = []
+
+    ruleSetFiles = files("$rootDir/config/pmd/ruleset.xml")
+}
+
+
+//---------------------------------------------------------------------------//
+// Publishing                                                                //
+//---------------------------------------------------------------------------//
+
+tasks.withType(Tar) {
+    compression = Compression.GZIP
+    archiveExtension.set('tar.gz')
+}

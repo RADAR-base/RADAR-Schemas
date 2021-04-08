@@ -3,10 +3,11 @@ package org.radarbase.schema.service;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 import java.util.List;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.Context;
+import jakarta.ws.rs.core.MediaType;
 import org.radarbase.schema.specification.SourceCatalogue;
 import org.radarbase.schema.specification.active.ActiveSource;
 import org.radarbase.schema.specification.connector.ConnectorSource;
@@ -23,7 +24,7 @@ public class SourceCatalogueService {
 
     private final SourceCatalogue sourceCatalogue;
 
-    SourceCatalogueService(SourceCatalogue sourceCatalogue) {
+    SourceCatalogueService(@Context SourceCatalogue sourceCatalogue) {
         this.sourceCatalogue = sourceCatalogue;
     }
 
@@ -72,7 +73,7 @@ public class SourceCatalogueService {
         private List<PassiveSource> passiveSources;
 
         @JsonProperty("active-source-types")
-        private List<ActiveSource> activeSources;
+        private List<ActiveSource<?>> activeSources;
 
         @JsonProperty("monitor-source-types")
         private List<MonitorSource> monitorSources;
@@ -104,7 +105,7 @@ public class SourceCatalogueService {
             return passiveSources;
         }
 
-        public List<ActiveSource> getActiveSources() {
+        public List<ActiveSource<?>> getActiveSources() {
             return activeSources;
         }
 

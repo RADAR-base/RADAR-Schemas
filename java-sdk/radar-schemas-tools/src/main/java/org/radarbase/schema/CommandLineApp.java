@@ -20,8 +20,10 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Comparator;
+import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
+import java.util.TreeSet;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -35,13 +37,14 @@ import org.radarbase.schema.registration.ConfluentCloudTopics;
 import org.radarbase.schema.registration.KafkaTopics;
 import org.radarbase.schema.registration.SchemaTopicManager;
 import org.radarbase.schema.registration.SchemaRegistry;
-import org.radarbase.schema.service.SourceCatalogueServer;
 import org.radarbase.schema.specification.DataProducer;
 import org.radarbase.schema.specification.DataTopic;
 import org.radarbase.schema.specification.SourceCatalogue;
 import org.radarbase.schema.specification.stream.StreamGroup;
 import org.radarbase.schema.util.SubCommand;
 import org.radarbase.schema.validation.SchemaValidator;
+import org.radarbase.schema.validation.ValidationException;
+import org.radarbase.schema.validation.config.ExcludeConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -140,8 +143,7 @@ public class CommandLineApp {
                 ConfluentCloudTopics.command(),
                 SchemaRegistry.command(),
                 listCommand(),
-                SchemaValidator.command(),
-                SourceCatalogueServer.command(),
+                validatorCommand(),
                 SchemaTopicManager.command());
 
         ArgumentParser parser = getArgumentParser(subCommands);
@@ -260,5 +262,86 @@ public class CommandLineApp {
         } else {
             return null;
         }
+    }
+
+
+    @SuppressWarnings("PMD.SystemPrintln")
+    private static SubCommand validatorCommand() {
+        return new SubCommand() {
+            @Override
+            public String getName() {
+                return "validate";
+            }
+
+            @Override
+            public int execute(Namespace options, CommandLineApp app) {
+                try {
+                    ExcludeConfig config = loadConfig(app.getRoot(), options.getString("config"));
+                    SchemaValidator validator = new SchemaValidator(app.getRoot(), config);
+                    Stream<ValidationException> stream = validateSchemas(
+                            options.getString("scope"), validator);
+
+                    if (options.getBoolean("quiet")) {
+                        return stream.count() > 0 ? 1 : 0;
+                    } else {
+                        String result = SchemaValidator.format(stream);
+
+                        System.out.println(result);
+                        if (options.getBoolean("verbose")) {
+                            System.out.println("Validated schemas:");
+                            Set<String> names = new TreeSet<>(
+                                    validator.getValidatedSchemas().keySet());
+                            for (String name : names) {
+                                System.out.println(" - " + name);
+                            }
+                            System.out.println();
+                        }
+                        return result.isEmpty() ? 0 : 1;
+                    }
+                } catch (IOException e) {
+                    System.err.println("Failed to load schemas: " + e);
+                    return 1;
+                }
+            }
+
+            @Override
+            public void addParser(ArgumentParser parser) {
+                parser.description("Validate a set of specifications.");
+                parser.addArgument("-s", "--scope")
+                        .help("type of specifications to validate")
+                        .choices(Scope.values());
+                parser.addArgument("-c", "--config")
+                        .help("configuration file to use");
+                parser.addArgument("-v", "--verbose")
+                        .help("verbose validation message")
+                        .action(Arguments.storeTrue());
+                parser.addArgument("-q", "--quiet")
+                        .help("only set exit code.")
+                        .action(Arguments.storeTrue());
+                SubCommand.addRootArgument(parser);
+            }
+
+
+            private Stream<ValidationException> validateSchemas(String scopeString,
+                    SchemaValidator validator) {
+                if (scopeString == null) {
+                    return validator.analyseFiles();
+                } else {
+                    return validator.analyseFiles(Scope.valueOf(scopeString));
+                }
+            }
+
+            private ExcludeConfig loadConfig(Path root, String configSubPath) throws IOException {
+                Path configPath = null;
+                if (configSubPath != null) {
+                    if (configSubPath.charAt(0) == '/') {
+                        configPath = Paths.get(configSubPath);
+                    } else {
+                        configPath = root.resolve(configSubPath);
+                    }
+                }
+                return ExcludeConfig.load(configPath);
+            }
+        };
     }
 }

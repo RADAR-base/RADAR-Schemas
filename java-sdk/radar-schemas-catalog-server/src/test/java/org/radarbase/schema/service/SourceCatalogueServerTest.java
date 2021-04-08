@@ -31,8 +31,7 @@ public class SourceCatalogueServerTest {
             try {
                 SourceCatalogue sourceCatalog = SourceCatalogue.load(Paths.get("../.."));
                 server.start(sourceCatalog);
-                server.close();
-            } catch (InterruptedException | IllegalStateException e) {
+            } catch (IllegalStateException e) {
                 // this is acceptable
             } catch (Exception e) {
                 errorCollector.addError(e);
@@ -43,7 +42,8 @@ public class SourceCatalogueServerTest {
 
     @After
     public void tearDown() throws Exception {
-        server.stop();
+        serverThread.interrupt();
+        server.close();
         serverThread.join();
     }
 

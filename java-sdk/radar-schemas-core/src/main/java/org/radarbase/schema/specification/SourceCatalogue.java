@@ -161,7 +161,7 @@ public class SourceCatalogue {
      * @param topic TODO
      * @return TODO
      */
-    public ActiveSource getActiveSource(String topic) {
+    public ActiveSource<?> getActiveSource(String topic) {
         return activeSources.get(topic);
     }
 
