@@ -32,10 +32,9 @@ sourceSets {
     }
 }
 
-ext {
-    artifactName = 'radar-schemas-tools'
-    description = 'RADAR Schemas specification and validation tools.'
+description = 'RADAR Schemas specification and validation tools.'
 
+ext {
     argparseVersion = '0.8.1'
     jacksonVersion = '2.10.4'
     jacksonYamlVersion = '2.10.4'
