@@ -57,7 +57,7 @@ run {
 }
 
 startScripts {
-    applicationName = 'radar-catalog-server'
+    classpath = sourceSets.application.runtimeClasspath
 }
 
 apply from: "$rootDir/gradle/testing.gradle"
