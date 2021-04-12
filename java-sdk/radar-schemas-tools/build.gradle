@@ -102,8 +102,8 @@ run {
     classpath = sourceSets.application.runtimeClasspath
 }
 
-task createStartScripts(type: CreateStartScripts) {
-    applicationName = 'radar-schema'
+startScripts {
+    classpath = sourceSets.application.runtimeClasspath
 }
 
 //---------------------------------------------------------------------------//
