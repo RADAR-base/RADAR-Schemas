@@ -60,47 +60,7 @@ startScripts {
     applicationName = 'radar-catalog-server'
 }
 
-//---------------------------------------------------------------------------//
-// Test definition                                                           //
-//---------------------------------------------------------------------------//
-test {
-    inputs.dir "${project.rootDir}/../commons"
-    inputs.dir "${project.rootDir}/../specifications"
-    testLogging {
-        events "skipped", "failed"
-        exceptionFormat "full"
-        showExceptions = true
-        showCauses = true
-        showStackTraces = true
-        showStandardStreams = true
-    }
-}
-
-//---------------------------------------------------------------------------//
-// Style checking                                                            //
-//---------------------------------------------------------------------------//
-checkstyle {
-    // codacy version
-    toolVersion '8.31'
-    ignoreFailures false
-
-    configFile = file("$rootDir/config/checkstyle/checkstyle.xml")
-}
-
-pmd {
-    // pmd version
-    toolVersion = '6.23.0'
-    ignoreFailures = false
-
-    sourceSets = [sourceSets.main]
-
-    consoleOutput = true
-
-    ruleSets = []
-
-    ruleSetFiles = files("$rootDir/config/pmd/ruleset.xml")
-}
-
+apply from: "$rootDir/gradle/testing.gradle"
 
 //---------------------------------------------------------------------------//
 // Publishing                                                                //

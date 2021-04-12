@@ -14,14 +14,22 @@ RUN ./gradlew tasks
 COPY java-sdk/radar-schemas-commons/build.gradle /code/java-sdk/radar-schemas-commons/
 COPY java-sdk/radar-schemas-commons/src /code/java-sdk/radar-schemas-commons/src
 RUN ./gradlew :radar-schemas-commons:jar
-COPY java-sdk/radar-schemas-tools/build.gradle /code/java-sdk/radar-schemas-tools/
-COPY java-sdk/radar-schemas-tools/src /code/java-sdk/radar-schemas-tools/src
-RUN ./gradlew distTar && cd radar-schemas-tools/build/distributions && tar xzf radar-schemas-tools*.tar.gz
+COPY java-sdk/radar-schemas-tools /code/java-sdk/radar-schemas-tools
+COPY java-sdk/radar-schemas-core /code/java-sdk/radar-schemas-core
+COPY java-sdk/radar-catalog-server /code/java-sdk/radar-catalog-server
+
+RUN ./gradlew distTar \
+  && cd radar-schemas-tools/build/distributions \
+  && tar xzf radar-schemas-tools*.tar.gz \
+  && cd ../../../radar-catalog-server/build/distributions \
+  && tar xzf radar-catalog-server*.tar.gz
 
 FROM openjdk:11-jre-slim
 
 COPY --from=builder /code/java-sdk/radar-schemas-tools/build/distributions/radar-schemas-tools-*/lib/* /usr/lib/
+COPY --from=builder /code/java-sdk/radar-catalog-server/build/distributions/radar-catalog-server-*/lib/* /usr/lib/
 COPY --from=builder /code/java-sdk/radar-schemas-tools/build/distributions/radar-schemas-tools-*/bin/radar-schemas-tools /usr/bin/
+COPY --from=builder /code/java-sdk/radar-catalog-server/build/distributions/radar-catalog-server-*/bin/radar-catalog-server /usr/bin/
 
 WORKDIR /schemas
 VOLUME /schemas
