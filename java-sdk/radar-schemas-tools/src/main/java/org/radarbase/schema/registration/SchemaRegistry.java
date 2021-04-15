@@ -37,6 +37,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 import okio.BufferedSink;
+import org.jetbrains.annotations.NotNull;
 import org.radarbase.config.ServerConfig;
 import org.radarbase.producer.rest.RestClient;
 import org.radarbase.producer.rest.SchemaRetriever;
@@ -135,7 +136,7 @@ public class SchemaRegistry {
                         }
 
                         @Override
-                        public void writeTo(BufferedSink sink) throws IOException {
+                        public void writeTo(@NotNull BufferedSink sink) throws IOException {
                             sink.writeUtf8("{\"compatibility\": \"");
                             sink.writeUtf8(compatibility.name());
                             sink.writeUtf8("\"}");

@@ -53,7 +53,6 @@ public class ConfluentCloudTopics extends AbstractTopicRegistrar {
         return cfg;
     }
 
-
     /**
      * Create a ConfluentCloudTopics command to register topics from the command line.
      */

@@ -108,7 +108,7 @@ public abstract class AbstractTopicRegistrar implements TopicRegistrar {
                 topics = getKafkaClient().listTopics(opts).names().get(sleep, TimeUnit.SECONDS);
             } catch (ExecutionException e) {
                 logger.error("Failed to list topics from brokers: {}."
-                        + " Trying again after {} seconds.", e.toString(), sleep);
+                        + " Trying again after {} seconds.", e, sleep);
                 Thread.sleep(sleep * 1000L);
                 sleep = Math.min(MAX_SLEEP, sleep * 2);
                 continue;

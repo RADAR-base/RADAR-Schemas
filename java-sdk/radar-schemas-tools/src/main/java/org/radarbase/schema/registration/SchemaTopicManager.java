@@ -35,7 +35,6 @@ import org.apache.kafka.clients.producer.RecordMetadata;
 import org.apache.kafka.common.PartitionInfo;
 import org.apache.kafka.common.TopicPartition;
 import org.apache.kafka.common.config.ConfigResource;
-import org.apache.zookeeper.KeeperException;
 import org.radarbase.schema.CommandLineApp;
 import org.radarbase.schema.util.SubCommand;
 import org.slf4j.Logger;
@@ -163,7 +162,7 @@ public class SchemaTopicManager implements Closeable {
         Map<String, Object> consumerProps = new HashMap<>();
 
         consumerProps.put(ConsumerConfig.GROUP_ID_CONFIG,
-                "schema-backup-" + UUID.randomUUID().toString());
+                "schema-backup-" + UUID.randomUUID());
         consumerProps.put(ConsumerConfig.CLIENT_ID_CONFIG, "schema-backup");
 
         consumerProps.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, topics.getBootstrapServers());
@@ -322,10 +321,9 @@ public class SchemaTopicManager implements Closeable {
      * @throws ExecutionException if the topic configuration cannot be written
      * @throws IllegalStateException if this manager was not initialized or if the
      *                               schema registry is running.
-     * @throws KeeperException if no connection with Zookeeper could be made.
      */
     public void restoreBackup(short replication)
-            throws IOException, ExecutionException, InterruptedException, KeeperException {
+            throws IOException, ExecutionException, InterruptedException {
         ensureInitialized();
         SchemaTopicBackup storeTopic;
         try {
