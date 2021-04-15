@@ -6,6 +6,7 @@ plugins {
 
 targetCompatibility = JavaVersion.VERSION_11
 sourceCompatibility = JavaVersion.VERSION_11
+description = 'RADAR Schemas core specification and validation tools.'
 
 configurations {
     implementation {
@@ -14,23 +15,6 @@ configurations {
     runtimeOnly {
         exclude group: 'org.slf4j', module: 'slf4j-log4j12'
     }
-}
-
-ext {
-    artifactName = 'radar-schemas-core'
-    description = 'RADAR Schemas core specification and validation tools.'
-
-    argparseVersion = '0.8.1'
-    jacksonVersion = '2.11.4'
-    radarJerseyVersion = "0.5.0"
-
-    junitVersion = '4.13'
-    confluentVersion = '5.5.3'
-    kafkaVersion = '2.5.1'
-    okHttpVersion = '4.9.0'
-    radarCommonsVersion = '0.13.1'
-    slf4jVersion = '1.7.30'
-    javaxValidationVersion = '2.0.1.Final'
 }
 
 dependencies {

@@ -17,7 +17,6 @@ import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javax.validation.constraints.NotNull;
-import kafka.zk.ZkVersion;
 import net.sourceforge.argparse4j.impl.action.StoreConstArgumentAction;
 import net.sourceforge.argparse4j.inf.ArgumentParser;
 import net.sourceforge.argparse4j.inf.Namespace;
@@ -201,13 +200,10 @@ public class SchemaTopicManager implements Closeable {
      * @throws RuntimeException storage failure or any other error.
      * @throws IllegalStateException if this manager was not initialized or schema registry was
      *                               running
-     * @throws KeeperException if no connection with Zookeeper could be made.
      */
     public void ensure(short replication, Duration timeout)
-            throws InterruptedException, ExecutionException, SerializationException, IOException,
-            KeeperException {
+            throws InterruptedException, ExecutionException, SerializationException, IOException {
         ensureInitialized();
-        ensureSchemaRegistryNotRunning();
 
         boolean topicExists = topics.getTopics().contains(TOPIC_NAME);
         if (topicExists) {
@@ -331,7 +327,6 @@ public class SchemaTopicManager implements Closeable {
     public void restoreBackup(short replication)
             throws IOException, ExecutionException, InterruptedException, KeeperException {
         ensureInitialized();
-        ensureSchemaRegistryNotRunning();
         SchemaTopicBackup storeTopic;
         try {
             storeTopic = storage.load();
@@ -357,29 +352,8 @@ public class SchemaTopicManager implements Closeable {
         commitBackup(storeTopic);
     }
 
-    private void ensureSchemaRegistryNotRunning() throws KeeperException, InterruptedException {
-        try {
-            if (topics.getZkClient().pathExists("/schema_registry/schema_registry_master")) {
-                throw new IllegalStateException(
-                        "Cannot restore schemas while the schema registry is running.");
-            }
-        } catch (Exception ex) {
-            logger.error("Cannot check whether schema registry master exists", ex);
-        }
-        logger.info("No zookeeper nodes for Schema Registry.");
-    }
-
-    private void resetSchemaRegistryId() throws KeeperException, InterruptedException {
-        try {
-            topics.getZkClient().deletePath("/schema_registry/schema_registry_id",
-                    ZkVersion.MatchAnyVersion(), false);
-        } catch (Exception ex) {
-            logger.info("No schema registry ID listed in zookeeper.");
-        }
-    }
-
     private void commitBackup(SchemaTopicBackup backup)
-            throws ExecutionException, InterruptedException, KeeperException {
+            throws ExecutionException, InterruptedException {
         AlterConfigsResult alterResult = topics.getKafkaClient()
                 .incrementalAlterConfigs(Map.of(topicResource, backup.getConfig().entries().stream()
                         .map(e -> new AlterConfigOp(e, OpType.SET))
@@ -398,7 +372,6 @@ public class SchemaTopicManager implements Closeable {
         }
 
         alterResult.all().get();
-        resetSchemaRegistryId();
     }
 
     /**

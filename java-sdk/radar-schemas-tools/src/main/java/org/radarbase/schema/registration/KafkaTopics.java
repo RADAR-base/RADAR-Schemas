@@ -2,27 +2,21 @@ package org.radarbase.schema.registration;
 
 import static org.apache.kafka.clients.admin.AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import javax.validation.constraints.NotNull;
-
-import kafka.cluster.Broker;
-import kafka.cluster.EndPoint;
-import kafka.zk.KafkaZkClient;
-import kafka.zookeeper.ZooKeeperClientException;
 import net.sourceforge.argparse4j.inf.ArgumentParser;
 import net.sourceforge.argparse4j.inf.Namespace;
 import org.apache.kafka.clients.admin.AdminClient;
-import org.apache.kafka.common.utils.Time;
+import org.apache.kafka.common.Node;
 import org.radarbase.schema.CommandLineApp;
 import org.radarbase.schema.util.SubCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import scala.Option;
-import scala.collection.JavaConverters$;
-import scala.collection.Seq;
 
 /**
  * Registers Kafka topics with Zookeeper.
@@ -30,21 +24,19 @@ import scala.collection.Seq;
 public class KafkaTopics extends AbstractTopicRegistrar {
     private static final Logger logger = LoggerFactory.getLogger(KafkaTopics.class);
 
-    private final KafkaZkClient zkClient;
     private AdminClient kafkaClient;
-    private String bootstrapServers;
+    private final String bootstrapServers;
     private boolean initialized;
 
     /**
      * Create Kafka topics registration object with given Zookeeper.
      *
-     * @param zookeeper comma-separated list of Zookeeper 'hostname:port'.
+     * @param bootstrapServers comma-separated list of Kafka 'PROTOCOL://hostname:port'.
      */
-    public KafkaTopics(@NotNull String zookeeper) {
-        this.zkClient = KafkaZkClient
-                .apply(zookeeper, false, 15_000, 10_000, 30, Time.SYSTEM, "kafka.server",
-                        "SessionExpireListener", Option.apply("radar-schemas"), Option.empty());
-        bootstrapServers = null;
+    public KafkaTopics(@NotNull String bootstrapServers) {
+        this.kafkaClient = AdminClient.create(Map.of(
+            BOOTSTRAP_SERVERS_CONFIG, bootstrapServers));
+        this.bootstrapServers = bootstrapServers;
         initialized = false;
     }
 
@@ -55,7 +47,6 @@ public class KafkaTopics extends AbstractTopicRegistrar {
      * @param brokers number of brokers to wait for
      * @return whether the brokers where available
      * @throws InterruptedException     when waiting for the brokers is interrupted.
-     * @throws ZooKeeperClientException if Zookeeper cannot be initialized.
      */
     public boolean initialize(int brokers) throws InterruptedException {
         int sleep = 2;
@@ -63,18 +54,23 @@ public class KafkaTopics extends AbstractTopicRegistrar {
         int numBrokers = 0;
 
         for (int tries = 0; tries < numTries && numBrokers < brokers; tries++) {
-            List<Broker> brokerList = currentBrokers();
-            numBrokers = brokerList.size();
+            List<String> hosts;
+            try {
+                hosts = kafkaClient.describeCluster()
+                    .nodes()
+                    .get()
+                    .stream()
+                    .map(Node::host)
+                    .collect(Collectors.toList());
+            } catch (ExecutionException ex) {
+                logger.error("Failed to connect to bootstrap server " + bootstrapServers,
+                        ex.getCause());
+                hosts = Collections.emptyList();
+            }
+            numBrokers = hosts.size();
 
             if (numBrokers >= brokers) {
-                // wait for 5sec before proceeding with topic creation
-                bootstrapServers = brokerList.stream()
-                        .map(Broker::endPoints)
-                        .flatMap(KafkaTopics::asStream)
-                        .map(EndPoint::connectionString)
-                        .collect(Collectors.joining(","));
-
-                logger.info("Creating Kafka client with bootstrap servers {}", bootstrapServers);
+                logger.info("Initialized Kafka client with bootstrap servers {}", hosts);
                 kafkaClient = AdminClient.create(Map.of(
                         BOOTSTRAP_SERVERS_CONFIG, bootstrapServers));
             } else if (tries < numTries - 1) {
@@ -99,20 +95,6 @@ public class KafkaTopics extends AbstractTopicRegistrar {
         }
     }
 
-    private List<Broker> currentBrokers() {
-        try {
-            // convert Scala sequence of servers to Java
-            return asStream(zkClient.getAllBrokersInCluster()).collect(Collectors.toList());
-        } catch (ZooKeeperClientException ex) {
-            logger.warn("Failed to reach zookeeper");
-            return List.of();
-        }
-    }
-
-    private static <T> Stream<T> asStream(Seq<T> stream) {
-        return JavaConverters$.MODULE$.seqAsJavaList(stream).stream();
-    }
-
     public String getBootstrapServers() {
         ensureInitialized();
         return bootstrapServers;
@@ -122,15 +104,14 @@ public class KafkaTopics extends AbstractTopicRegistrar {
      * Get current number of Kafka brokers according to Zookeeper.
      *
      * @return number of Kafka brokers
-     * @throws ZooKeeperClientException if zookeeper cannot connect
+     * @throws ExecutionException if kafka cannot connect
+     * @throws InterruptedException if the query is interrupted.
      */
-    public int getNumberOfBrokers() {
-        return zkClient.getAllBrokersInCluster().length();
-    }
-
-    @NotNull
-    public KafkaZkClient getZkClient() {
-        return zkClient;
+    public int getNumberOfBrokers() throws ExecutionException, InterruptedException {
+        return kafkaClient.describeCluster()
+            .nodes()
+            .thenApply(Collection::size)
+            .get();
     }
 
     @NotNull
@@ -138,12 +119,6 @@ public class KafkaTopics extends AbstractTopicRegistrar {
     public AdminClient getKafkaClient() {
         ensureInitialized();
         return kafkaClient;
-    }
-
-    @Override
-    public void close() {
-        super.close();
-        zkClient.close();
     }
 
     /**
@@ -180,7 +155,7 @@ public class KafkaTopics extends AbstractTopicRegistrar {
                 return topics.createTopics(app.getCatalogue(), partitions, replication,
                         options.getString("topic"), options.getString("match"));
 
-            } catch (InterruptedException | ZooKeeperClientException e) {
+            } catch (InterruptedException e) {
                 logger.error("Cannot retrieve number of addActive Kafka brokers."
                         + " Please check that Zookeeper is running.");
                 return 1;
@@ -209,8 +184,8 @@ public class KafkaTopics extends AbstractTopicRegistrar {
                     .help("register the schemas of all topics matching the given regex"
                             + "; does not do anything if --topic is specified")
                     .type(String.class);
-            parser.addArgument("zookeeper")
-                    .help("zookeeper hosts and ports, comma-separated");
+            parser.addArgument("bootstrapServers")
+                    .help("Kafka hosts, ports and protocols, comma-separated");
             SubCommand.addRootArgument(parser);
         }
     }
