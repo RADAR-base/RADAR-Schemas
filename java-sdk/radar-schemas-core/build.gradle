@@ -1,11 +1,15 @@
 plugins {
+    id 'java-library'
     id 'idea'
     id 'checkstyle'
     id 'pmd'
 }
 
-targetCompatibility = JavaVersion.VERSION_11
-sourceCompatibility = JavaVersion.VERSION_11
+compileJava {
+    targetCompatibility = JavaVersion.VERSION_11
+    sourceCompatibility = JavaVersion.VERSION_11
+}
+
 description = 'RADAR Schemas core specification and validation tools.'
 
 configurations {
@@ -18,16 +22,27 @@ configurations {
 }
 
 dependencies {
+    api (group: 'org.apache.avro', name: 'avro', version: avroVersion) {
+        exclude group: 'org.xerial.snappy', module: 'snappy-java'
+        exclude group: 'com.thoughtworks.paranamer', module: 'paranamer'
+        exclude group: 'org.apache.commons', module: 'commons-compress'
+        exclude group: 'org.tukaani', module: 'xz'
+    }
     api group: 'javax.validation', name: 'validation-api', version: javaxValidationVersion
     implementation project(':radar-schemas-commons')
 
     api ("com.fasterxml.jackson.core:jackson-databind:$jacksonVersion")
-    implementation ("com.fasterxml.jackson.datatype:jackson-datatype-jdk8:$jacksonVersion")
-    implementation ("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jacksonVersion")
+
     implementation ("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:$jacksonVersion")
     implementation(group: 'io.confluent', name: 'kafka-connect-avro-data', version: confluentVersion) {
+        exclude group: "org.glassfish.jersey.core", module: "jersey-common"
+        exclude group: "jakarta.ws.rs", module: "jakarta.ws.rs-api"
+        exclude group: "io.swagger", module: "swagger-annotations"
+        exclude group: "io.confluent", module: "common-utils"
         exclude group: "io.confluent", module: "kafka-schema-serializer"
     }
+
+
     implementation(group: 'org.apache.kafka', name: 'connect-api', version: kafkaVersion) {
         exclude group: "org.apache.kafka", module: "kafka-clients"
         exclude group: "javax.ws.rs", module: "javax.ws.rs-api"

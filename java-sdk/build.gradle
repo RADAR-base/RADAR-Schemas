@@ -3,27 +3,22 @@
 //---------------------------------------------------------------------------//
 
 plugins {
-    id 'com.commercehub.gradle.plugin.avro-base' version '0.19.1'
+    id 'com.github.davidmc24.gradle.plugin.avro-base' version '1.1.0'
 }
 
 subprojects {
     apply plugin: 'java'
-    apply plugin: 'java-library'
-    apply plugin: 'com.commercehub.gradle.plugin.avro-base'
     apply plugin: 'maven-publish'
     apply plugin: 'idea'
 
     // Configuration
-    version = '0.6.1-SNAPSHOT'
+    version = '0.7.0-SNAPSHOT'
     group = 'org.radarbase'
     ext.githubRepoName = 'RADAR-base/RADAR-Schemas'
 
     ext.githubUrl = "https://github.com/${githubRepoName}.git"
     ext.issueUrl = "https://github.com/${githubRepoName}/issues"
     ext.website = 'https://radar-base.org'
-
-    targetCompatibility = JavaVersion.VERSION_1_8
-    sourceCompatibility = JavaVersion.VERSION_1_8
 
     ext {
         avroVersion = '1.9.2'
@@ -36,24 +31,15 @@ subprojects {
         confluentVersion = '6.1.1'
         kafkaVersion = '6.1.1-ce'
         okHttpVersion = '4.9.1'
-        radarCommonsVersion = '0.13.1'
+        radarCommonsVersion = '0.13.2'
         slf4jVersion = '1.7.30'
         javaxValidationVersion = '2.0.1.Final'
+        logbackVersion = '1.2.3'
     }
 
     repositories {
         mavenCentral()
         maven { url 'https://packages.confluent.io/maven/' }
-    }
-
-    // dependencies
-    dependencies {
-        api (group: 'org.apache.avro', name: 'avro', version: avroVersion) {
-            exclude group: 'org.xerial.snappy', module: 'snappy-java'
-            exclude group: 'com.thoughtworks.paranamer', module: 'paranamer'
-            exclude group: 'org.apache.commons', module: 'commons-compress'
-            exclude group: 'org.tukaani', module: 'xz'
-        }
     }
 
     // Generated avro files
@@ -81,5 +67,5 @@ subprojects {
 }
 
 wrapper {
-    gradleVersion '6.8.3'
+    gradleVersion '7.0'
 }

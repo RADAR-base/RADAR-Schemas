@@ -1,8 +1,8 @@
 plugins {
+    id 'java-library'
     id 'idea'
     id 'checkstyle'
     id 'pmd'
-    id 'application'
 }
 
 compileJava {
@@ -29,27 +29,24 @@ sourceSets {
 description = 'RADAR Schemas specification and validation tools.'
 
 repositories {
-    maven { url  "https://dl.bintray.com/radar-cns/org.radarcns" }
-    maven { url  "https://dl.bintray.com/radar-base/org.radarbase" }
+    maven { url "https://jitpack.io" }
 }
 
 dependencies {
-    implementation("org.radarbase:radar-jersey:$radarJerseyVersion")
-    implementation project(':radar-schemas-core')
-    implementation group: 'net.sourceforge.argparse4j', name: 'argparse4j', version: argparseVersion
+    api project(':radar-schemas-commons')
+    api project(':radar-schemas-core')
+    api group: 'org.radarbase', name: 'radar-commons-server', version: radarCommonsVersion
 
-    runtimeOnly group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
+    implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: okHttpVersion
+
+    implementation group: 'io.confluent', name: 'kafka-connect-avro-converter', version: confluentVersion
+    implementation group: 'io.confluent', name: 'kafka-schema-registry', version: confluentVersion
+    implementation group: 'org.apache.kafka', name: 'connect-json', version: kafkaVersion
+
+    testRuntimeOnly group: 'ch.qos.logback', name: 'logback-classic', version: logbackVersion
 
     testImplementation group: 'junit', name: 'junit', version: junitVersion
-
-    testImplementation group: 'com.squareup.okhttp3', name: 'okhttp', version: okHttpVersion
 }
-
-application {
-    mainClass.set('org.radarbase.schema.service.SourceCatalogueServer')
-}
-
-apply from: "$rootDir/gradle/testing.gradle"
 
 //---------------------------------------------------------------------------//
 // Publishing                                                                //
@@ -59,3 +56,6 @@ tasks.withType(Tar) {
     compression = Compression.GZIP
     archiveExtension.set('tar.gz')
 }
+
+apply from: "$rootDir/gradle/publishing.gradle"
+apply from: "$rootDir/gradle/testing.gradle"

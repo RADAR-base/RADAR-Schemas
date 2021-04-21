@@ -3,6 +3,8 @@ package org.radarbase.schema.specification.stream;
 import static org.radarbase.schema.util.SchemaUtils.applyOrEmpty;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import java.util.ArrayList;
@@ -21,6 +23,7 @@ import org.radarcns.kafka.ObservationKey;
 /**
  * Topic used for Kafka Streams.
  */
+@JsonInclude(Include.NON_NULL)
 public class StreamDataTopic extends DataTopic {
     /** Whether the stream is a windowed stream with standard TimeWindow windows. */
     @JsonProperty

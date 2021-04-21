@@ -16,6 +16,8 @@
 
 package org.radarbase.schema.specification.passive;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Objects;
 import org.radarbase.schema.specification.AppDataTopic;
@@ -24,6 +26,7 @@ import org.radarcns.catalogue.ProcessingState;
 /**
  * TODO.
  */
+@JsonInclude(Include.NON_NULL)
 public class PassiveDataTopic extends AppDataTopic {
 
     @JsonProperty("processing_state")

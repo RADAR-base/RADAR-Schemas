@@ -1,5 +1,7 @@
 package org.radarbase.schema.specification.push;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 import javax.validation.constraints.NotNull;
@@ -7,6 +9,7 @@ import org.radarbase.schema.Scope;
 import org.radarbase.schema.specification.DataProducer;
 import org.radarbase.schema.specification.DataTopic;
 
+@JsonInclude(Include.NON_NULL)
 public class PushSource extends DataProducer<DataTopic> {
 
     @JsonProperty

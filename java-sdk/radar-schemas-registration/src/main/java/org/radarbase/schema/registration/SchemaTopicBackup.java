@@ -13,6 +13,7 @@ import io.confluent.kafka.schemaregistry.storage.SchemaRegistryValue;
 import io.confluent.kafka.schemaregistry.storage.SchemaValue;
 import io.confluent.kafka.schemaregistry.storage.exceptions.SerializationException;
 import io.confluent.kafka.schemaregistry.storage.serialization.SchemaRegistrySerializer;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -27,20 +28,27 @@ import org.apache.kafka.clients.admin.Config;
 import org.apache.kafka.clients.admin.ConfigEntry;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 
-/** Data class for containing the data and metadata of the _schemas topic. */
+/**
+ * Data class for containing the data and metadata of the _schemas topic.
+ */
 public class SchemaTopicBackup {
+
     @JsonProperty
     private final Map<String, String> settings;
     @JsonProperty
     private final Set<SchemaRecord> records;
 
-    /** Empty backup. */
+    /**
+     * Empty backup.
+     */
     public SchemaTopicBackup() {
         settings = new HashMap<>();
         records = new LinkedHashSet<>();
     }
 
-    /** Fully ready backup. */
+    /**
+     * Fully ready backup.
+     */
     @JsonCreator
     public SchemaTopicBackup(
             @JsonProperty("settings") Map<String, String> settings,
@@ -77,28 +85,35 @@ public class SchemaTopicBackup {
         }
     }
 
-    /** Add schema from topic. This will deduplicate using record key. */
+    /**
+     * Add schema from topic. This will deduplicate using record key.
+     */
     public void addSchemaRecord(
             SchemaRegistrySerializer serializer,
-            ConsumerRecord<byte[], byte[]> record) throws SerializationException {
-
-        SchemaRegistryKey messageKey = serializer.deserializeKey(record.key());
+            ConsumerRecord<byte[], byte[]> record) throws IOException {
 
         SchemaRecord schemaRecord = null;
+        SchemaRegistryKey messageKey = null;
+        try {
+            messageKey = serializer.deserializeKey(record.key());
 
-        if (messageKey.getKeyType() == SchemaRegistryKeyType.SCHEMA
-                && record.value() != null) {
-            SchemaRegistryValue message = serializer.deserializeValue(messageKey, record.value());
+            if (messageKey.getKeyType() == SchemaRegistryKeyType.SCHEMA
+                    && record.value() != null) {
+                SchemaRegistryValue message = serializer.deserializeValue(
+                        messageKey, record.value());
 
-            if (message instanceof SchemaValue) {
-                SchemaValue schemaValue = (SchemaValue) message;
-                schemaRecord = new SchemaRecord(
-                        messageKey.getKeyType(),
-                        schemaValue.getSubject(),
-                        schemaValue.getId(),
-                        record.key(),
-                        record.value());
+                if (message instanceof SchemaValue) {
+                    SchemaValue schemaValue = (SchemaValue) message;
+                    schemaRecord = new SchemaRecord(
+                            messageKey.getKeyType(),
+                            schemaValue.getSubject(),
+                            schemaValue.getId(),
+                            record.key(),
+                            record.value());
+                }
             }
+        } catch (SerializationException ex) {
+            throw new IOException("Cannot deserialize message", ex);
         }
         if (schemaRecord == null) {
             schemaRecord = new SchemaRecord(
@@ -121,17 +136,8 @@ public class SchemaTopicBackup {
     }
 
     /**
-     * Set the Kafka config of a topic.
-     * @param config configuration of the topic.
-     */
-    @JsonIgnore
-    public void setConfig(@NotNull Config config) {
-        putAll(config.entries().stream()
-                .collect(Collectors.toMap(ConfigEntry::name, ConfigEntry::value)));
-    }
-
-    /**
      * Get the Kafka config of a topic.
+     *
      * @return configuration of the topic. It may be empty if not initialized.
      */
     @JsonIgnore
@@ -142,8 +148,22 @@ public class SchemaTopicBackup {
                 .collect(Collectors.toList()));
     }
 
-    /** Schema record. */
+    /**
+     * Set the Kafka config of a topic.
+     *
+     * @param config configuration of the topic.
+     */
+    @JsonIgnore
+    public void setConfig(@NotNull Config config) {
+        putAll(config.entries().stream()
+                .collect(Collectors.toMap(ConfigEntry::name, ConfigEntry::value)));
+    }
+
+    /**
+     * Schema record.
+     */
     public static class SchemaRecord {
+
         private final SchemaRegistryKeyType type;
         private final Integer schemaId;
         private final String subject;

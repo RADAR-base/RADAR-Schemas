@@ -1,6 +1,8 @@
 package org.radarbase.schema.specification.stream;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 import java.util.stream.Stream;
@@ -13,6 +15,7 @@ import org.radarbase.schema.specification.DataProducer;
  * by default, since Kafka Streams will do that itself. To disable this, set the
  * {@code register_schema} property to {@code true}.
  */
+@JsonInclude(Include.NON_NULL)
 public class StreamGroup extends DataProducer<StreamDataTopic> {
     @JsonProperty @NotEmpty
     private List<StreamDataTopic> data;

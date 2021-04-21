@@ -2,11 +2,8 @@ package org.radarbase.schema.registration;
 
 import static org.apache.kafka.common.config.ConfigResource.Type.TOPIC;
 
-import io.confluent.kafka.schemaregistry.storage.exceptions.SerializationException;
 import io.confluent.kafka.schemaregistry.storage.serialization.SchemaRegistrySerializer;
-import java.io.Closeable;
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.List;
@@ -17,9 +14,6 @@ import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javax.validation.constraints.NotNull;
-import net.sourceforge.argparse4j.impl.action.StoreConstArgumentAction;
-import net.sourceforge.argparse4j.inf.ArgumentParser;
-import net.sourceforge.argparse4j.inf.Namespace;
 import org.apache.kafka.clients.admin.AlterConfigOp;
 import org.apache.kafka.clients.admin.AlterConfigOp.OpType;
 import org.apache.kafka.clients.admin.AlterConfigsResult;
@@ -35,16 +29,16 @@ import org.apache.kafka.clients.producer.RecordMetadata;
 import org.apache.kafka.common.PartitionInfo;
 import org.apache.kafka.common.TopicPartition;
 import org.apache.kafka.common.config.ConfigResource;
-import org.radarbase.schema.CommandLineApp;
-import org.radarbase.schema.util.SubCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Manages the _schemas topic. Currently, this backs up and restores all data in the _schemas topic.
+ * Manages the _schemas topic. Currently, this backs up and restores all data in the _schemas
+ * topic.
  */
 @SuppressWarnings("WeakerAccess")
-public class SchemaTopicManager implements Closeable {
+public class SchemaTopicManager {
+
     private static final Logger logger = LoggerFactory.getLogger(SchemaTopicManager.class);
     private static final String TOPIC_NAME = "_schemas";
     private static final Duration SECONDARY_TIMEOUT = Duration.ofSeconds(10L);
@@ -56,6 +50,7 @@ public class SchemaTopicManager implements Closeable {
 
     /**
      * Schema topic manager.
+     *
      * @param zookeeper zookeeper hosts and ports, comma-separated
      * @param storage storage medium to read and write backups from and to.
      */
@@ -69,6 +64,7 @@ public class SchemaTopicManager implements Closeable {
 
     /**
      * Wait for brokers and topics to become available.
+     *
      * @param numBrokers number of brokers to wait for
      * @throws InterruptedException if waiting for the brokers or topics was interrupted.
      * @throws IllegalStateException if the brokers or topics are not available
@@ -89,9 +85,10 @@ public class SchemaTopicManager implements Closeable {
     /**
      * Read a backup from the _schemas topic. This backup only includes the actual schemas, not
      * configuration changes or NOOP messages.
+     *
      * @param timeout time to wait for first schema records to become available.
      * @return backup of the _schemas topic.
-     * @throws SerializationException if a message in the topic cannot be read
+     * @throws IOException if a message in the topic cannot be read
      * @throws ExecutionException if the topic configuration cannot be read
      * @throws InterruptedException if the process was interrupted before finishing
      * @throws RuntimeException storage failure or any other error.
@@ -99,7 +96,7 @@ public class SchemaTopicManager implements Closeable {
      */
     @NotNull
     public SchemaTopicBackup readBackup(Duration timeout)
-            throws SerializationException, ExecutionException, InterruptedException {
+            throws IOException, ExecutionException, InterruptedException {
         ensureInitialized();
 
         SchemaTopicBackup storeTopic = new SchemaTopicBackup();
@@ -112,7 +109,7 @@ public class SchemaTopicManager implements Closeable {
                     .values()
                     .get(topicResource)
                     .get());
-        } catch (SerializationException e) {
+        } catch (IOException e) {
             logger.error("Failed to deserialize the schema or config key", e);
             throw e;
         } catch (ExecutionException e) {
@@ -133,15 +130,16 @@ public class SchemaTopicManager implements Closeable {
     /**
      * Read a backup from the _schemas topic and store it. This backup only includes the actual
      * schemas, not configuration changes or NOOP messages.
+     *
      * @param timeout time to wait for first schema records to become available.
-     * @throws SerializationException if a message in the topic cannot be read
+     * @throws IOException if a message in the topic cannot be read
      * @throws ExecutionException if the topic configuration cannot be read
      * @throws InterruptedException if the process was interrupted before finishing
      * @throws RuntimeException storage failure or any other error.
      * @throws IllegalStateException if this manager was not initialized
      */
     public void makeBackup(Duration timeout)
-            throws IOException, InterruptedException, ExecutionException, SerializationException {
+            throws IOException, InterruptedException, ExecutionException {
         SchemaTopicBackup storeTopic = readBackup(timeout);
         if (storeTopic != null) {
             try {
@@ -189,11 +187,12 @@ public class SchemaTopicManager implements Closeable {
     }
 
     /**
-     * Checks if the current _schemas topic is valid. If not, the topic is replaced by the data
-     * in the backup. The _schemas topic is considered valid if it exists, is not empty and starts
-     * at id 1.
+     * Checks if the current _schemas topic is valid. If not, the topic is replaced by the data in
+     * the backup. The _schemas topic is considered valid if it exists, is not empty and starts at
+     * id 1.
+     *
      * @param timeout time to wait for first schema records to become available.
-     * @throws SerializationException if a message in the topic cannot be read or written
+     * @throws IOException if a message in the topic cannot be read or written
      * @throws ExecutionException if the topic configuration cannot be read or written
      * @throws InterruptedException if the process was interrupted before finishing
      * @throws RuntimeException storage failure or any other error.
@@ -201,7 +200,7 @@ public class SchemaTopicManager implements Closeable {
      *                               running
      */
     public void ensure(short replication, Duration timeout)
-            throws InterruptedException, ExecutionException, SerializationException, IOException {
+            throws InterruptedException, ExecutionException, IOException {
         ensureInitialized();
 
         boolean topicExists = topics.getTopics().contains(TOPIC_NAME);
@@ -244,7 +243,6 @@ public class SchemaTopicManager implements Closeable {
             }
         }
 
-
         if (!topics.createTopics(Stream.of(TOPIC_NAME), 1, replication)) {
             throw new IllegalStateException("Failed to create _schemas topic");
         }
@@ -252,9 +250,11 @@ public class SchemaTopicManager implements Closeable {
         commitBackup(newBackup);
     }
 
-    /** Read the schemas in the _schemas topic and put them in a backup. */
+    /**
+     * Read the schemas in the _schemas topic and put them in a backup.
+     */
     private void readSchemas(Map<String, Object> consumerProps, SchemaTopicBackup storeTopic,
-            Duration timeout) throws SerializationException {
+            Duration timeout) throws IOException {
         try (Consumer<byte[], byte[]> consumer = new KafkaConsumer<>(consumerProps)) {
             ensurePartitions(consumer);
 
@@ -280,6 +280,7 @@ public class SchemaTopicManager implements Closeable {
 
     /**
      * Ensure that _schemas has exactly one partition.
+     *
      * @param consumer consumer to subscribe partitions with.
      * @throws IllegalArgumentException if the _schemas topic cannot be found.
      * @throws IllegalStateException if the _schemas topic has more than one partition.
@@ -317,10 +318,11 @@ public class SchemaTopicManager implements Closeable {
 
     /**
      * Restores the _schemas from backup.
+     *
      * @throws RuntimeException storage failure or any other error.
      * @throws ExecutionException if the topic configuration cannot be written
-     * @throws IllegalStateException if this manager was not initialized or if the
-     *                               schema registry is running.
+     * @throws IllegalStateException if this manager was not initialized or if the schema registry
+     *                               is running.
      */
     public void restoreBackup(short replication)
             throws IOException, ExecutionException, InterruptedException {
@@ -340,7 +342,7 @@ public class SchemaTopicManager implements Closeable {
 
         if (topics.getTopics().contains(TOPIC_NAME)) {
             throw new IllegalStateException(
-                "Topic _schemas already exists, cannot restore it from backup");
+                    "Topic _schemas already exists, cannot restore it from backup");
         }
 
         if (!topics.createTopics(Stream.of(TOPIC_NAME), 1, replication)) {
@@ -371,110 +373,4 @@ public class SchemaTopicManager implements Closeable {
 
         alterResult.all().get();
     }
-
-    /**
-     * Return the schema registry as a subcommand.
-     */
-    public static SubCommand command() {
-        return new SchemasCommand();
-    }
-
-    @Override
-    public void close() {
-        topics.close();
-    }
-
-    private static class SchemasCommand implements SubCommand {
-        private static final String SUBACTION = "subaction";
-
-        private enum SubAction {
-            BACKUP, RESTORE, ENSURE
-        }
-
-        @Override
-        public String getName() {
-            return "schema-topic";
-        }
-
-        @Override
-        public int execute(Namespace options, CommandLineApp app) {
-            String zookeeper = options.getString("zookeeper");
-
-            JsonSchemaBackupStorage jsonStorage = new JsonSchemaBackupStorage(
-                    Paths.get(options.getString("file")));
-
-            try (SchemaTopicManager manager = new SchemaTopicManager(zookeeper, jsonStorage)) {
-                manager.initialize(options.getInt("brokers"));
-
-                Duration timeout = Duration.ofSeconds(options.getInt("timeout"));
-
-                switch (options.<SubAction>get(SUBACTION)) {
-                    case BACKUP:
-                        manager.makeBackup(timeout);
-                        break;
-                    case RESTORE:
-                        manager.restoreBackup(options.getShort("replication"));
-                        break;
-                    case ENSURE:
-                        manager.ensure(options.getShort("replication"), timeout);
-                        break;
-                    default:
-                        logger.error("Unknown action");
-                        return 3;
-                }
-                return 0;
-            } catch (Exception ex) {
-                logger.error("Action failed: {}", ex.toString());
-                return 2;
-            }
-        }
-
-        @Override
-        public void addParser(ArgumentParser parser) {
-            parser.description("Manage the _schemas topic");
-
-            parser.addArgument("--backup")
-                    .help("back up schema topic data")
-                    .action(new StoreConstArgumentAction())
-                    .setConst(SubAction.BACKUP)
-                    .dest(SUBACTION);
-
-            parser.addArgument("--restore")
-                    .help("restore schema topic from backup")
-                    .action(new StoreConstArgumentAction())
-                    .setConst(SubAction.RESTORE)
-                    .dest(SUBACTION);
-
-            parser.addArgument("--ensure")
-                    .help("ensure that the schema topic is restored if needed")
-                    .action(new StoreConstArgumentAction())
-                    .setConst(SubAction.ENSURE)
-                    .dest(SUBACTION);
-
-            parser.addArgument("-r", "--replication")
-                    .help("number of replicas per data packet")
-                    .type(Short.class)
-                    .setDefault((short) 3);
-
-            parser.addArgument("-t", "--timeout")
-                    .help("time (seconds) to wait for records in the _schemas topic to become"
-                        + " available")
-                    .setDefault(600)
-                    .type(Integer.class);
-
-            parser.addArgument("-f", "--file")
-                    .help("JSON file to load _schemas from")
-                    .type(String.class)
-                    .required(true);
-
-            parser.addArgument("-b", "--brokers")
-                    .help("number of brokers that are expected to be available.")
-                    .type(Integer.class)
-                    .setDefault(3);
-            parser.addArgument("zookeeper")
-                    .help("zookeeper hosts and ports, comma-separated");
-            SubCommand.addRootArgument(parser);
-        }
-    }
-
 }

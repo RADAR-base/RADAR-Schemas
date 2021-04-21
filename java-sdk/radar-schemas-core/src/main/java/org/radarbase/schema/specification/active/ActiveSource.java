@@ -16,6 +16,8 @@
 
 package org.radarbase.schema.specification.active;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -33,6 +35,7 @@ import org.radarbase.schema.specification.active.questionnaire.QuestionnaireSour
 @JsonSubTypes(value = {
         @JsonSubTypes.Type(name = "QUESTIONNAIRE", value = QuestionnaireSource.class),
         @JsonSubTypes.Type(name = "APP", value = AppActiveSource.class)})
+@JsonInclude(Include.NON_NULL)
 public class ActiveSource<T extends DataTopic> extends DataProducer<T> {
     public enum RadarSourceTypes {
         QUESTIONNAIRE

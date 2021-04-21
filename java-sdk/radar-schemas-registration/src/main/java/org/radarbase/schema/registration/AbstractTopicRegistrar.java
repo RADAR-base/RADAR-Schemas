@@ -1,7 +1,5 @@
 package org.radarbase.schema.registration;
 
-import static org.radarbase.schema.CommandLineApp.matchTopic;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -12,7 +10,6 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javax.validation.constraints.NotNull;
-
 import org.apache.kafka.clients.admin.AdminClient;
 import org.apache.kafka.clients.admin.ListTopicsOptions;
 import org.apache.kafka.clients.admin.NewTopic;
@@ -21,6 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public abstract class AbstractTopicRegistrar implements TopicRegistrar {
+
     static final int MAX_SLEEP = 32;
     private static final Logger logger = LoggerFactory.getLogger(AbstractTopicRegistrar.class);
     private Set<String> topics;
@@ -28,7 +26,7 @@ public abstract class AbstractTopicRegistrar implements TopicRegistrar {
     @Override
     public int createTopics(@NotNull SourceCatalogue catalogue, int partitions, short replication,
             String topic, String match) {
-        Pattern pattern = matchTopic(topic, match);
+        Pattern pattern = TopicRegistrar.matchTopic(topic, match);
 
         if (pattern == null) {
             return createTopics(catalogue, partitions, replication) ? 0 : 1;
@@ -51,8 +49,8 @@ public abstract class AbstractTopicRegistrar implements TopicRegistrar {
     /**
      * Create all topics in a catalogue.
      *
-     * @param catalogue   source catalogue to extract topic names from
-     * @param partitions  number of partitions per topic
+     * @param catalogue source catalogue to extract topic names from
+     * @param partitions number of partitions per topic
      * @param replication number of replicas for a topic
      * @return whether the whole catalogue was registered
      */

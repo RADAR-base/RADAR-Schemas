@@ -2,9 +2,9 @@ package org.radarbase.schema.registration;
 
 import java.io.Closeable;
 import java.util.Set;
+import java.util.regex.Pattern;
 import java.util.stream.Stream;
 import javax.validation.constraints.NotNull;
-
 import org.radarbase.schema.specification.SourceCatalogue;
 
 /**
@@ -13,10 +13,29 @@ import org.radarbase.schema.specification.SourceCatalogue;
 public interface TopicRegistrar extends Closeable {
 
     /**
+     * Create a pattern to match given topic. If the exact match is non-null, it is returned as an
+     * exact match, otherwise if regex is non-null, it is used, and otherwise {@code null} is
+     * returned.
+     *
+     * @param exact string that should be exactly matched.
+     * @param regex string that should be matched as a regex.
+     * @return pattern or {@code null} if both exact and regex are {@code null}.
+     */
+    static Pattern matchTopic(String exact, String regex) {
+        if (exact != null) {
+            return Pattern.compile("^" + Pattern.quote(exact) + "$");
+        } else if (regex != null) {
+            return Pattern.compile(regex);
+        } else {
+            return null;
+        }
+    }
+
+    /**
      * Create all topics in a catalogue based on pattern provided.
      *
-     * @param catalogue   source catalogue to extract topic names from.
-     * @param partitions  number of partitions per topic.
+     * @param catalogue source catalogue to extract topic names from.
+     * @param partitions number of partitions per topic.
      * @param replication number of replicas for a topic.
      * @param topic Topic name if registering the schemas only for topic.
      * @param match Regex string to register schemas only for topics that match the pattern.
@@ -28,8 +47,8 @@ public interface TopicRegistrar extends Closeable {
     /**
      * Create a single topic.
      *
-     * @param topics      names of the topic to create.
-     * @param partitions  number of partitions per topic.
+     * @param topics names of the topic to create.
+     * @param partitions number of partitions per topic.
      * @param replication number of replicas for a topic.
      * @return whether the topic was registered.
      */

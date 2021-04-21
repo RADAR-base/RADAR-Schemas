@@ -19,7 +19,7 @@ package org.radarbase.schema.specification;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -49,9 +49,6 @@ import org.slf4j.LoggerFactory;
  */
 public class SourceCatalogue {
     private static final Logger logger = LoggerFactory.getLogger(SourceCatalogue.class);
-
-    /** Folder names. */
-    public static final String YAML_EXTENSION = ".yml";
 
     public static final Path BASE_PATH = Paths.get("../..").toAbsolutePath().normalize();
 
@@ -100,7 +97,7 @@ public class SourceCatalogue {
         Path specRoot = root.resolve("specifications");
 
         ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
-        mapper.setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE);
+        mapper.setPropertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE);
 
         // only serialize fields, not getters, etc.
         mapper.setVisibility(mapper.getSerializationConfig().getDefaultVisibilityChecker()

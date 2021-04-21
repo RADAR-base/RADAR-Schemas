@@ -16,6 +16,8 @@
 
 package org.radarbase.schema.specification.active.questionnaire;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.net.URL;
 import java.util.Map;
@@ -24,6 +26,7 @@ import org.radarbase.schema.specification.DataTopic;
 /**
  * TODO.
  */
+@JsonInclude(Include.NON_NULL)
 public class QuestionnaireDataTopic extends DataTopic {
     @JsonProperty
     private URL questionnaireDefinitionUrl;

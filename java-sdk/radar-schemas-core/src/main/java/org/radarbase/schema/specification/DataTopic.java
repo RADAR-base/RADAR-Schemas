@@ -5,6 +5,8 @@ import static com.fasterxml.jackson.dataformat.yaml.YAMLGenerator.Feature.WRITE_
 import static org.radarbase.schema.util.SchemaUtils.expandClass;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -23,6 +25,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /** DataTopic topic from a data producer. */
+@JsonInclude(Include.NON_NULL)
 public class DataTopic extends AvroTopicConfig {
     private static final Logger logger = LoggerFactory.getLogger(DataTopic.class);
 

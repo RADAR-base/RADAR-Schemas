@@ -69,7 +69,7 @@ public class SourceCatalogueServer implements Closeable {
             System.exit(1);
         }
 
-        if (parsedArgs.getBoolean("help")) {
+        if (parsedArgs.getBoolean("help") != null && parsedArgs.getBoolean("help")) {
             parser.printHelp();
             System.exit(0);
         }

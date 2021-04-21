@@ -15,8 +15,11 @@ import java.util.Arrays;
 import java.util.Locale;
 import javax.validation.constraints.NotNull;
 
-/** Schema topic backup storage to JSON files. */
+/**
+ * Schema topic backup storage to JSON files.
+ */
 public class JsonSchemaBackupStorage implements SchemaBackupStorage {
+
     private static final String EXT = ".json";
     private static final String INVALID_EXT = ".invalid" + EXT;
     private static final ObjectMapper MAPPER = new ObjectMapper()
@@ -25,16 +28,6 @@ public class JsonSchemaBackupStorage implements SchemaBackupStorage {
 
     public JsonSchemaBackupStorage(@NotNull Path path) {
         this.path = path.toAbsolutePath();
-    }
-
-    @Override
-    public void store(SchemaTopicBackup topic) throws IOException {
-        Path tmpPath = Files.createTempFile(path.getParent(), ".schema-backup", EXT);
-        try (Writer writer = Files.newBufferedWriter(tmpPath)) {
-            MAPPER.writeValue(writer, topic);
-        }
-
-        replaceAndBackup(tmpPath, path, EXT);
     }
 
     static boolean contentEquals(@NotNull Path path, @NotNull Path backupPath) throws IOException {
@@ -61,6 +54,16 @@ public class JsonSchemaBackupStorage implements SchemaBackupStorage {
 
             return input2.read() == -1;
         }
+    }
+
+    @Override
+    public void store(SchemaTopicBackup topic) throws IOException {
+        Path tmpPath = Files.createTempFile(path.getParent(), ".schema-backup", EXT);
+        try (Writer writer = Files.newBufferedWriter(tmpPath)) {
+            MAPPER.writeValue(writer, topic);
+        }
+
+        replaceAndBackup(tmpPath, path, EXT);
     }
 
     private void replaceAndBackup(Path tmpPath, Path mainPath, String suffix) throws IOException {

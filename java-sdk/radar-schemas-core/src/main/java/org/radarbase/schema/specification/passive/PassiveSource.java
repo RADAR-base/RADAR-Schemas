@@ -16,6 +16,8 @@
 
 package org.radarbase.schema.specification.passive;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 import javax.validation.constraints.NotEmpty;
@@ -26,6 +28,7 @@ import org.radarbase.schema.specification.AppSource;
 /**
  * TODO.
  */
+@JsonInclude(Include.NON_NULL)
 public class PassiveSource extends AppSource<PassiveDataTopic> {
     @JsonProperty @NotEmpty
     private List<PassiveDataTopic> data;

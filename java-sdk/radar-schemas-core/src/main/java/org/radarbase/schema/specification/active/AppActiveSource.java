@@ -2,10 +2,13 @@ package org.radarbase.schema.specification.active;
 
 import static org.radarbase.schema.util.SchemaUtils.expandClass;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import org.radarbase.schema.specification.AppDataTopic;
 
+@JsonInclude(Include.NON_NULL)
 public class AppActiveSource extends ActiveSource<AppDataTopic> {
     @JsonProperty("app_provider")
     private String appProvider;

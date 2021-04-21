@@ -3,6 +3,8 @@ package org.radarbase.schema.specification;
 import static org.radarbase.schema.util.SchemaUtils.applyOrEmpty;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +19,7 @@ import org.radarbase.topic.AvroTopic;
  * A producer of data to Kafka, generally mapping to a source.
  * @param <T> type of data that is produced.
  */
+@JsonInclude(Include.NON_NULL)
 public abstract class DataProducer<T extends DataTopic> {
     @JsonProperty @NotBlank
     private String name;

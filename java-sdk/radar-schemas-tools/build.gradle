@@ -1,12 +1,12 @@
 plugins {
     id 'idea'
-    id 'checkstyle'
-    id 'pmd'
     id 'application'
 }
 
-targetCompatibility = JavaVersion.VERSION_11
-sourceCompatibility = JavaVersion.VERSION_11
+compileJava {
+    targetCompatibility = JavaVersion.VERSION_11
+    sourceCompatibility = JavaVersion.VERSION_11
+}
 
 configurations {
     implementation {
@@ -15,10 +15,6 @@ configurations {
     runtimeOnly {
         exclude group: 'org.slf4j', module: 'slf4j-log4j12'
     }
-    applicationCompileOnly.extendsFrom(compileOnly)
-    applicationImplementation.extendsFrom(implementation)
-    applicationRuntimeOnly.extendsFrom(runtimeOnly)
-    testRuntimeOnly.extendsFrom(applicationRuntimeOnly)
 }
 
 sourceSets {
@@ -30,49 +26,21 @@ sourceSets {
 
 description = 'RADAR Schemas specification and validation tools.'
 
-ext.artifactName = 'radar-schemas-tools'
-
 repositories {
     maven { url "https://jitpack.io" }
 }
 
 dependencies {
-//    api group: 'org.apache.kafka', name: 'kafka_2.12', version: kafkaVersion
-
-    implementation project(':radar-schemas-commons')
-    implementation project(':radar-schemas-core')
-
-    implementation group: 'org.radarbase', name: 'radar-commons-server', version: radarCommonsVersion
-
-    implementation ("com.fasterxml.jackson.module:jackson-module-jaxb-annotations:$jacksonModuleVersion")
-    implementation ("com.fasterxml.jackson.jaxrs:jackson-jaxrs-base:$jacksonModuleVersion")
-    implementation ("com.fasterxml.jackson.module:jackson-module-parameter-names:$jacksonModuleVersion")
-    implementation ("com.fasterxml.jackson.datatype:jackson-datatype-guava:$jacksonModuleVersion")
-    implementation ("com.fasterxml.jackson.dataformat:jackson-dataformat-csv:$jacksonModuleVersion")
-    implementation("com.fasterxml.jackson.module:jackson-module-scala_2.12:$jacksonModuleVersion")
+    implementation project(':radar-schemas-registration')
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:$jacksonModuleVersion")
 
     implementation group: 'net.sourceforge.argparse4j', name: 'argparse4j', version: argparseVersion
-    implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: okHttpVersion
 
-    implementation group: 'io.confluent', name: 'kafka-connect-avro-converter', version: confluentVersion
-    implementation group: 'io.confluent', name: 'kafka-schema-registry', version: confluentVersion
-    implementation group: 'org.apache.kafka', name: 'connect-json', version: kafkaVersion
-
-    applicationRuntimeOnly group: 'org.slf4j', name: 'slf4j-simple', version: slf4jVersion
-
-    testImplementation group: 'junit', name: 'junit', version: junitVersion
+    runtimeOnly group: 'org.slf4j', name: 'slf4j-simple', version: slf4jVersion
 }
 
 application {
-    mainClass.set('org.radarbase.schema.CommandLineApp')
-}
-
-run {
-    classpath = sourceSets.application.runtimeClasspath
-}
-
-startScripts {
-    classpath = sourceSets.application.runtimeClasspath
+    mainClass.set('org.radarbase.schema.tools.CommandLineApp')
 }
 
 //---------------------------------------------------------------------------//
@@ -83,6 +51,3 @@ tasks.withType(Tar) {
     compression = Compression.GZIP
     archiveExtension.set('tar.gz')
 }
-
-apply from: "$rootDir/gradle/publishing.gradle"
-apply from: "$rootDir/gradle/testing.gradle"

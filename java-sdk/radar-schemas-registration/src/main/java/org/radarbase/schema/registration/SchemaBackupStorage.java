@@ -6,8 +6,10 @@ import java.io.IOException;
  * Storage for _schemas topic backups.
  */
 public interface SchemaBackupStorage {
+
     /**
      * Store a valid _schemas topic backup.
+     *
      * @param topic backup to store.
      * @throws IOException if the data cannot be stored.
      */
@@ -15,6 +17,7 @@ public interface SchemaBackupStorage {
 
     /**
      * Store an invalid _schemas topic backup.
+     *
      * @param topic backup to store.
      * @throws IOException if the data cannot be stored.
      */
@@ -22,6 +25,7 @@ public interface SchemaBackupStorage {
 
     /**
      * Load a valid _schemas topic backup from storage.
+     *
      * @return backup or {@code null} if no backup was available.
      * @throws IOException if the data cannot be stored.
      */

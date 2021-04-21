@@ -1,5 +1,7 @@
 package org.radarbase.schema.specification.connector;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 import org.radarbase.schema.Scope;
@@ -11,6 +13,7 @@ import org.radarbase.schema.specification.DataTopic;
  * registry by default, since Kafka Connect will do that itself. To enable auto-registration, set
  * the {@code register_schema} property to {@code true}.
  */
+@JsonInclude(Include.NON_NULL)
 public class ConnectorSource extends DataProducer<DataTopic> {
     @JsonProperty
     private List<DataTopic> data;
