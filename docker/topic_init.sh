@@ -3,9 +3,9 @@
 # Create topics
 echo "Creating RADAR-base topics..."
 
-if ! radar-schemas-tools create -p $KAFKA_NUM_PARTITIONS -r $KAFKA_NUM_REPLICATION -b $KAFKA_NUM_BROKERS "${KAFKA_ZOOKEEPER_CONNECT}" merged; then
-  echo "FAILED TO CREATE TOPICS ... Retrying again"
-  if ! radar-schemas-tools create -p $KAFKA_NUM_PARTITIONS -r $KAFKA_NUM_REPLICATION -b $KAFKA_NUM_BROKERS "${KAFKA_ZOOKEEPER_CONNECT}" merged; then
+if ! radar-schemas-tools create -p $KAFKA_NUM_PARTITIONS -r $KAFKA_NUM_REPLICATION -b $KAFKA_NUM_BROKERS "${KAFKA_BOOTSTRAP_SERVERS}" merged; then
+  echo "FAILED TO CREATE TOPICS ... Retrying"
+  if ! radar-schemas-tools create -p $KAFKA_NUM_PARTITIONS -r $KAFKA_NUM_REPLICATION -b $KAFKA_NUM_BROKERS "${KAFKA_BOOTSTRAP_SERVERS}" merged; then
     echo "FAILED TO CREATE TOPICS"
     exit 1
   else

@@ -16,10 +16,10 @@ COPY java-sdk/radar-catalog-server/build.gradle /code/java-sdk/radar-catalog-ser
 RUN gradle downloadDependencies --no-watch-fs
 
 COPY java-sdk/radar-schemas-commons/src /code/java-sdk/radar-schemas-commons/src
-COPY java-sdk/radar-schemas-registration /code/java-sdk/radar-schemas-registration
-COPY java-sdk/radar-schemas-tools /code/java-sdk/radar-schemas-tools
-COPY java-sdk/radar-schemas-core /code/java-sdk/radar-schemas-core
-COPY java-sdk/radar-catalog-server /code/java-sdk/radar-catalog-server
+COPY java-sdk/radar-schemas-registration/src /code/java-sdk/radar-schemas-registration/src
+COPY java-sdk/radar-schemas-tools/src /code/java-sdk/radar-schemas-tools/src
+COPY java-sdk/radar-schemas-core/src /code/java-sdk/radar-schemas-core/src
+COPY java-sdk/radar-catalog-server/src /code/java-sdk/radar-catalog-server/src
 
 RUN gradle distTar --no-watch-fs \
   && cd radar-schemas-tools/build/distributions \
@@ -29,10 +29,11 @@ RUN gradle distTar --no-watch-fs \
 
 FROM openjdk:11-jdk-slim
 
-ENV KAFKA_SCHEMA_REGISTRY=http://schema-registry-1:8081
-ENV KAFKA_NUM_PARTITIONS=3
-ENV KAFKA_NUM_REPLICATION=3
-ENV KAFKA_NUM_BROKERS=3
+ENV KAFKA_SCHEMA_REGISTRY=http://schema-registry-1:8081 \
+    KAFKA_NUM_PARTITIONS=3 \
+    KAFKA_NUM_REPLICATION=3 \
+    KAFKA_NUM_BROKERS=3 \
+    KAFKA_BOOTSTRAP_SERVERS=kafka-1:9092
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
 		curl \
