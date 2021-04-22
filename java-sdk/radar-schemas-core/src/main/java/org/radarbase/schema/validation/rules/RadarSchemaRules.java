@@ -57,7 +57,7 @@ public class RadarSchemaRules implements SchemaRules {
     // CamelCase
     // see SchemaValidatorRolesTest#recordNameRegex() for valid and invalid values
     static final Pattern RECORD_NAME_PATTERN = Pattern.compile(
-            "^([A-Z]([a-z]+[0-9]*|[a-z]*[0-9]+))+[A-Z]?$");
+            "^([A-Z]([a-z]*[0-9]*))+[A-Z]?$");
 
     // used in testing
     static final Pattern ENUM_SYMBOL_PATTERN = Pattern.compile("^[A-Z][A-Z0-9_]*$");

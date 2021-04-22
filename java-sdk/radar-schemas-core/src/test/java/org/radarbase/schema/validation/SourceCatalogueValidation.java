@@ -78,7 +78,7 @@ public class SourceCatalogueValidation {
                 .flatMap(source -> source.getData().stream())
                 .forEach(data -> {
                     try {
-                        assertTrue(data.getTopics().count() > 0);
+                        assertTrue(data.getTopics(catalogue.getSchemaCatalogue()).count() > 0);
                     } catch (IOException ex) {
                         fail("Cannot create topic from specification: " + ex);
                     }

@@ -7,6 +7,6 @@
     {"name": "time", "type": "double", "doc": "Start time of the sample in seconds since January 1, 1970, 00:00:00 UTC (Unix timestamp)."},
     {"name": "timeReceived", "type": "double", "doc": "Time this sample was recieved by the push service in seconds since January 1, 1970, 00:00:00 UTC (Unix timestamp)."},
     {"name": "summaryId", "type": "string", "doc": "Unique identifier for the summary that this sample is associated with."},
-    {"name": "bodyBattery", "type": ["null", "float"], "doc": "Body battery value recorded for the time", "default": null}
+    {"name": "bodyBattery", "type": ["null", "float"], "doc": "Body battery value recorded for the time.", "default": null}
     ]
 }

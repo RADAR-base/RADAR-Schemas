@@ -1,5 +1,7 @@
 package org.radarbase.schema.tools;
 
+import java.io.IOException;
+import java.util.Map;
 import net.sourceforge.argparse4j.inf.ArgumentParser;
 import net.sourceforge.argparse4j.inf.Namespace;
 import org.radarbase.schema.registration.KafkaTopics;
@@ -10,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * Create a KafkaTopics command to register topics from the command line.
  */
 public class KafkaTopicsCommand implements SubCommand {
-
     private static final Logger logger = LoggerFactory.getLogger(KafkaTopicsCommand.class);
 
     @Override
@@ -29,8 +30,20 @@ public class KafkaTopicsCommand implements SubCommand {
             return 1;
         }
 
-        try (KafkaTopics topics = new KafkaTopics(options.getString("bootstrapServers"))) {
-            if (!topics.initialize(brokers)) {
+        Map<String, Object> kafkaConfig;
+        try {
+            kafkaConfig = KafkaTopics.loadConfig(
+                    options.getString("kafka-config"),
+                    options.getString("bootstrap-servers"));
+        } catch (IOException | IllegalStateException ex) {
+            logger.error("Cannot configure Kafka client: {}", ex.getMessage());
+            return 1;
+        }
+
+        try (KafkaTopics topics = new KafkaTopics(kafkaConfig)) {
+            try {
+                topics.initialize(brokers);
+            } catch (IllegalStateException ex) {
                 logger.error("Kafka brokers not yet available. Aborting.");
                 return 1;
             }
@@ -69,8 +82,13 @@ public class KafkaTopicsCommand implements SubCommand {
                 .help("register the schemas of all topics matching the given regex"
                         + "; does not do anything if --topic is specified")
                 .type(String.class);
-        parser.addArgument("bootstrapServers")
-                .help("Kafka hosts, ports and protocols, comma-separated");
+        parser.addArgument("-s", "--bootstrap-servers")
+                .help("Kafka hosts, ports and protocols, comma-separated")
+                .type(String.class);
+        parser.addArgument("-c", "--kafka-config")
+                .help("File path for Kafka properties")
+                .type(String.class);
+
         SubCommand.addRootArgument(parser);
     }
 }

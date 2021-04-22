@@ -68,7 +68,6 @@ public class CommandLineApp {
     public static void main(String... args) {
         SortedMap<String, SubCommand> subCommands = commandsToMap(
                 new KafkaTopicsCommand(),
-                new ConfluentCloudTopicsCommand(),
                 new SchemaRegistryCommand(),
                 new ListCommand(),
                 new ValidatorCommand(),

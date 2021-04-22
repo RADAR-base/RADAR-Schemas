@@ -51,7 +51,7 @@ dependencies {
     implementation group: 'org.radarbase', name: 'radar-commons-server', version: radarCommonsVersion
 
     testImplementation group: 'junit', name: 'junit', version: junitVersion
-    testRuntimeOnly group: 'org.slf4j', name: 'slf4j-simple', version: slf4jVersion
+    testRuntimeOnly group: 'ch.qos.logback', name: 'logback-classic', version: logbackVersion
 }
 
 apply from: "$rootDir/gradle/publishing.gradle"

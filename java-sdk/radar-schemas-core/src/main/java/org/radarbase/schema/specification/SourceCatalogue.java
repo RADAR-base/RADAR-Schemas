@@ -33,6 +33,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import org.radarbase.schema.SchemaCatalogue;
 import org.radarbase.schema.Scope;
 import org.radarbase.schema.specification.active.ActiveSource;
 import org.radarbase.schema.specification.connector.ConnectorSource;
@@ -60,14 +61,19 @@ public class SourceCatalogue {
     private final Map<String, PushSource> pushSources;
 
     private final Set<DataProducer<?>> sources;
+    private final SchemaCatalogue schemaCatalogue;
 
     @SuppressWarnings("WeakerAccess")
-    SourceCatalogue(Map<String, ActiveSource<?>> activeSources,
+    SourceCatalogue(
+            SchemaCatalogue schemaCatalogue,
+            Map<String, ActiveSource<?>> activeSources,
             Map<String, MonitorSource> monitorSources,
             Map<String, PassiveSource> passiveSources,
             Map<String, StreamGroup> streamGroups,
             Map<String, ConnectorSource> connectorSources,
             Map<String, PushSource> pushSources) {
+        this.schemaCatalogue = schemaCatalogue;
+
         this.activeSources = activeSources;
         this.monitorSources = monitorSources;
         this.passiveSources = passiveSources;
@@ -107,13 +113,16 @@ public class SourceCatalogue {
                 .withSetterVisibility(JsonAutoDetect.Visibility.NONE)
                 .withCreatorVisibility(JsonAutoDetect.Visibility.NONE));
 
+        SchemaCatalogue schemaCatalogue = new SchemaCatalogue(root);
+
         return new SourceCatalogue(
-            initSources(mapper.readerFor(ActiveSource.class), specRoot, Scope.ACTIVE),
-            initSources(mapper.readerFor(MonitorSource.class), specRoot, Scope.MONITOR),
-            initSources(mapper.readerFor(PassiveSource.class), specRoot, Scope.PASSIVE),
-            initSources(mapper.readerFor(StreamGroup.class), specRoot, Scope.STREAM),
-            initSources(mapper.readerFor(ConnectorSource.class), specRoot, Scope.CONNECTOR),
-            initSources(mapper.readerFor(PushSource.class), specRoot, Scope.PUSH));
+                schemaCatalogue,
+                initSources(mapper.readerFor(ActiveSource.class), specRoot, Scope.ACTIVE),
+                initSources(mapper.readerFor(MonitorSource.class), specRoot, Scope.MONITOR),
+                initSources(mapper.readerFor(PassiveSource.class), specRoot, Scope.PASSIVE),
+                initSources(mapper.readerFor(StreamGroup.class), specRoot, Scope.STREAM),
+                initSources(mapper.readerFor(ConnectorSource.class), specRoot, Scope.CONNECTOR),
+                initSources(mapper.readerFor(PushSource.class), specRoot, Scope.PUSH));
     }
 
     private static <T> Map<String, T> initSources(ObjectReader reader, Path root, Scope scope)
@@ -143,6 +152,10 @@ public class SourceCatalogue {
                 })
                 .filter(Objects::nonNull)
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    }
+
+    public SchemaCatalogue getSchemaCatalogue() {
+        return schemaCatalogue;
     }
 
     /**
@@ -228,6 +241,6 @@ public class SourceCatalogue {
     /** Get all topics in the catalogue. */
     public Stream<AvroTopic<?, ?>> getTopics() {
         return sources.stream()
-                .flatMap(DataProducer::getTopics);
+                .flatMap(s -> s.getTopics(schemaCatalogue));
     }
 }

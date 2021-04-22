@@ -1,10 +1,12 @@
 package org.radarbase.schema.registration;
 
 import java.io.Closeable;
+import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 import javax.validation.constraints.NotNull;
+import org.apache.kafka.clients.admin.Admin;
 import org.radarbase.schema.specification.SourceCatalogue;
 
 /**
@@ -55,6 +57,16 @@ public interface TopicRegistrar extends Closeable {
     boolean createTopics(Stream<String> topics, int partitions, short replication);
 
     /**
+     * Wait for brokers to become available. This uses a polling mechanism, waiting for at most 200
+     * seconds.
+     *
+     * @param brokers number of brokers to wait for
+     * @throws InterruptedException when waiting for the brokers is interrupted.
+     * @throws IllegalStateException when the brokers are not ready.
+     */
+    void initialize(int brokers) throws InterruptedException;
+
+    /**
      * Ensures this topicRegistrar instance is initialized for use.
      */
     void ensureInitialized();
@@ -73,4 +85,10 @@ public interface TopicRegistrar extends Closeable {
      * @return {@code List<String>} list of topics.
      */
     Set<String> getTopics();
+
+    /** Kafka Admin client. */
+    Admin getKafkaClient();
+
+    /** Kafka Admin properties. */
+    Map<String, ?> getKafkaProperties();
 }

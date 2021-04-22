@@ -18,8 +18,8 @@
     {"name": "power", "type": ["null", "float"], "doc": "The amount of power expended in watts.", "default": null},
     {"name": "bikeCadence", "type": ["null", "int"], "doc": "Cycling cadence in revolutions per minute.", "default": null},
     {"name": "swimCadence", "type": ["null", "int"], "doc": "Swim cadence in strokes per minute.", "default": null},
-    {"name": "latitude", "type": ["null", "float"], "doc": "Latitude in decimal degrees (DD)", "default": null},
-    {"name": "longitude", "type": ["null", "float"], "doc": "Longitude in decimal degrees (DD)", "default": null},
-    {"name": "elevation", "type": ["null", "float"], "doc": "Elevation in meters", "default": null}
+    {"name": "latitude", "type": ["null", "float"], "doc": "Latitude in decimal degrees (DD).", "default": null},
+    {"name": "longitude", "type": ["null", "float"], "doc": "Longitude in decimal degrees (DD).", "default": null},
+    {"name": "elevation", "type": ["null", "float"], "doc": "Elevation in meters.", "default": null}
     ]
 }

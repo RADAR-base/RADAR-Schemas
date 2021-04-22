@@ -38,11 +38,10 @@ import org.slf4j.LoggerFactory;
  */
 @SuppressWarnings("WeakerAccess")
 public class SchemaTopicManager {
-
     private static final Logger logger = LoggerFactory.getLogger(SchemaTopicManager.class);
     private static final String TOPIC_NAME = "_schemas";
     private static final Duration SECONDARY_TIMEOUT = Duration.ofSeconds(10L);
-    private final KafkaTopics topics;
+    private final TopicRegistrar topics;
     private final SchemaBackupStorage storage;
     private final SchemaRegistrySerializer serializer;
     private final ConfigResource topicResource;
@@ -51,11 +50,14 @@ public class SchemaTopicManager {
     /**
      * Schema topic manager.
      *
-     * @param zookeeper zookeeper hosts and ports, comma-separated
+     * @param topicRegistrar topic registrar
      * @param storage storage medium to read and write backups from and to.
      */
-    public SchemaTopicManager(@NotNull String zookeeper, @NotNull SchemaBackupStorage storage) {
-        topics = new KafkaTopics(zookeeper);
+    public SchemaTopicManager(
+            @NotNull TopicRegistrar topicRegistrar,
+            @NotNull SchemaBackupStorage storage
+    ) {
+        topics = topicRegistrar;
         this.storage = storage;
         serializer = new SchemaRegistrySerializer();
         topicResource = new ConfigResource(TOPIC, TOPIC_NAME);
@@ -70,9 +72,7 @@ public class SchemaTopicManager {
      * @throws IllegalStateException if the brokers or topics are not available
      */
     public void initialize(int numBrokers) throws InterruptedException {
-        if (!topics.initialize(numBrokers)) {
-            throw new IllegalStateException("Brokers or topics not available.");
-        }
+        topics.initialize(numBrokers);
         isInitialized = true;
     }
 
@@ -163,7 +163,7 @@ public class SchemaTopicManager {
                 "schema-backup-" + UUID.randomUUID());
         consumerProps.put(ConsumerConfig.CLIENT_ID_CONFIG, "schema-backup");
 
-        consumerProps.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, topics.getBootstrapServers());
+        consumerProps.putAll(topics.getKafkaProperties());
         consumerProps.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
         consumerProps.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "false");
         consumerProps.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG,
@@ -178,7 +178,7 @@ public class SchemaTopicManager {
         Map<String, Object> producerProps = new HashMap<>();
         producerProps.put(ProducerConfig.CLIENT_ID_CONFIG, "schema-backup");
 
-        producerProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, topics.getBootstrapServers());
+        producerProps.putAll(topics.getKafkaProperties());
         producerProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG,
                 org.apache.kafka.common.serialization.ByteArraySerializer.class);
         producerProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,

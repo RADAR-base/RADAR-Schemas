@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 import org.radarbase.config.AvroTopicConfig;
+import org.radarbase.schema.SchemaCatalogue;
 import org.radarbase.topic.AvroTopic;
 import org.radarcns.catalogue.Unit;
 import org.radarcns.kafka.ObservationKey;
@@ -65,14 +66,8 @@ public class DataTopic extends AvroTopicConfig {
 
     /** Get all Avro topics that are provided by the data. */
     @JsonIgnore
-    public Stream<AvroTopic<?, ?>> getTopics() throws IOException {
-        try {
-            return Stream.of(parseAvroTopic());
-        } catch (IllegalArgumentException ex) {
-            throw new IOException("Cannot parse Avro Topic " + getTopic()
-                    + " schemas, with key_schema " + getKeySchema()
-                    + " and value_schema " + getValueSchema(), ex);
-        }
+    public Stream<AvroTopic<?, ?>> getTopics(SchemaCatalogue schemaCatalogue) throws IOException {
+        return Stream.of(schemaCatalogue.getGenericAvroTopic(this));
     }
 
     public String getType() {

@@ -36,7 +36,7 @@ dependencies {
 
     implementation group: 'net.sourceforge.argparse4j', name: 'argparse4j', version: argparseVersion
 
-    runtimeOnly group: 'org.slf4j', name: 'slf4j-simple', version: slf4jVersion
+    runtimeOnly group: 'ch.qos.logback', name: 'logback-classic', version: logbackVersion
 }
 
 application {

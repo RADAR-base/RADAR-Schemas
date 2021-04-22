@@ -111,16 +111,6 @@ public class RadarSchemaFieldRulesTest {
                 .builder(MONITOR_NAME_SPACE_MOCK)
                 .record(RECORD_NAME_MOCK)
                 .fields()
-                .requiredString(FIELD_NUMBER_MOCK + "value")
-                .endRecord();
-
-        result = schemaValidator.fields(validator.validateFieldName()).apply(schema);
-        assertEquals(2, result.count());
-
-        schema = SchemaBuilder
-                .builder(MONITOR_NAME_SPACE_MOCK)
-                .record(RECORD_NAME_MOCK)
-                .fields()
                 .requiredString(FIELD_NUMBER_MOCK)
                 .endRecord();
 

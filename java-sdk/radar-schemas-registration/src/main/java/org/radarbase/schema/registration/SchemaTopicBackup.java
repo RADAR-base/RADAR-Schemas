@@ -93,7 +93,7 @@ public class SchemaTopicBackup {
             ConsumerRecord<byte[], byte[]> record) throws IOException {
 
         SchemaRecord schemaRecord = null;
-        SchemaRegistryKey messageKey = null;
+        SchemaRegistryKey messageKey;
         try {
             messageKey = serializer.deserializeKey(record.key());
 

@@ -7,6 +7,8 @@
     </encoder>
   </appender>
 
+  <logger level="warn" name="io.confluent.connect.avro.AvroDataConfig"/>
+
   <logger additivity="false" level="info" name="org.radarbase.validator">
     <appender-ref ref="STDOUT"/>
   </logger>

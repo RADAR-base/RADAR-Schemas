@@ -7,7 +7,6 @@ import static org.radarbase.schema.validation.rules.Validator.valid;
 import static org.radarbase.schema.validation.rules.Validator.validateNonNull;
 
 import java.util.EnumMap;
-import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
@@ -20,9 +19,6 @@ import org.radarbase.schema.validation.ValidationException;
  */
 public class RadarSchemaFieldRules implements SchemaFieldRules {
     private static final String UNKNOWN = "UNKNOWN";
-    private static final List<String> FIELD_NAME_NOT_ALLOWED_SUFFIX = List.of(
-            "value", "Value");
-
     // lowerCamelCase
     public static final Pattern FIELD_NAME_PATTERN = Pattern.compile(
             "^[a-z][a-z0-9]*([a-z0-9][A-Z][a-z0-9]+)?([A-Z][a-z0-9]+)*[A-Z]?$");
@@ -68,11 +64,7 @@ public class RadarSchemaFieldRules implements SchemaFieldRules {
     public Validator<SchemaField> validateFieldName() {
         return validateNonNull(f -> f.getField().name(), matches(FIELD_NAME_PATTERN), message(
                 "Field name does not respect lowerCamelCase name convention."
-                        + " Please avoid abbreviations and write out the field name instead."))
-                .and(validateNonNull(f -> f.getField().name(),
-                        n -> FIELD_NAME_NOT_ALLOWED_SUFFIX.stream().noneMatch(n::endsWith),
-                        message("Field name may not end with the following values: "
-                                + FIELD_NAME_NOT_ALLOWED_SUFFIX + ".")));
+                        + " Please avoid abbreviations and write out the field name instead."));
     }
 
     @Override

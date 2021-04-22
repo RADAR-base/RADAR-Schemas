@@ -1,5 +1,7 @@
 package org.radarbase.schema.tools;
 
+import static org.radarbase.schema.util.SchemaUtils.applyOrIllegalException;
+
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -15,7 +17,6 @@ import org.radarbase.schema.validation.ValidationException;
 import org.radarbase.schema.validation.config.ExcludeConfig;
 
 public class ValidatorCommand implements SubCommand {
-
     @Override
     public String getName() {
         return "validate";
@@ -25,27 +26,56 @@ public class ValidatorCommand implements SubCommand {
     public int execute(Namespace options, CommandLineApp app) {
         try {
             ExcludeConfig config = loadConfig(app.getRoot(), options.getString("config"));
-            SchemaValidator validator = new SchemaValidator(app.getRoot(), config);
-            Stream<ValidationException> stream = validateSchemas(
-                    options.getString("scope"), validator);
 
-            if (options.getBoolean("quiet")) {
-                return stream.count() > 0 ? 1 : 0;
-            } else {
-                String result = SchemaValidator.format(stream);
-
-                System.out.println(result);
-                if (options.getBoolean("verbose")) {
-                    System.out.println("Validated schemas:");
-                    Set<String> names = new TreeSet<>(
-                            validator.getValidatedSchemas().keySet());
-                    for (String name : names) {
-                        System.out.println(" - " + name);
-                    }
-                    System.out.println();
-                }
-                return result.isEmpty() ? 0 : 1;
+            try {
+                System.out.println();
+                System.out.println("Validated topics:");
+                app.getCatalogue().getSources().stream()
+                        .flatMap(s -> s.getData().stream())
+                        .flatMap(applyOrIllegalException(d -> d.getTopics(app.getCatalogue().getSchemaCatalogue())))
+                        .map(t -> "- "
+                                + t.getName()
+                                + " [" + t.getKeySchema().getFullName() + ": "
+                                + t.getValueSchema().getFullName() + "]")
+                        .sorted()
+                        .distinct()
+                        .forEach(System.out::println);
+                System.out.println();
+            } catch (Exception ex) {
+                System.err.println("Failed to load all topics: " + ex.getMessage());
+                return 1;
             }
+
+            if (options.getBoolean("full")) {
+                SchemaValidator validator = new SchemaValidator(app.getRoot(), config);
+
+                Stream<ValidationException> stream = validateSchemas(
+                        options.getString("scope"), validator);
+
+                if (options.getBoolean("quiet")) {
+                    if (stream.count() > 0) {
+                        return 1;
+                    }
+                } else {
+                    String result = SchemaValidator.format(stream);
+
+                    System.out.println(result);
+                    if (options.getBoolean("verbose")) {
+                        System.out.println("Validated schemas:");
+                        Set<String> names = new TreeSet<>(
+                                validator.getValidatedSchemas().keySet());
+                        for (String name : names) {
+                            System.out.println(" - " + name);
+                        }
+                        System.out.println();
+                    }
+                    if (!result.isEmpty()) {
+                        return 1;
+                    }
+                }
+            }
+
+            return 0;
         } catch (IOException e) {
             System.err.println("Failed to load schemas: " + e);
             return 1;
@@ -65,6 +95,9 @@ public class ValidatorCommand implements SubCommand {
                 .action(Arguments.storeTrue());
         parser.addArgument("-q", "--quiet")
                 .help("only set exit code.")
+                .action(Arguments.storeTrue());
+        parser.addArgument("-f", "--full")
+                .help("full validation of contents")
                 .action(Arguments.storeTrue());
         SubCommand.addRootArgument(parser);
     }

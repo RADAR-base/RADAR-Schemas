@@ -16,25 +16,20 @@
 
 package org.radarbase.schema.validation;
 
-import static java.util.function.Function.identity;
-import static java.util.function.Predicate.not;
-import static org.radarbase.schema.validation.ValidationHelper.COMMONS_PATH;
 import static org.radarbase.schema.validation.rules.Validator.raise;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
-import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.apache.avro.Schema;
 import org.apache.avro.Schema.Parser;
+import org.radarbase.schema.SchemaCatalogue;
 import org.radarbase.schema.Scope;
 import org.radarbase.schema.validation.config.ExcludeConfig;
 import org.radarbase.schema.validation.rules.RadarSchemaMetadataRules;
@@ -72,60 +67,16 @@ public class SchemaValidator {
      */
     public Stream<ValidationException> analyseFiles(Scope scope) {
         try {
-            List<Path> avroFiles = Files.walk(scope.getPath(root.resolve(COMMONS_PATH)))
-                    .filter(Files::isRegularFile)
-                    .filter(SchemaValidator::isAvscFile)
-                    .filter(not(config::skipFile))
-                    .collect(Collectors.toList());
+            SchemaCatalogue schemaCatalogue = new SchemaCatalogue(root, scope,
+                    p -> Files.isRegularFile(p)
+                            && SchemaValidator.isAvscFile(p)
+                            && !config.skipFile(p));
 
-            Map<String, SchemaMetadata> schemas = new HashMap<>();
-            int prevSize = -1;
-
-            // Recursively parse all schemas.
-            // If the parsed schema size does not change anymore, the final schemas cannot be parsed
-            // at all.
-            while (prevSize != schemas.size()) {
-                prevSize = schemas.size();
-                Map<String, Schema> useTypes = schemas.entrySet().stream()
-                        .collect(Collectors.toMap(Entry::getKey, e -> e.getValue().getSchema()));
-                Set<Path> ignoreFiles = schemas.values().stream()
-                        .map(SchemaMetadata::getPath)
-                        .collect(Collectors.toSet());
-
-                schemas.putAll(avroFiles.stream()
-                        .filter(not(ignoreFiles::contains))
-                        .map(p -> {
-                            @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
-                            Parser parser = new Parser();
-                            parser.addTypes(useTypes);
-                            try {
-                                return new SchemaMetadata(parser.parse(p.toFile()), scope, p);
-                            } catch (Exception ex) {
-                                return null;
-                            }
-                        })
-                        .filter(Objects::nonNull)
-                        .collect(Collectors.toMap(
-                                m -> m.getSchema().getFullName(),
-                                identity(),
-                                (v1, v2) -> {
-                                    if (v1.equals(v2)) {
-                                        return v1;
-                                    } else {
-                                        throw new IllegalStateException("Duplicate enum: " + v1);
-                                    }
-                                })));
-            }
-
-            Set<Path> ignoreFiles = schemas.values().stream()
-                    .map(SchemaMetadata::getPath)
-                    .collect(Collectors.toSet());
-            Map<String, Schema> useTypes = schemas.entrySet().stream()
+            Map<String, Schema> useTypes = schemaCatalogue.getSchemas().entrySet().stream()
                     .collect(Collectors.toMap(Entry::getKey, e -> e.getValue().getSchema()));
 
             return Stream.concat(
-                    avroFiles.stream()
-                            .filter(not(ignoreFiles::contains))
+                    schemaCatalogue.getUnmappedAvroFiles().stream()
                             .map(p -> {
                                 Parser parser = new Parser();
                                 parser.addTypes(useTypes);
@@ -137,7 +88,7 @@ public class SchemaValidator {
                                 }
                             })
                             .filter(Objects::nonNull),
-                    schemas.values().stream()
+                    schemaCatalogue.getSchemas().values().stream()
                             .flatMap(this::validate)
             );
         } catch (IOException ex) {
@@ -175,7 +126,7 @@ public class SchemaValidator {
      * @param file TODO
      * @return TODO
      */
-    private static boolean isAvscFile(Path file) {
+    public static boolean isAvscFile(Path file) {
         return ValidationHelper.matchesExtension(file, AVRO_EXTENSION);
     }
 

@@ -1,11 +1,14 @@
 package org.radarbase.schema.tools;
 
+import java.io.IOException;
 import java.nio.file.Paths;
 import java.time.Duration;
+import java.util.Map;
 import net.sourceforge.argparse4j.impl.action.StoreConstArgumentAction;
 import net.sourceforge.argparse4j.inf.ArgumentParser;
 import net.sourceforge.argparse4j.inf.Namespace;
 import org.radarbase.schema.registration.JsonSchemaBackupStorage;
+import org.radarbase.schema.registration.KafkaTopics;
 import org.radarbase.schema.registration.SchemaTopicManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,13 +25,21 @@ public class SchemaTopicManagerCommand implements SubCommand {
 
     @Override
     public int execute(Namespace options, CommandLineApp app) {
-        String zookeeper = options.getString("zookeeper");
-
         JsonSchemaBackupStorage jsonStorage = new JsonSchemaBackupStorage(
                 Paths.get(options.getString("file")));
 
-        SchemaTopicManager manager = new SchemaTopicManager(zookeeper, jsonStorage);
+        Map<String, Object> kafkaConfig;
         try {
+            kafkaConfig = KafkaTopics.loadConfig(
+                    options.getString("kafka-config"),
+                    options.getString("bootstrap-servers"));
+        } catch (IOException | IllegalStateException ex) {
+            logger.error("Cannot configure Kafka client: {}", ex.getMessage());
+            return 1;
+        }
+
+        try (KafkaTopics topics = new KafkaTopics(kafkaConfig)) {
+            SchemaTopicManager manager = new SchemaTopicManager(topics, jsonStorage);
             manager.initialize(options.getInt("brokers"));
 
             Duration timeout = Duration.ofSeconds(options.getInt("timeout"));
@@ -48,6 +59,7 @@ public class SchemaTopicManagerCommand implements SubCommand {
                     return 3;
             }
             return 0;
+
         } catch (Exception ex) {
             logger.error("Action failed: {}", ex.toString());
             return 2;
@@ -96,8 +108,12 @@ public class SchemaTopicManagerCommand implements SubCommand {
                 .help("number of brokers that are expected to be available.")
                 .type(Integer.class)
                 .setDefault(3);
-        parser.addArgument("zookeeper")
-                .help("zookeeper hosts and ports, comma-separated");
+        parser.addArgument("-s", "--bootstrap-servers")
+                .help("Kafka hosts, ports and protocols, comma-separated")
+                .type(String.class);
+        parser.addArgument("-c", "--kafka-config")
+                .help("File path for Kafka properties")
+                .type(String.class);
         SubCommand.addRootArgument(parser);
     }
 

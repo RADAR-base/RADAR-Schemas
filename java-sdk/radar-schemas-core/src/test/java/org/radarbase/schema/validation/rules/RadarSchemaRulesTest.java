@@ -70,15 +70,15 @@ public class RadarSchemaRulesTest {
         assertTrue(matches("Heart4M", RECORD_NAME_PATTERN));
         assertTrue(matches("Heart4", RECORD_NAME_PATTERN));
         assertFalse(matches("Heart4me", RECORD_NAME_PATTERN));
-        assertFalse(matches("Heart4ME", RECORD_NAME_PATTERN));
+        assertTrue(matches("Heart4ME", RECORD_NAME_PATTERN));
         assertFalse(matches("4Me", RECORD_NAME_PATTERN));
-        assertFalse(matches("TTest", RECORD_NAME_PATTERN));
+        assertTrue(matches("TTest", RECORD_NAME_PATTERN));
         assertFalse(matches("questionnaire", RECORD_NAME_PATTERN));
         assertFalse(matches("questionnaire4", RECORD_NAME_PATTERN));
         assertFalse(matches("questionnaire4Me", RECORD_NAME_PATTERN));
         assertFalse(matches("questionnaire4me", RECORD_NAME_PATTERN));
-        assertFalse(matches("A4MM", RECORD_NAME_PATTERN));
-        assertFalse(matches("Aaaa4MMaa", RECORD_NAME_PATTERN));
+        assertTrue(matches("A4MM", RECORD_NAME_PATTERN));
+        assertTrue(matches("Aaaa4MMaa", RECORD_NAME_PATTERN));
     }
 
     @Test

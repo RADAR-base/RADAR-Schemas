@@ -37,6 +37,13 @@ public class SchemaRegistryCommand implements SubCommand {
                 registration = new SchemaRegistry(url, apiKey, apiSecret);
             }
 
+            try {
+                registration.initialize();
+            } catch (IllegalStateException | InterruptedException ex) {
+                logger.error("Cannot reach schema registry. Aborting");
+                return 1;
+            }
+
             boolean forced = options.getBoolean("force");
             if (forced && !registration.putCompatibility(Compatibility.NONE)) {
                 return 1;

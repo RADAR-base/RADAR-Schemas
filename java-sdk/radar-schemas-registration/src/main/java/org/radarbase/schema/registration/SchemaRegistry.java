@@ -45,6 +45,7 @@ public class SchemaRegistry {
     private static final Logger logger = LoggerFactory.getLogger(SchemaRegistry.class);
     private final SchemaRetriever schemaClient;
     private final RestClient httpClient;
+    private static final int MAX_SLEEP = 32;
 
     /**
      * Schema registry for given URL. If this is https, unsafe certificates are accepted.
@@ -75,6 +76,42 @@ public class SchemaRegistry {
     }
 
     /**
+     * Wait for schema registry to become available. This uses a polling mechanism, waiting for at
+     * most 200 seconds.
+     *
+     * @throws InterruptedException when waiting for the brokers is interrupted.
+     * @throws IllegalStateException if the schema registry is not ready after wait is finished.
+     */
+    public void initialize() throws InterruptedException {
+        int sleep = 2;
+        int numTries = 20;
+
+        for (int tries = 0; tries < numTries; tries++) {
+            try (Response response = httpClient.request("subjects")) {
+                if (response.isSuccessful()) {
+                    return;
+                } else {
+                    logger.error("Schema registry {} not ready, responded with HTTP {}: {}",
+                            httpClient.getServer(), response.code(),
+                            RestClient.responseBody(response));
+                }
+            } catch (IOException e) {
+                logger.error("Failed to connect to schema registry {}",
+                        httpClient.getServer());
+            }
+
+            if (tries < numTries - 1) {
+                logger.warn("Waiting {} seconds for schema registry.", sleep);
+                Thread.sleep(sleep * 1000L);
+                sleep = Math.min(MAX_SLEEP, sleep * 2);
+            }
+        }
+
+        throw new IllegalStateException(
+                "Schema registry " + httpClient.getServer() + " not available");
+    }
+
+    /**
      * Register all schemas in a source catalogue. Stream and connector sources are ignored.
      *
      * @param catalogue schema catalogue to read schemas from
@@ -83,7 +120,7 @@ public class SchemaRegistry {
     public boolean registerSchemas(SourceCatalogue catalogue) {
         return catalogue.getSources().stream()
                 .filter(DataProducer::doRegisterSchema)
-                .flatMap(DataProducer::getTopics)
+                .flatMap(p -> p.getTopics(catalogue.getSchemaCatalogue()))
                 .sorted(Comparator.comparing(AvroTopic::getName))
                 .distinct()
                 .peek(t -> logger.info("Registering topic {} schemas: {} - {}",

@@ -128,6 +128,19 @@ public final class SchemaUtils {
         };
     }
 
+
+    /** Apply a throwing function, and if it throws, log it and let it return an empty Stream. */
+    public static <T, R> Function<T, Stream<R>> applyOrIllegalException(
+            ThrowingFunction<T, Stream<R>> func) {
+        return t -> {
+            try {
+                return func.apply(t);
+            } catch (Exception ex) {
+                throw new IllegalStateException(ex.getMessage(), ex);
+            }
+        };
+    }
+
     /**
      * Function that may throw an exception.
      * @param <T> type of value taken.

@@ -12,6 +12,7 @@ import java.util.Objects;
 import java.util.stream.Stream;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import org.radarbase.schema.SchemaCatalogue;
 import org.radarbase.schema.Scope;
 import org.radarbase.topic.AvroTopic;
 
@@ -69,8 +70,8 @@ public abstract class DataProducer<T extends DataTopic> {
     }
 
     @JsonIgnore
-    public Stream<AvroTopic<?, ?>> getTopics() {
-        return getData().stream().flatMap(applyOrEmpty(DataTopic::getTopics));
+    public Stream<AvroTopic<?, ?>> getTopics(SchemaCatalogue schemaCatalogue) {
+        return getData().stream().flatMap(applyOrEmpty(t -> t.getTopics(schemaCatalogue)));
     }
 
     public boolean doRegisterSchema() {

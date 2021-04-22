@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 import org.radarbase.config.AvroTopicConfig;
+import org.radarbase.schema.SchemaCatalogue;
 import org.radarbase.schema.specification.DataTopic;
 import org.radarbase.stream.TimeWindowMetadata;
 import org.radarbase.topic.AvroTopic;
@@ -115,14 +116,14 @@ public class StreamDataTopic extends DataTopic {
 
     @JsonIgnore
     @Override
-    public Stream<AvroTopic<?, ?>> getTopics() {
+    public Stream<AvroTopic<?, ?>> getTopics(SchemaCatalogue schemaCatalogue) {
         return getTopicNames()
                 .flatMap(applyOrEmpty(topic -> {
                     AvroTopicConfig config = new AvroTopicConfig();
                     config.setTopic(topic);
                     config.setKeySchema(getKeySchema());
                     config.setValueSchema(getValueSchema());
-                    return Stream.of(config.parseAvroTopic());
+                    return Stream.of(schemaCatalogue.getGenericAvroTopic(config));
                 }));
     }
 

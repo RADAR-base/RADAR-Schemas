@@ -19,7 +19,6 @@ import javax.validation.constraints.NotNull;
  * Schema topic backup storage to JSON files.
  */
 public class JsonSchemaBackupStorage implements SchemaBackupStorage {
-
     private static final String EXT = ".json";
     private static final String INVALID_EXT = ".invalid" + EXT;
     private static final ObjectMapper MAPPER = new ObjectMapper()

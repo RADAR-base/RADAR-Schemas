@@ -10,7 +10,7 @@
     {"name": "startTimeOffset", "type": ["null", "int"], "doc": "Offset in seconds to add to time to derive the 'local' time of the device that captured the data.", "default": null},
     {"name": "date", "type": ["null", "string"], "doc": "The calendar date this summary would be displayed on in Garmin Connect in the local time zone of the device. The date format is ‘yyyy-mm-dd’.", "default": null},
     {"name": "duration", "type": ["null", "int"], "doc": "Length of the monitoring period in seconds. 86400 once a full day is complete, but less if a user syncs mid-day.", "default": null},
-    {"name": "spo2Value", "type": ["null", "float"], "doc": "The SpO2 measurement taken at the time (1 sample/minute)", "default": null},
+    {"name": "spo2", "type": ["null", "float"], "doc": "The SpO2 measurement taken at the time (1 sample/minute).", "default": null},
     {"name": "onDemand", "type": ["null", "boolean"], "doc": "A Boolean to show whether this pulse ox summary represents an on- demand reading or an averaged acclimation reading.", "default": null}
   ]
 }
