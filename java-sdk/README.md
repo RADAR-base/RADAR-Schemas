@@ -1,18 +1,20 @@
 # RADAR Schemas Java SDK
 
-The Java SDKs are published as JARs on bintray. To use them in Gradle, add the following code to your `build.gradle`:
+The Java SDKs are published as JARs on Maven Central. To use them in Gradle, add the following code to your `build.gradle`:
 
 ```gradle
 repositories {
-    maven { url  'http://dl.bintray.com/radar-cns/org.radarcns' }
+    mavenCentral()
+    maven { url 'https://packages.confluent.io/maven/' }
+    maven { url "https://jitpack.io" }
 }
 
 dependencies {
     // Commons schemas (backend, passive remote monitoring app)
-    compile 'org.radarcns:radar-schemas-commons:0.5.13'
+    compile 'org.radarcns:radar-schemas-commons:<release version>'
 
     // Questionnaire schemas (active remote monitoring app)
-    compile 'org.radarcns:radar-schemas-tools:0.5.13'
+    compile 'org.radarcns:radar-schemas-tools:<release version>'
 }
 ```
 Usually, you only need to include the schemas you actually need in your dependencies.

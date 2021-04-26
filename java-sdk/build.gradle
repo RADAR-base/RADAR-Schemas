@@ -4,28 +4,25 @@
 
 plugins {
     id 'com.commercehub.gradle.plugin.avro-base' version '0.19.1'
-    id 'com.jfrog.bintray' version '1.8.5' apply false
-    id 'com.jfrog.artifactory' version '4.15.2' apply false
 }
 
 subprojects {
     apply plugin: 'java'
     apply plugin: 'java-library'
-    apply plugin: 'com.jfrog.bintray'
     apply plugin: 'com.commercehub.gradle.plugin.avro-base'
     apply plugin: 'maven-publish'
     apply plugin: 'idea'
 
     // Configuration
-    version = '0.5.15-SNAPSHOT'
-    group = 'org.radarcns'
+    version = '0.6.1-SNAPSHOT'
+    group = 'org.radarbase'
     ext.githubRepoName = 'RADAR-base/RADAR-Schemas'
 
     ext.avroVersion = '1.9.2'
 
     ext.githubUrl = "https://github.com/${githubRepoName}.git"
     ext.issueUrl = "https://github.com/${githubRepoName}/issues"
-    ext.website = 'http://radar-cns.org'
+    ext.website = 'http://radar-base.org'
 
     targetCompatibility = JavaVersion.VERSION_1_8
     sourceCompatibility = JavaVersion.VERSION_1_8
@@ -39,68 +36,6 @@ subprojects {
             exclude group: 'org.apache.commons', module: 'commons-compress'
             exclude group: 'org.tukaani', module: 'xz'
         }
-    }
-
-    // publishing
-    ext.pomConfig = {
-        licenses {
-            license {
-                name "The Apache Software License, Version 2.0"
-                url "http://www.apache.org/licenses/LICENSE-2.0.txt"
-                distribution 'repo'
-            }
-        }
-        developers {
-            developer {
-                id 'blootsvoets'
-                name 'Joris Borgdorff'
-                email 'joris@thehyve.nl'
-                organization 'The Hyve'
-            }
-            developer {
-                id 'yatharthranjan'
-                name 'Yatharth Ranjan'
-                email 'yatharth.ranjan@kcl.ac.uk'
-                organization 'King\'s College London'
-            }
-        }
-        issueManagement {
-            system 'GitHub'
-            url issueUrl
-        }
-        organization {
-            name 'RADAR-base'
-            url website
-        }
-        scm {
-            connection 'scm:git:' + githubUrl
-            url githubUrl
-        }
-    }
-    ext.sharedManifest = manifest {
-        attributes("Implementation-Title": rootProject.name,
-                "Implementation-Version": version)
-    }
-
-    jar {
-        manifest.from sharedManifest
-    }
-    // custom tasks for creating source/javadoc jars
-    task sourcesJar(type: Jar, dependsOn: classes) {
-        archiveClassifier.set('sources')
-        from sourceSets.main.allSource
-        manifest.from sharedManifest
-    }
-
-    task javadocJar(type: Jar, dependsOn: javadoc) {
-        archiveClassifier.set('javadoc')
-        from javadoc.destinationDir
-        manifest.from sharedManifest
-    }
-
-    // add javadoc/source jar tasks as artifacts
-    artifacts {
-        archives sourcesJar, javadocJar
     }
 
     // Generated avro files
