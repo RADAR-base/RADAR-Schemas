@@ -15,6 +15,6 @@
       "default": "UNKNOWN"
     },
     { "name": "questionnaireName", "type": ["null", "string"], "doc": "Name of the questionnaire.", "default": null },
-    { "name": "metadata", "type": { "type": "map", "values": ["null", "string"] }, "doc": "Event metadata.", "default": null }
+    { "name": "metadata", "type": ["null", { "type": "map", "values": ["null", "string"] }], "doc": "Event metadata.", "default": null }
   ]
 }
