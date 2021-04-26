@@ -3,12 +3,10 @@ plugins {
     id 'checkstyle'
     id 'pmd'
     id 'application'
-    id 'com.jfrog.artifactory'
 }
 
 targetCompatibility = JavaVersion.VERSION_11
 sourceCompatibility = JavaVersion.VERSION_11
-mainClassName = 'org.radarcns.schema.CommandLineApp'
 
 configurations {
     implementation {
@@ -17,6 +15,10 @@ configurations {
     runtimeOnly {
         exclude group: 'org.slf4j', module: 'slf4j-log4j12'
     }
+    applicationCompileOnly.extendsFrom(compileOnly)
+    applicationImplementation.extendsFrom(implementation)
+    applicationRuntimeOnly.extendsFrom(runtimeOnly)
+    testRuntimeOnly.extendsFrom(applicationRuntimeOnly)
 }
 
 sourceSets {
@@ -24,12 +26,15 @@ sourceSets {
         java.srcDir 'src/test/java'
         resources.srcDir 'src/test/resources'
     }
+    application {
+        compileClasspath += sourceSets.main.output
+        runtimeClasspath += sourceSets.main.output
+    }
 }
 
-ext {
-    artifactName = 'radar-schemas-tools'
-    description = 'RADAR Schemas specification and validation tools.'
+description = 'RADAR Schemas specification and validation tools.'
 
+ext {
     argparseVersion = '0.8.1'
     jacksonVersion = '2.10.4'
     jacksonYamlVersion = '2.10.4'
@@ -39,17 +44,16 @@ ext {
     confluentVersion = '5.5.0'
     kafkaVersion = '2.5.0'
     okHttpVersion = '4.7.2'
-    radarCommonsVersion = '0.13.0'
+    radarCommonsVersion = '0.13.1'
     slf4jVersion = '1.7.30'
     javaxValidationVersion = '2.0.1.Final'
 }
 
 repositories {
-    jcenter()
+    mavenCentral()
     maven { url 'https://packages.confluent.io/maven/' }
-    maven { url  "https://dl.bintray.com/radar-base/org.radarbase" }
-    maven { url 'https://oss.jfrog.org/artifactory/oss-snapshot-local' }
     maven { url "https://jitpack.io" }
+    maven { url = "https://oss.sonatype.org/content/repositories/snapshots/" }
 }
 
 dependencies {
@@ -84,14 +88,22 @@ dependencies {
     api group: 'org.glassfish.jersey.containers', name: 'jersey-container-servlet-core', version: jerseyVersion
 
     runtimeOnly group: 'org.glassfish.jersey.media', name: 'jersey-media-json-jackson', version: jerseyVersion
-    runtimeOnly group: 'org.slf4j', name: 'slf4j-simple', version: slf4jVersion
+    applicationRuntimeOnly group: 'org.slf4j', name: 'slf4j-simple', version: slf4jVersion
     runtimeOnly group: 'org.glassfish.jersey.inject', name: 'jersey-hk2', version: jerseyVersion
 
     testImplementation group: 'junit', name: 'junit', version: junitVersion
 }
 
-task createStartScripts(type: CreateStartScripts) {
-    applicationName = 'radar-schema'
+application {
+    mainClassName = 'org.radarbase.schema.CommandLineApp'
+}
+
+run {
+    classpath = sourceSets.application.runtimeClasspath
+}
+
+startScripts {
+    classpath = sourceSets.application.runtimeClasspath
 }
 
 //---------------------------------------------------------------------------//
@@ -145,65 +157,4 @@ tasks.withType(Tar){
     archiveExtension.set('tar.gz')
 }
 
-publishing {
-    publications {
-        RadarToolsPublication(MavenPublication) {
-            from components.java
-            artifact sourcesJar
-            artifact javadocJar
-            artifactId artifactName
-            pom.withXml {
-                def root = asNode()
-                root.appendNode('description', description)
-                root.appendNode('name', artifactName)
-                root.appendNode('url', githubUrl)
-                root.children().last() + pomConfig
-                root.dependencies.'*'.findAll() {
-                    it.artifactId.text() == 'slf4j-simple'
-                }.each() {
-                    it.parent().remove(it)
-                }
-            }
-        }
-    }
-}
-
-bintray {
-    user project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER')
-    key project.hasProperty('bintrayApiKey') ? project.property('bintrayApiKey') : System.getenv('BINTRAY_API_KEY')
-    override false
-    publications 'RadarToolsPublication'
-    pkg {
-        repo = project.group
-        name = artifactName
-        userOrg = 'radar-cns'
-        licenses = ['Apache-2.0']
-        websiteUrl = website
-        issueTrackerUrl = issueUrl
-        vcsUrl = githubUrl
-        githubRepo = githubRepoName
-        githubReleaseNotesFile = 'README.md'
-        version {
-            name = project.version
-            desc = description
-            vcsTag = System.getenv('TRAVIS_TAG')
-            released = new Date()
-        }
-    }
-}
-
-artifactory {
-    setContextUrl('https://oss.jfrog.org/artifactory')
-    publish {
-        repository {
-            repoKey = 'oss-snapshot-local'
-            username = project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER')
-            password = project.hasProperty('bintrayApiKey') ? project.property('bintrayApiKey') : System.getenv('BINTRAY_API_KEY')
-            maven = true
-        }
-    }
-}
-
-artifactoryPublish {
-    publications('RadarToolsPublication')
-}
+apply from: "$rootDir/gradle/publishing.gradle"

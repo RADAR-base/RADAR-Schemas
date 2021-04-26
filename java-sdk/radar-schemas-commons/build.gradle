@@ -1,7 +1,4 @@
-apply plugin: 'com.jfrog.artifactory'
-
-ext.artifactName = 'radar-schemas-commons'
-ext.description = 'RADAR Schemas Commons SDK'
+description = 'RADAR Schemas Commons SDK'
 
 sourceSets {
     main {
@@ -10,8 +7,8 @@ sourceSets {
 }
 
 repositories {
-    jcenter()
-    maven { url 'https://oss.jfrog.org/artifactory/oss-snapshot-local' }
+    mavenCentral()
+    maven { url = "https://oss.sonatype.org/content/repositories/snapshots/" }
 }
 
 //---------------------------------------------------------------------------//
@@ -37,60 +34,4 @@ compileJava.dependsOn generateAvro
 // Publishing                                                                //
 //---------------------------------------------------------------------------//
 
-publishing {
-    publications {
-        RadarCommonsPublication(MavenPublication) {
-            from components.java
-            artifact sourcesJar
-            artifact javadocJar
-            artifactId artifactName
-            pom.withXml {
-                def root = asNode()
-                root.appendNode('description', description)
-                root.appendNode('name', artifactName)
-                root.appendNode('url', githubUrl)
-                root.children().last() + pomConfig
-            }
-        }
-    }
-}
-
-bintray {
-    user project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER')
-    key project.hasProperty('bintrayApiKey') ? project.property('bintrayApiKey') : System.getenv('BINTRAY_API_KEY')
-    override false
-    publications 'RadarCommonsPublication'
-    pkg {
-        repo = project.group
-        name = artifactName
-        userOrg = 'radar-cns'
-        licenses = ['Apache-2.0']
-        websiteUrl = website
-        issueTrackerUrl = issueUrl
-        vcsUrl = githubUrl
-        githubRepo = githubRepoName
-        githubReleaseNotesFile = 'README.md'
-        version {
-            name = project.version
-            desc = description
-            vcsTag = System.getenv('TRAVIS_TAG')
-            released = new Date()
-        }
-    }
-}
-
-artifactory {
-    contextUrl = 'https://oss.jfrog.org/artifactory'
-    publish {
-        repository {
-            repoKey = 'oss-snapshot-local'
-            username = project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER')
-            password = project.hasProperty('bintrayApiKey') ? project.property('bintrayApiKey') : System.getenv('BINTRAY_API_KEY')
-            maven = true
-        }
-    }
-}
-
-artifactoryPublish {
-    publications('RadarCommonsPublication')
-}
+apply from: "$rootDir/gradle/publishing.gradle"
