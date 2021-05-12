@@ -1,8 +1,11 @@
+<<<<<<< HEAD
 plugins {
     id 'java-library'
     id 'com.github.davidmc24.gradle.plugin.avro-base'
 }
 
+=======
+>>>>>>> dev
 description = 'RADAR Schemas Commons SDK'
 
 sourceSets {

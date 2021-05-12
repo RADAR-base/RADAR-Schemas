@@ -1,7 +1,7 @@
 name: aRMT
 vendor: RADAR
 model: aRMT-App
-version: 1.9.0
+version: 1.10.0
 assessment_type: QUESTIONNAIRE
 doc: aRMT Questionnaires definition. Includes Personal Health Questionnaire Depression Scale (PHQ-8), Experience sampling method (ESM) and RSES and other data.
 data:
@@ -33,14 +33,17 @@ data:
     value_schema: .active.questionnaire.Questionnaire
     questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/esm/esm_armt.json
   - type: AUDIO
+    doc: A speech questionnaire that contain two parts, a scripted text part where users will record themselves reading a text aloud, and an unscripted text part where users will record themselves answering a question.
     topic: questionnaire_audio
     value_schema: .active.questionnaire.Questionnaire
     questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/audio/audio_armt.json
   - type: AUDIO_2
+    doc: A speech questionnaire that contain two parts, a scripted text part where users will record themselves reading a text aloud, and an unscripted text part where users will record themselves answering a question.
     topic: questionnaire_audio
     value_schema: .active.questionnaire.Questionnaire
     questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/audio_2/audio_2_armt.json
   - type: AUDIO_3
+    doc: A speech questionnaire that contain two parts, a scripted text part where users will record themselves reading a text aloud, and an unscripted text part where users will record themselves answering a question.
     topic: questionnaire_audio
     value_schema: .active.questionnaire.Questionnaire
     questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/audio_3/audio_3_armt.json
@@ -148,6 +151,45 @@ data:
     topic: questionnaire_rapid_sleep_questions
     value_schema: .active.questionnaire.Questionnaire
     questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/sleep_questions/sleep_questions_armt.json
+  - type: AUDIO_WITHOUT_UNSCRIPTED
+    doc: A speech questionnaire similar to the AUDIO questionnaire but without the second unscripted task.
+    topic: questionnaire_audio_without_unscripted
+    value_schema: .active.questionnaire.Questionnaire
+    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/audio_without_unscripted/audio_without_unscripted_armt.json
+  - type: AUDIO_WITHOUT_UNSCRIPTED_2
+    doc: A speech questionnaire similar to the AUDIO questionnaire but without the second unscripted task.
+    topic: questionnaire_audio_without_unscripted_2
+    value_schema: .active.questionnaire.Questionnaire
+    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/audio_without_unscripted_2/audio_without_unscripted_armt.json
+  - type: AUDIO_WITHOUT_UNSCRIPTED_3
+    doc: A speech questionnaire similar to the AUDIO questionnaire but without the second unscripted task.
+    topic: questionnaire_audio_without_unscripted_3
+    value_schema: .active.questionnaire.Questionnaire
+    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/audio_without_unscripted_3/audio_without_unscripted_armt.json
+  - type: CAT
+    topic: questionnaire_cat
+    value_schema: .active.questionnaire.Questionnaire
+    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/cat/cat_armt.json
+  - type: PSQI
+    topic: questionnaire_psqi
+    value_schema: .active.questionnaire.Questionnaire
+    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/psqi/psqi_armt.json
+  - type: FSS
+    topic: questionnaire_fss
+    value_schema: .active.questionnaire.Questionnaire
+    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/fss/fss_armt.json
+  - type: PCFS
+    topic: questionnaire_pcfs
+    value_schema: .active.questionnaire.Questionnaire
+    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/pcfs/pcfs_armt.json
+  - type: RALPMH_COVID_SYMPTOMS
+    topic: questionnaire_ralpmh_covid_symptoms
+    value_schema: .active.questionnaire.Questionnaire
+    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/ralpmh_covid_symptoms/ralpmh_covid_symptoms_armt.json
+  - type: LIPF
+    topic: questionnaire_lipf
+    value_schema: .active.questionnaire.Questionnaire
+    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/lipf/lipf_armt.json
   - type: COMPLETION_LOG
     doc: Information about the completeness of each questionnaire.
     topic: questionnaire_completion_log
