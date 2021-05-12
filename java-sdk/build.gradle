@@ -3,7 +3,7 @@
 //---------------------------------------------------------------------------//
 
 plugins {
-    id 'com.commercehub.gradle.plugin.avro-base' version '0.19.1'
+    id 'com.commercehub.gradle.plugin.avro-base' version '0.9.1'
 }
 
 subprojects {
@@ -14,7 +14,7 @@ subprojects {
     apply plugin: 'idea'
 
     // Configuration
-    version = '0.6.0'
+    version = '0.6.1'
     group = 'org.radarbase'
     ext.githubRepoName = 'RADAR-base/RADAR-Schemas'
 

@@ -27,7 +27,7 @@ assemble.dependsOn(javadocJar, sourcesJar)
 
 publishing {
     publications {
-        mavenJar(MavenPublication) { publication ->
+        mavenJar(MavenPublication) {
             from components.java
             artifact sourcesJar
             artifact javadocJar
