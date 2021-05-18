@@ -1,0 +1,61 @@
+plugins {
+    id 'java-library'
+    id 'idea'
+    id 'checkstyle'
+    id 'pmd'
+}
+
+compileJava {
+    targetCompatibility = JavaVersion.VERSION_11
+    sourceCompatibility = JavaVersion.VERSION_11
+}
+
+configurations {
+    implementation {
+        exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+    }
+    runtimeOnly {
+        exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+    }
+}
+
+sourceSets {
+    application {
+        compileClasspath += sourceSets.main.output
+        runtimeClasspath += sourceSets.main.output
+    }
+}
+
+description = 'RADAR Schemas specification and validation tools.'
+
+repositories {
+    maven { url "https://jitpack.io" }
+}
+
+dependencies {
+    api project(':radar-schemas-commons')
+    api project(':radar-schemas-core')
+    api group: 'org.radarbase', name: 'radar-commons-server', version: radarCommonsVersion
+
+    implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: okHttpVersion
+
+    implementation group: 'io.confluent', name: 'kafka-connect-avro-converter', version: confluentVersion
+    implementation group: 'io.confluent', name: 'kafka-schema-registry', version: confluentVersion
+    implementation group: 'org.apache.kafka', name: 'connect-json', version: kafkaVersion
+
+    testRuntimeOnly group: 'ch.qos.logback', name: 'logback-classic', version: logbackVersion
+
+    testImplementation group: 'junit', name: 'junit', version: junitVersion
+}
+
+//---------------------------------------------------------------------------//
+// Publishing                                                                //
+//---------------------------------------------------------------------------//
+
+tasks.withType(Tar) {
+    compression = Compression.GZIP
+    archiveExtension.set('tar.gz')
+}
+
+apply from: "$rootDir/gradle/publishing.gradle"
+apply from: "$rootDir/gradle/testing.gradle"

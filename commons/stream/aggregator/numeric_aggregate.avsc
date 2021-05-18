@@ -3,7 +3,6 @@
   "type": "record",
   "name": "NumericAggregate",
   "doc": "Basic statistics on a numeric value type.",
-  "version": "1.0.0",
   "fields": [
     { "name": "name", "type": "string", "doc": "Name of the field that has been aggregated over." },
     { "name": "min", "type": "double", "doc": "State the minimum between accumulated values." },

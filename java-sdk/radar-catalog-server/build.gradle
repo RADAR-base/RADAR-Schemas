@@ -1,0 +1,61 @@
+plugins {
+    id 'idea'
+    id 'checkstyle'
+    id 'pmd'
+    id 'application'
+}
+
+compileJava {
+    targetCompatibility = JavaVersion.VERSION_11
+    sourceCompatibility = JavaVersion.VERSION_11
+}
+
+configurations {
+    implementation {
+        exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+    }
+    runtimeOnly {
+        exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+    }
+}
+
+sourceSets {
+    application {
+        compileClasspath += sourceSets.main.output
+        runtimeClasspath += sourceSets.main.output
+    }
+}
+
+description = 'RADAR Schemas specification and validation tools.'
+
+repositories {
+    maven { url  "https://dl.bintray.com/radar-cns/org.radarcns" }
+    maven { url  "https://dl.bintray.com/radar-base/org.radarbase" }
+}
+
+dependencies {
+    implementation("org.radarbase:radar-jersey:$radarJerseyVersion")
+    implementation project(':radar-schemas-core')
+    implementation group: 'net.sourceforge.argparse4j', name: 'argparse4j', version: argparseVersion
+
+    runtimeOnly group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
+
+    testImplementation group: 'junit', name: 'junit', version: junitVersion
+
+    testImplementation group: 'com.squareup.okhttp3', name: 'okhttp', version: okHttpVersion
+}
+
+application {
+    mainClass.set('org.radarbase.schema.service.SourceCatalogueServer')
+}
+
+apply from: "$rootDir/gradle/testing.gradle"
+
+//---------------------------------------------------------------------------//
+// Publishing                                                                //
+//---------------------------------------------------------------------------//
+
+tasks.withType(Tar) {
+    compression = Compression.GZIP
+    archiveExtension.set('tar.gz')
+}
