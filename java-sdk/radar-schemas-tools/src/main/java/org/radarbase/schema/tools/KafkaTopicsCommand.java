@@ -33,8 +33,8 @@ public class KafkaTopicsCommand implements SubCommand {
         Map<String, Object> kafkaConfig;
         try {
             kafkaConfig = KafkaTopics.loadConfig(
-                    options.getString("kafka-config"),
-                    options.getString("bootstrap-servers"));
+                    options.getString("kafka_config"),
+                    options.getString("bootstrap_servers"));
         } catch (IOException | IllegalStateException ex) {
             logger.error("Cannot configure Kafka client: {}", ex.getMessage());
             return 1;

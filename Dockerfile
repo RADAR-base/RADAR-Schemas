@@ -28,7 +28,7 @@ RUN gradle distTar --no-watch-fs \
   && cd ../../../radar-catalog-server/build/distributions \
   && tar xzf radar-catalog-server*.tar.gz
 
-FROM openjdk:11-jdk-slim
+FROM openjdk:11-jre-slim
 
 ENV KAFKA_SCHEMA_REGISTRY=http://schema-registry-1:8081 \
     SCHEMA_REGISTRY_API_KEY="" \

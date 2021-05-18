@@ -2,8 +2,6 @@
 
 set -e
 
-AVRO_TOOLS=/usr/share/java/avro-tools.jar
-
 rsync -a /schema/original/commons /schema/original/specifications /schema/merged
 rsync -a /schema/conf/ /schema/merged
 
