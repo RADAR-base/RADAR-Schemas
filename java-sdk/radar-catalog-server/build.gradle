@@ -28,13 +28,9 @@ sourceSets {
 
 description = 'RADAR Schemas specification and validation tools.'
 
-repositories {
-    maven { url  "https://dl.bintray.com/radar-cns/org.radarcns" }
-    maven { url  "https://dl.bintray.com/radar-base/org.radarbase" }
-}
-
 dependencies {
     implementation("org.radarbase:radar-jersey:$radarJerseyVersion")
+    implementation project(':radar-schemas-commons')
     implementation project(':radar-schemas-core')
     implementation group: 'net.sourceforge.argparse4j', name: 'argparse4j', version: argparseVersion
 

@@ -1,5 +1,6 @@
 package org.radarbase.schema.service;
 
+import jakarta.inject.Singleton;
 import org.glassfish.jersey.internal.inject.AbstractBinder;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.jetbrains.annotations.NotNull;
@@ -35,8 +36,9 @@ public class SourceCatalogueJerseyEnhancer implements JerseyResourceEnhancer {
     @Override
     public void enhanceBinder(
             @NotNull AbstractBinder abstractBinder) {
-        abstractBinder.bind(sourceCatalogue)
-                .to(SourceCatalogue.class);
+        abstractBinder.bindFactory(() -> sourceCatalogue)
+                .to(SourceCatalogue.class)
+                .in(Singleton.class);
     }
 
     @Override

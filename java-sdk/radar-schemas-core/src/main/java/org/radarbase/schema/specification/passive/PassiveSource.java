@@ -19,11 +19,11 @@ package org.radarbase.schema.specification.passive;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import java.util.List;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import org.radarbase.schema.Scope;
 import org.radarbase.schema.specification.AppSource;
+
+import javax.validation.constraints.NotEmpty;
+import java.util.List;
 
 /**
  * TODO.
@@ -46,16 +46,5 @@ public class PassiveSource extends AppSource<PassiveDataTopic> {
     @Override
     public String getName() {
         return super.getVendor() + '_' + super.getModel();
-    }
-
-    /**
-     * TODO.
-     * @param type TODO
-     * @return TODO
-     */
-    public PassiveDataTopic getSensor(@NotNull String type) {
-        return data.stream().filter(s -> type.equalsIgnoreCase(s.getType())).findFirst()
-                .orElseThrow(() ->  new IllegalArgumentException(
-                        type + " is not a valid sensor for " + this.getName()));
     }
 }

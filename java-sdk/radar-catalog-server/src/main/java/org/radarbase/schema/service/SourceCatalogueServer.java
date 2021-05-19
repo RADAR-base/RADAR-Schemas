@@ -1,10 +1,5 @@
 package org.radarbase.schema.service;
 
-import java.io.Closeable;
-import java.io.IOException;
-import java.net.URI;
-import java.nio.file.Paths;
-import java.util.List;
 import net.sourceforge.argparse4j.ArgumentParsers;
 import net.sourceforge.argparse4j.inf.ArgumentParser;
 import net.sourceforge.argparse4j.inf.ArgumentParserException;
@@ -15,6 +10,12 @@ import org.radarbase.jersey.config.ConfigLoader;
 import org.radarbase.schema.specification.SourceCatalogue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.Closeable;
+import java.io.IOException;
+import java.net.URI;
+import java.nio.file.Paths;
+import java.util.List;
 
 /**
  * This server provides a webservice to share the SourceType Catalogues provided in *.yml files as
@@ -83,6 +84,11 @@ public class SourceCatalogueServer implements Closeable {
             logger.error(parser.formatUsage());
             System.exit(1);
         }
+
+        // Processing state cannot be imported by ManagementPortal at this time.
+        sourceCatalogue.getPassiveSources().values().stream()
+                .flatMap(s -> s.getData().stream())
+                .forEach(d -> d.setProcessingState(null));
 
         try (SourceCatalogueServer server = new SourceCatalogueServer(parsedArgs.getInt("port"))) {
             server.start(sourceCatalogue);

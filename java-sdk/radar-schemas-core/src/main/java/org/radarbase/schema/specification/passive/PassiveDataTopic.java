@@ -36,6 +36,10 @@ public class PassiveDataTopic extends AppDataTopic {
         return processingState;
     }
 
+    public void setProcessingState(ProcessingState processingState) {
+        this.processingState = processingState;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
