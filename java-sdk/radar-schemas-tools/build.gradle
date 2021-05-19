@@ -1,12 +1,12 @@
 plugins {
     id 'idea'
-    id 'checkstyle'
-    id 'pmd'
     id 'application'
 }
 
-targetCompatibility = JavaVersion.VERSION_11
-sourceCompatibility = JavaVersion.VERSION_11
+compileJava {
+    targetCompatibility = JavaVersion.VERSION_11
+    sourceCompatibility = JavaVersion.VERSION_11
+}
 
 configurations {
     implementation {
@@ -15,17 +15,9 @@ configurations {
     runtimeOnly {
         exclude group: 'org.slf4j', module: 'slf4j-log4j12'
     }
-    applicationCompileOnly.extendsFrom(compileOnly)
-    applicationImplementation.extendsFrom(implementation)
-    applicationRuntimeOnly.extendsFrom(runtimeOnly)
-    testRuntimeOnly.extendsFrom(applicationRuntimeOnly)
 }
 
 sourceSets {
-    test {
-        java.srcDir 'src/test/java'
-        resources.srcDir 'src/test/resources'
-    }
     application {
         compileClasspath += sourceSets.main.output
         runtimeClasspath += sourceSets.main.output
@@ -34,76 +26,21 @@ sourceSets {
 
 description = 'RADAR Schemas specification and validation tools.'
 
-ext {
-    argparseVersion = '0.8.1'
-    jacksonVersion = '2.10.4'
-    jacksonYamlVersion = '2.10.4'
-    jerseyVersion = '2.31'
-    jettyVersion = '9.4.29.v20200521'
-    junitVersion = '4.13'
-    confluentVersion = '5.5.0'
-    kafkaVersion = '2.5.0'
-    okHttpVersion = '4.7.2'
-    radarCommonsVersion = '0.13.1'
-    slf4jVersion = '1.7.30'
-    javaxValidationVersion = '2.0.1.Final'
-}
-
 repositories {
-    mavenCentral()
-    maven { url 'https://packages.confluent.io/maven/' }
     maven { url "https://jitpack.io" }
-    maven { url = "https://oss.sonatype.org/content/repositories/snapshots/" }
 }
 
 dependencies {
-    api group: 'javax.validation', name: 'validation-api', version: javaxValidationVersion
-    api group: 'org.apache.kafka', name: 'kafka_2.12', version: kafkaVersion
-    // temporary version override to avoid netty vulnerability. Can be removed as soon as Kafka has an updated dependency
-    implementation group: 'org.apache.zookeeper', name: 'zookeeper', version: '3.5.8'
+    implementation project(':radar-schemas-registration')
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:$jacksonModuleVersion")
 
-    api ("com.fasterxml.jackson.core:jackson-databind") {
-      version {
-        strictly jacksonVersion
-      }
-    }
-    implementation ("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml") {
-      version {
-        strictly jacksonYamlVersion
-      }
-    }
-    implementation project(':radar-schemas-commons')
-    implementation group: 'org.radarbase', name: 'radar-commons', version: radarCommonsVersion
-    implementation group: 'org.radarbase', name: 'radar-commons-server', version: radarCommonsVersion
     implementation group: 'net.sourceforge.argparse4j', name: 'argparse4j', version: argparseVersion
-    implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: okHttpVersion
-    implementation group: 'org.eclipse.jetty', name: 'jetty-server', version: jettyVersion
-    implementation group: 'org.eclipse.jetty', name: 'jetty-servlet', version: jettyVersion
-    implementation group: 'org.glassfish.jersey.core', name: 'jersey-server', version: jerseyVersion
-    implementation group: 'io.confluent', name: 'kafka-connect-avro-converter', version: confluentVersion
-    implementation group: 'io.confluent', name: 'kafka-schema-registry', version: confluentVersion
-    implementation group: 'org.apache.kafka', name: 'connect-json', version: kafkaVersion
 
-    // source catalogue service annotations
-    api group: 'org.glassfish.jersey.containers', name: 'jersey-container-servlet-core', version: jerseyVersion
-
-    runtimeOnly group: 'org.glassfish.jersey.media', name: 'jersey-media-json-jackson', version: jerseyVersion
-    applicationRuntimeOnly group: 'org.slf4j', name: 'slf4j-simple', version: slf4jVersion
-    runtimeOnly group: 'org.glassfish.jersey.inject', name: 'jersey-hk2', version: jerseyVersion
-
-    testImplementation group: 'junit', name: 'junit', version: junitVersion
+    runtimeOnly group: 'ch.qos.logback', name: 'logback-classic', version: logbackVersion
 }
 
 application {
-    mainClassName = 'org.radarbase.schema.CommandLineApp'
-}
-
-run {
-    classpath = sourceSets.application.runtimeClasspath
-}
-
-startScripts {
-    classpath = sourceSets.application.runtimeClasspath
+    mainClass.set('org.radarbase.schema.tools.CommandLineApp')
 }
 
 //---------------------------------------------------------------------------//
@@ -123,38 +60,10 @@ test {
 }
 
 //---------------------------------------------------------------------------//
-// Style checking                                                            //
-//---------------------------------------------------------------------------//
-checkstyle {
-    // codacy version
-    toolVersion '8.31'
-    ignoreFailures false
-
-    configFile = file("$rootDir/config/checkstyle/checkstyle.xml")
-}
-
-pmd {
-    // pmd version
-    toolVersion = '6.23.0'
-    ignoreFailures = false
-
-    sourceSets = [sourceSets.main]
-
-    consoleOutput = true
-
-    ruleSets = []
-
-    ruleSetFiles = files("$rootDir/config/pmd/ruleset.xml")
-}
-
-
-//---------------------------------------------------------------------------//
 // Publishing                                                                //
 //---------------------------------------------------------------------------//
 
-tasks.withType(Tar){
+tasks.withType(Tar) {
     compression = Compression.GZIP
     archiveExtension.set('tar.gz')
 }
-
-apply from: "$rootDir/gradle/publishing.gradle"

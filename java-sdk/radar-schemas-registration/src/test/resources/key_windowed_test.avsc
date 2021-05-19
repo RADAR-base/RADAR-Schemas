@@ -1,0 +1,11 @@
+{"namespace": "org.radarcns.kafka.key",
+  "type": "record",
+  "name": "AggregateKeyTest",
+  "doc": "Windowed key in the RADAR-CNS project.",
+  "fields": [
+    {"name": "userTestId", "type": "string", "doc": "User Identifier created during the enrolment."},
+    {"name": "sourceTestId", "type": "string", "doc": "Unique identifier associated with the source."},
+    {"name": "start", "type": "long", "doc": "First timestamp in UNIX time contained in the time window."},
+    {"name": "end", "type": "long", "doc": "Last timestamp in UNIX time contained in the time window."}
+  ]
+}

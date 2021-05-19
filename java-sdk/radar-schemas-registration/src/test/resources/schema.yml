@@ -1,0 +1,14 @@
+#============================= SKIP FILE =============================#
+files:
+  - README.md
+  - .DS_Store
+
+#====================== SKIP TEST CONFIGURATION ======================#
+validation:
+  org.radarcns.passive.biovotion.BiovotionVsm1OxygenSaturation:
+    fields:
+      - spO2
+      - spO2Quality
+  org.radarcns.passive.empatica.EmpaticaE4InterBeatInterval:
+    fields:
+      - interBeatInterval
