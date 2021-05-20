@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import java.io.Closeable;
 import java.io.IOException;
 import java.net.URI;
+import java.net.URL;
 import java.nio.file.Paths;
 import java.util.List;
 
@@ -22,6 +23,14 @@ import java.util.List;
  * {@link org.radarbase.schema.service.SourceCatalogueService.SourceTypeResponse}
  */
 public class SourceCatalogueServer implements Closeable {
+    static {
+        URL loggingResource = SourceCatalogueServer.class.getClassLoader()
+                .getResource("logging.properties");
+        if (loggingResource != null) {
+            System.setProperty("java.util.logging.config.file", loggingResource.getFile());
+        }
+    }
+
     private static final Logger logger = LoggerFactory.getLogger(SourceCatalogueServer.class);
 
     private GrizzlyServer server;
@@ -94,4 +103,6 @@ public class SourceCatalogueServer implements Closeable {
             server.start(sourceCatalogue);
         }
     }
+
+
 }

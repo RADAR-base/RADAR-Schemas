@@ -30,11 +30,11 @@ description = 'RADAR Schemas specification and validation tools.'
 
 dependencies {
     implementation("org.radarbase:radar-jersey:$radarJerseyVersion")
-    implementation project(':radar-schemas-commons')
     implementation project(':radar-schemas-core')
     implementation group: 'net.sourceforge.argparse4j', name: 'argparse4j', version: argparseVersion
 
     runtimeOnly group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
+    runtimeOnly group: 'org.slf4j', name: 'jul-to-slf4j', version: '1.7.30'
 
     testImplementation group: 'junit', name: 'junit', version: junitVersion
 
