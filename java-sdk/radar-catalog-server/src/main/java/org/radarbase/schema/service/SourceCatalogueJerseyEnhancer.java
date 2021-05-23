@@ -36,37 +36,23 @@ public class SourceCatalogueJerseyEnhancer implements JerseyResourceEnhancer {
     @Override
     public void enhanceBinder(
             @NotNull AbstractBinder abstractBinder) {
+        enhance(abstractBinder);
+    }
+
+    @Override
+    public void enhanceResources(@NotNull ResourceConfig resourceConfig) {
+        enhance(resourceConfig);
+    }
+
+    @Override
+    public void enhance(@NotNull AbstractBinder abstractBinder) {
         abstractBinder.bindFactory(() -> sourceCatalogue)
                 .to(SourceCatalogue.class)
                 .in(Singleton.class);
     }
 
     @Override
-    public void enhanceResources(@NotNull ResourceConfig resourceConfig) {
-        AuthConfig authConfig = new AuthConfig(
-                new MPConfig(),
-                "res_sourceCatalogue",
-                null,
-                null,
-                null,
-                null,
-                null,
-                null);
-
-        resourceConfig.register(Enhancers.INSTANCE.radar(authConfig));
-        resourceConfig.register(Enhancers.INSTANCE.getDisabledAuthorization());
-        resourceConfig.register(Enhancers.INSTANCE.getGeneralException());
-        resourceConfig.register(Enhancers.INSTANCE.getHttpException());
-        resourceConfig.register(Enhancers.INSTANCE.getHealth());
-    }
-
-    @Override
-    public void enhance(@NotNull AbstractBinder abstractBinder) {
-        enhanceBinder(abstractBinder);
-    }
-
-    @Override
     public void enhance(@NotNull ResourceConfig resourceConfig) {
-        enhanceResources(resourceConfig);
+        // do nothing
     }
 }

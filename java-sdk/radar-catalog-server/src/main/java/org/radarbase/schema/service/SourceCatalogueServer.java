@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
 import java.io.Closeable;
 import java.io.IOException;
 import java.net.URI;
-import java.net.URL;
 import java.nio.file.Paths;
 import java.util.List;
 
@@ -24,14 +23,8 @@ import java.util.List;
  */
 public class SourceCatalogueServer implements Closeable {
     static {
-        URL loggingResource = SourceCatalogueServer.class.getClassLoader()
-                .getResource("logging.properties");
-        if (loggingResource != null) {
-            System.setProperty("java.util.logging.config.file", loggingResource.getFile());
-        }
+        System.setProperty("java.util.logging.manager", "org.apache.logging.log4j.jul.LogManager");
     }
-
-    private static final Logger logger = LoggerFactory.getLogger(SourceCatalogueServer.class);
 
     private GrizzlyServer server;
     private final int serverPort;
@@ -50,6 +43,10 @@ public class SourceCatalogueServer implements Closeable {
     @SuppressWarnings("PMD.SignatureDeclareThrowsException")
     public void start(SourceCatalogue sourceCatalogue) {
         ResourceConfig config = ConfigLoader.INSTANCE.createResourceConfig(List.of(
+                ConfigLoader.Enhancers.INSTANCE.getUtility(),
+                ConfigLoader.Enhancers.INSTANCE.getGeneralException(),
+                ConfigLoader.Enhancers.INSTANCE.getHttpException(),
+                ConfigLoader.Enhancers.INSTANCE.getHealth(),
                 new SourceCatalogueJerseyEnhancer(sourceCatalogue)));
         server = new GrizzlyServer(URI.create("http://0.0.0.0:" + serverPort + "/"), config, false);
         server.listen();
@@ -57,6 +54,8 @@ public class SourceCatalogueServer implements Closeable {
 
     @SuppressWarnings("PMD.DoNotCallSystemExit")
     public static void main(String[] args) {
+        Logger logger = LoggerFactory.getLogger(SourceCatalogueServer.class);
+
         ArgumentParser parser = ArgumentParsers.newFor("radar-catalog-server")
                 .addHelp(true)
                 .build()
