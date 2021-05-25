@@ -38,7 +38,7 @@ jobs:
             ~/.gradle/caches
             ~/.gradle/wrapper
           # Key for restoring and saving the cache
-          key: ${{ runner.os }}-java-${{ hashFiles('**/*.gradle.kts', '**/gradle.properties') }}
+          key: ${{ runner.os }}-java-${{ hashFiles('**/*.gradle', 'java-sdk/gradle.properties') }}
           restore-keys: |
             ${{ runner.os }}-java-
 
@@ -49,7 +49,7 @@ jobs:
       # Gradle check
       - name: Check
         run: ./gradlew check
-        
+
       - name: Validate schemas
         run: ./gradlew :radar-schemas-tools:run --args="validate $GITHUB_WORKSPACE"
 
