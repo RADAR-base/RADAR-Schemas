@@ -1,8 +1,6 @@
 # RADAR-Schemas
 
-[![Build Status](https://travis-ci.org/RADAR-base/RADAR-Schemas.svg?branch=master)](https://travis-ci.org/RADAR-base/RADAR-Schemas)
-
-[Avro schemas](https://avro.apache.org/docs/1.8.2/spec.html) used in RADAR-base. The schemas are organized as follows:
+[Avro schemas](https://avro.apache.org/docs/1.9.2/spec.html) used in RADAR-base. The schemas are organized as follows:
 
 - The `commons` directory contains all schemas used inside Kafka and data fed into Kafka.
   - In the `active` subdirectory, add schemas for active data collection, like questionnaires or assignments.
