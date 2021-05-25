@@ -12,7 +12,7 @@ subprojects {
     apply plugin: 'idea'
 
     // Configuration
-    version = '0.7.0-SNAPSHOT'
+    version = '0.7.1-SNAPSHOT'
     group = 'org.radarbase'
     ext.githubRepoName = 'RADAR-base/RADAR-Schemas'
 
@@ -25,7 +25,7 @@ subprojects {
         argparseVersion = '0.8.1'
         jacksonVersion = '2.12.3'
         jacksonModuleVersion = '2.12.3'
-        radarJerseyVersion = "0.6.0"
+        radarJerseyVersion = "0.6.2"
 
         junitVersion = '4.13.2'
         confluentVersion = '6.1.1'
@@ -40,6 +40,7 @@ subprojects {
     repositories {
         mavenCentral()
         maven { url 'https://packages.confluent.io/maven/' }
+        maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
     }
 
     // Generated avro files

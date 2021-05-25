@@ -1,6 +1,7 @@
 package org.radarbase.schema.service;
 
 import net.sourceforge.argparse4j.ArgumentParsers;
+import net.sourceforge.argparse4j.helper.HelpScreenException;
 import net.sourceforge.argparse4j.inf.ArgumentParser;
 import net.sourceforge.argparse4j.inf.ArgumentParserException;
 import net.sourceforge.argparse4j.inf.Namespace;
@@ -22,7 +23,9 @@ import java.util.List;
  * {@link org.radarbase.schema.service.SourceCatalogueService.SourceTypeResponse}
  */
 public class SourceCatalogueServer implements Closeable {
-    private static final Logger logger = LoggerFactory.getLogger(SourceCatalogueServer.class);
+    static {
+        System.setProperty("java.util.logging.manager", "org.apache.logging.log4j.jul.LogManager");
+    }
 
     private GrizzlyServer server;
     private final int serverPort;
@@ -41,6 +44,10 @@ public class SourceCatalogueServer implements Closeable {
     @SuppressWarnings("PMD.SignatureDeclareThrowsException")
     public void start(SourceCatalogue sourceCatalogue) {
         ResourceConfig config = ConfigLoader.INSTANCE.createResourceConfig(List.of(
+                ConfigLoader.Enhancers.INSTANCE.getUtility(),
+                ConfigLoader.Enhancers.INSTANCE.getGeneralException(),
+                ConfigLoader.Enhancers.INSTANCE.getHttpException(),
+                ConfigLoader.Enhancers.INSTANCE.getHealth(),
                 new SourceCatalogueJerseyEnhancer(sourceCatalogue)));
         server = new GrizzlyServer(URI.create("http://0.0.0.0:" + serverPort + "/"), config, false);
         server.listen();
@@ -48,6 +55,8 @@ public class SourceCatalogueServer implements Closeable {
 
     @SuppressWarnings("PMD.DoNotCallSystemExit")
     public static void main(String[] args) {
+        Logger logger = LoggerFactory.getLogger(SourceCatalogueServer.class);
+
         ArgumentParser parser = ArgumentParsers.newFor("radar-catalog-server")
                 .addHelp(true)
                 .build()
@@ -61,21 +70,21 @@ public class SourceCatalogueServer implements Closeable {
         parser.addArgument("root")
                 .help("Root path of the source catalogue");
 
-        Namespace parsedArgs = null;
+        Namespace parsedArgs;
         try {
             parsedArgs = parser.parseArgs(args);
+        } catch (HelpScreenException e) {
+            parser.printHelp();
+            System.exit(0);
+            return;
         } catch (ArgumentParserException e) {
             logger.error("Failed to parse arguments: {}", e.getMessage());
             logger.error(parser.formatUsage());
             System.exit(1);
+            return;
         }
 
-        if (parsedArgs.getBoolean("help") != null && parsedArgs.getBoolean("help")) {
-            parser.printHelp();
-            System.exit(0);
-        }
-
-        SourceCatalogue sourceCatalogue = null;
+        SourceCatalogue sourceCatalogue;
         try {
             sourceCatalogue = SourceCatalogue
                     .load(Paths.get(parsedArgs.getString("root")));
@@ -83,6 +92,7 @@ public class SourceCatalogueServer implements Closeable {
             logger.error("Failed to load source catalogue", e);
             logger.error(parser.formatUsage());
             System.exit(1);
+            return;
         }
 
         // Processing state cannot be imported by ManagementPortal at this time.
