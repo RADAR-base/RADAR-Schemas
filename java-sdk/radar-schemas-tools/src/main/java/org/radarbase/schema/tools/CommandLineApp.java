@@ -27,6 +27,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import net.sourceforge.argparse4j.ArgumentParsers;
+import net.sourceforge.argparse4j.helper.HelpScreenException;
 import net.sourceforge.argparse4j.inf.ArgumentParser;
 import net.sourceforge.argparse4j.inf.ArgumentParserException;
 import net.sourceforge.argparse4j.inf.Namespace;
@@ -78,15 +79,13 @@ public class CommandLineApp {
         Namespace ns;
         try {
             ns = parser.parseArgs(args);
+        } catch (HelpScreenException e) {
+            parser.printHelp();
+            System.exit(0);
+            return;
         } catch (ArgumentParserException e) {
             parser.handleError(e);
             System.exit(1);
-            return;
-        }
-
-        if (ns.getBoolean("help") != null && ns.getBoolean("help")) {
-            parser.printHelp();
-            System.exit(0);
             return;
         }
 

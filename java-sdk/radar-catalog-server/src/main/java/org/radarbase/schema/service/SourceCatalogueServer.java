@@ -1,6 +1,7 @@
 package org.radarbase.schema.service;
 
 import net.sourceforge.argparse4j.ArgumentParsers;
+import net.sourceforge.argparse4j.helper.HelpScreenException;
 import net.sourceforge.argparse4j.inf.ArgumentParser;
 import net.sourceforge.argparse4j.inf.ArgumentParserException;
 import net.sourceforge.argparse4j.inf.Namespace;
@@ -69,21 +70,21 @@ public class SourceCatalogueServer implements Closeable {
         parser.addArgument("root")
                 .help("Root path of the source catalogue");
 
-        Namespace parsedArgs = null;
+        Namespace parsedArgs;
         try {
             parsedArgs = parser.parseArgs(args);
+        } catch (HelpScreenException e) {
+            parser.printHelp();
+            System.exit(0);
+            return;
         } catch (ArgumentParserException e) {
             logger.error("Failed to parse arguments: {}", e.getMessage());
             logger.error(parser.formatUsage());
             System.exit(1);
+            return;
         }
 
-        if (parsedArgs.getBoolean("help") != null && parsedArgs.getBoolean("help")) {
-            parser.printHelp();
-            System.exit(0);
-        }
-
-        SourceCatalogue sourceCatalogue = null;
+        SourceCatalogue sourceCatalogue;
         try {
             sourceCatalogue = SourceCatalogue
                     .load(Paths.get(parsedArgs.getString("root")));
@@ -91,6 +92,7 @@ public class SourceCatalogueServer implements Closeable {
             logger.error("Failed to load source catalogue", e);
             logger.error(parser.formatUsage());
             System.exit(1);
+            return;
         }
 
         // Processing state cannot be imported by ManagementPortal at this time.
@@ -102,6 +104,4 @@ public class SourceCatalogueServer implements Closeable {
             server.start(sourceCatalogue);
         }
     }
-
-
 }
