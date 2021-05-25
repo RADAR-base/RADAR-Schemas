@@ -140,18 +140,19 @@ public class SchemaTopicManager {
      */
     public void makeBackup(Duration timeout)
             throws IOException, InterruptedException, ExecutionException {
+        logger.info("Reading backup data");
         SchemaTopicBackup storeTopic = readBackup(timeout);
-        if (storeTopic != null) {
-            try {
-                if (storeTopic.startsAtFirstId()) {
-                    storage.store(storeTopic);
-                } else {
-                    storage.storeInvalid(storeTopic);
-                }
-            } catch (IOException e) {
-                logger.error("Failed to store _schemas data", e);
-                throw e;
+        try {
+            if (storeTopic.startsAtFirstId()) {
+                logger.info("Storing valid backup");
+                storage.store(storeTopic);
+            } else {
+                logger.info("Storing invalid backup");
+                storage.storeInvalid(storeTopic);
             }
+        } catch (IOException e) {
+            logger.error("Failed to store _schemas data", e);
+            throw e;
         }
     }
 
@@ -210,6 +211,7 @@ public class SchemaTopicManager {
                 logger.info("Existing topic is valid.");
                 return;
             }
+            logger.info("Existing _schemas topic is invalid. Backing up current topic.");
 
             try {
                 storage.storeInvalid(backup);
@@ -220,18 +222,20 @@ public class SchemaTopicManager {
         }
         SchemaTopicBackup newBackup;
         try {
+            logger.info("Loading data from backup storage at {}", storage.getPath());
             newBackup = storage.load();
         } catch (IOException e) {
-            logger.error("Backup storage loading failure.", e);
+            logger.error("Backup storage loading failure at {}", storage.getPath(), e);
             throw e;
         }
         if (newBackup == null) {
-            logger.error("No valid backup in storage.");
+            logger.error("No valid backup in storage at {}", storage.getPath());
             return;
         }
 
         // Backups successful. Remove old topic.
         if (topicExists) {
+            logger.info("Removing existing {} topic", TOPIC_NAME);
             topics.getKafkaClient().deleteTopics(List.of(TOPIC_NAME))
                     .all().get();
             try {
@@ -262,7 +266,7 @@ public class SchemaTopicManager {
             consumer.assign(List.of(topicPartition));
             consumer.seekToBeginning(List.of(topicPartition));
 
-            logger.debug("Kafka store reader thread started");
+            logger.info("Kafka store reader thread started");
 
             int numRecords = -1;
             Duration duration = timeout;
@@ -328,6 +332,7 @@ public class SchemaTopicManager {
             throws IOException, ExecutionException, InterruptedException {
         ensureInitialized();
         SchemaTopicBackup storeTopic;
+        logger.info("Loading backup from {}", storage.getPath());
         try {
             storeTopic = storage.load();
         } catch (IOException e) {
@@ -349,6 +354,7 @@ public class SchemaTopicManager {
             throw new IllegalStateException("Failed to create _schemas topic");
         }
 
+        logger.info("Restoring backup");
         commitBackup(storeTopic);
     }
 
@@ -365,10 +371,12 @@ public class SchemaTopicManager {
                     .map(producer::send)
                     .collect(Collectors.toList());
 
+            logger.info("Waiting for records to be committed");
             // collect so we can do a blocking operation after all records have been sent
             for (Future<?> future : futures) {
                 future.get();
             }
+            logger.info("Records have been committed");
         }
 
         alterResult.all().get();

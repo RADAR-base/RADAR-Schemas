@@ -17,9 +17,9 @@ COPY commons /code/commons
 COPY specifications /code/specifications
 
 COPY java-sdk/radar-schemas-commons/src /code/java-sdk/radar-schemas-commons/src
+COPY java-sdk/radar-schemas-core/src /code/java-sdk/radar-schemas-core/src
 COPY java-sdk/radar-schemas-registration/src /code/java-sdk/radar-schemas-registration/src
 COPY java-sdk/radar-schemas-tools/src /code/java-sdk/radar-schemas-tools/src
-COPY java-sdk/radar-schemas-core/src /code/java-sdk/radar-schemas-core/src
 COPY java-sdk/radar-catalog-server/src /code/java-sdk/radar-catalog-server/src
 
 RUN gradle distTar --no-watch-fs \

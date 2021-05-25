@@ -4,6 +4,9 @@ import static java.nio.file.StandardCopyOption.ATOMIC_MOVE;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
@@ -19,6 +22,8 @@ import javax.validation.constraints.NotNull;
  * Schema topic backup storage to JSON files.
  */
 public class JsonSchemaBackupStorage implements SchemaBackupStorage {
+    private static final Logger logger = LoggerFactory.getLogger(JsonSchemaBackupStorage.class);
+
     private static final String EXT = ".json";
     private static final String INVALID_EXT = ".invalid" + EXT;
     private static final ObjectMapper MAPPER = new ObjectMapper()
@@ -58,6 +63,7 @@ public class JsonSchemaBackupStorage implements SchemaBackupStorage {
     @Override
     public void store(SchemaTopicBackup topic) throws IOException {
         Path tmpPath = Files.createTempFile(path.getParent(), ".schema-backup", EXT);
+
         try (Writer writer = Files.newBufferedWriter(tmpPath)) {
             MAPPER.writeValue(writer, topic);
         }
@@ -66,17 +72,17 @@ public class JsonSchemaBackupStorage implements SchemaBackupStorage {
     }
 
     private void replaceAndBackup(Path tmpPath, Path mainPath, String suffix) throws IOException {
-        if (Files.exists(mainPath)) {
+        if (!Files.exists(mainPath)) {
+            logger.info("Creating new {}", mainPath);
+            Files.move(tmpPath, mainPath, ATOMIC_MOVE);
+        } else if (contentEquals(mainPath, tmpPath)) {
+            logger.info("Not replacing old identical value {}", mainPath);
+            Files.delete(tmpPath);
+        } else {
             FileTime lastModified = Files.getLastModifiedTime(mainPath);
             Path backupPath = changeJsonSuffix(mainPath, "." + lastModified.toInstant() + suffix);
+            logger.info("Creating new {} and moving the existing value to {}", mainPath, backupPath);
             Files.copy(mainPath, backupPath);
-
-            Files.move(tmpPath, mainPath, ATOMIC_MOVE);
-
-            if (contentEquals(mainPath, backupPath)) {
-                Files.delete(backupPath);
-            }
-        } else {
             Files.move(tmpPath, mainPath, ATOMIC_MOVE);
         }
     }
@@ -105,5 +111,10 @@ public class JsonSchemaBackupStorage implements SchemaBackupStorage {
         try (Reader reader = Files.newBufferedReader(path)) {
             return MAPPER.readValue(reader, SchemaTopicBackup.class);
         }
+    }
+
+    @Override
+    public Path getPath() {
+        return path;
     }
 }

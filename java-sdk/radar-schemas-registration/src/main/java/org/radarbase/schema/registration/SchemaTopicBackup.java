@@ -185,8 +185,8 @@ public class SchemaTopicBackup {
                 @NotNull @JsonProperty("type") SchemaRegistryKeyType type,
                 @JsonProperty("subject") String subject,
                 @JsonProperty("schemaId") Integer schemaId,
-                @NotNull @JsonProperty("key") byte[] key,
-                @NotNull @JsonProperty("value") byte[] value) {
+                @JsonProperty("key") byte[] key,
+                @JsonProperty("value") byte[] value) {
             this.type = type;
             this.schemaId = schemaId;
             this.subject = subject;
@@ -207,11 +207,19 @@ public class SchemaTopicBackup {
         }
 
         public byte[] getKey() {
-            return Arrays.copyOf(key, key.length);
+            if (key != null) {
+                return Arrays.copyOf(key, key.length);
+            } else {
+                return null;
+            }
         }
 
         public byte[] getValue() {
-            return Arrays.copyOf(value, value.length);
+            if (value != null) {
+                return Arrays.copyOf(value, value.length);
+            } else {
+                return null;
+            }
         }
 
         @Override

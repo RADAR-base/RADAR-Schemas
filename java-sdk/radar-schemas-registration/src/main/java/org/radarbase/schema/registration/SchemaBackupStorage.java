@@ -1,6 +1,7 @@
 package org.radarbase.schema.registration;
 
 import java.io.IOException;
+import java.nio.file.Path;
 
 /**
  * Storage for _schemas topic backups.
@@ -30,4 +31,6 @@ public interface SchemaBackupStorage {
      * @throws IOException if the data cannot be stored.
      */
     SchemaTopicBackup load() throws IOException;
+
+    Path getPath();
 }
