@@ -25,7 +25,7 @@ subprojects {
         argparseVersion = '0.8.1'
         jacksonVersion = '2.12.3'
         jacksonModuleVersion = '2.12.3'
-        radarJerseyVersion = "0.6.2-SNAPSHOT"
+        radarJerseyVersion = "0.6.2"
 
         junitVersion = '4.13.2'
         confluentVersion = '6.1.1'
