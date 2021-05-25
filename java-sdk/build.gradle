@@ -12,7 +12,7 @@ subprojects {
     apply plugin: 'idea'
 
     // Configuration
-    version = '0.7.0'
+    version = '0.7.1-SNAPSHOT'
     group = 'org.radarbase'
     ext.githubRepoName = 'RADAR-base/RADAR-Schemas'
 
