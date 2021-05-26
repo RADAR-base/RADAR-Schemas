@@ -95,7 +95,7 @@ jobs:
         id: cache-parameters
         run: |
           if [ "${{ steps.cache-buildx.outputs.cache-hit }}" = "true" ]; then
-            echo "::set-output name=cache-to::null"
+            echo "::set-output name=cache-to::"
           else
             echo "::set-output name=cache-to::type=local,dest=/tmp/.buildx-cache-new,mode=max"
           fi
