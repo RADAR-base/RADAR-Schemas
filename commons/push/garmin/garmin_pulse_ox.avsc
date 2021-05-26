@@ -1,0 +1,16 @@
+{
+  "namespace": "org.radarcns.push.garmin",
+  "name": "GarminPulseOx",
+  "type": "record",
+  "doc": "Pulse Ox summaries contain blood oxygen saturation data. Two types of data are represented in Pulse Ox summaries based on the capabilities of the user’s device. If the onDemand field is not present or set to false, the spo2Values contains an SpO2 measurement that is an average of all measurements taken as part of the Acclimation feature (https://www8.garmin.com/manuals/webhelp/fenix5plus/EN-US/GUID-4D425925-D4EE-4C26-B974- 5375D0670860.html). If the onDemand field is true the spo2Values instead contains one or more exact measurements taken by a device that is capable of on-demand measurements but not the Acclimation feature, such as the Vivosmart 4. There maybe multiple records of spo2Value for the same summaryId. These may also be associated with Sleep summaries using summaryId. Backfill is supported for Pulse Ox summaries, but only for Acclimation data.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Start time of the activity in seconds since January 1, 1970, 00:00:00 UTC (Unix timestamp)."},
+    {"name": "timeReceived", "type": "double", "doc": "Time that this record was collected by a service in seconds since the Unix Epoch (s)."},
+    {"name": "summaryId", "type": "string", "doc": "Unique identifier for the summary."},
+    {"name": "startTimeOffset", "type": ["null", "int"], "doc": "Offset in seconds to add to time to derive the 'local' time of the device that captured the data.", "default": null},
+    {"name": "date", "type": ["null", "string"], "doc": "The calendar date this summary would be displayed on in Garmin Connect in the local time zone of the device. The date format is ‘yyyy-mm-dd’.", "default": null},
+    {"name": "duration", "type": ["null", "int"], "doc": "Length of the monitoring period in seconds. 86400 once a full day is complete, but less if a user syncs mid-day.", "default": null},
+    {"name": "spo2", "type": ["null", "float"], "doc": "The SpO2 measurement taken at the time (1 sample/minute).", "default": null},
+    {"name": "onDemand", "type": ["null", "boolean"], "doc": "A Boolean to show whether this pulse ox summary represents an on- demand reading or an averaged acclimation reading.", "default": null}
+  ]
+}

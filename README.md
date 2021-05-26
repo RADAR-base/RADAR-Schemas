@@ -1,8 +1,6 @@
 # RADAR-Schemas
 
-[![Build Status](https://travis-ci.org/RADAR-base/RADAR-Schemas.svg?branch=master)](https://travis-ci.org/RADAR-base/RADAR-Schemas)
-
-[Avro schemas](https://avro.apache.org/docs/1.8.2/spec.html) used in RADAR-base. The schemas are organized as follows:
+[Avro schemas](https://avro.apache.org/docs/1.9.2/spec.html) used in RADAR-base. The schemas are organized as follows:
 
 - The `commons` directory contains all schemas used inside Kafka and data fed into Kafka.
   - In the `active` subdirectory, add schemas for active data collection, like questionnaires or assignments.
@@ -58,19 +56,21 @@ Now you can run tools commands with
 # usage
 docker-compose run --rm tools
 # validation
-docker-compose run --rm tools radar-schemas-tools validate
+docker-compose run --rm tools radar-schemas-tools validate /schema/merged
 # list topic information
-docker-compose run --rm tools radar-schemas-tools list
+docker-compose run --rm tools radar-schemas-tools list /schema/merged
 # register schemas with the schema registry
-docker-compose run --rm tools radar-schemas-tools register http://schema-registry:8081
+docker-compose run --rm tools radar-schemas-tools register http://schema-registry-1:8081 /schema/merged
 # create topics with zookeeper
-docker-compose run --rm tools radar-schemas-tools create zookeeper-1:2181
+docker-compose run --rm tools radar-schemas-tools create -s kafka-1:9092 -b 1 -r 1 -p 1 /schema/merged
 # run source-catalogue webservice
-docker-compose run --rm tools radar-schemas-tools serve -p <portnumber>
+docker-compose run -p 8080:8080 --rm tools radar-catalog-server -p 8080 /schema/merged
+# and in a separate console, run
+curl localhost:8080/source-types
 # back up the _schemas topic
-docker-compose run --rm tools radar-schemas-tools schema-topic --backup -f schema.json -b 1 zookeeper-1:2181
+docker-compose run --rm tools radar-schemas-tools schema-topic --backup -f schema.json -b 1 -s kafka-1:9092 -f /schema/conf/backup.json /schema/merged
 # ensure the validity of the _schemas topic
-docker-compose run --rm tools radar-schemas-tools schema-topic --ensure -f schema.json -b 1 -r 1 zookeeper-1:2181
+docker-compose run --rm tools radar-schemas-tools schema-topic --ensure -f schema.json -b 1 -s kafka-1:9092 -f /schema/conf/backup.json -r 1 /schema/merged
 ```
 
 ### Using radar-schema-tools with Confluent Cloud
@@ -90,11 +90,11 @@ docker-compose run --rm tools radar-schemas-tools schema-topic --ensure -f schem
     1.2. Run `cc-topic-create` command
 
     ```
-    docker run --rm -v "$PWD/java-config.properties:/schema/conf/java.properties" radarbase/kafka-init radar-schemas-tools cc-topic-create -c java-config.properties
+    docker run --rm -v "$PWD/java-config.properties:/schema/conf/java.properties" radarbase/radar-schemas-tools radar-schemas-tools topic-create -c /schema/conf/java-config.properties /schema/merged
     ```
         
 2. Register schemas on Confluent Cloud schema registry
 
     ```
-    docker run --rm radarbase/kafka-init radar-schemas-tools register SR_ENDPOINT -u SR_API_KEY -p SR_API_SECRET
+    docker run --rm radarbase/kafka-init radar-schemas-tools register SR_ENDPOINT -u SR_API_KEY -p SR_API_SECRET /schema/merged
     ```
