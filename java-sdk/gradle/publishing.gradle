@@ -1,0 +1,86 @@
+apply plugin: 'maven-publish'
+apply plugin: 'signing'
+
+def sharedManifest = manifest {
+    attributes("Implementation-Title": project.name,
+        "Implementation-Version": version)
+}
+
+jar {
+    manifest.from sharedManifest
+}
+
+// custom tasks for creating source/javadoc jars
+task sourcesJar(type: Jar, dependsOn: classes) {
+    archiveClassifier.set('sources')
+    from sourceSets.main.allSource
+    manifest.from sharedManifest
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    archiveClassifier.set('javadoc')
+    from javadoc.destinationDir
+    manifest.from sharedManifest
+}
+
+assemble.dependsOn(javadocJar, sourcesJar)
+
+publishing {
+    publications {
+        mavenJar(MavenPublication) {
+            from components.java
+            artifact sourcesJar
+            artifact javadocJar
+
+            pom {
+                name = project.name
+                description = project.description
+                url = githubUrl
+                licenses {
+                    license {
+                        name = 'The Apache Software License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        distribution = 'repo'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'blootsvoets'
+                        name = 'Joris Borgdorff'
+                        email = 'joris@thehyve.nl'
+                        organization = 'The Hyve'
+                    }
+                    developer {
+                        id = 'yatharthranjan'
+                        name = 'Yatharth Ranjan'
+                        email = 'yatharth.ranjan@kcl.ac.uk'
+                        organization = 'King\'s College London'
+                    }
+                }
+                issueManagement {
+                    system = 'GitHub'
+                    url = githubUrl + '/issues'
+                }
+                organization {
+                    name = 'RADAR-base'
+                    url = website
+                }
+                scm {
+                    connection = 'scm:git:' + githubUrl
+                    url = githubUrl
+                }
+            }
+        }
+    }
+}
+
+signing {
+    useGpgCmd()
+    required { true }
+    sign(tasks["sourcesJar"], tasks["javadocJar"])
+    sign(publishing.publications["mavenJar"])
+}
+
+tasks.withType(Sign).configureEach {
+    onlyIf { gradle.taskGraph.hasTask("${project.path}:publish") }
+}

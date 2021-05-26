@@ -1,18 +1,23 @@
 # RADAR Schemas Java SDK
 
-The Java SDKs are published as JARs on bintray. To use them in Gradle, add the following code to your `build.gradle`:
+The Java SDKs are published as JARs on Maven Central. To use them in Gradle, add the following code to your `build.gradle`:
 
 ```gradle
 repositories {
-    maven { url  'http://dl.bintray.com/radar-cns/org.radarcns' }
+    mavenCentral()
+    maven { url 'https://packages.confluent.io/maven/' }
+    maven { url "https://jitpack.io" }
 }
 
 dependencies {
-    // Commons schemas (backend, passive remote monitoring app)
-    compile 'org.radarcns:radar-schemas-commons:0.5.7'
+    // Compiled Avro schemas
+    compile 'org.radarbase:radar-schemas-commons:<release version>'
 
-    // Questionnaire schemas (active remote monitoring app)
-    compile 'org.radarcns:radar-schemas-tools:0.5.7'
+    // Specification loader and schema validation library
+    compile 'org.radarbase:radar-schemas-core:<release version>'
+
+    // Register topics and schemas
+    compile 'org.radarbase:radar-schemas-registration:<release version>'
 }
 ```
 Usually, you only need to include the schemas you actually need in your dependencies.
@@ -31,3 +36,7 @@ public class Deserialize {
 ```
 
 Alternatively, use `org.radarcns.data.SpecificRecordEncoder` and `org.radarcns.data.SpecificRecordDecoder` from the [`radar-commons`](https://github.com/RADAR-base/radar-commons) package.
+
+## Tools
+
+This distribution also contains two java applications: `radar-schemas-tools` and `radar-catalog-server`. The former is used to validate schemas and specifications, register topics and schemas, or list available topics. The latter hosts all source types from the specification as an API.

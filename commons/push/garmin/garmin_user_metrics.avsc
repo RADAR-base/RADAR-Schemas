@@ -1,0 +1,14 @@
+{
+  "namespace": "org.radarcns.push.garmin",
+  "name": "GarminUserMetrics",
+  "type": "record",
+  "doc": "User Metrics are per-user calculations performed by Garmin based on the underlying data uploaded from the user’s device. This data can be specific to a single device and field availability is dependent on device model support. Unlike other summaries, User Metrics are associated only with a calendar date, not a specific time frame, and only the most recent value for any fields is presented to the user. Each metric directly corresponds to the similarly named field found in Garmin Connect.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Time that this record was collected by a service in seconds since the Unix Epoch (s)."},
+    {"name": "timeReceived", "type": "double", "doc": "Time that this record was collected by a service in seconds since the Unix Epoch (s)."},
+    {"name": "summaryId", "type": "string", "doc": "Unique identifier for the summary."},
+    {"name": "date", "type": ["null", "string"], "doc": "The calendar date this summary would be displayed on in Garmin Connect in the local time zone of the device. The date format is ‘yyyy-mm-dd’.", "default": null},
+    {"name": "vo2Max", "type": ["null", "float"], "doc": "An estimate of the maximum volume of oxygen (in milliliters) the user can consume per minute per kilogram of body weight at maximum performance.", "default": null},
+    {"name": "fitnessAge", "type": ["null", "int"], "doc": "An estimation of the ‘age’ of the user’s fitness level, calculated by comparing internal fitness metrics with the average readings of biometrically similar users by age. For instance, a fitness age of 48 indicates that the user’s physical fitness is similar to that of an average 48- year-old person of the same gender.", "default": null}
+  ]
+}

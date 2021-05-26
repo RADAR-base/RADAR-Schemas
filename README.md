@@ -1,8 +1,6 @@
 # RADAR-Schemas
 
-[![Build Status](https://travis-ci.org/RADAR-base/RADAR-Schemas.svg?branch=master)](https://travis-ci.org/RADAR-base/RADAR-Schemas)
-
-[Avro schemas](https://avro.apache.org/docs/1.8.2/spec.html) used in RADAR-base. The schemas are organized as follows:
+[Avro schemas](https://avro.apache.org/docs/1.9.2/spec.html) used in RADAR-base. The schemas are organized as follows:
 
 - The `commons` directory contains all schemas used inside Kafka and data fed into Kafka.
   - In the `active` subdirectory, add schemas for active data collection, like questionnaires or assignments.
@@ -13,6 +11,14 @@
   - In the `stream` subdirectory, add schemas used in Kafka Streams.
 - The `specifications` directory contains specifications of what data types are collected through which devices.
 - Java SDKs for each of the components are provided in the `java-sdk` folder, see installation instructions there. They are automatically generated from the Avro schemas using the Avro 1.8.2 specification.
+
+## Usage
+
+This project can be used in RADAR-base by using the `radarbase/kafka-init` Docker image. The schemas and specifications can be extended by locally creating a directory structure that includes a `commons` and `specifications` directory and mounting it to the image, to the `/schema/conf/commons` and `/schema/conf/specifications` directories, respectively. Existing specifications can be excluded from your deployment by mounting a file at `/etc/radar-schemas/specifications.exclude`, with on each line a file pattern that can be excluded. The pattern should start from the `specifications` directory as parent directory. Example file contents:
+```
+active/*
+passive/biovotion*
+```
 
 ## Contributing
 
@@ -50,17 +56,45 @@ Now you can run tools commands with
 # usage
 docker-compose run --rm tools
 # validation
-docker-compose run --rm tools radar-schemas-tools validate
+docker-compose run --rm tools radar-schemas-tools validate /schema/merged
 # list topic information
-docker-compose run --rm tools radar-schemas-tools list
+docker-compose run --rm tools radar-schemas-tools list /schema/merged
 # register schemas with the schema registry
-docker-compose run --rm tools radar-schemas-tools register http://schema-registry:8081
+docker-compose run --rm tools radar-schemas-tools register http://schema-registry-1:8081 /schema/merged
 # create topics with zookeeper
-docker-compose run --rm tools radar-schemas-tools create zookeeper-1:2181
+docker-compose run --rm tools radar-schemas-tools create -s kafka-1:9092 -b 1 -r 1 -p 1 /schema/merged
 # run source-catalogue webservice
-docker-compose run --rm tools radar-schemas-tools serve -p <portnumber>
+docker-compose run -p 8080:8080 --rm tools radar-catalog-server -p 8080 /schema/merged
+# and in a separate console, run
+curl localhost:8080/source-types
 # back up the _schemas topic
-docker-compose run --rm tools radar-schemas-tools schema-topic --backup -f schema.json -b 1 zookeeper-1:2181
+docker-compose run --rm tools radar-schemas-tools schema-topic --backup -f schema.json -b 1 -s kafka-1:9092 -f /schema/conf/backup.json /schema/merged
 # ensure the validity of the _schemas topic
-docker-compose run --rm tools radar-schemas-tools schema-topic --ensure -f schema.json -b 1 -r 1 zookeeper-1:2181
+docker-compose run --rm tools radar-schemas-tools schema-topic --ensure -f schema.json -b 1 -s kafka-1:9092 -f /schema/conf/backup.json -r 1 /schema/merged
 ```
+
+### Using radar-schema-tools with Confluent Cloud
+
+1. Create topics on Confluent Cloud 
+
+    1.1. Create a `java-config.properties` file. A Confluent Cloud config for Java application based on this [template](https://github.com/confluentinc/configuration-templates/blob/master/clients/cloud/java-sr.config).
+
+    ```properties
+    # Kafka
+    bootstrap.servers={{ BROKER_ENDPOINT }}
+    security.protocol=SASL_SSL
+    sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username="{{ CLUSTER_API_KEY }}" password="{{ CLUSTER_API_SECRET }}";
+    ssl.endpoint.identification.algorithm=https
+    sasl.mechanism=PLAIN
+    ```
+    1.2. Run `cc-topic-create` command
+
+    ```
+    docker run --rm -v "$PWD/java-config.properties:/schema/conf/java.properties" radarbase/radar-schemas-tools radar-schemas-tools topic-create -c /schema/conf/java-config.properties /schema/merged
+    ```
+        
+2. Register schemas on Confluent Cloud schema registry
+
+    ```
+    docker run --rm radarbase/kafka-init radar-schemas-tools register SR_ENDPOINT -u SR_API_KEY -p SR_API_SECRET /schema/merged
+    ```
