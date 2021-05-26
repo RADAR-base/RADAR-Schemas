@@ -81,7 +81,8 @@ public class JsonSchemaBackupStorage implements SchemaBackupStorage {
         } else {
             FileTime lastModified = Files.getLastModifiedTime(mainPath);
             Path backupPath = changeJsonSuffix(mainPath, "." + lastModified.toInstant() + suffix);
-            logger.info("Creating new {} and moving the existing value to {}", mainPath, backupPath);
+            logger.info("Creating new {} and moving the existing value to {}",
+                    mainPath, backupPath);
             Files.copy(mainPath, backupPath);
             Files.move(tmpPath, mainPath, ATOMIC_MOVE);
         }
