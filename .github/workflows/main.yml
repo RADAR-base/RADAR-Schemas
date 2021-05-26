@@ -67,7 +67,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-${{ hashFiles('Dockerfile', 'java-sdk/**/*.gradle.kts', 'java-sdk/gradle.properties', 'java-sdk/*/src/main/**', 'commons/**', 'specifications/**', 'docker/**') }}
+          key: ${{ runner.os }}-buildx-${{ hashFiles('Dockerfile', 'java-sdk/**/*.gradle', 'java-sdk/gradle.properties', 'java-sdk/*/src/main/**', 'commons/**', 'specifications/**', 'docker/**') }}
           restore-keys: |
             ${{ runner.os }}-buildx-
 

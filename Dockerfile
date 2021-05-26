@@ -4,14 +4,13 @@ RUN mkdir -p /code/java-sdk
 WORKDIR /code/java-sdk
 ENV GRADLE_USER_HOME=/code/.gradlecache
 
-COPY java-sdk/gradle/*.gradle /code/java-sdk/gradle/
 COPY java-sdk/build.gradle java-sdk/settings.gradle /code/java-sdk/
 COPY java-sdk/radar-schemas-commons/build.gradle /code/java-sdk/radar-schemas-commons/
 COPY java-sdk/radar-schemas-core/build.gradle /code/java-sdk/radar-schemas-core/
 COPY java-sdk/radar-schemas-registration/build.gradle /code/java-sdk/radar-schemas-registration/
 COPY java-sdk/radar-schemas-tools/build.gradle /code/java-sdk/radar-schemas-tools/
 COPY java-sdk/radar-catalog-server/build.gradle /code/java-sdk/radar-catalog-server/
-RUN gradle downloadDependencies --no-watch-fs
+RUN gradle downloadDependencies --no-watch-fs -Pprofile=docker
 
 COPY commons /code/commons
 COPY specifications /code/specifications
@@ -22,7 +21,7 @@ COPY java-sdk/radar-schemas-registration/src /code/java-sdk/radar-schemas-regist
 COPY java-sdk/radar-schemas-tools/src /code/java-sdk/radar-schemas-tools/src
 COPY java-sdk/radar-catalog-server/src /code/java-sdk/radar-catalog-server/src
 
-RUN gradle distTar --no-watch-fs \
+RUN gradle distTar --no-watch-fs -Pprofile=docker \
   && cd radar-schemas-tools/build/distributions \
   && tar xzf radar-schemas-tools*.tar.gz \
   && cd ../../../radar-catalog-server/build/distributions \
