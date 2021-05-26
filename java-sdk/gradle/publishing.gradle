@@ -72,20 +72,6 @@ publishing {
             }
         }
     }
-
-    repositories {
-        maven {
-            name = "OSSRH"
-            credentials {
-                username = project.hasProperty("ossrh.user") ? project.property("ossrh.user") : System.getenv("OSSRH_USER")
-                password = project.hasProperty("ossrh.password") ? project.property("ossrh.password") : System.getenv("OSSRH_PASSWORD")
-            }
-
-            def releasesRepoUrl = uri("https://oss.sonatype.org/service/local/staging/deploy/maven2/")
-            def snapshotsRepoUrl = uri("https://oss.sonatype.org/content/repositories/snapshots/")
-            url = version.toString().endsWith("SNAPSHOT") ? snapshotsRepoUrl : releasesRepoUrl
-        }
-    }
 }
 
 signing {
