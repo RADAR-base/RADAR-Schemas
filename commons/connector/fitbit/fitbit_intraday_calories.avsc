@@ -1,0 +1,14 @@
+{
+  "namespace": "org.radarcns.connector.fitbit",
+  "type": "record",
+  "name": "FitbitIntradayCalories",
+  "doc": "Intra day calories and activity level data from fitbit device.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+    { "name": "timeReceived", "type": "double", "doc": "Time that the data was received from the Fitbit API (seconds since the Unix Epoch)." },
+    { "name": "timeInterval", "type": "int", "doc": "Chronological window size (s)." },
+    { "name": "calories", "type": "double", "doc": "Calories in this period."},
+    { "name": "level", "type": "int", "doc": "Level of activity: 0 - sedentary; 1 - lightly active; 2 - fairly active; 3 - very active."},
+    { "name": "mets", "type": "double", "doc": "The metabolic equivalent of task (MET) -  https://en.wikipedia.org/wiki/Metabolic_equivalent_of_task."}
+  ]
+}

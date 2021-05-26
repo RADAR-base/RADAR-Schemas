@@ -1,0 +1,20 @@
+{
+  "namespace": "org.radarcns.monitor.questionnaire",
+  "type": "record",
+  "name": "QuestionnaireApplicationInteractionEvent",
+  "doc": "Schema of reporting events for user interaction with the questionnaire application. This describes significant user interactions, such as response to notifications and starting or completing questionnaires.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+    { "name": "eventType", "type": {
+      "name": "InteractionEventType",
+      "doc": "NOTIFICATION_OPEN = When a user presses the notification to open the app, APP_OPEN = When a user opens the app directly, QUESTIONNAIRE_STARTED = When a user starts a questionnaire, QUESTIONNAIRE_FINISHED = When a user completes a questionnaire, QUESTIONNAIRE_CANCELLED = When a user closes a questionnaire without completing it., QUESTIONNAIRE_TRIGGERED = When a data message triggers a new questionnaire.", 
+      "type": "enum",
+      "symbols": ["NOTIFICATION_OPEN", "APP_OPEN", "QUESTIONNAIRE_STARTED", "QUESTIONNAIRE_FINISHED", "QUESTIONNAIRE_CANCELLED", "OTHER", "UNKNOWN", "RECORDING_STARTED", "RECORDING_STOPPED", "QUESTIONNAIRE_TRIGGERED"]
+      },
+      "doc": "Questionnaire app activity usage event type.",
+      "default": "UNKNOWN"
+    },
+    { "name": "questionnaireName", "type": ["null", "string"], "doc": "Name of the questionnaire.", "default": null },
+    { "name": "metadata", "type": ["null", { "type": "map", "values": ["null", "string"] }], "doc": "Event metadata.", "default": null }
+  ]
+}

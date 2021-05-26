@@ -1,0 +1,12 @@
+{
+  "namespace": "org.radarcns.connector.upload.oxford",
+  "type": "record",
+  "name": "OxfordCameraImage",
+  "doc": "Image captured by Oxford's wearable camera. This only contains a URL reference to the actual image data.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Time since Unix Epoch as reported by the device (s)."},
+    {"name": "timeReceived", "type": "double", "doc": "Time this record was processed (s)."},
+    {"name": "name", "type": "string", "doc": "Image name."},
+    {"name": "url", "type": "string", "doc": "URL where image is stored."}
+  ]
+}

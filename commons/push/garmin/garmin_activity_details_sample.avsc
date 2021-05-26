@@ -1,0 +1,25 @@
+{
+  "namespace": "org.radarcns.push.garmin",
+  "name": "GarminActivityDetailsSample",
+  "type": "record",
+  "doc": "Each activity detail contains an activity summary and an optional list of samples. The samples list will be empty if the activity is manual or details are not supported by the device. Samples may be as frequent as once per second, and values should be considered valid until the next sample. In all cases, movingDurationInSeconds is less than or equal to timerDurationInSeconds is less than or equal to clockDurationInSeconds.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Start time of the sample in seconds since January 1, 1970, 00:00:00 UTC (Unix timestamp)."},
+    {"name": "timeReceived", "type": "double", "doc": "Time this sample was recieved by the push service in seconds since January 1, 1970, 00:00:00 UTC (Unix timestamp)."},
+    {"name": "summaryId", "type": "string", "doc": "Unique identifier for the summary that this sample is associated with."},
+    {"name": "airTemperature", "type": ["null", "float"], "doc": "Air Temperature in Celcius.", "default": null},
+    {"name": "heartRate", "type": ["null", "int"], "doc": "Heart rate in beats per minute.", "default": null},
+    {"name": "speed", "type": ["null", "float"], "doc": "Speed in Meters Per Second.", "default": null},
+    {"name": "stepsPerMinute", "type": ["null", "float"], "doc": "Number of steps per minute.", "default": null},
+    {"name": "totalDistance", "type": ["null", "float"], "doc": "Total Distance in Meters.", "default": null},
+    {"name": "timerDuration", "type": ["null", "int"], "doc": "The amount of 'timer time' in an activity.", "default": null},
+    {"name": "clockDuration", "type": ["null", "int"], "doc": "The amount of real-world 'clock time' from the start of an activity to the end.", "default": null},
+    {"name": "movingDuration", "type": ["null", "int"], "doc": "The amount of 'timer time' during which the athlete was moving (above a threshold speed).", "default": null},
+    {"name": "power", "type": ["null", "float"], "doc": "The amount of power expended in watts.", "default": null},
+    {"name": "bikeCadence", "type": ["null", "int"], "doc": "Cycling cadence in revolutions per minute.", "default": null},
+    {"name": "swimCadence", "type": ["null", "int"], "doc": "Swim cadence in strokes per minute.", "default": null},
+    {"name": "latitude", "type": ["null", "float"], "doc": "Latitude in decimal degrees (DD).", "default": null},
+    {"name": "longitude", "type": ["null", "float"], "doc": "Longitude in decimal degrees (DD).", "default": null},
+    {"name": "elevation", "type": ["null", "float"], "doc": "Elevation in meters.", "default": null}
+    ]
+}

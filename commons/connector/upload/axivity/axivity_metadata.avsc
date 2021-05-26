@@ -1,0 +1,12 @@
+{
+  "namespace": "org.radarcns.connector.upload.axivity",
+  "type": "record",
+  "name": "AxivityMetadata",
+  "doc": "Data that contains one column with the version name as type string.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Timestamp in unix time acquired locally from the device."},
+    {"name": "timeReceived", "type": "double", "doc": "Timestamp in unix time received from upload."},
+    {"name": "annotationName", "type": "string", "doc": "Name of the annotation from cwa metadata."},
+    {"name": "annotationData", "type": "string", "doc": "Value available for this annotation in the cwa metadata."}
+  ]
+}

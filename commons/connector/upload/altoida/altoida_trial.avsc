@@ -1,0 +1,13 @@
+{
+  "namespace": "org.radarcns.connector.upload.altoida",
+  "name": "AltoidaTrial",
+  "type": "record",
+  "doc": "Trial statistics.",
+  "fields": [
+    {"name": "placeDuration", "type": "float", "doc": "Time the user required to place the object (s)."},
+    {"name": "findDuration", "type": "float", "doc": "Time the user required to find the object (s)."},
+    {"name": "stepAngularChange", "type": ["null", "float"], "doc": "Mean angle the user turned during one step when finding the object (s).", "default": null},
+    {"name": "totalAngularChange", "type": "float", "doc": "Accumulated angular change when finding the object (radians)."},
+    {"name": "pathComplexity", "type": ["null", "float"], "doc": "Path complexity when finding the object (m).", "default": null}
+  ]
+}

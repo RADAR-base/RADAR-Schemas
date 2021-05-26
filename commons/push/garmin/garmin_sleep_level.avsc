@@ -1,0 +1,14 @@
+{
+  "namespace": "org.radarcns.push.garmin",
+  "name": "GarminSleepLevel",
+  "type": "record",
+  "doc": "Sleep level time ranges, currently deep, light, rem and awake. Time ranges are represented as unix timestamps in seconds. Usually associated with Sleep Summary data using the summaryId field.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Start time of this sleep level in seconds since January 1, 1970, 00:00:00 UTC (Unix timestamp)."},
+    {"name": "timeReceived", "type": "double", "doc": "Time that this record was collected by a service in seconds since the Unix Epoch (s)."},
+    {"name": "summaryId", "type": "string", "doc": "Unique identifier for the summary that this record is associated with."},
+    {"name": "sleepLevel", "type": "string", "doc":"Sleep levels, currently deep, light, rem and awake."},
+    {"name": "startTime", "type": "double", "doc": "Start time of this sleep period in seconds."},
+    {"name": "endTime", "type": "double", "doc": "End time of this sleep period in seconds."}
+  ]
+}

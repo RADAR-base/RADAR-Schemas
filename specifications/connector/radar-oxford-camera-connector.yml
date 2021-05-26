@@ -1,0 +1,14 @@
+#====================================== Altoida Phone Sensors =====================================#
+name: RADAR-OXFORD-CAMERA-CONNECTOR
+vendor: Oxford University
+model: Wearable Camera
+version: 1.0.0
+doc: Spec for RADAR-base connector for Oxford's wearable camera.
+data:
+    # Summary
+  - doc: Sensor readings and computed properties when an image was captured.
+    topic: connect_upload_oxford_camera_data
+    value_schema: .connector.upload.oxford.OxfordCameraData
+  - doc: Image file reference.
+    topic: connect_upload_oxford_camera_image
+    value_schema: .connector.upload.oxford.OxfordCameraImage

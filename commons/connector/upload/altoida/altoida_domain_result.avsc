@@ -1,0 +1,19 @@
+{
+  "namespace": "org.radarcns.connector.upload.altoida",
+  "type": "record",
+  "name": "AltoidaDomainResult",
+  "doc": "Nine domain percentile values 0 to 100 as described below (percent of healthy users that perform worse in the respective domain).",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Timestamp in unix time acquired locally from the device."},
+    {"name": "timeReceived", "type": "double", "doc": "Timestamp in unix time received from Altoida API."},
+    {"name": "perceptualMotorCoordination", "type": "float", "doc": "Percentage value of perceptual motor coordination."},
+    {"name": "complexAttention", "type": "float", "doc": "Percentage value of complex attention."},
+    {"name": "cognitiveProcessingSpeed", "type": "float", "doc": "Percentage value of cognitive processing speed."},
+    {"name": "inhibition", "type": "float", "doc": "Percentage value of inhibition."},
+    {"name": "flexibility", "type": "float", "doc": "Percentage value of flexibility."},
+    {"name": "visualPerception", "type": "float", "doc": "Percentage value of visual perception."},
+    {"name": "planning", "type": "float", "doc": "Percentage value of planning."},
+    {"name": "prospectiveMemory", "type": "float", "doc": "Percentage value of prospective memory."},
+    {"name": "spatialMemory", "type": "float", "doc": "Percentage value of spatial memory."}
+  ]
+}

@@ -1,0 +1,12 @@
+{
+   "namespace": "org.radarcns.connector.upload.altoida",
+   "type": "record",
+   "name": "AltoidaDiagnostics",
+   "doc": "What object was placed or found in an Altoida trial.",
+   "fields": [
+     {"name": "time", "type": "double", "doc": "Timestamp in unix time acquired locally from the device."},
+     {"name": "timeReceived", "type": "double", "doc": "Timestamp in unix time received from Altoida API."},
+     {"name": "objectAction", "type": "string", "doc": "Indicates whether the object is placed or found."},
+     {"name": "objectType", "type": "string", "doc": "Name of the object: star, heart or teddy."}
+   ]
+ }

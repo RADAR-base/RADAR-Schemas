@@ -1,0 +1,21 @@
+{
+  "namespace": "org.radarcns.connector.upload.oxford",
+  "type": "record",
+  "name": "OxfordCameraData",
+  "doc": "Entry for an image captured by Oxford's wearable camera.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Time since Unix Epoch as reported by the device (s)."},
+    {"name": "timeReceived", "type": "double", "doc": "Time this record was processed (s)."},
+    {"name": "name", "type": "string", "doc": "Image name."},
+    {"name": "infraredProximity", "type": "boolean", "doc": "True if a the infrared sensor detected an warm object (e.g. part of a human body) closeby when the image was captured."},
+    {"name": "acceleration", "type": "OxfordCameraAxes", "doc": "Acceleration of the camera when the image was captured (g)."},
+    {"name": "magneticField", "type": "OxfordCameraAxes", "doc": "Magnetic field of the camera when the image was captured (100 µT)."},
+    {"name": "orientation", "type": "OxfordCameraAxes", "doc": "Orientation of the camera when the image was captured (unknown unit, unknown interpretation)."},
+    {"name": "temperature", "type": "float", "doc": "Ambient temperature when the image was recorded (celcius)."},
+    {"name": "colorMean", "type": "OxfordCameraRgb", "doc": "Mean color saturation over all pixels of the image in the sRGB color space (range 0-1)."},
+    {"name": "luminanceMean", "type": "float", "doc": "Mean luminance over all pixels of the image (0 - 1). Calculation unknown but assumed to match sum of RGB values."},
+    {"name": "exposure", "type": "int", "doc": "Physical exposure of the captured image (unknown unit, unknown range)."},
+    {"name": "gain", "type": "float", "doc": "Gain applied to raw photo sensor values. Amplification factor of the signal (unknown range)."},
+    {"name": "colorBalance", "type": "OxfordCameraRgb", "doc": "Relative distribution of gain applied in the captured image (uncertain interpretation)."}
+  ]
+}

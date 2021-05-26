@@ -1,0 +1,11 @@
+{
+  "namespace": "org.radarcns.connector.upload.altoida",
+  "type": "record",
+  "name": "AltoidaBlink",
+  "doc": "Eye blinking event data of the Aldoida app user. Possible values are LEFT, RIGHT, BOTH, DETECTED.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Timestamp in unix time acquired locally from the device."},
+    {"name": "timeReceived", "type": "double", "doc": "Timestamp in unix time received from Altoida API."},
+    {"name": "eye", "type": "string", "doc": "Which of the eyes blinked. LEFT, RIGHT, BOTH, DETECTED."}
+  ]
+}

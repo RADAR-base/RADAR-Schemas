@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.active.opensmile",
   "type": "record",
   "name": "OpenSmile2AudioAnalysis",
-  "doc": "Audio data collected by aRMT app and processed using openSMILE.",
+  "doc": "NOTE: THIS SCHEMA IS DEPRACATED. PLEASE USE org.radarcns.active.questionnaire.Questionnaire. Audio data collected by aRMT app and processed using openSMILE.",
   "fields": [
     {"name": "time", "type": "double", "doc": "Device timestamp in UTC (s)."},
     { "name": "timeCompleted", "type": "double", "doc": "Timestamp in UTC (s) when subject completed the audio questionnaire." },
