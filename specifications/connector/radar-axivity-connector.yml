@@ -1,0 +1,31 @@
+#====================================== Axivity Device Data =======================================#
+name: RADAR-AXIVITY-CONNECTOR
+vendor: Axivity
+model: Axivity.device
+version: 1.0.0
+doc: Spec for RADAR-base Axivity data upload connector. Schemas should be registered in the connector. Information on the raw data can be found at https://github.com/digitalinteraction/openmovement/tree/master/Docs/ax3.
+data:
+  - doc: Data from 3-axis accelerometer sensor with gravitational constant g as unit. Data extracted from CWA binary file.
+    topic: connect_upload_axivity_acceleration
+    value_schema: .connector.upload.axivity.AxivityAcceleration
+
+  - doc: Battery level information of axivity device extracted from CWA Block.
+    topic: connect_upload_axivity_battery_level
+    value_schema: .connector.upload.axivity.AxivityBatteryLevel
+
+  - doc: Ambient light data extracted from a CWA Block.
+    topic: connect_upload_axivity_light
+    value_schema: .connector.upload.axivity.AxivityLight
+
+  - doc: Temperature data extracted from CWA Block.
+    topic: connect_upload_axivity_temperature
+    value_schema: .connector.upload.axivity.AxivityLight
+
+  - doc: Event data extracted from from a CWA Block.
+    topic: connect_upload_axivity_event
+    value_schema: .connector.upload.axivity.AxivityEvent
+
+  # meta-data
+  - doc: Data that contains additional meta-data of the recording. Data extracted from the header of CWA binary file.
+    topic: connect_upload_axivity_metadata
+    value_schema: .connector.upload.axivity.AxivityMetadata

@@ -1,15 +1,14 @@
 pluginManagement {
     repositories {
         gradlePluginPortal()
-        jcenter()
-        maven {
-            name "JCenter Gradle Plugins"
-            url  "https://dl.bintray.com/gradle/gradle-plugins"
-        }
+        mavenCentral()
     }
 }
 
 rootProject.name = 'radar-schemas'
 
+include ':radar-schemas-registration'
 include ':radar-schemas-tools'
 include ':radar-schemas-commons'
+include ':radar-catalog-server'
+include ':radar-schemas-core'

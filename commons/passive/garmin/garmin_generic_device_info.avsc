@@ -1,0 +1,41 @@
+{
+   "name":"GarminGenericDeviceInfo",
+   "type":"record",
+   "namespace":"org.radarcns.passive.garmin",
+   "doc":"Device information for Garmin devices.",
+   "fields":[
+      {
+         "name":"time",
+         "type":"double",
+         "doc":"Last updated time."
+      },
+      {
+         "name":"timeReceived",
+         "type":"double",
+         "doc":"Device receiver timestamp in UTC (s)."
+      },
+
+      {"name": "connectionState", "type": {
+            "name": "State",
+            "type": "enum",
+            "doc": "Possible connection state values - UNKNOWN, DISCONNECTED, CONNECTING, CONNECTED.",
+            "symbols": ["DISCONNECTED", "CONNECTING", "CONNECTED" , "UNKNOWN"]
+            }, "doc": "Garmin device connection state.", "default": "UNKNOWN"},
+
+      {
+         "name":"deviceModel",
+         "type":"string",
+         "doc":"Device model. Supported model are listed on Garmin site - https://developer.garmin.com/health-sdk/overview/."
+      },
+      {
+         "name":"firmwareVersion",
+         "type":"int",
+         "doc":"Firmware version of Garmin device."
+      },
+      {
+         "name":"friendlyName",
+         "type":"string",
+         "doc":"Friendly name of the device."
+      }
+   ]
+}

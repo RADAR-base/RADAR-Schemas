@@ -1,0 +1,43 @@
+{
+   "name":"GarminGenericIntensity",
+   "type":"record",
+   "namespace":"org.radarcns.passive.garmin",
+   "doc":"Intensity data from Garmin device. Garmin devices compare your heartrate data to determine intensity level. It compares resting heartrate with current heartrate to determine Vigorous or Moderate intensity level. No specific ranges or algorithm specified.",
+   "fields":[
+        {
+            "name":"time",
+            "type":"double",
+            "doc":"Last updated time."
+         },
+         {
+            "name":"timeReceived",
+            "type":"double",
+            "doc":"Device receiver timestamp in UTC (s)."
+         },
+      {
+         "name":"totalDailyMinutes",
+         "type":"int",
+         "doc":"Total Daily Minutes. Garmin devices accumulate intensity minutes throughout the day. This is what is available for current total daily minutes. This value indicates intensity minutes accumulated till that point of the day."
+      },
+      {
+         "name":"dailyModerateMinutes",
+         "type":"int",
+         "doc":"Daily Moderate Minutes. Garmin devices accumulate intensity minutes throughout the day. This is what is available for current total daily minutes. This value indicates intensity minutes accumulated till that point of the day."
+      },
+      {
+         "name":"dailyVigorousMinutes",
+         "type":"int",
+         "doc":"Daily Vigorous Minutes. Garmin devices accumulate intensity minutes throughout the day. This is what is available for current total daily minutes. This value indicates intensity minutes accumulated till that point of the day."
+      },
+      {
+         "name":"totalWeeklyMinutes",
+         "type":"int",
+         "doc":"Total Weekly Minutes."
+      },
+      {
+         "name":"weeklyGoal",
+         "type":"int",
+         "doc":"Weekly Goal."
+      }
+   ]
+}

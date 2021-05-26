@@ -1,0 +1,15 @@
+{
+  "namespace": "org.radarcns.connector.upload.axivity",
+  "type": "record",
+  "name": "AxivityEvent",
+  "doc": "Event data available in a CWA block.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Timestamp in unix time acquired locally from the device."},
+    {"name": "timeReceived", "type": "double", "doc": "Timestamp in unix time received from upload."},
+    {"name": "event", "type": {
+          "name": "AxivityEventType",
+          "type": "enum",
+          "doc": "Event types recorded from the axivity device.",
+          "symbols": ["RESUME", "SINGLE_TAP", "DOUBLE_TAP", "FIFO_OVERFLOW", "BUFFER_OVERFLOW", "UNHANDLED_INTERRUPT", "UNKNOWN"]}, "doc": "Event of the block.", "default": "UNKNOWN"}
+  ]
+}

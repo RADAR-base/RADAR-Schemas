@@ -2,7 +2,7 @@
    "namespace": "org.radarcns.connector.upload.altoida",
    "type": "record",
    "name": "AltoidaDiagnostics",
-   "doc": "Data indicating what object was placed or found.",
+   "doc": "What object was placed or found in an Altoida trial.",
    "fields": [
      {"name": "time", "type": "double", "doc": "Timestamp in unix time acquired locally from the device."},
      {"name": "timeReceived", "type": "double", "doc": "Timestamp in unix time received from Altoida API."},

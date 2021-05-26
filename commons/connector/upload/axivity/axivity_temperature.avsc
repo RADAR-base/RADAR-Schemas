@@ -1,0 +1,11 @@
+{
+  "namespace": "org.radarcns.connector.upload.axivity",
+  "type": "record",
+  "name": "AxivityTemperature",
+  "doc": "Temperature data from axivity.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Timestamp in unix time acquired locally from the device."},
+    {"name": "timeReceived", "type": "double", "doc": "Timestamp in unix time received from upload."},
+    {"name": "temperature", "type": "float", "doc": "Temperature (°C)." }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "namespace": "org.radarcns.push.garmin",
+  "name": "GarminStressDetailSummary",
+  "type": "record",
+  "doc": "Stress Details summaries contain the user’s stress level values for a given day. Stress levels are provided as 3-minute averages of the real-time stress scores generated on the device with values ranging from 1 to 100. A value of -1 means there was not enough data to detect stress, and -2 means there was too much motion (e.g. the user was walking or running). Scores between 1 and 25 are considered “rest” (i.e. not stressful), 26-50 as “low” stress, 51-75 “medium” stress, and 76- 100 as “high” stress. These numbers are derived based on a combination of many device sensors and will automatically adjust to the wearer of the device and gain accuracy over time as the stress algorithms learn the user’s natural biometric norms. Stress values from the Health API are exactly the stress values shown on Garmin Connect.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Start time of the activity in seconds since January 1, 1970, 00:00:00 UTC (Unix timestamp)."},
+    {"name": "timeReceived", "type": "double", "doc": "Time that this record was collected by a service in seconds since the Unix Epoch (s)."},
+    {"name": "summaryId", "type": "string", "doc": "Unique identifier for the summary."},
+    {"name": "startTimeOffset", "type": ["null", "int"], "doc": "Offset in seconds to add to time to derive the 'local' time of the device that captured the data.", "default": null},
+    {"name": "date", "type": ["null", "string"], "doc": "The calendar date this summary would be displayed on in Garmin Connect in the local time zone of the device. The date format is ‘yyyy-mm-dd’.", "default": null},
+    {"name": "duration", "type": ["null", "int"], "doc": "Length of the monitoring period in seconds. 86400 once a full day is complete, but less if a user syncs mid-day.", "default": null}
+  ]
+}

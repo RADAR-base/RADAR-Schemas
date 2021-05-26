@@ -1,0 +1,12 @@
+{
+  "namespace": "org.radarcns.connector.upload.altoida",
+  "type": "record",
+  "name": "AltoidaTap",
+  "doc": "Location where the user tapped the touchscreen on an x and y axis. These values are calculated from the center of the screen in centimeters (cm).",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Timestamp in unix time acquired locally from the device."},
+    {"name": "timeReceived", "type": "double", "doc": "Timestamp in unix time received from Altoida API."},
+    {"name": "x", "type": "double", "doc": "Location where the touchscreen was touched along the x axis (cm)."},
+    {"name": "y", "type": "double", "doc": "Location where the touchscreen was touched along the y axis (cm)."}
+  ]
+}

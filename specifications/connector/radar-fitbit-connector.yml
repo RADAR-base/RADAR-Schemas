@@ -22,3 +22,6 @@ data:
   - doc: Aggregate activity log.
     topic: connect_fitbit_activity_log
     value_schema: .connector.fitbit.FitbitActivityLogRecord
+  - doc: The intraday time series for Calories. Also includes Activity Level and METS.
+    topic: connect_fitbit_intraday_calories
+    value_schema: .connector.fitbit.FitbitIntradayCalories

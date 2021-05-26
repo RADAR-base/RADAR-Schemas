@@ -1,0 +1,38 @@
+{
+  "namespace": "org.radarcns.active.banking",
+  "type": "record",
+  "name": "BankingTransaction",
+  "doc": "Transaction in Banking App. This captures a full transaction: inputting a PIN number, then an amount and then a confirmation or cancellation. A transaction may also time out or end prematurely.",
+  "fields": [ {
+    "name": "transactionId",
+    "type": "string",
+    "doc": "Unique ID for an Transaction."
+  }, {
+    "name": "time",
+    "type": "double",
+    "doc": "Time since the Unix Epoch (seconds), time stores the time a transaction has started."
+  }, {
+    "name": "timeCompleted",
+    "type": "double",
+    "doc": "Time stores the time a transaction has been completed."
+  }, {
+    "name": "duration",
+    "type": "double",
+    "doc": "Duration of the transaction (seconds), duration is essentially timeCompleted - time."
+  }, {
+    "name": "isComplete",
+    "type": [ "null", "boolean" ],
+    "doc": "True if the result is CORRECT_CONFIRMED, WRONG_CONFIRMED, CORRECT_CANCELLED or WRONG_CANCELLED. False if TIME_OUT or EXIT.",
+    "default": null
+  }, {
+    "name": "transactionResult",
+    "type": {
+      "type": "enum",
+      "name": "TransactionResult",
+      "doc": "CORRECT_CONFIRMED: both inputs Correct- Confirmed Transaction, CORRECT_CANCELLED: Correct inputs - Cancelled Transaction, WRONG_CONFIRMED:   (at least one of two inputs Wrong) - Confirmed Transaction, WRONG_CANCELLED: Wrong input Cancelled Transaction, TIME_OUT: Transaction timed Out, EXIT: Transaction Ended prematurely.",
+      "symbols" : [ "CORRECT_CONFIRMED", "CORRECT_CANCELLED", "WRONG_CONFIRMED", "WRONG_CANCELLED", "TIME_OUT", "EXIT", "UNKNOWN"]
+    },
+    "doc": "Shows the result of the Transaction which can be Correct Cancelled, Correct Cancelled, Wrong Confirmed, Wrong Cancelled, Timed Out, Ended.",
+    "default": "UNKNOWN"
+  } ]
+}

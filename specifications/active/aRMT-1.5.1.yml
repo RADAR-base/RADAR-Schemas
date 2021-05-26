@@ -1,0 +1,118 @@
+name: aRMT
+vendor: RADAR
+model: aRMT-App
+version: 1.5.1
+assessment_type: QUESTIONNAIRE
+doc: aRMT Questionnaires definition. Includes Personal Health Questionnaire Depression Scale (PHQ-8), Experience sampling method (ESM) and RSES and other data.
+data:
+  - type: THINC_IT
+    topic: notification_thinc_it
+    value_schema: .active.questionnaire.Questionnaire
+    questionnaire_definition_url: https://github.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/blob/master/questionnaires/thinc_it/thinc_it_armt.json
+  - type: ROMBERG_TEST
+    doc: The value of the task is in milliseconds (ms).
+    topic: task_romberg_test
+    value_schema: .active.task.Task
+    questionnaire_definition_url: https://github.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/blob/master/questionnaires/romberg_test/romberg_test_armt.json
+  - type: 2MW_TEST
+    doc: The value of the task is in milliseconds (ms).
+    topic: task_2MW_test
+    value_schema: .active.task.Task
+    questionnaire_definition_url: https://github.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/blob/master/questionnaires/2MW_test/2MW_test_armt.json
+  - type: TANDEM_WALKING_TEST
+    doc: The value of the task is in milliseconds (ms).
+    topic: task_tandem_walking_test
+    value_schema: .active.task.Task
+    questionnaire_definition_url: https://github.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/blob/master/questionnaires/tandem_walking_test/tandem_walking_test_armt.json
+  - type: PHQ8
+    topic: questionnaire_phq8
+    value_schema: .active.questionnaire.Questionnaire
+    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/phq8/phq8_armt.json
+  - type: ESM
+    topic: questionnaire_esm
+    value_schema: .active.questionnaire.Questionnaire
+    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/esm/esm_armt.json
+  - type: AUDIO
+    topic: questionnaire_audio
+    value_schema: .active.questionnaire.Questionnaire
+    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/audio/audio_armt.json
+  - type: AUDIO_2
+    topic: questionnaire_audio
+    value_schema: .active.questionnaire.Questionnaire
+    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/audio_2/audio_2_armt.json
+  - type: AUDIO_3
+    topic: questionnaire_audio
+    value_schema: .active.questionnaire.Questionnaire
+    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/audio_3/audio_3_armt.json
+  - type: AUDIO_4
+    topic: questionnaire_audio
+    value_schema: .active.questionnaire.Questionnaire
+    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/audio_4/audio_4_armt.json
+  - type: RSES
+    topic: questionnaire_rses
+    value_schema: .active.questionnaire.Questionnaire
+    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/rses/rses_armt.json
+  - type: PERCEIVED_DEFICITS_QUESTIONNAIRE
+    topic: questionnaire_perceived_deficits_questionnaire
+    value_schema: .active.questionnaire.Questionnaire
+    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/perceived_deficits_questionnaire/perceived_deficits_questionnaire_armt.json
+  - type: PATIENT_DETERMINED_DISEASE_STEP
+    topic: questionnaire_patient_determined_disease_step
+    value_schema: .active.questionnaire.Questionnaire
+    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/patient_determined_disease_step/patient_determined_disease_step_armt.json
+  - type: ESM28Q
+    topic: questionnaire_esm28q
+    value_schema: .active.questionnaire.Questionnaire
+    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/esm28q/esm28q_armt.json
+  - type: BIPQ
+    topic: questionnaire_bipq
+    value_schema: .active.questionnaire.Questionnaire
+    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/bipq/bipq_armt.json
+  - type: ESM_EPI_MOD_1
+    topic: questionnaire_esm_epi_mod_1
+    value_schema: .active.questionnaire.Questionnaire
+    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/esm_epi_mod_1/esm_epi_mod_1_armt.json
+  - type: EVENING_ASSESSMENT
+    topic: questionnaire_evening_assessment
+    value_schema: .active.questionnaire.Questionnaire
+    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/evening_assessment/evening_assessment_armt.json
+  - type: MORNING_ASSESSMENT
+    topic: questionnaire_morning_assessment
+    value_schema: .active.questionnaire.Questionnaire
+    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/morning_assessment/morning_assessment_armt.json
+  - type: TAM
+    topic: questionnaire_tam
+    value_schema: .active.questionnaire.Questionnaire
+    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/tam/tam_armt.json
+  - type: BAARS_IV
+    topic: questionnaire_baars_iv
+    value_schema: .active.questionnaire.Questionnaire
+    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/baars_iv/baars_iv_armt.json
+  - type: ARI_SELF
+    topic: questionnaire_ari_self
+    value_schema: .active.questionnaire.Questionnaire
+    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/ari_self/ari_self_armt.json
+  - type: GAD7
+    topic: questionnaire_gad7
+    value_schema: .active.questionnaire.Questionnaire
+    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/gad7/gad7_armt.json
+  - type: RPQ
+    topic: questionnaire_rpq
+    value_schema: .active.questionnaire.Questionnaire
+    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/rpq/rpq_armt.json
+  - type: ART_COGNITIVE_TEST
+    topic: questionnaire_art_cognitive_test
+    value_schema: .active.questionnaire.Questionnaire
+    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/art_cognitive_test/art_cognitive_test_armt.json
+  - type: COMPLETION_LOG
+    doc: Information about the completeness of each questionnaire.
+    topic: questionnaire_completion_log
+    value_schema: .monitor.questionnaire.QuestionnaireCompletionLog
+  - type: TIMEZONE
+    doc: Timezone information sent along with each questionnaire.
+    topic: questionnaire_timezone
+    value_schema: .monitor.application.ApplicationTimeZone
+  - type: APP_EVENT
+    doc: Questionnaire application interaction event.
+    topic: questionnaire_app_event
+    value_schema: .monitor.questionnaire.QuestionnaireApplicationInteractionEvent
