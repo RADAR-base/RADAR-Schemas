@@ -4,6 +4,6 @@
   "name": "FibaroSection",
   "doc": "A section of a building",
   "fields": [
-      {"name": "id", "type": "double", "doc": "Unique ID for a Section"}
-      {"name": "name", "type": "string", "doc": "Section's name"}       
+      {"name": "id", "type": "double", "doc": "Unique ID for a Section"},
+      {"name": "name", "type": "string", "doc": "Section's name"}]   
 }
