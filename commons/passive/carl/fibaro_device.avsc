@@ -5,7 +5,7 @@
   "doc": "A Fibaro Device",
   "fields": [
       {"name": "id", "type": "double", "doc": "A unique ID for a Fibaro Device"},
-      {"name": "type", "type": "enum", "doc": "Type of the device", "symbols":["PRESENSE_SENSOR", "DOOR_SENSOR", "FLOOD_SENSOR", "PANIC_BUTTON"]},
+      {"name": "deviceType", "type": {"name": "DeviceType", "type": "enum", "doc": "Type of the device", "symbols":["PRESENSE_SENSOR", "DOOR_SENSOR", "FLOOD_SENSOR", "PANIC_BUTTON"]}},
       {"name": "serial", "type": "string", "doc": "A serial number for a Fibaro Device"},
       {"name": "make", "type": "string", "doc": "The name of a Device's Manufacturer"},
       {"name": "model", "type": "string", "doc": "The model name of the Fibaro Device"},
