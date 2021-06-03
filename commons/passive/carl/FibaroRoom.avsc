@@ -1,0 +1,11 @@
+{
+ "namespace": "org.radarcns.active.carl",
+ "type": "record",
+ "name": "Room",
+ "doc": "A building Room that has Fibaro Devices assigned to it",
+ "fields": [
+     {"name": "id", "type": "double", "doc": "Unique ID for a Room"},
+     {"name": "name", "type": "string", "doc": "Room's Name"},
+     {"name": "sectionId", "type": ["null","double"], "doc": "Section's unique ID where the Room belongs to"}]
+}
+

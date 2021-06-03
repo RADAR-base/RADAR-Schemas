@@ -1,0 +1,11 @@
+{
+ "namespace": "org.radarcns.active.carl",
+ "type": "record",
+ "name": "FibaroSection",
+ "doc": "A section of a building that can include different rooms",
+ "fields": [
+     {"name": "id", "type": "double", "doc": "Unique ID for a Section"},
+     {"name": "name", "type": "string", "doc": "Section's name"}]  
+
+}
+

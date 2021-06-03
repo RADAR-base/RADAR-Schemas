@@ -1,0 +1,15 @@
+{
+ "namespace": "org.radarcns.active.carl",
+ "type": "record",
+ "name": "FibaroEvent",
+ "doc": "An event that was registered with a Fibaro Device that captures the previous value of the last event that was registered with the same device - old and the new value - new",
+ "fields": [
+     {"name": "id", "type": "double", "doc": "Unique ID for an Event"},
+     {"name": "type", "type": "string", "doc": "The type of the Event"},
+     {"name": "timestamp", "type": "double", "doc": "Time since the Unix Epoch (seconds), represent the time that an Event was registered "},
+     {"name": "deviceId", "type": "string", "doc": "Unique ID of the device that registered the Event"},
+     {"name": "old", "type": "double", "doc": "The previous value of a similar Event that was registered on with the same Device"},
+     {"name": "new", "type": "double", "doc": "The new value that was registered with the Device"}
+  ]
+}
+
