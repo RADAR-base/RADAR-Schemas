@@ -1,5 +1,5 @@
 {
- "namespace": "org.radarcns.active.carl",
+ "namespace": "org.radarcns.passive.carl",
  "type": "record",
  "name": "FibaroSection",
  "doc": "A section of a building that can include different rooms",

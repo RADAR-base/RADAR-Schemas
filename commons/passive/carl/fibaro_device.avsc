@@ -1,5 +1,5 @@
 {
- "namespace": "org.radarcns.active.carl",
+ "namespace": "org.radarcns.passive.carl",
  "type": "record",
  "name": "FibaroDevice",
  "doc": "A Fibaro Device, capturing multiple variables for a specific Fibaro device",
