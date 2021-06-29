@@ -11,7 +11,7 @@
      {"name": "model", "type": "string", "doc": "The model name of the Fibaro Device."},
      {"name": "battery", "type": "double", "doc": "The level of Device's Battery."},
      {"name": "lastSyncTime", "type": "double", "doc": "Time since the Unix Epoch (seconds), represent the time of the Fibaro Device's last sync with CARL Cloud."},
-     {"name": "mac", "type": ["null", "string"], "doc": "The MAC Addresss of the Fibaro Device."}, "default":"Fibaro"},
+     {"name": "mac", "type": ["null", "string"], "doc": "The MAC Addresss of the Fibaro Device.", "default":"Fibaro"},
      {"name": "name", "type": ["null","string"], "doc": "Name of the Fibaro Device."},
      {"name": "roomId", "type": "double", "doc": "Unique ID of the Room that the Fibaro Device is registered to."},
      {"name": "enabled", "type": "boolean", "doc": "True if the Fibaro Device is enabled, False if it is not."},
