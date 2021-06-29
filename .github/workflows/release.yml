@@ -5,9 +5,6 @@ on:
   release:
     types: [published]
 
-env:
-  DOCKER_IMAGE: radarbase/radar-schemas-tools
-
 jobs:
   upload:
     # The type of runner that the job will run on
@@ -64,6 +61,9 @@ jobs:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
+    env:
+      DOCKER_IMAGE: radarbase/radar-schemas-tools
+
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - uses: actions/checkout@v2
@@ -94,6 +94,7 @@ jobs:
       - name: Build docker
         uses: docker/build-push-action@v2
         with:
+          # Allow running the image on the architectures supported by openjdk:11-jre-slim
           platforms: linux/amd64,linux/arm64
           push: true
           tags: ${{ steps.docker_meta.outputs.tags }}

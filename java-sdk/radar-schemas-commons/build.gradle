@@ -48,4 +48,6 @@ compileJava.dependsOn generateAvro
 // Publishing                                                                //
 //---------------------------------------------------------------------------//
 
-apply from: "$rootDir/gradle/publishing.gradle"
+if (!project.hasProperty("profile") || project.property("profile") != "docker") {
+    apply from: "$rootDir/gradle/publishing.gradle"
+}

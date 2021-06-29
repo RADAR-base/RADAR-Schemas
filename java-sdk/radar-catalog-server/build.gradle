@@ -1,7 +1,4 @@
 plugins {
-    id 'idea'
-    id 'checkstyle'
-    id 'pmd'
     id 'application'
 }
 
@@ -16,13 +13,6 @@ configurations {
     }
     runtimeOnly {
         exclude group: 'org.slf4j', module: 'slf4j-log4j12'
-    }
-}
-
-sourceSets {
-    application {
-        compileClasspath += sourceSets.main.output
-        runtimeClasspath += sourceSets.main.output
     }
 }
 
@@ -47,7 +37,9 @@ application {
     mainClass.set('org.radarbase.schema.service.SourceCatalogueServer')
 }
 
-apply from: "$rootDir/gradle/testing.gradle"
+if (!project.hasProperty("profile") || project.property("profile") != "docker") {
+    apply from: "$rootDir/gradle/testing.gradle"
+}
 
 //---------------------------------------------------------------------------//
 // Publishing                                                                //
