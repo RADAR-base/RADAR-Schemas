@@ -1,0 +1,16 @@
+{
+  "type": "record",
+  "namespace": "org.radarcns.passive.dreem",
+  "name": "Dreem",
+  "doc": "AVRO Schema for DREEM sleep endpoints",
+  "fields": [
+    {"name": "studyId", "type":"string", "doc":"This is study number"},
+    {"name": "subjId", "type":"string", "doc":"Subject Identifier for the study. Format: xxx-yyy where xxx represents 3 digits for the site ID and yyy represents 3 digits for the participant ID"},
+    {"name": "recDateTime", "type":"string","logicalType":"timestamp-millis", "doc":"Date & time corresponding to the recording start. Format: (ISO8601) YYYY-MM-DD’T’HH:MM:SS[Z/+hhmm/-hhmm]"},
+    {"name": "offHead", "type":"int", "doc":"Percentage of the TRT during which the headband was on head"},
+    {"name": "endpoint", "type":"enum", "symbols": ["TRT", "TST", "SE", "SQL", "WASO", "RL", "NREM", "N1", "N2", "N3", "REM", "p_N1", "p_N2", "p_N3", "p_REM", "p_NREM", "RR", "RRN1", "RRN2", "RRN3", "QUAL"], "doc":"DREEM sleep endpoints"},
+    {"name": "value", "type":["int", "float"], "doc":"Value associated with the endpoint. Format: XX.XX"},
+    {"name": "qiIndex", "type":["string", "float"], "doc":"Confidence index associated to the endpoint value (only for TST, SE, SOL, WASO, N1, N2, N3, REM, NREM, p_N1, p_N2, p_N3, p_REM). If not computed ‘NA’"},
+    {"name": "xRowId", "type":"int", "doc":"Unique row count, beginning  with 1 for first row and incrementing by 1 for each additional row to last line of file (line count). XROWID line count should remain constant once a record has been placed in a file. Any new  records to be added/included in subsequent files should be appended to the end of the file.  Increment the XROWID for the new appended records"}
+    ]
+}
