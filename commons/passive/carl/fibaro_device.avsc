@@ -2,7 +2,7 @@
  "namespace": "org.radarcns.passive.carl",
  "type": "record",
  "name": "FibaroDevice",
- "doc": "A Fibaro Device, capturing multiple variables for a specific Fibaro device",
+ "doc": "A Fibaro Device, capturing multiple variables for a specific Fibaro device. More information can be found https://www.fibaro.com/",
  "fields": [
      {"name": "id", "type": "double", "doc": "A unique ID for a Fibaro Device."},
      {"name": "deviceType", "type": {"name": "DeviceType", "type": "enum", "doc": "Type of the device.", "symbols":["PRESENSE_SENSOR", "DOOR_SENSOR", "FLOOD_SENSOR", "PANIC_BUTTON"]}},
