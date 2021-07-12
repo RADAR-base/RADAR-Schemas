@@ -20,8 +20,8 @@
      {"name": "configured", "type": "boolean", "doc": "True if the device is configured."},
      {"name": "dead", "type": "boolean", "doc": "True if the device is not found on the network."},
      {"name": "deadReason", "type": ["null","string"], "doc": "The reason that 'dead' field was set as True."},
-     {"name": "created", "type": "double", "doc": "Time since the Unix Epoch (seconds), represent the time of the Fibaro Device's first sync."},
-     {"name": "modified", "type": "double", "doc": "Time since the Unix Epoch (seconds), represent the time of the Fibaro Device's last modification."}
+     {"name": "created", "type": "double", "doc": "Time since the Unix Epoch (seconds), represents the time of the Fibaro Device's first sync."},
+     {"name": "modified", "type": "double", "doc": "Time since the Unix Epoch (seconds), represents the time of the Fibaro Device's last modification."}
   ]
 }
 
