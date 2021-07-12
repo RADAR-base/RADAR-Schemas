@@ -4,7 +4,7 @@
  "name": "FibaroDevice",
  "doc": "A Fibaro Device, capturing multiple variables for a specific Fibaro device. More information can be found https://www.fibaro.com/",
  "fields": [
-     {"name": "id", "type": "double", "doc": "A unique ID for a Fibaro Device."},
+     {"name": "id", "type": "int", "doc": "A unique ID for a Fibaro Device."},
      {"name": "deviceType", "type": {"name": "DeviceType", "type": "enum", "doc": "Type of the device.", "symbols":["PRESENSE_SENSOR", "DOOR_SENSOR", "FLOOD_SENSOR", "PANIC_BUTTON"]}},
      {"name": "serial", "type": "string", "doc": "A serial number for a Fibaro Device."},
      {"name": "make", "type": "string", "doc": "The name of a Device's Manufacturer.", "default":"Fibaro"},
@@ -13,7 +13,7 @@
      {"name": "lastSyncTime", "type": "double", "doc": "Time since the Unix Epoch (seconds), represent the time of the Fibaro Device's last sync with CARL Cloud."},
      {"name": "mac", "type": ["null", "string"], "doc": "The MAC Addresss of the Fibaro Device.", "default":null},
      {"name": "name", "type": ["null","string"], "doc": "Name of the Fibaro Device."},
-     {"name": "roomId", "type": "double", "doc": "Unique ID of the Room that the Fibaro Device is registered to."},
+     {"name": "roomId", "type": "int", "doc": "Unique ID of the Room that the Fibaro Device is registered to."},
      {"name": "enabled", "type": "boolean", "doc": "True if the Fibaro Device is enabled, False if it is not."},
      {"name": "parentId", "type": "double", "doc": "Unique ID of the Fibaro Device where this Fibaro Instance belongs to."},
      {"name": "categories", "type": "string", "doc": "Show the categories in which the Device belongs to."},
