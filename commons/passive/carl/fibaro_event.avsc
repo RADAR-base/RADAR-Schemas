@@ -6,10 +6,11 @@
  "fields": [
      {"name": "id", "type": "double", "doc": "Unique ID for an Event."},
      {"name": "type", "type": "string", "doc": "The type of the Event."},
-     {"name": "timestamp", "type": "double", "doc": "Time since the Unix Epoch (seconds), represents the time that an Event was registered."},
+     {"name": "time", "type": "double", "doc": "Time since the Unix Epoch (seconds), represents the time that an Event was registered."},
      {"name": "deviceId", "type": "string", "doc": "Unique ID of the device that registered the Event."},
      {"name": "previous", "type": "double", "doc": "The previous value of a similar Event that was registered on with the same Device."},
-     {"name": "current", "type": "double", "doc": "The current value that was registered with the Device."}
+     {"name": "current", "type": "double", "doc": "The current value that was registered with the Device."},
+     {"name": "timeReceived", "type": "double", "doc": "Time since the Unix Epoch (seconds), represents the time this record was received."}
   ]
 }
 
