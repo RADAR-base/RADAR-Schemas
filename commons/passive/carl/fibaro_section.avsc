@@ -4,7 +4,7 @@
  "name": "FibaroSection",
  "doc": "A section of a building that can include different rooms",
  "fields": [
-     {"name": "id", "type": "double", "doc": "Unique ID for a Section."},
+     {"name": "id", "type": "int", "doc": "Unique ID for a Section."},
      {"name": "name", "type": "string", "doc": "Section's name."},
      {"name": "timeReceived", "type": "double", "doc": "Time since the Unix Epoch (seconds), represents the time that this record was received."}
     ]  
