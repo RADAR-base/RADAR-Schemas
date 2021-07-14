@@ -21,7 +21,10 @@
      {"name": "dead", "type": "boolean", "doc": "True if the device is not found on the network."},
      {"name": "deadReason", "type": ["null","string"], "doc": "The reason that 'dead' field was set as True."},
      {"name": "created", "type": "double", "doc": "Time since the Unix Epoch (seconds), represents the time of the Fibaro Device's first sync."},
-     {"name": "modified", "type": "double", "doc": "Time since the Unix Epoch (seconds), represents the time of the Fibaro Device's last modification."}
-  ]
+     {"name": "modified", "type": "double", "doc": "Time since the Unix Epoch (seconds), represents the time of the Fibaro Device's last modification."},
+     {"name": "time", "type": "double", "doc": "Time since the Unix Epoch (seconds), represents the time that an Event was registered."},
+     {"name": "timeReceived", "type": "double", "doc": "Time since the Unix Epoch (seconds), represents the time this record was received."}
+     
+    ]
 }
 
