@@ -10,6 +10,4 @@
         {"name": "watt", "type": "double", "doc": "Wattage recorded at this point in time."},
         {"name": "timeReceived", "type": "double", "doc": "Time since the Unix Epoch (seconds), represents the time this record was received."}
       ]
-   }
-   
-   
+}
