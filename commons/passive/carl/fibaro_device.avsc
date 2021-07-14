@@ -15,7 +15,7 @@
      {"name": "name", "type": ["null","string"], "doc": "Name of the Fibaro Device."},
      {"name": "roomId", "type": "int", "doc": "Unique ID of the Room that the Fibaro Device is registered to."},
      {"name": "enabled", "type": "boolean", "doc": "True if the Fibaro Device is enabled, False if it is not."},
-     {"name": "parentId", "type": "double", "doc": "Unique ID of the Fibaro Device where this Fibaro Instance belongs to."},
+     {"name": "parentId", "type": "int", "doc": "Unique ID of the Fibaro Device where this Fibaro Instance belongs to."},
      {"name": "categories", "type": "string", "doc": "Show the categories in which the Device belongs to."},
      {"name": "configured", "type": "boolean", "doc": "True if the device is configured."},
      {"name": "dead", "type": "boolean", "doc": "True if the device is not found on the network."},
