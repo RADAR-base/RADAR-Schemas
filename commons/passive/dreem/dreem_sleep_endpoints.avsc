@@ -1,0 +1,69 @@
+{
+  "type": "record",
+  "namespace": "org.radarcns.passive.dreem",
+  "name": "DreemSleepEndpoints",
+  "doc": "AVRO Schema for DREEM sleep endpoints. These are statistics (metrics) calculated from DREEM Hypnogram",
+  "fields": [
+    {
+      "name": "time",
+      "type": "double",
+      "doc": "This refers to the recDateTime field from the dataset."
+    },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "This is the processing time in UTC (s)."
+    },
+    {
+      "name": "offHead",
+      "type": "float",
+      "doc": "Percentage of the total recording time TRT  during which the headband was on head"
+    },
+    {
+      "name": "endpoint",
+      "type": "enum",
+      "symbols": [
+        "TRT",
+        "TST",
+        "SE",
+        "SQL",
+        "WASO",
+        "RL",
+        "NREM",
+        "N1",
+        "N2",
+        "N3",
+        "REM",
+        "p_N1",
+        "p_N2",
+        "p_N3",
+        "p_REM",
+        "p_NREM",
+        "RR",
+        "RRN1",
+        "RRN2",
+        "RRN3",
+        "QUAL"
+      ],
+      "doc": "DREEM sleep endpoints. TRT(Total Recording Time.  Unit is min):Amount of time from record start to record stop, TST(Total Sleep Time. Unit is min):Amount of sleep from record start to record stop, SE(Sleep efficiency. Unit is %):Portion of the TRT spent asleep, SQL(Sleep onset latency. Unit is min):Time from 'Lights out' to unequivocal sleep onset (first of three consecutive N1 sleep epochs, or any non-N1 sleep stage), WASO(Wake after sleep onset. Unit is min):Wakefulness between SO and final epoch of sleep, RL(REM Latency. Unit is ):SO to first epoch of REM sleep, NREM(Total Sleep Non-REM Sleep. Unit is min):It is N1 + N2 + N3, NI(NREM 1 duration. Unit is min):Minutes of N1 sleep, N2(NREM 2 duration. Unit is min):Minutes of N2 sleep, N3(NREM 3 duration. Unit is min):Minutes of N3 sleep, REM(Total Rapid Eye Movement Sleep duration. Unit is min):Minutes of REM sleep, p_N1(% Stage N1 Sleep. Unit is %):Percentage of TST spent in N1 sleep, p_N2(% Stage N2 Sleep. Unit is %):Percentage of TST spent in N2 sleep, p_N3(% Stage N3 Sleep. Unit is %):Percentage of TST spent in N3 sleep, p_REM(% Stage REM Sleep. Unit is %):Percentage of TST spent in REM sleep, p_NREM(Total Sleep NREM Sleep/ Total Sleep Time. Unit is %):Percentage of TST spent in NREM sleep (N1 + N2 + N3), RR(Mean Respiratory rate. Unit is BPM):Average number of breaths per minute through the recording, RRN1(Respiratory rate during N1. Unit is BPM):Average number of breaths per minute in N1 sleep, RRN2(Respiratory rate during N2. Unit is BPM):Average number of breaths per minute in N2 sleep, RRN3(Respiratory rate during N3. Unit is BPM):Average number of breaths per minute in N3 sleep, QUAL(Recording quality. Unit is %):Proportion of recording that is unequivocally scorable by a sleep expert"
+    },
+    {
+      "name": "value",
+      "type": [
+        "int",
+        "float"
+      ],
+      "doc": "Value associated with the endpoint. Format: XX.XX"
+    },
+    {
+      "name": "qiIndex",
+      "type": [
+        "null",
+        "float",
+        "string"
+      ],
+      "default": null,
+      "doc": "Confidence index associated to the endpoint value (only for TST, SE, SOL, WASO, N1, N2, N3, REM, NREM, p_N1, p_N2, p_N3, p_REM). If not computed ‘NA’"
+    }
+  ]
+}
