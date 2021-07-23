@@ -19,7 +19,6 @@ for ((i=1; i<=$MAX_RETRIES; i++)); do
             exit 1
         else
             echo "FAILED TO CREATE TOPICS ... Retrying"
-            sleep 10
         fi
     fi
 done
