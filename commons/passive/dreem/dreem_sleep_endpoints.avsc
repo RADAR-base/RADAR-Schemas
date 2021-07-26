@@ -20,118 +20,109 @@
       "doc": "Percentage of the total recording time TRT during which the headband was on head."
     },
     {
-      "name": "TRTEndpoint",
-      "type": "float",
-      "doc": "TRT stands for Total Recording Time. Unit is min. It is amount of time from record start to record stop. Value associated with the endpoint. Format: XX.XX"
+      "name": "totalRecordingTime",
+      "type": "org.radarcns.passive.dreem.DreemMetric",
+      "doc": "TRT stands for Total Recording Time. Unit is min. It is amount of time from record start to record stop."
     },
     {
-      "name": "TSTEndpoint",
-      "type": "float",
-      "doc": "TST stands for Total Sleep Time. Unit is min. It is amount of sleep from record start to record stop. Value associated with the endpoint. Format: XX.XX"
+      "name": "totalSleepTime",
+      "type": "org.radarcns.passive.dreem.DreemMetric",
+      "doc": "TST stands for Total Sleep Time. Unit is min. It is amount of sleep from record start to record stop."
     },
     {
-      "name": "SEEndpoint",
-      "type": "float",
-      "doc": "SE stands for Sleep Efficiency. Unit is %. It is portion of the TRT spent asleep. Value associated with the endpoint. Format: XX.XX"
+      "name": "sleepEfficiency",
+      "type": "org.radarcns.passive.dreem.DreemMetric",
+      "doc": "SE stands for Sleep Efficiency. Unit is %. It is portion of the TRT spent asleep."
     },
     {
-      "name": "SOLEndpoint",
-      "type": "float",
-      "doc": "SOL stands for Sleep Onset Latency. Unit is min. Time from 'Lights out' to unequivocal sleep onset (first of three consecutive N1 sleep epochs, or any non-N1 sleep stage). Value associated with the endpoint. Format: XX.XX",
+      "name": "sleepOnsetLatency",
+      "type": "org.radarcns.passive.dreem.DreemMetric",
+      "doc": "SOL stands for Sleep Onset Latency. Unit is min. Time from 'Lights out' to unequivocal sleep onset (first of three consecutive N1 sleep epochs, or any non-N1 sleep stage).",
     },
     {
-      "name": "WASOEndpoint",
-      "type": "float",
-      "doc": "WASO stands for Wake After Sleep Onset. Unit is min. It is wakefulness between SO and final epoch of sleep. Value associated with the endpoint. Format: XX.XX"
+      "name": "wakeAfterSleepOnset",
+      "type": "org.radarcns.passive.dreem.DreemMetric",
+      "doc": "WASO stands for Wake After Sleep Onset. Unit is min. It is wakefulness between SO and final epoch of sleep."
     },
     {
-      "name": "RLEndpoint",
-      "type": "float",
-      "doc": "RL stands for REM Latency. Unit is min. It is SO to first epoch of REM sleep. Value associated with the endpoint. Format: XX.XX"
+      "name": "rapidEyeMovementLatency",
+      "type": "org.radarcns.passive.dreem.DreemMetric",
+      "doc": "RL stands for REM Latency. Unit is min. It is SO to first epoch of REM sleep."
     },
     {
-      "name": "NREMEndpoint",
-      "type": "float",
-      "doc": "NREM stands for Total Sleep Non-REM Sleep. Unit is min. It is N1 + N2 + N3. Value associated with the endpoint. Format: XX.XX"
+      "name": "nonRapidEyeMovement",
+      "type": "org.radarcns.passive.dreem.DreemMetric",
+      "doc": "NREM stands for Total Sleep Non-REM Sleep. Unit is min. It is N1 + N2 + N3."
     },
     {
-      "name": "N1Endpoint",
-      "type": "float",
-      "doc": "N1 stands for NREM 1 duration. Unit is min. It is minutes of N1 sleep. Value associated with the endpoint. Format: XX.XX"
+      "name": "nonRapidEyeMovement1Duration",
+      "type": "org.radarcns.passive.dreem.DreemMetric",
+      "doc": "N1 stands for NREM 1 duration. Unit is min. It is minutes of N1 sleep."
     },
     {
-      "name": "N2Endpoint",
-      "type": "float",
-      "doc": "N2 stands for NREM 2 duration. Unit is min. It is minutes of N2 sleep. Value associated with the endpoint. Format: XX.XX"
+      "name": "nonRapidEyeMovement2Duration",
+      "type": "org.radarcns.passive.dreem.DreemMetric",
+      "doc": "N2 stands for NREM 2 duration. Unit is min. It is minutes of N2 sleep."
     },
     {
-      "name": "N3Endpoint",
-      "type": "float",
-      "doc": "N3 stands for NREM 3 duration. Unit is min. It is minutes of N3 sleep. Value associated with the endpoint. Format: XX.XX"
+      "name": "nonRapidEyeMovement3Duration",
+      "type": "org.radarcns.passive.dreem.DreemMetric",
+      "doc": "N3 stands for NREM 3 duration. Unit is min. It is minutes of N3 sleep."
     },
     {
-      "name": "REMEndpoint",
-      "type": "float",
-      "doc": "REM stands for Total Rapid Eye Movement Sleep duration. Unit is min. It is minutes of REM sleep. Value associated with the endpoint. Format: XX.XX"
+      "name": "totalRapidEyeMovementSleepDuration",
+      "type": "org.radarcns.passive.dreem.DreemMetric",
+      "doc": "REM stands for Total Rapid Eye Movement Sleep duration. Unit is min. It is minutes of REM sleep."
     },
     {
-      "name": "p_N1Endpoint",
-      "type": "float",
-      "doc": "p_N1 stands for percentage Stage N1 Sleep. Unit is %. It is percentage of TST spent in N1 sleep. Value associated with the endpoint. Format: XX.XX"
+      "name": "totalSleepTimeSpentInNonRapidEyeMovement1Sleep",
+      "type": "org.radarcns.passive.dreem.DreemMetric",
+      "doc": "p_N1 stands for percentage Stage N1 Sleep. Unit is %. It is percentage of TST spent in N1 sleep."
     },
 	{
-      "name": "p_N2Endpoint",
-      "type": "float",
-      "doc": "p_N2 stands for percentage Stage N2 Sleep. Unit is %. It is percentage of TST spent in N2 sleep. Value associated with the endpoint. Format: XX.XX"
+      "name": "totalSleepTimeSpentInNonRapidEyeMovement2Sleep",
+      "type": "org.radarcns.passive.dreem.DreemMetric",
+      "doc": "p_N2 stands for percentage Stage N2 Sleep. Unit is %. It is percentage of TST spent in N2 sleep."
     },
     {
-      "name": "p_N3Endpoint",
-      "type": "float",
-      "doc": "p_N3 stands for percentage Stage N3 Sleep. Unit is %. It is percentage of TST spent in N3 sleep. Value associated with the endpoint. Format: XX.XX"
+      "name": "totalSleepTimeSpentInNonRapidEyeMovement3Sleep",
+      "type": "org.radarcns.passive.dreem.DreemMetric",
+      "doc": "p_N3 stands for percentage Stage N3 Sleep. Unit is %. It is percentage of TST spent in N3 sleep."
     },	
     {
-      "name": "p_REMEndpoint",
-      "type": "float",
-      "doc": "p_REM stands for Percentage Stage REM Sleep. Unit is %. It is percentage of TST spent in REM sleep. Value associated with the endpoint. Format: XX.XX"
+      "name": "totalSleepTimeSpentInRapidEyeMovementSleep",
+      "type": "org.radarcns.passive.dreem.DreemMetric",
+      "doc": "p_REM stands for Percentage Stage REM Sleep. Unit is %. It is percentage of TST spent in REM sleep."
     },
     {
-      "name": "p_NREMEndpoint",
-      "type": "float",
-      "doc": "p_NREM stands for Total Sleep NREM Sleep/ Total Sleep Time. Unit is %. It is percentage of TST spent in NREM sleep (N1 + N2 + N3). Value associated with the endpoint. Format: XX.XX"
+      "name": "totalSleepTimeSpentInNonRapidEyeMovementSleep",
+      "type": "org.radarcns.passive.dreem.DreemMetric",
+      "doc": "p_NREM stands for Total Sleep NREM Sleep/ Total Sleep Time. Unit is %. It is percentage of TST spent in NREM sleep (N1 + N2 + N3)."
     },
     {
-      "name": "RREndpoint",
-      "type": "float",
-      "doc": "RR stands for Mean Respiratory rate. Unit is BPM. Is is average number of breaths per minute through the recording. Value associated with the endpoint. Format: XX.XX"
+      "name": "meanRespiratoryRate",
+      "type": "org.radarcns.passive.dreem.DreemMetric",
+      "doc": "RR stands for Mean Respiratory rate. Unit is BPM. Is is average number of breaths per minute through the recording."
     },
     {
-      "name": "RRN1Endpoint",
-      "type": "float",
-      "doc": "RRN1 stands for respiratory rate during N1. Unit is BPM. It is average number of breaths per minute in N1 sleep. Value associated with the endpoint. Format: XX.XX"
+      "name": "respiratoryRateDuringNonRapidEyeMovement1Duration",
+      "type": "org.radarcns.passive.dreem.DreemMetric",
+      "doc": "RRN1 stands for respiratory rate during N1. Unit is BPM. It is average number of breaths per minute in N1 sleep."
     },
     {
-      "name": "RRN2Endpoint",
-      "type": "float",
-      "doc": "RRN2 stands for respiratory rate during N2. Unit is BPM. It is average number of breaths per minute in N2 sleep. Value associated with the endpoint. Format: XX.XX"
+      "name": "respiratoryRateDuringNonRapidEyeMovement2Duration",
+      "type": "org.radarcns.passive.dreem.DreemMetric",
+      "doc": "RRN2 stands for respiratory rate during N2. Unit is BPM. It is average number of breaths per minute in N2 sleep."
     },
     {
-      "name": "RRN3Endpoint",
-      "type": "float",
-      "doc": "RRN3 stands for respiratory rate during N3. Unit is BPM. It is average number of breaths per minute in N3 sleep. Value associated with the endpoint. Format: XX.XX"
+      "name": "respiratoryRateDuringNonRapidEyeMovement3Duration",
+      "type": "org.radarcns.passive.dreem.DreemMetric",
+      "doc": "RRN3 stands for respiratory rate during N3. Unit is BPM. It is average number of breaths per minute in N3 sleep."
     },
     {
-      "name": "QUALEndpoint",
-      "type": "float",
-      "doc": "QUAL stands for recording quality. Unit is %. It is proportion of recording that is unequivocally scorable by a sleep expert. Value associated with the endpoint. Format: XX.XX"
-    },
-    {
-      "name": "confidenceIndex",
-      "type": [
-        "null",
-        "float"
-      ],
-      "default": null,
-      "doc": "Confidence index associated to the endpoint value (only for TST, SE, SOL, WASO, N1, N2, N3, REM, NREM, p_N1, p_N2, p_N3, p_REM). If not computed ‘NA’ but for schema purposes it is set to null"
+      "name": "recordingQuality",
+      "type": "org.radarcns.passive.dreem.DreemMetric",
+      "doc": "QUAL stands for recording quality. Unit is %. It is proportion of recording that is unequivocally scorable by a sleep expert."
     }
   ]
 }
