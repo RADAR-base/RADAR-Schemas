@@ -37,7 +37,7 @@
     {
       "name": "sleepOnsetLatency",
       "type": "org.radarcns.passive.dreem.DreemMetric",
-      "doc": "SOL stands for Sleep Onset Latency. Unit is min. Time from 'Lights out' to unequivocal sleep onset (first of three consecutive N1 sleep epochs, or any non-N1 sleep stage).",
+      "doc": "SOL stands for Sleep Onset Latency. Unit is min. Time from 'Lights out' to unequivocal sleep onset (first of three consecutive N1 sleep epochs, or any non-N1 sleep stage)."
     },
     {
       "name": "wakeAfterSleepOnset",
