@@ -5,16 +5,23 @@ import static org.radarbase.schema.util.SchemaUtils.applyOrIllegalException;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.AbstractMap;
+import java.util.Comparator;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Stream;
+
+import kotlin.Pair;
 import net.sourceforge.argparse4j.impl.Arguments;
 import net.sourceforge.argparse4j.inf.ArgumentParser;
 import net.sourceforge.argparse4j.inf.Namespace;
+import org.radarbase.schema.SchemaCatalogue;
 import org.radarbase.schema.Scope;
+import org.radarbase.schema.specification.DataProducer;
 import org.radarbase.schema.validation.SchemaValidator;
 import org.radarbase.schema.validation.ValidationException;
 import org.radarbase.schema.validation.config.ExcludeConfig;
+import org.radarbase.schema.validation.rules.SchemaMetadata;
 
 public class ValidatorCommand implements SubCommand {
     @Override
@@ -46,32 +53,28 @@ public class ValidatorCommand implements SubCommand {
                 return 1;
             }
 
+            String scopeString = options.getString("scope");
+            Scope scope = scopeString != null ? Scope.valueOf(scopeString) : null;
+
+            Stream<ValidationException> exceptionStream = Stream.empty();
+
             if (options.getBoolean("full")) {
-                SchemaValidator validator = new SchemaValidator(app.getRoot(), config);
+                SchemaValidator validator = new SchemaValidator(app.getRoot(), config, false);
+                Stream<ValidationException> stream = validator.analyseFiles(scope, app.getCatalogue().getSchemaCatalogue());
 
-                Stream<ValidationException> stream = validateSchemas(
-                        options.getString("scope"), validator);
+                int result = resolveValidation(stream, validator, options.getBoolean("verbose"), options.getBoolean("quiet"));
+                if (result != 0) {
+                    return result;
+                }
+            }
 
-                if (options.getBoolean("quiet")) {
-                    if (stream.count() > 0) {
-                        return 1;
-                    }
-                } else {
-                    String result = SchemaValidator.format(stream);
+            if (options.getBoolean("from_specification")) {
+                SchemaValidator validator = new SchemaValidator(app.getRoot(), config, true);
+                Stream<ValidationException> stream = validator.analyseSourceCatalogue(scope, app.getCatalogue());
 
-                    System.out.println(result);
-                    if (options.getBoolean("verbose")) {
-                        System.out.println("Validated schemas:");
-                        Set<String> names = new TreeSet<>(
-                                validator.getValidatedSchemas().keySet());
-                        for (String name : names) {
-                            System.out.println(" - " + name);
-                        }
-                        System.out.println();
-                    }
-                    if (!result.isEmpty()) {
-                        return 1;
-                    }
+                int result = resolveValidation(stream, validator, options.getBoolean("verbose"), options.getBoolean("quiet"));
+                if (result != 0) {
+                    return result;
                 }
             }
 
@@ -96,21 +99,41 @@ public class ValidatorCommand implements SubCommand {
         parser.addArgument("-q", "--quiet")
                 .help("only set exit code.")
                 .action(Arguments.storeTrue());
+        parser.addArgument("-S", "--from-specification")
+                .help("validation of all schemas referenced in specifications")
+                .action(Arguments.storeTrue());
         parser.addArgument("-f", "--full")
                 .help("full validation of contents")
                 .action(Arguments.storeTrue());
         SubCommand.addRootArgument(parser);
     }
 
-
-    private Stream<ValidationException> validateSchemas(
-            String scopeString,
-            SchemaValidator validator) {
-        if (scopeString == null) {
-            return validator.analyseFiles();
+    private int resolveValidation(Stream<ValidationException> stream,
+            SchemaValidator validator,
+            boolean verbose,
+            boolean quiet) {
+        if (quiet) {
+            if (stream.count() > 0) {
+                return 1;
+            }
         } else {
-            return validator.analyseFiles(Scope.valueOf(scopeString));
+            String result = SchemaValidator.format(stream);
+
+            System.out.println(result);
+            if (verbose) {
+                System.out.println("Validated schemas:");
+                Set<String> names = new TreeSet<>(
+                        validator.getValidatedSchemas().keySet());
+                for (String name : names) {
+                    System.out.println(" - " + name);
+                }
+                System.out.println();
+            }
+            if (!result.isEmpty()) {
+                return 1;
+            }
         }
+        return 0;
     }
 
     private ExcludeConfig loadConfig(Path root, String configSubPath) throws IOException {
