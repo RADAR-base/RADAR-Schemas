@@ -77,27 +77,27 @@
     {
       "name": "totalSleepTimeSpentInNonRapidEyeMovement1Sleep",
       "type": "org.radarcns.passive.dreem.DreemMetric",
-      "doc": "p_N1 stands for percentage Stage N1 Sleep. Unit is %. It is percentage of TST spent in N1 sleep."
+      "doc": "The p_N1 stands for percentage Stage N1 Sleep. Unit is %. It is percentage of TST spent in N1 sleep."
     },
 	{
       "name": "totalSleepTimeSpentInNonRapidEyeMovement2Sleep",
       "type": "org.radarcns.passive.dreem.DreemMetric",
-      "doc": "p_N2 stands for percentage Stage N2 Sleep. Unit is %. It is percentage of TST spent in N2 sleep."
+      "doc": "The p_N2 stands for percentage Stage N2 Sleep. Unit is %. It is percentage of TST spent in N2 sleep."
     },
     {
       "name": "totalSleepTimeSpentInNonRapidEyeMovement3Sleep",
       "type": "org.radarcns.passive.dreem.DreemMetric",
-      "doc": "p_N3 stands for percentage Stage N3 Sleep. Unit is %. It is percentage of TST spent in N3 sleep."
+      "doc": "The p_N3 stands for percentage Stage N3 Sleep. Unit is %. It is percentage of TST spent in N3 sleep."
     },	
     {
       "name": "totalSleepTimeSpentInRapidEyeMovementSleep",
       "type": "org.radarcns.passive.dreem.DreemMetric",
-      "doc": "p_REM stands for Percentage Stage REM Sleep. Unit is %. It is percentage of TST spent in REM sleep."
+      "doc": "The p_REM stands for Percentage Stage REM Sleep. Unit is %. It is percentage of TST spent in REM sleep."
     },
     {
       "name": "totalSleepTimeSpentInNonRapidEyeMovementSleep",
       "type": "org.radarcns.passive.dreem.DreemMetric",
-      "doc": "p_NREM stands for Total Sleep NREM Sleep/ Total Sleep Time. Unit is %. It is percentage of TST spent in NREM sleep (N1 + N2 + N3)."
+      "doc": "The p_NREM stands for Total Sleep NREM Sleep/ Total Sleep Time. Unit is %. It is percentage of TST spent in NREM sleep (N1 + N2 + N3)."
     },
     {
       "name": "meanRespiratoryRate",
