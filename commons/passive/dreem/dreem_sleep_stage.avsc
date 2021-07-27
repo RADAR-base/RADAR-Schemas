@@ -2,7 +2,7 @@
    "type":"record",
    "namespace":"org.radarcns.passive.dreem",
    "name":"DreemSleepStage",
-   "doc":"AVRO Schema for DREEM hypnogram data",
+   "doc":"AVRO Schema for DREEM hypnogram data.",
    "fields":[
       {
          "name":"time",
