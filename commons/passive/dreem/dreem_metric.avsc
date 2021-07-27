@@ -5,16 +5,6 @@
    "doc":"Single computed Dreem endpoint Metric.",
    "fields":[
       {
-         "name":"time",
-         "type":"double",
-         "doc":"This refers to the recording time in UTC (s)."
-      },
-      {
-         "name":"timeReceived",
-         "type":"double",
-         "doc":"This is the processing time in UTC (s)."
-      },
-      {
          "name":"value",
          "type":[
             "null",
