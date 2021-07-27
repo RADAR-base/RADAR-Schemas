@@ -2,7 +2,7 @@
   "type": "record",
   "namespace": "org.radarcns.passive.dreem",
   "name": "DreemSleepEndpoints",
-  "doc": "AVRO Schema for DREEM sleep endpoints. These are statistics (metrics) calculated from DREEM Hypnogram",
+  "doc": "AVRO Schema for DREEM sleep endpoints. These are statistics (metrics) calculated from DREEM Hypnogram.",
   "fields": [
     {
       "name": "time",
