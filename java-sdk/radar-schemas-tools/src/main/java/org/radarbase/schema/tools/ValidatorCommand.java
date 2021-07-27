@@ -39,7 +39,8 @@ public class ValidatorCommand implements SubCommand {
                 System.out.println("Validated topics:");
                 app.getCatalogue().getSources().stream()
                         .flatMap(s -> s.getData().stream())
-                        .flatMap(applyOrIllegalException(d -> d.getTopics(app.getCatalogue().getSchemaCatalogue())))
+                        .flatMap(applyOrIllegalException(d ->
+                                d.getTopics(app.getCatalogue().getSchemaCatalogue())))
                         .map(t -> "- "
                                 + t.getName()
                                 + " [" + t.getKeySchema().getFullName() + ": "
@@ -57,28 +58,22 @@ public class ValidatorCommand implements SubCommand {
             Scope scope = scopeString != null ? Scope.valueOf(scopeString) : null;
 
             Stream<ValidationException> exceptionStream = Stream.empty();
+            SchemaValidator validator = new SchemaValidator(app.getRoot(), config);
 
             if (options.getBoolean("full")) {
-                SchemaValidator validator = new SchemaValidator(app.getRoot(), config, false);
-                Stream<ValidationException> stream = validator.analyseFiles(scope, app.getCatalogue().getSchemaCatalogue());
-
-                int result = resolveValidation(stream, validator, options.getBoolean("verbose"), options.getBoolean("quiet"));
-                if (result != 0) {
-                    return result;
-                }
+                exceptionStream = validator.analyseFiles(
+                        scope,
+                        app.getCatalogue().getSchemaCatalogue());
             }
-
             if (options.getBoolean("from_specification")) {
-                SchemaValidator validator = new SchemaValidator(app.getRoot(), config, true);
-                Stream<ValidationException> stream = validator.analyseSourceCatalogue(scope, app.getCatalogue());
-
-                int result = resolveValidation(stream, validator, options.getBoolean("verbose"), options.getBoolean("quiet"));
-                if (result != 0) {
-                    return result;
-                }
+                exceptionStream = Stream.concat(
+                        exceptionStream,
+                        validator.analyseSourceCatalogue(scope, app.getCatalogue())).distinct();
             }
 
-            return 0;
+            return resolveValidation(exceptionStream, validator,
+                    options.getBoolean("verbose"),
+                    options.getBoolean("quiet"));
         } catch (IOException e) {
             System.err.println("Failed to load schemas: " + e);
             return 1;
