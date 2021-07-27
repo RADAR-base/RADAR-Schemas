@@ -201,7 +201,7 @@ data:
   - type: PULSE_OX
     topic: questionnaire_pulse_ox
     value_schema: .active.questionnaire.Questionnaire
-    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/pulse_ox_response/pulse_ox_response_armt.json
+    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/pulse_ox/pulse_ox_armt.json
   - type: AUDIO_WITHOUT_UNSCRIPTED_4
     doc: A speech questionnaire that contains `The North Wind` scripted text where users will record themselves reading a text aloud.
     topic: questionnaire_audio_without_unscripted_4
