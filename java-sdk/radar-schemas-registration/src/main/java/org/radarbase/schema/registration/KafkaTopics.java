@@ -67,7 +67,7 @@ public class KafkaTopics implements TopicRegistrar {
 
     /**
      * Wait for brokers to become available. This uses a polling mechanism, retrying with sleep
-     * up to the supplied {@param numTries} on failures. The sleep time is doubled every retry
+     * up to the supplied numTries on failures. The sleep time is doubled every retry
      * iteration until the {@value #MAX_SLEEP} is reached which then takes precedence.
      *
      * @param brokers number of brokers to wait for.
