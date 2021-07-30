@@ -50,9 +50,6 @@ jobs:
       - name: Check
         run: ./gradlew check
 
-      - name: Validate schemas
-        run: ./gradlew :radar-schemas-tools:run --args="validate $GITHUB_WORKSPACE"
-
   docker:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
