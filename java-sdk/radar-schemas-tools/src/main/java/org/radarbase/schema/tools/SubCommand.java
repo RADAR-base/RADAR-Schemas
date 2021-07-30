@@ -1,8 +1,5 @@
 package org.radarbase.schema.tools;
 
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import net.sourceforge.argparse4j.inf.ArgumentChoice;
 import net.sourceforge.argparse4j.inf.ArgumentParser;
 import net.sourceforge.argparse4j.inf.Namespace;
@@ -48,20 +45,15 @@ public interface SubCommand {
 
         private final int minRange;
         private final int maxRange;
-        private final Set<Integer> range;
 
         public IntRangeArgumentChoice(int minRange, int maxRange) {
             this.minRange = minRange;
             this.maxRange = maxRange;
-            this.range = IntStream
-                    .rangeClosed(minRange, maxRange)
-                    .boxed()
-                    .collect(Collectors.toUnmodifiableSet());
         }
 
         @Override
         public boolean contains(Object val) {
-            return range.contains((int) val);
+            return val instanceof Integer && (Integer) val >= minRange && (Integer) val <= maxRange;
         }
 
         @Override
