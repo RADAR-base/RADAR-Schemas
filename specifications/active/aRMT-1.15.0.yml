@@ -253,11 +253,11 @@ data:
     topic: questionnaire_epi_wsas
     value_schema: .active.questionnaire.Questionnaire
     questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/epi_wsas/epi_wsas_armt.json
-  - type: BP_QUESTIONNAIRE
+  - type: BP
     topic: questionnaire_bp
     value_schema: .active.questionnaire.Questionnaire
     questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/bp/bp_armt.json
-  - type: HLH_QUESTIONNAIRE
+  - type: HLH
     topic: questionnaire_hlh
     value_schema: .active.questionnaire.Questionnaire
     questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/hlh/hlh_armt.json
