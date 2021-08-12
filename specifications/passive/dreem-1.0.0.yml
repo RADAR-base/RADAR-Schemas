@@ -1,6 +1,6 @@
 #====================================== For Dreem 3 headband also known as Neuroband device =====================================#
 vendor: DREEM
-model: Dreem Neuroband
+model: Neuroband
 version: 1.0.0
 doc: DREEM data collected and uploaded by DREEM web application
 data:
