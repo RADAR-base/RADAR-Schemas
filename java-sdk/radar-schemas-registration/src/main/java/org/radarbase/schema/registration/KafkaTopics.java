@@ -62,8 +62,21 @@ public class KafkaTopics implements TopicRegistrar {
      */
     @Override
     public void initialize(int brokers) throws InterruptedException {
+        initialize(brokers, 20);
+    }
+
+    /**
+     * Wait for brokers to become available. This uses a polling mechanism, retrying with sleep
+     * up to the supplied numTries on failures. The sleep time is doubled every retry
+     * iteration until the {@value #MAX_SLEEP} is reached which then takes precedence.
+     *
+     * @param brokers number of brokers to wait for.
+     * @param numTries Number of times to retry in case of failure.
+     * @throws InterruptedException when waiting for the brokers is interrupted.
+     */
+    @Override
+    public void initialize(int brokers, int numTries) throws InterruptedException {
         int sleep = 2;
-        int numTries = 20;
         int numBrokers = 0;
 
         for (int tries = 0; tries < numTries && numBrokers < brokers; tries++) {
