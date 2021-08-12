@@ -1,1 +1,21 @@
-
+#====================================== For DREEM device =====================================#
+vendor: DREEM
+model: NA
+version: 1.0.0
+doc: DREEM data collected and uploaded by DREEM web application
+data:
+  - type: DREEM SLEEP STAGE
+    unit: NON_DIMENSIONAL
+    processing_state: VENDOR
+    topic: dreem_sleep_stage
+    value_schema: .passive.dreem.DreemSleepStage
+  - type: DREEM SLEEP ENDPOINTS
+    unit: NON_DIMENSIONAL
+    processing_state: VENDOR
+    topic: dreem_sleep_endpoints
+    value_schema: .passive.dreem.DreemSleepEndpoints
+  - type: DREEM METRIC
+    unit: NON_DIMENSIONAL
+    processing_state: VENDOR
+    topic: dreem_metric
+    value_schema: .passive.dreem.DreemMetric    
