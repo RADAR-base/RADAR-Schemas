@@ -78,7 +78,6 @@ public class KafkaTopics implements TopicRegistrar {
     public void initialize(int brokers, int numTries) throws InterruptedException {
         int sleep = 2;
         int numBrokers = 0;
-        long timeout = 5;
 
         for (int tries = 0; tries < numTries; tries++) {
             long start = System.currentTimeMillis();
@@ -86,7 +85,7 @@ public class KafkaTopics implements TopicRegistrar {
             try {
                 hosts = kafkaClient.describeCluster()
                         .nodes()
-                        .get(timeout, TimeUnit.SECONDS)
+                        .get(sleep, TimeUnit.SECONDS)
                         .stream()
                         .map(Node::host)
                         .collect(Collectors.toList());
@@ -95,7 +94,7 @@ public class KafkaTopics implements TopicRegistrar {
                         kafkaProperties.get(BOOTSTRAP_SERVERS_CONFIG), ex.getCause());
             } catch (TimeoutException ex) {
                 logger.error("Failed to connect to bootstrap server {} within {} seconds",
-                        kafkaProperties.get(BOOTSTRAP_SERVERS_CONFIG), timeout);
+                        kafkaProperties.get(BOOTSTRAP_SERVERS_CONFIG), sleep);
             }
             numBrokers = hosts.size();
             if (numBrokers >= brokers) {
@@ -109,7 +108,6 @@ public class KafkaTopics implements TopicRegistrar {
                     Thread.sleep(sleepMillis);
                 }
                 sleep = Math.min(MAX_SLEEP, sleep * 2);
-                timeout = Math.min(5, sleep);
             } else {
                 logger.error("Only {} out of {} Kafka brokers available."
                         + " Failed to wait on all brokers.", numBrokers, brokers);
@@ -205,7 +203,6 @@ public class KafkaTopics implements TopicRegistrar {
         ensureInitialized();
         logger.info("Waiting for topics to become available.");
         int sleep = 2;
-        long timeout = 5;
         int numTries = 10;
 
         topics = null;
@@ -222,7 +219,7 @@ public class KafkaTopics implements TopicRegistrar {
             } catch (ExecutionException ex) {
                 logger.error("Failed to list topics from brokers: {}", ex.getCause().toString());
             } catch (TimeoutException ex) {
-                logger.error("Failed to list topics within {} seconds", timeout);
+                logger.error("Failed to list topics within {} seconds", sleep);
             }
             if (topics != null && !topics.isEmpty()) {
                 break;
@@ -234,7 +231,6 @@ public class KafkaTopics implements TopicRegistrar {
                     Thread.sleep(sleepMillis);
                 }
                 sleep = Math.min(MAX_SLEEP, sleep * 2);
-                timeout = Math.min(5, sleep);
             } else {
                 logger.error("Topics have not become available. Failed to list topics.");
             }
