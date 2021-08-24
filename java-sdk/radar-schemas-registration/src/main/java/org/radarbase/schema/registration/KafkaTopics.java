@@ -239,7 +239,7 @@ public class KafkaTopics implements TopicRegistrar {
                 sleep = Math.min(MAX_SLEEP, sleep * 2);
                 timeout = Math.min(5, sleep);
             } else {
-                logger.error("Topics have not become available. Failed to wait on Kafka.");
+                logger.error("Topics have not become available. Failed to list topics.");
             }
         }
         return topics != null && !topics.isEmpty();
