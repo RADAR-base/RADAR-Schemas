@@ -17,6 +17,8 @@ import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -24,6 +26,7 @@ import javax.validation.constraints.NotNull;
 import org.apache.kafka.clients.admin.AdminClient;
 import org.apache.kafka.clients.admin.ListTopicsOptions;
 import org.apache.kafka.clients.admin.NewTopic;
+import org.apache.kafka.common.KafkaFuture;
 import org.apache.kafka.common.Node;
 import org.radarbase.schema.specification.SourceCatalogue;
 import org.slf4j.Logger;
@@ -78,30 +81,38 @@ public class KafkaTopics implements TopicRegistrar {
     public void initialize(int brokers, int numTries) throws InterruptedException {
         int sleep = 2;
         int numBrokers = 0;
+        long timeout = 5;
 
-        for (int tries = 0; tries < numTries && numBrokers < brokers; tries++) {
-            List<String> hosts;
+        for (int tries = 0; tries < numTries; tries++) {
+            long start = System.currentTimeMillis();
+            List<String> hosts = Collections.emptyList();
             try {
                 hosts = kafkaClient.describeCluster()
                         .nodes()
-                        .get()
+                        .get(timeout, TimeUnit.SECONDS)
                         .stream()
                         .map(Node::host)
                         .collect(Collectors.toList());
             } catch (ExecutionException ex) {
                 logger.error("Failed to connect to bootstrap server {}",
                         kafkaProperties.get(BOOTSTRAP_SERVERS_CONFIG), ex.getCause());
-                hosts = Collections.emptyList();
+            } catch (TimeoutException ex) {
+                logger.error("Failed to connect to bootstrap server {} within {} seconds",
+                        kafkaProperties.get(BOOTSTRAP_SERVERS_CONFIG), timeout);
             }
             numBrokers = hosts.size();
-
             if (numBrokers >= brokers) {
                 break;
             } else if (tries < numTries - 1) {
                 logger.warn("Only {} out of {} Kafka brokers available. Waiting {} seconds.",
                         numBrokers, brokers, sleep);
-                Thread.sleep(sleep * 1000L);
+                long timeTaken = System.currentTimeMillis() - start;
+                long sleepMillis = Math.max(sleep * 1000L - timeTaken, 0L);
+                if (sleepMillis > 0L) {
+                    Thread.sleep(sleepMillis);
+                }
                 sleep = Math.min(MAX_SLEEP, sleep * 2);
+                timeout = Math.min(5, sleep);
             } else {
                 logger.error("Only {} out of {} Kafka brokers available."
                         + " Failed to wait on all brokers.", numBrokers, brokers);
@@ -176,7 +187,10 @@ public class KafkaTopics implements TopicRegistrar {
             }).map(t -> new NewTopic(t, partitions, replication)).collect(Collectors.toList());
 
             if (!newTopics.isEmpty()) {
-                getKafkaClient().createTopics(newTopics).all().get();
+                getKafkaClient()
+                        .createTopics(newTopics)
+                        .all()
+                        .get();
                 logger.info("Created {} topics. Requesting to refresh topics", newTopics.size());
                 refreshTopics();
             } else {
@@ -193,40 +207,42 @@ public class KafkaTopics implements TopicRegistrar {
     public boolean refreshTopics() throws InterruptedException {
         ensureInitialized();
         logger.info("Waiting for topics to become available.");
-        int sleep = 10;
+        int sleep = 2;
+        long timeout = 5;
         int numTries = 10;
 
         topics = null;
-        ListTopicsOptions opts = new ListTopicsOptions().listInternal(true);
+        ListTopicsOptions opts = new ListTopicsOptions()
+                .listInternal(true);
+
         for (int tries = 0; tries < numTries; tries++) {
+            long start = System.currentTimeMillis();
             try {
-                topics = getKafkaClient().listTopics(opts).names().get(sleep, TimeUnit.SECONDS);
-            } catch (ExecutionException e) {
-                logger.error("Failed to list topics from brokers: {}."
-                        + " Trying again after {} seconds.", e, sleep);
-                Thread.sleep(sleep * 1000L);
-                sleep = Math.min(MAX_SLEEP, sleep * 2);
-                continue;
-            } catch (TimeoutException e) {
-                // do nothing
+                topics = getKafkaClient()
+                        .listTopics(opts)
+                        .names()
+                        .get(sleep, TimeUnit.SECONDS);
+            } catch (ExecutionException ex) {
+                logger.error("Failed to list topics from brokers: {}", ex.getCause().toString());
+            } catch (TimeoutException ex) {
+                logger.error("Failed to list topics within {} seconds", timeout);
             }
             if (topics != null && !topics.isEmpty()) {
                 break;
-            }
-            if (tries < numTries - 1) {
-                logger.warn("Topics not listed yet after {} seconds", sleep);
+            } else if (tries < numTries - 1) {
+                logger.warn("Topics not listed yet. Trying again after {} seconds.", sleep);
+                long timeTaken = System.currentTimeMillis() - start;
+                long sleepMillis = Math.max(sleep * 1000L - timeTaken, 0L);
+                if (sleepMillis > 0L) {
+                    Thread.sleep(sleepMillis);
+                }
+                sleep = Math.min(MAX_SLEEP, sleep * 2);
+                timeout = Math.min(5, sleep);
             } else {
                 logger.error("Topics have not become available. Failed to wait on Kafka.");
             }
-            sleep = Math.min(MAX_SLEEP, sleep * 2);
         }
-
-        if (topics == null || topics.isEmpty()) {
-            return false;
-        } else {
-            Thread.sleep(5000L);
-            return true;
-        }
+        return topics != null && !topics.isEmpty();
     }
 
     @Override
