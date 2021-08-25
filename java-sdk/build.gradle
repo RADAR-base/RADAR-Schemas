@@ -8,7 +8,7 @@ plugins {
 }
 
 allprojects {
-    version = '0.7.2'
+    version = '0.7.3'
     group = 'org.radarbase'
 }
 
@@ -73,5 +73,5 @@ nexusPublishing {
 }
 
 wrapper {
-    gradleVersion '7.0'
+    gradleVersion '7.2'
 }

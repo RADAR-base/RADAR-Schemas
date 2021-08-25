@@ -1,7 +1,7 @@
 name: aRMT
 vendor: RADAR
 model: aRMT-App
-version: 1.14.0
+version: 1.15.0
 assessment_type: QUESTIONNAIRE
 doc: aRMT Questionnaires definition. Includes Personal Health Questionnaire Depression Scale (PHQ-8), Experience sampling method (ESM) and RSES and other data.
 data:
@@ -217,6 +217,18 @@ data:
     topic: questionnaire_audio_vocalisation
     value_schema: .active.questionnaire.Questionnaire
     questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/audio_vocalisation/audio_vocalisation_armt.json
+  - type: EXACERBATION_DIARY
+    topic: questionnaire_exacerbation_diary
+    value_schema: .active.questionnaire.Questionnaire
+    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/exacerbation_diary/exacerbation_diary_armt.json
+  - type: NUVOAIR_SPIROMETRY
+    topic: notification_nuvoair_spirometry
+    value_schema: .active.questionnaire.Questionnaire
+    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/nuvoair_spirometry/nuvoair_spirometry_armt.json
+  - type: K_BUILD_PRIVATE
+    topic: questionnaire_k_build_private
+    value_schema: .active.questionnaire.Questionnaire
+    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions-Private/master/questionnaires/k_build_private/k_build_private_armt.json
   - type: COMPLETION_LOG
     doc: Information about the completeness of each questionnaire.
     topic: questionnaire_completion_log
@@ -241,11 +253,11 @@ data:
     topic: questionnaire_epi_wsas
     value_schema: .active.questionnaire.Questionnaire
     questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/epi_wsas/epi_wsas_armt.json
-  - type: BP_QUESTIONNAIRE
+  - type: BP
     topic: questionnaire_bp
     value_schema: .active.questionnaire.Questionnaire
     questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/bp/bp_armt.json
-  - type: HLH_QUESTIONNAIRE
+  - type: HLH
     topic: questionnaire_hlh
     value_schema: .active.questionnaire.Questionnaire
     questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/hlh/hlh_armt.json
