@@ -1,0 +1,17 @@
+{
+ "namespace": "org.radarcns.passive.carl",
+ "type": "record",
+ "name": "FibaroSection",
+ "doc": "A section of a building that can include one or multiple different rooms.",
+ "fields": [
+     {"name": "time", "type": "double", "doc": "Time since the Unix Epoch (seconds), represents the time that this record was registered."},
+     {"name": "timeReceived", "type": "double", "doc": "Time since the Unix Epoch (seconds), represents the time that this record was received."}, 
+     {"name": "id", "type": "int", "doc": "Unique ID for a Section. As registered in Carl Cloud."},
+     {"name": "hclId", "type": "int", "doc": "Unique ID for a Section. As registered in Home Center Lite's API."},
+     {"name": "name", "type": "string", "doc": "Section's name."},
+     {"name": "userId", "type": "int", "doc": "Unique ID for the user who registered the Section."}
+    
+    ]  
+     
+}
+

@@ -1,0 +1,16 @@
+{
+ "namespace": "org.radarcns.passive.carl",
+ "type": "record",
+ "name": "FibaroRoom",
+ "doc": "A building Room that has Fibaro Devices assigned to it.",
+ "fields": [
+     {"name": "time", "type": "double", "doc": "Time since the Unix Epoch (seconds), represents the time that this record was registered."},
+     {"name": "timeReceived", "type": "double", "doc": "Time since the Unix Epoch (seconds), represents the time that this record was received."},
+     {"name": "id", "type": "int", "doc": "Unique ID for a Room. As registered in Carl Cloud."},
+     {"name": "hclId", "type": "int", "doc": "Unique ID for a Room. As registered in Home Center Lite's API."},
+     {"name": "name", "type": "string", "doc": "Room's Name."},
+     {"name": "sectionId", "type": ["null","int"], "doc": "Section's unique ID where the Room belongs to.", "default":null},
+     {"name": "userId", "type": "int", "doc": "Unique ID for the user who registered the Room."}
+    ]
+}
+
