@@ -66,6 +66,8 @@ public interface TopicRegistrar extends Closeable {
      */
     void initialize(int brokers) throws InterruptedException;
 
+    void initialize(int brokers, int numTries) throws InterruptedException;
+
     /**
      * Ensures this topicRegistrar instance is initialized for use.
      */

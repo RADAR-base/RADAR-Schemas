@@ -1,5 +1,6 @@
 package org.radarbase.schema.tools;
 
+import net.sourceforge.argparse4j.inf.ArgumentChoice;
 import net.sourceforge.argparse4j.inf.ArgumentParser;
 import net.sourceforge.argparse4j.inf.Namespace;
 
@@ -27,7 +28,7 @@ public interface SubCommand {
      * Execute the subcommand based on the options and app given.
      *
      * @param options the options passed on the command line.
-     * @param app application with source catalogue.
+     * @param app     application with source catalogue.
      * @return command exit code.
      */
     int execute(Namespace options, CommandLineApp app);
@@ -39,4 +40,25 @@ public interface SubCommand {
      * @param parser argument parser of the current subcommand.
      */
     void addParser(ArgumentParser parser);
+
+    class IntRangeArgumentChoice implements ArgumentChoice {
+
+        private final int minRange;
+        private final int maxRange;
+
+        public IntRangeArgumentChoice(int minRange, int maxRange) {
+            this.minRange = minRange;
+            this.maxRange = maxRange;
+        }
+
+        @Override
+        public boolean contains(Object val) {
+            return val instanceof Integer && (Integer) val >= minRange && (Integer) val <= maxRange;
+        }
+
+        @Override
+        public String textualFormat() {
+            return "[allowed range: " + minRange + "-" + maxRange + "]";
+        }
+    }
 }

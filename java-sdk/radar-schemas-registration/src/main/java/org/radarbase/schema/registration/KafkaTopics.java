@@ -62,32 +62,51 @@ public class KafkaTopics implements TopicRegistrar {
      */
     @Override
     public void initialize(int brokers) throws InterruptedException {
+        initialize(brokers, 20);
+    }
+
+    /**
+     * Wait for brokers to become available. This uses a polling mechanism, retrying with sleep
+     * up to the supplied numTries on failures. The sleep time is doubled every retry
+     * iteration until the {@value #MAX_SLEEP} is reached which then takes precedence.
+     *
+     * @param brokers number of brokers to wait for.
+     * @param numTries Number of times to retry in case of failure.
+     * @throws InterruptedException when waiting for the brokers is interrupted.
+     */
+    @Override
+    public void initialize(int brokers, int numTries) throws InterruptedException {
         int sleep = 2;
-        int numTries = 20;
         int numBrokers = 0;
 
-        for (int tries = 0; tries < numTries && numBrokers < brokers; tries++) {
-            List<String> hosts;
+        for (int tries = 0; tries < numTries; tries++) {
+            long start = System.currentTimeMillis();
+            List<String> hosts = Collections.emptyList();
             try {
                 hosts = kafkaClient.describeCluster()
                         .nodes()
-                        .get()
+                        .get(sleep, TimeUnit.SECONDS)
                         .stream()
                         .map(Node::host)
                         .collect(Collectors.toList());
             } catch (ExecutionException ex) {
                 logger.error("Failed to connect to bootstrap server {}",
                         kafkaProperties.get(BOOTSTRAP_SERVERS_CONFIG), ex.getCause());
-                hosts = Collections.emptyList();
+            } catch (TimeoutException ex) {
+                logger.error("Failed to connect to bootstrap server {} within {} seconds",
+                        kafkaProperties.get(BOOTSTRAP_SERVERS_CONFIG), sleep);
             }
             numBrokers = hosts.size();
-
             if (numBrokers >= brokers) {
                 break;
             } else if (tries < numTries - 1) {
                 logger.warn("Only {} out of {} Kafka brokers available. Waiting {} seconds.",
                         numBrokers, brokers, sleep);
-                Thread.sleep(sleep * 1000L);
+                long timeTaken = System.currentTimeMillis() - start;
+                long sleepMillis = Math.max(sleep * 1000L - timeTaken, 0L);
+                if (sleepMillis > 0L) {
+                    Thread.sleep(sleepMillis);
+                }
                 sleep = Math.min(MAX_SLEEP, sleep * 2);
             } else {
                 logger.error("Only {} out of {} Kafka brokers available."
@@ -163,7 +182,10 @@ public class KafkaTopics implements TopicRegistrar {
             }).map(t -> new NewTopic(t, partitions, replication)).collect(Collectors.toList());
 
             if (!newTopics.isEmpty()) {
-                getKafkaClient().createTopics(newTopics).all().get();
+                getKafkaClient()
+                        .createTopics(newTopics)
+                        .all()
+                        .get();
                 logger.info("Created {} topics. Requesting to refresh topics", newTopics.size());
                 refreshTopics();
             } else {
@@ -180,40 +202,40 @@ public class KafkaTopics implements TopicRegistrar {
     public boolean refreshTopics() throws InterruptedException {
         ensureInitialized();
         logger.info("Waiting for topics to become available.");
-        int sleep = 10;
+        int sleep = 2;
         int numTries = 10;
 
         topics = null;
-        ListTopicsOptions opts = new ListTopicsOptions().listInternal(true);
+        ListTopicsOptions opts = new ListTopicsOptions()
+                .listInternal(true);
+
         for (int tries = 0; tries < numTries; tries++) {
+            long start = System.currentTimeMillis();
             try {
-                topics = getKafkaClient().listTopics(opts).names().get(sleep, TimeUnit.SECONDS);
-            } catch (ExecutionException e) {
-                logger.error("Failed to list topics from brokers: {}."
-                        + " Trying again after {} seconds.", e, sleep);
-                Thread.sleep(sleep * 1000L);
-                sleep = Math.min(MAX_SLEEP, sleep * 2);
-                continue;
-            } catch (TimeoutException e) {
-                // do nothing
+                topics = getKafkaClient()
+                        .listTopics(opts)
+                        .names()
+                        .get(sleep, TimeUnit.SECONDS);
+            } catch (ExecutionException ex) {
+                logger.error("Failed to list topics from brokers: {}", ex.getCause().toString());
+            } catch (TimeoutException ex) {
+                logger.error("Failed to list topics within {} seconds", sleep);
             }
             if (topics != null && !topics.isEmpty()) {
                 break;
-            }
-            if (tries < numTries - 1) {
-                logger.warn("Topics not listed yet after {} seconds", sleep);
+            } else if (tries < numTries - 1) {
+                logger.warn("Topics not listed yet. Trying again after {} seconds.", sleep);
+                long timeTaken = System.currentTimeMillis() - start;
+                long sleepMillis = Math.max(sleep * 1000L - timeTaken, 0L);
+                if (sleepMillis > 0L) {
+                    Thread.sleep(sleepMillis);
+                }
+                sleep = Math.min(MAX_SLEEP, sleep * 2);
             } else {
-                logger.error("Topics have not become available. Failed to wait on Kafka.");
+                logger.error("Topics have not become available. Failed to list topics.");
             }
-            sleep = Math.min(MAX_SLEEP, sleep * 2);
         }
-
-        if (topics == null || topics.isEmpty()) {
-            return false;
-        } else {
-            Thread.sleep(5000L);
-            return true;
-        }
+        return topics != null && !topics.isEmpty();
     }
 
     @Override

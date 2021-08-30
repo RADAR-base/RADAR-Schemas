@@ -3,12 +3,12 @@
 //---------------------------------------------------------------------------//
 
 plugins {
-    id 'com.github.davidmc24.gradle.plugin.avro-base' version '1.1.0'
+    id 'com.github.davidmc24.gradle.plugin.avro-base' version '1.2.0'
     id("io.github.gradle-nexus.publish-plugin") version "1.1.0"
 }
 
 allprojects {
-    version = '0.7.0'
+    version = '0.7.3'
     group = 'org.radarbase'
 }
 
@@ -57,14 +57,8 @@ subprojects {
     task downloadDependencies {
         description "Pre-downloads *most* dependencies"
         doLast {
-            configurations.getAsMap().each { name, config ->
-                println "Retrieving dependencies for $name"
-                try {
-                    config.files
-                } catch (e) {
-                    project.logger.info e.message // some cannot be resolved, silentlyish skip them
-                }
-            }
+            configurations.compileClasspath.files
+            configurations.runtimeClasspath.files
         }
     }
 }
@@ -79,5 +73,5 @@ nexusPublishing {
 }
 
 wrapper {
-    gradleVersion '7.0'
+    gradleVersion '7.2'
 }

@@ -1,5 +1,4 @@
 plugins {
-    id 'idea'
     id 'application'
 }
 
@@ -17,13 +16,6 @@ configurations {
     }
 }
 
-sourceSets {
-    application {
-        compileClasspath += sourceSets.main.output
-        runtimeClasspath += sourceSets.main.output
-    }
-}
-
 description = 'RADAR Schemas specification and validation tools.'
 
 repositories {
@@ -36,7 +28,7 @@ dependencies {
 
     implementation group: 'net.sourceforge.argparse4j', name: 'argparse4j', version: argparseVersion
 
-    runtimeOnly group: 'ch.qos.logback', name: 'logback-classic', version: logbackVersion
+    implementation group: 'ch.qos.logback', name: 'logback-classic', version: logbackVersion
 }
 
 application {

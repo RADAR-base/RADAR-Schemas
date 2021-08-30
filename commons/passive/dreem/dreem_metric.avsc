@@ -1,0 +1,26 @@
+{
+   "type":"record",
+   "namespace":"org.radarcns.passive.dreem",
+   "name":"DreemMetric",
+   "doc":"Single computed Dreem endpoint Metric.",
+   "fields":[
+      {
+         "name":"value",
+         "type":[
+            "null",
+            "float"
+         ],
+         "default":null,
+         "doc":"Value associated with the endpoint. Format: XX.XX ."
+      },
+      {
+         "name":"confidenceIndex",
+         "type":[
+            "null",
+            "float"
+         ],
+         "default":null,
+         "doc":"Confidence index associated to the endpoint value (only for TST, SE, SOL, WASO, N1, N2, N3, REM, NREM, p_N1, p_N2, p_N3, p_REM). If not computed ‘NA’ but for schema purposes it is set to null."
+      }
+   ]
+}

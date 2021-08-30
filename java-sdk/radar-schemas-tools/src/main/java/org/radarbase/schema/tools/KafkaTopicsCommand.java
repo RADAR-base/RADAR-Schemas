@@ -42,7 +42,8 @@ public class KafkaTopicsCommand implements SubCommand {
 
         try (KafkaTopics topics = new KafkaTopics(kafkaConfig)) {
             try {
-                topics.initialize(brokers);
+                int numTries = options.getInt("num_tries");
+                topics.initialize(brokers, numTries);
             } catch (IllegalStateException ex) {
                 logger.error("Kafka brokers not yet available. Aborting.");
                 return 1;
@@ -75,6 +76,11 @@ public class KafkaTopicsCommand implements SubCommand {
                 .help("number of brokers that are expected to be available.")
                 .type(Integer.class)
                 .setDefault(3);
+        parser.addArgument("-n", "--num-tries")
+                .help("number of times to try the topic registration (in case there are failures).")
+                .type(Integer.class)
+                .setDefault(20)
+                .choices(new IntRangeArgumentChoice(1, 100));
         parser.addArgument("-t", "--topic")
                 .help("register the schemas of one topic")
                 .type(String.class);
