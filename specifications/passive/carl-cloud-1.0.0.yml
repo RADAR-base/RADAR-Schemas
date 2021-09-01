@@ -3,7 +3,8 @@ name: CARLCLoud
 vendor: CERTH
 model: CARLCLoud
 version: 1.0.0
-assessment_type: APP
+labels:
+  assessment_type: APP
 doc: CARL CLoud schemas and topics
 data:
   - type: FIBAROSECTION
