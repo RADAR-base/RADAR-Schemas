@@ -1,0 +1,18 @@
+{
+ "namespace": "org.radarcns.passive.carl",
+ "type": "record",
+ "name": "FibaroEvent",
+ "doc": "An event that was registered with a Fibaro Device that captures the previous value of the last event that was registered with the same device - old and the new value - new.",
+ "fields": [
+     {"name": "time", "type": "double", "doc": "Time since the Unix Epoch (seconds), represents the time that an Event was registered."},
+     {"name": "timeReceived", "type": "double", "doc": "Time since the Unix Epoch (seconds), represents the time this record was received."},
+     {"name": "id", "type": "int", "doc": "Unique ID for an Event. As registered in Carl Cloud."},
+     {"name": "hclId", "type": "int", "doc": "Unique ID for a Event. As registered in Home Center Lite's API."},
+     {"name": "type", "type": "string", "doc": "The type of the Event."},
+     {"name": "deviceId", "type": "int", "doc": "Unique ID of the device that registered the Event."},
+     {"name": "previous", "type": "double", "doc": "The previous value of a similar Event that was registered on with the same Device."},
+     {"name": "current", "type": "double", "doc": "The current value that was registered with the Device."},
+     {"name": "userId", "type": "int", "doc": "Unique ID for the user who registered the Room."}
+  ]
+}
+
