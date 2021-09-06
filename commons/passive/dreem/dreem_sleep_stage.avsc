@@ -1,0 +1,47 @@
+{
+   "type":"record",
+   "namespace":"org.radarcns.passive.dreem",
+   "name":"DreemSleepStage",
+   "doc":"AVRO Schema for DREEM hypnogram data.",
+   "fields":[
+      {
+         "name":"time",
+         "type":"double",
+         "doc":"This refers to the sleepDateTime field from the dataset."
+      },
+      {
+         "name":"timeReceived",
+         "type":"double",
+         "doc":"This is the processing time in UTC (s)."
+      },
+      {
+         "name":"recDateTime",
+         "type":"double",
+         "doc":"This refers to the session start time."
+      },
+      {
+         "name":"epochNumber",
+         "type":"int",
+         "doc":"Interval number (30 seconds) since the measurement was started. It starts at 1."
+      },
+      {
+         "name":"sleepStage",
+         "type":{
+            "name":"SleepStageType",
+            "type":"enum",
+            "symbols":[
+               "UNKNOWN",
+               "WK",
+               "REM",
+               "N1",
+               "N2",
+               "N3",
+               "NS"
+            ],
+            "doc":"Types of sleep stage Wk: Wakefulness, RM: Rapid eye movements, N1: non-REM stage 1, N2 non rem stage 2, N3 is non rem stage 3, NS stands for non scorable. NS is defined as an epoch that was either off head or had low record quality indication (at epoch level). UNKNOWN indicates that another unknown sleep stage was detected."
+         },
+         "doc":"Sleep stage that the user is in at this particular time point.",
+         "default":"UNKNOWN"
+      }
+   ]
+}

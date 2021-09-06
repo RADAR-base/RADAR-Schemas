@@ -1,6 +1,8 @@
 package org.radarbase.schema.validation.rules;
 
 import java.nio.file.Path;
+import java.util.Objects;
+
 import org.apache.avro.Schema;
 import org.radarbase.schema.Scope;
 
@@ -31,5 +33,28 @@ public class SchemaMetadata {
 
     public Schema getSchema() {
         return schema;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        SchemaMetadata that = (SchemaMetadata) o;
+
+        return scope == that.scope
+                && Objects.equals(path, that.path)
+                && Objects.equals(schema, that.schema);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = scope != null ? scope.hashCode() : 0;
+        result = 31 * result + (path != null ? path.hashCode() : 0);
+        return result;
     }
 }
