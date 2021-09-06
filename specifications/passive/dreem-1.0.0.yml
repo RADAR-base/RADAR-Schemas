@@ -1,0 +1,16 @@
+#====================================== For Dreem 3 headband also known as Neuroband device =====================================#
+vendor: DREEM
+model: Neuroband
+version: 1.0.0
+doc: DREEM data collected and uploaded by DREEM web application
+data:
+  - doc: This is DREEM hypnogram data captured from Neuroband
+    unit: NON_DIMENSIONAL
+    processing_state: VENDOR
+    topic: dreem_sleep_stage
+    value_schema: .passive.dreem.DreemSleepStage
+  - doc: This is DREEM metrics data captured from Neuroband
+    unit: NON_DIMENSIONAL
+    processing_state: VENDOR
+    topic: dreem_sleep_endpoints
+    value_schema: .passive.dreem.DreemSleepEndpoints

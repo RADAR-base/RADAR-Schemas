@@ -33,7 +33,9 @@ import org.apache.avro.Schema;
 import org.apache.avro.SchemaBuilder;
 import org.junit.Before;
 import org.junit.Test;
+import org.radarbase.schema.SchemaCatalogue;
 import org.radarbase.schema.Scope;
+import org.radarbase.schema.specification.SourceCatalogue;
 import org.radarbase.schema.validation.config.ExcludeConfig;
 
 /**
@@ -50,37 +52,79 @@ public class SchemaValidatorTest {
     }
 
     @Test
-    public void active() {
+    public void active() throws IOException {
         testScope(ACTIVE);
     }
 
     @Test
-    public void monitor() {
+    public void activeSpecifications() throws IOException {
+        testFromSpecification(ACTIVE);
+    }
+
+    @Test
+    public void monitor() throws IOException {
         testScope(MONITOR);
     }
 
     @Test
-    public void passive() {
+    public void monitorSpecifications() throws IOException {
+        testFromSpecification(MONITOR);
+    }
+
+    @Test
+    public void passive() throws IOException {
         testScope(PASSIVE);
     }
 
     @Test
-    public void kafka() {
+    public void passiveSpecifications() throws IOException {
+        testFromSpecification(PASSIVE);
+    }
+
+    @Test
+    public void kafka() throws IOException {
         testScope(KAFKA);
     }
 
     @Test
-    public void catalogue() {
+    public void kafkaSpecifications() throws IOException {
+        testFromSpecification(KAFKA);
+    }
+
+    @Test
+    public void catalogue() throws IOException {
         testScope(CATALOGUE);
     }
 
     @Test
-    public void connector() {
+    public void catalogueSpecifications() throws IOException {
+        testFromSpecification(CATALOGUE);
+    }
+
+    @Test
+    public void connectorSchemas() throws IOException {
         testScope(CONNECTOR);
     }
 
-    private void testScope(Scope scope) {
-        String result = SchemaValidator.format(validator.analyseFiles(scope));
+    @Test
+    public void connectorSpecifications() throws IOException {
+        testFromSpecification(CONNECTOR);
+    }
+
+    private void testFromSpecification(Scope scope) throws IOException {
+        SourceCatalogue sourceCatalogue = SourceCatalogue.load(ROOT);
+        String result = SchemaValidator.format(
+                validator.analyseSourceCatalogue(scope, sourceCatalogue));
+
+        if (!result.isEmpty()) {
+            fail(result);
+        }
+    }
+
+    private void testScope(Scope scope) throws IOException {
+        SchemaCatalogue schemaCatalogue = new SchemaCatalogue(ROOT, scope);
+        String result = SchemaValidator.format(
+                validator.analyseFiles(scope, schemaCatalogue));
 
         if (!result.isEmpty()) {
             fail(result);

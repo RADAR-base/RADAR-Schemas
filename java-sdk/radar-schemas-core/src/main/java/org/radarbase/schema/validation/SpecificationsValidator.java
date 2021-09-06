@@ -16,13 +16,14 @@
 
 package org.radarbase.schema.validation;
 
-import static org.radarbase.schema.validation.ValidationHelper.SPECIFICATIONS_PATH;
+import org.radarbase.schema.Scope;
+import org.radarbase.schema.validation.config.ExcludeConfig;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import org.radarbase.schema.Scope;
-import org.radarbase.schema.validation.config.ExcludeConfig;
+
+import static org.radarbase.schema.validation.ValidationHelper.SPECIFICATIONS_PATH;
 
 /**
  * Validates RADAR-Schemas specifications.

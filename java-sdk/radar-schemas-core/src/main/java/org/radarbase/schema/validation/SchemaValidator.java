@@ -16,21 +16,13 @@
 
 package org.radarbase.schema.validation;
 
-import static org.radarbase.schema.validation.rules.Validator.raise;
-
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.Arrays;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import kotlin.Pair;
 import org.apache.avro.Schema;
 import org.apache.avro.Schema.Parser;
 import org.radarbase.schema.SchemaCatalogue;
 import org.radarbase.schema.Scope;
+import org.radarbase.schema.specification.DataProducer;
+import org.radarbase.schema.specification.SourceCatalogue;
 import org.radarbase.schema.validation.config.ExcludeConfig;
 import org.radarbase.schema.validation.rules.RadarSchemaMetadataRules;
 import org.radarbase.schema.validation.rules.RadarSchemaRules;
@@ -38,16 +30,24 @@ import org.radarbase.schema.validation.rules.SchemaMetadata;
 import org.radarbase.schema.validation.rules.SchemaMetadataRules;
 import org.radarbase.schema.validation.rules.Validator;
 
+import java.nio.file.Path;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 /**
  * Validator for a set of RADAR-Schemas.
  */
 public class SchemaValidator {
     public static final String AVRO_EXTENSION = "avsc";
 
-    private final Path root;
     private final ExcludeConfig config;
-    private final Validator<SchemaMetadata> validator;
     private final SchemaMetadataRules rules;
+    private Validator<SchemaMetadata> validator;
 
     /**
      * Schema validator for given RADAR-Schemas directory.
@@ -56,52 +56,75 @@ public class SchemaValidator {
      */
     public SchemaValidator(Path root, ExcludeConfig config) {
         this.config = config;
-        this.root = root;
         this.rules = new RadarSchemaMetadataRules(root, config);
-        this.validator = rules.getValidator();
+        this.validator = rules.getValidator(false);
+    }
+
+    public Stream<ValidationException> analyseSourceCatalogue(
+            Scope scope, SourceCatalogue catalogue) {
+        this.validator = rules.getValidator(true);
+        Stream<DataProducer<?>> producers;
+        if (scope != null) {
+            producers = catalogue.getSources().stream()
+                    .filter(s -> s.getScope().equals(scope));
+        } else {
+            producers = catalogue.getSources().stream();
+        }
+
+        try {
+            return producers.flatMap(s -> s.getData().stream())
+                    .flatMap(d -> {
+                        Pair<SchemaMetadata, SchemaMetadata> metadata =
+                                catalogue.getSchemaCatalogue().getSchemaMetadata(d);
+                        return Stream.of(metadata.component1(), metadata.component2());
+                    })
+                    .sorted(Comparator.comparing(s -> s.getSchema().getFullName()))
+                    .distinct()
+                    .flatMap(this::validate)
+                    .distinct();
+        } finally {
+            this.validator = rules.getValidator(false);
+        }
     }
 
     /**
      * TODO.
      * @param scope TODO.
      */
-    public Stream<ValidationException> analyseFiles(Scope scope) {
-        try {
-            SchemaCatalogue schemaCatalogue = new SchemaCatalogue(root, scope,
-                    p -> Files.isRegularFile(p)
-                            && SchemaValidator.isAvscFile(p)
-                            && !config.skipFile(p));
-
-            Map<String, Schema> useTypes = schemaCatalogue.getSchemas().entrySet().stream()
-                    .collect(Collectors.toMap(Entry::getKey, e -> e.getValue().getSchema()));
-
-            return Stream.concat(
-                    schemaCatalogue.getUnmappedAvroFiles().stream()
-                            .map(p -> {
-                                Parser parser = new Parser();
-                                parser.addTypes(useTypes);
-                                try {
-                                    parser.parse(p.toFile());
-                                    return null;
-                                } catch (Exception ex) {
-                                    return new ValidationException("Cannot parse schema", ex);
-                                }
-                            })
-                            .filter(Objects::nonNull),
-                    schemaCatalogue.getSchemas().values().stream()
-                            .flatMap(this::validate)
-            );
-        } catch (IOException ex) {
-            return raise("Failed to read files: " + ex, ex);
+    public Stream<ValidationException> analyseFiles(Scope scope, SchemaCatalogue schemaCatalogue) {
+        if (scope == null) {
+            return analyseFiles(schemaCatalogue);
         }
+        this.validator = rules.getValidator(false);
+        Map<String, Schema> useTypes = schemaCatalogue.getSchemas().entrySet().stream()
+                .filter(s -> s.getValue().getScope().equals(scope))
+                .collect(Collectors.toMap(Entry::getKey, e -> e.getValue().getSchema()));
+
+        return Stream.concat(
+                schemaCatalogue.getUnmappedAvroFiles().stream()
+                        .filter(s -> s.getScope().equals(scope))
+                        .map(p -> {
+                            Parser parser = new Parser();
+                            parser.addTypes(useTypes);
+                            try {
+                                parser.parse(p.getPath().toFile());
+                                return null;
+                            } catch (Exception ex) {
+                                return new ValidationException("Cannot parse schema", ex);
+                            }
+                        })
+                        .filter(Objects::nonNull),
+                schemaCatalogue.getSchemas().values().stream()
+                        .flatMap(this::validate)
+        ).distinct();
     }
 
     /**
      * TODO.
      */
-    public Stream<ValidationException> analyseFiles() {
+    public Stream<ValidationException> analyseFiles(SchemaCatalogue schemaCatalogue) {
         return Arrays.stream(Scope.values())
-                .flatMap(this::analyseFiles);
+                .flatMap(scope -> analyseFiles(scope, schemaCatalogue));
     }
 
     /** Validate a single schema in given path. */
@@ -111,6 +134,9 @@ public class SchemaValidator {
 
     /** Validate a single schema in given path. */
     public Stream<ValidationException> validate(SchemaMetadata schemaMetadata) {
+        if (config.skipFile(schemaMetadata.getPath())) {
+            return Stream.empty();
+        }
         return validator.apply(schemaMetadata);
     }
 

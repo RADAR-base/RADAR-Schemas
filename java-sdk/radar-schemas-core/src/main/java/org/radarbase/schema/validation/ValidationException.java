@@ -22,7 +22,7 @@ import java.util.Objects;
  * TODO.
  */
 public class ValidationException extends RuntimeException {
-    private static long serialVersionUID = 1;
+    private static final long serialVersionUID = 1;
 
     public ValidationException(String message) {
         super(message);
@@ -47,6 +47,6 @@ public class ValidationException extends RuntimeException {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getMessage(), getCause());
+        return getMessage().hashCode();
     }
 }

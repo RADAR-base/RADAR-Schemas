@@ -1,0 +1,14 @@
+{
+    "namespace": "org.radarcns.passive.carl",
+    "type": "record",
+    "name": "FibaroConsumption",
+    "doc": "Record of wattage that a home device consumed at a point in time.",
+    "fields": [
+        {"name": "time", "type": "double", "doc": "Time since the Unix Epoch (seconds), represents the time that an Event was registered."},
+        {"name": "timeReceived", "type": "double", "doc": "Time since the Unix Epoch (seconds), represents the time this record was received."},
+        {"name": "id", "type": "double", "doc": "A unique ID of a consumption record."},
+        {"name": "deviceId", "type": "int", "doc": "Unique ID of the device that corresponding to this record."},    
+        {"name": "watt", "type": "double", "doc": "Wattage recorded at this point in time."}
+        
+      ]
+}
