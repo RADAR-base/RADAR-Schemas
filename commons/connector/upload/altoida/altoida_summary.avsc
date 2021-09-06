@@ -7,13 +7,13 @@
     {"name": "time", "type": "double", "doc": "Timestamp in unix time acquired locally from the device."},
     {"name": "timeReceived", "type": "double", "doc": "Timestamp in unix time received from Altoida API."},
     {"name": "label", "type": "string", "doc": "Label name of session as entered in the app."},
-    {"name": "age", "type": "int", "doc": "Age of the participant in years."},
-    {"name": "yearsOfEducation", "type": "int", "doc": "Years of education in years."},
-    {"name": "gender", "type": {
+    {"name": "age", "type": ["null","int"], "doc": "Age of the participant in years."},
+    {"name": "yearsOfEducation", "type": ["null","int"], "doc": "Years of education in years."},
+    {"name": "gender", "type": ["null", {
           "name": "GenderType",
           "type": "enum",
           "doc": "Gender types provided by Altoida.",
-          "symbols": ["MALE", "FEMALE", "OTHER", "UNKNOWN"]}, "doc": "Gender of the participant.", "default": "UNKNOWN"},
+          "symbols": ["MALE", "FEMALE", "OTHER", "UNKNOWN"]}], "doc": "Gender of the participant.", "default": "UNKNOWN"},
     {"name": "classification", "type": ["null", {
               "name": "Classification",
               "type": "enum",
