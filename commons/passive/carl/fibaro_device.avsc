@@ -1,0 +1,33 @@
+{
+ "namespace": "org.radarcns.passive.carl",
+ "type": "record",
+ "name": "FibaroDevice",
+ "doc": "A Fibaro Device, capturing multiple variables for a specific Fibaro device. More information can be found https://www.fibaro.com/.",
+ "fields": [
+     {"name": "time", "type": "double", "doc": "Time since the Unix Epoch (seconds), represents the time that an Event was registered."},
+     {"name": "timeReceived", "type": "double", "doc": "Time since the Unix Epoch (seconds), represents the time this record was received."}, 
+     {"name": "id", "type": "int", "doc": "A unique ID for a Fibaro Device. As registered in Carl Cloud."},
+     {"name": "hclId", "type": "int", "doc": "Unique ID for a Fibaro Device. As registered in Home Center Lite's API."},
+     {"name": "deviceType", "type": {"type": "enum", "name": "DeviceType", "doc": "PRESENSE_SENSOR: Devices that act as motion sensor, temperature sensor, seismic sensor ,light  sensor, accelerometer,DOOR_SENSOR: Devices that register if the door/windows was opened as well as heat changes, FLODD_SENSOR: Devices that registeres flood inside the house, PANIC_BUTTON: Device that when pressed alerts the system, WALLPLUG: Device that measures the electric consumption of a device connected to it.", "symbols":["PRESENSE_SENSOR", "DOOR_SENSOR", "FLOOD_SENSOR", "PANIC_BUTTON", "WALLPLUG"]},"doc": "Type of the device (Presense, Door, Flood, Panic, Wall Plug)."},
+     {"name": "serial", "type": "string", "doc": "A serial number for a Fibaro Device."},
+     {"name": "make", "type": ["null", "string"], "doc": "The name of a Device's Manufacturer.", "default":null},
+     {"name": "model", "type": "string", "doc": "The model name of the Fibaro Device."},
+     {"name": "battery", "type": "double", "doc": "The level of Device's Battery."},
+     {"name": "lastSyncTime", "type": "double", "doc": "Time since the Unix Epoch (seconds), represent the time of the Fibaro Device's last sync with CARL Cloud."},
+     {"name": "mac", "type": ["null", "string"], "doc": "The MAC Addresss of the Fibaro Device.", "default":null},
+     {"name": "userId", "type": "int", "doc": "Unique ID for the user who registered the Fibaro Device."},
+     {"name": "name", "type": ["null","string"], "doc": "Name of the Fibaro Device.", "default":null},
+     {"name": "roomId", "type": "int", "doc": "Unique ID of the Room that the Fibaro Device is registered to."},
+     {"name": "enabled", "type": "boolean", "doc": "True if the Fibaro Device is enabled, False if it is not."},
+     {"name": "parentId", "type": "int", "doc": "Unique ID of the Fibaro Device where this Fibaro Instance belongs to."},
+     {"name": "categories", "type": "string", "doc": "Show the categories in which the Device belongs to."},
+     {"name": "configured", "type": "boolean", "doc": "True if the device is configured."},
+     {"name": "dead", "type": "boolean", "doc": "True if the device is not found on the network."},
+     {"name": "deadReason", "type": ["null","string"], "doc": "The reason that 'dead' field was set as True.", "default":null},
+     {"name": "created", "type": "double", "doc": "Time since the Unix Epoch (seconds), represents the time of the Fibaro Device's first sync."},
+     {"name": "modified", "type": "double", "doc": "Time since the Unix Epoch (seconds), represents the time of the Fibaro Device's last modification."}
+
+     
+    ]
+}
+
