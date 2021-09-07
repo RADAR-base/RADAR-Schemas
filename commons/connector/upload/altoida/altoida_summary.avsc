@@ -9,11 +9,11 @@
     {"name": "label", "type": "string", "doc": "Label name of session as entered in the app."},
     {"name": "age", "type": ["null","int"], "doc": "Age of the participant in years.",  "default": null},
     {"name": "yearsOfEducation", "type": ["null","int"], "doc": "Years of education in years.",  "default": null},
-    {"name": "gender", "type": ["null", {
+    {"name": "gender", "type": {
           "name": "GenderType",
           "type": "enum",
           "doc": "Gender types provided by Altoida.",
-          "symbols": ["MALE", "FEMALE", "OTHER", "UNKNOWN"]}], "doc": "Gender of the participant.", "default": null},
+          "symbols": ["MALE", "FEMALE", "OTHER", "UNKNOWN"]}, "doc": "Gender of the participant.", "default": "UNKNOWN"},
     {"name": "classification", "type": ["null", {
               "name": "Classification",
               "type": "enum",
