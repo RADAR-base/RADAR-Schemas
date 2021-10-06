@@ -32,7 +32,7 @@ public abstract class DataProducer<T extends DataTopic> {
     private Map<String, String> properties;
 
     @JsonProperty
-    private List<String> labels;
+    private Map<String, String> labels;
 
     /**
      * If true, register the schema during kafka initialization, otherwise, the producer should do
@@ -56,7 +56,7 @@ public abstract class DataProducer<T extends DataTopic> {
     @NotNull
     public abstract Scope getScope();
 
-    public List<String> getLabels() {
+    public Map<String, String> getLabels() {
         return labels;
     }
 

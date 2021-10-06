@@ -28,7 +28,7 @@ import org.radarbase.schema.specification.DataTopic;
  */
 @JsonInclude(Include.NON_NULL)
 public class QuestionnaireDataTopic extends DataTopic {
-    @JsonProperty
+    @JsonProperty("questionnaire_definition_url")
     private URL questionnaireDefinitionUrl;
 
     public URL getQuestionnaireDefinitionUrl() {

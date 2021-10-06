@@ -146,7 +146,7 @@ public class SourceCatalogue {
                                 filename.toUpperCase(Locale.ENGLISH),
                                 reader.<T>readValue(f.toFile()));
                     } catch (IOException ex) {
-                        logger.error("Failed to load configuration {}", f, ex);
+                        logger.error("Failed to load configuration {}: {}", f, ex.toString());
                         return null;
                     }
                 })
