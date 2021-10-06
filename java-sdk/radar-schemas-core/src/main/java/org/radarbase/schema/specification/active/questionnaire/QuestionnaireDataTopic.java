@@ -38,6 +38,6 @@ public class QuestionnaireDataTopic extends DataTopic {
     @Override
     protected void propertiesMap(Map<String, Object> props, boolean reduced) {
         super.propertiesMap(props, reduced);
-        props.put("questionnaireDefinitionUrl", questionnaireDefinitionUrl);
+        props.put("questionnaire_definition_url", questionnaireDefinitionUrl);
     }
 }

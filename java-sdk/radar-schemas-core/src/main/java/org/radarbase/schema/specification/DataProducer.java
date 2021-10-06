@@ -86,7 +86,7 @@ public abstract class DataProducer<T extends DataTopic> {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        DataProducer producer = (DataProducer) o;
+        DataProducer<?> producer = (DataProducer<?>) o;
         return Objects.equals(name, producer.name)
                 && Objects.equals(doc, producer.doc)
                 && Objects.equals(getData(), producer.getData());
