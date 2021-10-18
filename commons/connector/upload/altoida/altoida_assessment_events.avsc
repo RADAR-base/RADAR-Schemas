@@ -1,0 +1,24 @@
+{
+    "namespace": "org.radarcns.connector.upload.altoida",
+    "name": "AltoidaAssessmentEvents",
+    "type": "record",
+    "doc": "Schema of events for user interaction during an Altoida assessment.",
+    "fields": [
+      { "name": "time", "type": "double", "doc": "Timestamp in UTC (s) when the assessment is started by the subject." },
+      { "name": "timeReceived", "type": "double", "doc": "Timestamp in unix time received from Altoida API."},
+      { "name": "name", "type": "string", "doc": "Questionnaire names." },
+      { "name": "events", "type": {
+        "type": "array",
+        "items": {
+          "name": "AssessmentEvent",
+          "type": "record",
+          "doc": "Assessment event.",
+           "fields": [
+             { "name": "eventType", "type": ["null", "string"], "doc": "Event type.", "default": null },
+             { "name": "timestamp", "type": "double", "doc": "Timestamp in UTC (s) when the event occurred." },
+             { "name": "metadata", "type": ["null", "string"], "doc": "Event metadata or additional information." }
+           ]
+         }}, "doc": "Assessment events list."}
+    ]
+  }
+  
