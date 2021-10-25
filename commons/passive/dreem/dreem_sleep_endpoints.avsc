@@ -40,6 +40,11 @@
       "doc": "SOL stands for Sleep Onset Latency. Unit is min. Time from 'Lights out' to unequivocal sleep onset (first of three consecutive N1 sleep epochs, or any non-N1 sleep stage)."
     },
     {
+      "name": "latencyPersistentSleep",
+      "type": "org.radarcns.passive.dreem.DreemMetric",
+      "doc": "LPS stands for Latency to Persistent Sleep. Unit is min. Time from 'Lights out' to the first epoch of persistent sleep (persistent sleep defined as the first epoch of 10 min of persistent sleep)."
+    },
+    {
       "name": "wakeAfterSleepOnset",
       "type": "org.radarcns.passive.dreem.DreemMetric",
       "doc": "WASO stands for Wake After Sleep Onset. Unit is min. It is wakefulness between SO and final epoch of sleep."
