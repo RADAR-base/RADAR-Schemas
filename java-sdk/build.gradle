@@ -3,8 +3,9 @@
 //---------------------------------------------------------------------------//
 
 plugins {
-    id 'com.github.davidmc24.gradle.plugin.avro-base' version '1.2.0'
+    id 'com.github.davidmc24.gradle.plugin.avro-base' version '1.2.1'
     id("io.github.gradle-nexus.publish-plugin") version "1.1.0"
+    id("com.github.ben-manes.versions") version "0.39.0"
 }
 
 allprojects {
@@ -24,15 +25,14 @@ subprojects {
 
     ext {
         avroVersion = '1.9.2'
-        argparseVersion = '0.8.1'
-        jacksonVersion = '2.12.3'
-        jacksonModuleVersion = '2.12.3'
-        radarJerseyVersion = "0.6.2"
+        argparseVersion = '0.9.0'
+        jacksonVersion = '2.12.5'
+        radarJerseyVersion = "0.6.3-SNAPSHOT"
 
         junitVersion = '4.13.2'
-        confluentVersion = '6.1.1'
-        kafkaVersion = '6.1.1-ce'
-        okHttpVersion = '4.9.1'
+        confluentVersion = '6.2.1'
+        kafkaVersion = '6.2.1-ce'
+        okHttpVersion = '4.9.2'
         radarCommonsVersion = '0.13.2'
         slf4jVersion = '1.7.30'
         javaxValidationVersion = '2.0.1.Final'

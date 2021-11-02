@@ -24,7 +24,7 @@ repositories {
 
 dependencies {
     implementation project(':radar-schemas-registration')
-    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:$jacksonModuleVersion")
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:$jacksonVersion")
 
     implementation group: 'net.sourceforge.argparse4j', name: 'argparse4j', version: argparseVersion
 
