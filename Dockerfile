@@ -40,6 +40,7 @@ ENV KAFKA_SCHEMA_REGISTRY=http://schema-registry-1:8081 \
     NO_VALIDATE=""
 
 RUN apk add --no-cache \
+		bash \
 		curl \
 		rsync
 
