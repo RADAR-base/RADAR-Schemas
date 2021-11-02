@@ -39,10 +39,9 @@ ENV KAFKA_SCHEMA_REGISTRY=http://schema-registry-1:8081 \
     KAFKA_CONFIG_PATH="" \
     NO_VALIDATE=""
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
+RUN apk add --no-cache \
 		curl \
-		rsync \
-	&& rm -rf /var/lib/apt/lists/*
+		rsync
 
 WORKDIR /schema
 
