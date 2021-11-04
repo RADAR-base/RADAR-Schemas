@@ -16,11 +16,11 @@
            "fields": [
              { "name": "id", "type": "string", "doc": "Circle id.", "default": null },
              { "name": "radius", "type": "double", "doc": "Circle radius" },
-             { "name": "xCenterOffset", "type": "double", "doc": "Circle location x center offset." },
-             { "name": "yCenterOffset", "type": "double", "doc": "Circle location y center offset." },
+             { "name": "xCenterOffset", "type": "double", "doc": "Circle location x center offset in cm." },
+             { "name": "yCenterOffset", "type": "double", "doc": "Circle location y center offset in cm." },
              { "name": "color", "type": ["null", "string"], "doc": "Circle color." }
            ]
-         }}, "doc": "Assessment events list."},
+         }}, "doc": "Contrast circles list."},
       { "name": "events", "type": {
         "type": "array",
         "items": {
