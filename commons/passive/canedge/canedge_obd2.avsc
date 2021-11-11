@@ -95,7 +95,7 @@
       "doc": "Commanded secondary air status. The OBD2 name is S1_PID_12_CmdSecAirStatus. Min value is 0. Max value is 255. The unit is Encoded."
     },
 	{
-      "name": "oxySensor1Volt",
+      "name": "oxySensor1Volt14",
       "type": ["null", "float"],
       "doc": "Oxygen sensor 1 (voltage). The OBD2 name is S1_PID_14_OxySensor1_Volt. Min value is 0. Max value is 1. The unit is volts."
     },
@@ -105,7 +105,7 @@
       "doc": "Oxygen sensor 1 (short term fuel trim). The OBD2 name is S1_PID_14_OxySensor1_STFT. Min value is -100. Max value is 99. The unit is %."
     },
 	{
-      "name": "oxySensor2Volt",
+      "name": "oxySensor2Volt14",
       "type": ["null", "float"],
       "doc": "Oxygen sensor 2 (voltage). The OBD2 name is S1_PID_14_OxySensor2_Volt. Min value is 0. Max value is 1. The unit is volts."
     },
@@ -115,7 +115,7 @@
       "doc": "Oxygen sensor 2 (short term fuel trim). The OBD2 name is S1_PID_14_OxySensor2_STFT. Min value is -100. Max value is 99. The unit is %."
     },
 	{
-      "name": "oxySensor3Volt",
+      "name": "oxySensor3Volt14",
       "type": ["null", "float"],
       "doc": "Oxygen sensor 3 (voltage). The OBD2 name is S1_PID_14_OxySensor3_Volt. Min value is 0. Max value is 1. The unit is volts."
     },
@@ -125,7 +125,7 @@
       "doc": "Oxygen sensor 3 (short term fuel trim). The OBD2 name is S1_PID_14_OxySensor3_STFT. Min value is -100. Max value is 99. The unit is %."
     },
 	{
-      "name": "oxySensor4Volt",
+      "name": "oxySensor4Volt14",
       "type": ["null", "float"],
       "doc": "Oxygen sensor 4 (voltage). The OBD2 name is S1_PID_14_OxySensor4_Volt. Min value is 0. Max value is 1. The unit is volts."
     },
@@ -135,7 +135,7 @@
       "doc": "Oxygen sensor 4 (short term fuel trim). The OBD2 name is S1_PID_14_OxySensor4_STFT. Min value is -100. Max value is 99. The unit is %."
     },
 	{
-      "name": "oxySensor5Volt",
+      "name": "oxySensor5Volt14",
       "type": ["null", "float"],
       "doc": "Oxygen sensor 5 (voltage). The OBD2 name is S1_PID_14_OxySensor5_Volt. Min value is 0. Max value is 1. The unit is volts."
     },
@@ -145,7 +145,7 @@
       "doc": "Oxygen sensor 5 (short term fuel trim). The OBD2 name is S1_PID_14_OxySensor5_STFT. Min value is -100. Max value is 99. The unit is %."
     },
 	{
-      "name": "oxySensor6Volt",
+      "name": "oxySensor6Volt14",
       "type": ["null", "float"],
       "doc": "Oxygen sensor 6 (voltage). The OBD2 name is S1_PID_14_OxySensor6_Volt. Min value is 0. Max value is 1. The unit is volts."
     },
@@ -155,7 +155,7 @@
       "doc": "Oxygen sensor 6 (short term fuel trim). The OBD2 name is S1_PID_14_OxySensor6_STFT. Min value is -100. Max value is 99. The unit is %."
     },
 	{
-      "name": "oxySensor7Volt",
+      "name": "oxySensor7Volt14",
       "type": ["null", "float"],
       "doc": "Oxygen sensor 7 (voltage). The OBD2 name is S1_PID_14_OxySensor7_Volt. Min value is 0. Max value is 1. The unit is volts."
     },
@@ -165,7 +165,7 @@
       "doc": "Oxygen sensor 7 (short term fuel trim). The OBD2 name is S1_PID_14_OxySensor7_STFT. Min value is -100. Max value is 99. The unit is %."
     },
 	{
-      "name": "oxySensor8Volt",
+      "name": "oxySensor8Volt14",
       "type": ["null", "float"],
       "doc": "Oxygen sensor 8 (voltage). The OBD2 name is S1_PID_14_OxySensor8_Volt. Min value is 0. Max value is 1. The unit is volts."
     },
@@ -195,82 +195,82 @@
       "doc": "Fuel rail gauge pres. (diesel, gas inject). The OBD2 name is S1_PID_23_FuelRailGaug. Min value is 0. Max value is 655350. The unit is kPa."
     },
 	{
-      "name": "oxySensor1FAER",
+      "name": "oxySensor1FAER24",
       "type": ["null", "float"],
       "doc": "Oxygen sensor 1 (air-fuel equiv. ratio). The OBD2 name is S1_PID_24_OxySensor1_FAER. Min value is 0. Max value is 2. The unit is ratio."
     },
 	{
-      "name": "oxySensor1Volt",
+      "name": "oxySensor1Volt24",
       "type": ["null", "float"],
       "doc": "Oxygen sensor 1 (voltage). The OBD2 name is S1_PID_24_OxySensor1_Volt. Min value is 0. Max value is 2. The unit is volts."
     },
 	{
-      "name": "oxySensor2FAER",
+      "name": "oxySensor2FAER25",
       "type": ["null", "float"],
       "doc": "Oxygen sensor 2 (air-fuel equiv. ratio). The OBD2 name is S1_PID_25_OxySensor2_FAER. Min value is 0. Max value is 2. The unit is ratio."
     },
 	{
-      "name": "oxySensor2Volt",
+      "name": "oxySensor2Volt25",
       "type": ["null", "float"],
       "doc": "Oxygen sensor 2 (voltage). The OBD2 name is S1_PID_25_OxySensor2_Volt. Min value is 0. Max value is 8. The unit is volts."
     },
 	{
-      "name": "oxySensor3FAER",
+      "name": "oxySensor3FAER26",
       "type": ["null", "float"],
       "doc": "Oxygen sensor 3 (air-fuel equiv. ratio). The OBD2 name is S1_PID_26_OxySensor3_FAER. Min value is 0. Max value is 2. The unit is ratio."
     },
 	{
-      "name": "oxySensor3Volt",
+      "name": "oxySensor3Volt26",
       "type": ["null", "float"],
       "doc": "Oxygen sensor 3 (voltage). The OBD2 name is S1_PID_26_OxySensor3_Volt. Min value is 0. Max value is 8. The unit is volts."
     },
 	{
-      "name": "oxySensor4FAER",
+      "name": "oxySensor4FAER27",
       "type": ["null", "float"],
       "doc": "Oxygen sensor 4 (air-fuel equiv. ratio). The OBD2 name is S1_PID_27_OxySensor4_FAER. Min value is 0. Max value is 2. The unit is ratio."
     },
 	{
-      "name": "oxySensor4Volt",
+      "name": "oxySensor4Volt27",
       "type": ["null", "float"],
       "doc": "Oxygen sensor 4 (voltage). The OBD2 name is S1_PID_27_OxySensor4_Volt. Min value is 0. Max value is 8. The unit is volts."
     },
 	{
-      "name": "oxySensor5FAER",
+      "name": "oxySensor5FAER28",
       "type": ["null", "float"],
       "doc": "Oxygen sensor 5 (air-fuel equiv. ratio). The OBD2 name is S1_PID_28_OxySensor5_FAER. Min value is 0. Max value is 2. The unit is ratio."
     },
 	{
-      "name": "oxySensor5Volt",
+      "name": "oxySensor5Volt28",
       "type": ["null", "float"],
       "doc": "Oxygen sensor 5 (voltage). The OBD2 name is S1_PID_28_OxySensor5_Volt. Min value is 0. Max value is 8. The unit is volts."
     },
 	{
-      "name": "oxySensor6FAER",
+      "name": "oxySensor6FAER29",
       "type": ["null", "float"],
       "doc": "Oxygen sensor 6 (air-fuel equiv. ratio). The OBD2 name is S1_PID_29_OxySensor6_FAER. Min value is 0. Max value is 2. The unit is ratio."
     },
 	{
-      "name": "oxySensor6Volt",
+      "name": "oxySensor6Volt29",
       "type": ["null", "float"],
       "doc": "Oxygen sensor 6 (voltage). The OBD2 name is S1_PID_29_OxySensor6_Volt. Min value is 0. Max value is 8. The unit is volts."
     },
 	{
-      "name": "oxySensor7FAER",
+      "name": "oxySensor7FAER2A",
       "type": ["null", "float"],
       "doc": "Oxygen sensor 7 (air-fuel equiv. ratio). The OBD2 name is S1_PID_2A_OxySensor7_FAER. Min value is 0. Max value is 2. The unit is ratio."
     },
 	{
-      "name": "oxySensor7Volt",
+      "name": "oxySensor7Volt2A",
       "type": ["null", "float"],
       "doc": "Oxygen sensor 7 (voltage). The OBD2 name is S1_PID_2A_OxySensor7_Volt. Min value is 0. Max value is 8. The unit is volts."
     },
 	{
-      "name": "oxySensor8FAER",
+      "name": "oxySensor8FAER2B",
       "type": ["null", "float"],
       "doc": "Oxygen sensor 8 (air-fuel equiv. ratio). The OBD2 name is S1_PID_2B_OxySensor8_FAER. Min value is 0. Max value is 2. The unit is ratio."
     },
 	{
-      "name": "oxySensor8Volt",
+      "name": "oxySensor8Volt2B",
       "type": ["null", "float"],
       "doc": "Oxygen sensor 8 (voltage). The OBD2 name is S1_PID_2B_OxySensor8_Volt. Min value is 0. Max value is 8. The unit is volts."
     },	
@@ -315,7 +315,7 @@
       "doc": "Absolute barometric pressure. The OBD2 name is S1_PID_33_AbsBaroPres. Min value is 0. Max value is 255. The unit is kPa."
     },
 	{
-      "name": "oxySensor1FAER",
+      "name": "oxySensor1FAER34",
       "type": ["null", "float"],
       "doc": "Oxygen sensor 1 (air-fuel equiv. ratio). The OBD2 name is S1_PID_34_OxySensor1_FAER. Min value is 0. Max value is 2. The unit is ratio."
     },
@@ -325,7 +325,7 @@
       "doc": "Oxygen sensor 1 (current). The OBD2 name is S1_PID_34_OxySensor1_Crnt. Min value is -128. Max value is 128. The unit is mA."
     },
 	{
-      "name": "oxySensor2FAER",
+      "name": "oxySensor2FAER35",
       "type": ["null", "float"],
       "doc": "Oxygen sensor 2 (air-fuel equiv. ratio). The OBD2 name is S1_PID_35_OxySensor2_FAER. Min value is 0. Max value is 2. The unit is ratio."
     },
@@ -335,7 +335,7 @@
       "doc": "Oxygen sensor 2 (current). The OBD2 name is S1_PID_35_OxySensor2_Crnt. Min value is -128. Max value is 128. The unit is mA."
     },
 	{
-      "name": "oxySensor3FAER",
+      "name": "oxySensor3FAER36",
       "type": ["null", "float"],
       "doc": "Oxygen sensor 3 (air-fuel equiv. ratio). The OBD2 name is S1_PID_36_OxySensor3_FAER. Min value is 0. Max value is 2. The unit is ratio."
     },
@@ -345,7 +345,7 @@
       "doc": "Oxygen sensor 3 (current). The OBD2 name is S1_PID_36_OxySensor3_Crnt. Min value is -128. Max value is 128. The unit is mA."
     },
 	{
-      "name": "oxySensor4FAER",
+      "name": "oxySensor4FAER37",
       "type": ["null", "float"],
       "doc": "Oxygen sensor 4 (air-fuel equiv. ratio). The OBD2 name is S1_PID_37_OxySensor4_FAER. Min value is 0. Max value is 2. The unit is ratio."
     },
@@ -355,7 +355,7 @@
       "doc": "Oxygen sensor 4 (current). The OBD2 name is S1_PID_37_OxySensor4_Crnt. Min value is -128. Max value is 128. The unit is mA."
     },
 	{
-      "name": "oxySensor5FAER",
+      "name": "oxySensor5FAER38",
       "type": ["null", "float"],
       "doc": "Oxygen sensor 5 (air-fuel equiv. ratio). The OBD2 name is S1_PID_38_OxySensor5_FAER. Min value is 0. Max value is 2. The unit is ratio."
     },
@@ -365,7 +365,7 @@
       "doc": "Oxygen sensor 5 (current). The OBD2 name is S1_PID_38_OxySensor5_Crnt. Min value is -128. Max value is 128. The unit is mA."
     },
 	{
-      "name": "oxySensor6FAER",
+      "name": "oxySensor6FAER39",
       "type": ["null", "float"],
       "doc": "Oxygen sensor 6 (air-fuel equiv. ratio). The OBD2 name is S1_PID_39_OxySensor6_FAER. Min value is 0. Max value is 2. The unit is ratio."
     },
@@ -375,7 +375,7 @@
       "doc": "Oxygen sensor 6 (current). The OBD2 name is S1_PID_39_OxySensor6_Crnt. Min value is -128. Max value is 128. The unit is mA."
     },
 	{
-      "name": "oxySensor7FAER",
+      "name": "oxySensor7FAER3A",
       "type": ["null", "float"],
       "doc": "Oxygen sensor 7 (air-fuel equiv. ratio). The OBD2 name is S1_PID_3A_OxySensor7_FAER. Min value is 0. Max value is 2. The unit is ratio."
     },
@@ -385,7 +385,7 @@
       "doc": "Oxygen sensor 7 (current). The OBD2 name is S1_PID_3A_OxySensor7_Crnt. Min value is -128. Max value is 128. The unit is mA."
     },
 	{
-      "name": "oxySensor8FAER",
+      "name": "oxySensor8FAER3B",
       "type": ["null", "float"],
       "doc": "Oxygen sensor 8 (air-fuel equiv. ratio). The OBD2 name is S1_PID_3B_OxySensor8_FAER. Min value is 0. Max value is 2. The unit is ratio."
     },
@@ -655,7 +655,7 @@
       "doc": "Mass air flow sensor. The OBD2 name is S1_PID_66_MAFSensor. Min value is 0. Max value is 2048. The unit is grams/sec."
     },
 	{
-      "name": "engineCoolantTemp",
+      "name": "engineCoolantTemp67",
       "type": ["null", "float"],
       "doc": "Engine coolant temperature. The OBD2 name is S1_PID_67_EngineCoolantTemp. Min value is -40. Max value is 215. The unit is degC."
     },
@@ -668,11 +668,6 @@
       "name": "engineFrictionPercentTorque",
       "type": ["null", "float"],
       "doc": "Engine friction percent torque. The OBD2 name is S1_PID_8E_EngFrictionPctTorq. Min value is -125. Max value is 130. The unit is %."
-    },
-	{
-      "name": "xxx",
-      "type": ["null", "float"],
-      "doc": "xxx. The OBD2 name is xxxx. Min value is x. Max value is xx. The unit is xxx."
     }	
   ]
 }
