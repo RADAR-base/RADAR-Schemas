@@ -1,7 +1,7 @@
 {
   "type": "record",
   "namespace": "org.radarcns.passive.canedge",
-  "name": "CANEdgeOBD2",
+  "name": "CanEdgeObd2",
   "doc": "AVRO Schema for CAN Edge OBD2 Service 01. These are OBD2 PIDs extracted from raw CANEdge MF4 file.",
   "fields": [
     {
