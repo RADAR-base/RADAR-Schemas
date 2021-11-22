@@ -1,0 +1,11 @@
+#====================================== For CSS Electronics CANedge1 =====================================#
+vendor: CSSElectronics
+model: CANedge1
+version: 1.0.0
+doc: Vehicle CAN bus OBD2 data collected and uploaded by web application
+data:
+  - doc: This is vehicle CAN bus OBD2 data captured from CANedge1 device
+    unit: NON_DIMENSIONAL
+    processing_state: VENDOR
+    topic: canedge_obd2
+    value_schema: .passive.canedge.CanEdgeObd2
