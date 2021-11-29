@@ -1,6 +1,6 @@
 {
     "namespace": "org.radarcns.connector.upload.altoida",
-    "name": "AltoidaAssessmentSummary",
+    "name": "AltoidaAssessmentsSummary",
     "type": "record",
     "doc": "Summary of completed Altoida assessments with start and end timestamps.",
     "fields": [
