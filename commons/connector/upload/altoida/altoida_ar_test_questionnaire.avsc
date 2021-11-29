@@ -1,6 +1,6 @@
 {
     "namespace": "org.radarcns.connector.upload.altoida",
-    "name": "AltoidaARTest",
+    "name": "AltoidaARTestQuestionnaire",
     "type": "record",
     "doc": "Schema of Altoida AR Test questionnaire data.",
     "fields": [
