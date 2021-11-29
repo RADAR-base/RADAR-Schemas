@@ -27,11 +27,11 @@
       { "name": "events", "type": {
         "type": "array",
         "items": {
-          "name": "AssessmentEvent",
+          "name": "ContrastVisionAssessmentEvent",
           "type": "record",
           "doc": "Assessment event.",
            "fields": [
-             { "name": "eventType", "type": ["null", "string"], "doc": "Event type. Possible values: start_pressed, circle_pressed.", "default": null },
+             { "name": "eventType", "type": ["null", "string"], "doc": "Event type.", "default": null },
              { "name": "timestamp", "type": "double", "doc": "Timestamp in UTC (s) when the event occurred." },
              { "name": "location", "type": ["null", "string"], "doc": "Tapping location." }
            ]

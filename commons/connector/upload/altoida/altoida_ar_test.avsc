@@ -14,11 +14,11 @@
           "type": "record",
           "doc": "AR Test button / screen element.",
            "fields": [
-             { "name": "name", "type": "string", "doc": "Element name.", "default": null },
+             { "name": "name", "type": "string", "doc": "Element name."},
              { "name": "xCenterOffset", "type": "double", "doc": "Element location x center offset in cm." },
              { "name": "yCenterOffset", "type": "double", "doc": "Element location y center offset in cm." },
              { "name": "width", "type": "double", "doc": "Element width in cm." },
-             { "name": "height", "type": "double", "doc": "Element height in cm." },
+             { "name": "height", "type": "double", "doc": "Element height in cm." }
            ]
          }}, "doc": "Buttons / screen elements list."},
       { "name": "events", "type": {

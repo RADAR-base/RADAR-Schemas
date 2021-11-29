@@ -13,7 +13,7 @@
       { "name": "events", "type": {
         "type": "array",
         "items": {
-          "name": "AssessmentEvent",
+          "name": "ARTestAssessmentEvent",
           "type": "record",
           "doc": "Assessment event.",
            "fields": [
