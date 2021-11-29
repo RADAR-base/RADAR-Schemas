@@ -16,7 +16,11 @@
            "fields": [
              { "name": "eventType", "type": ["null", "string"], "doc": "Event type.", "default": null },
              { "name": "timestamp", "type": "double", "doc": "Timestamp in UTC (s) when the event occurred." },
-             { "name": "location", "type": ["null", "string"], "doc": "Tapping location." }
+             {"name": "location", "type": {
+              "name": "LocationValue",
+              "type": "enum",
+              "doc": "Location values provided by Altoida.",
+              "symbols": ["TOP", "LEFT", "RIGHT", "BOTTOM", "TOPLEFT", "TOPRIGHT", "BOTTOMLEFT", "BOTTOMRIGHT", "UNKNOWN"]}, "doc": "Tapping location.", "default": "UNKNOWN"}
            ]
          }}, "doc": "Assessment events list."}
     ]
