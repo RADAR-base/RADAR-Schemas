@@ -25,13 +25,8 @@
         "type": "array",
         "items": {
           "name": "AssessmentEvent",
-          "type": "record",
-          "doc": "Assessment event.",
-           "fields": [
-             { "name": "eventType", "type": ["null", "string"], "doc": "Event type.", "default": null },
-             { "name": "timestamp", "type": "double", "doc": "Timestamp in UTC (s) when the event occurred." },
-             { "name": "objectName", "type": "string", "doc": "Object name. Name of the object: star, heart or teddy." }
-           ]
+          "type": "AltoidaAssessmentEvent",
+          "doc": "Altoida assessment event."
          }}, "doc": "Assessment events list."}
     ]
   }
