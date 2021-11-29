@@ -18,7 +18,10 @@
              { "name": "radius", "type": "double", "doc": "Circle radius" },
              { "name": "xCenterOffset", "type": "double", "doc": "Circle location x center offset in cm." },
              { "name": "yCenterOffset", "type": "double", "doc": "Circle location y center offset in cm." },
-             { "name": "color", "type": ["null", "string"], "doc": "Circle color." }
+             { "name": "colorAlphaValue", "type": ["null", "string"], "doc": "Circle alpha value in RGBA color space." },
+             { "name": "colorRValue", "type": ["null", "string"], "doc": "Circle red value in RGBA color space." },
+             { "name": "colorGValue", "type": ["null", "string"], "doc": "Circle green value in RGBA color space." },
+             { "name": "colorBValue", "type": ["null", "string"], "doc": "Circle blue value in RGBA color space." }
            ]
          }}, "doc": "Contrast circles list."},
       { "name": "events", "type": {
