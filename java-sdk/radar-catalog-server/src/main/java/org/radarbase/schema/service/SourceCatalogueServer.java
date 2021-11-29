@@ -44,7 +44,8 @@ public class SourceCatalogueServer implements Closeable {
     @SuppressWarnings("PMD.SignatureDeclareThrowsException")
     public void start(SourceCatalogue sourceCatalogue) {
         ResourceConfig config = ConfigLoader.INSTANCE.createResourceConfig(List.of(
-                ConfigLoader.Enhancers.INSTANCE.getUtility(),
+                ConfigLoader.Enhancers.INSTANCE.getMapper(),
+                ConfigLoader.Enhancers.INSTANCE.getOkhttp(),
                 ConfigLoader.Enhancers.INSTANCE.getGeneralException(),
                 ConfigLoader.Enhancers.INSTANCE.getHttpException(),
                 ConfigLoader.Enhancers.INSTANCE.getHealth(),

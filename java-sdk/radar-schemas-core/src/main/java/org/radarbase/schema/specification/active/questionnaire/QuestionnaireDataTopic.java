@@ -28,7 +28,7 @@ import org.radarbase.schema.specification.DataTopic;
  */
 @JsonInclude(Include.NON_NULL)
 public class QuestionnaireDataTopic extends DataTopic {
-    @JsonProperty
+    @JsonProperty("questionnaire_definition_url")
     private URL questionnaireDefinitionUrl;
 
     public URL getQuestionnaireDefinitionUrl() {
@@ -38,6 +38,6 @@ public class QuestionnaireDataTopic extends DataTopic {
     @Override
     protected void propertiesMap(Map<String, Object> props, boolean reduced) {
         super.propertiesMap(props, reduced);
-        props.put("questionnaireDefinitionUrl", questionnaireDefinitionUrl);
+        props.put("questionnaire_definition_url", questionnaireDefinitionUrl);
     }
 }

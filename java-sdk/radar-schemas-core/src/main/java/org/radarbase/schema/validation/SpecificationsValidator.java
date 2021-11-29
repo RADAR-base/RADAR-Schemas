@@ -16,8 +16,12 @@
 
 package org.radarbase.schema.validation;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import org.radarbase.schema.Scope;
 import org.radarbase.schema.validation.config.ExcludeConfig;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -29,9 +33,12 @@ import static org.radarbase.schema.validation.ValidationHelper.SPECIFICATIONS_PA
  * Validates RADAR-Schemas specifications.
  */
 public class SpecificationsValidator {
+    private static final Logger logger = LoggerFactory.getLogger(SpecificationsValidator.class);
+
     public static final String YML_EXTENSION = "yml";
     private final ExcludeConfig config;
-    private final Path root;
+    private final Path specificationsRoot;
+    private final ObjectMapper mapper;
 
     /**
      * Specifications validator for given RADAR-Schemas directory.
@@ -39,15 +46,42 @@ public class SpecificationsValidator {
      * @param config configuration to exclude certain schemas or fields from validation.
      */
     public SpecificationsValidator(Path root, ExcludeConfig config) {
-        this.root = root;
+        this.specificationsRoot = root.resolve(SPECIFICATIONS_PATH);
         this.config = config;
+        this.mapper = new ObjectMapper(new YAMLFactory());
     }
 
     /** Check that all files in the specifications directory are YAML files. */
     public boolean specificationsAreYmlFiles(Scope scope) throws IOException {
-        return Files.walk(scope.getPath(root.resolve(SPECIFICATIONS_PATH)))
+        Path baseFolder = scope.getPath(specificationsRoot);
+        if (baseFolder == null) {
+            logger.info(scope + " sources folder not present");
+            return false;
+        }
+
+        return Files.walk(baseFolder)
                     .filter(p -> Files.isRegularFile(p) && !config.skipFile(p))
                     .allMatch(SpecificationsValidator::isYmlFile);
+    }
+
+    public <T> boolean checkSpecificationParsing(Scope scope, Class<T> clazz) throws IOException {
+        Path baseFolder = scope.getPath(specificationsRoot);
+        if (baseFolder == null) {
+            logger.info(scope + " sources folder not present");
+            return false;
+        }
+
+        return Files.walk(baseFolder)
+                .filter(Files::isRegularFile)
+                .allMatch(f -> {
+                    try {
+                        mapper.readerFor(clazz).<T>readValue(f.toFile());
+                        return true;
+                    } catch (IOException ex) {
+                        logger.error("Failed to load configuration {}: {}", f, ex.toString());
+                        return false;
+                    }
+                });
     }
 
     private static boolean isYmlFile(Path path) {

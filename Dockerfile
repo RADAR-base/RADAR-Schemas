@@ -1,4 +1,4 @@
-FROM gradle:7.0-jdk11 as builder
+FROM gradle:7.2-jdk17 as builder
 
 RUN mkdir -p /code/java-sdk
 WORKDIR /code/java-sdk
@@ -27,7 +27,7 @@ RUN gradle distTar --no-watch-fs -Pprofile=docker \
   && cd ../../../radar-catalog-server/build/distributions \
   && tar xzf radar-catalog-server*.tar.gz
 
-FROM openjdk:11-jre-slim
+FROM azul/zulu-openjdk-alpine:17-jre-headless
 
 ENV KAFKA_SCHEMA_REGISTRY=http://schema-registry-1:8081 \
     SCHEMA_REGISTRY_API_KEY="" \
@@ -39,10 +39,10 @@ ENV KAFKA_SCHEMA_REGISTRY=http://schema-registry-1:8081 \
     KAFKA_CONFIG_PATH="" \
     NO_VALIDATE=""
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
+RUN apk add --no-cache \
+		bash \
 		curl \
-		rsync \
-	&& rm -rf /var/lib/apt/lists/*
+		rsync
 
 WORKDIR /schema
 
