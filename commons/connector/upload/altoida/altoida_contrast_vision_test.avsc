@@ -14,7 +14,7 @@
           "type": "record",
           "doc": "Contrast circle screen element.",
            "fields": [
-             { "name": "id", "type": "string", "doc": "Circle id.", "default": null },
+             { "name": "id", "type": ["null", "string"], "doc": "Circle id.", "default": null },
              { "name": "radius", "type": "double", "doc": "Circle radius" },
              { "name": "xCenterOffset", "type": "double", "doc": "Circle location x center offset in cm." },
              { "name": "yCenterOffset", "type": "double", "doc": "Circle location y center offset in cm." },
