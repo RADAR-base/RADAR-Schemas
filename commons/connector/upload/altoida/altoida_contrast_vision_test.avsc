@@ -14,14 +14,14 @@
           "type": "record",
           "doc": "Contrast circle screen element.",
            "fields": [
-             { "name": "id", "type": ["null", "string"], "doc": "Circle id." },
+             { "name": "id", "type": "int", "doc": "Circle id." },
              { "name": "radius", "type": "double", "doc": "Circle radius" },
              { "name": "xCenterOffset", "type": "double", "doc": "Circle location x center offset in cm." },
              { "name": "yCenterOffset", "type": "double", "doc": "Circle location y center offset in cm." },
-             { "name": "colorAlphaValue", "type": ["null", "string"], "doc": "Circle alpha value in RGBA color space." },
-             { "name": "colorRValue", "type": ["null", "string"], "doc": "Circle red value in RGBA color space." },
-             { "name": "colorGValue", "type": ["null", "string"], "doc": "Circle green value in RGBA color space." },
-             { "name": "colorBValue", "type": ["null", "string"], "doc": "Circle blue value in RGBA color space." }
+             { "name": "colorAlphaValue", "type": ["null", "string"], "doc": "Circle alpha value in RGBA color space.", "default" : null },
+             { "name": "colorRValue", "type": ["null", "string"], "doc": "Circle red value in RGBA color space.", "default" : null },
+             { "name": "colorGValue", "type": ["null", "string"], "doc": "Circle green value in RGBA color space.", "default" : null },
+             { "name": "colorBValue", "type": ["null", "string"], "doc": "Circle blue value in RGBA color space.", "default" : null }
            ]
          }}, "doc": "Contrast circles list."},
       { "name": "events", "type": {
@@ -33,7 +33,7 @@
            "fields": [
              { "name": "eventType", "type": ["null", "string"], "doc": "Event type.", "default": null },
              { "name": "timestamp", "type": "double", "doc": "Timestamp in UTC (s) when the event occurred." },
-             { "name": "location", "type": ["null", "string"], "doc": "Tapping location." }
+             { "name": "circleId", "type": ["null", "string"], "doc": "Circle id of pressed circle.", "default" : null }
            ]
          }}, "doc": "Assessment events list."}
     ]

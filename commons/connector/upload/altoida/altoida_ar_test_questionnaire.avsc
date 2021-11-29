@@ -19,7 +19,7 @@
            "fields": [
              { "name": "eventType", "type": ["null", "string"], "doc": "Event type.", "default": null },
              { "name": "timestamp", "type": "double", "doc": "Timestamp in UTC (s) when the event occurred." },
-             { "name": "objectName", "type": ["null", "string"], "doc": "Object name." }
+             { "name": "objectName", "type": "string", "doc": "Object name." }
            ]
          }}, "doc": "Assessment events list."}
     ]
