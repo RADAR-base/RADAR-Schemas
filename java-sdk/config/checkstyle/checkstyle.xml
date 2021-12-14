@@ -53,7 +53,6 @@
         </module>
         <module name="NeedBraces"/>
         <module name="LeftCurly"/>
-        <module name="RightCurly"/>
         <module name="RightCurly">
             <property name="option" value="alone"/>
             <property name="tokens" value="CLASS_DEF, METHOD_DEF, CTOR_DEF, LITERAL_FOR, LITERAL_WHILE, LITERAL_DO, STATIC_INIT, INSTANCE_INIT"/>
@@ -190,10 +189,11 @@
         </module>
         <module name="JavadocMethod">
             <property name="severity" value="warning"/>
-            <property name="scope" value="public"/>
+            <property name="accessModifiers" value="public"/>
             <property name="allowMissingParamTags" value="true"/>
+            <property name="validateThrows" value="false"/>
             <property name="allowMissingReturnTag" value="true"/>
-            <property name="allowedAnnotations" value="Override, Test"/>
+            <property name="allowedAnnotations" value="Override, Test, Bean, PostConstruct, BeforeEach, BeforeAll, Before, When, Then"/>
         </module>
         <module name="MethodName">
             <property name="format" value="^[a-z][a-z0-9][a-zA-Z0-9_]*$"/>

@@ -51,7 +51,7 @@
 
   <rule ref="category/java/bestpractices.xml">
     <exclude name="GuardLogStatement"/>
-    <exclude name="PositionLiteralsFirstInComparisons"/>
+    <exclude name="LiteralsFirstInComparisons"/>
   </rule>
 
   <rule ref="category/java/errorprone.xml">

@@ -1,4 +1,4 @@
-FROM gradle:7.2-jdk17 as builder
+FROM gradle:7.3-jdk17 as builder
 
 RUN mkdir -p /code/java-sdk
 WORKDIR /code/java-sdk

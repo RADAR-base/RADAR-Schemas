@@ -4,8 +4,8 @@ import jakarta.inject.Singleton;
 import org.glassfish.jersey.internal.inject.AbstractBinder;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.jetbrains.annotations.NotNull;
-import org.radarbase.jersey.config.ConfigLoader.Filters;
-import org.radarbase.jersey.config.JerseyResourceEnhancer;
+import org.radarbase.jersey.enhancer.JerseyResourceEnhancer;
+import org.radarbase.jersey.filter.Filters;
 import org.radarbase.schema.specification.SourceCatalogue;
 
 public class SourceCatalogueJerseyEnhancer implements JerseyResourceEnhancer {

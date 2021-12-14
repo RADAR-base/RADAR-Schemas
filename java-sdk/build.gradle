@@ -27,14 +27,14 @@ subprojects {
         avroVersion = '1.9.2'
         argparseVersion = '0.9.0'
         jacksonVersion = '2.12.5'
-        radarJerseyVersion = "0.6.3-SNAPSHOT"
+        radarJerseyVersion = "0.8.0.1"
 
         junitVersion = '4.13.2'
-        confluentVersion = '6.2.1'
-        kafkaVersion = '6.2.1-ce'
-        okHttpVersion = '4.9.2'
+        confluentVersion = '7.0.1'
+        kafkaVersion = '7.0.1-ce'
+        okHttpVersion = '4.9.3'
         radarCommonsVersion = '0.13.2'
-        slf4jVersion = '1.7.30'
+        slf4jVersion = '1.7.32'
         javaxValidationVersion = '2.0.1.Final'
         logbackVersion = '1.2.3'
     }
@@ -73,5 +73,5 @@ nexusPublishing {
 }
 
 wrapper {
-    gradleVersion '7.2'
+    gradleVersion '7.3.1'
 }
