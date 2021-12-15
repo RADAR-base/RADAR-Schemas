@@ -1,2 +1,2 @@
 #/bin/bash
-radar-schemas-tools list -q --raw merged | tr '\n' ','
+radar-schemas-tools list -q --raw merged | tr '\n' ',' | sed 's/,$//'

@@ -3,8 +3,8 @@ plugins {
 }
 
 compileJava {
-    targetCompatibility = JavaVersion.VERSION_11
-    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_17
+    sourceCompatibility = JavaVersion.VERSION_17
 }
 
 configurations {
@@ -23,7 +23,7 @@ dependencies {
     implementation project(':radar-schemas-core')
     implementation group: 'net.sourceforge.argparse4j', name: 'argparse4j', version: argparseVersion
 
-    def log4j2Version = "2.14.1"
+    def log4j2Version = "2.16.0"
     runtimeOnly("org.apache.logging.log4j:log4j-slf4j-impl:$log4j2Version")
     runtimeOnly("org.apache.logging.log4j:log4j-api:$log4j2Version")
     runtimeOnly("org.apache.logging.log4j:log4j-jul:$log4j2Version")
