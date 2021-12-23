@@ -27,7 +27,7 @@ subprojects {
         avroVersion = '1.11.0'
         argparseVersion = '0.9.0'
         jacksonVersion = '2.12.5'
-        radarJerseyVersion = "0.8.0.1"
+        radarJerseyVersion = "0.8.1"
 
         junitVersion = '4.13.2'
         confluentVersion = '7.0.1'
