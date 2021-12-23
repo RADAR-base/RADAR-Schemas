@@ -11,7 +11,7 @@ COPY java-sdk/radar-schemas-core/build.gradle /code/java-sdk/radar-schemas-core/
 COPY java-sdk/radar-schemas-registration/build.gradle /code/java-sdk/radar-schemas-registration/
 COPY java-sdk/radar-schemas-tools/build.gradle /code/java-sdk/radar-schemas-tools/
 COPY java-sdk/radar-catalog-server/build.gradle /code/java-sdk/radar-catalog-server/
-RUN gradle downloadDependencies --no-watch-fs -Pprofile=docker
+RUN gradle downloadDependencies copyDependencies startScripts --no-watch-fs -Pprofile=docker
 
 COPY commons /code/commons
 COPY specifications /code/specifications
@@ -22,11 +22,7 @@ COPY java-sdk/radar-schemas-registration/src /code/java-sdk/radar-schemas-regist
 COPY java-sdk/radar-schemas-tools/src /code/java-sdk/radar-schemas-tools/src
 COPY java-sdk/radar-catalog-server/src /code/java-sdk/radar-catalog-server/src
 
-RUN gradle distTar --no-watch-fs -Pprofile=docker \
-  && cd radar-schemas-tools/build/distributions \
-  && tar xzf radar-schemas-tools*.tar.gz \
-  && cd ../../../radar-catalog-server/build/distributions \
-  && tar xzf radar-catalog-server*.tar.gz
+RUN gradle jar --no-watch-fs -Pprofile=docker
 
 FROM azul/zulu-openjdk-alpine:17-jre-headless
 
@@ -50,10 +46,9 @@ WORKDIR /schema
 RUN mkdir -p original merged java/src java/classes /usr/share/java \
   && chown 101 merged java/src java/classes
 
-COPY --from=builder /code/java-sdk/radar-schemas-tools/build/distributions/radar-schemas-tools-*/lib/* /usr/lib/
-COPY --from=builder /code/java-sdk/radar-catalog-server/build/distributions/radar-catalog-server-*/lib/* /usr/lib/
-COPY --from=builder /code/java-sdk/radar-schemas-tools/build/distributions/radar-schemas-tools-*/bin/radar-schemas-tools /usr/bin/
-COPY --from=builder /code/java-sdk/radar-catalog-server/build/distributions/radar-catalog-server-*/bin/radar-catalog-server /usr/bin/
+COPY --from=builder /code/java-sdk/radar-*/build/third-party/* /usr/lib/
+COPY --from=builder /code/java-sdk/radar-*/build/scripts/* /usr/bin/
+COPY --from=builder /code/java-sdk/radar-*/build/libs/* /usr/lib/
 COPY ./commons ./original/commons
 COPY ./specifications ./original/specifications
 
