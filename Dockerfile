@@ -2,7 +2,8 @@ FROM gradle:7.3-jdk17 as builder
 
 RUN mkdir -p /code/java-sdk
 WORKDIR /code/java-sdk
-ENV GRADLE_USER_HOME=/code/.gradlecache
+ENV GRADLE_USER_HOME=/code/.gradlecache \
+   GRADLE_OPTS=-Djdk.lang.Process.launchMechanism=vfork
 
 COPY java-sdk/build.gradle java-sdk/settings.gradle /code/java-sdk/
 COPY java-sdk/radar-schemas-commons/build.gradle /code/java-sdk/radar-schemas-commons/
