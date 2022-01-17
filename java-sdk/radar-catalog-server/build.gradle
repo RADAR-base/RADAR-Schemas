@@ -23,7 +23,7 @@ dependencies {
     implementation project(':radar-schemas-core')
     implementation group: 'net.sourceforge.argparse4j', name: 'argparse4j', version: argparseVersion
 
-    def log4j2Version = "2.17.0"
+    def log4j2Version = "2.17.1"
     runtimeOnly("org.apache.logging.log4j:log4j-slf4j-impl:$log4j2Version")
     runtimeOnly("org.apache.logging.log4j:log4j-api:$log4j2Version")
     runtimeOnly("org.apache.logging.log4j:log4j-jul:$log4j2Version")
