@@ -8,6 +8,7 @@ import net.sourceforge.argparse4j.inf.Namespace;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.radarbase.jersey.GrizzlyServer;
 import org.radarbase.jersey.config.ConfigLoader;
+import org.radarbase.jersey.enhancer.Enhancers;
 import org.radarbase.schema.specification.SourceCatalogue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,11 +45,10 @@ public class SourceCatalogueServer implements Closeable {
     @SuppressWarnings("PMD.SignatureDeclareThrowsException")
     public void start(SourceCatalogue sourceCatalogue) {
         ResourceConfig config = ConfigLoader.INSTANCE.createResourceConfig(List.of(
-                ConfigLoader.Enhancers.INSTANCE.getMapper(),
-                ConfigLoader.Enhancers.INSTANCE.getOkhttp(),
-                ConfigLoader.Enhancers.INSTANCE.getGeneralException(),
-                ConfigLoader.Enhancers.INSTANCE.getHttpException(),
-                ConfigLoader.Enhancers.INSTANCE.getHealth(),
+                Enhancers.INSTANCE.getMapper(),
+                Enhancers.INSTANCE.getOkhttp(),
+                Enhancers.INSTANCE.getException(),
+                Enhancers.INSTANCE.getHealth(),
                 new SourceCatalogueJerseyEnhancer(sourceCatalogue)));
         server = new GrizzlyServer(URI.create("http://0.0.0.0:" + serverPort + "/"), config, false);
         server.listen();

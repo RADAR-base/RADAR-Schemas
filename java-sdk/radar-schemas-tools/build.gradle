@@ -3,8 +3,8 @@ plugins {
 }
 
 compileJava {
-    targetCompatibility = JavaVersion.VERSION_11
-    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_17
+    sourceCompatibility = JavaVersion.VERSION_17
 }
 
 configurations {
@@ -54,6 +54,14 @@ test {
 //---------------------------------------------------------------------------//
 // Publishing                                                                //
 //---------------------------------------------------------------------------//
+
+task copyDependencies(type: Copy) {
+    from(configurations.named("runtimeClasspath").map {it.files })
+    into("$buildDir/third-party/")
+    doLast {
+        println("Copied third-party runtime dependencies")
+    }
+}
 
 tasks.withType(Tar) {
     compression = Compression.GZIP
