@@ -21,16 +21,14 @@ test {
 // Style checking                                                            //
 //---------------------------------------------------------------------------//
 checkstyle {
-    // codacy version
-    toolVersion '8.31'
+    toolVersion '9.2'
     ignoreFailures false
 
     configFile = file("$rootDir/config/checkstyle/checkstyle.xml")
 }
 
 pmd {
-    // pmd version
-    toolVersion = '6.23.0'
+    toolVersion = '6.41.0'
     ignoreFailures = false
 
     sourceSets = [sourceSets.main]
