@@ -82,7 +82,7 @@
     },
     {
       "name": "osVersion",
-      "type": "double",
+      "type": "string",
       "doc": "Device OS version."
     },
     {
