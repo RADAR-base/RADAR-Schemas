@@ -1,28 +1,16 @@
 {
     "namespace": "org.radarcns.connector.upload.altoida",
-    "name": "AltoidaTappingTest",
+    "name": "AltoidaTappingTestEvent",
     "type": "record",
     "doc": "Schema of events for the Altoida Tapping test.",
     "fields": [
-      { "name": "time", "type": "double", "doc": "Timestamp in UTC (s) when the assessment is started by the subject." },
-      { "name": "timeReceived", "type": "double", "doc": "Timestamp in unix time received from Altoida API."},
-      { "name": "name", "type": "string", "doc": "Questionnaire names." },
-      { "name": "events", "type": {
-        "type": "array",
-        "items": {
-          "name": "TappingAssessmentEvent",
-          "type": "record",
-          "doc": "Tapping assessment event.",
-           "fields": [
-             { "name": "eventType", "type": ["null", "string"], "doc": "Event type. Possible values: circle_highlight.", "default": null },
-             { "name": "timestamp", "type": "double", "doc": "Timestamp in UTC (s) when the event occurred." },
-             {"name": "location", "type": {
-              "name": "LocationValue",
-              "type": "enum",
-              "doc": "Location values provided by Altoida.",
-              "symbols": ["TOP", "LEFT", "RIGHT", "BOTTOM", "TOPLEFT", "TOPRIGHT", "BOTTOMLEFT", "BOTTOMRIGHT", "UNKNOWN"]}, "doc": "Tapping location.", "default": "UNKNOWN"}
-           ]
-         }}, "doc": "Assessment events list."}
+      { "name": "eventType", "type": ["null", "string"], "doc": "Event type. Possible values: circle_highlight.", "default": null },
+      { "name": "timestamp", "type": "double", "doc": "Timestamp in UTC (s) when the event occurred." },
+      { "name": "location", "type": {
+        "name": "LocationValue",
+        "type": "enum",
+        "doc": "Location values provided by Altoida.",
+        "symbols": ["TOP", "LEFT", "RIGHT", "BOTTOM", "TOPLEFT", "TOPRIGHT", "BOTTOMLEFT", "BOTTOMRIGHT", "UNKNOWN"]}, "doc": "Tapping location.", "default": "UNKNOWN"}
     ]
   }
   

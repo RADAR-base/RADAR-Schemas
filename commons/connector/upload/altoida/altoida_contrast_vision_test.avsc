@@ -2,7 +2,7 @@
     "namespace": "org.radarcns.connector.upload.altoida",
     "name": "AltoidaContrastVisionTest",
     "type": "record",
-    "doc": "Schema for the Altoida Tapping test details.",
+    "doc": "Schema for the Altoida contrast vision test details.",
     "fields": [
       { "name": "time", "type": "double", "doc": "Timestamp in UTC (s) when the assessment is started by the subject." },
       { "name": "timeReceived", "type": "double", "doc": "Timestamp in unix time received from Altoida API."},
