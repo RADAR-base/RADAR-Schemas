@@ -20,14 +20,7 @@
              { "name": "width", "type": "double", "doc": "Element width in cm." },
              { "name": "height", "type": "double", "doc": "Element height in cm." }
            ]
-         }}, "doc": "Buttons / screen elements list."},
-      { "name": "events", "type": {
-        "type": "array",
-        "items": {
-          "name": "AssessmentEvent",
-          "type": "AltoidaAssessmentEvent",
-          "doc": "Altoida assessment event."
-         }}, "doc": "Assessment events list."}
+         }}, "doc": "Buttons / screen elements list."}
     ]
   }
   

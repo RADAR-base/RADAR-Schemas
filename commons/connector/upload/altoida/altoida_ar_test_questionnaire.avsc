@@ -9,19 +9,7 @@
       { "name": "firstObjectPlaced", "type": "string", "doc": "First object placed. Name of the object: star, heart or teddy." },
       { "name": "firstObjectPlacedCorrect", "type": "string", "doc": "First object placed correct answer. Name of the object: star, heart or teddy." },
       { "name": "firstObjectSearched", "type": "string", "doc": "First object searched. Name of the object: star, heart or teddy." },
-      { "name": "firstObjectSearchedCorrect", "type": "string", "doc": "First object searched correct answer. Name of the object: star, heart or teddy." },
-      { "name": "events", "type": {
-        "type": "array",
-        "items": {
-          "name": "ARTestAssessmentEvent",
-          "type": "record",
-          "doc": "Assessment event.",
-           "fields": [
-             { "name": "eventType", "type": ["null", "string"], "doc": "Event type.", "default": null },
-             { "name": "timestamp", "type": "double", "doc": "Timestamp in UTC (s) when the event occurred." },
-             { "name": "objectName", "type": "string", "doc": "Object name." }
-           ]
-         }}, "doc": "Assessment events list."}
+      { "name": "firstObjectSearchedCorrect", "type": "string", "doc": "First object searched correct answer. Name of the object: star, heart or teddy." }
     ]
   }
   

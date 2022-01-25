@@ -2,7 +2,7 @@
     "namespace": "org.radarcns.connector.upload.altoida",
     "name": "AltoidaContrastVisionTest",
     "type": "record",
-    "doc": "Schema of events for the Altoida Tapping test.",
+    "doc": "Schema for the Altoida Tapping test details.",
     "fields": [
       { "name": "time", "type": "double", "doc": "Timestamp in UTC (s) when the assessment is started by the subject." },
       { "name": "timeReceived", "type": "double", "doc": "Timestamp in unix time received from Altoida API."},
@@ -23,14 +23,7 @@
              { "name": "colorGValue", "type": "float", "doc": "Circle green value in RGBA color space." },
              { "name": "colorBValue", "type": "float", "doc": "Circle blue value in RGBA color space." }
            ]
-         }}, "doc": "Contrast circles list."},
-      { "name": "events", "type": {
-        "type": "array",
-        "items": {
-          "name": "AssessmentEvent",
-          "type": "AltoidaAssessmentEvent",
-          "doc": "Altoida assessment event."
-         }}, "doc": "Assessment events list."}
+         }}, "doc": "Contrast circles list."}
     ]
   }
   
