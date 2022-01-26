@@ -6,7 +6,7 @@
     "fields": [
       { "name": "time", "type": "double", "doc": "Timestamp in UTC (s) when the assessment is started by the subject." },
       { "name": "timeReceived", "type": "double", "doc": "Timestamp in unix time received from Altoida API."},
-      { "name": "assessmentType", "type": ["null", "string"], "doc": "Assessment type.", "default": null },
+      { "name": "assessmentName", "type": ["null", "string"], "doc": "Assessment name.", "default": null },
       { "name": "startTime", "type": "double", "doc": "Timestamp in UTC (s) when the assessment is started." },
       { "name": "endTime", "type": "double", "doc": "Timestamp in UTC (s)  when the assessment is finished." }
     ]

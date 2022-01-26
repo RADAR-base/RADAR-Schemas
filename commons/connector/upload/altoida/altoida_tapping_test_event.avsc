@@ -4,6 +4,8 @@
     "type": "record",
     "doc": "Schema of events for the Altoida Tapping test.",
     "fields": [
+      { "name": "assessmentName", "type": ["null", "string"], "doc": "Assessment name.", "default": null },
+      { "name": "assessmentTimestamp", "type": "double", "doc": "Timestamp in UTC (s) when the assessment is started." },  
       { "name": "eventType", "type": ["null", "string"], "doc": "Event type. Possible values: circle_highlight.", "default": null },
       { "name": "timestamp", "type": "double", "doc": "Timestamp in UTC (s) when the event occurred." },
       { "name": "location", "type": {
