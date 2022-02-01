@@ -1,0 +1,18 @@
+{
+  "namespace": "org.radarcns.connector.upload.altoida",
+  "type": "record",
+  "name": "AltoidaAssessmentEvent",
+  "doc": "Altoida assessmment event.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Timestamp in UTC (s) when the event occurred." },
+    { "name": "assessmentName", "type": ["null", "string"], "doc": "Assessment name.", "default": null },
+    { "name": "assessmentTimestamp", "type": "double", "doc": "Timestamp in UTC (s) when the assessment is started." },
+    { "name": "eventType", "type": ["null", "string"], "doc": "Event type.", "default": null },
+    { "name": "objectName", "type": ["null", "string"], "doc": "Object name related to the event.", "default": null },
+    { "name": "location", "type": ["null", {
+      "name": "LocationValue",
+      "type": "enum",
+      "doc": "Location values provided by Altoida.",
+      "symbols": ["TOP", "LEFT", "RIGHT", "BOTTOM", "TOPLEFT", "TOPRIGHT", "BOTTOMLEFT", "BOTTOMRIGHT", "UNKNOWN"]}], "doc": "Tapping location.", "default": null}
+  ]
+}
