@@ -4,10 +4,10 @@
   "name": "AltoidaAssessmentEvent",
   "doc": "Altoida assessmment event.",
   "fields": [
+    { "name": "time", "type": "double", "doc": "Timestamp in UTC (s) when the event occurred." },
     { "name": "assessmentName", "type": ["null", "string"], "doc": "Assessment name.", "default": null },
     { "name": "assessmentTimestamp", "type": "double", "doc": "Timestamp in UTC (s) when the assessment is started." },
     { "name": "eventType", "type": ["null", "string"], "doc": "Event type.", "default": null },
-    { "name": "timestamp", "type": "double", "doc": "Timestamp in UTC (s) when the event occurred." },
     { "name": "objectName", "type": ["null", "string"], "doc": "Object name related to the event.", "default": null },
     { "name": "location", "type": ["null", {
       "name": "LocationValue",
