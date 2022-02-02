@@ -1,0 +1,12 @@
+{
+  "namespace": "org.radarcns.connector.upload.altoida",
+  "type": "record",
+  "name": "AltoidaMotorBubble",
+  "doc": "Data from Altoida motor bubble test.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Timestamp in unix time acquired locally from the device."},
+    {"name": "timeReceived", "type": "double", "doc": "Timestamp in unix time received from Altoida API."},
+    {"name": "x", "type": "double", "doc": "Distance from the center of the screen in (cm)s on x-axis."},
+    {"name": "y", "type": "double", "doc": "Distance from the center of the screen in (cm)s on y-axis."}
+  ]
+}
