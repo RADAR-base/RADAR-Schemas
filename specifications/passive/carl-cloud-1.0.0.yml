@@ -28,5 +28,5 @@ data:
   - type: FIBAROEVENT
     doc: An event that was registered with a Fibaro Device that captures the previous value of the last event that was registered with the same device - old and the new value - new.
     unit: NON_DIMENSIONAL
-    topic: certh_carl_cloud_fibaro_section
+    topic: certh_carl_cloud_fibaro_event
     value_schema: .passive.carl.FibaroEvent
