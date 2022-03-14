@@ -14,6 +14,8 @@
     {"name": "visualPerception", "type": "float", "doc": "Percentage value of visual perception."},
     {"name": "planning", "type": "float", "doc": "Percentage value of planning."},
     {"name": "prospectiveMemory", "type": "float", "doc": "Percentage value of prospective memory."},
-    {"name": "spatialMemory", "type": "float", "doc": "Percentage value of spatial memory."}
+    {"name": "spatialMemory", "type": "float", "doc": "Percentage value of spatial memory."},
+    {"name": "eyeMovement", "type": ["null", "float"], "doc": "Percentage value of eye movement.", "default": null},
+    {"name": "speech", "type": ["null", "float"], "doc": "Percentage value of speech.", "default": null}
   ]
 }

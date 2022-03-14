@@ -1,0 +1,114 @@
+{
+  "namespace": "org.radarcns.connector.upload.altoida",
+  "type": "record",
+  "name": "AltoidaXmlMetadata",
+  "doc": "Data that contains Altoida test metadata which includes information on the session, subject, and device.",
+  "fields": [
+    {
+      "name": "time",
+      "type": "double",
+      "doc": "Timestamp in unix time acquired locally from the device."
+    },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Timestamp in unix time received from Altoida API."
+    },
+    {
+      "name": "age",
+      "type": ["null", "int"],
+      "doc": "Age of the participant in years.",
+      "default": null
+    },
+    {
+      "name": "yearsOfEducation",
+      "type": ["null", "int"],
+      "doc": "Years of education in years.",
+      "default": null
+    },
+    {
+      "name": "gender",
+      "type": {
+        "name": "GenderType",
+        "type": "enum",
+        "doc": "Gender types provided by Altoida.",
+        "symbols": ["MALE", "FEMALE", "OTHER", "UNKNOWN"]
+      },
+      "doc": "Gender of the participant.",
+      "default": "UNKNOWN"
+    },
+    {
+      "name": "dominantHand",
+      "type": {
+        "name": "DominantHandType",
+        "type": "enum",
+        "doc": "Gender types provided by Altoida.",
+        "symbols": ["LEFT", "RIGHT", "OTHER", "UNKNOWN"]
+      },
+      "doc": "Dominant hand of the participant.",
+      "default": "UNKNOWN"
+    },
+    {
+      "name": "applicationVersion",
+      "type": "string",
+      "doc": "Version number."
+    },
+    {
+      "name": "deviceType",
+      "type": {
+        "name": "DeviceType",
+        "type": "enum",
+        "doc": "Device types provided by Altoida.",
+        "symbols": ["PHONE", "TABLET", "OTHER", "UNKNOWN"]
+      },
+      "doc": "Device type used by the participant.",
+      "default": "UNKNOWN"
+    },
+    {
+      "name": "deviceDescription",
+      "type": "string",
+      "doc": "Device description such as model, etc."
+    },
+    {
+      "name": "osType",
+      "type": {
+        "name": "OSType",
+        "type": "enum",
+        "doc": "OS types provided by Altoida.",
+        "symbols": ["IOS", "ANDROID", "OTHER", "UNKNOWN"]
+      },
+      "doc": "OS type of the device used by the participant.",
+      "default": "UNKNOWN"
+    },
+    {
+      "name": "osVersion",
+      "type": "string",
+      "doc": "Device OS version."
+    },
+    {
+      "name": "displayPpi",
+      "type": "double",
+      "doc": "Device display PPI."
+    },
+    {
+      "name": "displayWidthPixels",
+      "type": "double",
+      "doc": "Device display width pixels."
+    },
+    {
+      "name": "displayHeightPixels",
+      "type": "double",
+      "doc": "Device display height pixels."
+    },
+    {
+      "name": "displayWidthCm",
+      "type": "double",
+      "doc": "Device display width centimeters."
+    },
+    {
+      "name": "displayHeightCm",
+      "type": "double",
+      "doc": "Device display height centimeters."
+    }
+  ]
+}

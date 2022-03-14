@@ -1,0 +1,14 @@
+{
+    "namespace": "org.radarcns.connector.upload.altoida",
+    "name": "AltoidaAssessmentsSummary",
+    "type": "record",
+    "doc": "Summary timestamps of a completed Altoida assessment.",
+    "fields": [
+      { "name": "timeReceived", "type": "double", "doc": "Timestamp in unix time received from Altoida API."},
+      { "name": "assessmentName", "type": ["null", "string"], "doc": "Assessment name.", "default": null },
+      { "name": "startTime", "type": "double", "doc": "Timestamp in UTC (s) when the assessment is started." },
+      { "name": "endTime", "type": "double", "doc": "Timestamp in UTC (s)  when the assessment is finished." },
+      { "name": "metadata", "type": ["null", "string"], "doc": "Assessment metadata, if provided.", "default": null }
+    ]
+  }
+  

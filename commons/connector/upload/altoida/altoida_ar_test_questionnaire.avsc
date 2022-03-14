@@ -1,0 +1,15 @@
+{
+    "namespace": "org.radarcns.connector.upload.altoida",
+    "name": "AltoidaARTestQuestionnaire",
+    "type": "record",
+    "doc": "Schema of Altoida AR Test questionnaire data.",
+    "fields": [
+      { "name": "time", "type": "double", "doc": "Timestamp in UTC (s) when the assessment is started by the subject." },
+      { "name": "timeReceived", "type": "double", "doc": "Timestamp in unix time received from Altoida API."},
+      { "name": "firstObjectPlaced", "type": "string", "doc": "First object placed. Name of the object: star, heart or teddy." },
+      { "name": "firstObjectPlacedCorrect", "type": "string", "doc": "First object placed correct answer. Name of the object: star, heart or teddy." },
+      { "name": "firstObjectSearched", "type": "string", "doc": "First object searched. Name of the object: star, heart or teddy." },
+      { "name": "firstObjectSearchedCorrect", "type": "string", "doc": "First object searched correct answer. Name of the object: star, heart or teddy." }
+    ]
+  }
+  

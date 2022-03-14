@@ -7,8 +7,8 @@
     {"name": "time", "type": "double", "doc": "Timestamp in unix time acquired locally from the device."},
     {"name": "timeReceived", "type": "double", "doc": "Timestamp in unix time received from Altoida API."},
     {"name": "label", "type": "string", "doc": "Label name of session as entered in the app."},
-    {"name": "age", "type": "int", "doc": "Age of the participant in years."},
-    {"name": "yearsOfEducation", "type": "int", "doc": "Years of education in years."},
+    {"name": "age", "type": ["null","int"], "doc": "Age of the participant in years.",  "default": null},
+    {"name": "yearsOfEducation", "type": ["null","int"], "doc": "Years of education in years.",  "default": null},
     {"name": "gender", "type": {
           "name": "GenderType",
           "type": "enum",
