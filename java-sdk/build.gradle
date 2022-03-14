@@ -27,7 +27,7 @@ subprojects {
         avroVersion = '1.11.0'
         argparseVersion = '0.9.0'
         jacksonVersion = '2.13.2'
-        radarJerseyVersion = "0.8.1"
+        radarJerseyVersion = "0.8.2"
 
         junitVersion = '4.13.2'
         confluentVersion = '7.0.1'
@@ -37,6 +37,15 @@ subprojects {
         slf4jVersion = '1.7.36'
         javaxValidationVersion = '2.0.1.Final'
         logbackVersion = '1.2.10'
+    }
+
+    configurations.all {
+        resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+            if (details.requested.group == 'com.fasterxml.jackson.module' && details.requested.name == 'jackson-module-kotlin' && details.requested.version == '2.13.2') {
+                details.useVersion '2.13.1'
+                details.because 'Fixes missing kotlin module of latest version'
+            }
+        }
     }
 
     repositories {
