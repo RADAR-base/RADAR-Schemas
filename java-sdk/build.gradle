@@ -39,15 +39,6 @@ subprojects {
         logbackVersion = '1.2.10'
     }
 
-    configurations.all {
-        resolutionStrategy.eachDependency { DependencyResolveDetails details ->
-            if (details.requested.group == 'com.fasterxml.jackson.module' && details.requested.name == 'jackson-module-kotlin' && details.requested.version == '2.13.2') {
-                details.useVersion '2.13.1'
-                details.because 'Fixes missing kotlin module of latest version'
-            }
-        }
-    }
-
     repositories {
         mavenCentral()
         maven { url 'https://packages.confluent.io/maven/' }
