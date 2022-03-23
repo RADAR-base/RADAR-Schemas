@@ -9,6 +9,7 @@
     { "name": "duration", "type": "int", "doc": "Duration at this sleep characteristic in seconds." },
     { "name": "level", "type":
       { "name": "FitbitSleepClassicLevel", "type": "enum", "symbols": ["AWAKE", "RESTLESS", "ASLEEP", "UNKNOWN"], "doc": "Level of sleep as computed by Fitbit."},
-      "doc": "Level of sleep as computed by Fitbit.", "default": "UNKNOWN" }
+      "doc": "Level of sleep as computed by Fitbit.", "default": "UNKNOWN" },
+    { "name": "efficiency", "type": "string", "doc": "Calculated sleep efficiency score" }
   ]
 }
