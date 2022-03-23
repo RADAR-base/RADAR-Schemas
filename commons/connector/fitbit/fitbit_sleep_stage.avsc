@@ -10,6 +10,6 @@
     { "name": "level", "type":
       {"name": "FitbitSleepStageLevel", "type": "enum", "symbols": ["DEEP", "LIGHT", "REM", "AWAKE", "UNKNOWN"], "doc": "Level of sleep as computed by Fitbit."},
       "doc": "Level of sleep as computed by Fitbit.", "default": "UNKNOWN" },
-    { "name": "efficiency", "type": "string", "doc": "Calculated sleep efficiency score" }
+    { "name": "efficiency", "type": ["null", "int"], "doc": "Calculated sleep efficiency score", "default": null }
   ]
 }
