@@ -7,6 +7,7 @@
     { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
     { "name": "timeReceived", "type": "double", "doc": "Time that the data was received from the Fitbit API (seconds since the Unix Epoch)." },
     { "name": "timeInterval", "type": "int", "doc":  "Chronological window size (s)." },
-    { "name": "heartRate", "type": "int", "doc": "Heart rate value (bpm)."}
+    { "name": "heartRate", "type": "int", "doc": "Heart rate value (bpm)."},
+    { "name": "restingHeartRate", "type": ["null", "int"], "doc": "Resting heart rate value (bpm) for the day. A sleep stage log is required to generate this value. When a classic sleep log is recorded, this value will be missing.", "default": null }
   ]
 }
