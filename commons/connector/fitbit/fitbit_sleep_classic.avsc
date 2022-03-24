@@ -10,6 +10,6 @@
     { "name": "level", "type":
       { "name": "FitbitSleepClassicLevel", "type": "enum", "symbols": ["AWAKE", "RESTLESS", "ASLEEP", "UNKNOWN"], "doc": "Level of sleep as computed by Fitbit."},
       "doc": "Level of sleep as computed by Fitbit.", "default": "UNKNOWN" },
-    { "name": "efficiency", "type": ["null", "int"], "doc": "Calculated sleep efficiency score", "default": null }
+    { "name": "efficiency", "type": ["null", "int"], "doc": "Calculated sleep efficiency score (in percentage). It is a percentage of the amount of time the user was asleep (and not restless) divided by the time they spent in the bed after initially falling asleep.", "default": null }
   ]
 }

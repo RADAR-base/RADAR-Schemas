@@ -13,6 +13,7 @@
     {"name": "durationOutOfRange", "type": ["null", "int"], "doc": "Duration in the heart rate zone 'Out Of Range', which is the lowest heart rate zone (s). Null if unknown.", "default": null},
     {"name": "durationFatBurn", "type": ["null", "int"], "doc": "Duration in the heart rate zone 'Fat Burn', which is the second lowest heart rate zone (s). Null if unknown.", "default": null},
     {"name": "durationCardio", "type": ["null", "int"], "doc": "Duration in the heart rate zone 'Cardio', which is the third lowest heart rate zone (s). Null if unknown.", "default": null},
-    {"name": "durationPeak", "type": ["null", "int"], "doc": "Duration in the heart rate zone 'Peak', which is the highest heart rate zone (s). Null if unknown.", "default": null}
+    {"name": "durationPeak", "type": ["null", "int"], "doc": "Duration in the heart rate zone 'Peak', which is the highest heart rate zone (s). Null if unknown.", "default": null},
+    { "name": "restingHeartRate", "type": ["null", "int"], "doc": "Resting heart rate value (bpm) for the day. A sleep stage log is required to generate this value. When a classic sleep log is recorded, this value will be missing.", "default": null }
   ]
 }
