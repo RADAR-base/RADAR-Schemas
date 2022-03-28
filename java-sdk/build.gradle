@@ -9,7 +9,7 @@ plugins {
 }
 
 allprojects {
-    version = '0.7.8-SNAPSHOT'
+    version = '0.7.8'
     group = 'org.radarbase'
 }
 
@@ -41,8 +41,8 @@ subprojects {
 
     configurations.all {
         resolutionStrategy.eachDependency { DependencyResolveDetails details ->
-            if (details.requested.group == 'com.fasterxml.jackson.module' && details.requested.name == 'jackson-module-kotlin' && details.requested.version == '2.13.2') {
-                details.useVersion '2.13.1'
+            if (details.requested.group == 'com.fasterxml.jackson.module' && details.requested.name == 'jackson-module-kotlin') {
+                details.useVersion jacksonVersion
                 details.because 'Fixes missing kotlin module of latest version'
             }
         }
