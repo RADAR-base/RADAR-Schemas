@@ -24,7 +24,7 @@ COPY java-sdk/radar-catalog-server/src /code/java-sdk/radar-catalog-server/src
 
 RUN gradle jar --no-watch-fs -Pprofile=docker
 
-FROM azul/zulu-openjdk-alpine:17-jre-headless
+FROM eclipse-temurin:17-jre
 
 ENV KAFKA_SCHEMA_REGISTRY=http://schema-registry-1:8081 \
     SCHEMA_REGISTRY_API_KEY="" \
@@ -36,10 +36,9 @@ ENV KAFKA_SCHEMA_REGISTRY=http://schema-registry-1:8081 \
     KAFKA_CONFIG_PATH="" \
     NO_VALIDATE=""
 
-RUN apk add --no-cache \
-		bash \
-		curl \
-		rsync
+RUN apt-get update && apt-get install -y \
+		rsync \
+    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /schema
 
