@@ -6,6 +6,6 @@
   "fields": [
     { "name": "date", "type": "string", "doc": "ISO 8601 formatted local date of device (yyyy-MM-dd)." },
     { "name": "timeReceived", "type": "double", "doc": "Time that the data was received from the Fitbit API (seconds since the Unix Epoch)." },
-    { "name": "restingHeartRate", "type": "int", "doc": "Resting heart rate value (bpm) for the day. A sleep stage log is required to generate this value. When a classic sleep log is recorded, this value will be missing.", "default": null }
+    { "name": "restingHeartRate", "type": "int", "doc": "Resting heart rate value (bpm) for the day. A sleep stage log is required to generate this value. When a classic sleep log is recorded, this value will be missing." }
   ]
 }
