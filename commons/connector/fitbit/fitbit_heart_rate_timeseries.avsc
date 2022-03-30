@@ -1,0 +1,10 @@
+{
+  "namespace": "org.radarcns.connector.fitbit",
+  "type": "record",
+  "name": "FitbitHeartRateTimeSeries",
+  "doc": "Heart rate time-series data over a period of time from fitbit device.",
+  "fields": [
+    { "name": "datetime", "type": "string", "doc": "Local date of device (yyyy-MM-dd)." },
+    { "name": "restingHeartRate", "type": ["null", "int"], "doc": "Resting heart rate value (bpm) for the day. A sleep stage log is required to generate this value. When a classic sleep log is recorded, this value will be missing.", "default": null }
+  ]
+}
