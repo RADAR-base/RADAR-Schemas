@@ -27,9 +27,11 @@ dependencies {
     }
     api group: 'javax.validation', name: 'validation-api', version: javaxValidationVersion
     api project(':radar-schemas-commons')
-    api ("com.fasterxml.jackson.core:jackson-databind:$jacksonVersion")
 
-    implementation ("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:$jacksonVersion")
+    api(platform("com.fasterxml.jackson:jackson-bom:$jacksonVersion"))
+    api("com.fasterxml.jackson.core:jackson-databind")
+
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml")
     implementation(group: 'io.confluent', name: 'kafka-connect-avro-data', version: confluentVersion) {
         exclude group: "org.glassfish.jersey.core", module: "jersey-common"
         exclude group: "jakarta.ws.rs", module: "jakarta.ws.rs-api"

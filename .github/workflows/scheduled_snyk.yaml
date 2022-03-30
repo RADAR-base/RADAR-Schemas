@@ -1,0 +1,34 @@
+name: Snyk scheduled test
+on:
+  schedule:
+    - cron: '0 2 * * 1'
+jobs:
+  security:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: java-sdk
+
+    env:
+      REPORT_FILE: test.json
+    steps:
+      - uses: actions/checkout@master
+      - uses: snyk/actions/setup@master
+
+      - uses: actions/setup-java@v2
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+
+      - name: Run Snyk
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        run: >
+          snyk test
+          --all-sub-projects
+          --configuration-matching='^runtimeClasspath$'
+          --json-file-output=${{ env.REPORT_FILE }}
+          --org=radar-base
