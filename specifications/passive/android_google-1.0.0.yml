@@ -1,0 +1,14 @@
+#====================================== Android Phone Sensors =====================================#
+vendor: ANDROID
+model: GOOGLE
+version: 1.0.0
+data:
+  # Sleep
+  - type: SLEEP
+    app_provider: .google.GoogleSleepProvider
+    unit: NON_DIMENSIONAL
+    processing_state: RAW
+    topic: android_google_sleep
+    value_schema: .passive.google.GoogleSleep
+    sample_rate:
+      dynamic: true

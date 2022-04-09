@@ -1,0 +1,13 @@
+{
+  "namespace": "org.radarcns.passive.google",
+  "type": "record",
+  "name": "GoogleSleep",
+  "doc": "User Sleep Data containing information when the user sleeps and wakes up.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Device timestamp in UTC (s)."},
+    {"name": "timeReceived", "type": "double", "doc": "Device receiver timestamp in UTC (s)."},
+    {"name": "startTime", "type": ["null", "int"], "default": null, "doc": "The UNIX epoch time (milliseconds since 1/1/1970 UTC) for the moment when the system detects that the user begins sleeping."},
+    {"name": "endTime", "type": ["null", "int"], "default": null, "doc": "The UNIX epoch time (milliseconds since 1/1/1970 UTC) for the moment when the system detects that the user stops sleeping and wakes up."},
+    {"name": "duration", "type": ["null", "int"], "default": null, "doc": "The amount of elapsed time, in milliseconds, that the system detected that the user was asleep based on the device sensor data."}
+  ]
+}
