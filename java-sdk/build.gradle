@@ -20,20 +20,20 @@ subprojects {
     // Configuration
     ext.githubRepoName = 'RADAR-base/RADAR-Schemas'
     ext.githubUrl = "https://github.com/${githubRepoName}.git"
-    ext.issueUrl = "https://github.com/${githubRepoName}/issues"
+    ext.issueUrl = "https://github.com/$githubRepoName/issues"
     ext.website = 'https://radar-base.org'
 
     ext {
         avroVersion = '1.11.0'
         argparseVersion = '0.9.0'
-        jacksonVersion = '2.13.2.20220324'
+        jacksonVersion = '2.13.3'
         radarJerseyVersion = "0.8.3"
 
         junitVersion = '4.13.2'
-        confluentVersion = '7.0.1'
-        kafkaVersion = '7.0.1-ce'
+        confluentVersion = '7.1.1'
+        kafkaVersion = '7.1.1-ce'
         okHttpVersion = '4.9.3'
-        radarCommonsVersion = '0.13.2'
+        radarCommonsVersion = '0.15.0'
         slf4jVersion = '1.7.36'
         javaxValidationVersion = '2.0.1.Final'
         logbackVersion = '1.2.11'
@@ -63,6 +63,18 @@ subprojects {
     }
 }
 
+static def isNonStable(String version) {
+    def stableKeyword = ["RELEASE", "FINAL", "GA", "-CE"].any { version.toUpperCase().contains(it) }
+    def regex = /^[0-9,.v-]+(-r)?$/
+    return !stableKeyword && !(version ==~ regex)
+}
+
+tasks.named("dependencyUpdates").configure {
+    rejectVersionIf {
+        isNonStable(it.candidate.version)
+    }
+}
+
 nexusPublishing {
     repositories {
         sonatype {
@@ -73,5 +85,5 @@ nexusPublishing {
 }
 
 wrapper {
-    gradleVersion '7.4.1'
+    gradleVersion '7.4.2'
 }
