@@ -5,12 +5,14 @@ on:
 jobs:
   security:
     runs-on: ubuntu-latest
+
     defaults:
       run:
         working-directory: java-sdk
 
     env:
       REPORT_FILE: test.json
+
     steps:
       - uses: actions/checkout@v3
       - uses: snyk/actions/setup@master
