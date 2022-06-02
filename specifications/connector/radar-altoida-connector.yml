@@ -72,6 +72,10 @@ data:
     value_schema: .connector.upload.altoida.AltoidaMetadata
 
   # Version
-  - doc: Data that contains one column with the version name as type string. Original file name ends with _VERSION.csv
+  - doc: Data from the XML summary file
     topic: connect_upload_altoida_xml_metadata
     value_schema: .connector.upload.altoida.AltoidaXmlMetadata
+
+  - doc: Assessment metadata
+    topic: connect_upload_altoida_assessment
+    value_schema:  .connector.upload.altoida.AltoidaAssessment
