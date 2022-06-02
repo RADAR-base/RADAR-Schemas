@@ -70,3 +70,8 @@ data:
   - doc: Data that contains one column with the version name as type string. Original file name ends with _VERSION.csv
     topic: connect_upload_altoida_metadata
     value_schema: .connector.upload.altoida.AltoidaMetadata
+
+  # Version
+  - doc: Data that contains one column with the version name as type string. Original file name ends with _VERSION.csv
+    topic: connect_upload_altoida_xml_metadata
+    value_schema: .connector.upload.altoida.AltoidaXmlMetadata
