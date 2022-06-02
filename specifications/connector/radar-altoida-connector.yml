@@ -76,6 +76,23 @@ data:
     topic: connect_upload_altoida_xml_metadata
     value_schema: .connector.upload.altoida.AltoidaXmlMetadata
 
-  - doc: Assessment metadata
+  - doc: Assessments summary
     topic: connect_upload_altoida_assessment
-    value_schema:  .connector.upload.altoida.AltoidaAssessment
+    value_schema:  .connector.upload.altoida.AltoidaAssessmentsSummary
+
+  - doc: Single test events
+    topic: connect_upload_altoida_test_event
+    value_schema:  .connector.upload.altoida.AltoidaAssessmentEvent
+
+  - doc: AR test questionnaire
+    topic: connect_upload_altoida_ar_assessment
+    value_schema:  .connector.upload.altoida.AltoidaARTestQuestionnaire
+
+  - doc: Screen elements during an Altoida test
+    topic: connect_upload_altoida_screen_elements
+    value_schema:  .connector.upload.altoida.AltoidaTestScreenElement
+
+  - doc: Motor function for bubble test
+    topic: connect_upload_altoida_motor_bubble
+    value_schema: .connector.upload.altoida.AltoidaMotorBubble
+
