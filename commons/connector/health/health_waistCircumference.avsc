@@ -1,0 +1,23 @@
+{
+  "namespace": "org.radarcns.connector.health",
+  "name": "HKQuantityTypeIdentifierWaistCircumference",
+  "type": "record",
+  "doc": "Waist circumference, unit is m.",
+  "fields": [
+    {
+      "name": "time",
+      "type": "double",
+      "doc": "Device timestamp in UTC (s)."
+    },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Time that the data was received from the Apple Healthkit ."
+    },
+    {
+      "name": "waistCircumference",
+      "type": "int",
+      "doc": "Waist circumference taken in this period."
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "namespace": "org.radarcns.connector.health",
+  "name": "HKQuantityTypeIdentifierBloodPressureSystolic",
+  "type": "record",
+  "doc": "Blood pressure systolic, unit is mmHg.",
+  "fields": [
+    {
+      "name": "time",
+      "type": "double",
+      "doc": "Device timestamp in UTC (s)."
+    },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Time that the data was received from the Apple Healthkit ."
+    },
+    {
+      "name": "timeInterval",
+      "type": "int",
+      "doc": "Chronological window size (s)."
+    },
+    {
+      "name": "bloodPressureSystolic",
+      "type": "int",
+      "doc": "Blood pressure systolic taken in this period."
+    }
+  ]
+}

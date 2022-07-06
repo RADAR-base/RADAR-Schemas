@@ -1,0 +1,19 @@
+{
+  "namespace": "org.radarcns.connector.health",
+  "name": "HKQuantityTypeIdentifierBodyFatPercentage",
+  "type": "record",
+  "doc": "Fat Percentage , unit is %.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Time that the data was received from the Apple Healthkit ."
+    },
+    {
+      "name": "fatPercentage",
+      "type": "int",
+      "doc": "fatPercentage taken in this period."
+    }
+  ]
+}

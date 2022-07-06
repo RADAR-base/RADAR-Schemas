@@ -1,0 +1,20 @@
+{
+  "namespace": "org.radarcns.connector.health",
+  "name": "HKQuantityTypeIdentifierStepCount",
+  "type": "record",
+  "doc": "Steps , unit is count.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Time that the data was received from the Apple Healthkit ."
+    },
+    {
+      "name": "timeInterval",
+      "type": "int",
+      "doc": "Chronological window size (s)."
+    },
+    { "name": "steps", "type": "int", "doc": "Steps taken in this period." }
+  ]
+}

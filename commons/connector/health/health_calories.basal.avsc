@@ -1,0 +1,24 @@
+{
+  "namespace": "org.radarcns.connector.health",
+  "name": "HKQuantityTypeIdentifierBasalEnergyBurned",
+  "type": "record",
+  "doc": "Basal enenrgy calories, unit is kcal.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Time that the data was received from the Apple Healthkit ."
+    },
+    {
+      "name": "timeInterval",
+      "type": "int",
+      "doc": "Chronological window size (s)."
+    },
+    {
+      "name": "calories",
+      "type": "int",
+      "doc": "Basal calories taken in this period."
+    }
+  ]
+}

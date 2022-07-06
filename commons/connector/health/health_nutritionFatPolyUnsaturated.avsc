@@ -1,0 +1,24 @@
+{
+  "namespace": "org.radarcns.connector.health",
+  "name": "HKQuantityTypeIdentifierDietaryFatMonounsaturated",
+  "type": "record",
+  "doc": "Nutrition fat poly unsaturated, unit is g.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Time that the data was received from the Apple Healthkit ."
+    },
+    {
+      "name": "timeInterval",
+      "type": "int",
+      "doc": "Chronological window size (s)."
+    },
+    {
+      "name": "nutritionFatPolyUnsaturated",
+      "type": "int",
+      "doc": "Nutrition fat poly unsaturated taken in this period."
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "namespace": "org.radarcns.connector.health",
+  "name": "HKCategoryTypeIdentifierMindfulSession",
+  "type": "record",
+  "doc": "Mindfulness, unit is sec.",
+  "fields": [
+    {
+      "name": "time",
+      "type": "double",
+      "doc": "Device timestamp in UTC (s)."
+    },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Time that the data was received from the Apple Healthkit ."
+    },
+    {
+      "name": "mindfulness",
+      "type": "int",
+      "doc": "Mindfulness taken in this period."
+    }
+  ]
+}
