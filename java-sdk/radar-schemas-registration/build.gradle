@@ -29,7 +29,7 @@ dependencies {
     api group: 'org.radarbase', name: 'radar-commons-server', version: radarCommonsVersion
 
 
-    implementation platform(module("io.netty:netty-bom@4.1.78.Final"))
+    implementation platform(module("io.netty:netty-bom:4.1.78.Final"))
     implementation platform(module("org.eclipse.jetty:jetty-bom:9.4.48.v20220622"))
 
     implementation group: 'io.confluent', name: 'kafka-connect-avro-converter', version: confluentVersion
