@@ -46,6 +46,7 @@ dependencies {
         exclude group: "javax.ws.rs", module: "javax.ws.rs-api"
     }
 
+    api group: 'com.squareup.okhttp3', name: 'okhttp', version: okHttpVersion
     api group: 'org.radarbase', name: 'radar-commons-server', version: radarCommonsVersion
 
     testImplementation group: 'junit', name: 'junit', version: junitVersion
