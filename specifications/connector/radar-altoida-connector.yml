@@ -78,4 +78,4 @@ data:
 
   - doc: Assessment metadata
     topic: connect_upload_altoida_assessment
-    value_schema:  .connector.upload.altoida.AltoidaAssessment
+    value_schema:  .connector.upload.altoida.AltoidaAssessmentsSummary

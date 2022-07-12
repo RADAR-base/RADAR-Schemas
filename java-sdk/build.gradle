@@ -30,9 +30,9 @@ subprojects {
         radarJerseyVersion = "0.8.3"
 
         junitVersion = '4.13.2'
-        confluentVersion = '7.1.1'
-        kafkaVersion = '7.1.1-ce'
-        okHttpVersion = '4.9.3'
+        confluentVersion = '7.2.0'
+        kafkaVersion = '7.2.0-ce'
+        okHttpVersion = '4.10.0'
         radarCommonsVersion = '0.15.0'
         slf4jVersion = '1.7.36'
         javaxValidationVersion = '2.0.1.Final'
