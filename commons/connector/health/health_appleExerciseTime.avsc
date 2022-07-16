@@ -1,8 +1,8 @@
 {
-  "namespace": "org.radarcns.connector.health",
-  "name": "HKQuantityTypeIdentifierAppleExerciseTime",
+  "namespace": "org.radarcns.active.healthkit",
+  "name": "HealthKitExerciseTime",
   "type": "record",
-  "doc": "AppleExerciseTime , unit is min.",
+  "doc": "AppleExerciseTime",
   "fields": [
     { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
     {
@@ -16,9 +16,9 @@
       "doc": "Chronological window size (s)."
     },
     {
-      "name": "appleExerciseTime",
+      "name": "exerciseDuration",
       "type": "int",
-      "doc": "Exercise time  taken in this period."
+      "doc": "Exercise time taken in this period, unit is min, correspond with HKQuantityTypeIdentifierAppleExerciseTime in Apple HealthKit"
     }
   ]
 }
