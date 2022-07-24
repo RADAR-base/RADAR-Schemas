@@ -1,48 +1,34 @@
 {
   "namespace": "org.radarcns.active.healthkit",
-  "name": "HealthKit_Height_BodyMass_BodyMassIndex",
+  "name": "HealthKitBodyMeasurements",
   "type": ["null", "record"],
   "default": null,
   "doc": "Height, BodyMass, BodyMassIndex",
   "fields": [
     {
-      {
-        "name": "time",
-        "type": "double",
-        "doc": "Device timestamp in UTC (s)."
-      },
-      {
-        "name": "timeReceived",
-        "type": "double",
-        "doc": "Time that the data was received from the Apple Healthkit ."
-      },
-      { "name": "height", "type": "int", "doc": "Users's height, unit is m." }
+      "name": "time",
+      "type": "double",
+      "doc": "Device timestamp in UTC (s)."
     },
     {
-      {
-        "name": "time",
-        "type": "double",
-        "doc": "Device timestamp in UTC (s)."
-      },
-      {
-        "name": "timeReceived",
-        "type": "double",
-        "doc": "Time that the data was received from the Apple Healthkit ."
-      },
-      { "name": "weight", "type": "int", "doc": "Users's weight, unit is kg." }
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Time that the data was received from the Apple Healthkit ."
     },
     {
-      { "name": "time",
-        "type": "double",
-        "doc": "Device timestamp in UTC (s)."
-      },
-      {
-        "name": "timeReceived",
-        "type": "double",
-        "doc": "Time that the data was received from the Apple Healthkit ."
-      },
-      { "name": "bmi", "type": "int", "doc": "Users's bmi, unit is count." }
+      "name": "height",
+      "type": "int",
+      "doc": "Users's height, unit is m."
+    },
+    {
+      "name": "weight",
+      "type": "int",
+      "doc": "Users's weight, unit is kg."
+    },
+    {
+      "name": "bmi",
+      "type": "int",
+      "doc": "Users's bmi, unit is count."
     }
   ]
 }
-
