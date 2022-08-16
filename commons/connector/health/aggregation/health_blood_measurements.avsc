@@ -3,7 +3,7 @@
   "name": "HealthKitBloodMeasurements",
   "type": ["null", "record"],
   "default": null,
-  "doc": "blood_glucose, blood_pressure_diastolic, blood_pressure_systolic, oxygen_saturation, vo2max",
+  "doc": "blood_glucose, blood_pressure_diastolic, blood_pressure_systolic, oxygen_saturation, vo2max, insulin",
   "fields": [
     {
       "name": "time",
@@ -39,6 +39,11 @@
       "name": "vo2max",
       "type": "double",
       "doc": "Users's vo2max, unit is ml/(kg * min)"
+    },
+    {
+      "name": "insulin",
+      "type": "double",
+      "doc": "User taken insulin, unit is IU"
     }
   ]
 }
