@@ -1,0 +1,65 @@
+{
+  "namespace": "org.radarcns.active.healthkit",
+  "name": "HealthKitBodyMeasurements",
+  "type": ["null", "record"],
+  "default": null,
+  "doc": "height, weight, bmi, fat_percentage, temperature, waist_circumference, gender, date_of_birth",
+  "fields": [
+    {
+      "name": "time",
+      "type": "double",
+      "doc": "Device timestamp in UTC (s)."
+    },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Time that the data was received from the Apple Healthkit"
+    },
+    {
+      "name": "height",
+      "type": "double",
+      "doc": "Users's height, unit is m"
+    },
+    {
+      "name": "weight",
+      "type": "double",
+      "doc": "Users's weight, unit is kg"
+    },
+    {
+      "name": "bmi",
+      "type": "double",
+      "doc": "Users's bmi, unit is count"
+    },
+    {
+      "name": "fat_percentage",
+      "type": "double",
+      "doc": "Users's fat percentage, unit is %"
+    },
+    {
+      "name": "temperature",
+      "type": "double",
+      "doc": "Users's body temperature, unit is Celsius"
+    },
+    {
+      "name": "waist_circumference",
+      "type": "double",
+      "doc": "Users's waist circumference, unit is m"
+    },
+    {
+      "name": "gender",
+      "type": "enum",
+      "doc": "User's gender"
+      "symbols" : ["male","female","other"]
+    },
+    {
+      "name": "date_of_birth",
+      "type": "",
+      "doc": "Users's date of birth"
+    },
+    {
+      "name": "mindfulness",
+      "type": "int",
+      "doc": "Users's date of birth, unit is sec"
+    }
+  ]
+}

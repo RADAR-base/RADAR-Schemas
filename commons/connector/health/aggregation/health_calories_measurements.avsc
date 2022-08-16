@@ -1,9 +1,9 @@
 {
   "namespace": "org.radarcns.active.healthkit",
-  "name": "HealthKitBodyMeasurements",
+  "name": "HealthKitCaloriesMeasurements",
   "type": ["null", "record"],
   "default": null,
-  "doc": "Height, BodyMass, BodyMassIndex",
+  "doc": "Caloires active, Calories basal",
   "fields": [
     {
       "name": "time",
@@ -16,19 +16,14 @@
       "doc": "Time that the data was received from the Apple Healthkit ."
     },
     {
-      "name": "height",
-      "type": "int",
-      "doc": "Users's height, unit is m."
+      "name": "calories.active",
+      "type": "double",
+      "doc": "Users's active calories, unit is kcal"
     },
     {
-      "name": "weight",
-      "type": "int",
-      "doc": "Users's weight, unit is kg."
-    },
-    {
-      "name": "bmi",
-      "type": "int",
-      "doc": "Users's bmi, unit is count."
+      "name": "calories.basal",
+      "type": "double",
+      "doc": "Users's basal calories, unit is kcal"
     }
   ]
 }
