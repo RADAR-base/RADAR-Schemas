@@ -1,3 +1,5 @@
+import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
+
 //---------------------------------------------------------------------------//
 // Configuration                                                             //
 //---------------------------------------------------------------------------//
@@ -24,17 +26,17 @@ subprojects {
     ext.website = 'https://radar-base.org'
 
     ext {
-        avroVersion = '1.11.0'
+        avroVersion = '1.11.1'
         argparseVersion = '0.9.0'
         jacksonVersion = '2.13.3'
-        radarJerseyVersion = "0.8.3"
+        radarJerseyVersion = "0.9.0"
 
         junitVersion = '4.13.2'
-        confluentVersion = '7.2.0'
-        kafkaVersion = '7.2.0-ce'
+        confluentVersion = '7.2.1'
+        kafkaVersion = '7.2.1-ce'
         okHttpVersion = '4.10.0'
         radarCommonsVersion = '0.15.0'
-        slf4jVersion = '1.7.36'
+        slf4jVersion = '2.0.0'
         javaxValidationVersion = '2.0.1.Final'
         logbackVersion = '1.2.11'
     }
@@ -69,7 +71,7 @@ static def isNonStable(String version) {
     return !stableKeyword && !(version ==~ regex)
 }
 
-tasks.named("dependencyUpdates").configure {
+tasks.withType(DependencyUpdatesTask).configureEach {
     rejectVersionIf {
         isNonStable(it.candidate.version)
     }
@@ -85,5 +87,5 @@ nexusPublishing {
 }
 
 wrapper {
-    gradleVersion '7.4.2'
+    gradleVersion '7.5.1'
 }
