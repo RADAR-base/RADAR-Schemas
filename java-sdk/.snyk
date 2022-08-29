@@ -1,0 +1,10 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.25.0
+# ignores vulnerabilities until expiry date; change duration by modifying expiry date
+ignore:
+  SNYK-JAVA-ORGJETBRAINSKOTLIN-2393744:
+    - '*':
+        reason: Not using kotlin tempdir API
+        expires: 2023-08-11T08:30:16.487Z
+        created: 2022-07-12T08:30:16.492Z
+patch: {}

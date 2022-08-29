@@ -13,6 +13,8 @@ sourceSets {
 
 dependencies {
     api (group: 'org.apache.avro', name: 'avro', version: avroVersion) {
+        api "com.fasterxml.jackson.core:jackson-core:$jacksonVersion"
+        api "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"
         exclude group: 'org.xerial.snappy', module: 'snappy-java'
         exclude group: 'com.thoughtworks.paranamer', module: 'paranamer'
         exclude group: 'org.apache.commons', module: 'commons-compress'

@@ -95,4 +95,3 @@ data:
   - doc: Motor function for bubble test
     topic: connect_upload_altoida_motor_bubble
     value_schema: .connector.upload.altoida.AltoidaMotorBubble
-

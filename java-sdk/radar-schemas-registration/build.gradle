@@ -25,12 +25,16 @@ repositories {
 dependencies {
     api project(':radar-schemas-commons')
     api project(':radar-schemas-core')
+    api group: 'com.squareup.okhttp3', name: 'okhttp', version: okHttpVersion
     api group: 'org.radarbase', name: 'radar-commons-server', version: radarCommonsVersion
 
-    implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: okHttpVersion
+    implementation platform("io.netty:netty-bom:4.1.79.Final")
+    implementation platform("org.eclipse.jetty:jetty-bom:9.4.48.v20220622")
 
     implementation group: 'io.confluent', name: 'kafka-connect-avro-converter', version: confluentVersion
-    implementation group: 'io.confluent', name: 'kafka-schema-registry', version: confluentVersion
+    implementation(group: 'io.confluent', name: 'kafka-schema-registry', version: confluentVersion) {
+        exclude(group: "org.slf4j", module: "slf4j-reload4j")
+    }
     implementation group: 'org.apache.kafka', name: 'connect-json', version: kafkaVersion
 
     testRuntimeOnly group: 'ch.qos.logback', name: 'logback-classic', version: logbackVersion
