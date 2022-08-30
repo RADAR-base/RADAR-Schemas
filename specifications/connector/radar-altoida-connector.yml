@@ -76,6 +76,22 @@ data:
     topic: connect_upload_altoida_xml_metadata
     value_schema: .connector.upload.altoida.AltoidaXmlMetadata
 
-  - doc: Assessment metadata
+  - doc: Assessment summary which includes the start time and end time of a single assessment
     topic: connect_upload_altoida_assessment
     value_schema:  .connector.upload.altoida.AltoidaAssessmentsSummary
+
+  - doc: Single event in an assessment. This usually describes the user's interaction with an object in an assessment
+    topic: connect_upload_altoida_test_event
+    value_schema:  .connector.upload.altoida.AltoidaAssessmentEvent
+
+  - doc: Questionnaire answers in the AR Test
+    topic: connect_upload_altoida_ar_assessment
+    value_schema:  .connector.upload.altoida.AltoidaARTestQuestionnaire
+
+  - doc: Screen elements during an Altoida test
+    topic: connect_upload_altoida_screen_elements
+    value_schema:  .connector.upload.altoida.AltoidaTestScreenElement
+
+  - doc: Motor function for bubble test
+    topic: connect_upload_altoida_motor_bubble
+    value_schema: .connector.upload.altoida.AltoidaMotorBubble
