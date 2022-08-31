@@ -1,7 +1,7 @@
 {
   "namespace": "org.radarcns.active.healthkit",
-  "name": "HealthKitNutritionMeasurements",
-  "type": ["null", "record"],
+  "name": "HealthKitNutritionMeasurement",
+  "type": ["record"],
   "default": null,
   "doc": "User's nutrition data",
   "fields": [
@@ -17,97 +17,116 @@
     },
     {
       "name": "nutrition.calories",
-      "type": "double",
+      "type": ["null","double"],
+      "default": null,
       "doc": "Users's calories, unit is kcal"
     },
     {
       "name": "nutrition.fat.saturated",
-      "type": "double",
+      "type": ["null","double"],
+      "default": null,
       "doc": "Users's fat saturated, unit is g"
     },
     {
       "name": "nutrition.fat.unsaturated",
-      "type": "double",
+      "type": ["null","double"],
+      "default": null,
       "doc": "Users's fat unsaturated, unit is g"
     },
     {
       "name": "nutrition.fat.polyunsaturated",
-      "type": "double",
+      "type": ["null","double"],
+      "default": null,
       "doc": "Users's fat polyunsaturated, unit is g"
     },
     {
       "name": "nutrition.fat.monounsaturated",
-      "type": "double",
+      "type": ["null","double"],
+      "default": null,
       "doc": "Users's fat monounsaturated, unit is g"
     },
     {
       "name": "nutrition.fat.trans",
-      "type": "double",
+      "type": ["null","double"],
+      "default": null,
       "doc": "Users's fat trans, unit is g"
     },
     {
       "name": "nutrition.cholesterol",
-      "type": "double",
+      "type": ["null","double"],
+      "default": null,
       "doc": "Users's cholesterol, unit is mg"
     },
     {
       "name": "nutrition.sodium",
-      "type": "double",
+      "type": ["null","double"],
+      "default": null,
       "doc": "Users's sodium, unit is mg"
     },
     {
       "name": "nutrition.potassium",
-      "type": "double",
+      "type": ["null","double"],
+      "default": null,
       "doc": "Users's potassium, unit is mg"
     },
     {
       "name": "nutrition.carbs.total",
-      "type": "double",
+      "type": ["null","double"],
+      "default": null,
       "doc": "Users's carbs total, unit is g"
     },
     {
       "name": "nutrition.dietary_fiber",
-      "type": "double",
+      "type": ["null","double"],
+      "default": null,
       "doc": "Users's dietary fiber, unit is g"
     },
     {
       "name": "nutrition.sugar",
-      "type": "double",
+      "type": ["null","double"],
+      "default": null,
       "doc": "Users's sugar, unit is g"
     },
     {
       "name": "nutrition.protien",
-      "type": "double",
+      "type": ["null","double"],
+      "default": null,
       "doc": "Users's sugar, unit is g"
     },
     {
       "name": "nutrition.vitamin_a",
-      "type": "double",
+      "type": ["null","double"],
+      "default": null,
       "doc": "Users's vitamin a, unit is mcg"
     },
     {
       "name": "nutrition.vitamin_c",
-      "type": "double",
+      "type": ["null","double"],
+      "default": null,
       "doc": "Users's vitamin c, unit is mg"
     },
     {
       "name": "nutrition.calcium",
-      "type": "double",
+      "type": ["null","double"],
+      "default": null,
       "doc": "Users's calcium, unit is mg"
     },
     {
       "name": "nutrition.iron",
-      "type": "double",
+      "type": ["null","double"],
+      "default": null,
       "doc": "Users's iron, unit is mg"
     },
     {
       "name": "nutrition.water",
-      "type": "double",
+      "type": ["null","double"],
+      "default": null,
       "doc": "Users's water, unit is ml"
     },
     {
       "name": "nutrition.caffeine",
-      "type": "double",
+      "type": ["null","double"],
+      "default": null,
       "doc": "Users's caffeine, unit is g"
     }
   ]

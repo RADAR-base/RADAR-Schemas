@@ -1,7 +1,7 @@
 {
   "namespace": "org.radarcns.active.healthkit",
-  "name": "HealthKitCaloriesMeasurements",
-  "type": ["null", "record"],
+  "name": "HealthKitCaloriesMeasurement",
+  "type": ["record"],
   "default": null,
   "doc": "Caloires active, Calories basal",
   "fields": [
@@ -17,12 +17,14 @@
     },
     {
       "name": "calories.active",
-      "type": "double",
+      "type": ["null","double"],
+      "default": null,
       "doc": "Users's active calories, unit is kcal"
     },
     {
       "name": "calories.basal",
-      "type": "double",
+      "type": ["null","double"],
+      "default": null,
       "doc": "Users's basal calories, unit is kcal"
     }
   ]

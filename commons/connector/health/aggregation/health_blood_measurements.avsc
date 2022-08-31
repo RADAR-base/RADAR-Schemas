@@ -1,7 +1,7 @@
 {
   "namespace": "org.radarcns.active.healthkit",
-  "name": "HealthKitBloodMeasurements",
-  "type": ["null", "record"],
+  "name": "HealthKitBloodMeasurement",
+  "type": ["record"],
   "default": null,
   "doc": "blood_glucose, blood_pressure_diastolic, blood_pressure_systolic, oxygen_saturation, vo2max, insulin",
   "fields": [
@@ -17,32 +17,38 @@
     },
     {
       "name": "blood_pressure_systolic",
-      "type": "double",
+      "type": ["null","double"],
+      "default":null,
       "doc": "Users's BloodPressureSystolic, unit is mmHg"
     },
     {
       "name": "blood_pressure_diastolic",
-      "type": "double",
+      "type": ["null","double"],
+      "default":null,
       "doc": "Users's BloodPressureDiastolic, unit is mmHg"
     },
     {
       "name": "blood_glucose",
-      "type": "double",
+      "type": ["null","double"],
+      "default":null,
       "doc": "Users's BloodGlucose, unit is mmol/L"
     },
     {
       "name": "oxygen_saturation",
-      "type": "double",
+      "type": ["null","double"],
+      "default":null,
       "doc": "Users's oxygen saturation, unit is %"
     },
     {
       "name": "vo2max",
-      "type": "double",
+      "type": ["null","double"],
+      "default":null,
       "doc": "Users's vo2max, unit is ml/(kg * min)"
     },
     {
       "name": "insulin",
-      "type": "double",
+      "type": ["null","double"],
+      "default":null,
       "doc": "User taken insulin, unit is IU"
     }
   ]

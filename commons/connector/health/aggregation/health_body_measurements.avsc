@@ -1,7 +1,7 @@
 {
   "namespace": "org.radarcns.active.healthkit",
-  "name": "HealthKitBodyMeasurements",
-  "type": ["null", "record"],
+  "name": "HealthKitBodyMeasurement",
+  "type": ["record"],
   "default": null,
   "doc": "height, weight, bmi, fat_percentage, temperature, waist_circumference, gender, date_of_birth",
   "fields": [
@@ -17,49 +17,55 @@
     },
     {
       "name": "height",
-      "type": "double",
+      "type": ["null","double"],
+      "default": null,
       "doc": "Users's height, unit is m"
     },
     {
       "name": "weight",
-      "type": "double",
+      "type": ["null","double"],
+      "default": null,
       "doc": "Users's weight, unit is kg"
     },
     {
       "name": "bmi",
-      "type": "double",
+      "type": ["null","double"],
+      "default": null,
       "doc": "Users's bmi, unit is count"
     },
     {
       "name": "fat_percentage",
-      "type": "double",
+      "type": ["null","double"],
+      "default": null,
       "doc": "Users's fat percentage, unit is %"
     },
     {
       "name": "temperature",
-      "type": "double",
+      "type": ["null","double"],
+      "default": null,
       "doc": "Users's body temperature, unit is Celsius"
     },
     {
       "name": "waist_circumference",
-      "type": "double",
+      "type": ["null","double"],
+      "default": null,
       "doc": "Users's waist circumference, unit is m"
     },
     {
       "name": "gender",
       "type": "enum",
       "doc": "User's gender"
-      "symbols" : ["male","female","other"]
+      "symbols" : ["UNKNOWN","male","female","other","OTHER"]
     },
     {
       "name": "date_of_birth",
-      "type": "",
-      "doc": "Users's date of birth"
+      "type": "string",
+      "doc": "Users's date of birth, the type will be year-month-day, for example, 1998-07-28"
     },
     {
       "name": "mindfulness",
       "type": "int",
-      "doc": "Users's date of birth, unit is sec"
+      "doc": "Users's mindfulness time, unit is sec"
     }
   ]
 }
