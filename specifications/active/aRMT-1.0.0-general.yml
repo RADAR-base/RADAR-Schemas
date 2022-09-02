@@ -1,0 +1,23 @@
+name: aRMT-general
+vendor: RADAR
+model: aRMT-App
+version: 1.0.0-general
+assessment_type: QUESTIONNAIRE
+doc: General topics used by the aRMT app, including metadata and monitoring information.
+data:
+  - type: QUESTIONNAIRE_RESPONSE
+    topic: questionnaire_response
+    doc: General questionnaire response topic, if the topic specific to the questionnaire does not exist.
+    value_schema: .active.questionnaire.Questionnaire
+  - type: COMPLETION_LOG
+    doc: Information about the completeness of each questionnaire.
+    topic: questionnaire_completion_log
+    value_schema: .monitor.questionnaire.QuestionnaireCompletionLog
+  - type: TIMEZONE
+    doc: Timezone information sent along with each questionnaire.
+    topic: questionnaire_timezone
+    value_schema: .monitor.application.ApplicationTimeZone
+  - type: APP_EVENT
+    doc: Questionnaire application interaction event.
+    topic: questionnaire_app_event
+    value_schema: .monitor.questionnaire.QuestionnaireApplicationInteractionEvent
