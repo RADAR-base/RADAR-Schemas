@@ -1,0 +1,24 @@
+{
+    "namespace": "org.radarcns.active.healthkit",
+    "name": "HealthKitData",
+    "type": "record",
+    "doc": "HealthKit generic data schema.",
+    "fields": [
+      { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+      {
+        "name": "timeReceived",
+        "type": "double",
+        "doc": "Time that the data was received from the Apple Healthkit API."
+      },
+      {
+        "name": "key",
+        "type": "string",
+        "doc": "Type of data retrived e.g. weight, height, etc."
+      },
+      {
+        "name": "value",
+        "type": ["null", "double", "int", "string"],
+        "doc": "Value of the data retrieved."
+      }
+    ]
+  }
