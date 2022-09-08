@@ -8,7 +8,7 @@
       {
         "name": "timeReceived",
         "type": "double",
-        "doc": "Time that the data was received from the Apple Healthkit API.",
+        "doc": "Time that the data was received from the Apple Healthkit API."
       },
       {
         "name": "key",
@@ -19,25 +19,25 @@
         "name": "intValue",
         "type": ["null", "int"],
         "doc": "Value of the int data retrieved.",
-        "default" : null
+        "default": null
       },
       {
         "name": "floatValue",
         "type": ["null", "float"],
         "doc": "Value of the float data retrieved.",
-        "default" : null
+        "default": null
       },
       {
         "name": "doubleValue",
         "type": ["null", "double"],
         "doc": "Value of the double data retrieved.",
-        "default" : null
+        "default": null
       },
       {
         "name": "stringValue",
         "type": ["null", "string"],
         "doc": "Value of the string data retrieved.",
-        "default" : null
+        "default": null
       }
     ]
   }

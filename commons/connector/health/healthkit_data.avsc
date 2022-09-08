@@ -19,7 +19,7 @@
         "name": "value",
         "type": ["null", "double", "int", "string"],
         "doc": "Value of the data retrieved.",
-        "default" : null
+        "default": null
       }
     ]
   }
