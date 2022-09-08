@@ -1,0 +1,13 @@
+name: aRMT
+vendor: RADAR
+model: aRMT-App
+version: 1.0.0
+assessment_type: QUESTIONNAIRE
+doc: aRMT Healthkit data definition.
+data:
+  - type: HEALTHKIT_GENERIC_DATA
+    topic: healthkit_generic_data
+    value_schema: .active.healthkit.HealthKitData
+  - type: HEALTHKIT_GENERIC_TYPED_DATA
+    topic: healthkit_generic_typed_data
+    value_schema: .active.healthkit.HealthKitTypedData
