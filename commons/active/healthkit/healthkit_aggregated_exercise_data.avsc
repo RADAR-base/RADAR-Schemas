@@ -31,13 +31,13 @@
       },
       {
         "name": "calories_active",
-        "type": ["null","int"],
+        "type": ["null","double"],
         "default": null,
         "doc": "Users's active calories, unit is kcal"
       },
       {
         "name": "calories_basal",
-        "type": ["null","int"],
+        "type": ["null","double"],
         "default": null,
         "doc": "Users's basal calories, unit is kcal"
       },
