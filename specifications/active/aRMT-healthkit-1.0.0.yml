@@ -11,3 +11,6 @@ data:
   - type: HEALTHKIT_GENERIC_TYPED_DATA
     topic: healthkit_generic_typed_data
     value_schema: .active.healthkit.HealthKitTypedData
+  - type: HEALTHKIT_AGGREGATED_EXERCISE_DATA
+    topic: healthkit_aggregated_exercise_data
+    value_schema: .active.healthkit.HealthKitAggregatedExerciseData
