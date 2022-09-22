@@ -16,8 +16,8 @@
 
 package org.radarbase.schema.validation;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.radarbase.schema.Scope.ACTIVE;
 import static org.radarbase.schema.Scope.CATALOGUE;
 import static org.radarbase.schema.Scope.CONNECTOR;
@@ -31,8 +31,8 @@ import java.nio.file.Paths;
 import java.util.stream.Stream;
 import org.apache.avro.Schema;
 import org.apache.avro.SchemaBuilder;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.radarbase.schema.SchemaCatalogue;
 import org.radarbase.schema.Scope;
 import org.radarbase.schema.specification.SourceCatalogue;
@@ -45,7 +45,7 @@ public class SchemaValidatorTest {
     private SchemaValidator validator;
     private static final Path ROOT = Paths.get("../..").toAbsolutePath();
 
-    @Before
+    @BeforeEach
     public void setUp() throws IOException {
         ExcludeConfig config = ExcludeConfig.load(null);
         validator = new SchemaValidator(ROOT, config);

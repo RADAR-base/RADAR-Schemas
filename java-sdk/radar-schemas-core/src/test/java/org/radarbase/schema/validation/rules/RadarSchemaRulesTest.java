@@ -16,9 +16,9 @@
 
 package org.radarbase.schema.validation.rules;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.radarbase.schema.validation.rules.RadarSchemaRules.ENUM_SYMBOL_PATTERN;
 import static org.radarbase.schema.validation.rules.RadarSchemaRules.NAMESPACE_PATTERN;
 import static org.radarbase.schema.validation.rules.RadarSchemaRules.RECORD_NAME_PATTERN;
@@ -28,8 +28,8 @@ import java.util.stream.Stream;
 import org.apache.avro.Schema;
 import org.apache.avro.Schema.Parser;
 import org.apache.avro.SchemaBuilder;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.radarbase.schema.validation.ValidationException;
 import org.radarbase.schema.validation.config.ExcludeConfig;
 
@@ -46,7 +46,7 @@ public class RadarSchemaRulesTest {
     private static final String RECORD_NAME_MOCK = "RecordName";
     private RadarSchemaRules validator;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         ExcludeConfig config = new ExcludeConfig();
         validator = new RadarSchemaRules(config);

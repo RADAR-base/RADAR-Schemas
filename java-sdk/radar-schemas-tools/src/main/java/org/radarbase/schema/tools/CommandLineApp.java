@@ -27,7 +27,9 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import ch.qos.logback.classic.Level;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.config.Configurator;
 import net.sourceforge.argparse4j.ArgumentParsers;
 import net.sourceforge.argparse4j.helper.HelpScreenException;
 import net.sourceforge.argparse4j.inf.ArgumentParser;
@@ -93,12 +95,12 @@ public class CommandLineApp {
 
         Boolean isVerbose = ns.getBoolean("verbose");
         if (isVerbose != null && isVerbose) {
-            setLogLevel(org.slf4j.event.Level.DEBUG);
+            Configurator.setAllLevels(LogManager.getRootLogger().getName(), Level.DEBUG);
         }
 
         Boolean isQuiet = ns.getBoolean("quiet");
         if (isQuiet != null && isQuiet) {
-            setLogLevel(org.slf4j.event.Level.ERROR);
+            Configurator.setAllLevels(LogManager.getRootLogger().getName(), Level.ERROR);
         }
 
         CommandLineApp app;
@@ -207,20 +209,5 @@ public class CommandLineApp {
                             return "  " + t.getTopic() + "\n    " + details;
                         })
                         .collect(Collectors.joining("\n")));
-    }
-
-    private static void setLogLevel(org.slf4j.event.Level level) {
-        Logger rootLogger = LoggerFactory.getLogger(org.slf4j.Logger.ROOT_LOGGER_NAME);
-        if (rootLogger instanceof ch.qos.logback.classic.Logger) {
-            ch.qos.logback.classic.Logger logbackLogger = (ch.qos.logback.classic.Logger) rootLogger;
-            switch (level) {
-                case ERROR: logbackLogger.setLevel(Level.ERROR); break;
-                case WARN: logbackLogger.setLevel(Level.WARN); break;
-                case INFO: logbackLogger.setLevel(Level.INFO); break;
-                case DEBUG: logbackLogger.setLevel(Level.DEBUG); break;
-                case TRACE: logbackLogger.setLevel(Level.TRACE); break;
-            }
-        }
-
     }
 }

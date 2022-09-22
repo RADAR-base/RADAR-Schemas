@@ -28,48 +28,17 @@ public class SchemaRegistryCommand implements SubCommand {
         String apiKey = options.getString("api_key");
         String apiSecret = options.getString("api_secret");
         try {
-            SchemaRegistry registration;
-            if (apiKey == null || apiKey.isBlank() || apiSecret == null || apiSecret.isBlank()) {
-                logger.info("Initializing standard SchemaRegistration ...");
-                registration = new SchemaRegistry(url);
-            } else {
-                logger.info("Initializing SchemaRegistration with authentication...");
-                registration = new SchemaRegistry(url, apiKey, apiSecret);
-            }
-
-            try {
-                registration.initialize();
-            } catch (IllegalStateException | InterruptedException ex) {
-                logger.error("Cannot reach schema registry. Aborting");
-                return 1;
-            }
+            SchemaRegistry registration = createSchemaRegistry(url, apiKey, apiSecret);
 
             boolean forced = options.getBoolean("force");
             if (forced && !registration.putCompatibility(Compatibility.NONE)) {
                 return 1;
             }
-            boolean result;
             Pattern pattern = matchTopic(
                     options.getString("topic"), options.getString("match"));
 
-            if (pattern == null) {
-                result = registration.registerSchemas(app.getCatalogue());
-            } else {
-                Optional<Boolean> didUpload = app.getCatalogue().getTopics()
-                        .filter(t -> pattern.matcher(t.getName()).find())
-                        .map(registration::registerSchema)
-                        .reduce((a, b) -> a && b);
+            boolean result = registerSchemas(app, registration, pattern);
 
-                if (didUpload.isPresent()) {
-                    result = didUpload.get();
-                } else {
-                    logger.error("Topic {} does not match a known topic."
-                                    + " Find the list of acceptable topics"
-                                    + " with the `radar-schemas-tools list` command. Aborting.",
-                            pattern);
-                    result = false;
-                }
-            }
             if (forced) {
                 registration.putCompatibility(Compatibility.FULL);
             }
@@ -77,6 +46,46 @@ public class SchemaRegistryCommand implements SubCommand {
         } catch (MalformedURLException ex) {
             logger.error("Schema registry URL {} is invalid: {}", url, ex.toString());
             return 1;
+        } catch (IllegalStateException | InterruptedException ex) {
+            logger.error("Cannot reach schema registry. Aborting");
+            return 1;
+        }
+    }
+
+    private static SchemaRegistry createSchemaRegistry(String url, String apiKey, String apiSecret)
+            throws MalformedURLException, InterruptedException {
+        SchemaRegistry registry;
+        if (apiKey == null || apiKey.isBlank() || apiSecret == null || apiSecret.isBlank()) {
+            logger.info("Initializing standard SchemaRegistration ...");
+            registry = new SchemaRegistry(url);
+        } else {
+            logger.info("Initializing SchemaRegistration with authentication...");
+            registry = new SchemaRegistry(url, apiKey, apiSecret);
+        }
+
+        registry.initialize();
+        return registry;
+    }
+
+    private static boolean registerSchemas(CommandLineApp app, SchemaRegistry registration,
+            Pattern pattern) {
+        if (pattern == null) {
+            return registration.registerSchemas(app.getCatalogue());
+        } else {
+            Optional<Boolean> didUpload = app.getCatalogue().getTopics()
+                    .filter(t -> pattern.matcher(t.getName()).find())
+                    .map(registration::registerSchema)
+                    .reduce((a, b) -> a && b);
+
+            if (didUpload.isPresent()) {
+                return didUpload.get();
+            } else {
+                logger.error("Topic {} does not match a known topic."
+                                + " Find the list of acceptable topics"
+                                + " with the `radar-schemas-tools list` command. Aborting.",
+                        pattern);
+                return false;
+            }
         }
     }
 

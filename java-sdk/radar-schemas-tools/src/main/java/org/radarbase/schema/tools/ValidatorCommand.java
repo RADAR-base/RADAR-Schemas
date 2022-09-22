@@ -1,27 +1,21 @@
 package org.radarbase.schema.tools;
 
-import static org.radarbase.schema.util.SchemaUtils.applyOrIllegalException;
+import net.sourceforge.argparse4j.impl.Arguments;
+import net.sourceforge.argparse4j.inf.ArgumentParser;
+import net.sourceforge.argparse4j.inf.Namespace;
+import org.radarbase.schema.Scope;
+import org.radarbase.schema.validation.SchemaValidator;
+import org.radarbase.schema.validation.ValidationException;
+import org.radarbase.schema.validation.config.ExcludeConfig;
 
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.AbstractMap;
-import java.util.Comparator;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Stream;
 
-import kotlin.Pair;
-import net.sourceforge.argparse4j.impl.Arguments;
-import net.sourceforge.argparse4j.inf.ArgumentParser;
-import net.sourceforge.argparse4j.inf.Namespace;
-import org.radarbase.schema.SchemaCatalogue;
-import org.radarbase.schema.Scope;
-import org.radarbase.schema.specification.DataProducer;
-import org.radarbase.schema.validation.SchemaValidator;
-import org.radarbase.schema.validation.ValidationException;
-import org.radarbase.schema.validation.config.ExcludeConfig;
-import org.radarbase.schema.validation.rules.SchemaMetadata;
+import static org.radarbase.schema.util.SchemaUtils.applyOrIllegalException;
 
 public class ValidatorCommand implements SubCommand {
     @Override
@@ -32,8 +26,6 @@ public class ValidatorCommand implements SubCommand {
     @Override
     public int execute(Namespace options, CommandLineApp app) {
         try {
-            ExcludeConfig config = loadConfig(app.getRoot(), options.getString("config"));
-
             try {
                 System.out.println();
                 System.out.println("Validated topics:");
@@ -58,6 +50,7 @@ public class ValidatorCommand implements SubCommand {
             Scope scope = scopeString != null ? Scope.valueOf(scopeString) : null;
 
             Stream<ValidationException> exceptionStream = Stream.empty();
+            ExcludeConfig config = loadConfig(app.getRoot(), options.getString("config"));
             SchemaValidator validator = new SchemaValidator(app.getRoot(), config);
 
             if (options.getBoolean("full")) {
@@ -131,7 +124,7 @@ public class ValidatorCommand implements SubCommand {
         return 0;
     }
 
-    private ExcludeConfig loadConfig(Path root, String configSubPath) throws IOException {
+    private static ExcludeConfig loadConfig(Path root, String configSubPath) throws IOException {
         Path configPath;
         if (configSubPath != null) {
             if (configSubPath.charAt(0) == '/') {

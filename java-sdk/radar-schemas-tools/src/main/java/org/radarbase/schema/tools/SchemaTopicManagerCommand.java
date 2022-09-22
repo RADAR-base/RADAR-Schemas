@@ -25,9 +25,6 @@ public class SchemaTopicManagerCommand implements SubCommand {
 
     @Override
     public int execute(Namespace options, CommandLineApp app) {
-        JsonSchemaBackupStorage jsonStorage = new JsonSchemaBackupStorage(
-                Paths.get(options.getString("file")));
-
         Map<String, Object> kafkaConfig;
         try {
             kafkaConfig = KafkaTopics.loadConfig(
@@ -39,6 +36,8 @@ public class SchemaTopicManagerCommand implements SubCommand {
         }
 
         try (KafkaTopics topics = new KafkaTopics(kafkaConfig)) {
+            JsonSchemaBackupStorage jsonStorage = new JsonSchemaBackupStorage(
+                    Paths.get(options.getString("file")));
             SchemaTopicManager manager = new SchemaTopicManager(topics, jsonStorage);
             manager.initialize(options.getInt("brokers"));
 

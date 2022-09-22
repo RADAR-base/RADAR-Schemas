@@ -16,9 +16,9 @@
 
 package org.radarbase.schema.validation.rules;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.radarbase.schema.validation.rules.RadarSchemaFieldRules.FIELD_NAME_PATTERN;
 import static org.radarbase.schema.validation.rules.Validator.matches;
 
@@ -27,8 +27,8 @@ import java.util.stream.Stream;
 import org.apache.avro.Schema;
 import org.apache.avro.Schema.Parser;
 import org.apache.avro.SchemaBuilder;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.radarbase.schema.validation.ValidationException;
 import org.radarbase.schema.validation.ValidationHelper;
 import org.radarbase.schema.validation.config.ExcludeConfig;
@@ -47,7 +47,7 @@ public class RadarSchemaFieldRulesTest {
     private RadarSchemaFieldRules validator;
     private RadarSchemaRules schemaValidator;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         validator = new RadarSchemaFieldRules();
         schemaValidator = new RadarSchemaRules(new ExcludeConfig(), validator);

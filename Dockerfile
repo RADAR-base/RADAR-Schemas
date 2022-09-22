@@ -1,17 +1,17 @@
-FROM --platform=$BUILDPLATFORM gradle:7.4-jdk17 as builder
+FROM --platform=$BUILDPLATFORM gradle:7.5-jdk17 as builder
 
 RUN mkdir -p /code/java-sdk
 WORKDIR /code/java-sdk
 ENV GRADLE_USER_HOME=/code/.gradlecache \
    GRADLE_OPTS=-Djdk.lang.Process.launchMechanism=vfork
 
-COPY java-sdk/build.gradle java-sdk/settings.gradle /code/java-sdk/
-COPY java-sdk/radar-schemas-commons/build.gradle /code/java-sdk/radar-schemas-commons/
-COPY java-sdk/radar-schemas-core/build.gradle /code/java-sdk/radar-schemas-core/
-COPY java-sdk/radar-schemas-registration/build.gradle /code/java-sdk/radar-schemas-registration/
-COPY java-sdk/radar-schemas-tools/build.gradle /code/java-sdk/radar-schemas-tools/
-COPY java-sdk/radar-catalog-server/build.gradle /code/java-sdk/radar-catalog-server/
-RUN gradle downloadDependencies copyDependencies startScripts --no-watch-fs -Pprofile=docker
+COPY java-sdk/*.gradle.kts java-sdk/gradle.properties /code/java-sdk/
+COPY java-sdk/radar-schemas-commons/build.gradle.kts /code/java-sdk/radar-schemas-commons/
+COPY java-sdk/radar-schemas-core/build.gradle.kts /code/java-sdk/radar-schemas-core/
+COPY java-sdk/radar-schemas-registration/build.gradle.kts /code/java-sdk/radar-schemas-registration/
+COPY java-sdk/radar-schemas-tools/build.gradle.kts /code/java-sdk/radar-schemas-tools/
+COPY java-sdk/radar-catalog-server/build.gradle.kts /code/java-sdk/radar-catalog-server/
+RUN gradle downloadDependencies copyDependencies startScripts --no-watch-fs
 
 COPY commons /code/commons
 COPY specifications /code/specifications
@@ -22,7 +22,7 @@ COPY java-sdk/radar-schemas-registration/src /code/java-sdk/radar-schemas-regist
 COPY java-sdk/radar-schemas-tools/src /code/java-sdk/radar-schemas-tools/src
 COPY java-sdk/radar-catalog-server/src /code/java-sdk/radar-catalog-server/src
 
-RUN gradle jar --no-watch-fs -Pprofile=docker
+RUN gradle jar --no-watch-fs
 
 FROM eclipse-temurin:17-jre
 

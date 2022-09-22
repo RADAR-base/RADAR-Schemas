@@ -1,8 +1,5 @@
 package org.radarbase.schema.service;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
@@ -11,21 +8,22 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ErrorCollector;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.radarbase.schema.specification.SourceCatalogue;
 
-public class SourceCatalogueServerTest {
-    @Rule
-    public ErrorCollector errorCollector = new ErrorCollector();
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+class SourceCatalogueServerTest {
     private SourceCatalogueServer server;
     private Thread serverThread;
+    private Exception exception;
 
-    @Before
+    @BeforeEach
     public void setUp() {
+        exception = null;
         server = new SourceCatalogueServer(9876);
         serverThread = new Thread(() -> {
             try {
@@ -34,17 +32,20 @@ public class SourceCatalogueServerTest {
             } catch (IllegalStateException e) {
                 // this is acceptable
             } catch (Exception e) {
-                errorCollector.addError(e);
+                exception = e;
             }
         });
         serverThread.start();
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         serverThread.interrupt();
         server.close();
         serverThread.join();
+        if (exception != null) {
+            throw exception;
+        }
     }
 
     @Test
