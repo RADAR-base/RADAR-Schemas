@@ -98,23 +98,23 @@ configure(listOf(
     enablePublishing()
 }
 
-val stableVersionPattern = "(RELEASE|FINAL|GA|-ce|^[0-9,.v-]+)$".toRegex(RegexOption.IGNORE_CASE)
-
 tasks.withType<DependencyUpdatesTask> {
+    val stableVersionPattern = "(RELEASE|FINAL|GA|-ce|^[0-9,.v-]+)$".toRegex(RegexOption.IGNORE_CASE)
+
     rejectVersionIf {
         !stableVersionPattern.containsMatchIn(candidate.version)
     }
 }
 
-fun Project.propertyOrEnv(propertyName: String, envName: String): String? {
-    return if (hasProperty(propertyName)) {
-        property(propertyName)?.toString()
-    } else {
-        System.getenv(envName)
-    }
-}
-
 nexusPublishing {
+    fun Project.propertyOrEnv(propertyName: String, envName: String): String? {
+        return if (hasProperty(propertyName)) {
+            property(propertyName)?.toString()
+        } else {
+            System.getenv(envName)
+        }
+    }
+
     repositories {
         sonatype {
             username.set(propertyOrEnv("ossrh.user", "OSSRH_USER"))
@@ -127,6 +127,7 @@ tasks.wrapper {
     gradleVersion = "7.5.1"
 }
 
+/** Set the given Java [version] for compiled Java and Kotlin code. */
 fun Project.setJavaVersion(version: Int) {
     tasks.withType<JavaCompile> {
         options.release.set(version)
