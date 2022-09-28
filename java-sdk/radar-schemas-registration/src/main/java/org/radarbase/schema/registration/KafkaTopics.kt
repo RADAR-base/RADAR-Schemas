@@ -1,13 +1,12 @@
 package org.radarbase.schema.registration
 
 import org.apache.kafka.clients.admin.AdminClient
-import org.apache.kafka.clients.admin.AdminClientConfig
+import org.apache.kafka.clients.admin.AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG
 import org.apache.kafka.clients.admin.ListTopicsOptions
 import org.apache.kafka.clients.admin.NewTopic
+import org.apache.kafka.common.config.SaslConfigs.SASL_JAAS_CONFIG
 import org.radarbase.schema.specification.SourceCatalogue
 import org.slf4j.LoggerFactory
-import java.io.IOException
-import java.nio.file.Paths
 import java.time.Duration
 import java.time.Instant
 import java.util.*
@@ -15,17 +14,16 @@ import java.util.concurrent.ExecutionException
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException
 import java.util.stream.Stream
-import kotlin.io.path.inputStream
 
 /**
  * Registers Kafka topics with Zookeeper.
  */
 class KafkaTopics(
-    private val kafkaProperties: Map<String, Any>,
+    private val toolConfig: ToolConfig,
 ) : TopicRegistrar {
     private var initialized = false
     private var topics: Set<String>? = null
-    private val adminClient: AdminClient = AdminClient.create(kafkaProperties)
+    private val adminClient: AdminClient = AdminClient.create(toolConfig.kafka)
 
     /**
      * Wait for brokers to become available. This uses a polling mechanism, waiting for at most 200
@@ -60,11 +58,11 @@ class KafkaTopics(
                         .size
                 } catch (ex: ExecutionException) {
                     logger.error("Failed to connect to bootstrap server {}",
-                        kafkaProperties[AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG], ex.cause)
+                        kafkaProperties[BOOTSTRAP_SERVERS_CONFIG], ex.cause)
                     0
                 } catch (ex: TimeoutException) {
                     logger.error("Failed to connect to bootstrap server {} within {} seconds",
-                        kafkaProperties[AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG], sleep)
+                        kafkaProperties[BOOTSTRAP_SERVERS_CONFIG], sleep)
                     0
                 }
             }
@@ -90,13 +88,14 @@ class KafkaTopics(
         catalogue: SourceCatalogue,
         partitions: Int,
         replication: Short,
-        topic: String, match: String
+        topic: String,
+        match: String
     ): Int {
         val pattern = TopicRegistrar.matchTopic(topic, match)
         return if (pattern == null) {
             if (createTopics(catalogue, partitions, replication)) 0 else 1
         } else {
-            val topicNames = catalogue.topicNames
+            val topicNames = topicNames(catalogue)
                 .filter { s -> pattern.matcher(s).find() }
                 .toList()
             if (topicNames.isEmpty()) {
@@ -107,6 +106,15 @@ class KafkaTopics(
             }
             if (createTopics(topicNames.stream(), partitions, replication)) 0 else 1
         }
+    }
+
+    private fun topicNames(catalogue: SourceCatalogue): Stream<String> {
+        return Stream.concat(
+            catalogue.topicNames,
+            toolConfig.topics.entries.stream()
+                .filter { (_, c) -> c.enabled }
+                .map { (t, _) -> t }
+        )
     }
 
     /**
@@ -123,7 +131,7 @@ class KafkaTopics(
         replication: Short
     ): Boolean {
         ensureInitialized()
-        return createTopics(catalogue.topicNames, partitions, replication)
+        return createTopics(topicNames(catalogue), partitions, replication)
     }
 
     override fun createTopics(
@@ -147,7 +155,15 @@ class KafkaTopics(
                         return@filter true
                     }
                 }
-                .map { t -> NewTopic(t, partitions, replication) }
+                .map { t ->
+                    val topicConfig = toolConfig.topics[t]
+                        ?: TopicConfig()
+                    NewTopic(
+                        t,
+                        topicConfig.partitions ?: partitions,
+                        topicConfig.replicationFactor ?: replication,
+                    ).configs(topicConfig.properties)
+                }
                 .toList()
 
             if (newTopics.isNotEmpty()) {
@@ -200,8 +216,9 @@ class KafkaTopics(
 
     override fun getTopics(): Set<String> {
         ensureInitialized()
-        checkNotNull(topics)
-        return Collections.unmodifiableSet(checkNotNull(topics))
+        return Collections.unmodifiableSet(checkNotNull(topics) {
+            "Topics were not properly initialized"
+        })
     }
 
     override fun close() {
@@ -228,36 +245,27 @@ class KafkaTopics(
         return adminClient
     }
 
-    override fun getKafkaProperties(): Map<String, Any?> {
-        return kafkaProperties
-    }
+    override fun getKafkaProperties(): Map<String, Any?> = toolConfig.kafka
 
     companion object {
         private val logger = LoggerFactory.getLogger(KafkaTopics::class.java)
         private val MAX_SLEEP = Duration.ofSeconds(32)
         @JvmStatic
-        @Throws(IOException::class)
-        fun loadConfig(
-            configFile: String?,
+        fun ToolConfig.configureKafka(
             bootstrapServers: String?
-        ): Map<String, Any?> {
-            val kafkaConfig: MutableMap<String, Any?> = LinkedHashMap<String, Any?>()
-
-            if (!configFile.isNullOrEmpty()) {
-                val cfg = Properties()
-                Paths.get(configFile).inputStream().use { cfg.load(it) }
-                cfg.forEach { (k, v) ->
-                    kafkaConfig[k as String] = v
+        ): ToolConfig = if (bootstrapServers.isNullOrEmpty()) {
+            check(BOOTSTRAP_SERVERS_CONFIG in kafka) {
+                "Cannot configure Kafka without $BOOTSTRAP_SERVERS_CONFIG property"
+            }
+            this
+        } else {
+            copy(kafka = buildMap {
+                putAll(kafka)
+                put(BOOTSTRAP_SERVERS_CONFIG, bootstrapServers)
+                System.getenv("KAFKA_SASL_JAAS_CONFIG")?.let {
+                    put(SASL_JAAS_CONFIG, it)
                 }
-            }
-            if (!bootstrapServers.isNullOrEmpty()) {
-                kafkaConfig[AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG] = bootstrapServers
-            }
-            checkNotNull(kafkaConfig[AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG]) {
-                ("Cannot configure Kafka without "
-                    + AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG + " property")
-            }
-            return kafkaConfig
+            })
         }
 
         fun retrySequence(startSleep: Duration, maxSleep: Duration): Sequence<Duration> {
@@ -271,7 +279,9 @@ class KafkaTopics(
                         logger.info("Waiting {} seconds to retry", (sleepMillis / 100) / 10.0)
                         Thread.sleep(sleepMillis)
                     }
-                    sleep.multipliedBy(2L).coerceAtMost(maxSleep)
+                    if (sleep < maxSleep) {
+                        sleep.multipliedBy(2L).coerceAtMost(maxSleep)
+                    } else sleep
                 }
                 Pair(nextSleep, Instant.now())
             }.map { (sleep, _) -> sleep }
