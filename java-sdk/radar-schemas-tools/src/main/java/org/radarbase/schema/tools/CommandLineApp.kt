@@ -23,14 +23,13 @@ import net.sourceforge.argparse4j.inf.Namespace
 import org.apache.logging.log4j.Level
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.core.config.Configurator
+import org.radarbase.schema.specification.DataProducer
 import org.radarbase.schema.specification.DataTopic
 import org.radarbase.schema.specification.SourceCatalogue
-import org.radarbase.schema.specification.stream.StreamGroup
 import org.slf4j.LoggerFactory
 import java.io.IOException
 import java.nio.file.Path
 import java.nio.file.Paths
-import java.util.*
 import java.util.stream.Stream
 import kotlin.system.exitProcess
 
@@ -64,30 +63,35 @@ class CommandLineApp(val root: Path) {
 
     val resultsCacheTopics: Stream<String>
         get() = catalogue.streamGroups.values.stream()
-            .flatMap { obj: StreamGroup -> obj.timedTopicNames }
+            .flatMap { it.timedTopicNames }
 
     fun getTopicsVerbose(prettyPrint: Boolean, source: String?): Stream<String> {
-        return catalogue.sources.parallelStream()
-            .filter { s ->
-                (source == null
-                    || source.equals("${s.scope} - ${s.name}", ignoreCase = true))
+        var stream = catalogue.sources.parallelStream()
+        if (source != null) {
+            stream = stream.filter { s ->
+                source.equals(s.verboseName, ignoreCase = true)
             }
-            .map { s ->
-                ("${s.scope} - ${s.name}\n"
-                    + s.data.asSequence()
-                    .sortedBy { it.topic }
-                    .joinToString(separator = "\n") { t: DataTopic ->
-                        var details = t.toString(prettyPrint)
-                        details = t.toString(prettyPrint)
-                            .substring(0, details.length - 1)
-                            .replace("\n", "\n    ")
-                        "  ${t.topic}\n    $details"
-                    })
-            }
+        }
+        return stream.map { s ->
+            val dataTopicsString = s.data.asSequence()
+                .sortedBy { it.topic }
+                .joinToString(separator = "\n") { it.toVerboseString(prettyPrint) }
+            "${s.verboseName}\n$dataTopicsString"
+        }
     }
 
     companion object {
         private val logger = LoggerFactory.getLogger(CommandLineApp::class.java)
+
+        fun DataTopic.toVerboseString(prettyPrint: Boolean): String {
+            val details = toString(prettyPrint)
+                .dropLast(1)
+                .replace("\n", "\n    ")
+            return "  ${topic}\n    $details"
+        }
+
+        val DataProducer<*>.verboseName: String
+            get() = "$scope - $name"
 
         /**
          * Command to execute.
@@ -100,7 +104,7 @@ class CommandLineApp(val root: Path) {
                 ListCommand(),
                 ValidatorCommand(),
                 SchemaTopicManagerCommand(),
-            ).associateByTo(TreeMap()) { it.name }
+            ).sortedBy { it.name }
             val parser = getArgumentParser(subCommands)
 
             val ns: Namespace = try {
@@ -127,23 +131,24 @@ class CommandLineApp(val root: Path) {
                 logger.error("Failed to load catalog from root.")
                 exitProcess(1)
             }
-            val command = subCommands[ns.getString("subparser")]
-            if (command == null) {
-                parser.handleError(ArgumentParserException(
-                    "Subcommand " + ns.getString("subparser") + " not implemented",
-                    parser))
-            } else {
-                exitProcess(command.execute(ns, app))
-            }
+            val subparser = ns.getString("subparser")
+            val command = subCommands.find { it.name == subparser }
+                ?: run {
+                    parser.handleError(
+                        ArgumentParserException("Subcommand $subparser not implemented", parser),
+                    )
+                    exitProcess(1)
+                }
+            exitProcess(command.execute(ns, app))
         }
 
-        private fun getArgumentParser(subCommands: SortedMap<String, SubCommand>): ArgumentParser {
+        private fun getArgumentParser(subCommands: List<SubCommand>): ArgumentParser {
             val parser = ArgumentParsers.newFor("radar-schemas-tools")
                 .addHelp(true)
                 .build()
                 .description("Schema tools")
             val subParsers = parser.addSubparsers().dest("subparser")
-            for (command in subCommands.values) {
+            for (command in subCommands) {
                 command.addParser(subParsers.addParser(command.name, true))
             }
             return parser

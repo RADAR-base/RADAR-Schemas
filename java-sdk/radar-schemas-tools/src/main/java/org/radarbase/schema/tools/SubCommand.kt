@@ -48,8 +48,8 @@ interface SubCommand {
         fun ArgumentParser.addRootArgument() {
             addArgument("root")
                 .nargs("?")
-                .help("Root schemas directory with a specifications and commons directory").default =
-                "."
+                .help("Root schemas directory with a specifications and commons directory")
+                .default = "."
         }
     }
 }

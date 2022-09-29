@@ -90,7 +90,6 @@ class KafkaTopicsCommand : SubCommand {
     }
 
     companion object {
-        private val logger = LoggerFactory.getLogger(
-            KafkaTopicsCommand::class.java)
+        private val logger = LoggerFactory.getLogger(KafkaTopicsCommand::class.java)
     }
 }
