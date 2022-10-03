@@ -56,7 +56,9 @@ configure(listOf(
     apply(plugin = "application")
 
     extensions.configure(JavaApplication::class) {
-        applicationDefaultJvmArgs = listOf("-Djava.util.logging.manager=org.apache.logging.log4j.jul.LogManager")
+        applicationDefaultJvmArgs = listOf(
+            "-Djava.util.logging.manager=org.apache.logging.log4j.jul.LogManager",
+        )
     }
 
     setJavaVersion(17)

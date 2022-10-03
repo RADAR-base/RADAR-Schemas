@@ -88,8 +88,8 @@ class KafkaTopics(
         catalogue: SourceCatalogue,
         partitions: Int,
         replication: Short,
-        topic: String,
-        match: String
+        topic: String?,
+        match: String?,
     ): Int {
         val pattern = TopicRegistrar.matchTopic(topic, match)
         return if (pattern == null) {

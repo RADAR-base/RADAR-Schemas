@@ -16,7 +16,7 @@ class KafkaTopicsCommand : SubCommand {
 
     override fun execute(options: Namespace, app: CommandLineApp): Int {
         val brokers = options.getInt("brokers")
-        val replication = options.getShort("replication")
+        val replication = options.getShort("replication") ?: 3
         if (brokers < replication) {
             logger.error("Cannot assign a replication factor {}"
                 + " higher than number of brokers {}", replication, brokers)
@@ -34,7 +34,7 @@ class KafkaTopicsCommand : SubCommand {
                     return 1
                 }
                 return topics.createTopics(app.catalogue,
-                    options.getInt("partitions"),
+                    options.getInt("partitions") ?: 3,
                     replication,
                     options.getString("topic"),
                     options.getString("match"))

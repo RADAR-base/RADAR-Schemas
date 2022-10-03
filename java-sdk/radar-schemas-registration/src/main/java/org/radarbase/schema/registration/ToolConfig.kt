@@ -17,7 +17,9 @@ data class ToolConfig(
 
 @Throws(IOException::class)
 fun loadToolConfig(fileName: String?): ToolConfig {
-    fileName ?: return ToolConfig()
+    if (fileName.isNullOrEmpty()) {
+        return ToolConfig()
+    }
 
     val mapper = ObjectMapper(YAMLFactory.builder().build())
         .registerModule(kotlinModule {

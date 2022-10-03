@@ -23,7 +23,6 @@ import net.sourceforge.argparse4j.inf.Namespace
 import org.apache.logging.log4j.Level
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.core.config.Configurator
-import org.radarbase.schema.registration.KafkaTopics.Companion.configureKafka
 import org.radarbase.schema.registration.ToolConfig
 import org.radarbase.schema.registration.loadToolConfig
 import org.radarbase.schema.specification.DataProducer
@@ -114,6 +113,7 @@ class CommandLineApp(
                 ValidatorCommand(),
                 SchemaTopicManagerCommand(),
             ).sortedBy { it.name }
+
             val parser = getArgumentParser(subCommands)
 
             val ns: Namespace = try {
@@ -126,23 +126,13 @@ class CommandLineApp(
                 exitProcess(1)
             }
 
-            val isVerbose = ns.getBoolean("verbose")
-            if (isVerbose == true) {
-                Configurator.setAllLevels(LogManager.getRootLogger().name, Level.DEBUG)
-            }
-            val isQuiet = ns.getBoolean("quiet")
-            if (isQuiet == true) {
-                Configurator.setAllLevels(LogManager.getRootLogger().name, Level.ERROR)
-            }
-            val toolConfigFile = ns.getString("config")
-            val toolConfig = try {
-                loadToolConfig(toolConfigFile)
-            } catch (ex: IOException) {
-                logger.error("Cannot configure Kafka client: {}", ex.message)
-                exitProcess(1)
-            }
+            processLoggingOptions(ns)
+
             val root = Paths.get(ns.getString("root")).toAbsolutePath()
-            toolConfig.exclude.root = root
+            val toolConfig = loadConfig(ns.getString("config")).apply {
+                exclude.root = root
+            }
+
             val app: CommandLineApp = try {
                 CommandLineApp(root, toolConfig)
             } catch (e: IOException) {
@@ -158,6 +148,22 @@ class CommandLineApp(
                     exitProcess(1)
                 }
             exitProcess(command.execute(ns, app))
+        }
+
+        private fun loadConfig(fileName: String): ToolConfig = try {
+            loadToolConfig(fileName)
+        } catch (ex: IOException) {
+            logger.error("Cannot configure radar-schemas-tools client from config file {}: {}",
+                fileName, ex.message)
+            exitProcess(1)
+        }
+        private fun processLoggingOptions(ns: Namespace) {
+            if (ns.getBoolean("verbose") == true) {
+                Configurator.setAllLevels(LogManager.getRootLogger().name, Level.DEBUG)
+            }
+            if (ns.getBoolean("quiet") == true) {
+                Configurator.setAllLevels(LogManager.getRootLogger().name, Level.ERROR)
+            }
         }
 
         private fun getArgumentParser(subCommands: List<SubCommand>): ArgumentParser {

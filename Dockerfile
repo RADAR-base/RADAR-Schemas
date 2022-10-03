@@ -33,7 +33,7 @@ ENV KAFKA_SCHEMA_REGISTRY=http://schema-registry-1:8081 \
     KAFKA_NUM_REPLICATION=3 \
     KAFKA_NUM_BROKERS=3 \
     KAFKA_BOOTSTRAP_SERVERS="" \
-    KAFKA_CONFIG_PATH="" \
+    CONFIG_PATH="" \
     NO_VALIDATE=""
 
 RUN apt-get update && apt-get install -y \
