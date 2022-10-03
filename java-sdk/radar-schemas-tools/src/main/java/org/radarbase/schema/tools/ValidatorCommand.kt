@@ -7,10 +7,7 @@ import org.radarbase.schema.Scope
 import org.radarbase.schema.tools.SubCommand.Companion.addRootArgument
 import org.radarbase.schema.validation.SchemaValidator
 import org.radarbase.schema.validation.ValidationException
-import org.radarbase.schema.validation.config.ExcludeConfig
 import java.io.IOException
-import java.nio.file.Path
-import java.nio.file.Paths
 import java.util.stream.Stream
 import kotlin.streams.asSequence
 
@@ -110,19 +107,5 @@ class ValidatorCommand : SubCommand {
         }
         stream.count() > 0 -> 1
         else -> 0
-    }
-
-    companion object {
-        @Throws(IOException::class)
-        private fun loadConfig(root: Path, configSubPath: String?): ExcludeConfig {
-            val configPath = if (configSubPath != null) {
-                if (configSubPath[0] == '/') {
-                    Paths.get(configSubPath)
-                } else {
-                    root.resolve(configSubPath)
-                }
-            } else null
-            return ExcludeConfig.load(configPath)
-        }
     }
 }
