@@ -20,6 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.radarbase.schema.validation.config.ExcludeConfig.VALID_INPUT_PATTERN;
 
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import org.junit.jupiter.api.Test;
@@ -42,23 +43,26 @@ public class ExcludeConfigTest {
 
         config.setFiles("*.md");
 
-        assertTrue(config.skipFile(Paths.get(root, "commons/passive/empatica/README.md")));
+        Path empaticaReadmePath = Paths.get(root, "commons/passive/empatica/README.md");
+        assertTrue(config.skipFile(empaticaReadmePath));
         assertFalse(config.skipFile(Paths.get("specification/passive/schema.avsc")));
 
         config.setFiles("commons/**/*.md");
 
-        assertTrue(config.skipFile(Paths.get(root, "commons/passive/empatica/README.md")));
-        assertFalse(config.skipFile(Paths.get(root, "specification/passive/README.md")));
+        assertTrue(config.skipFile(empaticaReadmePath));
+        Path passiveReadmePath = Paths.get(root, "specification/passive/README.md");
+        assertFalse(config.skipFile(passiveReadmePath));
 
         config.setFiles("commons/**/README.md");
 
-        assertTrue(config.skipFile(Paths.get(root, "commons/passive/empatica/README.md")));
-        assertFalse(config.skipFile(Paths.get(root, "specification/passive/README.md")));
+        assertTrue(config.skipFile(empaticaReadmePath));
+        assertFalse(config.skipFile(passiveReadmePath));
 
         config.setFiles(
                 "commons/monitor/application/application_external_time.avsc");
-        assertTrue(config.skipFile(Paths.get(root, "commons/monitor/application/"
-                + "application_external_time.avsc")));
+        Path externalTimePath = Paths.get(root, "commons/monitor/application/"
+                + "application_external_time.avsc");
+        assertTrue(config.skipFile(externalTimePath));
         assertFalse(config.skipFile(Paths.get(root, "commons/passive/application/"
                 + "application_external_time.avsc")));
         assertFalse(config.skipFile(Paths.get(root, "commons/monitor/application/"
@@ -67,8 +71,7 @@ public class ExcludeConfigTest {
         config.setFiles(
                 "commons/monitor/application/application_external_time.avsc",
                 "commons/**/*.avsc");
-        assertTrue(config.skipFile(Paths.get(root, "commons/monitor/application/"
-                + "application_external_time.avsc")));
+        assertTrue(config.skipFile(externalTimePath));
         assertFalse(config.skipFile(Paths.get(root, "restApi/data/acceleration.avsc")));
     }
 

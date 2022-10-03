@@ -46,6 +46,10 @@ interface SubCommand {
          * Adds the root directory as an argument. This should be called as the last option, if at all.
          */
         fun ArgumentParser.addRootArgument() {
+            addArgument("-c", "--config")
+                .help("Configuration YAML file")
+                .type(String::class.java)
+
             addArgument("root")
                 .nargs("?")
                 .help("Root schemas directory with a specifications and commons directory")

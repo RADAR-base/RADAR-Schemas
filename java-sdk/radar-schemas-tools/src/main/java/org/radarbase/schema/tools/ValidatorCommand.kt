@@ -45,8 +45,7 @@ class ValidatorCommand : SubCommand {
             ?.let { Scope.valueOf(it) }
 
         return try {
-            val config = loadConfig(app.root, options.getString("config"))
-            val validator = SchemaValidator(app.root, config)
+            val validator = SchemaValidator(app.root, app.config.exclude)
 
             var exceptionStream = Stream.empty<ValidationException>()
             if (options.getBoolean("full")) {
@@ -75,8 +74,6 @@ class ValidatorCommand : SubCommand {
             addArgument("-s", "--scope")
                 .help("type of specifications to validate")
                 .choices(*Scope.values())
-            addArgument("-c", "--config")
-                .help("configuration file to use")
             addArgument("-v", "--verbose")
                 .help("verbose validation message")
                 .action(Arguments.storeTrue())

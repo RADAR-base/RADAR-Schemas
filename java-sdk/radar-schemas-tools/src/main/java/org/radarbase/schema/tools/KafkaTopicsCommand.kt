@@ -5,11 +5,8 @@ import net.sourceforge.argparse4j.inf.Namespace
 import org.radarbase.schema.registration.KafkaTopics
 import org.radarbase.schema.registration.KafkaTopics.Companion.configureKafka
 import org.radarbase.schema.registration.ToolConfig
-import org.radarbase.schema.registration.loadToolConfig
 import org.radarbase.schema.tools.SubCommand.Companion.addRootArgument
 import org.slf4j.LoggerFactory
-import java.io.IOException
-import java.lang.IllegalStateException
 
 /**
  * Create a KafkaTopics command to register topics from the command line.
@@ -25,14 +22,8 @@ class KafkaTopicsCommand : SubCommand {
                 + " higher than number of brokers {}", replication, brokers)
             return 1
         }
-        val topicConfigurationFile = options.getString("tool_config")
-        val toolConfig: ToolConfig = try {
-            loadToolConfig(topicConfigurationFile)
-                .configureKafka(bootstrapServers = options.getString("bootstrap_servers"))
-        } catch (ex: IOException) {
-            logger.error("Cannot load tool config: {}", ex.toString())
-            return 1
-        }
+        val toolConfig: ToolConfig = app.config
+            .configureKafka(bootstrapServers = options.getString("bootstrap_servers"))
         try {
             KafkaTopics(toolConfig).use { topics ->
                 try {
@@ -81,9 +72,6 @@ class KafkaTopicsCommand : SubCommand {
                 .type(String::class.java)
             addArgument("-s", "--bootstrap-servers")
                 .help("Kafka hosts, ports and protocols, comma-separated")
-                .type(String::class.java)
-            addArgument("-c", "--config")
-                .help("Configuration YAML file")
                 .type(String::class.java)
             addRootArgument()
         }

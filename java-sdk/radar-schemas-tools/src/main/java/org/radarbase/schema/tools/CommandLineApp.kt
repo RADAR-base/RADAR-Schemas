@@ -23,6 +23,9 @@ import net.sourceforge.argparse4j.inf.Namespace
 import org.apache.logging.log4j.Level
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.core.config.Configurator
+import org.radarbase.schema.registration.KafkaTopics.Companion.configureKafka
+import org.radarbase.schema.registration.ToolConfig
+import org.radarbase.schema.registration.loadToolConfig
 import org.radarbase.schema.specification.DataProducer
 import org.radarbase.schema.specification.DataTopic
 import org.radarbase.schema.specification.SourceCatalogue
@@ -40,7 +43,10 @@ import kotlin.system.exitProcess
  * @param root path to the root of a RADAR-Schemas directory.
  * @throws IOException if the source catalogue cannot be loaded.
  */
-class CommandLineApp(val root: Path) {
+class CommandLineApp(
+    val root: Path,
+    val config: ToolConfig,
+) {
     val catalogue: SourceCatalogue = SourceCatalogue.load(root)
 
     init {
@@ -48,7 +54,10 @@ class CommandLineApp(val root: Path) {
     }
 
     val topicsToCreate: Stream<String>
-        get() = catalogue.topicNames
+        get() = Stream.concat(
+            catalogue.topicNames,
+            config.topics.keys.stream(),
+        )
 
     val rawTopics: Stream<String>
         get() = Stream.of(
@@ -125,8 +134,17 @@ class CommandLineApp(val root: Path) {
             if (isQuiet == true) {
                 Configurator.setAllLevels(LogManager.getRootLogger().name, Level.ERROR)
             }
+            val toolConfigFile = ns.getString("config")
+            val toolConfig = try {
+                loadToolConfig(toolConfigFile)
+            } catch (ex: IOException) {
+                logger.error("Cannot configure Kafka client: {}", ex.message)
+                exitProcess(1)
+            }
+            val root = Paths.get(ns.getString("root")).toAbsolutePath()
+            toolConfig.exclude.root = root
             val app: CommandLineApp = try {
-                CommandLineApp(Paths.get(ns.getString("root")).toAbsolutePath())
+                CommandLineApp(root, toolConfig)
             } catch (e: IOException) {
                 logger.error("Failed to load catalog from root.")
                 exitProcess(1)

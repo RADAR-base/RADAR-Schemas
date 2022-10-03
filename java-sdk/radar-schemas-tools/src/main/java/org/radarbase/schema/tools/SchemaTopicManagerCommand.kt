@@ -7,7 +7,6 @@ import org.radarbase.schema.registration.*
 import org.radarbase.schema.registration.KafkaTopics.Companion.configureKafka
 import org.radarbase.schema.tools.SubCommand.Companion.addRootArgument
 import org.slf4j.LoggerFactory
-import java.io.IOException
 import java.nio.file.Paths
 import java.time.Duration
 
@@ -15,14 +14,8 @@ class SchemaTopicManagerCommand : SubCommand {
     override val name = "schema-topic"
 
     override fun execute(options: Namespace, app: CommandLineApp): Int {
-        val toolConfigFile = options.getString("config")
-        val toolConfig = try {
-            loadToolConfig(toolConfigFile)
+        val toolConfig = app.config
                 .configureKafka(bootstrapServers = options.getString("bootstrap_servers"))
-        } catch (ex: IOException) {
-            logger.error("Cannot configure Kafka client: {}", ex.message)
-            return 1
-        }
         try {
             KafkaTopics(toolConfig).use { topics ->
                 val jsonStorage = JsonSchemaBackupStorage(
@@ -82,9 +75,6 @@ class SchemaTopicManagerCommand : SubCommand {
                 .type(Int::class.java).default = 3
             addArgument("-s", "--bootstrap-servers")
                 .help("Kafka hosts, ports and protocols, comma-separated")
-                .type(String::class.java)
-            addArgument("-c", "--config")
-                .help("File path YAML configuration file")
                 .type(String::class.java)
             addRootArgument()
         }

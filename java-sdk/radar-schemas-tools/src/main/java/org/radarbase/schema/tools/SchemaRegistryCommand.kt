@@ -6,11 +6,9 @@ import net.sourceforge.argparse4j.inf.Namespace
 import org.radarbase.schema.registration.SchemaRegistry
 import org.radarbase.schema.registration.ToolConfig
 import org.radarbase.schema.registration.TopicRegistrar
-import org.radarbase.schema.registration.loadToolConfig
 import org.radarbase.schema.tools.SubCommand.Companion.addRootArgument
 import org.slf4j.LoggerFactory
 import java.io.IOException
-import java.lang.IllegalStateException
 import java.net.MalformedURLException
 import java.util.regex.Pattern
 
@@ -25,8 +23,7 @@ class SchemaRegistryCommand : SubCommand {
             ?: System.getenv("SCHEMA_REGISTRY_API_SECRET")
         val toolConfigFile = options.getString("config")
         return try {
-            val toolConfig: ToolConfig = loadToolConfig(toolConfigFile)
-            val registration = createSchemaRegistry(url, apiKey, apiSecret, toolConfig)
+            val registration = createSchemaRegistry(url, apiKey, apiSecret, app.config)
             val forced = options.getBoolean("force")
             if (forced && !registration.putCompatibility(SchemaRegistry.Compatibility.NONE)) {
                 return 1
@@ -73,9 +70,6 @@ class SchemaRegistryCommand : SubCommand {
                 .help("Client password to authorize with.")
             addArgument("-p", "--api-secret")
                 .help("Client key to authorize with.")
-            addArgument("-c", "--config")
-                .help("Configuration YAML file")
-                .type(String::class.java)
             addRootArgument()
         }
     }
