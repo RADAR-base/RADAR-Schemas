@@ -82,22 +82,22 @@ public class SourceCatalogueService {
         private List<ConnectorSource> connectorSources;
 
         private SourceTypeResponse addPassive() {
-            this.passiveSources = new ArrayList<>(sourceCatalogue.getPassiveSources().values());
+            this.passiveSources = new ArrayList<>(sourceCatalogue.getPassiveSources());
             return this;
         }
 
         private SourceTypeResponse addActive() {
-            this.activeSources = new ArrayList<>(sourceCatalogue.getActiveSources().values());
+            this.activeSources = new ArrayList<>(sourceCatalogue.getActiveSources());
             return this;
         }
 
         private SourceTypeResponse addMonitor() {
-            this.monitorSources = new ArrayList<>(sourceCatalogue.getMonitorSources().values());
+            this.monitorSources = new ArrayList<>(sourceCatalogue.getMonitorSources());
             return this;
         }
 
         private SourceTypeResponse addConnector() {
-            this.connectorSources = new ArrayList<>(sourceCatalogue.getConnectorSources().values());
+            this.connectorSources = new ArrayList<>(sourceCatalogue.getConnectorSources());
             return this;
         }
 

@@ -5,6 +5,8 @@ import org.apache.kafka.clients.admin.AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG
 import org.apache.kafka.clients.admin.ListTopicsOptions
 import org.apache.kafka.clients.admin.NewTopic
 import org.apache.kafka.common.config.SaslConfigs.SASL_JAAS_CONFIG
+import org.radarbase.schema.registration.config.ToolConfig
+import org.radarbase.schema.registration.config.TopicConfig
 import org.radarbase.schema.specification.SourceCatalogue
 import org.slf4j.LoggerFactory
 import java.time.Duration

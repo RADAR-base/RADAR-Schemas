@@ -1,9 +1,10 @@
-package org.radarbase.schema.registration
+package org.radarbase.schema.registration.config
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import com.fasterxml.jackson.module.kotlin.KotlinFeature
 import com.fasterxml.jackson.module.kotlin.kotlinModule
+import org.radarbase.schema.specification.config.SourceConfig
 import org.radarbase.schema.validation.config.ExcludeConfig
 import java.io.IOException
 import java.nio.file.Paths
@@ -13,6 +14,7 @@ data class ToolConfig(
     val kafka: Map<String, Any> = emptyMap(),
     val topics: Map<String, TopicConfig> = emptyMap(),
     val exclude: ExcludeConfig = ExcludeConfig(),
+    val sources: SourceConfig = SourceConfig()
 )
 
 @Throws(IOException::class)

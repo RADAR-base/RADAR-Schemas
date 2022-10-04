@@ -23,8 +23,8 @@ import net.sourceforge.argparse4j.inf.Namespace
 import org.apache.logging.log4j.Level
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.core.config.Configurator
-import org.radarbase.schema.registration.ToolConfig
-import org.radarbase.schema.registration.loadToolConfig
+import org.radarbase.schema.registration.config.ToolConfig
+import org.radarbase.schema.registration.config.loadToolConfig
 import org.radarbase.schema.specification.DataProducer
 import org.radarbase.schema.specification.DataTopic
 import org.radarbase.schema.specification.SourceCatalogue
@@ -66,11 +66,11 @@ class CommandLineApp(
             catalogue.connectorSources,
             catalogue.pushSources,
         )
-            .flatMap { it.values.stream() }
+            .flatMap { it.stream() }
             .flatMap { it.topicNames }
 
     val resultsCacheTopics: Stream<String>
-        get() = catalogue.streamGroups.values.stream()
+        get() = catalogue.streamGroups.stream()
             .flatMap { it.timedTopicNames }
 
     fun getTopicsVerbose(prettyPrint: Boolean, source: String?): Stream<String> {

@@ -97,7 +97,7 @@ public class SourceCatalogueServer implements Closeable {
         }
 
         // Processing state cannot be imported by ManagementPortal at this time.
-        sourceCatalogue.getPassiveSources().values().stream()
+        sourceCatalogue.getPassiveSources().stream()
                 .flatMap(s -> s.getData().stream())
                 .forEach(d -> d.setProcessingState(null));
 

@@ -22,13 +22,15 @@ import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import java.io.IOException;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
+import java.nio.file.PathMatcher;
 import java.nio.file.Paths;
 import java.util.HashSet;
-import java.util.Locale;
-import java.util.Map;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -36,6 +38,7 @@ import java.util.stream.Stream;
 import org.radarbase.schema.SchemaCatalogue;
 import org.radarbase.schema.Scope;
 import org.radarbase.schema.specification.active.ActiveSource;
+import org.radarbase.schema.specification.config.SourceConfig;
 import org.radarbase.schema.specification.connector.ConnectorSource;
 import org.radarbase.schema.specification.monitor.MonitorSource;
 import org.radarbase.schema.specification.passive.PassiveSource;
@@ -53,12 +56,12 @@ public class SourceCatalogue {
 
     public static final Path BASE_PATH = Paths.get("../..").toAbsolutePath().normalize();
 
-    private final Map<String, ActiveSource<?>> activeSources;
-    private final Map<String, MonitorSource> monitorSources;
-    private final Map<String, PassiveSource> passiveSources;
-    private final Map<String, ConnectorSource> connectorSources;
-    private final Map<String, StreamGroup> streamGroups;
-    private final Map<String, PushSource> pushSources;
+    private final List<ActiveSource<?>> activeSources;
+    private final List<MonitorSource> monitorSources;
+    private final List<PassiveSource> passiveSources;
+    private final List<ConnectorSource> connectorSources;
+    private final List<StreamGroup> streamGroups;
+    private final List<PushSource> pushSources;
 
     private final Set<DataProducer<?>> sources;
     private final SchemaCatalogue schemaCatalogue;
@@ -66,12 +69,12 @@ public class SourceCatalogue {
     @SuppressWarnings("WeakerAccess")
     SourceCatalogue(
             SchemaCatalogue schemaCatalogue,
-            Map<String, ActiveSource<?>> activeSources,
-            Map<String, MonitorSource> monitorSources,
-            Map<String, PassiveSource> passiveSources,
-            Map<String, StreamGroup> streamGroups,
-            Map<String, ConnectorSource> connectorSources,
-            Map<String, PushSource> pushSources) {
+            List<ActiveSource<?>> activeSources,
+            List<MonitorSource> monitorSources,
+            List<PassiveSource> passiveSources,
+            List<StreamGroup> streamGroups,
+            List<ConnectorSource> connectorSources,
+            List<PushSource> pushSources) {
         this.schemaCatalogue = schemaCatalogue;
 
         this.activeSources = activeSources;
@@ -83,12 +86,12 @@ public class SourceCatalogue {
 
         sources = new HashSet<>();
 
-        sources.addAll(activeSources.values());
-        sources.addAll(monitorSources.values());
-        sources.addAll(passiveSources.values());
-        sources.addAll(streamGroups.values());
-        sources.addAll(connectorSources.values());
-        sources.addAll(pushSources.values());
+        sources.addAll(activeSources);
+        sources.addAll(monitorSources);
+        sources.addAll(passiveSources);
+        sources.addAll(streamGroups);
+        sources.addAll(connectorSources);
+        sources.addAll(pushSources);
     }
 
     /**
@@ -100,6 +103,18 @@ public class SourceCatalogue {
      * @throws IOException if the source catalogue could not be read.
      */
     public static SourceCatalogue load(Path root) throws IOException {
+        return load(root, new SourceConfig());
+    }
+
+    /**
+     * Load the source catalogue based at the given root directory.
+     * @param root Directory containing a specifications subdirectory.
+     * @return parsed source catalogue.
+     * @throws InvalidPathException if the {@code specifications} directory cannot be found in given
+     *                              root.
+     * @throws IOException if the source catalogue could not be read.
+     */
+    public static SourceCatalogue load(Path root, SourceConfig sourceConfig) throws IOException {
         Path specRoot = root.resolve("specifications");
 
         ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
@@ -117,41 +132,40 @@ public class SourceCatalogue {
 
         return new SourceCatalogue(
                 schemaCatalogue,
-                initSources(mapper.readerFor(ActiveSource.class), specRoot, Scope.ACTIVE),
-                initSources(mapper.readerFor(MonitorSource.class), specRoot, Scope.MONITOR),
-                initSources(mapper.readerFor(PassiveSource.class), specRoot, Scope.PASSIVE),
-                initSources(mapper.readerFor(StreamGroup.class), specRoot, Scope.STREAM),
-                initSources(mapper.readerFor(ConnectorSource.class), specRoot, Scope.CONNECTOR),
-                initSources(mapper.readerFor(PushSource.class), specRoot, Scope.PUSH));
+                initSources(mapper.readerFor(ActiveSource.class), specRoot, Scope.ACTIVE, sourceConfig, sourceConfig.getActive()),
+                initSources(mapper.readerFor(MonitorSource.class), specRoot, Scope.MONITOR, sourceConfig, sourceConfig.getMonitor()),
+                initSources(mapper.readerFor(PassiveSource.class), specRoot, Scope.PASSIVE, sourceConfig, sourceConfig.getPassive()),
+                initSources(mapper.readerFor(StreamGroup.class), specRoot, Scope.STREAM, sourceConfig, sourceConfig.getStream()),
+                initSources(mapper.readerFor(ConnectorSource.class), specRoot, Scope.CONNECTOR, sourceConfig, sourceConfig.getConnector()),
+                initSources(mapper.readerFor(PushSource.class), specRoot, Scope.PUSH, sourceConfig, sourceConfig.getPush()));
     }
 
-    private static <T> Map<String, T> initSources(ObjectReader reader, Path root, Scope scope)
-            throws IOException {
+    private static <T> List<T> initSources(ObjectReader reader, Path root, Scope scope,
+            SourceConfig sourceConfig, List<T> otherSources) throws IOException {
         Path baseFolder = scope.getPath(root);
         if (baseFolder == null) {
             logger.info(scope + " sources folder not present");
-            return Map.of();
+            return otherSources;
         }
 
-        return Files.walk(baseFolder)
-                .filter(Files::isRegularFile)
-                .map(f -> {
-                    String filename = f.getFileName().toString();
-                    int extensionIndex = filename.lastIndexOf('.');
-                    if (extensionIndex != -1) {
-                        filename = filename.substring(0, extensionIndex);
-                    }
-                    try {
-                        return Map.entry(
-                                filename.toUpperCase(Locale.ENGLISH),
-                                reader.<T>readValue(f.toFile()));
-                    } catch (IOException ex) {
-                        logger.error("Failed to load configuration {}: {}", f, ex.toString());
-                        return null;
-                    }
-                })
-                .filter(Objects::nonNull)
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        FileSystem fs = FileSystems.getDefault();
+        PathMatcher pathMatcher = sourceConfig.pathMatcher(fs);
+        try (Stream<Path> walker = Files.walk(baseFolder)) {
+            Stream<T> fileSources = walker
+                    .filter(f -> Files.isRegularFile(f) && pathMatcher.matches(f))
+                    .map(f -> {
+                        try {
+                            return reader.<T>readValue(f.toFile());
+                        } catch (IOException ex) {
+                            logger.error("Failed to load configuration {}: {}", f, ex.toString());
+                            return null;
+                        }
+                    })
+                    .filter(Objects::nonNull);
+
+            return Stream.concat(fileSources, otherSources.stream())
+                    .collect(Collectors.toList());
+        }
     }
 
     public SchemaCatalogue getSchemaCatalogue() {
@@ -162,54 +176,27 @@ public class SourceCatalogue {
      * TODO.
      * @return TODO
      */
-    public Map<String, ActiveSource<?>> getActiveSources() {
+    public List<ActiveSource<?>> getActiveSources() {
         return activeSources;
     }
 
     /**
      * TODO.
-     * @param topic TODO
      * @return TODO
      */
-    public ActiveSource<?> getActiveSource(String topic) {
-        return activeSources.get(topic);
-    }
-
-    /**
-     * TODO.
-     * @return TODO
-     */
-    public Map<String, MonitorSource> getMonitorSources() {
+    public List<MonitorSource> getMonitorSources() {
         return monitorSources;
     }
 
     /**
      * TODO.
-     * @param topic TODO
      * @return TODO
      */
-    public MonitorSource getMonitorSource(String topic) {
-        return monitorSources.get(topic);
-    }
-
-    /**
-     * TODO.
-     * @return TODO
-     */
-    public Map<String, PassiveSource> getPassiveSources() {
+    public List<PassiveSource> getPassiveSources() {
         return passiveSources;
     }
 
-    /**
-     * TODO.
-     * @param topic TODO
-     * @return TODO
-     */
-    public PassiveSource getPassiveSource(String topic) {
-        return passiveSources.get(topic);
-    }
-
-    public Map<String, StreamGroup> getStreamGroups() {
+    public List<StreamGroup> getStreamGroups() {
         return streamGroups;
     }
 
@@ -230,11 +217,11 @@ public class SourceCatalogue {
      * TODO.
      * @return TODO
      */
-    public Map<String, ConnectorSource> getConnectorSources() {
+    public List<ConnectorSource> getConnectorSources() {
         return connectorSources;
     }
 
-    public Map<String, PushSource> getPushSources() {
+    public List<PushSource> getPushSources() {
         return pushSources;
     }
 

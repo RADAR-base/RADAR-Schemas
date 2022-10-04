@@ -4,7 +4,7 @@ import net.sourceforge.argparse4j.impl.Arguments
 import net.sourceforge.argparse4j.inf.ArgumentParser
 import net.sourceforge.argparse4j.inf.Namespace
 import org.radarbase.schema.registration.SchemaRegistry
-import org.radarbase.schema.registration.ToolConfig
+import org.radarbase.schema.registration.config.ToolConfig
 import org.radarbase.schema.registration.TopicRegistrar
 import org.radarbase.schema.tools.SubCommand.Companion.addRootArgument
 import org.slf4j.LoggerFactory

@@ -4,7 +4,7 @@ import net.sourceforge.argparse4j.inf.ArgumentParser
 import net.sourceforge.argparse4j.inf.Namespace
 import org.radarbase.schema.registration.KafkaTopics
 import org.radarbase.schema.registration.KafkaTopics.Companion.configureKafka
-import org.radarbase.schema.registration.ToolConfig
+import org.radarbase.schema.registration.config.ToolConfig
 import org.radarbase.schema.tools.SubCommand.Companion.addRootArgument
 import org.slf4j.LoggerFactory
 

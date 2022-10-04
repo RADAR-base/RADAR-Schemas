@@ -16,27 +16,26 @@
 
 package org.radarbase.schema.validation;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.opentest4j.MultipleFailuresError;
+import org.radarbase.schema.specification.DataProducer;
+import org.radarbase.schema.specification.SourceCatalogue;
+
+import java.io.IOException;
+import java.util.Collection;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.radarbase.schema.specification.SourceCatalogue.BASE_PATH;
 import static org.radarbase.schema.validation.ValidationHelper.isValidTopic;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import java.io.IOException;
-import java.lang.reflect.Executable;
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.opentest4j.MultipleFailuresError;
-import org.radarbase.schema.specification.DataProducer;
-import org.radarbase.schema.specification.SourceCatalogue;
 
 /**
  * TODO.
@@ -64,7 +63,7 @@ public class SourceCatalogueValidationTest {
                 catalogue.getStreamGroups(),
                 catalogue.getConnectorSources(),
                 catalogue.getPushSources())
-                .flatMap(map -> map.values().stream())
+                .flatMap(Collection::stream)
                 .flatMap(DataProducer::getTopicNames)
                 .sorted()
                 .collect(Collectors.toList());
