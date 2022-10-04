@@ -55,8 +55,6 @@ public class ConfigItem {
 
     /**
      * TODO.
-     *
-     * @return TODO
      */
     @JsonSetter("fields")
     public void setFields(Collection<String> fields) {

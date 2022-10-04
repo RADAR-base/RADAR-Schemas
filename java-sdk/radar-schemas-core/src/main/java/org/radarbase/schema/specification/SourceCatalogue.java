@@ -132,14 +132,21 @@ public class SourceCatalogue {
 
         return new SourceCatalogue(
                 schemaCatalogue,
-                initSources(mapper.readerFor(ActiveSource.class), specRoot, Scope.ACTIVE, sourceConfig, sourceConfig.getActive()),
-                initSources(mapper.readerFor(MonitorSource.class), specRoot, Scope.MONITOR, sourceConfig, sourceConfig.getMonitor()),
-                initSources(mapper.readerFor(PassiveSource.class), specRoot, Scope.PASSIVE, sourceConfig, sourceConfig.getPassive()),
-                initSources(mapper.readerFor(StreamGroup.class), specRoot, Scope.STREAM, sourceConfig, sourceConfig.getStream()),
-                initSources(mapper.readerFor(ConnectorSource.class), specRoot, Scope.CONNECTOR, sourceConfig, sourceConfig.getConnector()),
-                initSources(mapper.readerFor(PushSource.class), specRoot, Scope.PUSH, sourceConfig, sourceConfig.getPush()));
+                initSources(mapper.readerFor(ActiveSource.class), specRoot, Scope.ACTIVE,
+                        sourceConfig, sourceConfig.getActive()),
+                initSources(mapper.readerFor(MonitorSource.class), specRoot, Scope.MONITOR,
+                        sourceConfig, sourceConfig.getMonitor()),
+                initSources(mapper.readerFor(PassiveSource.class), specRoot, Scope.PASSIVE,
+                        sourceConfig, sourceConfig.getPassive()),
+                initSources(mapper.readerFor(StreamGroup.class), specRoot, Scope.STREAM,
+                        sourceConfig, sourceConfig.getStream()),
+                initSources(mapper.readerFor(ConnectorSource.class), specRoot, Scope.CONNECTOR,
+                        sourceConfig, sourceConfig.getConnector()),
+                initSources(mapper.readerFor(PushSource.class), specRoot, Scope.PUSH,
+                        sourceConfig, sourceConfig.getPush()));
     }
 
+    @SuppressWarnings("PMD.CloseResource")
     private static <T> List<T> initSources(ObjectReader reader, Path root, Scope scope,
             SourceConfig sourceConfig, List<T> otherSources) throws IOException {
         Path baseFolder = scope.getPath(root);
@@ -149,8 +156,8 @@ public class SourceCatalogue {
         }
 
         FileSystem fs = FileSystems.getDefault();
-        PathMatcher pathMatcher = sourceConfig.pathMatcher(fs);
         try (Stream<Path> walker = Files.walk(baseFolder)) {
+            PathMatcher pathMatcher = sourceConfig.pathMatcher(fs);
             Stream<T> fileSources = walker
                     .filter(f -> Files.isRegularFile(f) && pathMatcher.matches(f))
                     .map(f -> {
