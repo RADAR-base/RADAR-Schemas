@@ -37,6 +37,7 @@ import java.io.IOException
 import java.nio.file.*
 import java.util.*
 import java.util.stream.Stream
+import kotlin.io.path.exists
 import kotlin.streams.asSequence
 
 class SourceCatalogue internal constructor(
@@ -121,8 +122,9 @@ class SourceCatalogue internal constructor(
             sourceRootPathMatcher: PathMatcher,
             otherSources: List<T>,
         ): List<T> {
-            val baseFolder = scope.getPath(root) ?: run {
-                logger.info("{} sources folder not present at {}", scope, root.resolve(scope.lower))
+            val baseFolder = root.resolve(scope.lower)
+            if (!baseFolder.exists()) {
+                logger.info("{} sources folder not present at {}", scope, baseFolder)
                 return otherSources
             }
             val reader = mapper.readerFor(T::class.java)

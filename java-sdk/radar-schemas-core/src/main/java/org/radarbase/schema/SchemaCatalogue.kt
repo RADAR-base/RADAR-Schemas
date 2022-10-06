@@ -16,6 +16,7 @@ import java.util.*
 import java.util.stream.Stream
 import kotlin.collections.HashMap
 import kotlin.collections.HashSet
+import kotlin.io.path.exists
 import kotlin.io.path.inputStream
 
 class SchemaCatalogue @JvmOverloads constructor(
@@ -68,18 +69,20 @@ class SchemaCatalogue @JvmOverloads constructor(
         matcher: PathMatcher,
         config: SchemaConfig
     ) {
-        val walkRoot = scope.getPath(schemaRoot) ?: return
+        val walkRoot = schemaRoot.resolve(scope.lower)
         val avroFiles = buildMap<Path, String> {
-            Files.walk(walkRoot).use<Stream<Path>, Unit> { walker ->
-                walker
-                    .filter { p ->
-                        matcher.matches(p) && SchemaValidator.isAvscFile(p)
-                    }
-                    .forEach { p ->
-                        p.inputStream().reader().use {
-                            put(p, it.readText())
+            if (walkRoot.exists()) {
+                Files.walk(walkRoot).use<Stream<Path>, Unit> { walker ->
+                    walker
+                        .filter { p ->
+                            matcher.matches(p) && SchemaValidator.isAvscFile(p)
                         }
-                    }
+                        .forEach { p ->
+                            p.inputStream().reader().use {
+                                put(p, it.readText())
+                            }
+                        }
+                }
             }
             config.schemas(scope)
                 .forEach { (key, value) ->
