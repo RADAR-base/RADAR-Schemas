@@ -5,8 +5,8 @@ import org.apache.kafka.clients.admin.AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG
 import org.apache.kafka.clients.admin.ListTopicsOptions
 import org.apache.kafka.clients.admin.NewTopic
 import org.apache.kafka.common.config.SaslConfigs.SASL_JAAS_CONFIG
-import org.radarbase.schema.registration.config.ToolConfig
-import org.radarbase.schema.registration.config.TopicConfig
+import org.radarbase.schema.specification.config.ToolConfig
+import org.radarbase.schema.specification.config.TopicConfig
 import org.radarbase.schema.specification.SourceCatalogue
 import org.slf4j.LoggerFactory
 import java.time.Duration
@@ -15,6 +15,7 @@ import java.util.*
 import java.util.concurrent.ExecutionException
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException
+import java.util.stream.Collectors
 import java.util.stream.Stream
 
 /**
@@ -99,7 +100,7 @@ class KafkaTopics(
         } else {
             val topicNames = topicNames(catalogue)
                 .filter { s -> pattern.matcher(s).find() }
-                .toList()
+                .collect(Collectors.toList())
             if (topicNames.isEmpty()) {
                 logger.error("Topic {} does not match a known topic."
                     + " Find the list of acceptable topics"
@@ -113,10 +114,8 @@ class KafkaTopics(
     private fun topicNames(catalogue: SourceCatalogue): Stream<String> {
         return Stream.concat(
             catalogue.topicNames,
-            toolConfig.topics.entries.stream()
-                .filter { (_, c) -> c.enabled }
-                .map { (t, _) -> t }
-        )
+            toolConfig.topics.keys.stream()
+        ).filter { t -> toolConfig.topics[t]?.enabled != false }
     }
 
     /**

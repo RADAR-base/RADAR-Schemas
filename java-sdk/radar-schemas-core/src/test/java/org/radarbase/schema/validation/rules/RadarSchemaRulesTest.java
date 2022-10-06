@@ -30,8 +30,8 @@ import org.apache.avro.Schema.Parser;
 import org.apache.avro.SchemaBuilder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.radarbase.schema.specification.config.SchemaConfig;
 import org.radarbase.schema.validation.ValidationException;
-import org.radarbase.schema.validation.config.ExcludeConfig;
 
 /**
  * TODO.
@@ -48,8 +48,8 @@ public class RadarSchemaRulesTest {
 
     @BeforeEach
     public void setUp() {
-        ExcludeConfig config = new ExcludeConfig();
-        validator = new RadarSchemaRules(config);
+        SchemaConfig config = new SchemaConfig();
+        validator = new RadarSchemaRules();
     }
 
     @Test

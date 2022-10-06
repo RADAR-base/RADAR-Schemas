@@ -24,6 +24,8 @@ import org.radarbase.schema.specification.DataProducer;
 import org.radarbase.schema.specification.SourceCatalogue;
 
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
@@ -34,7 +36,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
-import static org.radarbase.schema.specification.SourceCatalogue.BASE_PATH;
 import static org.radarbase.schema.validation.ValidationHelper.isValidTopic;
 
 /**
@@ -42,10 +43,12 @@ import static org.radarbase.schema.validation.ValidationHelper.isValidTopic;
  */
 public class SourceCatalogueValidationTest {
     private static SourceCatalogue catalogue;
+    public static Path BASE_PATH = Paths.get("../..").toAbsolutePath().normalize();
+
 
     @BeforeAll
     public static void setUp() throws IOException {
-        catalogue = SourceCatalogue.load(BASE_PATH);
+        catalogue = SourceCatalogue.Companion.load(BASE_PATH);
     }
 
     @Test

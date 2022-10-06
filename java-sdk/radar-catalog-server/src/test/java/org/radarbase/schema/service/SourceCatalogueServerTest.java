@@ -27,7 +27,7 @@ class SourceCatalogueServerTest {
         server = new SourceCatalogueServer(9876);
         serverThread = new Thread(() -> {
             try {
-                SourceCatalogue sourceCatalog = SourceCatalogue.load(Paths.get("../.."));
+                SourceCatalogue sourceCatalog = SourceCatalogue.Companion.load(Paths.get("../.."));
                 server.start(sourceCatalog);
             } catch (IllegalStateException e) {
                 // this is acceptable

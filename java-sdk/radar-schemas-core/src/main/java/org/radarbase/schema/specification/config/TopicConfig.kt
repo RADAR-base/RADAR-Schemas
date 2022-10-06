@@ -1,4 +1,4 @@
-package org.radarbase.schema.registration.config
+package org.radarbase.schema.specification.config
 
 data class TopicConfig(
     val enabled: Boolean = true,

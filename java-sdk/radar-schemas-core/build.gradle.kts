@@ -15,7 +15,7 @@ dependencies {
     val jacksonVersion: String by project
     api(platform("com.fasterxml.jackson:jackson-bom:$jacksonVersion"))
     api("com.fasterxml.jackson.core:jackson-databind")
-
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml")
 
     val confluentVersion: String by project

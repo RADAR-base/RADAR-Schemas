@@ -30,7 +30,7 @@ import okio.BufferedSink
 import org.apache.avro.specific.SpecificRecord
 import org.radarbase.config.ServerConfig
 import org.radarbase.schema.registration.KafkaTopics.Companion.retrySequence
-import org.radarbase.schema.registration.config.TopicConfig
+import org.radarbase.schema.specification.config.TopicConfig
 import org.slf4j.LoggerFactory
 import java.io.IOException
 import java.lang.IllegalStateException

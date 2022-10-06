@@ -7,6 +7,7 @@ import org.radarbase.schema.Scope
 import org.radarbase.schema.tools.SubCommand.Companion.addRootArgument
 import org.radarbase.schema.validation.SchemaValidator
 import org.radarbase.schema.validation.ValidationException
+import org.radarbase.schema.validation.ValidationHelper.COMMONS_PATH
 import java.io.IOException
 import java.util.stream.Stream
 import kotlin.streams.asSequence
@@ -42,7 +43,7 @@ class ValidatorCommand : SubCommand {
             ?.let { Scope.valueOf(it) }
 
         return try {
-            val validator = SchemaValidator(app.root, app.config.exclude)
+            val validator = SchemaValidator(app.root.resolve(COMMONS_PATH), app.config.schemas)
 
             var exceptionStream = Stream.empty<ValidationException>()
             if (options.getBoolean("full")) {

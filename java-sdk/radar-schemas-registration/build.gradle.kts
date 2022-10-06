@@ -12,10 +12,6 @@ dependencies {
     val radarCommonsVersion: String by project
     api("org.radarbase:radar-commons-server:$radarCommonsVersion")
 
-    val jacksonVersion: String by project
-    implementation(platform("com.fasterxml.jackson:jackson-bom:$jacksonVersion"))
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-
     val nettyVersion: String by project
     implementation(platform("io.netty:netty-bom:$nettyVersion"))
     val jettyVersion: String by project

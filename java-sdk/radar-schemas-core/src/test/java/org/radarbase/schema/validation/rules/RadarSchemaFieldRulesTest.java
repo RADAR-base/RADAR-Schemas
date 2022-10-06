@@ -16,14 +16,6 @@
 
 package org.radarbase.schema.validation.rules;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.radarbase.schema.validation.rules.RadarSchemaFieldRules.FIELD_NAME_PATTERN;
-import static org.radarbase.schema.validation.rules.Validator.matches;
-
-import java.nio.file.Paths;
-import java.util.stream.Stream;
 import org.apache.avro.Schema;
 import org.apache.avro.Schema.Parser;
 import org.apache.avro.SchemaBuilder;
@@ -31,7 +23,15 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.radarbase.schema.validation.ValidationException;
 import org.radarbase.schema.validation.ValidationHelper;
-import org.radarbase.schema.validation.config.ExcludeConfig;
+
+import java.nio.file.Paths;
+import java.util.stream.Stream;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.radarbase.schema.validation.rules.RadarSchemaFieldRules.FIELD_NAME_PATTERN;
+import static org.radarbase.schema.validation.rules.Validator.matches;
 
 /**
  * TODO.
@@ -50,7 +50,7 @@ public class RadarSchemaFieldRulesTest {
     @BeforeEach
     public void setUp() {
         validator = new RadarSchemaFieldRules();
-        schemaValidator = new RadarSchemaRules(new ExcludeConfig(), validator);
+        schemaValidator = new RadarSchemaRules(validator);
     }
 
     @Test

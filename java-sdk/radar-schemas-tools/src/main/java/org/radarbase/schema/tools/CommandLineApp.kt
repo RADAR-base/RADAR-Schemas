@@ -23,8 +23,8 @@ import net.sourceforge.argparse4j.inf.Namespace
 import org.apache.logging.log4j.Level
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.core.config.Configurator
-import org.radarbase.schema.registration.config.ToolConfig
-import org.radarbase.schema.registration.config.loadToolConfig
+import org.radarbase.schema.specification.config.ToolConfig
+import org.radarbase.schema.specification.config.loadToolConfig
 import org.radarbase.schema.specification.DataProducer
 import org.radarbase.schema.specification.DataTopic
 import org.radarbase.schema.specification.SourceCatalogue
@@ -46,7 +46,7 @@ class CommandLineApp(
     val root: Path,
     val config: ToolConfig,
 ) {
-    val catalogue: SourceCatalogue = SourceCatalogue.load(root)
+    val catalogue: SourceCatalogue = SourceCatalogue.load(root, config.schemas, config.sources)
 
     init {
         logger.info("radar-schema-tools is initialized with root directory {}", this.root)
@@ -129,9 +129,9 @@ class CommandLineApp(
             processLoggingOptions(ns)
 
             val root = Paths.get(ns.getString("root")).toAbsolutePath()
-            val toolConfig = loadConfig(ns.getString("config")).apply {
-                exclude.root = root
-            }
+            val toolConfig = loadConfig(ns.getString("config"))
+
+            logger.info("Loading radar-schemas-tools with configuration {}", toolConfig)
 
             val app: CommandLineApp = try {
                 CommandLineApp(root, toolConfig)
@@ -157,6 +157,7 @@ class CommandLineApp(
                 fileName, ex.message)
             exitProcess(1)
         }
+
         private fun processLoggingOptions(ns: Namespace) {
             if (ns.getBoolean("verbose") == true) {
                 Configurator.setAllLevels(LogManager.getRootLogger().name, Level.DEBUG)

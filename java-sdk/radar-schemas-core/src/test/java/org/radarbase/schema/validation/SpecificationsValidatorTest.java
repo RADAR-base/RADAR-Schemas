@@ -1,7 +1,7 @@
 package org.radarbase.schema.validation;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.radarbase.schema.specification.SourceCatalogue.BASE_PATH;
+import static org.radarbase.schema.validation.SourceCatalogueValidationTest.BASE_PATH;
 
 import java.io.IOException;
 
@@ -9,19 +9,19 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.radarbase.schema.Scope;
 import org.radarbase.schema.specification.active.ActiveSource;
+import org.radarbase.schema.specification.config.SchemaConfig;
 import org.radarbase.schema.specification.connector.ConnectorSource;
 import org.radarbase.schema.specification.monitor.MonitorSource;
 import org.radarbase.schema.specification.passive.PassiveSource;
 import org.radarbase.schema.specification.push.PushSource;
 import org.radarbase.schema.specification.stream.StreamGroup;
-import org.radarbase.schema.validation.config.ExcludeConfig;
 
 public class SpecificationsValidatorTest {
     private SpecificationsValidator validator;
 
     @BeforeEach
-    public void setUp() throws IOException {
-        this.validator = new SpecificationsValidator(BASE_PATH, ExcludeConfig.load(null));
+    public void setUp() {
+        this.validator = new SpecificationsValidator(BASE_PATH, new SchemaConfig());
     }
 
     @Test

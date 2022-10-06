@@ -55,7 +55,7 @@ VOLUME /schema/conf
 VOLUME /etc/confluent/
 
 # Copy bash file
-COPY docker/specifications.exclude /etc/radar-schemas/specifications.exclude
+COPY docker/config.yaml /etc/radar-schemas-tools/
 COPY docker/topic_init.sh ./docker/init.sh ./docker/list_aggregated.sh ./docker/list_raw.sh /usr/bin/
 
 USER 101
