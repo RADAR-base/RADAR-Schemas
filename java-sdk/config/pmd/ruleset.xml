@@ -52,6 +52,7 @@
   <rule ref="category/java/bestpractices.xml">
     <exclude name="GuardLogStatement"/>
     <exclude name="LiteralsFirstInComparisons"/>
+    <exclude name="SystemPrintln"/>
   </rule>
 
   <rule ref="category/java/errorprone.xml">

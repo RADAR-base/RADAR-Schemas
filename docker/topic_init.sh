@@ -9,7 +9,7 @@ fi
 # Create topics
 echo "Creating RADAR-base topics. Will try ${NUM_TRIES} times..."
 
-if radar-schemas-tools create -c "${KAFKA_CONFIG_PATH}" -p $KAFKA_NUM_PARTITIONS -r $KAFKA_NUM_REPLICATION -b $KAFKA_NUM_BROKERS -s "${KAFKA_BOOTSTRAP_SERVERS}" -n ${NUM_TRIES} merged; then
+if radar-schemas-tools create -c "${CONFIG_PATH}" -p $KAFKA_NUM_PARTITIONS -r $KAFKA_NUM_REPLICATION -b $KAFKA_NUM_BROKERS -s "${KAFKA_BOOTSTRAP_SERVERS}" -n ${NUM_TRIES} merged; then
     echo "Created topics"
 else
     echo "FAILED TO CREATE TOPICS"
@@ -19,7 +19,7 @@ fi
 echo "Topics created."
 
 echo "Registering RADAR-base schemas..."
-if ! radar-schemas-tools register --force -u "$SCHEMA_REGISTRY_API_KEY" -p "$SCHEMA_REGISTRY_API_SECRET" "${KAFKA_SCHEMA_REGISTRY}" merged; then
+if ! radar-schemas-tools register --force -c "${CONFIG_PATH}" "${KAFKA_SCHEMA_REGISTRY}" merged; then
   echo "FAILED TO REGISTER SCHEMAS"
   exit 1
 fi

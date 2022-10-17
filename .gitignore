@@ -5,7 +5,6 @@ out/
 *.iml
 .gradle/
 .gradletasknamecache
-gradle.properties
 exchange.properties
 *.class
 /doc/
