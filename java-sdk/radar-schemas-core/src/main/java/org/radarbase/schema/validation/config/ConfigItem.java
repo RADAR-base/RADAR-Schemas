@@ -26,7 +26,7 @@ import java.util.Set;
 /**
  * TODO.
  */
-class ConfigItem {
+public class ConfigItem {
 
     /** Possible check status. */
     private enum CheckStatus {
@@ -55,8 +55,6 @@ class ConfigItem {
 
     /**
      * TODO.
-     *
-     * @return TODO
      */
     @JsonSetter("fields")
     public void setFields(Collection<String> fields) {

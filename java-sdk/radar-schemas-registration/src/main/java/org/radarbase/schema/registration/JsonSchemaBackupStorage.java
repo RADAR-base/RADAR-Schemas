@@ -49,7 +49,7 @@ public class JsonSchemaBackupStorage implements SchemaBackupStorage {
 
             while (numRead1 != -1) {
                 int numRead2 = input2.readNBytes(buf2, 0, numRead1);
-                if (numRead2 < numRead1
+                if (numRead2 != numRead1
                         || !Arrays.equals(buf1, 0, numRead1, buf2, 0, numRead1)) {
                     return false;
                 }
