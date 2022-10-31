@@ -1,0 +1,14 @@
+<Configuration status="WARN">
+  <Appenders>
+    <Console name="STDOUT" target="SYSTEM_OUT">
+      <PatternLayout pattern="[%d] %-5level - %msg (%F:%L)%n"/>
+    </Console>
+  </Appenders>
+
+  <Loggers>
+    <Logger name="io.confluent.connect.avro.AvroDataConfig" level="WARN" additivity="false"/>
+    <Root level="INFO">
+      <AppenderRef ref="STDOUT"/>
+    </Root>
+  </Loggers>
+</Configuration>
