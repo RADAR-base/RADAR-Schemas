@@ -5,14 +5,19 @@
   "doc": "A summary of the user's food log entry for a given day.",
   "fields": [
     {
+      "name": "time",
+      "type": "double",
+      "doc": "Device timestamp in UTC (s)."
+    },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Time that the data was received from the Fitbit API (seconds since the Unix Epoch)."
+    },
+    {
       "name": "isFavorite",
       "type": "boolean",
       "doc": "Whether the food is the favorite one."
-    },
-    {
-      "name": "time",
-      "type": "string",
-      "doc": "Date of the food being logged."
     },
     {
       "name": "logId",
