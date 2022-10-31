@@ -1,0 +1,103 @@
+{
+  "namespace": "org.radarcns.connector.fitbit",
+  "type": "record",
+  "name": "FitbitFoodLog",
+  "doc": "A summary of the user's food log entry for a given day.",
+  "fields": [
+    {
+      "name": "isFavorite",
+      "type": "boolean",
+      "doc": "Whether the food is the favorite one."
+    },
+    {
+      "name": "time",
+      "type": "string",
+      "doc": "Date of the food being logged."
+    },
+    {
+      "name": "logId",
+      "type": "long",
+      "doc": "The id of the logged food."
+    },
+    {
+      "name": "accessLevel",
+      "type": "string",
+      "doc": "The access level of the food."
+    },
+    {
+      "name": "amount",
+      "type": "int",
+      "doc": "The amount of the food."
+    },
+    {
+      "name": "brand",
+      "type": "string",
+      "doc": "The brand of the food."
+    },
+    {
+      "name": "foodId",
+      "type": "long",
+      "doc": "The id of the food."
+    },
+    {
+      "name": "locale",
+      "type": "string",
+      "doc": "The locale of the food."
+    },
+    {
+      "name": "mealTypeId",
+      "type": "long",
+      "doc": "The meal type id of the food."
+    },
+    {
+      "name": "name",
+      "type": "string",
+      "doc": "The name of the food."
+    },
+    {
+      "name": "unitId",
+      "type": "long",
+      "doc": "The unit id of the food."
+    },
+    {
+      "name": "unitName",
+      "type": "string",
+      "doc": "The unit name of the food."
+    },
+    {
+      "name": "plural",
+      "type": "string",
+      "doc": "The plural of the food."
+    },
+    {
+      "name": "calories",
+      "type": "float",
+      "doc": "The calories of the food."
+    },
+    {
+      "name": "carbs",
+      "type": "float",
+      "doc": "The carbs of the food."
+    },
+    {
+      "name": "fat",
+      "type": "float",
+      "doc": "The fat of the food."
+    },
+    {
+      "name": "fiber",
+      "type": "float",
+      "doc": "The fiber of the food."
+    },
+    {
+      "name": "protein",
+      "type": "float",
+      "doc": "The protein of the food."
+    },
+    {
+      "name": "sodium",
+      "type": "float",
+      "doc": "The sodium of the food."
+    }
+  ]
+}
