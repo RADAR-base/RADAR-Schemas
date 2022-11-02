@@ -47,7 +47,7 @@
     {
       "name": "locale",
       "type": "string",
-      "doc": "The locale of the food. Example format - en_US"
+      "doc": "The locale of the food. Example format - en_US."
     },
     {
       "name": "mealTypeId",
