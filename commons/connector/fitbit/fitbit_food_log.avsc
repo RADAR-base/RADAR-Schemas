@@ -1,0 +1,108 @@
+{
+  "namespace": "org.radarcns.connector.fitbit",
+  "type": "record",
+  "name": "FitbitFoodLog",
+  "doc": "A summary of the user's food log entry for a given day.",
+  "fields": [
+    {
+      "name": "time",
+      "type": "double",
+      "doc": "Device timestamp in UTC (s)."
+    },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Time that the data was received from the Fitbit API (seconds since the Unix Epoch)."
+    },
+    {
+      "name": "isFavorite",
+      "type": "boolean",
+      "doc": "Whether the food is the favorite one."
+    },
+    {
+      "name": "logId",
+      "type": "long",
+      "doc": "The id of the logged food."
+    },
+    {
+      "name": "accessLevel",
+      "type": "string",
+      "doc": "The access level of the food. There are three access level types for food log entries that an authorized user can view via API requests. Each food is annotated with an accessLevel field with one of the following values: PUBLIC - Foods that are in Fitbit's public food database and are visible to any Fitbit users. Only Fitbit populates this database to avoid spam and duplicate entries. PRIVATE - Foods created by a user either on the website or via the Create Food endpoint. SHARED - A food created by a user whose foods privacy is set to Friends or Anyone. These can be logged either on the website or via the Create Food endpoint. These foods can be discovered using the Search Foods endpoint."
+    },
+    {
+      "name": "amount",
+      "type": "int",
+      "doc": "The amount of the food. Unit can be accessed from From the unitName of the food."
+    },
+    {
+      "name": "brand",
+      "type": "string",
+      "doc": "The brand of the food."
+    },
+    {
+      "name": "foodId",
+      "type": "long",
+      "doc": "The id of the food. This can be from the Fitbit food database or a private food the authorized user has entered - https://dev.fitbit.com/build/reference/web-api/nutrition/get-food/."
+    },
+    {
+      "name": "locale",
+      "type": "string",
+      "doc": "The locale of the food. Example format - en_US."
+    },
+    {
+      "name": "mealTypeId",
+      "type": "long",
+      "doc": "The meal type id of the food. The mealTypeId field is always 7 (Anytime). Meals are not associated with particular times."
+    },
+    {
+      "name": "name",
+      "type": "string",
+      "doc": "The name of the food."
+    },
+    {
+      "name": "unitId",
+      "type": "long",
+      "doc": "The unit id of the food. Typically, an application retrieves the complete list of units once at startup. From then on, the application will receive a food-specific list of unit ids along with the [Favorite](https://dev.fitbit.com/build/reference/web-api/nutrition/get-favorite-foods/), [Recent](https://dev.fitbit.com/build/reference/web-api/nutrition/get-recent-foods/), or [Frequent](https://dev.fitbit.com/build/reference/web-api/nutrition/get-frequent-foods/) food or by making a query to [Search Foods](https://dev.fitbit.com/build/reference/web-api/nutrition/search-foods/) endpoint. These are the IDs of units that apply to the favorite food. The application will refer to the complete list of units retrieved previously to get and display to the user the unit name or plural name for each unit ID on food-specific list."
+    },
+    {
+      "name": "unitName",
+      "type": "string",
+      "doc": "The unit name of the food."
+    },
+    {
+      "name": "unitPlural",
+      "type": "string",
+      "doc": "The plural unit name of the food."
+    },
+    {
+      "name": "calories",
+      "type": "float",
+      "doc": "The calories of the food in kilocalories."
+    },
+    {
+      "name": "carbs",
+      "type": "float",
+      "doc": "The carbs of the food in grams."
+    },
+    {
+      "name": "fat",
+      "type": "float",
+      "doc": "The fat of the food in grams."
+    },
+    {
+      "name": "fiber",
+      "type": "float",
+      "doc": "The fiber of the food in grams."
+    },
+    {
+      "name": "protein",
+      "type": "float",
+      "doc": "The protein of the food in grams."
+    },
+    {
+      "name": "sodium",
+      "type": "float",
+      "doc": "The sodium of the food in milligrams."
+    }
+  ]
+}
