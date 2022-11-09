@@ -300,40 +300,40 @@ data:
   - type: ADHD_PHQ8
     topic: questionnaire_adhd_phq8
     value_schema: .active.questionnaire.Questionnaire
-    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/progress_report_4/progress_report_4_armt.json
+    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/adhd_phq8/adhd_phq8_armt.json
   - type: RPQ_A
     topic: questionnaire_rpq_a
     value_schema: .active.questionnaire.Questionnaire
-    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/progress_report_4/progress_report_4_armt.json
+    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/rpq_a/rpq_a_armt.json
   - type: ADHD_MEDICATION_USE_DAILY
     topic: questionnaire_adhd_medication_use_daily
     value_schema: .active.questionnaire.Questionnaire
-    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/progress_report_4/progress_report_4_armt.json
+    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/adhd_medication_daily/adhd_medication_daily_armt.json
   - type: ADHD_MEDICATION_SIDE_EFFECTS
     topic: questionnaire_adhd_medication_side_effects
     value_schema: .active.questionnaire.Questionnaire
-    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/progress_report_4/progress_report_4_armt.json
+    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/adhd_medication_side_effects/adhd_medication_side_effects_armt.json
   - type: FND
     topic: questionnaire_fnd
     value_schema: .active.questionnaire.Questionnaire
-    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/progress_report_4/progress_report_4_armt.json
+    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/fnd/fnd_armt.json
   - type: AUDIT
     topic: questionnaire_audit
     value_schema: .active.questionnaire.Questionnaire
-    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/progress_report_4/progress_report_4_armt.json
+    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/audit/audit_armt.json
   - type: LTE
     topic: questionnaire_lte
     value_schema: .active.questionnaire.Questionnaire
-    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/progress_report_4/progress_report_4_armt.json
+    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/lte/lte_armt.json
   - type: MEDITERRANEAN_DIET_ADHERENCE
     topic: questionnaire_mediterranean_diet_adherence
     value_schema: .active.questionnaire.Questionnaire
-    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/progress_report_4/progress_report_4_armt.json
+    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/mediterranean_diet_adherence/mediterranean_diet_adherence_armt.json
   - type: WEIGHT_AND_WAIST_CIRCUMFERENCE
     topic: questionnaire_weight_and_waist_circumference
     value_schema: .active.questionnaire.Questionnaire
-    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/progress_report_4/progress_report_4_armt.json
+    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/weight_and_waist_circumference/weight_and_waist_circumference_armt.json
   - type: BLOOD_PRESSURE_MEASUREMENT
     topic: questionnaire_blood_pressure_measurement
     value_schema: .active.questionnaire.Questionnaire
-    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/progress_report_4/progress_report_4_armt.json
+    questionnaire_definition_url: https://raw.githubusercontent.com/RADAR-base/RADAR-REDCap-aRMT-Definitions/master/questionnaires/blood_pressure_measurement/blood_pressure_measurement_armt.json
