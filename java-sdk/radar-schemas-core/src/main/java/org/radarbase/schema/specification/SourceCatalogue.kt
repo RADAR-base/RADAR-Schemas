@@ -80,11 +80,10 @@ class SourceCatalogue internal constructor(
          * @throws IOException if the source catalogue could not be read.
          */
         @Throws(IOException::class, InvalidPathException::class)
-        @JvmOverloads
         fun load(
             root: Path,
-            schemaConfig: SchemaConfig = SchemaConfig(),
-            sourceConfig: SourceConfig = SourceConfig(),
+            schemaConfig: SchemaConfig,
+            sourceConfig: SourceConfig,
         ): SourceCatalogue {
             val specRoot = root.resolve(SPECIFICATIONS_PATH)
             val mapper = ObjectMapper(YAMLFactory()).apply {

@@ -84,7 +84,11 @@ class SourceCatalogueServer(private val serverPort: Int) : Closeable {
             }
             val config = loadConfig(parsedArgs.getString("config"))
             val sourceCatalogue: SourceCatalogue = try {
-                load(Paths.get(parsedArgs.getString("root")), config.schemas)
+                load(
+                    Paths.get(parsedArgs.getString("root")),
+                    schemaConfig = config.schemas,
+                    sourceConfig = config.sources,
+                )
             } catch (e: IOException) {
                 logger.error("Failed to load source catalogue", e)
                 logger.error(parser.formatUsage())
