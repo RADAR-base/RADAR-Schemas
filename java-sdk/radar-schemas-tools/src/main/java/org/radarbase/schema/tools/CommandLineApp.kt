@@ -111,7 +111,6 @@ class CommandLineApp(
                 SchemaRegistryCommand(),
                 ListCommand(),
                 ValidatorCommand(),
-                SchemaTopicManagerCommand(),
             ).sortedBy { it.name }
 
             val parser = getArgumentParser(subCommands)

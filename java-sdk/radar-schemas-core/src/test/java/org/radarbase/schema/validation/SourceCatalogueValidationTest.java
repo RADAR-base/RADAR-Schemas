@@ -22,6 +22,8 @@ import org.junit.jupiter.api.Test;
 import org.opentest4j.MultipleFailuresError;
 import org.radarbase.schema.specification.DataProducer;
 import org.radarbase.schema.specification.SourceCatalogue;
+import org.radarbase.schema.specification.config.SchemaConfig;
+import org.radarbase.schema.specification.config.SourceConfig;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -48,7 +50,7 @@ public class SourceCatalogueValidationTest {
 
     @BeforeAll
     public static void setUp() throws IOException {
-        catalogue = SourceCatalogue.Companion.load(BASE_PATH);
+        catalogue = SourceCatalogue.Companion.load(BASE_PATH, new SchemaConfig(), new SourceConfig());
     }
 
     @Test

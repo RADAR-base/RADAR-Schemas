@@ -5,7 +5,7 @@ plugins {
 }
 
 // Generated avro files
-val avroOutputDir = file("src/generated/java")
+val avroOutputDir = file("$projectDir/src/generated/java")
 
 description = "RADAR Schemas Commons SDK"
 

@@ -24,6 +24,7 @@ import org.radarbase.schema.SchemaCatalogue;
 import org.radarbase.schema.Scope;
 import org.radarbase.schema.specification.SourceCatalogue;
 import org.radarbase.schema.specification.config.SchemaConfig;
+import org.radarbase.schema.specification.config.SourceConfig;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -115,7 +116,7 @@ public class SchemaValidatorTest {
     }
 
     private void testFromSpecification(Scope scope) throws IOException {
-        SourceCatalogue sourceCatalogue = SourceCatalogue.Companion.load(ROOT);
+        SourceCatalogue sourceCatalogue = SourceCatalogue.Companion.load(ROOT, new SchemaConfig(), new SourceConfig());
         String result = SchemaValidator.format(
                 validator.analyseSourceCatalogue(scope, sourceCatalogue));
 
