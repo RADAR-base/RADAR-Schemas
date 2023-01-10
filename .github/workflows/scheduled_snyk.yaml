@@ -2,6 +2,10 @@ name: Snyk scheduled test
 on:
   schedule:
     - cron: '0 2 * * 1'
+  push:
+    branches:
+      - master
+
 jobs:
   security:
     runs-on: ubuntu-latest
@@ -17,7 +21,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: snyk/actions/setup@master
         with:
-          snyk-version: v1.931.0
+          snyk-version: v1.1032.0
 
       - uses: actions/setup-java@v3
         with:
@@ -34,13 +38,15 @@ jobs:
           snyk test
           --all-sub-projects
           --configuration-matching='^runtimeClasspath$'
+          --fail-on=upgradable
           --json-file-output=${{ env.REPORT_FILE }}
           --org=radar-base
+          --policy-path=$PWD/.snyk
 
       - name: Report new vulnerabilities
         uses: thehyve/report-vulnerability@master
+        if: success() || failure()
         with:
           report-file: ${{ env.REPORT_FILE }}
         env:
           TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        if: ${{ failure() }}

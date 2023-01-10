@@ -12,6 +12,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.radarbase.schema.specification.SourceCatalogue;
+import org.radarbase.schema.specification.config.SchemaConfig;
+import org.radarbase.schema.specification.config.SourceConfig;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -27,7 +29,7 @@ class SourceCatalogueServerTest {
         server = new SourceCatalogueServer(9876);
         serverThread = new Thread(() -> {
             try {
-                SourceCatalogue sourceCatalog = SourceCatalogue.Companion.load(Paths.get("../.."));
+                SourceCatalogue sourceCatalog = SourceCatalogue.Companion.load(Paths.get("../.."), new SchemaConfig(), new SourceConfig());
                 server.start(sourceCatalog);
             } catch (IllegalStateException e) {
                 // this is acceptable

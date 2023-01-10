@@ -12,16 +12,10 @@ dependencies {
     val radarCommonsVersion: String by project
     api("org.radarbase:radar-commons-server:$radarCommonsVersion")
 
-    val nettyVersion: String by project
-    implementation(platform("io.netty:netty-bom:$nettyVersion"))
-    val jettyVersion: String by project
-    implementation(platform("org.eclipse.jetty:jetty-bom:$jettyVersion"))
-
     val confluentVersion: String by project
     implementation("io.confluent:kafka-connect-avro-converter:$confluentVersion")
-    implementation("io.confluent:kafka-schema-registry:$confluentVersion") {
-        exclude(group = "org.slf4j", module = "slf4j-reload4j")
-    }
+    implementation("io.confluent:kafka-schema-registry-client:$confluentVersion")
+
     val kafkaVersion: String by project
     implementation("org.apache.kafka:connect-json:$kafkaVersion")
 
