@@ -1,0 +1,7 @@
+{
+  "namespace": "org.radarcns.connector.health",
+  "name": "HKCharacteristicTypeIdentifierBiologicalSex",
+  "type": "record",
+  "doc": "Gender",
+  "fields": [{ "name": "gender", "type": "string", "doc": "Users's gender" }]
+}

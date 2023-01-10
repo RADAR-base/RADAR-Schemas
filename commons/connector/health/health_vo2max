@@ -1,0 +1,28 @@
+{
+  "namespace": "org.radarcns.connector.health",
+  "name": "HKQuantityTypeIdentifierVO2Max",
+  "type": "record",
+  "doc": "Vo2max, unit is ml(kg * min).",
+  "fields": [
+    {
+      "name": "time",
+      "type": "double",
+      "doc": "Device timestamp in UTC (s)."
+    },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Time that the data was received from the Apple Healthkit ."
+    },
+    {
+      "name": "timeInterval",
+      "type": "int",
+      "doc": "Chronological window size (s)."
+    },
+    {
+      "name": "vo2max",
+      "type": "int",
+      "doc": "vo2max taken in this period."
+    }
+  ]
+}

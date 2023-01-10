@@ -1,0 +1,31 @@
+{
+  "namespace": "org.radarcns.active.healthkit",
+  "name": "HealthKitCaloriesMeasurement",
+  "type": ["record"],
+  "default": null,
+  "doc": "Caloires active, Calories basal",
+  "fields": [
+    {
+      "name": "time",
+      "type": "double",
+      "doc": "Device timestamp in UTC (s)."
+    },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Time that the data was received from the Apple Healthkit ."
+    },
+    {
+      "name": "calories.active",
+      "type": ["null","double"],
+      "default": null,
+      "doc": "Users's active calories, unit is kcal"
+    },
+    {
+      "name": "calories.basal",
+      "type": ["null","double"],
+      "default": null,
+      "doc": "Users's basal calories, unit is kcal"
+    }
+  ]
+}

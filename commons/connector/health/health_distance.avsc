@@ -1,0 +1,24 @@
+{
+  "namespace": "org.radarcns.connector.health",
+  "name": "HKQuantityTypeIdentifierDistanceWalkingRunning_HKQuantityTypeIdentifierDistanceCycling",
+  "type": "record",
+  "doc": "Distance, unit is m.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Time that the data was received from the Apple Healthkit ."
+    },
+    {
+      "name": "timeInterval",
+      "type": "int",
+      "doc": "Chronological window size (s)."
+    },
+    {
+      "name": "distance",
+      "type": "int",
+      "doc": "Distance taken in this period."
+    }
+  ]
+}
