@@ -1,0 +1,15 @@
+{
+  "namespace": "org.radarcns.connector.health",
+  "name": "HKQuantityTypeIdentifierHeight",
+  "type": "record",
+  "doc": "Height , unit is m.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Time that the data was received from the Apple Healthkit ."
+    },
+    { "name": "height", "type": "int", "doc": "Users's height" }
+  ]
+}

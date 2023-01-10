@@ -1,0 +1,24 @@
+{
+  "namespace": "org.radarcns.connector.health",
+  "name": "HKQuantityTypeIdentifierDietaryVitaminA",
+  "type": "record",
+  "doc": "Nutrition vitamin A, unit is mcg(HK),IU(GF).",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Time that the data was received from the Apple Healthkit ."
+    },
+    {
+      "name": "timeInterval",
+      "type": "int",
+      "doc": "Chronological window size (s)."
+    },
+    {
+      "name": "nutritionVitaminA",
+      "type": "int",
+      "doc": "Nutrition vitamin A taken in this period."
+    }
+  ]
+}

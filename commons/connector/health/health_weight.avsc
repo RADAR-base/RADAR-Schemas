@@ -1,0 +1,15 @@
+{
+  "namespace": "org.radarcns.connector.health",
+  "name": "HKQuantityTypeIdentifierBodyMass",
+  "type": "record",
+  "doc": "Weight , unit is kg.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Time that the data was received from the Apple Healthkit ."
+    },
+    { "name": "weight", "type": "int", "doc": "Users's weight" }
+  ]
+}

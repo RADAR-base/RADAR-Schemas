@@ -1,0 +1,28 @@
+{
+  "namespace": "org.radarcns.connector.health",
+  "name": "HKQuantityTypeIdentifierInsulinDelivery",
+  "type": "record",
+  "doc": "Insulin, unit is IU.",
+  "fields": [
+    {
+      "name": "time",
+      "type": "double",
+      "doc": "Device timestamp in UTC (s)."
+    },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Time that the data was received from the Apple Healthkit ."
+    },
+    {
+      "name": "timeInterval",
+      "type": "int",
+      "doc": "Chronological window size (s)."
+    },
+    {
+      "name": "insulin",
+      "type": "int",
+      "doc": "Insulin taken in this period."
+    }
+  ]
+}

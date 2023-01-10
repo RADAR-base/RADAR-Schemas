@@ -1,0 +1,24 @@
+{
+  "namespace": "org.radarcns.connector.health",
+  "name": "HKQuantityTypeIdentifierDietaryFatSaturated",
+  "type": "record",
+  "doc": "Nutrition fat saturated, unit is g.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Time that the data was received from the Apple Healthkit ."
+    },
+    {
+      "name": "timeInterval",
+      "type": "int",
+      "doc": "Chronological window size (s)."
+    },
+    {
+      "name": "nutritionFatSaturated",
+      "type": "int",
+      "doc": "Nutrition fat saturated taken in this period."
+    }
+  ]
+}

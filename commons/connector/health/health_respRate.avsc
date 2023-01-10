@@ -1,0 +1,28 @@
+{
+  "namespace": "org.radarcns.connector.health",
+  "name": "HKQuantityTypeIdentifierRespiratoryRate",
+  "type": "record",
+  "doc": "Respiratory heart rate, unit is count/min.",
+  "fields": [
+    {
+      "name": "time",
+      "type": "double",
+      "doc": "Device timestamp in UTC (s)."
+    },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Time that the data was received from the Apple Healthkit ."
+    },
+    {
+      "name": "timeInterval",
+      "type": "int",
+      "doc": "Chronological window size (s)."
+    },
+    {
+      "name": "respRate",
+      "type": "int",
+      "doc": "Respiratory rate taken in this period."
+    }
+  ]
+}

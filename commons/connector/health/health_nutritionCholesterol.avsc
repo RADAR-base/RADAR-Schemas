@@ -1,0 +1,24 @@
+{
+  "namespace": "org.radarcns.connector.health",
+  "name": "HKQuantityTypeIdentifierDietaryCholesterol",
+  "type": "record",
+  "doc": "Nutrition cholesterol, unit is mg.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Time that the data was received from the Apple Healthkit ."
+    },
+    {
+      "name": "timeInterval",
+      "type": "int",
+      "doc": "Chronological window size (s)."
+    },
+    {
+      "name": "nutritionCholesterol",
+      "type": "int",
+      "doc": "Nutrition cholesterol taken in this period."
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "namespace": "org.radarcns.active.healthkit",
+  "name": "HealthKitHeartRateMeasurement",
+  "type": ["record"],
+  "default": null,
+  "doc": "heart_rate.resting, heart_rate.variability, resp_rate",
+  "fields": [
+    {
+      "name": "time",
+      "type": "double",
+      "doc": "Device timestamp in UTC (s)."
+    },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Time that the data was received from the Apple Healthkit ."
+    },
+    {
+      "name": "heart_rate.resting",
+      "type": ["null","int"],
+      "default": null,
+      "doc": "Users's heart rate when resting, unit is count/min"
+    },
+    {
+      "name": "heart_rate.variability",
+      "type": ["null","int"],
+      "default": null,
+      "doc": "Users's variability heart rate, unit is ms"
+    },
+    {
+      "name": "resp_rate",
+      "type": ["null","int"],
+      "default": null,
+      "doc": "Users's rate when resting, unit is count/min"
+    }
+  ]
+}
