@@ -1,0 +1,11 @@
+{
+  "namespace": "org.radarcns.passive.phone",
+  "type": "record",
+  "name": "PhoneBluetoothDevicesScanned",
+  "doc": "Phone Bluetooth devices info.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Device timestamp in UTC (s)."},
+    {"name": "timeReceived", "type": "double", "doc": "Device receiver timestamp in UTC (s)."},
+    {"name": "macAddressHash", "type": ["null", "bytearray"], "default": null, "doc":"Hash of Nearby Bluetooth device MAC address"}
+  ]
+}
