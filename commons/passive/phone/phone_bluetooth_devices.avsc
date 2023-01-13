@@ -9,6 +9,6 @@
     {"name": "pairedDevices", "type": ["null", "int"], "default": null, "doc": "Number of paired devices."},
     {"name": "nearbyDevices", "type": ["null", "int"], "default": null, "doc": "Number of nearby devices."},
     {"name": "bluetoothEnabled", "type": "boolean", "doc": "Whether Bluetooth is enabled."}
-    {"name": "macAddressHash", "type": "bytearray", "doc":"Hash of Nearby Bluetooth device MAC address}
+    {"name": "macAddressHash", "type": "bytearray", "doc":"Hash of Nearby Bluetooth device MAC address"}
   ]
 }
