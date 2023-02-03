@@ -1,0 +1,12 @@
+{
+  "namespace": "org.radarcns.monitor.application",
+  "type": "record",
+  "name": "ApplicationTopicRecordsSent",
+  "doc": "Number of records sent per topic ",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+    { "name": "topic", "type": "String", "default": null, "doc": "name of topic sent" },
+    { "name": "success", "type": "boolean", "doc": "weather record is succesfully sent or not" },
+    { "name": "recordsSent", "type": "long", "doc": "Number of records sent for a particular topic " }
+  ]
+}
