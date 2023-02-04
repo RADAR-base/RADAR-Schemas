@@ -1,0 +1,16 @@
+{
+  "namespace": "org.radarcns.monitor.application",
+  "type": "record",
+  "name": "ApplicationPluginStatus",
+  "doc": "Status of each Plugin ",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+    {"name": "plugin", "type": "string", "doc": "Name of the plugin." },
+    { "name": "status", "type": {
+      "name": "status",
+      "type": "enum",
+      "symbols": ["UNAVAILABLE", "CONNECTING", "DISCONNECTING", "DISCONNECTED", "CONNECTED", "READY","UNKNOWN"],
+      "doc": "plugin status types"
+    }, "doc": "value of current status of each plugin.", "default": "UNKNOWN" }
+  ]
+}
