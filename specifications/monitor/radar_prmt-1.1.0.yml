@@ -50,3 +50,18 @@ data:
       configurable: true
     topic: application_device_info
     value_schema: .monitor.application.ApplicationDeviceInfo
+  - type: RECORDS_SENT
+    doc: Monitor used by the Android pRMT to report the number of records sent per topic.
+    sample_rate:
+      interval: 300
+      configurable: true
+    topic: application_topic_records_sent
+    value_schema: .monitor.application.ApplicationTopicRecordsSent
+  - type: PLUGIN_STATUS
+    doc: Monitor used by the Android pRMT to track plugin status.
+    sample_rate:
+      interval: 300
+      configurable: true
+    topic: application_plugin_status
+    value_schema: .monitor.application.ApplicationPluginStatus
+
