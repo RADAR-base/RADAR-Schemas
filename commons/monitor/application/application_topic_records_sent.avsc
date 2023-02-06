@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.monitor.application",
   "type": "record",
   "name": "ApplicationTopicRecordsSent",
-  "doc": "Number of records sent per topic ",
+  "doc": "Number of records sent per topic.",
   "fields": [
     { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
     { "name": "topic", "type": "string", "doc": "name of topic sent." },
