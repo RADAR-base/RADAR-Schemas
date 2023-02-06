@@ -5,9 +5,9 @@
   "doc": "Status of each Plugin ",
   "fields": [
     { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
-    {"name": "plugin", "type": "string", "doc": "Name of the plugin." },
-    { "name": "status", "type": {
-      "name": "status",
+    { "name": "plugin", "type": "string", "doc": "Name of the plugin." },
+    { "name": "sourceStatus", "type": {
+      "name": "SourceStatus",
       "type": "enum",
       "symbols": ["UNAVAILABLE", "CONNECTING", "DISCONNECTING", "DISCONNECTED", "CONNECTED", "READY","UNKNOWN"],
       "doc": "plugin status types"
