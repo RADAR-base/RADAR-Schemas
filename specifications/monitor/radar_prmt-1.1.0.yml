@@ -64,4 +64,7 @@ data:
       configurable: true
     topic: application_plugin_status
     value_schema: .monitor.application.ApplicationPluginStatus
-
+  - type: APPLICATION_ERROR
+    doc: Monitor used by Android pRMT to track plugin error.
+    topic: application_error
+    value_schema: .monitor.application.ApplicationError
