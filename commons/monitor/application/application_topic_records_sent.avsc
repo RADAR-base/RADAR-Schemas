@@ -7,6 +7,7 @@
     { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
     { "name": "topic", "type": "string", "doc": "The name of topic sent." },
     { "name": "success", "type": "boolean", "doc": "Weather record is succesfully sent or not." },
-    { "name": "recordsSent", "type": ["null","int"], "doc": "Number of records sent for a particular topic." }
+    { "name": "recordsSent", "type": ["null","int"], "doc": "Number of records sent for a particular topic.", "default": null
+    }
   ]
 }
