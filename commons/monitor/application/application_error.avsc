@@ -2,11 +2,11 @@
   "namespace": "org.radarcns.monitor.application",
   "type": "record",
   "name": "ApplicationError",
-  "doc": "Reports plugin specific error.",
+  "doc": "Error encountered in the application.",
   "fields": [
     { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
     { "name": "plugin", "type": "string", "doc": "Name of a plugin reporting error." },
-    { "name": "code", "type": "double", "doc": "Error code." },
-    { "name": "message", "type": "string", "doc": "Message describing the error." }
+    { "name": "code", "type": "int", "doc": "Error code assigned with the error." },
+    { "name": "message", "type": "string", "doc": "The error message associated with the error." }
       ]
 }
