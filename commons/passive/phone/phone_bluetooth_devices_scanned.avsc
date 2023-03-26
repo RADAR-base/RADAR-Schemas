@@ -6,7 +6,7 @@
   "fields": [
     {"name": "time", "type": "double", "doc": "Device timestamp in UTC (s)."},
     {"name": "timeReceived", "type": "double", "doc": "Device receiver timestamp in UTC (s)."},
-    {"name": "macAddressHash", "type": ["null", "bytes"], "default": null, "doc":"Hash of Nearby Bluetooth device MAC address"},
+    {"name": "macAddressHash", "type": ["null", "bytes"], "default": null, "doc":"Hash of Nearby Bluetooth device MAC address."},
     {"name": "hashSaltReference", "type": ["null", "int"], "doc": "Random identifier associated with the device or installation of the app.", "default": null}
   ]
 }
