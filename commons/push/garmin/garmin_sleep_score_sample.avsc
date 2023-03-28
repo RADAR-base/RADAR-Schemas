@@ -9,7 +9,7 @@
     {"name": "summaryId", "type": "string", "doc": "Unique identifier for the summary."},
     {"name": "date", "type": ["null", "string"], "doc": "The calendar date this summary would be displayed on in Garmin Connect in the local time zone of the device. The date format is ‘yyyy-mm-dd’.", "default": null},
     {"name": "startTimeOffset", "type": ["null", "int"], "doc": "Offset in seconds to add to time to derive the 'local' time of the device that captured the data.", "default": null},
-    {"name": "totalDurationScoreQualifier", "type": ["null", "string"], "doc": "A qualifierKey value of EXCELLENT, GOOD, FAIR, or POOR that is used as a qualitative description of the user’s total duration of sleep.", "default": null},
+    {"name": "totalDurationScoreQualifier", "type": ["null", "string"], "doc": "A qualifierKey value of EXCELLENT, GOOD, FAIR, or POOR used as a qualitative description of the user’s total duration of sleep.", "default": null},
     {"name": "stressScoreQualifier", "type": ["null", "string"], "doc": "A qualifierKey value of EXCELLENT, GOOD, FAIR, or POOR that is used as a qualitative description of the user’s stress during the period of sleep.", "default": null},
     {"name": "awakeCountScoreQualifier", "type": ["null", "string"], "doc": "A qualifierKey value of EXCELLENT, GOOD, FAIR, or POOR that is used as a qualitative description of the user’s awake count during the period of sleep.", "default": null},
     {"name": "remPercentageScoreQualifier", "type": ["null", "string"], "doc": "A qualifierKey value of EXCELLENT, GOOD, FAIR, or POOR that is used as a qualitative description of the user’s REM sleep percentage during the period of sleep.", "default": null},
