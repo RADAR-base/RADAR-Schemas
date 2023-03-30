@@ -1,5 +1,6 @@
 package org.radarbase.schema.tools
 
+import kotlinx.coroutines.runBlocking
 import net.sourceforge.argparse4j.inf.ArgumentParser
 import net.sourceforge.argparse4j.inf.Namespace
 import org.radarbase.schema.registration.KafkaTopics
@@ -28,29 +29,32 @@ class KafkaTopicsCommand : SubCommand {
         }
         val toolConfig: ToolConfig = app.config
             .configureKafka(bootstrapServers = options.getString("bootstrap_servers"))
-        try {
-            KafkaTopics(toolConfig).use { topics ->
-                try {
-                    val numTries = options.getInt("num_tries")
-                    topics.initialize(brokers, numTries)
-                } catch (ex: IllegalStateException) {
-                    logger.error("Kafka brokers not yet available. Aborting.")
-                    return 1
+        return try {
+            runBlocking {
+                KafkaTopics(toolConfig).use { topics ->
+                    try {
+                        val numTries = options.getInt("num_tries")
+                        topics.initialize(brokers, numTries)
+                    } catch (ex: IllegalStateException) {
+                        logger.error("Kafka brokers not yet available. Aborting.")
+                        return@use 1
+                    }
+                    topics.createTopics(
+                        app.catalogue,
+                        options.getInt("partitions") ?: 3,
+                        replication,
+                        options.getString("topic"),
+                        options.getString("match"),
+                    )
                 }
-                return topics.createTopics(
-                    app.catalogue,
-                    options.getInt("partitions") ?: 3,
-                    replication,
-                    options.getString("topic"),
-                    options.getString("match"),
-                )
             }
-        } catch (e: InterruptedException) {
+        } catch (ex: Exception) {
             logger.error(
                 "Cannot retrieve number of addActive Kafka brokers." +
-                    " Please check that Zookeeper is running.",
+                    " Please check that Zookeeper is running. {}",
+                ex.toString(),
             )
-            return 1
+            1
         }
     }
 

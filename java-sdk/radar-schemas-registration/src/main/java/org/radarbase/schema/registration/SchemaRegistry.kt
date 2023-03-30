@@ -21,13 +21,14 @@ import io.ktor.client.request.*
 import io.ktor.http.*
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.*
 import org.apache.avro.specific.SpecificRecord
 import org.radarbase.kotlin.coroutines.forkJoin
 import org.radarbase.producer.io.timeout
 import org.radarbase.producer.rest.RestException
 import org.radarbase.producer.schema.SchemaRetriever
 import org.radarbase.producer.schema.SchemaRetriever.Companion.schemaRetriever
-import org.radarbase.schema.registration.KafkaTopics.Companion.retrySequence
+import org.radarbase.schema.registration.KafkaTopics.Companion.retryDelayFlow
 import org.radarbase.schema.specification.SourceCatalogue
 import org.radarbase.schema.specification.config.TopicConfig
 import org.radarbase.topic.AvroTopic
@@ -35,7 +36,6 @@ import org.radarcns.kafka.ObservationKey
 import org.slf4j.LoggerFactory
 import java.io.IOException
 import java.net.MalformedURLException
-import java.time.Duration
 import kotlin.streams.asSequence
 import kotlin.time.Duration.Companion.seconds
 
@@ -78,10 +78,10 @@ class SchemaRegistry @JvmOverloads constructor(
      */
     @Throws(InterruptedException::class)
     suspend fun initialize() {
-        check(
-            retrySequence(startSleep = Duration.ofSeconds(2), maxSleep = MAX_SLEEP)
+        checkNotNull(
+            retryDelayFlow(2.seconds, MAX_SLEEP)
                 .take(20)
-                .any {
+                .map {
                     try {
                         schemaClient.restClient
                             .request<List<String>> {
@@ -103,7 +103,8 @@ class SchemaRegistry @JvmOverloads constructor(
                         )
                         false
                     }
-                },
+                }
+                .firstOrNull { it },
         ) { "Schema registry $baseUrl not available" }
     }
 
@@ -237,6 +238,6 @@ class SchemaRegistry @JvmOverloads constructor(
 
     companion object {
         private val logger = LoggerFactory.getLogger(SchemaRegistry::class.java)
-        private val MAX_SLEEP = Duration.ofSeconds(32)
+        private val MAX_SLEEP = 32.seconds
     }
 }
