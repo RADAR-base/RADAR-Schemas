@@ -48,6 +48,8 @@ interface PathMatcherConfig {
     companion object {
         fun Path.relativeToAbsolutePath(absoluteBase: Path) = if (isAbsolute) {
             relativeTo(absoluteBase)
-        } else this
+        } else {
+            this
+        }
     }
 }

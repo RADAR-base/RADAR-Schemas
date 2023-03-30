@@ -48,7 +48,8 @@ class SchemaValidator(schemaRoot: Path, config: SchemaConfig) {
     }
 
     fun analyseSourceCatalogue(
-        scope: Scope?, catalogue: SourceCatalogue
+        scope: Scope?,
+        catalogue: SourceCatalogue,
     ): Stream<ValidationException> {
         validator = rules.getValidator(true)
         val producers: Stream<DataProducer<*>> = if (scope != null) {
@@ -79,7 +80,7 @@ class SchemaValidator(schemaRoot: Path, config: SchemaConfig) {
      */
     fun analyseFiles(
         scope: Scope?,
-        schemaCatalogue: SchemaCatalogue
+        schemaCatalogue: SchemaCatalogue,
     ): Stream<ValidationException> {
         if (scope == null) {
             return analyseFiles(schemaCatalogue)
@@ -109,7 +110,7 @@ class SchemaValidator(schemaRoot: Path, config: SchemaConfig) {
                 .filter(Objects::nonNull)
                 .map { obj -> requireNotNull(obj) },
             schemaCatalogue.schemas.values.stream()
-                .flatMap { this.validate(it) }
+                .flatMap { this.validate(it) },
         ).distinct()
     }
 
@@ -128,7 +129,9 @@ class SchemaValidator(schemaRoot: Path, config: SchemaConfig) {
     private fun validate(schemaMetadata: SchemaMetadata): Stream<ValidationException> =
         if (pathMatcher.matches(schemaMetadata.path)) {
             validator.apply(schemaMetadata)
-        } else Stream.empty()
+        } else {
+            Stream.empty()
+        }
 
     val validatedSchemas: Map<String, Schema>
         get() = (rules.schemaRules as RadarSchemaRules).schemaStore
@@ -146,7 +149,8 @@ class SchemaValidator(schemaRoot: Path, config: SchemaConfig) {
                      |${ex.message}
                      |
                      |
-                     |""".trimMargin()
+                     |
+                    """.trimMargin()
                 }
                 .collect(Collectors.joining())
         }

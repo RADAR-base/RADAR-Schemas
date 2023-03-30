@@ -22,7 +22,7 @@ import kotlin.io.path.inputStream
 class SchemaCatalogue @JvmOverloads constructor(
     private val schemaRoot: Path,
     config: SchemaConfig,
-    scope: Scope? = null
+    scope: Scope? = null,
 ) {
     val schemas: Map<String, SchemaMetadata>
     val unmappedAvroFiles: List<SchemaMetadata>
@@ -57,7 +57,7 @@ class SchemaCatalogue @JvmOverloads constructor(
             keySchema.schema,
             valueSchema.schema,
             GenericRecord::class.java,
-            GenericRecord::class.java
+            GenericRecord::class.java,
         )
     }
 
@@ -67,7 +67,7 @@ class SchemaCatalogue @JvmOverloads constructor(
         unmappedFiles: MutableList<SchemaMetadata>,
         scope: Scope,
         matcher: PathMatcher,
-        config: SchemaConfig
+        config: SchemaConfig,
     ) {
         val walkRoot = schemaRoot.resolve(scope.lower)
         val avroFiles = buildMap<Path, String> {
@@ -114,7 +114,7 @@ class SchemaCatalogue @JvmOverloads constructor(
         customSchemas: Map<Path, String>,
         ignoreFiles: Set<Path>,
         useTypes: Map<String, Schema>,
-        scope: Scope
+        scope: Scope,
     ): Unit = customSchemas.asSequence()
         .filter { (p, _) -> p !in ignoreFiles }
         .forEach { (p, schema) ->
@@ -139,13 +139,13 @@ class SchemaCatalogue @JvmOverloads constructor(
     fun getSchemaMetadata(config: AvroTopicConfig): Pair<SchemaMetadata, SchemaMetadata> {
         val parsedKeySchema = schemas[config.keySchema]
             ?: throw NoSuchElementException(
-                "Key schema " + config.keySchema
-                    + " for topic " + config.topic + " not found."
+                "Key schema " + config.keySchema +
+                    " for topic " + config.topic + " not found.",
             )
         val parsedValueSchema = schemas[config.valueSchema]
             ?: throw NoSuchElementException(
-                "Value schema " + config.valueSchema
-                    + " for topic " + config.topic + " not found."
+                "Value schema " + config.valueSchema +
+                    " for topic " + config.topic + " not found.",
             )
         return Pair(parsedKeySchema, parsedValueSchema)
     }

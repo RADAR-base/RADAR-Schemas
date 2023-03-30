@@ -7,16 +7,20 @@ include(":radar-catalog-server")
 include(":radar-schemas-core")
 
 pluginManagement {
-    val kotlinVersion: String by settings
-    val dokkaVersion: String by settings
-    val nexusPluginVersion: String by settings
-    val dependencyUpdateVersion: String by settings
-    val avroGeneratorVersion: String by settings
-    plugins {
-        kotlin("jvm") version kotlinVersion
-        id("org.jetbrains.dokka") version dokkaVersion
-        id("io.github.gradle-nexus.publish-plugin") version nexusPluginVersion
-        id("com.github.ben-manes.versions") version dependencyUpdateVersion
-        id("com.github.davidmc24.gradle.plugin.avro-base") version avroGeneratorVersion
+    repositories {
+        gradlePluginPortal()
+        mavenCentral()
+        maven(url = "https://maven.pkg.github.com/radar-base/radar-commons") {
+            credentials {
+                username = System.getenv("GITHUB_ACTOR")
+                    ?: extra.properties["gpr.user"] as? String
+                    ?: extra.properties["public.gpr.user"] as? String
+                password = System.getenv("GITHUB_TOKEN")
+                    ?: extra.properties["gpr.token"] as? String
+                    ?: (extra.properties["public.gpr.token"] as? String)?.let {
+                        java.util.Base64.getDecoder().decode(it).decodeToString()
+                    }
+            }
+        }
     }
 }

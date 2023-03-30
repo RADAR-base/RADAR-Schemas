@@ -21,7 +21,7 @@ class ListCommand : SubCommand {
             out
                 .sorted()
                 .distinct()
-                .collect(Collectors.joining("\n"))
+                .collect(Collectors.joining("\n")),
         )
         return 0
     }

@@ -23,11 +23,11 @@ import net.sourceforge.argparse4j.inf.Namespace
 import org.apache.logging.log4j.Level
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.core.config.Configurator
-import org.radarbase.schema.specification.config.ToolConfig
-import org.radarbase.schema.specification.config.loadToolConfig
 import org.radarbase.schema.specification.DataProducer
 import org.radarbase.schema.specification.DataTopic
 import org.radarbase.schema.specification.SourceCatalogue
+import org.radarbase.schema.specification.config.ToolConfig
+import org.radarbase.schema.specification.config.loadToolConfig
 import org.slf4j.LoggerFactory
 import java.io.IOException
 import java.nio.file.Path
@@ -152,8 +152,11 @@ class CommandLineApp(
         private fun loadConfig(fileName: String): ToolConfig = try {
             loadToolConfig(fileName)
         } catch (ex: IOException) {
-            logger.error("Cannot configure radar-schemas-tools client from config file {}: {}",
-                fileName, ex.message)
+            logger.error(
+                "Cannot configure radar-schemas-tools client from config file {}: {}",
+                fileName,
+                ex.message,
+            )
             exitProcess(1)
         }
 

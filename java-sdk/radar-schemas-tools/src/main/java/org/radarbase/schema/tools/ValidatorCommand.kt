@@ -49,17 +49,22 @@ class ValidatorCommand : SubCommand {
             if (options.getBoolean("full")) {
                 exceptionStream = validator.analyseFiles(
                     scope,
-                    app.catalogue.schemaCatalogue)
+                    app.catalogue.schemaCatalogue,
+                )
             }
             if (options.getBoolean("from_specification")) {
                 exceptionStream = Stream.concat(
                     exceptionStream,
-                    validator.analyseSourceCatalogue(scope, app.catalogue)).distinct()
+                    validator.analyseSourceCatalogue(scope, app.catalogue),
+                ).distinct()
             }
 
-            resolveValidation(exceptionStream, validator,
+            resolveValidation(
+                exceptionStream,
+                validator,
                 options.getBoolean("verbose"),
-                options.getBoolean("quiet"))
+                options.getBoolean("quiet"),
+            )
         } catch (e: IOException) {
             System.err.println("Failed to load schemas: $e")
             1
@@ -92,7 +97,7 @@ class ValidatorCommand : SubCommand {
         stream: Stream<ValidationException>,
         validator: SchemaValidator,
         verbose: Boolean,
-        quiet: Boolean
+        quiet: Boolean,
     ): Int = when {
         !quiet -> {
             val result = SchemaValidator.format(stream)

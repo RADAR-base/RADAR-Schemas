@@ -1,7 +1,7 @@
 import com.github.davidmc24.gradle.plugin.avro.GenerateAvroJavaTask
 
 plugins {
-    id("com.github.davidmc24.gradle.plugin.avro-base")
+    id("com.github.davidmc24.gradle.plugin.avro-base") version Versions.avroPlugin
 }
 
 // Generated avro files
@@ -16,11 +16,9 @@ sourceSets {
 }
 
 dependencies {
-    val avroVersion: String by project
-    val jacksonVersion: String by project
-    api("org.apache.avro:avro:$avroVersion") {
-        api("com.fasterxml.jackson.core:jackson-core:$jacksonVersion")
-        api("com.fasterxml.jackson.core:jackson-databind:$jacksonVersion")
+    api("org.apache.avro:avro:${Versions.avro}") {
+        api("com.fasterxml.jackson.core:jackson-core:${Versions.jackson}")
+        api("com.fasterxml.jackson.core:jackson-databind:${Versions.jackson}")
         exclude(group = "org.xerial.snappy", module = "snappy-java")
         exclude(group = "com.thoughtworks.paranamer", module = "paranamer")
         exclude(group = "org.apache.commons", module = "commons-compress")
@@ -28,20 +26,22 @@ dependencies {
     }
 }
 
-//---------------------------------------------------------------------------//
+// ---------------------------------------------------------------------------//
 // Clean settings                                                            //
-//---------------------------------------------------------------------------//
+// ---------------------------------------------------------------------------//
 tasks.clean {
     delete(avroOutputDir)
 }
 
-//---------------------------------------------------------------------------//
+// ---------------------------------------------------------------------------//
 // AVRO file manipulation                                                    //
-//---------------------------------------------------------------------------//
+// ---------------------------------------------------------------------------//
 val generateAvro by tasks.registering(GenerateAvroJavaTask::class) {
-    source(rootProject.fileTree("../commons") {
-        include("**/*.avsc")
-    })
+    source(
+        rootProject.fileTree("../commons") {
+            include("**/*.avsc")
+        },
+    )
     setOutputDir(avroOutputDir)
 }
 

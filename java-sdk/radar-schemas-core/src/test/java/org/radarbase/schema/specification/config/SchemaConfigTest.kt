@@ -1,8 +1,7 @@
 package org.radarbase.schema.specification.config
 
-import org.junit.jupiter.api.Test
-
 import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Test
 import org.radarbase.schema.SchemaCatalogue
 import org.radarbase.schema.Scope
 import org.radarbase.schema.validation.ValidationHelper.COMMONS_PATH
@@ -15,7 +14,8 @@ internal class SchemaConfigTest {
     fun getMonitor() {
         val config = SchemaConfig(
             exclude = listOf("**"),
-            monitor = mapOf("application/test.avsc" to """
+            monitor = mapOf(
+                "application/test.avsc" to """
                 {
                   "namespace": "org.radarcns.monitor.application",
                   "type": "record",
@@ -26,7 +26,8 @@ internal class SchemaConfigTest {
                     { "name": "uptime", "type": "double", "doc": "Time since last app start (s)." }
                   ]
                 }
-                """.trimIndent()),
+                """.trimIndent(),
+            ),
         )
         val commonsRoot = Paths.get("../..").resolve(COMMONS_PATH)
             .absolute()

@@ -18,8 +18,12 @@ class KafkaTopicsCommand : SubCommand {
         val brokers = options.getInt("brokers")
         val replication = options.getShort("replication") ?: 3
         if (brokers < replication) {
-            logger.error("Cannot assign a replication factor {}"
-                + " higher than number of brokers {}", replication, brokers)
+            logger.error(
+                "Cannot assign a replication factor {}" +
+                    " higher than number of brokers {}",
+                replication,
+                brokers,
+            )
             return 1
         }
         val toolConfig: ToolConfig = app.config
@@ -42,8 +46,10 @@ class KafkaTopicsCommand : SubCommand {
                 )
             }
         } catch (e: InterruptedException) {
-            logger.error("Cannot retrieve number of addActive Kafka brokers."
-                + " Please check that Zookeeper is running.")
+            logger.error(
+                "Cannot retrieve number of addActive Kafka brokers." +
+                    " Please check that Zookeeper is running.",
+            )
             return 1
         }
     }
@@ -69,8 +75,10 @@ class KafkaTopicsCommand : SubCommand {
                 .help("register the schemas of one topic")
                 .type(String::class.java)
             addArgument("-m", "--match")
-                .help("register the schemas of all topics matching the given regex"
-                    + "; does not do anything if --topic is specified")
+                .help(
+                    "register the schemas of all topics matching the given regex" +
+                        "; does not do anything if --topic is specified",
+                )
                 .type(String::class.java)
             addArgument("-s", "--bootstrap-servers")
                 .help("Kafka hosts, ports and protocols, comma-separated")

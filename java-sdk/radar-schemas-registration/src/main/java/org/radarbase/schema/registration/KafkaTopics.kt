@@ -5,9 +5,9 @@ import org.apache.kafka.clients.admin.AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG
 import org.apache.kafka.clients.admin.ListTopicsOptions
 import org.apache.kafka.clients.admin.NewTopic
 import org.apache.kafka.common.config.SaslConfigs.SASL_JAAS_CONFIG
+import org.radarbase.schema.specification.SourceCatalogue
 import org.radarbase.schema.specification.config.ToolConfig
 import org.radarbase.schema.specification.config.TopicConfig
-import org.radarbase.schema.specification.SourceCatalogue
 import org.slf4j.LoggerFactory
 import java.time.Duration
 import java.time.Instant
@@ -63,12 +63,18 @@ class KafkaTopics(
                     logger.error("Refreshing topics interrupted")
                     throw ex
                 } catch (ex: TimeoutException) {
-                    logger.error("Failed to connect to bootstrap server {} within {} seconds",
-                        kafkaProperties[BOOTSTRAP_SERVERS_CONFIG], sleep)
+                    logger.error(
+                        "Failed to connect to bootstrap server {} within {} seconds",
+                        kafkaProperties[BOOTSTRAP_SERVERS_CONFIG],
+                        sleep,
+                    )
                     0
                 } catch (ex: Throwable) {
-                    logger.error("Failed to connect to bootstrap server {}",
-                        kafkaProperties[BOOTSTRAP_SERVERS_CONFIG], ex.cause)
+                    logger.error(
+                        "Failed to connect to bootstrap server {}",
+                        kafkaProperties[BOOTSTRAP_SERVERS_CONFIG],
+                        ex.cause,
+                    )
                     0
                 }
             }
@@ -105,9 +111,12 @@ class KafkaTopics(
                 .filter { s -> pattern.matcher(s).find() }
                 .collect(Collectors.toList())
             if (topicNames.isEmpty()) {
-                logger.error("Topic {} does not match a known topic."
-                    + " Find the list of acceptable topics"
-                    + " with the `radar-schemas-tools list` command. Aborting.", pattern)
+                logger.error(
+                    "Topic {} does not match a known topic." +
+                        " Find the list of acceptable topics" +
+                        " with the `radar-schemas-tools list` command. Aborting.",
+                    pattern,
+                )
                 return 1
             }
             if (createTopics(topicNames.stream(), partitions, replication)) 0 else 1
@@ -117,7 +126,7 @@ class KafkaTopics(
     private fun topicNames(catalogue: SourceCatalogue): Stream<String> {
         return Stream.concat(
             catalogue.topicNames,
-            toolConfig.topics.keys.stream()
+            toolConfig.topics.keys.stream(),
         ).filter { t -> toolConfig.topics[t]?.enabled != false }
     }
 
@@ -132,7 +141,7 @@ class KafkaTopics(
     private fun createTopics(
         catalogue: SourceCatalogue,
         partitions: Int,
-        replication: Short
+        replication: Short,
     ): Boolean {
         ensureInitialized()
         return createTopics(topicNames(catalogue), partitions, replication)
@@ -141,7 +150,7 @@ class KafkaTopics(
     override fun createTopics(
         topicsToCreate: Stream<String>,
         partitions: Int,
-        replication: Short
+        replication: Short,
     ): Boolean {
         ensureInitialized()
         return try {
@@ -223,9 +232,11 @@ class KafkaTopics(
 
     override fun getTopics(): Set<String> {
         ensureInitialized()
-        return Collections.unmodifiableSet(checkNotNull(topics) {
-            "Topics were not properly initialized"
-        })
+        return Collections.unmodifiableSet(
+            checkNotNull(topics) {
+                "Topics were not properly initialized"
+            },
+        )
     }
 
     override fun close() {
@@ -239,8 +250,10 @@ class KafkaTopics(
      * @throws ExecutionException if kafka cannot connect
      * @throws InterruptedException if the query is interrupted.
      */
-    @get:Throws(ExecutionException::class,
-        InterruptedException::class)
+    @get:Throws(
+        ExecutionException::class,
+        InterruptedException::class,
+    )
     val numberOfBrokers: Int
         get() = adminClient.describeCluster()
             .nodes()
@@ -257,22 +270,25 @@ class KafkaTopics(
     companion object {
         private val logger = LoggerFactory.getLogger(KafkaTopics::class.java)
         private val MAX_SLEEP = Duration.ofSeconds(32)
+
         @JvmStatic
         fun ToolConfig.configureKafka(
-            bootstrapServers: String?
+            bootstrapServers: String?,
         ): ToolConfig = if (bootstrapServers.isNullOrEmpty()) {
             check(BOOTSTRAP_SERVERS_CONFIG in kafka) {
                 "Cannot configure Kafka without $BOOTSTRAP_SERVERS_CONFIG property"
             }
             this
         } else {
-            copy(kafka = buildMap {
-                putAll(kafka)
-                put(BOOTSTRAP_SERVERS_CONFIG, bootstrapServers)
-                System.getenv("KAFKA_SASL_JAAS_CONFIG")?.let {
-                    put(SASL_JAAS_CONFIG, it)
-                }
-            })
+            copy(
+                kafka = buildMap {
+                    putAll(kafka)
+                    put(BOOTSTRAP_SERVERS_CONFIG, bootstrapServers)
+                    System.getenv("KAFKA_SASL_JAAS_CONFIG")?.let {
+                        put(SASL_JAAS_CONFIG, it)
+                    }
+                },
+            )
         }
 
         fun retrySequence(

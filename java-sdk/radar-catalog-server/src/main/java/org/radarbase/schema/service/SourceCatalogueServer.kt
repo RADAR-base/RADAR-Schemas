@@ -9,7 +9,6 @@ import org.radarbase.jersey.config.ConfigLoader.createResourceConfig
 import org.radarbase.jersey.enhancer.Enhancers.exception
 import org.radarbase.jersey.enhancer.Enhancers.health
 import org.radarbase.jersey.enhancer.Enhancers.mapper
-import org.radarbase.jersey.enhancer.Enhancers.okhttp
 import org.radarbase.schema.specification.SourceCatalogue
 import org.radarbase.schema.specification.SourceCatalogue.Companion.load
 import org.radarbase.schema.specification.config.ToolConfig
@@ -32,11 +31,10 @@ class SourceCatalogueServer(private val serverPort: Int) : Closeable {
         val config = createResourceConfig(
             listOf(
                 mapper,
-                okhttp,
                 exception,
                 health,
-                SourceCatalogueJerseyEnhancer(sourceCatalogue)
-            )
+                SourceCatalogueJerseyEnhancer(sourceCatalogue),
+            ),
         )
         server = GrizzlyServer(URI.create("http://0.0.0.0:$serverPort/"), config, false)
         server.listen()
@@ -52,7 +50,7 @@ class SourceCatalogueServer(private val serverPort: Int) : Closeable {
         init {
             System.setProperty(
                 "java.util.logging.manager",
-                "org.apache.logging.log4j.jul.LogManager"
+                "org.apache.logging.log4j.jul.LogManager",
             )
         }
 
@@ -108,8 +106,11 @@ class SourceCatalogueServer(private val serverPort: Int) : Closeable {
         private fun loadConfig(fileName: String): ToolConfig = try {
             loadToolConfig(fileName)
         } catch (ex: IOException) {
-            logger.error("Cannot configure radar-catalog-server from config file {}: {}",
-                fileName, ex.message)
+            logger.error(
+                "Cannot configure radar-catalog-server from config file {}: {}",
+                fileName,
+                ex.message,
+            )
             exitProcess(1)
         }
     }

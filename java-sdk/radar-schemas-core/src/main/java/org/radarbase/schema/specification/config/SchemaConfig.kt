@@ -15,7 +15,7 @@ data class SchemaConfig(
     val push: Map<String, String> = emptyMap(),
     val stream: Map<String, String> = emptyMap(),
 ) : PathMatcherConfig {
-    fun schemas(scope: Scope): Map<String, String> = when(scope) {
+    fun schemas(scope: Scope): Map<String, String> = when (scope) {
         ACTIVE -> active
         KAFKA -> kafka
         CATALOGUE -> catalogue
