@@ -59,13 +59,13 @@ class KafkaTopics(
                         .nodes()
                         .get(sleep.toSeconds(), TimeUnit.SECONDS)
                         .size
-                } catch (ex: ExecutionException) {
-                    logger.error("Failed to connect to bootstrap server {}",
-                        kafkaProperties[BOOTSTRAP_SERVERS_CONFIG], ex.cause)
-                    0
                 } catch (ex: TimeoutException) {
                     logger.error("Failed to connect to bootstrap server {} within {} seconds",
                         kafkaProperties[BOOTSTRAP_SERVERS_CONFIG], sleep)
+                    0
+                } catch (ex: Throwable) {
+                    logger.error("Failed to connect to bootstrap server {}",
+                        kafkaProperties[BOOTSTRAP_SERVERS_CONFIG], ex.cause)
                     0
                 }
             }
