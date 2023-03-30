@@ -1,0 +1,7 @@
+build/
+src/test/
+src/generated/
+out/
+.gradle/
+.idea/
+config/

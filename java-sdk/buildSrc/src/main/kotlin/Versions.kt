@@ -3,7 +3,6 @@ object Versions {
 
     const val java = 17
     val kotlin = KotlinVersion.CURRENT.toString()
-    const val kotlinxSerialization: String = "1.5.0"
 
     const val avroPlugin = "1.5.0"
 
