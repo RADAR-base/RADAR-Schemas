@@ -93,6 +93,7 @@ The Avro schemas should follow the [Google JSON style guide](https://google.gith
 
 In addition, schemas in the `commons` directory should follow the following guidelines:
 
+- For latest code use `dev` branch.
 - Try to avoid abbreviations in the field names and write out the field name instead.
 - There should be no need to add `value` at the end of a field name.
 - Enumerator items should be written in uppercase characters separated by underscores.
