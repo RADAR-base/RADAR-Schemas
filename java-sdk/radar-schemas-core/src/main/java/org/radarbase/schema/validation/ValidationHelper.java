@@ -67,9 +67,9 @@ public final class ValidationHelper {
      * @param scope TODO
      * @return TODO
      */
-    public static String getNamespace(Path root, Path schemaPath, Scope scope) {
+    public static String getNamespace(Path schemaRoot, Path schemaPath, Scope scope) {
         // add subfolder of root to namespace
-        Path rootPath = scope.getPath(root.resolve(COMMONS_PATH));
+        Path rootPath = scope.getPath(schemaRoot);
         if (rootPath == null) {
             throw new IllegalArgumentException("Scope " + scope + " does not have a commons path");
         }
