@@ -1,13 +1,18 @@
 {
-  "namespace": "org.radarcns.connector.health",
-  "name": "HKQuantityTypeIdentifierOxygenSaturation",
+  "namespace": "org.radarcns.active.healthkit",
+  "name": "HealthKitOxygenSaturation",
   "type": "record",
   "doc": "Oxygen saturation, unit is %.",
   "fields": [
     {
-      "name": "time",
+      "name": "startTime",
       "type": "double",
-      "doc": "Device timestamp in UTC (s)."
+      "doc": "Start time of this activity period in UTC (s)."
+    },
+    {
+      "name": "endTime",
+      "type": "double",
+      "doc": "End time of this activity period in UTC (s)."
     },
     {
       "name": "timeReceived",

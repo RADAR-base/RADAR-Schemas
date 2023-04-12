@@ -1,10 +1,19 @@
 {
-  "namespace": "org.radarcns.connector.health",
-  "name": "HKQuantityTypeIdentifierStepCount",
+  "namespace": "org.radarcns.active.healthkit",
+  "name": "HealthKitSteps",
   "type": "record",
   "doc": "Steps , unit is count.",
   "fields": [
-    { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+    {
+      "name": "startTime",
+      "type": "double",
+      "doc": "Start time of this activity period in UTC (s)."
+    },
+    {
+      "name": "endTime",
+      "type": "double",
+      "doc": "End time of this activity period in UTC (s)."
+    },
     {
       "name": "timeReceived",
       "type": "double",

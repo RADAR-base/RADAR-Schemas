@@ -1,13 +1,18 @@
 {
-  "namespace": "org.radarcns.connector.health",
-  "name": "HKQuantityTypeIdentifierRespiratoryRate",
+  "namespace": "org.radarcns.active.healthkit",
+  "name": "HealthKitRespRate",
   "type": "record",
   "doc": "Respiratory heart rate, unit is count/min.",
   "fields": [
     {
-      "name": "time",
+      "name": "startTime",
       "type": "double",
-      "doc": "Device timestamp in UTC (s)."
+      "doc": "Start time of this activity period in UTC (s)."
+    },
+    {
+      "name": "endTime",
+      "type": "double",
+      "doc": "End time of this activity period in UTC (s)."
     },
     {
       "name": "timeReceived",

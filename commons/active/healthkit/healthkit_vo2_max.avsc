@@ -1,13 +1,18 @@
 {
-  "namespace": "org.radarcns.connector.health",
-  "name": "HKQuantityTypeIdentifierVO2Max",
+  "namespace": "org.radarcns.active.healthkit",
+  "name": "HealthKitVo2Max",
   "type": "record",
   "doc": "Vo2max, unit is ml(kg * min).",
   "fields": [
     {
-      "name": "time",
+      "name": "startTime",
       "type": "double",
-      "doc": "Device timestamp in UTC (s)."
+      "doc": "Start time of this activity period in UTC (s)."
+    },
+    {
+      "name": "endTime",
+      "type": "double",
+      "doc": "End time of this activity period in UTC (s)."
     },
     {
       "name": "timeReceived",
