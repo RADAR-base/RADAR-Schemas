@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.active.healthkit",
   "name": "HealthkitAppleExerciseTime",
   "type": "record",
-  "doc": "AppleExerciseTime",
+  "doc": "A sample type that measures the amount of time the user spent exercising.",
   "fields": [
     {
       "name": "startTime",
@@ -22,7 +22,7 @@
     {
       "name": "exerciseDuration",
       "type": "float",
-      "doc": "Exercise time taken in this period, unit is min, correspond with HKQuantityTypeIdentifierAppleExerciseTime in Apple HealthKit"
+      "doc": "Exercise time taken in this period, unit is min, correspond with HKQuantityTypeIdentifierAppleExerciseTime in Apple HealthKit."
     }
   ]
 }

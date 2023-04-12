@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.active.healthkit",
   "name": "HealthkitCaloriesAggregated",
   "type": "record",
-  "doc": "Calories active, Calories basal",
+  "doc": "Calories active, Calories basal.",
   "fields": [
     {
       "name": "startTime",
@@ -17,19 +17,19 @@
     {
       "name": "timeReceived",
       "type": "double",
-      "doc": "Time that the data was received from the Apple Healthkit ."
+      "doc": "Time that the data was received from the Apple Healthkit."
     },
     {
       "name": "activeCalories",
       "type": ["null", "float"],
       "default": null,
-      "doc": "Users's active calories, unit is kcal"
+      "doc": "Users's active calories, unit is kcal."
     },
     {
       "name": "basalCalories",
       "type": ["null", "float"],
       "default": null,
-      "doc": "Users's basal calories, unit is kcal"
+      "doc": "Users's basal calories, unit is kcal."
     }
   ]
 }
