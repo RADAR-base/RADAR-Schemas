@@ -1,6 +1,6 @@
 {
   "namespace": "org.radarcns.active.healthkit",
-  "name": "HealthKitCalories",
+  "name": "HealthkitCalories",
   "type": "record",
   "doc": "Calories, unit is kcal.",
   "fields": [
@@ -20,13 +20,8 @@
       "doc": "Time that the data was received from the Apple Healthkit ."
     },
     {
-      "name": "timeInterval",
-      "type": "int",
-      "doc": "Chronological window size (s)."
-    },
-    {
       "name": "calories",
-      "type": "int",
+      "type": "float",
       "doc": "Calories taken in this period."
     }
   ]

@@ -1,6 +1,6 @@
 {
   "namespace": "org.radarcns.active.healthkit",
-  "name": "HealthKitStairs",
+  "name": "HealthkitStairs",
   "type": "record",
   "doc": "Stairs , unit is count.",
   "fields": [
@@ -18,11 +18,6 @@
       "name": "timeReceived",
       "type": "double",
       "doc": "Time that the data was received from the Apple Healthkit ."
-    },
-    {
-      "name": "timeInterval",
-      "type": "int",
-      "doc": "Chronological window size (s)."
     },
     { "name": "stairs", "type": "int", "doc": "Steps taken in this period." }
   ]

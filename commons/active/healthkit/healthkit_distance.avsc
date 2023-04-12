@@ -1,6 +1,6 @@
 {
   "namespace": "org.radarcns.active.healthkit",
-  "name": "HealthKitDistance",
+  "name": "HealthkitDistance",
   "type": "record",
   "doc": "Distance, unit is m.",
   "fields": [
@@ -18,11 +18,6 @@
       "name": "timeReceived",
       "type": "double",
       "doc": "Time that the data was received from the Apple Healthkit ."
-    },
-    {
-      "name": "timeInterval",
-      "type": "int",
-      "doc": "Chronological window size (s)."
     },
     {
       "name": "distance",

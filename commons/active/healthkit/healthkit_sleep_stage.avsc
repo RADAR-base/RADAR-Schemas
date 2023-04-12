@@ -1,8 +1,8 @@
 {
   "namespace": "org.radarcns.active.healthkit",
-  "name": "HealthkitRespRate",
+  "name": "HealthkitSleepStage",
   "type": "record",
-  "doc": "Respiratory heart rate, unit is count/min.",
+  "doc": "Healthkit Sleep Stages.",
   "fields": [
     {
       "name": "startTime",
@@ -20,9 +20,9 @@
       "doc": "Time that the data was received from the Apple Healthkit ."
     },
     {
-      "name": "respRate",
-      "type": "int",
-      "doc": "Respiratory rate taken in this period."
+      "name": "state",
+      "type": "string",
+      "doc": "Sleep state."
     }
   ]
 }

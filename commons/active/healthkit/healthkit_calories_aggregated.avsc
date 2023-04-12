@@ -1,8 +1,8 @@
 {
   "namespace": "org.radarcns.active.healthkit",
-  "name": "HealthkitRespRate",
+  "name": "HealthkitCaloriesAggregated",
   "type": "record",
-  "doc": "Respiratory heart rate, unit is count/min.",
+  "doc": "Calories active, Calories basal",
   "fields": [
     {
       "name": "startTime",
@@ -20,9 +20,16 @@
       "doc": "Time that the data was received from the Apple Healthkit ."
     },
     {
-      "name": "respRate",
-      "type": "int",
-      "doc": "Respiratory rate taken in this period."
+      "name": "activeCalories",
+      "type": ["null", "float"],
+      "default": null,
+      "doc": "Users's active calories, unit is kcal"
+    },
+    {
+      "name": "basalCalories",
+      "type": ["null", "float"],
+      "default": null,
+      "doc": "Users's basal calories, unit is kcal"
     }
   ]
 }

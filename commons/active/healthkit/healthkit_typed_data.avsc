@@ -1,6 +1,6 @@
 {
   "namespace": "org.radarcns.active.healthkit",
-  "name": "HealthKitTypedData",
+  "name": "HealthkitTypedData",
   "type": "record",
   "doc": "HealthKit generic typed data schema.",
   "fields": [

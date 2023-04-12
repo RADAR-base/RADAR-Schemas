@@ -1,6 +1,6 @@
 {
   "namespace": "org.radarcns.active.healthkit",
-  "name": "HealthKitVo2Max",
+  "name": "HealthkitVo2Max",
   "type": "record",
   "doc": "Vo2max, unit is ml(kg * min).",
   "fields": [
@@ -20,14 +20,9 @@
       "doc": "Time that the data was received from the Apple Healthkit ."
     },
     {
-      "name": "timeInterval",
+      "name": "vo2Max",
       "type": "int",
-      "doc": "Chronological window size (s)."
-    },
-    {
-      "name": "vo2max",
-      "type": "int",
-      "doc": "vo2max taken in this period."
+      "doc": "Vo2max taken in this period."
     }
   ]
 }
