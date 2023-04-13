@@ -21,6 +21,7 @@ import io.ktor.client.request.*
 import io.ktor.http.*
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import org.apache.avro.specific.SpecificRecord
 import org.radarbase.kotlin.coroutines.forkJoin
@@ -87,7 +88,7 @@ class SchemaRegistry @JvmOverloads constructor(
                             .request<List<String>> {
                                 url("subjects")
                             }
-                            .isNotEmpty()
+                        true
                     } catch (ex: RestException) {
                         logger.error(
                             "Schema registry {} not ready, responded with HTTP {}: {}",
@@ -96,7 +97,7 @@ class SchemaRegistry @JvmOverloads constructor(
                             ex.message,
                         )
                         false
-                    } catch (e: IOException) {
+                    } catch (e: Throwable) {
                         logger.error(
                             "Failed to connect to schema registry {}",
                             baseUrl,
@@ -106,6 +107,7 @@ class SchemaRegistry @JvmOverloads constructor(
                 }
                 .firstOrNull { it },
         ) { "Schema registry $baseUrl not available" }
+        delay(2.seconds)
     }
 
     /**
