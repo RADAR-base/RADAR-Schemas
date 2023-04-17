@@ -10,7 +10,7 @@
       "name": "PluginStatus",
       "type": "enum",
       "symbols": ["UNAVAILABLE", "CONNECTING", "DISCONNECTING", "DISCONNECTED", "CONNECTED", "READY","UNKNOWN"],
-      "doc": "The status of the plugin."
+      "doc": "Status of each plugin."
     }, "doc": "The status of the plugin.", "default": "UNKNOWN" }
   ]
 }
