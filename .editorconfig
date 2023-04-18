@@ -19,6 +19,6 @@ trim_trailing_whitespace = false
 indent_size = 4
 
 # Java
-[*.java]
+[*.{java,kt,kts}]
 indent_size = 4
 continuation_indent_size = 8
