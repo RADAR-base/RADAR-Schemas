@@ -1,0 +1,14 @@
+{
+  "namespace": "org.radarcns.passive.shimmer",
+  "type": "record",
+  "name": "Shimmer3MagneticField",
+  "doc": "Data from magnetometer sensor with no reference unit except local flux.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Device time since the Unix Epoch (s)." },
+    { "name": "timeReceived", "type": "double", "doc": "App receiver time since the Unix Epoch (s)." },
+    { "name": "sensor", "type": "Shimmer3Sensor", "doc": "Where the magnetic field record was derived from.", "default": "UNKNOWN" },
+    { "name": "x", "type": "float", "doc": "Magnetic field in the x-axis (local flux)." },
+    { "name": "y", "type": "float", "doc": "Magnetic field in the y-axis (local flux)." },
+    { "name": "z", "type": "float", "doc": "Magnetic field in the z-axis (local flux)." }
+  ]
+}

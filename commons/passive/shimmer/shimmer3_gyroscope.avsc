@@ -1,0 +1,14 @@
+{
+  "namespace": "org.radarcns.passive.shimmer",
+  "type": "record",
+  "name": "Shimmer3Gyroscope",
+  "doc": "Data from 3-axis gyroscope sensor.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Device time since the Unix Epoch (s)." },
+    { "name": "timeReceived", "type": "double", "doc": "App receiver time since the Unix Epoch (s)." },
+    { "name": "sensor", "type": "Shimmer3Sensor", "doc": "Where the gyroscope record was derived from.", "default": "UNKNOWN" },
+    { "name": "x", "type": "float", "doc": "Angular velocity in the x-axis (deg / s)." },
+    { "name": "y", "type": "float", "doc": "Angular velocity in the y-axis (deg / s)." },
+    { "name": "z", "type": "float", "doc": "Angular velocity in the z-axis (deg / s)." }
+  ]
+}
