@@ -1,7 +1,7 @@
 {
-  "namespace": "org.radarcns.passive.empatica",
+  "namespace": "org.radarcns.passive.shimmer",
   "type": "record",
-  "name": "EmpaticaE4BatteryLevel",
+  "name": "Shimmer3BatteryLevel",
   "doc": "Device battery level.",
   "fields": [
     { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },

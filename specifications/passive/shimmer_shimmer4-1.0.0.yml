@@ -1,0 +1,29 @@
+#====================================== Empatica E4 Wristband =====================================#
+vendor: Shimmer
+model: Shimmer4
+version: 1.0.0
+app_provider: nl.thehyve.prmt.shimmer.Shimmer4Service
+data:
+  - type: ACCELEROMETER
+    topic: android_shimmer_acceleration
+    value_schema: .passive.shimmer.Shimmer3Acceleration
+  - type: BATTERY
+    unit: PERCENTAGE
+    topic: android_shimmer_battery_level
+    value_schema: .passive.shimmer.Shimmer3BatteryLevel
+  - type: AXIS_ANGLE
+    topic: android_shimmer_axis_angle
+    value_schema: .passive.shimmer.Shimmer3AxisAngle
+  - type: GYROSCOPE
+    topic: android_shimmer_gyroscope
+    value_schema: .passive.shimmer.Shimmer3Gyroscope
+  - type: MAGNETIC_FIELD
+    topic: android_shimmer_magnetic_field
+    value_schema: .passive.shimmer.Shimmer3MagneticField
+  - type: QUATERNION
+    topic: android_shimmer_quaternion
+    value_schema: .passive.shimmer.Shimmer3Quaternion
+  - type: THERMOMETER
+    unit: CELSIUS
+    topic: android_shimmer_barometric
+    value_schema: .passive.shimmer.Shimmer3Barometric
