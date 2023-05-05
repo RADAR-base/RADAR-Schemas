@@ -1,0 +1,16 @@
+{
+  "namespace": "org.radarcns.push.garmin",
+  "name": "GarminHeartRateVariabilitySummary",
+  "type": "record",
+  "doc": "Heart rate variability (HRV) refers to beat-to-beat variations in heart rate and is data collected during the overnight sleep window for select devices. To gain a deeper understanding of your overall health, recovery and training performance through heart rate variability while you sleep, based on technology developed by our Firstbeat Analytics team, please visit https://discover.garmin.com/en-US/performance-data/running/#heart-rate-variability.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Time that this record was collected by a service in seconds since the Unix Epoch (s)."},
+    {"name": "timeReceived", "type": "double", "doc": "Time that this record was collected by a service in seconds since the Unix Epoch (s)."},
+    {"name": "summaryId", "type": "string", "doc": "Unique identifier for the summary."},
+    {"name": "date", "type": ["null", "string"], "doc": "The calendar date this summary would be displayed on in Garmin Connect in the local time zone of the device. The date format is ‘yyyy-mm-dd’.", "default": null},
+    {"name": "startTimeOffset", "type": ["null", "int"], "doc": "Offset in seconds to add to time to derive the 'local' time of the device that captured the data.", "default": null},
+    {"name": "lastNightAvg", "type": ["null", "float"], "doc": "The average heart rate variability value from the last night of data.", "default": null},
+    {"name": "lastNight5MinHigh", "type": ["null", "float"], "doc": "The maximum HRV value over any 5 minute interval of the last night of data.", "default": null},
+    {"name": "duration", "type": ["null", "int"], "doc": "The duration of the measurement period in seconds.", "default": null}
+  ]
+}

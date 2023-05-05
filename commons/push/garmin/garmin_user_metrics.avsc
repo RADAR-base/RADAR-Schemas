@@ -9,6 +9,7 @@
     {"name": "summaryId", "type": "string", "doc": "Unique identifier for the summary."},
     {"name": "date", "type": ["null", "string"], "doc": "The calendar date this summary would be displayed on in Garmin Connect in the local time zone of the device. The date format is ‘yyyy-mm-dd’.", "default": null},
     {"name": "vo2Max", "type": ["null", "float"], "doc": "An estimate of the maximum volume of oxygen (in milliliters) the user can consume per minute per kilogram of body weight at maximum performance.", "default": null},
-    {"name": "fitnessAge", "type": ["null", "int"], "doc": "An estimation of the ‘age’ of the user’s fitness level, calculated by comparing internal fitness metrics with the average readings of biometrically similar users by age. For instance, a fitness age of 48 indicates that the user’s physical fitness is similar to that of an average 48- year-old person of the same gender.", "default": null}
+    {"name": "fitnessAge", "type": ["null", "int"], "doc": "An estimation of the ‘age’ of the user’s fitness level, calculated by comparing internal fitness metrics with the average readings of biometrically average users of the same age and gender.", "default": null},
+    {"name": "enhanced", "type": ["null", "boolean"], "doc": "When set to true, the Fitness Age provided has been calculated using a new algorithm (taking into account activity intensity, resting heart rate and body fat percentage or BMI). When set to false, the value provided for Fitness Age has been calculated using the older method of estimation. More information on the improved Fitness Age calculation and device compatibility can be found at https://support.garmin.com/en-US/?faq=CM1YJmMrrNAbEpM9PapJ07.", "default": null}
   ]
 }
