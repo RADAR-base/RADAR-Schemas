@@ -7,7 +7,7 @@
     {"name": "time", "type": "double", "doc": "Time that this record was collected by a service in seconds since the Unix Epoch (s)."},
     {"name": "timeReceived", "type": "double", "doc": "Time that this record was collected by a service in seconds since the Unix Epoch (s)."},
     {"name": "summaryId", "type": "string", "doc": "Unique identifier for the summary."},
-    {"name": "date", "type": ["null", "string"], "doc": "The calendar date this summary would be displayed on in Garmin Connect in the local time zone of the device. The date format is ‘yyyy-mm-dd’.", "default": null},
+    {"name": "measurementTimeOffset", "type": ["null", "int"], "doc": "Offset in seconds to add to time to derive the 'local' time of the device that captured the data.", "default": null},
     {"name": "systolic", "type": ["null", "int"], "doc": "The systolic value of the blood pressure reading.", "default": null},
     {"name": "diastolic", "type": ["null", "int"], "doc": "The diastolic value of the blood pressure reading.", "default": null},
     {"name": "pulse", "type": ["null", "int"], "doc": "Pulse rate at the time the blood pressure reading.", "default": null},
