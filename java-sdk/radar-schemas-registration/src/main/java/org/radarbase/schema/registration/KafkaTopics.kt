@@ -59,13 +59,16 @@ class KafkaTopics(
                         .nodes()
                         .get(sleep.toSeconds(), TimeUnit.SECONDS)
                         .size
-                } catch (ex: ExecutionException) {
-                    logger.error("Failed to connect to bootstrap server {}",
-                        kafkaProperties[BOOTSTRAP_SERVERS_CONFIG], ex.cause)
-                    0
+                } catch (ex: InterruptedException) {
+                    logger.error("Refreshing topics interrupted")
+                    throw ex
                 } catch (ex: TimeoutException) {
                     logger.error("Failed to connect to bootstrap server {} within {} seconds",
                         kafkaProperties[BOOTSTRAP_SERVERS_CONFIG], sleep)
+                    0
+                } catch (ex: Throwable) {
+                    logger.error("Failed to connect to bootstrap server {}",
+                        kafkaProperties[BOOTSTRAP_SERVERS_CONFIG], ex.cause)
                     0
                 }
             }
@@ -165,7 +168,7 @@ class KafkaTopics(
                         topicConfig.replicationFactor ?: replication,
                     ).configs(topicConfig.properties)
                 }
-                .toList()
+                .collect(Collectors.toList())
 
             if (newTopics.isNotEmpty()) {
                 kafkaClient
@@ -202,11 +205,14 @@ class KafkaTopics(
                         .listTopics(opts)
                         .names()
                         .get(sleep.toSeconds(), TimeUnit.SECONDS)
-                } catch (ex: ExecutionException) {
-                    logger.error("Failed to list topics from brokers: {}", ex.cause.toString())
-                    emptySet()
                 } catch (ex: TimeoutException) {
                     logger.error("Failed to list topics within {} seconds", sleep)
+                    emptySet()
+                } catch (ex: InterruptedException) {
+                    logger.error("Refreshing topics interrupted")
+                    throw ex
+                } catch (ex: Throwable) {
+                    logger.error("Failed to list topics from brokers: {}", ex.cause.toString())
                     emptySet()
                 }
             }
@@ -269,23 +275,33 @@ class KafkaTopics(
             })
         }
 
-        fun retrySequence(startSleep: Duration, maxSleep: Duration): Sequence<Duration> {
-            return generateSequence(Pair(Duration.ZERO, Instant.now())) { (sleep, previousTime) ->
-                val nextSleep = if (sleep == Duration.ZERO) {
-                    startSleep
-                } else {
-                    val timeToSleep = Duration.between(previousTime + sleep, Instant.now())
-                    if (!timeToSleep.isNegative) {
-                        val sleepMillis = timeToSleep.toMillis()
-                        logger.info("Waiting {} seconds to retry", (sleepMillis / 100) / 10.0)
-                        Thread.sleep(sleepMillis)
-                    }
-                    if (sleep < maxSleep) {
-                        sleep.multipliedBy(2L).coerceAtMost(maxSleep)
-                    } else sleep
+        fun retrySequence(
+            startSleep: Duration,
+            maxSleep: Duration,
+        ): Sequence<Duration> = sequence {
+            var sleep = startSleep
+
+            while (true) {
+                // All computation for the sequence will be done in yield. It should be excluded
+                // from sleep.
+                val endTime = Instant.now() + sleep
+                yield(sleep)
+                sleepUntil(endTime) { sleepMillis ->
+                    logger.info("Waiting {} seconds to retry", (sleepMillis / 100) / 10.0)
                 }
-                Pair(nextSleep, Instant.now())
-            }.map { (sleep, _) -> sleep }
+                if (sleep < maxSleep) {
+                    sleep = sleep.multipliedBy(2L).coerceAtMost(maxSleep)
+                }
+            }
+        }
+
+        private inline fun sleepUntil(time: Instant, beforeSleep: (Long) -> Unit) {
+            val timeToSleep = Duration.between(time, Instant.now())
+            if (!timeToSleep.isNegative) {
+                val sleepMillis = timeToSleep.toMillis()
+                beforeSleep(sleepMillis)
+                Thread.sleep(sleepMillis)
+            }
         }
     }
 }

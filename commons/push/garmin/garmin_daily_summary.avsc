@@ -14,7 +14,7 @@
     {"name": "steps", "type": ["null", "int"], "doc": "Count of steps recorded during the monitoring period.", "default": null},
     {"name": "distance", "type": ["null", "float"], "doc": "Distance traveled in meters.", "default": null},
     {"name": "activeTime", "type": ["null", "int"], "doc": "Portion of the monitoring period (in seconds) in which the device wearer was considered Active. This relies on heuristics internal to each device.", "default": null},
-    {"name": "activeKilocalories", "type": ["null", "int"], "doc": "Active kilocalories (dietary calories) burned through actual movement and activity during the monitoring period.", "default": null},
+    {"name": "activeKilocalories", "type": ["null", "int"], "doc": "Active kilocalories (dietary calories) burned through actual movement and activity during the monitoring period. This includes only the calories burned by the activity and not calories burned as part of the basal metabolic rate (BMR).", "default": null},
     {"name": "bmrKilocalories", "type": ["null", "int"], "doc": "BMR Kilocalories burned by existing Basal Metabolic Rate (calculated based on user height/weight/age/other demographic data).", "default": null},
     {"name": "consumedCalories", "type": ["null", "int"], "doc": "The number of calories that have been consumed by the user through food for that day (value subtracted from calorie goal). This value is received from MyFitnessPal and is not entered within Connect.", "default": null},
     {"name": "moderateIntensityDuration", "type": ["null", "int"], "doc": "Cumulative duration of activities of moderate intensity, lasting at least 600 seconds at a time. Moderate intensity is defined as activity with MET value range 3-6.", "default": null},
