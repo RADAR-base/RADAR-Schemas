@@ -16,39 +16,43 @@
 
 package org.radarbase.schema.validation;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import org.apache.avro.Schema;
+import org.apache.avro.SchemaBuilder;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.radarbase.schema.SchemaCatalogue;
+import org.radarbase.schema.Scope;
+import org.radarbase.schema.specification.SourceCatalogue;
+import org.radarbase.schema.specification.config.SchemaConfig;
+import org.radarbase.schema.specification.config.SourceConfig;
+
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.stream.Stream;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.radarbase.schema.Scope.ACTIVE;
 import static org.radarbase.schema.Scope.CATALOGUE;
 import static org.radarbase.schema.Scope.CONNECTOR;
 import static org.radarbase.schema.Scope.KAFKA;
 import static org.radarbase.schema.Scope.MONITOR;
 import static org.radarbase.schema.Scope.PASSIVE;
-
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.stream.Stream;
-import org.apache.avro.Schema;
-import org.apache.avro.SchemaBuilder;
-import org.junit.Before;
-import org.junit.Test;
-import org.radarbase.schema.SchemaCatalogue;
-import org.radarbase.schema.Scope;
-import org.radarbase.schema.specification.SourceCatalogue;
-import org.radarbase.schema.validation.config.ExcludeConfig;
+import static org.radarbase.schema.validation.ValidationHelper.COMMONS_PATH;
 
 /**
  * TODO.
  */
 public class SchemaValidatorTest {
     private SchemaValidator validator;
-    private static final Path ROOT = Paths.get("../..").toAbsolutePath();
+    private static final Path ROOT = Paths.get("../..").toAbsolutePath().normalize();
+    private static final Path COMMONS_ROOT = ROOT.resolve(COMMONS_PATH);
 
-    @Before
-    public void setUp() throws IOException {
-        ExcludeConfig config = ExcludeConfig.load(null);
-        validator = new SchemaValidator(ROOT, config);
+    @BeforeEach
+    public void setUp() {
+        SchemaConfig config = new SchemaConfig();
+        validator = new SchemaValidator(COMMONS_ROOT, config);
     }
 
     @Test
@@ -112,7 +116,7 @@ public class SchemaValidatorTest {
     }
 
     private void testFromSpecification(Scope scope) throws IOException {
-        SourceCatalogue sourceCatalogue = SourceCatalogue.load(ROOT);
+        SourceCatalogue sourceCatalogue = SourceCatalogue.Companion.load(ROOT, new SchemaConfig(), new SourceConfig());
         String result = SchemaValidator.format(
                 validator.analyseSourceCatalogue(scope, sourceCatalogue));
 
@@ -122,7 +126,8 @@ public class SchemaValidatorTest {
     }
 
     private void testScope(Scope scope) throws IOException {
-        SchemaCatalogue schemaCatalogue = new SchemaCatalogue(ROOT, scope);
+        SchemaCatalogue schemaCatalogue = new SchemaCatalogue(COMMONS_ROOT, new SchemaConfig(),
+                scope);
         String result = SchemaValidator.format(
                 validator.analyseFiles(scope, schemaCatalogue));
 
@@ -132,22 +137,11 @@ public class SchemaValidatorTest {
     }
 
     @Test
-    public void testGetPath() {
-        Path path = Paths.get("/Users/developer/Repositories/RADAR-Schemas/commons/"
-                + "monitor/application/application_external_time.avsc");
-
-        String expected = "/RADAR-Schemas/commons/monitor/application/"
-                + "application_external_time.avsc";
-
-        assertEquals(expected, SchemaValidator.getPath(path));
-    }
-
-    @Test
     public void testEnumerator() {
-        Path schemaPath =  ROOT.resolve(
-                "commons/monitor/application/server_status.avsc");
+        Path schemaPath =  COMMONS_ROOT.resolve(
+                "monitor/application/application_server_status.avsc");
 
-        String name = "org.radarcns.monitor.application.ServerStatus";
+        String name = "org.radarcns.monitor.application.ApplicationServerStatus";
         String documentation = "Mock documentation.";
 
         Schema schema = SchemaBuilder

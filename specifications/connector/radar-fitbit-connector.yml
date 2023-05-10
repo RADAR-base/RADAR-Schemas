@@ -1,7 +1,7 @@
 name: RADAR-FITBIT-CONNECTOR
 vendor: RADAR-base
 model: radar-connect-fitbit-source
-version: 0.2.0
+version: 0.2.1
 doc: Spec for Radar fitbit connector. Schemas should be registered in the connector.
 data:
   - doc: The intraday time series for heart rate.
@@ -25,3 +25,6 @@ data:
   - doc: The intraday time series for Calories. Also includes Activity Level and METS.
     topic: connect_fitbit_intraday_calories
     value_schema: .connector.fitbit.FitbitIntradayCalories
+  - doc: The Food Log for the day.
+    topic: connect_fitbit_food_log
+    value_schema: .connector.fitbit.FitbitFoodLog

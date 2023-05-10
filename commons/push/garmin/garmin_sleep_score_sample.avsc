@@ -1,0 +1,20 @@
+{
+  "namespace": "org.radarcns.push.garmin",
+  "name": "GarminSleepScoreSample",
+  "type": "record",
+  "doc": "A map of sleep score string descriptions for each type of sleep as well as restless periods and stress levels during sleep. Each entry in the sleepScores will have a qualifierKey value of EXCELLENT, GOOD, FAIR, or POOR that is used as a qualitative description of the user’s period of sleep.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Start time of the sleep in seconds since January 1, 1970, 00:00:00 UTC (Unix timestamp)."},
+    {"name": "timeReceived", "type": "double", "doc": "Time that this record was collected by a service in seconds since the Unix Epoch (s)."},
+    {"name": "summaryId", "type": "string", "doc": "Unique identifier for the summary."},
+    {"name": "date", "type": ["null", "string"], "doc": "The calendar date this summary would be displayed on in Garmin Connect in the local time zone of the device. The date format is ‘yyyy-mm-dd’.", "default": null},
+    {"name": "startTimeOffset", "type": ["null", "int"], "doc": "Offset in seconds to add to time to derive the 'local' time of the device that captured the data.", "default": null},
+    {"name": "totalDurationScoreQualifier", "type": ["null", "string"], "doc": "A qualifierKey value of EXCELLENT, GOOD, FAIR, or POOR used as a qualitative description of the user’s total duration of sleep.", "default": null},
+    {"name": "stressScoreQualifier", "type": ["null", "string"], "doc": "A qualifierKey value of EXCELLENT, GOOD, FAIR, or POOR used as a qualitative description of the user’s stress during the period of sleep.", "default": null},
+    {"name": "awakeCountScoreQualifier", "type": ["null", "string"], "doc": "A qualifierKey value of EXCELLENT, GOOD, FAIR, or POOR used as a qualitative description of the user’s awake count during the period of sleep.", "default": null},
+    {"name": "remPercentageScoreQualifier", "type": ["null", "string"], "doc": "A qualifierKey value of EXCELLENT, GOOD, FAIR, or POOR used as a qualitative description of the user’s REM sleep percentage during the period of sleep.", "default": null},
+    {"name": "restlessnessScoreQualifier", "type": ["null", "string"], "doc": "A qualifierKey value of EXCELLENT, GOOD, FAIR, or POOR used as a qualitative description of the user’s restlessness during the period of sleep.", "default": null},
+    {"name": "lightPercentageScoreQualifier", "type": ["null", "string"], "doc": "A qualifierKey value of EXCELLENT, GOOD, FAIR, or POOR used as a qualitative description of the user’s light sleep percentage during the period of sleep.", "default": null},
+    {"name": "deepPercentageScoreQualifier", "type": ["null", "string"], "doc": "A qualifierKey value of EXCELLENT, GOOD, FAIR, or POOR used as a qualitative description of the user’s deep slep percentage during the period of sleep.", "default": null}
+  ]
+}

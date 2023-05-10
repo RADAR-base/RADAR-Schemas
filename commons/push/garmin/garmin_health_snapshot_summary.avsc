@@ -1,0 +1,28 @@
+{
+  "namespace": "org.radarcns.push.garmin",
+  "name": "GarminHealthSnapshotSummary",
+  "type": "record",
+  "doc": "The Garmin Health Snapshot is a collection of key health-related insights recorded during a two-minute session on a compatible device. Heart rate (HR), heart rate variability (HRV), Pulse Ox, respiration, and stress are the metrics included this summary, which collectively provide you a glimpse of your overall cardiovascular status. More information about Health Snapshot can be found at https://support.garmin.com/en-US/?faq=PB1duL5p6V64IQwhNvcRK9.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Time that this record was collected by a service in seconds since the Unix Epoch (s)."},
+    {"name": "timeReceived", "type": "double", "doc": "Time that this record was collected by a service in seconds since the Unix Epoch (s)."},
+    {"name": "summaryId", "type": "string", "doc": "Unique identifier for the summary."},
+    {"name": "date", "type": ["null", "string"], "doc": "The calendar date this summary would be displayed on in Garmin Connect in the local time zone of the device. The date format is ‘yyyy-mm-dd’.", "default": null},
+    {"name": "startTimeOffset", "type": ["null", "int"], "doc": "Offset in seconds to add to time to derive the 'local' time of the device that captured the data.", "default": null},
+    {"name": "rmssdHrvAverage", "type": ["null", "float"], "doc": "Average value of RMSSD HRV for this snapshot. RMSSD stands for the root mean square of successive differences between normal heartbeats.", "default": null},
+    {"name": "sdrrHrvAverage", "type": ["null", "float"], "doc": "Average value of SDRR HRV for this snapshot. SDRR is the standard deviation in time between heartbeats, which is sometimes referred to as the 'RR interval'.", "default": null},
+    {"name": "heartRateAverage", "type": ["null", "float"], "doc": "Average value of Heart Rate for this snapshot.", "default": null},
+    {"name": "heartRateMin", "type": ["null", "float"], "doc": "Minimum value of Heart Rate for this snapshot.", "default": null},
+    {"name": "heartRateMax", "type": ["null", "float"], "doc": "Maximum value of Heart Rate for this snapshot.", "default": null},
+    {"name": "respirationAverage", "type": ["null", "float"], "doc": "Average value of respiration rate for this snapshot.", "default": null},
+    {"name": "respirationMin", "type": ["null", "float"], "doc": "Minimum value of respiration rate for this snapshot.", "default": null},
+    {"name": "respirationMax", "type": ["null", "float"], "doc": "Maximum value of respiration rate for this snapshot.", "default": null},
+    {"name": "stressAverage", "type": ["null", "float"], "doc": "Average value of stress for this snapshot.", "default": null},
+    {"name": "stressMin", "type": ["null", "float"], "doc": "Minimum value of stress for this snapshot.", "default": null},
+    {"name": "stressMax", "type": ["null", "float"], "doc": "Maximum value of stress for this snapshot.", "default": null},
+    {"name": "spo2Average", "type": ["null", "float"], "doc": "Average value of pulse ox (spo2) for this snapshot.", "default": null},
+    {"name": "spo2Min", "type": ["null", "float"], "doc": "Minimum value of pulse ox (spo2) for this snapshot.", "default": null},
+    {"name": "spo2Max", "type": ["null", "float"], "doc": "Maximum value of pulse ox (spo2) for this snapshot.", "default": null},
+    {"name": "duration", "type": ["null", "int"], "doc": "The duration of the measurement period in seconds.", "default": null}
+  ]
+}

@@ -16,24 +16,24 @@
 
 package org.radarbase.schema.validation.rules;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.radarbase.schema.validation.SourceCatalogueValidationTest.BASE_PATH;
 import static org.radarbase.schema.validation.ValidationHelper.COMMONS_PATH;
 import static org.radarbase.schema.Scope.MONITOR;
 import static org.radarbase.schema.Scope.PASSIVE;
-import static org.radarbase.schema.specification.SourceCatalogue.BASE_PATH;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
 import org.apache.avro.Schema;
 import org.apache.avro.SchemaBuilder;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.radarbase.schema.specification.config.SchemaConfig;
 import org.radarbase.schema.validation.SchemaValidator;
 import org.radarbase.schema.validation.ValidationException;
 import org.radarbase.schema.validation.ValidationHelper;
-import org.radarbase.schema.validation.config.ExcludeConfig;
 
 /**
  * TODO.
@@ -43,10 +43,10 @@ public class RadarSchemaMetadataRulesTest {
     private static final String RECORD_NAME_MOCK = "RecordName";
     private RadarSchemaMetadataRules validator;
 
-    @Before
+    @BeforeEach
     public void setUp() {
-        ExcludeConfig config = new ExcludeConfig();
-        validator = new RadarSchemaMetadataRules(BASE_PATH, config);
+        SchemaConfig config = new SchemaConfig();
+        validator = new RadarSchemaMetadataRules(BASE_PATH.resolve(COMMONS_PATH), config);
     }
 
     @Test
