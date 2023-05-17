@@ -14,11 +14,78 @@
 
 ## Usage
 
-This project can be used in RADAR-base by using the `radarbase/kafka-init` Docker image. The schemas and specifications can be extended by locally creating a directory structure that includes a `commons` and `specifications` directory and mounting it to the image, to the `/schema/conf/commons` and `/schema/conf/specifications` directories, respectively. Existing specifications can be excluded from your deployment by mounting a file at `/etc/radar-schemas/specifications.exclude`, with on each line a file pattern that can be excluded. The pattern should start from the `specifications` directory as parent directory. Example file contents:
+This project can be used in RADAR-base by using the `radarbase/kafka-init` Docker image. The schemas and specifications can be extended by locally creating a directory structure that includes a `commons` and `specifications` directory and mounting it to the image, to the `/schema/conf/commons` and `/schema/conf/specifications` directories, respectively. You can provide a file path in `CONFIG_YAML` that points to a `config.yaml` file that is mounted in the docker container. The config file has the following format:
+
+```yaml
+# Specify any Kafka properties needed to connect to the Kafka cluster
+kafka:
+  security.protocol: PLAINTEXT
+
+# Configure additional topics, or specify the properties of a topic listed elsewhere.
+topics:
+  my_custom_topic:
+    # Enable configuration of this topic
+    enabled: true
+    # Number of partitions to use, if newly created
+    partitions: 3
+    # Replication factor, if newly created
+    replicationFactor: 2
+    # Topic properties in Kafka. See
+    # <https://docs.confluent.io/platform/current/installation/configuration/topic-configs.html#ak-topic-configurations-for-cp>
+    properties:
+      cleanup.policy: compact
+    # Key schema for the topic
+    keySchema: my.key.Schema
+    # Value schema for the topic
+    valueSchema: my.value.Schema
+    # Whether to register the schemas to the Schema Registry
+    registerSchema: false
+
+# Schema configuration. This refers to the files in the commons directory.
+schemas:
+  # Only include given schema directory files. You can use File glob syntax as described in <https://docs.oracle.com/javase/8/docs/api/java/nio/file/FileSystem.html#getPathMatcher-java.lang.String->
+  # If include is specified, exclude will be ignored. The glob pattern should start from the commons directory.
+  include: []
+  # Exclude all given schema directory files. You can use File glob syntax as described in <https://docs.oracle.com/javase/8/docs/api/java/nio/file/FileSystem.html#getPathMatcher-java.lang.String->
+  # If include is specified, exclude will be ignored. The glob pattern should start from the commons directory.
+  exclude:
+    - active/**
+  # You can specify additional schemas, using the format for each respective specification directory.
+  monitor:
+    # The object name is the path it would have, the value is a plain string containing a JSON object
+    application/application_uptime2.avsc: >
+      {
+        "namespace": "org.radarcns.monitor.application",
+        "type": "record",
+        "name": "ApplicationUptime2",
+        "doc": "Length of application uptime.",
+        "fields": [
+          { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+          { "name": "uptime", "type": "double", "doc": "Time since last app start (s)." }
+        ]
+      }
+
+# Source configuration. This refers to the files in the specifications directory.
+sources:
+  # Only include given specification directory files. You can use File glob syntax as described in <https://docs.oracle.com/javase/8/docs/api/java/nio/file/FileSystem.html#getPathMatcher-java.lang.String->
+  # If include is specified, exclude will be ignored. The glob pattern should start from the specifications directory.
+  include:
+    - passive/*
+  # Exclude all given specification directory files. You can use File glob syntax as described in <https://docs.oracle.com/javase/8/docs/api/java/nio/file/FileSystem.html#getPathMatcher-java.lang.String->
+  # If include is specified, exclude will be ignored. The glob pattern should start from the specifications directory.
+  exclude: []
+  # You can specify additional sources, using the format for each respective specification directory.
+  monitor:
+    - vender: test
+      model: test
+      version: 1.0.0
+      data:
+        type: UPTIME
+        topic: application_uptime2
+        value_schema: .monitor.application.ApplicationUptime2
 ```
-active/*
-passive/biovotion*
-```
+
+Please see the inline comments for more information on their values.
 
 ## Contributing
 
@@ -77,22 +144,24 @@ docker-compose run --rm tools radar-schemas-tools schema-topic --ensure -f schem
 
 1. Create topics on Confluent Cloud 
 
-    1.1. Create a `java-config.properties` file. A Confluent Cloud config for Java application based on this [template](https://github.com/confluentinc/configuration-templates/blob/master/clients/cloud/java-sr.config).
+    1.1. Create a `config.yaml` file. A Confluent Cloud config for Java application based on this [template](https://github.com/confluentinc/configuration-templates/blob/master/clients/cloud/java-sr.config).
 
-    ```properties
-    # Kafka
-    bootstrap.servers={{ BROKER_ENDPOINT }}
-    security.protocol=SASL_SSL
-    sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username="{{ CLUSTER_API_KEY }}" password="{{ CLUSTER_API_SECRET }}";
-    ssl.endpoint.identification.algorithm=https
-    sasl.mechanism=PLAIN
+    ```yaml
+    
+    kafka:
+      bootstrap.servers: {{ BROKER_ENDPOINT }}
+      security.protocol: SASL_SSL
+      sasl.jaas.config: org.apache.kafka.common.security.plain.PlainLoginModule required username="{{ CLUSTER_API_KEY }}" password="{{ CLUSTER_API_SECRET }}";
+      ssl.endpoint.identification.algorithm: https
+      sasl.mechanism: PLAIN
     ```
-    1.2. Run `cc-topic-create` command
+
+    1.2. Run `topic-create` command
 
     ```
-    docker run --rm -v "$PWD/java-config.properties:/schema/conf/java.properties" radarbase/radar-schemas-tools radar-schemas-tools topic-create -c /schema/conf/java-config.properties /schema/merged
+    docker run --rm -v "$PWD/config.yaml:/etc/radar-schemas-tools/config.yaml" radarbase/radar-schemas-tools radar-schemas-tools topic-create -c /etc/radar-schemas-tools/config.yaml /schema/merged
     ```
-        
+
 2. Register schemas on Confluent Cloud schema registry
 
     ```

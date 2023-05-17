@@ -16,6 +16,20 @@
 
 package org.radarbase.schema.validation.rules;
 
+import io.confluent.connect.avro.AvroData;
+import io.confluent.connect.avro.AvroDataConfig;
+import org.apache.avro.Schema;
+import org.apache.avro.Schema.Type;
+import org.radarbase.schema.validation.ValidationException;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+import java.util.function.BiFunction;
+import java.util.regex.Pattern;
+import java.util.stream.Stream;
+
 import static io.confluent.connect.avro.AvroDataConfig.CONNECT_META_DATA_CONFIG;
 import static io.confluent.connect.avro.AvroDataConfig.ENHANCED_AVRO_SCHEMA_SUPPORT_CONFIG;
 import static io.confluent.connect.avro.AvroDataConfig.SCHEMAS_CACHE_SIZE_CONFIG;
@@ -27,20 +41,6 @@ import static org.radarbase.schema.validation.rules.Validator.valid;
 import static org.radarbase.schema.validation.rules.Validator.validate;
 import static org.radarbase.schema.validation.rules.Validator.validateNonEmpty;
 import static org.radarbase.schema.validation.rules.Validator.validateNonNull;
-
-import io.confluent.connect.avro.AvroData;
-import io.confluent.connect.avro.AvroDataConfig;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.function.BiFunction;
-import java.util.regex.Pattern;
-import java.util.stream.Stream;
-import org.apache.avro.Schema;
-import org.apache.avro.Schema.Type;
-import org.radarbase.schema.validation.ValidationException;
-import org.radarbase.schema.validation.config.ExcludeConfig;
 
 /**
  * Schema validation rules enforced for the RADAR-Schemas repository.
@@ -64,21 +64,18 @@ public class RadarSchemaRules implements SchemaRules {
 
     private static final String WITH_TYPE_DOUBLE = "\" field with type \"double\".";
 
-    private final ExcludeConfig config;
     private final RadarSchemaFieldRules fieldRules;
 
     /**
      * RADAR-Schema validation rules.
-     * @param config validation configuration
      */
-    public RadarSchemaRules(ExcludeConfig config, RadarSchemaFieldRules fieldRules) {
-        this.config = config;
+    public RadarSchemaRules(RadarSchemaFieldRules fieldRules) {
         this.fieldRules = fieldRules;
         this.schemaStore = new HashMap<>();
     }
 
-    public RadarSchemaRules(ExcludeConfig config) {
-        this(config, new RadarSchemaFieldRules());
+    public RadarSchemaRules() {
+        this(new RadarSchemaFieldRules());
     }
 
     @Override
@@ -245,8 +242,7 @@ public class RadarSchemaRules implements SchemaRules {
             return schema.getFields().stream()
                     .flatMap(field -> {
                         SchemaField schemaField = new SchemaField(schema, field);
-                        return config.isSkipped(schemaField) ? valid()
-                                : validator.apply(schemaField);
+                        return validator.apply(schemaField);
                     });
         };
     }
