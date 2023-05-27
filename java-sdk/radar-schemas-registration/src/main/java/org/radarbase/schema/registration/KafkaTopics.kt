@@ -59,13 +59,16 @@ class KafkaTopics(
                         .nodes()
                         .get(sleep.toSeconds(), TimeUnit.SECONDS)
                         .size
-                } catch (ex: ExecutionException) {
-                    logger.error("Failed to connect to bootstrap server {}",
-                        kafkaProperties[BOOTSTRAP_SERVERS_CONFIG], ex.cause)
-                    0
+                } catch (ex: InterruptedException) {
+                    logger.error("Refreshing topics interrupted")
+                    throw ex
                 } catch (ex: TimeoutException) {
                     logger.error("Failed to connect to bootstrap server {} within {} seconds",
                         kafkaProperties[BOOTSTRAP_SERVERS_CONFIG], sleep)
+                    0
+                } catch (ex: Throwable) {
+                    logger.error("Failed to connect to bootstrap server {}",
+                        kafkaProperties[BOOTSTRAP_SERVERS_CONFIG], ex.cause)
                     0
                 }
             }
@@ -165,7 +168,7 @@ class KafkaTopics(
                         topicConfig.replicationFactor ?: replication,
                     ).configs(topicConfig.properties)
                 }
-                .toList()
+                .collect(Collectors.toList())
 
             if (newTopics.isNotEmpty()) {
                 kafkaClient
@@ -202,11 +205,14 @@ class KafkaTopics(
                         .listTopics(opts)
                         .names()
                         .get(sleep.toSeconds(), TimeUnit.SECONDS)
-                } catch (ex: ExecutionException) {
-                    logger.error("Failed to list topics from brokers: {}", ex.cause.toString())
-                    emptySet()
                 } catch (ex: TimeoutException) {
                     logger.error("Failed to list topics within {} seconds", sleep)
+                    emptySet()
+                } catch (ex: InterruptedException) {
+                    logger.error("Refreshing topics interrupted")
+                    throw ex
+                } catch (ex: Throwable) {
+                    logger.error("Failed to list topics from brokers: {}", ex.cause.toString())
                     emptySet()
                 }
             }
