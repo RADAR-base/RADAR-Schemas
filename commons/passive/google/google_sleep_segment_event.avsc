@@ -1,0 +1,19 @@
+{
+  "namespace": "org.radarcns.passive.google",
+  "type": "record",
+  "name": "GoogleSleepSegmentEvent",
+  "doc": "Represents the result of sleep data after the user is awake.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+    { "name": "timeReceived", "type": "double", "doc": "Device receiver timestamp in UTC (s)." },
+    { "name": "sleepStartTime", "type": "double", "doc": "The UNIX epoch time (s) for the moment when the user goes to sleep." },
+    { "name": "sleepEndTime", "type": "double", "doc": "The UNIX epoch time (s) for the moment when the user wakes up." },
+    { "name": "sleepDuration", "type": "double", "doc": "The amount of elapsed time (s), that the user was asleep." },
+    { "name": "sleepStatus", "type": {
+      "name": "SleepStatus",
+      "type": "enum",
+      "doc": "The status of the sleep segment detection.",
+      "symbols": ["STATUS_SUCCESSFUL", "STATUS_MISSING_DATA", "STATUS_NOT_DETECTED", "UNKNOWN"]
+    }, "doc": "Status that indicates whether the system succeeded in detecting sleep.", "default": "UNKNOWN" }
+  ]
+}
