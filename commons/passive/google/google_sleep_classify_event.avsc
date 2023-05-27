@@ -1,0 +1,13 @@
+{
+  "namespace": "org.radarcns.passive.google",
+  "type": "record",
+  "name": "GoogleSleepClassifyEvent",
+  "doc": "Sleep classification event including the sleep confidence, device motion and ambient light level.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+    { "name": "timeReceived", "type": "double", "doc": "Device receiver timestamp in UTC (s)." },
+    { "name": "sleepConfidence", "type": "int", "doc": "Sleep confidence value between 0 and 100." },
+    { "name": "light", "type": "int", "doc": "The brightness of the space around the device. Value ranges from 1 to 6, inclusive." },
+    { "name": "motion", "type": "int", "doc": "The amount of device motion. Value ranges from 1 to 6, inclusive." }
+  ]
+}
