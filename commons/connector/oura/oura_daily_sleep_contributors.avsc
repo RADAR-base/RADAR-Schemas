@@ -1,0 +1,15 @@
+{
+  "namespace": "org.radarcns.connector.oura",
+  "name": "OuraDailySleepContributors",
+  "type": "record",
+  "doc": "This defines how the sleep score is calculated by different contributors.",
+  "fields": [
+    {"name": "deepSleep", "type": ["null", "int"], "doc": "Contribution of deep sleep in range [1, 100]. Null if unknown.", "default": null},    
+    {"name": "efficiency", "type": ["null", "int"], "doc": "Contribution of sleep efficiency in range [1, 100]. Null if unknown.", "default": null},
+    {"name": "latency", "type": ["null", "int"], "doc": "Contribution of sleep latency in range [1, 100]. Null if unknown.", "default": null},
+    {"name": "remSleep", "type": ["null", "int"], "doc": "Contribution of REM sleep in range [1, 100]. Null if unknown.", "default": null},
+    {"name": "restfulness", "type": ["null", "int"], "doc": "Contribution of sleep restfulness in range [1, 100]. Null if unknown.", "default": null},
+    {"name": "timing", "type": ["null", "int"], "doc": "Contribution of sleep timing in range [1, 100]. Null if unknown.", "default": null},
+    {"name": "totalSleep", "type": ["null", "int"], "doc": "Contribution of total sleep in range [1, 100]. Null if unknown.", "default": null},
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "namespace": "org.radarcns.connector.oura",
+  "name": "OuraDailyActivityContributors",
+  "type": "record",
+  "doc": "This defines how the activity score is calculated by different contributors.",
+  "fields": [
+    {"name": "meetDailyTargets", "type": ["null", "int"], "doc": "Contribution of meeting previous 7-day daily activity targets in range [1, 100]. Null if unknown.", "default": null},    
+    {"name": "moveEveryHour", "type": ["null", "int"], "doc": "Contribution of previous 24-hour inactivity alerts in range [1, 100]. Null if unknown.", "default": null},
+    {"name": "recoveryTime", "type": ["null", "int"], "doc": "Contribution of previous 7-day recovery time in range [1, 100]. Null if unknown.", "default": null},
+    {"name": "stayActive", "type": ["null", "int"], "doc": "Contribution of previous 24-hour activity in range [1, 100]. Null if unknown.", "default": null},
+    {"name": "trainingFrequency", "type": ["null", "int"], "doc": "Contribution of previous 7-day exercise frequency in range [1, 100]. Null if unknown.", "default": null},
+    {"name": "trainingVolume", "type": ["null", "int"], "doc": "Contribution of previous 7-day exercise volume in range [1, 100]. Null if unknown.", "default": null},
+  ]
+}
