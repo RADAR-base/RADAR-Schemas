@@ -5,7 +5,7 @@
   "doc": "HealthKit generic typed data schema.",
   "fields": [
     {
-      "name": "startTime",
+      "name": "time",
       "type": "double",
       "doc": "Start time of this activity period in UTC (s)."
     },
