@@ -11,7 +11,12 @@
     {"name": "score", "type": ["null", "int"], "doc": "Activity score in range [1, 100]. Null if unknown.", "default": null},
     {"name": "activeCalories", "type": ["null", "int"], "doc": "Active calories expended (in kilocalories). Null if unknown.", "default": null},
     {"name": "averageMetMinutes", "type": ["null", "int"], "doc": "Average metabolic equivalent (MET) in minutes. Null if unknown.", "default": null},
-    {"name": "contributors", "type": ["null", "OuraDailyctivityContributors"], "doc": "Object defining the daily activity score contributors. Null if unknown.", "default": null},
+    {"name": "contributorMeetDailyTargets", "type": ["null", "int"], "doc": "Contribution of meeting previous 7-day daily activity targets in range [1, 100] to the activity score. Null if unknown.", "default": null},    
+    {"name": "contributorMoveEveryHour", "type": ["null", "int"], "doc": "Contribution of previous 24-hour inactivity alerts in range [1, 100] to the activity score. Null if unknown.", "default": null},
+    {"name": "contributorRecoveryTime", "type": ["null", "int"], "doc": "Contribution of previous 7-day recovery time in range [1, 100] to the activity score. Null if unknown.", "default": null},
+    {"name": "contributorStayActive", "type": ["null", "int"], "doc": "Contribution of previous 24-hour activity in range [1, 100] to the activity score. Null if unknown.", "default": null},
+    {"name": "contirbutorTrainingFrequency", "type": ["null", "int"], "doc": "Contribution of previous 7-day exercise frequency in range [1, 100] to the activity score. Null if unknown.", "default": null},
+    {"name": "contributorTrainingVolume", "type": ["null", "int"], "doc": "Contribution of previous 7-day exercise volume in range [1, 100] to the activity score. Null if unknown.", "default": null},
     {"name": "equivalentWalkingDistance", "type": ["null", "int"], "doc": "Equivalent walking distance (in meters) of energy expenditure. Null if unknown.", "default": null},
     {"name": "highActivityMetMinutes", "type": ["null", "int"], "doc": "High activity metabolic equivalent (MET) in minutes. Null if unknown.", "default": null},
     {"name": "highActivityTime", "type": ["null", "int"], "doc": "High activity metabolic equivalent (MET) in seconds. Null if unknown.", "default": null},
@@ -20,7 +25,6 @@
     {"name": "lowActivityTime", "type": ["null", "int"], "doc": "Low activity metabolic equivalent (MET) in seconds. Null if unknown.", "default": null},
     {"name": "mediumActivityMetMinutes", "type": ["null", "int"], "doc": "Medium activity metabolic equivalent (MET) in minutes. Null if unknown.", "default": null},
     {"name": "mediumActivityTime", "type": ["null", "int"], "doc": "Medium activity metabolic equivalent (MET) in seconds. Null if unknown.", "default": null},    
-    {"name": "inactivityAlerts", "type": ["null", "int"], "doc": "Duration in the heart rate zone 'Peak', which is the highest heart rate zone (s). Null if unknown.", "default": null},
     {"name": "metSampleInterval", "type": ["null", "int"], "doc": "Interval in seconds between the sampled items. Null if unknown.", "default": null},
     {"name": "metSampleItems", "type": ["null", "int"], "doc": "Recorded sample items. Null if unknown.", "default": null},
     {"name": "metSampleTimestamp", "type": ["null", "int"], "doc": "Timestamp when the sample recording started. Null if unknown.", "default": null},
@@ -33,6 +37,6 @@
     {"name": "targetCalories", "type": ["null", "int"], "doc": "Daily activity target (in kilocalories). Null if unknown.", "default": null},
     {"name": "targetMeters", "type": ["null", "int"], "doc": "Daily activity target (in meters). Null if unknown.", "default": null},
     {"name": "totalCalories", "type": ["null", "int"], "doc": "Total calories expended (in kilocalories). Null if unknown.", "default": null},
-    {"name": "day", "type": ["null", "string"], "doc": "The YYYY-MM-DD formatted local date indicating when the daily activity occurred. Null if unknown.", "default": null},
+    {"name": "day", "type": ["null", "string"], "doc": "The YYYY-MM-DD formatted local date indicating when the daily activity occurred. Null if unknown.", "default": null}
   ]
 }
