@@ -13,7 +13,8 @@
     {"name": "contributorRemSleep", "type": ["null", "int"], "doc": "Contribution of REM sleep in range [1, 100] to the sleep score. Null if unknown.", "default": null},
     {"name": "contributorRestfulness", "type": ["null", "int"], "doc": "Contribution of sleep restfulness in range [1, 100] to the sleep score. Null if unknown.", "default": null},
     {"name": "contributorTiming", "type": ["null", "int"], "doc": "Contribution of sleep timing in range [1, 100] to the sleep score. Null if unknown.", "default": null},
-    {"name": "contributorTotalSleep", "type": ["null", "int"], "doc": "Contribution of total sleep in range [1, 100] to the sleep score. Null if unknown.", "default": null},    {"name": "day", "type": ["null", "string"], "doc": "Day that the daily sleep belongs to. Null if unknown.", "default": null},
+    {"name": "contributorTotalSleep", "type": ["null", "int"], "doc": "Contribution of total sleep in range [1, 100] to the sleep score. Null if unknown.", "default": null},
+    {"name": "day", "type": ["null", "string"], "doc": "Day that the daily sleep belongs to. Null if unknown.", "default": null},
     {"name": "score", "type": ["null", "int"], "doc": "Daily sleep score in range [1, 100]. Null if unknown.", "default": null}
   ]
 }
