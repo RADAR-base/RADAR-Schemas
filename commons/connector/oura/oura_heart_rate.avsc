@@ -10,5 +10,5 @@
     {"name": "source", "type":
       {"name": "OuraHeartRateSource", "type": "enum", "symbols": ["AWAKE", "REST", "SLEEP", "SESSION", "LIVE", "UNKNOWN"], "doc": "Heart rate source type as computed by Oura."},
       "doc": "Heart rate source type as computed by Oura.", "default": "UNKNOWN" }
-    ]
+  ]
 }
