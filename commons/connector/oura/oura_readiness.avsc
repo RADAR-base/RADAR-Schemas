@@ -17,8 +17,8 @@
     {"name": "contributorRecoveryIndex", "type": ["null", "int"], "doc": "Contribution of cumulative activity balance to the readiness score in range [1, 100].", "default": null},    
     {"name": "contributorRestingHeartRate", "type": ["null", "int"], "doc": "Contribution of cumulative activity balance to the readiness score in range [1, 100].", "default": null},    
     {"name": "contributorSleepBalance", "type": ["null", "int"], "doc": "Contribution of cumulative activity balance to the readiness score in range [1, 100].", "default": null},    
-    {"name": "temperatureDeviation", "type": ["null", "int"], "doc": "Temperature deviation in degrees Celsius.", "default": null},    
-    {"name": "temperatureTrendDeviation", "type": ["null", "int"], "doc": "Temperature trend deviation in degrees Celsius.", "default": null}    
+    {"name": "temperatureDeviation", "type": ["null", "float"], "doc": "Temperature deviation in degrees Celsius.", "default": null},    
+    {"name": "temperatureTrendDeviation", "type": ["null", "float"], "doc": "Temperature trend deviation in degrees Celsius.", "default": null}    
   
   ]
 }

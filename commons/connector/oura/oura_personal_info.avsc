@@ -7,9 +7,9 @@
     {"name": "time", "type": "double", "doc": "Timestamp of the record."},
     {"name": "timeReceived", "type": "double", "doc": "Time that this record was collected by a service in seconds since the Unix Epoch (s)."},
     {"name": "id", "type": ["null", "string"], "doc": "ID of the record.", "default": null},
-    {"name": "age", "type": ["null", "string"], "doc": "Age of the user.", "default": null},    
-    {"name": "weight", "type": ["null", "string"], "doc": "Weight of the user.", "default": null},    
-    {"name": "height", "type": ["null", "string"], "doc": "Height of the user.", "default": null},         
+    {"name": "age", "type": ["null", "int"], "doc": "Age of the user.", "default": null},    
+    {"name": "weight", "type": ["null", "float"], "doc": "Weight of the user.", "default": null},    
+    {"name": "height", "type": ["null", "float"], "doc": "Height of the user.", "default": null},         
     {"name": "biologicalSex", "type": ["null", "string"], "doc": "Biological sex of the user.", "default": null},      
     {"name": "email", "type": ["null", "string"], "doc": "Email of the user.", "default": null}    
   ]

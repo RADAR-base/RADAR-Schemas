@@ -7,7 +7,7 @@
     {"name": "time", "type": "double", "doc": "Start time of the activity in seconds since January 1, 1970, 00:00:00 UTC (Unix timestamp)."},
     {"name": "timeReceived", "type": "double", "doc": "Time that this record was collected by a service in seconds since the Unix Epoch (s)."},
     {"name": "id", "type": ["null", "string"], "doc": "Unique identifier of the workout from Oura.", "default": null},    
-    {"name": "calories", "type": ["null", "int"], "doc": "Energy burned in kilocalories during the workout. Null if unknown.", "default": null},
+    {"name": "calories", "type": ["null", "float"], "doc": "Energy burned in kilocalories during the workout. Null if unknown.", "default": null},
     {"name": "day", "type": ["null", "string"], "doc": "Day when the workout occurred. Null if unknown.", "default": null},
     {"name": "distance", "type": ["null", "float"], "doc": "Distance traveled in meters during the workout. Null if unknown.", "default": null},
     {"name": "startDateTime", "type": ["null", "string"], "doc": "Timestamp indicating when the workout started. Null if unknown.", "default": null},

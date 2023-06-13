@@ -10,7 +10,7 @@
     {"name": "fiveMinuteClass", "type": ["null", "int"], "doc": "A 5-minute activity classification for the activity period: 0 - Non-wear, 1 - Rest, 2 - Inactive, 3 - Low Activity, 4 - Medium Activity, 5 - High Activity. Null if unknown.", "default": null},
     {"name": "score", "type": ["null", "int"], "doc": "Activity score in range [1, 100]. Null if unknown.", "default": null},
     {"name": "activeCalories", "type": ["null", "int"], "doc": "Active calories expended (in kilocalories). Null if unknown.", "default": null},
-    {"name": "averageMetMinutes", "type": ["null", "int"], "doc": "Average metabolic equivalent (MET) in minutes. Null if unknown.", "default": null},
+    {"name": "averageMetMinutes", "type": ["null", "float"], "doc": "Average metabolic equivalent (MET) in minutes. Null if unknown.", "default": null},
     {"name": "contributorMeetDailyTargets", "type": ["null", "int"], "doc": "Contribution of meeting previous 7-day daily activity targets in range [1, 100] to the activity score. Null if unknown.", "default": null},    
     {"name": "contributorMoveEveryHour", "type": ["null", "int"], "doc": "Contribution of previous 24-hour inactivity alerts in range [1, 100] to the activity score. Null if unknown.", "default": null},
     {"name": "contributorRecoveryTime", "type": ["null", "int"], "doc": "Contribution of previous 7-day recovery time in range [1, 100] to the activity score. Null if unknown.", "default": null},
