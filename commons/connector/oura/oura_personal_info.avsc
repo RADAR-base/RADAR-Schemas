@@ -10,7 +10,7 @@
     {"name": "age", "type": ["null", "string"], "doc": "Age of the user.", "default": null},    
     {"name": "weight", "type": ["null", "string"], "doc": "Weight of the user.", "default": null},    
     {"name": "height", "type": ["null", "string"], "doc": "Height of the user.", "default": null},         
-    {"name": "biological_sex", "type": ["null", "string"], "doc": "Biological sex of the user.", "default": null},      
+    {"name": "biologicalSex", "type": ["null", "string"], "doc": "Biological sex of the user.", "default": null},      
     {"name": "email", "type": ["null", "string"], "doc": "Email of the user.", "default": null}    
   ]
 }
