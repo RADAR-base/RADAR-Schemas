@@ -1,0 +1,8 @@
+{
+  "namespace": "org.radarcns.passive.google.healthconnect",
+  "name": "HealthConnectMetadata",
+  "type": "record",
+  "doc": "Metadata for a HealthConnect record",
+  "fields": [
+  ]
+}

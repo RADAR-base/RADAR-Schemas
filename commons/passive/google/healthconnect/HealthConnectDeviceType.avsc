@@ -1,0 +1,17 @@
+{
+  "namespace": "org.radarcns.passive.google.healthconnect",
+  "name": "HealthConnectDeviceType",
+  "type": "enum",
+  "doc": "Type of device. UNKNOWN for unknown, WATCH for a watch-type wearable, PHONE for a phone or tablet, SCALE for a digital scale, RING for a connected ring, HEAD_MOUNTED for a head-mounted device, FITNESS_BAND for a non-watch fitness wrist band, CHEST_STRAP for a device on a chest-strap, and SMART_DISPLAY for data entered in a smart display.",
+  "symbols": [
+    "UNKNOWN",
+    "WATCH",
+    "PHONE",
+    "SCALE",
+    "RING",
+    "HEAD_MOUNTED",
+    "FITNESS_BAND",
+    "CHEST_STRAP",
+    "SMART_DISPLAY"
+  ]
+}
