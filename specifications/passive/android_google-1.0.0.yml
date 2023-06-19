@@ -1,6 +1,6 @@
 #======================================== Google APIs =============================================#
-vendor: ANDROID
-model: GOOGLE
+vendor: GOOGLE
+model: SLEEP
 version: 1.0.0
 data:
   #Google Sleep
