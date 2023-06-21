@@ -8,7 +8,7 @@
     {"name": "timeReceived", "type": "double", "doc": "Time that this record was collected by a service in seconds since the Unix Epoch (s)."},
     {"name": "bpm", "type": ["null", "int"], "doc": "Heart rate in beats per minute.", "default": null},    
     {"name": "source", "type":
-      {"name": "OuraHeartRateSource", "type": "enum", "symbols": ["AWAKE", "REST", "SLEEP", "SESSION", "LIVE", "UNKNOWN"], "doc": "Heart rate source type as computed by Oura."},
-      "doc": "Heart rate source type as computed by Oura.", "default": "UNKNOWN" }
+      {"name": "OuraHeartRateSource", "type": "enum", "symbols": ["AWAKE", "REST", "SLEEP", "SESSION", "LIVE", "WORKOUT", "UNKNOWN"], "doc": "Heart rate source type as computed by Oura."},
+      "doc": "Heart rate source type as computed by Oura. UNKNOWN when this data is not provided (e.g. samples from sleep API).", "default": "UNKNOWN" }
   ]
 }
