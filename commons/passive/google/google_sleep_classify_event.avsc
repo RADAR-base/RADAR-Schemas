@@ -1,0 +1,13 @@
+{
+  "namespace": "org.radarcns.passive.google",
+  "type": "record",
+  "name": "GoogleSleepClassifyEvent",
+  "doc": "Sleep classification event that indicates that the user is probably sleeping. Includes sleep confidence, device motion and ambient light level.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+    { "name": "timeReceived", "type": "double", "doc": "Device receiver timestamp in UTC (s)." },
+    { "name": "sleepConfidence", "type": "float", "doc": "Sleep confidence value between 0-1. Higher value indicate that the user is more likely sleeping, while lower values indicate that the user is more likely awake." },
+    { "name": "light", "type": "int", "doc": "The brightness of the space around the device, based on the device's ambient light sensor readings. Value ranges from 1 to 6, inclusive. Higher values indicate brighter surroundings, while lower values indicate darker surroundings." },
+    { "name": "motion", "type": "int", "doc": "The amount of device motion, based on the device's accelerometer readings. Value ranges from 1 to 6, inclusive. Higher values indicate more movement of the device." }
+  ]
+}
