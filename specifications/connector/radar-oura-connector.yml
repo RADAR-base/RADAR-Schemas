@@ -1,0 +1,41 @@
+name: RADAR-OURA-CONNECTOR
+vendor: RADAR-base
+model: radar-connect-oura-source
+version: 0.0.1
+doc: Spec for Radar Oura connector. Schemas should be registered in the connector.
+data:
+  - doc: The daily activity summary values and detailed activity levels.
+    topic: connect_oura_daily_activity
+    value_schema: .connector.oura.OuraDailyActivity
+  - doc: The daily readiness summary values.
+    topic: connect_oura_daily_readiness
+    value_schema: .connector.oura.OuraDailyReadiness
+  - doc: The daily sleep summary values.
+    topic: connect_oura_daily_sleep
+    value_schema: .connector.oura.OuraDailySleep
+  - doc: Timeseries heart rate data.
+    topic: connect_oura_heart_rate
+    value_schema: .connector.oura.OuraHeartRate
+  - doc: Timeseries heart rate variability data.
+    topic: connect_oura_heart_rate_variability
+    value_schema: .connector.oura.OuraHeartRateVariability
+  - doc: Timeseries MET (metabolic equivalent) data. This describes MET data during an activity.
+    topic: connect_oura_met
+    value_schema: .connector.oura.OuraMet  
+  - doc: Timeseries motion count data. This describes motion count during a session.
+    topic: connect_oura_motion_count
+    value_schema: .connector.oura.OuraMotionCount
+  - doc: The tag data scope provides information on the tags the users enter in the mobile app, which includes activities, symptoms, etc.
+    topic: connect_oura_motion_count
+  - doc: The Sessions data scope provides information on how users engage with guided and unguided sessions in the Oura app.
+    topic: connect_oura_session
+    value_schema: .connector.oura.OuraSession
+  - doc: The sleep data for the specified Oura user within a given timeframe. A user can have multiple sleep periods per day.
+    topic: connect_oura_sleep
+    value_schema: .connector.oura.OuraSleep
+  - doc: The workout data scope includes information about user workouts.
+    topic: connect_oura_workout
+    value_schema: .connector.oura.OuraWorkout
+  - doc: The personal info scope includes personal information (e.g. age, email, weight, and height) about the user. 
+    topic: connect_oura_personal_info
+    value_schema: .connector.oura.OuraPersonalInfo
