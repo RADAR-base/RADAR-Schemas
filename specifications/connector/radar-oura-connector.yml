@@ -26,7 +26,8 @@ data:
     topic: connect_oura_motion_count
     value_schema: .connector.oura.OuraMotionCount
   - doc: The tag data scope provides information on the tags the users enter in the mobile app, which includes activities, symptoms, etc.
-    topic: connect_oura_motion_count
+    topic: connect_oura_tag
+    value_schema: .connector.oura.OuraTag
   - doc: The Sessions data scope provides information on how users engage with guided and unguided sessions in the Oura app.
     topic: connect_oura_session
     value_schema: .connector.oura.OuraSession
