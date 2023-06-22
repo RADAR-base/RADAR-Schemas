@@ -1,0 +1,70 @@
+{
+  "namespace": "org.radarcns.passive.google.healthconnect",
+  "name": "HealthConnectTypedData",
+  "type": "record",
+  "doc": "Health Connect generic typed data schema.",
+  "fields": [
+    {
+      "name": "time",
+      "type": "double",
+      "doc": "Time of this record in UTC (s)."
+    },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Time that the data was received from the Health Connect."
+    },
+    {
+      "name": "startTime",
+      "type": ["null", "double"],
+      "doc": "Start time of this activity period in UTC (s). Null if this is an instantaneous record.",
+      "default": null
+    },
+    {
+      "name": "endTime",
+      "type": ["null", "double"],
+      "doc": "End time of this activity period in UTC (s). Null if this is an instantaneous record.",
+      "default": null
+    },
+    {
+      "name": "timeZoneOffset",
+      "type": ["null", "int"],
+      "doc": "Local time zone offset for the time field, in seconds. Null if unknown.",
+      "default": null
+    },
+    {
+      "name": "metadata",
+      "type": "HealthConnectMetadata",
+      "doc": "Metadata on how and by what device the record was created."
+    },
+    {
+      "name": "unit",
+      "type": ["null", "string"],
+      "doc": "The unit of the measurement. Null if no unit is associated or if the unit is unknown.",
+      "default": null
+    },
+    {
+      "name": "key",
+      "type": "string",
+      "doc": "Type of data retrived e.g. weight, height, etc."
+    },
+    {
+      "name": "intValue",
+      "type": ["null", "int"],
+      "doc": "Value of the int data retrieved.",
+      "default": null
+    },
+    {
+      "name": "doubleValue",
+      "type": ["null", "double"],
+      "doc": "Value of the double data retrieved.",
+      "default": null
+    },
+    {
+      "name": "stringValue",
+      "type": ["null", "string"],
+      "doc": "Value of the string data retrieved.",
+      "default": null
+    }
+  ]
+}

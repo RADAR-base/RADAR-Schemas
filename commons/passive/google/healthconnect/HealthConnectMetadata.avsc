@@ -2,7 +2,12 @@
   "namespace": "org.radarcns.passive.google.healthconnect",
   "name": "HealthConnectMetadata",
   "type": "record",
-  "doc": "Metadata for a HealthConnect record",
+  "doc": "Metadata for a HealthConnect record.",
   "fields": [
+    {"name": "id", "type": "string", "doc": "Unique Health Connect record identifier."},
+    {"name": "dataOrigin", "type": "string", "doc": "Android package that generated the data."},
+    {"name": "lastModified", "type": "double", "doc": "Time (s) since the Unix Epoch when this data point was last modified."},
+    {"name": "deviceId", "type": ["null", "string"], "doc": "ID of the devices that generated the data, as provided in a HealthConnectDevice record. Null if unknown or not applicable for the record in question.", "default": null},
+    {"name": "recordingMethod", "type": "HealthConnectRecordingMethod", "doc": "Method of recording the data. UNKNOWN if the recording method is unknown.", "default": "UNKNOWN"}
   ]
 }

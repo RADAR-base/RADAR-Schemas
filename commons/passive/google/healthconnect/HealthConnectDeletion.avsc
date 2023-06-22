@@ -1,0 +1,10 @@
+{
+  "namespace": "org.radarcns.passive.google.healthconnect",
+  "name": "HealthConnectDeletion",
+  "type": "record",
+  "doc": "Metadata for a HealthConnect record.",
+  "fields": [
+    {"name": "timeReceived", "type": "double", "doc": "Time that the the deletion was received in seconds since the Unix epoch."},
+    {"name": "recordId", "type": "string", "doc": "Record ID that was deleted. This value may be found as the value of a HealthConnectTypedData record, in the field metadata.id."}
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "namespace": "org.radarcns.passive.google.healthconnect",
+  "name": "HealthConnectRecordingMethod",
+  "type": "enum",
+  "doc": "Type of device. UNKNOWN if the recording method is unknown, ACTIVELY_RECORDED if the user initiated the measurement, AUTOMATICALLY_RECORDED if the device initiated the measurement, MANUAL_ENTRY if a user entered the data directly.",
+  "symbols": [
+    "UNKNOWN",
+    "ACTIVELY_RECORDED",
+    "AUTOMATICALLY_RECORDED",
+    "MANUAL_ENTRY"
+  ]
+}

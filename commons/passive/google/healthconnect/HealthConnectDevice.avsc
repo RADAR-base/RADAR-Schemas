@@ -1,0 +1,13 @@
+{
+  "namespace": "org.radarcns.passive.google.healthconnect",
+  "name": "HealthConnectDevice",
+  "type": "record",
+  "doc": "Metadata for a HealthConnect record.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Time that the device was encountered in seconds since the Unix epoch."},
+    {"name": "id", "type": "string", "doc": "Randomly generated device ID."},
+    {"name": "manufacturer", "type": ["null", "string"], "doc": "Name of the manufacturer of the device that generated the data. Null if unknown or not applicable for the record in question.", "default": null},
+    {"name": "model", "type": ["null", "string"], "doc": "Name of the model of the device that generated the data. Null if unknown or not applicable for the record in question.", "default": null},
+    {"name": "type", "type": "HealthConnectDeviceType", "doc": "Type of device that generated the data. UNKNOWN if the device type is unknown.", "default": "UNKNOWN"}
+  ]
+}
