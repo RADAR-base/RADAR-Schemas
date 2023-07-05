@@ -1,0 +1,23 @@
+#======================================== Google APIs =============================================#
+vendor: GOOGLE
+model: SLEEP
+version: 1.0.0
+data:
+  #Google Sleep
+  - type: SLEEP_SEGMENT_EVENT
+    app_provider: .google.GoogleSleepProvider
+    unit: NON_DIMENSIONAL
+    processing_state: RAW
+    topic: android_google_sleep_segment_event
+    value_schema: .passive.google.GoogleSleepSegmentEvent
+    sample_rate:
+      dynamic: true
+  - type: SLEEP_CLASSIFY_EVENT
+    app_provider: .google.GoogleSleepProvider
+    unit: NON_DIMENSIONAL
+    processing_state: RAW
+    topic: android_google_sleep_classify_event
+    value_schema: .passive.google.GoogleSleepClassifyEvent
+    sample_rate:
+      interval: 600
+      dynamic: true
