@@ -1,0 +1,13 @@
+{
+  "namespace": "org.radarcns.passive.shimmer",
+  "type": "record",
+  "name": "Shimmer3Barometric",
+  "doc": "Data from barometric sensor.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+    { "name": "timeReceived", "type": "double", "doc": "Device receiver timestamp in UTC (s)." },
+    { "name": "sensor", "type": "Shimmer3Sensor", "doc": "Where the barometric record was derived from.", "default": "UNKNOWN" },
+    { "name": "pressure", "type": "float", "doc": "Barometric pressure (kPa)." },
+    { "name": "temperature", "type": "float", "doc": "Temperature (°C)." }
+  ]
+}

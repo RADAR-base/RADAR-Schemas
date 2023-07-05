@@ -1,0 +1,7 @@
+{
+  "namespace": "org.radarcns.passive.shimmer",
+  "name": "Shimmer3OrientationModel",
+  "type": "enum",
+  "symbols": ["UNKNOWN", "NONE", "SIX_DOF", "NINE_DOF"],
+  "doc": "Orientation model for computing the orientation of the device. UNKNOWN if unknown, NONE for raw data, SIX_DOF (6DOF) for a six degrees of freedom model and NINE_DOF (9DOF) for a nine degrees of freedom model."
+}

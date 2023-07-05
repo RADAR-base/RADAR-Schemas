@@ -1,0 +1,16 @@
+{
+  "namespace": "org.radarcns.passive.shimmer",
+  "type": "record",
+  "name": "Shimmer3Quaternion",
+  "doc": "Computed quaternion orientation, with local units.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Device time since the Unix Epoch (s)." },
+    { "name": "timeReceived", "type": "double", "doc": "App receiver time since the Unix Epoch (s)." },
+    { "name": "sensor", "type": "Shimmer3Sensor", "doc": "Where the value was derived from.", "default": "UNKNOWN" },
+    { "name": "orientationModel", "type": "Shimmer3OrientationModel", "doc": "What orientation model the angle was derived from.", "default": "UNKNOWN" },
+    { "name": "w", "type": "float", "doc": "Value across the w-axis (local)." },
+    { "name": "x", "type": "float", "doc": "Value across the x-axis (local)." },
+    { "name": "y", "type": "float", "doc": "Value across the y-axis (local)." },
+    { "name": "z", "type": "float", "doc": "Value across the z-axis (local)." }
+  ]
+}
