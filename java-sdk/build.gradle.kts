@@ -9,7 +9,7 @@ plugins {
 }
 
 allprojects {
-    version = "0.8.4-SNAPSHOT"
+    version = "0.8.5-SNAPSHOT"
     group = "org.radarbase"
 }
 
