@@ -1,0 +1,20 @@
+{
+  "namespace": "org.radarcns.connect",
+  "name": "ConnectSettingsChange",
+  "type": "record",
+  "doc": "Any settings changes that a user executes",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Time when the change was done in seconds since January 1, 1970, 00:00:00 UTC (Unix timestamp)."},
+  
+    { "name": "settingType", 
+      "type": {
+          "name": "SettingType",
+          "type": "enum", 
+          "symbols": ["PASSIVE_DATA_ENABLED", "NOTIFICATIONS_ENABLED", "DARK_MODE_ENABLED", "UNKNOWN"],
+          "doc": "UNKNOWN: for any other input type."
+    },},
+
+    { "name": "value", "type": "boolean", "doc": "True/False depending on whether the setting has been enabled or disabled"},
+    
+    ]
+}

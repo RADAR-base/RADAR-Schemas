@@ -1,0 +1,9 @@
+name: CONNECT-APP
+vendor: University of Manchester
+model: connect-schemas
+version: 1.0.0
+doc: Spec for the CONNECT app 
+data:
+  - doc: Settings changes log
+    topic: connect_settings_change
+    value_schema: .connect.ConnectSettingsChange
