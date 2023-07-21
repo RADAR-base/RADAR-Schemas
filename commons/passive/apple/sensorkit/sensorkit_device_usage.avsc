@@ -1,0 +1,18 @@
+{
+  "namespace": "org.radarcns.passive.apple.sensorkit",
+  "type": "record",
+  "name": "SensorKitDeviceUsage",
+  "doc": "Describes the frequency and relative duration that the user uses their device, particular Apple apps, or websites.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+    { "name": "timeReceived", "type": "double", "doc": "Device receiver timestamp in UTC (s)." },
+    { "name": "duration", "type": "double", "doc": "The duration that the report spans (s)." },
+    { "name": "totalScreenWakes", "type": "int", "doc": "The total number of screen wakes for the device." },
+    { "name": "totalUnlocks", "type": "int", "doc": "The total number of unlocks for the device." },
+    { "name": "totalUnlockDuration", "type": "double", "doc": " The duration of time the device is in an unlocked state (s)." },
+    { "name": "version", "type": "string", "doc": "Version" },
+    { "name": "applicationUsageByCategory", "type": "sting", "doc": "The usage time of apps per category." },
+    { "name": "notificationUsageByCategory", "type": "sting", "doc": "The frequency of notifications per category." },
+    { "name": "webUsageByCategory", "type": "sting", "doc": "The amount of time the user accesses domains per category." }
+  ]
+}

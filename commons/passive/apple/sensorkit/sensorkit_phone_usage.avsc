@@ -1,5 +1,5 @@
 {
-  "namespace": "org.radarcns.passive.phone",
+  "namespace": "org.radarcns.passive.apple.sensorkit",
   "type": "record",
   "name": "SensorKitPhoneUsage",
   "doc": "Data that describes the user’s phone activity over a period of time.",

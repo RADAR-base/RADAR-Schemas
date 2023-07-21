@@ -1,5 +1,5 @@
 {
-  "namespace": "org.radarcns.passive.phone",
+  "namespace": "org.radarcns.passive.apple.sensorkit",
   "type": "record",
   "name": "SensorKitAmbientLight",
   "doc": "Data describes the amount of ambient light in the user’s environment.",

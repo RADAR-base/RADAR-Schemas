@@ -1,7 +1,7 @@
 {
-  "namespace": "org.radarcns.passive.phone",
-  "type": "record",
+  "namespace": "org.radarcns.passive.apple.sensorkit",
   "name": "SensorKitAcceleration",
+  "type": "record",
   "doc": "Data from 3-axis accelerometer sensor with gravitational constant g as unit.",
   "fields": [
     { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
