@@ -1,0 +1,15 @@
+{
+  "namespace": "org.radarcns.passive.shimmer",
+  "type": "record",
+  "name": "Shimmer3AxisAngle",
+  "doc": "Computed axis angle, with local units.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Device time since the Unix Epoch (s)." },
+    { "name": "timeReceived", "type": "double", "doc": "App receiver time since the Unix Epoch (s)." },
+    { "name": "orientationModel", "type": "Shimmer3OrientationModel", "doc": "What orientation model the angle was derived from.", "default": "UNKNOWN" },
+    { "name": "angle", "type": "float", "doc": "Angle (local)." },
+    { "name": "x", "type": "float", "doc": "Value across the x-axis (local)." },
+    { "name": "y", "type": "float", "doc": "Value across the y-axis (local)." },
+    { "name": "z", "type": "float", "doc": "Value across the z-axis (local)." }
+  ]
+}

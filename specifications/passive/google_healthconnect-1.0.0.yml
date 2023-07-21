@@ -1,0 +1,30 @@
+#======================================== Google APIs =============================================#
+vendor: Google
+model: HealthConnect
+version: 1.0.0
+doc: "Google Health Connect app integration."
+data:
+  #Google Sleep
+  - type: TYPED_DATA
+    doc: "Typed data from the Health Connect database."
+    app_provider: .google.healthconnect.HealthConnectProvider
+    topic: android_health_connect_typed_data
+    value_schema: .passive.google.healthconnect.HealthConnectTypedData
+    sample_rate:
+      dynamic: true
+  - type: DELETION
+    doc: "Deletion of record previously recorded."
+    app_provider: .google.healthconnect.HealthConnectProvider
+    unit: NON_DIMENSIONAL
+    topic: android_health_connect_deletion
+    value_schema: .passive.google.healthconnect.HealthConnectDeletion
+    sample_rate:
+      dynamic: true
+  - type: DEVICE
+    doc: "Device that Health Connect stored data of."
+    app_provider: .google.healthconnect.HealthConnectProvider
+    unit: NON_DIMENSIONAL
+    topic: android_health_connect_device
+    value_schema: .passive.google.healthconnect.HealthConnectDevice
+    sample_rate:
+      dynamic: true

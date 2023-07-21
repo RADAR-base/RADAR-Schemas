@@ -1,0 +1,7 @@
+{
+  "namespace": "org.radarcns.passive.shimmer",
+  "name": "Shimmer3Sensor",
+  "type": "enum",
+  "symbols": ["UNKNOWN", "DEFAULT", "MPU", "MPL", "MADGEWICK", "DMP", "LN", "WR", "BMP180", "BMP280"],
+  "doc": "Shimmer sensor or chip that an observation was made with. UNKNOWN if the origin is not known, DEFAULT if the sensor is part of the core chipset, MPU if the sensor is derived from the Motion Processing Unit, MPL if the sensor is derived from the motion processing unit in combination with its Motion Processing Library; MADGEWICK for a Madgewick filter on top of orientation; DMP for Dynamic Motion Processing model for orientation; and LN for a low noise sensor and WR for wide range; BMP180 for a BMP180 barometric sensor and BMP280 for a BMP280 barometric sensor."
+}
