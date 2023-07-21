@@ -1,0 +1,19 @@
+{
+  "namespace": "org.radarcns.passive.phone",
+  "type": "record",
+  "name": "SensorKitAmbientLight",
+  "doc": "Data describes the amount of ambient light in the user’s environment.",
+  "fields": [
+      { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+      { "name": "timeReceived", "type": "double", "doc": "Device receiver timestamp in UTC (s)." },
+      { "name": "chromaticityX", "type": "float", "doc": "x-value of the coordinate pair that describes the light brightness and tint." },
+      { "name": "chromaticityY", "type": "float", "doc": "y-value of the coordinate pair that describes the light brightness and tint." },
+      { "name": "lux", "type": "float", "doc": "Illuminance (lx)." },
+      { "name": "placement", "type": {
+            "name": "SensorPlacement",
+            "type": "enum",
+            "doc": "Directional values that describe light-source location with respect to the sensor.",
+            "symbols": ["frontBottom", "frontBottomLeft", "frontBottomRight", "frontLeft", "frontRight", "frontTop", "frontTopLeft", "frontTopRight", "unknown"]
+            }, "doc": "The light’s location relative to the sensor.", "default": "UNKNOWN"},
+    ]
+}
