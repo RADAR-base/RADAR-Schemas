@@ -20,6 +20,6 @@
               "symbols": ["LEFT", "RIGHT"]
               }, "doc": "A value that indicates the wrist where the user wears the watch." },
     { "name": "offWristDate", "type": "double", "doc": "Off Wrist Date timestamp in UTC (s)." },
-    { "name": "onWristDate", "type": "double", "doc": "On Wrist Date timestamp in UTC (s)." },
+    { "name": "onWristDate", "type": "double", "doc": "On Wrist Date timestamp in UTC (s)." }
   ]
 }

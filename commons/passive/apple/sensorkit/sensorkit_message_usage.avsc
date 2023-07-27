@@ -9,6 +9,6 @@
     { "name": "duration", "type": "double", "doc": "The duration that the report spans (s)." },
     { "name": "totalIncomingMessages", "type": "int", "doc": "The number of messages the user receives." },
     { "name": "totalOutgoingMessages", "type": "int", "doc": "The number of messages the user sends." },
-    { "name": "totalUniqueContacts", "type": "int", "doc": "The user’s number of contacts." },
+    { "name": "totalUniqueContacts", "type": "int", "doc": "The user’s number of contacts." }
   ]
 }

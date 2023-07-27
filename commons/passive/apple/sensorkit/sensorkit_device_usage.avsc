@@ -11,8 +11,8 @@
     { "name": "totalUnlocks", "type": "int", "doc": "The total number of unlocks for the device." },
     { "name": "totalUnlockDuration", "type": "double", "doc": " The duration of time the device is in an unlocked state (s)." },
     { "name": "version", "type": "string", "doc": "Version" },
-    { "name": "applicationUsageByCategory", "type": "sting", "doc": "The usage time of apps per category." },
-    { "name": "notificationUsageByCategory", "type": "sting", "doc": "The frequency of notifications per category." },
-    { "name": "webUsageByCategory", "type": "sting", "doc": "The amount of time the user accesses domains per category." }
+    { "name": "applicationUsageByCategory", "type": "string", "doc": "The usage time of apps per category." },
+    { "name": "notificationUsageByCategory", "type": "string", "doc": "The frequency of notifications per category." },
+    { "name": "webUsageByCategory", "type": "string", "doc": "The amount of time the user accesses domains per category." }
   ]
 }

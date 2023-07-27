@@ -14,6 +14,6 @@
             "type": "enum",
             "doc": "Directional values that describe light-source location with respect to the sensor.",
             "symbols": ["frontBottom", "frontBottomLeft", "frontBottomRight", "frontLeft", "frontRight", "frontTop", "frontTopLeft", "frontTopRight", "unknown"]
-            }, "doc": "The light’s location relative to the sensor.", "default": "UNKNOWN"},
+            }, "doc": "The light’s location relative to the sensor.", "default": "UNKNOWN"}
     ]
 }
