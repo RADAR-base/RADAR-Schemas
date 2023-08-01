@@ -13,7 +13,7 @@
       "name": "UsageEventType",
       "type": "enum",
       "doc": "Android activity usage event type.",
-      "symbols": ["FOREGROUND", "BACKGROUND", "CONFIG", "SHORTCUT", "INTERACTION", "OTHER", "UNKNOWN"]
+      "symbols": ["FOREGROUND", "BACKGROUND", "CONFIG", "SHORTCUT", "INTERACTION", "FOREGROUND_SERVICE_START", "FOREGROUND_SERVICE_STOP", "STANDBY_BUCKET_CHANGED", "STOPPED", "OTHER", "UNKNOWN"]
       }, "doc": "Whether the event brought app to foreground or background or neither.", "default": "UNKNOWN" }
   ]
 }
