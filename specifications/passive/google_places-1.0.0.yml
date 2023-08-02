@@ -11,5 +11,5 @@ data:
     topic: android_google_places_info
     value_schema: .passive.google.GooglePlacesInfo
     sample_rate:
-      frequency: 600
+      interval: 600
       configurable: true
