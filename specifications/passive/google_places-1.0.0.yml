@@ -13,3 +13,4 @@ data:
     sample_rate:
       interval: 600
       configurable: true
+      dynamic: true 
