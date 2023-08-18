@@ -5,9 +5,10 @@
   "doc": "The Workout data scope includes information about user workouts. This is a diverse, growing list of workouts that help inform how the user is training and exercising.",
   "fields": [
     {"name": "time", "type": "double", "doc": "Start time of the workout in seconds since January 1, 1970, 00:00:00 UTC (Unix timestamp)."},
-    {"name": "endTime", "type": ["null", "string"], "doc": "Timestamp indicating when the workout ended. Null if unknown.", "default": null},
+    {"name": "endTime", "type": "double", "doc": "End time of the workout in seconds since January 1, 1970, 00:00:00 UTC (Unix timestamp)."},
     {"name": "timeReceived", "type": "double", "doc": "Time that this record was collected by a service in seconds since the Unix Epoch (s)."},
     {"name": "id", "type": ["null", "string"], "doc": "Unique identifier of the workout from Oura.", "default": null},    
+    {"name": "activity", "type": ["null", "string"], "doc": "Type of the workout activity.", "default": null},
     {"name": "calories", "type": ["null", "float"], "doc": "Energy burned in kilocalories during the workout. Null if unknown.", "default": null},
     {"name": "day", "type": ["null", "string"], "doc": "Day when the workout occurred. Null if unknown.", "default": null},
     {"name": "distance", "type": ["null", "float"], "doc": "Distance traveled in meters during the workout. Null if unknown.", "default": null},
