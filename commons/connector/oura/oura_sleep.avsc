@@ -20,7 +20,6 @@
     {"name": "lightSleepDuration", "type": ["null", "int"], "doc": "Duration spent in light sleep in seconds.", "default": null},    
     {"name": "lowBatteryAlert", "type": ["null", "boolean"], "doc": "Flag indicating if a low battery alert occurred.", "default": null},    
     {"name": "lowestHeartRate", "type": ["null", "int"], "doc": "Lowest heart rate during sleep.", "default": null},    
-    {"name": "movementThirtySec", "type": ["null", "string"], "doc": "The 30-second movement classification for the period where every character corresponds to: '1' = no motion, '2' = restless, '3' = tossing and turning '4' = active.", "default": null},    
     {"name": "period", "type": ["null", "int"], "doc": "ECore sleep period identifier.", "default": null},    
     {"name": "readinessContributorActivityBalance", "type": ["null", "int"], "doc": "Contribution of cumulative activity balance to the readiness score in range [1, 100].", "default": null},    
     {"name": "readinessContributorBodyTemperature", "type": ["null", "int"], "doc": "Contribution of cumulative activity balance to the readiness score in range [1, 100].", "default": null},    
@@ -36,10 +35,14 @@
     {"name": "readinessScoreDelta", "type": ["null", "int"], "doc": "Effect on readiness score caused by this sleep period.", "default": null},    
     {"name": "remSleepDuration", "type": ["null", "int"], "doc": "Duration spent in REM sleep in seconds.", "default": null},    
     {"name": "restlessPeriods", "type": ["null", "int"], "doc": "Number of restless periods during sleep.", "default": null},    
-    {"name": "sleepPhaseFiveMin", "type": ["null", "int"], "doc": "The 5-minute sleep phase classification for the period where every character corresponds to: '1' = deep sleep, '2' = light sleep, '3' = REM sleep '4' = awake.", "default": null},    
     {"name": "sleepScoreDelta", "type": ["null", "int"], "doc": "Effect on sleep score caused by this sleep period.", "default": null},    
+    {"name": "sleepAlgorithmVersion", "type":
+      {"name": "OuraSleepAlgorithmVersion", "type": "enum", "symbols": ["V1", "V2"], "doc": "Oura Sleep algorithm version."},
+      "doc": "Version of the sleep algorithm used to calculate the sleep data.", "default": "V2" },
     {"name": "timeInBed", "type": ["null", "int"], "doc": "Duration spent in bed in seconds.", "default": null},    
     {"name": "totalSleepDuration", "type": ["null", "int"], "doc": "Total sleep duration in seconds.", "default": null},    
-    {"name": "type", "type": ["null", "string"], "doc": "Possible sleep period types.", "default": null}   
-  ]
+    {"name": "type", "type":
+      {"name": "OuraSleepType", "type": "enum", "symbols": ["DELETED", "SLEEP", "LONG_SLEEP", "LATE_NAP", "REST", "UNKNOWN"], "doc": "Sleep type as computed by Oura."},
+      "doc": "Possible sleep period types. UNKNOWN when this data is not provided.", "default": "UNKNOWN" }
+    ]
 }
