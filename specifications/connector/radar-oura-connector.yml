@@ -40,3 +40,12 @@ data:
   - doc: The personal info scope includes personal information (e.g. age, email, weight, and height) about the user. 
     topic: connect_oura_personal_info
     value_schema: .connector.oura.OuraPersonalInfo
+  - doc: Sleep data with 5-minute granularity. 'Sleep Phase' levels include deep, light, rem, and awake.
+    topic: connect_oura_sleep_phase
+    value_schema: .connector.oura.OuraSleepPhase
+  - doc: Sleep movement data with 30-second granularity. 'Sleep Movement' levels include no motion, restless, tossing and turning, and active.
+    topic: connect_oura_sleep_movement
+    value_schema: .connector.oura.OuraSleepMovement
+  - doc: Activity data with 5-minute granularity. 'Activity Classes' include non-wear, rest, inactive, high, low, and medium activity.
+    topic: connect_oura_activity_class
+    value_schema: .connector.oura.OuraActivityClass
