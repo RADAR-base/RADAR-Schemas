@@ -6,6 +6,7 @@
   "fields": [
     {"name": "time", "type": "double", "doc": "Start time of the session in seconds since January 1, 1970, 00:00:00 UTC (Unix timestamp)."},
     {"name": "timeReceived", "type": "double", "doc": "Time that this record was collected by a service in seconds since the Unix Epoch (s)."},
+    {"name": "id", "type": ["null", "string"], "doc": "Unique identifier of the Oura session the motion count data is taken from.", "default": null},
     {"name": "motionCount", "type": ["null", "int"], "doc": "Motion count during a session.", "default": null}   
   ]
 }
