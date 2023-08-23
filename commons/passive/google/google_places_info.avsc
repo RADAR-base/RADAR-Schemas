@@ -15,6 +15,7 @@
     },
     { "name": "type2", "type": ["null", "org.radarcns.passive.google.PlacesType"], "doc": "Categorizing places based on their characteristics or attributes, this field represents the second type, if any, among the retrieved place categories.", "default": null },
     { "name": "type3", "type": ["null", "org.radarcns.passive.google.PlacesType"], "doc": "Categorizing places based on their characteristics or attributes, this field represents the third type, if any, among the retrieved place categories.", "default": null },
+    { "name": "type4", "type": ["null", "org.radarcns.passive.google.PlacesType"], "doc": "Categorizing places based on their characteristics or attributes, this field represents the fourth type, if any, among the retrieved place categories.", "default": null },
     { "name": "city", "type": ["null", "string"], "doc": "The city returned corresponds to the current location of the user's device.", "default": null },
     { "name": "state", "type": ["null", "string"], "doc": "The state returned corresponds to the current location of the user's device.", "default": null },
     { "name": "country", "type": ["null", "string"], "doc": "The country returned corresponds to the current location of the user's device.", "default": null },
