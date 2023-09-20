@@ -21,6 +21,15 @@
     { "name": "country", "type": ["null", "string"], "doc": "The country returned corresponds to the current location of the user's device.", "default": null },
     { "name": "placeId", "type": ["null", "string"], "doc": "A unique identifier assigned to each place in the Google Places database. It serves as a specific reference or key to a particular place entry and is used to retrieve detailed information about that place. By default, it is not retrieved to respect the user's privacy. To retrieve place IDs, Firebase parameters need to be explicitly set.", "default": null },
     { "name": "likelihood", "type": "double", "doc": "The likelihood provides a relative probability of the place being the best match within the list of returned places for a single request. A higher value means a greater probability that the place is the best match. It's value ranges between 0.0 and 1.0." },
-    { "name": "fromBroadcast", "type": "boolean", "doc": "Whether the data was generated as a result of a change in device location (true) or as part of a fixed scheduled intervals (false)." }
+    { "name": "fromBroadcast", "type": "boolean", "doc": "Whether the data was generated as a result of a change in device location (true) or as part of a fixed scheduled intervals (false)." },
+    { "name":  "preciseness",
+      "type": {
+        "name": "PlaceAccuracy",
+        "type": "enum",
+        "symbols": [ "PRECISE", "IMPRECISE" ],
+        "doc": "Whether the collected places data is precise or not. It depends on two criteria: \n1. If the data is from the OnLocationChanged broadcast and the associated accuracy value fetched from PhoneLocationManager is less than 100 meters. \n2. If this value is not from a broadcast and the ACCESS_FINE_LOCATION permission is granted. Otherwise, it is not considered precise location data."
+      },
+      "doc": "Whether the retrieved places data is accurately representing the precise location or not."
+    }
   ]
 }
