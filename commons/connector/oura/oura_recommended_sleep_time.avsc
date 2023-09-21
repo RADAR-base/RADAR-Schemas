@@ -8,9 +8,9 @@
     {"name": "timeReceived", "type": "double", "doc": "Time that this record was collected by a service in seconds since the Unix Epoch (s)."},
     {"name": "id", "type": ["null", "string"], "doc": "Unique identifier of the Oura sleep time recommendation.", "default": null},
     {"name": "day", "type": ["null", "string"], "doc": "Day that the sleep recommendation record belongs to. Null if unknown.", "default": null},
-    {"name": "bedtimeStartOffset", "type": ["null", "int"], "doc": "Day that the daily sleep belongs to. Null if unknown.", "default": null},
-    {"name": "bedtimeEndOffset", "type": ["null", "int"], "doc": "Day that the daily sleep belongs to. Null if unknown.", "default": null},
-    {"name": "timezoneOffset", "type": ["null", "int"], "doc": "Day that the daily sleep belongs to. Null if unknown.", "default": null},
+    {"name": "bedtimeStartOffset", "type": ["null", "int"], "doc": "Recommended optimal bedtime start offset from midnight. Null if unknown.", "default": null},
+    {"name": "bedtimeEndOffset", "type": ["null", "int"], "doc": "Recommended optimal bedtime end offset from midnight. Null if unknown.", "default": null},
+    {"name": "timezoneOffset", "type": ["null", "int"], "doc": "Timezone offset in second from GMT of the day. Null if unknown.", "default": null},
     {"name": "recommendation", "type":
       {"name": "OuraSleepRecommendation", "type": "enum", "symbols": ["IMPROVE_EFFICIENCY", "EARLIER_BEDTIME", "LATER_BEDTIME", "EARLIER_WAKE_UP_TIME", "LATER_WAKE_UP_TIME", "FOLLOW_OPTIMAL_BEDTIME", "UNKNOWN"], "doc": "Sleep phase type as computed by Oura."},
       "doc": "Oura recommendation action type for bedtime.", "default": "UNKNOWN" },
