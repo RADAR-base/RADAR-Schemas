@@ -49,5 +49,4 @@ class SourceCatalogueService(
             monitorSources = sourceCatalogue.monitorSources,
             connectorSources = sourceCatalogue.connectorSources,
         )
-
 }

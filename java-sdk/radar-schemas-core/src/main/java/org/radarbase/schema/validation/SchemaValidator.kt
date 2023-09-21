@@ -21,34 +21,33 @@ import org.radarbase.schema.Scope
 import org.radarbase.schema.specification.DataProducer
 import org.radarbase.schema.specification.SourceCatalogue
 import org.radarbase.schema.specification.config.SchemaConfig
-import org.radarbase.schema.validation.rules.*
+import org.radarbase.schema.validation.ValidationHelper.matchesExtension
+import org.radarbase.schema.validation.rules.RadarSchemaMetadataRules
+import org.radarbase.schema.validation.rules.RadarSchemaRules
+import org.radarbase.schema.validation.rules.SchemaMetadata
+import org.radarbase.schema.validation.rules.SchemaMetadataRules
+import org.radarbase.schema.validation.rules.Validator
 import java.nio.file.Path
 import java.nio.file.PathMatcher
-import java.util.*
+import java.util.Arrays
+import java.util.Objects
 import java.util.stream.Collectors
 import java.util.stream.Stream
 
 /**
  * Validator for a set of RADAR-Schemas.
+ *
+ * @param schemaRoot RADAR-Schemas commons directory.
+ * @param config configuration to exclude certain schemas or fields from validation.
  */
 class SchemaValidator(schemaRoot: Path, config: SchemaConfig) {
-    val rules: SchemaMetadataRules
-    private val pathMatcher: PathMatcher
-    private var validator: Validator<SchemaMetadata>
-
-    /**
-     * Schema validator for given RADAR-Schemas directory.
-     * @param schemaRoot RADAR-Schemas commons directory.
-     * @param config configuration to exclude certain schemas or fields from validation.
-     */
-    init {
-        pathMatcher = config.pathMatcher(schemaRoot)
-        rules = RadarSchemaMetadataRules(schemaRoot, config)
-        validator = rules.getValidator(false)
-    }
+    val rules: SchemaMetadataRules = RadarSchemaMetadataRules(schemaRoot, config)
+    private val pathMatcher: PathMatcher = config.pathMatcher(schemaRoot)
+    private var validator: Validator<SchemaMetadata> = rules.getValidator(false)
 
     fun analyseSourceCatalogue(
-        scope: Scope?, catalogue: SourceCatalogue
+        scope: Scope?,
+        catalogue: SourceCatalogue,
     ): Stream<ValidationException> {
         validator = rules.getValidator(true)
         val producers: Stream<DataProducer<*>> = if (scope != null) {
@@ -62,9 +61,9 @@ class SchemaValidator(schemaRoot: Path, config: SchemaConfig) {
                 .flatMap { it.data.stream() }
                 .flatMap { topic ->
                     val (keySchema, valueSchema) = catalogue.schemaCatalogue.getSchemaMetadata(topic)
-                    Stream.of(keySchema, valueSchema)
+                    Stream.of(keySchema, valueSchema).filter { it.schema != null }
                 }
-                .sorted(Comparator.comparing { it.schema.fullName })
+                .sorted(Comparator.comparing { it.schema!!.fullName })
                 .distinct()
                 .flatMap(this::validate)
                 .distinct()
@@ -73,13 +72,9 @@ class SchemaValidator(schemaRoot: Path, config: SchemaConfig) {
         }
     }
 
-    /**
-     * TODO.
-     * @param scope TODO.
-     */
     fun analyseFiles(
         scope: Scope?,
-        schemaCatalogue: SchemaCatalogue
+        schemaCatalogue: SchemaCatalogue,
     ): Stream<ValidationException> {
         if (scope == null) {
             return analyseFiles(schemaCatalogue)
@@ -100,7 +95,7 @@ class SchemaValidator(schemaRoot: Path, config: SchemaConfig) {
                     val parser = Schema.Parser()
                     parser.addTypes(useTypes)
                     try {
-                        parser.parse(p.path.toFile())
+                        parser.parse(p.path?.toFile())
                         return@map null
                     } catch (ex: Exception) {
                         return@map ValidationException("Cannot parse schema", ex)
@@ -109,15 +104,11 @@ class SchemaValidator(schemaRoot: Path, config: SchemaConfig) {
                 .filter(Objects::nonNull)
                 .map { obj -> requireNotNull(obj) },
             schemaCatalogue.schemas.values.stream()
-                .flatMap { this.validate(it) }
+                .flatMap { this.validate(it) },
         ).distinct()
     }
-
-    /**
-     * TODO.
-     */
     private fun analyseFiles(schemaCatalogue: SchemaCatalogue): Stream<ValidationException> =
-        Arrays.stream(Scope.values())
+        Arrays.stream(Scope.entries.toTypedArray())
             .flatMap { scope -> analyseFiles(scope, schemaCatalogue) }
 
     /** Validate a single schema in given path.  */
@@ -127,8 +118,10 @@ class SchemaValidator(schemaRoot: Path, config: SchemaConfig) {
     /** Validate a single schema in given path.  */
     private fun validate(schemaMetadata: SchemaMetadata): Stream<ValidationException> =
         if (pathMatcher.matches(schemaMetadata.path)) {
-            validator.apply(schemaMetadata)
-        } else Stream.empty()
+            validator.validate(schemaMetadata)
+        } else {
+            Stream.empty()
+        }
 
     val validatedSchemas: Map<String, Schema>
         get() = (rules.schemaRules as RadarSchemaRules).schemaStore
@@ -146,17 +139,13 @@ class SchemaValidator(schemaRoot: Path, config: SchemaConfig) {
                      |${ex.message}
                      |
                      |
-                     |""".trimMargin()
+                     |
+                    """.trimMargin()
                 }
                 .collect(Collectors.joining())
         }
 
-        /**
-         * TODO.
-         * @param file TODO
-         * @return TODO
-         */
-        fun isAvscFile(file: Path?): Boolean =
-            ValidationHelper.matchesExtension(file, AVRO_EXTENSION)
+        fun isAvscFile(file: Path): Boolean =
+            matchesExtension(file, AVRO_EXTENSION)
     }
 }

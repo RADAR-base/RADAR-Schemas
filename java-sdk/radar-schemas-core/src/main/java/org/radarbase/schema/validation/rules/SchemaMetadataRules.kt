@@ -14,7 +14,10 @@ interface SchemaMetadataRules {
      * and type of the schema.
      */
     fun getValidator(validateScopeSpecific: Boolean): Validator<SchemaMetadata> =
-        Validator { metadata: SchemaMetadata ->
+        Validator { metadata ->
+            if (metadata.schema == null) {
+                return@Validator Validator.raise("Missing schema")
+            }
             val schemaRules = schemaRules
 
             var validator = validateSchemaLocation()
@@ -30,14 +33,14 @@ interface SchemaMetadataRules {
             } else {
                 validator.and(schema(schemaRules.validateRecord()))
             }
-            validator.apply(metadata)
+            validator.validate(metadata)
         }
 
     /** Validates schemas without their metadata.  */
     fun schema(validator: Validator<Schema>): Validator<SchemaMetadata> =
-        Validator { metadata: SchemaMetadata -> validator.apply(metadata.schema) }
+        Validator { metadata -> validator.validate(metadata.schema!!) }
 
-    fun message(text: String): (SchemaMetadata) -> String = { metadata ->
-        "Schema ${metadata.schema.fullName} at ${metadata.path} is invalid. $text"
+    fun message(metadata: SchemaMetadata, text: String): String {
+        return "Schema ${metadata.schema!!.fullName} at ${metadata.path} is invalid. $text"
     }
 }

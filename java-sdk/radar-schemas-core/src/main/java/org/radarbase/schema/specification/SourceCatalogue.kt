@@ -34,8 +34,10 @@ import org.radarbase.schema.validation.ValidationHelper.SPECIFICATIONS_PATH
 import org.radarbase.topic.AvroTopic
 import org.slf4j.LoggerFactory
 import java.io.IOException
-import java.nio.file.*
-import java.util.*
+import java.nio.file.Files
+import java.nio.file.InvalidPathException
+import java.nio.file.Path
+import java.nio.file.PathMatcher
 import java.util.stream.Stream
 import kotlin.io.path.exists
 import kotlin.streams.asSequence
@@ -47,7 +49,7 @@ class SourceCatalogue internal constructor(
     val passiveSources: List<PassiveSource>,
     val streamGroups: List<StreamGroup>,
     val connectorSources: List<ConnectorSource>,
-    val pushSources: List<PushSource>
+    val pushSources: List<PushSource>,
 ) {
 
     val sources: Set<DataProducer<*>> = buildSet {
@@ -66,7 +68,7 @@ class SourceCatalogue internal constructor(
     /** Get all topics in the catalogue.  */
     val topics: Stream<AvroTopic<*, *>>
         get() = sources.stream()
-            .flatMap { it.getTopics(schemaCatalogue) }
+            .flatMap { it.topics(schemaCatalogue) }
 
     companion object {
         private val logger = LoggerFactory.getLogger(SourceCatalogue::class.java)
@@ -94,7 +96,7 @@ class SourceCatalogue internal constructor(
                         .withGetterVisibility(JsonAutoDetect.Visibility.NONE)
                         .withIsGetterVisibility(JsonAutoDetect.Visibility.NONE)
                         .withSetterVisibility(JsonAutoDetect.Visibility.NONE)
-                        .withCreatorVisibility(JsonAutoDetect.Visibility.NONE)
+                        .withCreatorVisibility(JsonAutoDetect.Visibility.NONE),
                 )
             }
             val schemaCatalogue = SchemaCatalogue(
@@ -109,7 +111,7 @@ class SourceCatalogue internal constructor(
                 initSources(mapper, specRoot, Scope.PASSIVE, pathMatcher, sourceConfig.passive),
                 initSources(mapper, specRoot, Scope.STREAM, pathMatcher, sourceConfig.stream),
                 initSources(mapper, specRoot, Scope.CONNECTOR, pathMatcher, sourceConfig.connector),
-                initSources(mapper, specRoot, Scope.PUSH, pathMatcher, sourceConfig.push)
+                initSources(mapper, specRoot, Scope.PUSH, pathMatcher, sourceConfig.push),
             )
         }
 

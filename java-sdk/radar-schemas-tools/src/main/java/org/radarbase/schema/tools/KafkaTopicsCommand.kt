@@ -1,5 +1,6 @@
 package org.radarbase.schema.tools
 
+import kotlinx.coroutines.runBlocking
 import net.sourceforge.argparse4j.inf.ArgumentParser
 import net.sourceforge.argparse4j.inf.Namespace
 import org.radarbase.schema.registration.KafkaTopics
@@ -18,22 +19,27 @@ class KafkaTopicsCommand : SubCommand {
         val brokers = options.getInt("brokers")
         val replication = options.getShort("replication") ?: 3
         if (brokers < replication) {
-            logger.error("Cannot assign a replication factor {}"
-                + " higher than number of brokers {}", replication, brokers)
+            logger.error(
+                "Cannot assign a replication factor {}" +
+                    " higher than number of brokers {}",
+                replication,
+                brokers,
+            )
             return 1
         }
         val toolConfig: ToolConfig = app.config
             .configureKafka(bootstrapServers = options.getString("bootstrap_servers"))
-        try {
+
+        return runBlocking {
             KafkaTopics(toolConfig).use { topics ->
                 try {
                     val numTries = options.getInt("num_tries")
                     topics.initialize(brokers, numTries)
                 } catch (ex: IllegalStateException) {
                     logger.error("Kafka brokers not yet available. Aborting.")
-                    return 1
+                    return@use 1
                 }
-                return topics.createTopics(
+                topics.createTopics(
                     app.catalogue,
                     options.getInt("partitions") ?: 3,
                     replication,
@@ -41,10 +47,6 @@ class KafkaTopicsCommand : SubCommand {
                     options.getString("match"),
                 )
             }
-        } catch (e: InterruptedException) {
-            logger.error("Cannot retrieve number of addActive Kafka brokers."
-                + " Please check that Zookeeper is running.")
-            return 1
         }
     }
 
@@ -69,8 +71,10 @@ class KafkaTopicsCommand : SubCommand {
                 .help("register the schemas of one topic")
                 .type(String::class.java)
             addArgument("-m", "--match")
-                .help("register the schemas of all topics matching the given regex"
-                    + "; does not do anything if --topic is specified")
+                .help(
+                    "register the schemas of all topics matching the given regex" +
+                        "; does not do anything if --topic is specified",
+                )
                 .type(String::class.java)
             addArgument("-s", "--bootstrap-servers")
                 .help("Kafka hosts, ports and protocols, comma-separated")

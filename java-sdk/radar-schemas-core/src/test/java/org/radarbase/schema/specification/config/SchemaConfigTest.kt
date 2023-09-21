@@ -1,8 +1,7 @@
 package org.radarbase.schema.specification.config
 
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-
-import org.junit.jupiter.api.Assertions.*
 import org.radarbase.schema.SchemaCatalogue
 import org.radarbase.schema.Scope
 import org.radarbase.schema.validation.ValidationHelper.COMMONS_PATH
@@ -15,7 +14,8 @@ internal class SchemaConfigTest {
     fun getMonitor() {
         val config = SchemaConfig(
             exclude = listOf("**"),
-            monitor = mapOf("application/test.avsc" to """
+            monitor = mapOf(
+                "application/test.avsc" to """
                 {
                   "namespace": "org.radarcns.monitor.application",
                   "type": "record",
@@ -26,7 +26,8 @@ internal class SchemaConfigTest {
                     { "name": "uptime", "type": "double", "doc": "Time since last app start (s)." }
                   ]
                 }
-                """.trimIndent()),
+                """.trimIndent(),
+            ),
         )
         val commonsRoot = Paths.get("../..").resolve(COMMONS_PATH)
             .absolute()
@@ -35,7 +36,7 @@ internal class SchemaConfigTest {
         assertEquals(1, schemaCatalogue.schemas.size)
         val (fullName, schemaMetadata) = schemaCatalogue.schemas.entries.first()
         assertEquals("org.radarcns.monitor.application.ApplicationUptime2", fullName)
-        assertEquals("org.radarcns.monitor.application.ApplicationUptime2", schemaMetadata.schema.fullName)
+        assertEquals("org.radarcns.monitor.application.ApplicationUptime2", schemaMetadata.schema!!.fullName)
         assertEquals(commonsRoot.resolve("monitor/application/test.avsc"), schemaMetadata.path)
         assertEquals(Scope.MONITOR, schemaMetadata.scope)
     }

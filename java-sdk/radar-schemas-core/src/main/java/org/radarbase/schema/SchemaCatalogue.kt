@@ -13,7 +13,6 @@ import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.PathMatcher
 import java.util.*
-import java.util.stream.Stream
 import kotlin.collections.HashMap
 import kotlin.collections.HashSet
 import kotlin.io.path.exists
@@ -22,7 +21,7 @@ import kotlin.io.path.inputStream
 class SchemaCatalogue @JvmOverloads constructor(
     private val schemaRoot: Path,
     config: SchemaConfig,
-    scope: Scope? = null
+    scope: Scope? = null,
 ) {
     val schemas: Map<String, SchemaMetadata>
     val unmappedAvroFiles: List<SchemaMetadata>
@@ -34,7 +33,7 @@ class SchemaCatalogue @JvmOverloads constructor(
         if (scope != null) {
             loadSchemas(schemaTemp, unmappedTemp, scope, matcher, config)
         } else {
-            for (useScope in Scope.values()) {
+            for (useScope in Scope.entries) {
                 loadSchemas(schemaTemp, unmappedTemp, useScope, matcher, config)
             }
         }
@@ -53,11 +52,11 @@ class SchemaCatalogue @JvmOverloads constructor(
     fun getGenericAvroTopic(config: AvroTopicConfig): AvroTopic<GenericRecord, GenericRecord> {
         val (keySchema, valueSchema) = getSchemaMetadata(config)
         return AvroTopic(
-            config.topic,
-            keySchema.schema,
-            valueSchema.schema,
+            requireNotNull(config.topic) { "Missing Avro topic in configuration" },
+            requireNotNull(keySchema.schema) { "Missing Avro key schema" },
+            requireNotNull(valueSchema.schema) { "Missing Avro value schema" },
             GenericRecord::class.java,
-            GenericRecord::class.java
+            GenericRecord::class.java,
         )
     }
 
@@ -67,12 +66,12 @@ class SchemaCatalogue @JvmOverloads constructor(
         unmappedFiles: MutableList<SchemaMetadata>,
         scope: Scope,
         matcher: PathMatcher,
-        config: SchemaConfig
+        config: SchemaConfig,
     ) {
         val walkRoot = schemaRoot.resolve(scope.lower)
         val avroFiles = buildMap<Path, String> {
             if (walkRoot.exists()) {
-                Files.walk(walkRoot).use<Stream<Path>, Unit> { walker ->
+                Files.walk(walkRoot).use { walker ->
                     walker
                         .filter { p ->
                             matcher.matches(p) && SchemaValidator.isAvscFile(p)
@@ -84,10 +83,9 @@ class SchemaCatalogue @JvmOverloads constructor(
                         }
                 }
             }
-            config.schemas(scope)
-                .forEach { (key, value) ->
-                    put(walkRoot.resolve(key), value)
-                }
+            config.schemas(scope).forEach { (key, value) ->
+                put(walkRoot.resolve(key), value)
+            }
         }
 
         var prevSize = -1
@@ -97,8 +95,12 @@ class SchemaCatalogue @JvmOverloads constructor(
         // at all.
         while (prevSize != schemas.size) {
             prevSize = schemas.size
-            val useTypes = schemas.mapValues { (_, value) -> value.schema }
-            val ignoreFiles = schemas.values.mapTo(HashSet()) { it.path }
+            val useTypes = schemas
+                .mapNotNull { (k, v) -> v.schema?.let { k to it } }
+                .toMap()
+            val ignoreFiles = schemas.values.asSequence()
+                .map { it.path }
+                .filterNotNullTo(HashSet())
 
             schemas.putParsedSchemas(avroFiles, ignoreFiles, useTypes, scope)
         }
@@ -114,7 +116,7 @@ class SchemaCatalogue @JvmOverloads constructor(
         customSchemas: Map<Path, String>,
         ignoreFiles: Set<Path>,
         useTypes: Map<String, Schema>,
-        scope: Scope
+        scope: Scope,
     ): Unit = customSchemas.asSequence()
         .filter { (p, _) -> p !in ignoreFiles }
         .forEach { (p, schema) ->
@@ -139,13 +141,13 @@ class SchemaCatalogue @JvmOverloads constructor(
     fun getSchemaMetadata(config: AvroTopicConfig): Pair<SchemaMetadata, SchemaMetadata> {
         val parsedKeySchema = schemas[config.keySchema]
             ?: throw NoSuchElementException(
-                "Key schema " + config.keySchema
-                    + " for topic " + config.topic + " not found."
+                "Key schema " + config.keySchema +
+                    " for topic " + config.topic + " not found.",
             )
         val parsedValueSchema = schemas[config.valueSchema]
             ?: throw NoSuchElementException(
-                "Value schema " + config.valueSchema
-                    + " for topic " + config.topic + " not found."
+                "Value schema " + config.valueSchema +
+                    " for topic " + config.topic + " not found.",
             )
         return Pair(parsedKeySchema, parsedValueSchema)
     }
