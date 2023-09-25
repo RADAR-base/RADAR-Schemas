@@ -18,11 +18,9 @@ package org.radarbase.schema.validation
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import org.radarbase.schema.Scope
 import org.radarbase.schema.specification.config.SchemaConfig
-import org.radarbase.schema.validation.ValidationHelper.SPECIFICATIONS_PATH
 import org.radarbase.schema.validation.rules.Validator
 import org.radarbase.schema.validation.rules.pathExtensionValidator
 import org.slf4j.LoggerFactory
@@ -35,64 +33,38 @@ import java.util.stream.Collectors
 /**
  * Validates RADAR-Schemas specifications.
  *
- * @param root RADAR-Schemas directory.
+ * @param root RADAR-Schemas specifications directory.
  * @param config configuration to exclude certain schemas or fields from validation.
  *
  */
-class SpecificationsValidator(root: Path, config: SchemaConfig) {
-    private val specificationsRoot: Path = root.resolve(SPECIFICATIONS_PATH)
+class SpecificationsValidator(
+    private val root: Path,
+    private val config: SchemaConfig,
+) {
     private val mapper: ObjectMapper = ObjectMapper(YAMLFactory())
-    private val pathMatcher: PathMatcher = config.pathMatcher(specificationsRoot)
+    private val pathMatcher: PathMatcher = config.pathMatcher(root)
 
-    /** Check that all files in the specifications directory are YAML files.  */
-    @Throws(IOException::class)
-    fun specificationsAreYmlFiles(scope: Scope): Boolean {
-        val baseFolder = scope.getPath(specificationsRoot)
-        if (baseFolder == null) {
+    fun ofScope(scope: Scope): SpecificationsValidator? {
+        val baseFolder = scope.getPath(root)
+        return if (baseFolder == null) {
             logger.info(
                 "{} sources folder not present at {}",
                 scope,
-                specificationsRoot.resolve(scope.lower),
+                root.resolve(scope.lower),
             )
-            return false
-        }
-        return runBlocking {
-            val paths = baseFolder.fetchChildren()
-            val exceptions = validationContext {
-                paths.forEach { isYmlFile.launchValidation(it) }
-            }
-            if (exceptions.isEmpty()) {
-                true
-            } else {
-                logger.error("Not all specification files have the right extension: {}", exceptions.joinToString())
-                false
-            }
+            null
+        } else {
+            SpecificationsValidator(baseFolder, config)
         }
     }
 
-    @Throws(IOException::class)
-    fun <T> checkSpecificationParsing(scope: Scope, clazz: Class<T>?): Boolean {
-        val baseFolder = scope.getPath(specificationsRoot)
-        if (baseFolder == null) {
-            logger.info(
-                "{} sources folder not present at {}",
-                scope,
-                specificationsRoot.resolve(scope.lower),
-            )
-            return false
-        }
-        val validator = isValidYmlFile(clazz)
-
-        return runBlocking {
-            val paths = baseFolder.fetchChildren()
-            val exceptions = validationContext {
-                paths.forEach { validator.launchValidation(it) }
-            }
-            if (exceptions.isEmpty()) {
-                true
-            } else {
-                logger.error("Not all specification files have the right format: {}", exceptions.joinToString())
-                false
+    suspend fun <T> isValidSpecification(clazz: Class<T>?): List<ValidationException> {
+        val paths = root.fetchChildren()
+        return validationContext {
+            val isParseableAsClass = isYmlFileParseable(clazz)
+            paths.forEach { p ->
+                isYmlFile.launchValidation(p)
+                isParseableAsClass.launchValidation(p)
             }
         }
     }
@@ -105,7 +77,7 @@ class SpecificationsValidator(root: Path, config: SchemaConfig) {
         }
     }
 
-    private fun <T> isValidYmlFile(clazz: Class<T>?) = Validator<Path> { path ->
+    private fun <T> isYmlFileParseable(clazz: Class<T>?) = Validator<Path> { path ->
         try {
             mapper.readerFor(clazz).readValue<T>(path.toFile())
         } catch (ex: IOException) {

@@ -1,6 +1,7 @@
 package org.radarbase.schema.validation
 
-import org.junit.jupiter.api.Assertions.assertTrue
+import kotlinx.coroutines.runBlocking
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.radarbase.schema.Scope.ACTIVE
@@ -16,6 +17,7 @@ import org.radarbase.schema.specification.monitor.MonitorSource
 import org.radarbase.schema.specification.passive.PassiveSource
 import org.radarbase.schema.specification.push.PushSource
 import org.radarbase.schema.specification.stream.StreamGroup
+import org.radarbase.schema.validation.ValidationHelper.SPECIFICATIONS_PATH
 import java.io.IOException
 
 class SpecificationsValidatorTest {
@@ -23,73 +25,54 @@ class SpecificationsValidatorTest {
 
     @BeforeEach
     fun setUp() {
-        validator = SpecificationsValidator(SourceCatalogueValidationTest.BASE_PATH, SchemaConfig())
+        validator = SpecificationsValidator(SourceCatalogueValidationTest.BASE_PATH.resolve(SPECIFICATIONS_PATH), SchemaConfig())
     }
 
     @Test
     @Throws(IOException::class)
-    fun activeIsYml() {
-        assertTrue(validator.specificationsAreYmlFiles(ACTIVE))
-        assertTrue(
-            validator.checkSpecificationParsing(
-                ACTIVE,
-                ActiveSource::class.java,
-            ),
-        )
+    fun activeIsYml() = runBlocking {
+        val validator = validator.ofScope(ACTIVE) ?: return@runBlocking
+        val result = validator.isValidSpecification(ActiveSource::class.java)
+        assertEquals("", SchemaValidator.format(result))
     }
 
     @Test
     @Throws(IOException::class)
-    fun monitorIsYml() {
-        assertTrue(validator.specificationsAreYmlFiles(MONITOR))
-        assertTrue(
-            validator.checkSpecificationParsing(
-                MONITOR,
-                MonitorSource::class.java,
-            ),
-        )
+    fun monitorIsYml() = runBlocking {
+        val validator = validator.ofScope(MONITOR) ?: return@runBlocking
+        val result = validator.isValidSpecification(MonitorSource::class.java)
+        assertEquals("", SchemaValidator.format(result))
     }
 
     @Test
     @Throws(IOException::class)
-    fun passiveIsYml() {
-        assertTrue(validator.specificationsAreYmlFiles(PASSIVE))
-        assertTrue(
-            validator.checkSpecificationParsing(
-                PASSIVE,
-                PassiveSource::class.java,
-            ),
-        )
+    fun passiveIsYml() = runBlocking {
+        val validator = validator.ofScope(PASSIVE) ?: return@runBlocking
+        val result = validator.isValidSpecification(PassiveSource::class.java)
+        assertEquals("", SchemaValidator.format(result))
     }
 
     @Test
     @Throws(IOException::class)
-    fun connectorIsYml() {
-        assertTrue(validator.specificationsAreYmlFiles(CONNECTOR))
-        assertTrue(
-            validator.checkSpecificationParsing(
-                CONNECTOR,
-                ConnectorSource::class.java,
-            ),
-        )
+    fun connectorIsYml() = runBlocking {
+        val validator = validator.ofScope(CONNECTOR) ?: return@runBlocking
+        val result = validator.isValidSpecification(ConnectorSource::class.java)
+        assertEquals("", SchemaValidator.format(result))
     }
 
     @Test
     @Throws(IOException::class)
-    fun pushIsYml() {
-        assertTrue(validator.specificationsAreYmlFiles(PUSH))
-        assertTrue(validator.checkSpecificationParsing(PUSH, PushSource::class.java))
+    fun pushIsYml() = runBlocking {
+        val validator = validator.ofScope(PUSH) ?: return@runBlocking
+        val result = validator.isValidSpecification(PushSource::class.java)
+        assertEquals("", SchemaValidator.format(result))
     }
 
     @Test
     @Throws(IOException::class)
-    fun streamIsYml() {
-        assertTrue(validator.specificationsAreYmlFiles(STREAM))
-        assertTrue(
-            validator.checkSpecificationParsing(
-                STREAM,
-                StreamGroup::class.java,
-            ),
-        )
+    fun streamIsYml() = runBlocking {
+        val validator = validator.ofScope(STREAM) ?: return@runBlocking
+        val result = validator.isValidSpecification(StreamGroup::class.java)
+        assertEquals("", SchemaValidator.format(result))
     }
 }
