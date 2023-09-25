@@ -41,39 +41,34 @@ import kotlin.io.path.extension
 class SchemaValidator(schemaRoot: Path, config: SchemaConfig) {
     val rules: SchemaMetadataRules = RadarSchemaMetadataRules(schemaRoot, config)
     private val pathMatcher: PathMatcher = config.pathMatcher(schemaRoot)
-    private var validator: Validator<SchemaMetadata> = rules.isSchemaMetadataValid(false)
 
     suspend fun analyseSourceCatalogue(
         scope: Scope?,
         catalogue: SourceCatalogue,
     ): List<ValidationException> {
-        validator = rules.isSchemaMetadataValid(true)
+        val validator = rules.isSchemaMetadataValid(true)
         val producers: Stream<DataProducer<*>> = if (scope != null) {
             catalogue.sources.stream()
                 .filter { it.scope == scope }
         } else {
             catalogue.sources.stream()
         }
-        return try {
-            validationContext {
-                val schemas = producers
-                    .flatMap { it.data.stream() }
-                    .flatMap { topic ->
-                        val (keySchema, valueSchema) = catalogue.schemaCatalogue.getSchemaMetadata(topic)
-                        Stream.of(keySchema, valueSchema)
-                    }
-                    .filter { it.schema != null }
-                    .sorted(Comparator.comparing { it.schema!!.fullName })
-                    .collect(Collectors.toSet())
+        return validationContext {
+            val schemas = producers
+                .flatMap { it.data.stream() }
+                .flatMap { topic ->
+                    val (keySchema, valueSchema) = catalogue.schemaCatalogue.getSchemaMetadata(topic)
+                    Stream.of(keySchema, valueSchema)
+                }
+                .filter { it.schema != null }
+                .sorted(Comparator.comparing { it.schema!!.fullName })
+                .collect(Collectors.toSet())
 
-                schemas.forEach { metadata ->
-                    if (pathMatcher.matches(metadata.path)) {
-                        validator.launchValidation(metadata)
-                    }
+            schemas.forEach { metadata ->
+                if (pathMatcher.matches(metadata.path)) {
+                    validator.launchValidation(metadata)
                 }
             }
-        } finally {
-            validator = rules.isSchemaMetadataValid(false)
         }
     }
 
@@ -92,7 +87,7 @@ class SchemaValidator(schemaRoot: Path, config: SchemaConfig) {
         schemaCatalogue: SchemaCatalogue,
         scope: Scope,
     ) {
-        validator = rules.isSchemaMetadataValid(false)
+        val validator = rules.isSchemaMetadataValid(false)
         val parsingValidator = parsingValidator(scope, schemaCatalogue)
 
         schemaCatalogue.unmappedAvroFiles.forEach { metadata ->
@@ -134,6 +129,7 @@ class SchemaValidator(schemaRoot: Path, config: SchemaConfig) {
 
     /** Validate a single schema in given path.  */
     private fun ValidationContext.validate(schemaMetadata: SchemaMetadata) {
+        val validator = rules.isSchemaMetadataValid(false)
         if (pathMatcher.matches(schemaMetadata.path)) {
             validator.launchValidation(schemaMetadata)
         }
