@@ -95,9 +95,7 @@ class SchemaCatalogue @JvmOverloads constructor(
         // at all.
         while (prevSize != schemas.size) {
             prevSize = schemas.size
-            val useTypes = schemas
-                .mapNotNull { (k, v) -> v.schema?.let { k to it } }
-                .toMap()
+            val useTypes = schemas.toSchemaMap()
             val ignoreFiles = schemas.values.asSequence()
                 .map { it.path }
                 .filterNotNullTo(HashSet())
@@ -117,7 +115,7 @@ class SchemaCatalogue @JvmOverloads constructor(
         ignoreFiles: Set<Path>,
         useTypes: Map<String, Schema>,
         scope: Scope,
-    ): Unit = customSchemas.asSequence()
+    ) = customSchemas.asSequence()
         .filter { (p, _) -> p !in ignoreFiles }
         .forEach { (p, schema) ->
             val parser = Schema.Parser()
@@ -154,5 +152,13 @@ class SchemaCatalogue @JvmOverloads constructor(
 
     companion object {
         private val logger = LoggerFactory.getLogger(SchemaCatalogue::class.java)
+
+        fun Map<String, SchemaMetadata>.toSchemaMap(): Map<String, Schema> = buildMap(size) {
+            this@toSchemaMap.forEach { (k, v) ->
+                if (v.schema != null) {
+                    put(k, v.schema)
+                }
+            }
+        }
     }
 }

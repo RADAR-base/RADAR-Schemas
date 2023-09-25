@@ -15,6 +15,7 @@
  */
 package org.radarbase.schema.validation
 
+import kotlinx.coroutines.runBlocking
 import org.apache.avro.SchemaBuilder
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.fail
@@ -36,7 +37,6 @@ import org.radarbase.schema.validation.ValidationHelper.COMMONS_PATH
 import java.io.IOException
 import java.nio.file.Path
 import java.nio.file.Paths
-import java.util.stream.Stream
 
 class SchemaValidatorTest {
     private lateinit var validator: SchemaValidator
@@ -120,7 +120,7 @@ class SchemaValidatorTest {
     }
 
     @Throws(IOException::class)
-    private fun testFromSpecification(scope: Scope) {
+    private fun testFromSpecification(scope: Scope) = runBlocking {
         val sourceCatalogue = load(ROOT, SchemaConfig(), SourceConfig())
         val result = format(
             validator.analyseSourceCatalogue(scope, sourceCatalogue),
@@ -131,14 +131,14 @@ class SchemaValidatorTest {
     }
 
     @Throws(IOException::class)
-    private fun testScope(scope: Scope) {
+    private fun testScope(scope: Scope) = runBlocking {
         val schemaCatalogue = SchemaCatalogue(
             COMMONS_ROOT,
             SchemaConfig(),
             scope,
         )
         val result = format(
-            validator.analyseFiles(scope, schemaCatalogue),
+            validator.analyseFiles(schemaCatalogue, scope),
         )
         if (result.isNotEmpty()) {
             fail<Any>(result)
@@ -146,7 +146,7 @@ class SchemaValidatorTest {
     }
 
     @Test
-    fun testEnumerator() {
+    fun testEnumerator() = runBlocking {
         val schemaPath = COMMONS_ROOT.resolve(
             "monitor/application/application_server_status.avsc",
         )
@@ -156,13 +156,21 @@ class SchemaValidatorTest {
             .enumeration(name)
             .doc(documentation)
             .symbols("CONNECTED", "DISCONNECTED", "UNKNOWN")
-        var result: Stream<ValidationException> = validator.validate(schema, schemaPath, MONITOR)
+        var result = validationContext {
+            with(validator) {
+                validate(schema, schemaPath, MONITOR)
+            }
+        }
         assertEquals(0, result.count())
         schema = SchemaBuilder
             .enumeration(name)
             .doc(documentation)
             .symbols("CONNECTED", "DISCONNECTED", "un_known")
-        result = validator.validate(schema, schemaPath, MONITOR)
+        result = validationContext {
+            with(validator) {
+                validate(schema, schemaPath, MONITOR)
+            }
+        }
         assertEquals(2, result.count())
     }
 

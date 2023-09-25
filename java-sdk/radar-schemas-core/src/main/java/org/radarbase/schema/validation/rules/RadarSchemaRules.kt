@@ -22,12 +22,7 @@ import io.confluent.connect.schema.AbstractDataConfig
 import org.apache.avro.Schema
 import org.apache.avro.Schema.Type.DOUBLE
 import org.apache.avro.Schema.Type.RECORD
-import org.radarbase.schema.validation.ValidationException
-import org.radarbase.schema.validation.rules.Validator.Companion.check
-import org.radarbase.schema.validation.rules.Validator.Companion.raise
-import org.radarbase.schema.validation.rules.Validator.Companion.valid
-import org.radarbase.schema.validation.rules.Validator.Companion.validate
-import java.util.stream.Stream
+import org.radarbase.schema.validation.ValidationContext
 
 /**
  * Schema validation rules enforced for the RADAR-Schemas repository.
@@ -37,97 +32,117 @@ class RadarSchemaRules(
 ) : SchemaRules {
     val schemaStore: MutableMap<String, Schema> = HashMap()
 
-    override fun validateUniqueness() = Validator { schema: Schema ->
+    override val isUnique = Validator { schema: Schema ->
         val key = schema.fullName
         val oldSchema = schemaStore.putIfAbsent(key, schema)
-        check(
-            oldSchema == null || oldSchema == schema,
-            messageSchema(schema, "Schema is already defined elsewhere with a different definition."),
-        )
+        if (oldSchema != null && oldSchema != schema) {
+            raise(
+                schema,
+                "Schema is already defined elsewhere with a different definition.",
+            )
+        }
     }
 
-    override fun validateNameSpace() = validate(
-        { it.namespace?.matches(NAMESPACE_PATTERN) == true },
-        messageSchema("Namespace cannot be null and must fully lowercase, period-separated, without numeric characters."),
+    override val isNamespaceValid = validator(
+        predicate = { it.namespace?.matches(NAMESPACE_PATTERN) == true },
+        message = schemaErrorMessage("Namespace cannot be null and must fully lowercase, period-separated, without numeric characters."),
     )
 
-    override fun validateName() = validate(
-        { it.name?.matches(RECORD_NAME_PATTERN) == true },
-        messageSchema("Record names must be camel case."),
+    override val isNameValid = validator(
+        predicate = { it.name?.matches(RECORD_NAME_PATTERN) == true },
+        message = schemaErrorMessage("Record names must be camel case."),
     )
 
-    override fun validateSchemaDocumentation() = Validator<Schema> { schema ->
+    override val isDocumentationValid = Validator<Schema> { schema ->
         validateDocumentation(
             schema.doc,
-            { m, t -> messageSchema(t, m) },
+            ValidationContext::raise,
             schema,
         )
     }
 
-    override fun validateSymbols() = validate(
-        { !it.enumSymbols.isNullOrEmpty() },
-        messageSchema("Avro Enumerator must have symbol list."),
-    ).and(validateSymbolNames())
-
-    private fun validateSymbolNames() = Validator<Schema> { schema ->
-        schema.enumSymbols.stream()
-            .filter { !it.matches(ENUM_SYMBOL_PATTERN) }
-            .map { s ->
-                ValidationException(
-                    messageSchema(
-                        schema,
-                        "Symbol $s does not use valid syntax. " +
-                            "Enumerator items should be written in uppercase characters separated by underscores.",
-                    ),
+    override val isEnumSymbolsValid = Validator<Schema> { schema ->
+        if (schema.enumSymbols.isNullOrEmpty()) {
+            raise(schema, "Avro Enumerator must have symbol list.")
+            return@Validator
+        }
+        schema.enumSymbols.forEach { s ->
+            if (!s.matches(ENUM_SYMBOL_PATTERN)) {
+                raise(
+                    schema,
+                    "Symbol $s does not use valid syntax. " +
+                        "Enumerator items should be written in uppercase characters separated by underscores.",
                 )
             }
+        }
     }
 
-    /**
-     * TODO.
-     * @return TODO
-     */
-    override fun validateTime(): Validator<Schema> = validate(
-        { it.getField(TIME)?.schema()?.type == DOUBLE },
-        messageSchema("Any schema representing collected data must have a \"$TIME$WITH_TYPE_DOUBLE"),
+    override val hasTime: Validator<Schema> = validator(
+        predicate = { it.getField(TIME)?.schema()?.type == DOUBLE },
+        message = schemaErrorMessage("Any schema representing collected data must have a \"$TIME$WITH_TYPE_DOUBLE"),
     )
+
+    override val hasTimeCompleted: Validator<Schema> = validator(
+        predicate = { it.getField(TIME_COMPLETED)?.schema()?.type == DOUBLE },
+        message = schemaErrorMessage("Any ACTIVE schema must have a \"$TIME_COMPLETED$WITH_TYPE_DOUBLE"),
+    )
+
+    override val hasNoTimeCompleted: Validator<Schema> = validator(
+        predicate = { it.getField(TIME_COMPLETED) == null },
+        message = schemaErrorMessage("\"$TIME_COMPLETED\" is allow only in ACTIVE schemas."),
+    )
+
+    override val hasTimeReceived: Validator<Schema> = validator(
+        predicate = { it.getField(TIME_RECEIVED)?.schema()?.type == DOUBLE },
+        message = schemaErrorMessage("Any PASSIVE schema must have a \"$TIME_RECEIVED$WITH_TYPE_DOUBLE"),
+    )
+
+    override val hasNoTimeReceived: Validator<Schema> = validator(
+        predicate = { it.getField(TIME_RECEIVED) == null },
+        message = schemaErrorMessage("\"$TIME_RECEIVED\" is allow only in PASSIVE schemas."),
+    )
+
+    override val isAvroConnectCompatible: Validator<Schema>
 
     /**
-     * TODO.
-     * @return TODO
+     * Validate an enum.
      */
-    override fun validateTimeCompleted(): Validator<Schema> = validate(
-        { it.getField(TIME_COMPLETED)?.schema()?.type == DOUBLE },
-        messageSchema("Any ACTIVE schema must have a \"$TIME_COMPLETED$WITH_TYPE_DOUBLE"),
+    override val isEnumValid: Validator<Schema> = all(
+        isUnique,
+        isNamespaceValid,
+        isEnumSymbolsValid,
+        isDocumentationValid,
+        isNameValid,
     )
 
     /**
-     * TODO.
-     * @return TODO
+     * Validate a record that is defined inline.
      */
-    override fun validateNotTimeCompleted(): Validator<Schema> = validate(
-        { it.getField(TIME_COMPLETED) == null },
-        messageSchema("\"$TIME_COMPLETED\" is allow only in ACTIVE schemas."),
-    )
+    override val isRecordValid: Validator<Schema>
 
-    override fun validateTimeReceived(): Validator<Schema> = validate(
-        { it.getField(TIME_RECEIVED)?.schema()?.type == DOUBLE },
-        messageSchema("Any PASSIVE schema must have a \"$TIME_RECEIVED$WITH_TYPE_DOUBLE"),
-    )
+    /**
+     * Validates record schemas of an active source.
+     */
+    override val isActiveSourceValid: Validator<Schema>
 
-    override fun validateNotTimeReceived(): Validator<Schema> = validate(
-        { it.getField(TIME_RECEIVED) == null },
-        messageSchema("\"$TIME_RECEIVED\" is allow only in PASSIVE schemas."),
-    )
+    /**
+     * Validates schemas of monitor sources.
+     */
+    override val isMonitorSourceValid: Validator<Schema>
 
-    override fun validateAvroData(): Validator<Schema> {
+    /**
+     * Validates schemas of passive sources.
+     */
+    override val isPassiveSourceValid: Validator<Schema>
+
+    init {
         val avroConfig = Builder()
             .with(AvroDataConfig.CONNECT_META_DATA_CONFIG, false)
             .with(AbstractDataConfig.SCHEMAS_CACHE_SIZE_CONFIG, 10)
             .with(AvroDataConfig.ENHANCED_AVRO_SCHEMA_SUPPORT_CONFIG, true)
             .build()
 
-        return Validator { schema: Schema ->
+        isAvroConnectCompatible = Validator { schema: Schema ->
             val encoder = AvroData(10)
             val decoder = AvroData(avroConfig)
             try {
@@ -142,17 +157,33 @@ class RadarSchemaRules(
                 raise("Failed to convert schema back to itself")
             }
         }
+
+        isRecordValid = all(
+            isUnique,
+            isAvroConnectCompatible,
+            isNamespaceValid,
+            isNameValid,
+            isDocumentationValid,
+            isFieldsValid(fieldRules.isFieldValid(this)),
+        )
+
+        isActiveSourceValid = all(isRecordValid, hasTime)
+
+        isMonitorSourceValid = all(isRecordValid, hasTime)
+
+        isPassiveSourceValid = all(isRecordValid, hasTime, hasTimeReceived, hasNoTimeCompleted)
     }
 
-    override fun fields(validator: Validator<SchemaField>): Validator<Schema> =
+    override fun isFieldsValid(validator: Validator<SchemaField>): Validator<Schema> =
         Validator { schema: Schema ->
             when {
                 schema.type != RECORD -> raise(
                     "Default validation can be applied only to an Avro RECORD, not to ${schema.type} of schema ${schema.fullName}.",
                 )
                 schema.fields.isEmpty() -> raise("Schema ${schema.fullName} does not contain any fields.")
-                else -> schema.fields.stream()
-                    .flatMap { field -> validator.validate(SchemaField(schema, field)) }
+                else -> schema.fields.forEach { field ->
+                    validator.launchValidation(SchemaField(schema, field))
+                }
             }
         }
 
@@ -172,52 +203,43 @@ class RadarSchemaRules(
         val ENUM_SYMBOL_PATTERN = "[A-Z][A-Z0-9_]*".toRegex()
         private const val WITH_TYPE_DOUBLE = "\" field with type \"double\"."
 
-        fun <T> validateDocumentation(
+        fun <T> ValidationContext.validateDocumentation(
             doc: String?,
-            message: (String, T) -> String,
+            raise: ValidationContext.(T, String) -> Unit,
             schema: T,
-        ): Stream<ValidationException> {
+        ) {
             if (doc.isNullOrEmpty()) {
-                return raise(
-                    message(
-                        "Property \"doc\" is missing. Documentation is" +
-                            " mandatory for all fields. The documentation should report what is being" +
-                            " measured, how, and what units or ranges are applicable. Abbreviations" +
-                            " and acronyms in the documentation should be written out. The sentence" +
-                            " must end with a period '.'. Please add \"doc\" property.",
-                        schema,
-                    ),
+                raise(
+                    schema,
+                    """Property "doc" is missing. Documentation is mandatory for all fields.
+                        | The documentation should report what is being measured, how, and what
+                        |  units or ranges are applicable. Abbreviations and acronyms in the
+                        |   documentation should be written out. The sentence must end with a
+                        |    period '.'. Please add "doc" property.
+                    """.trimMargin(),
                 )
+                return
             }
-            var result: Stream<ValidationException> = valid()
             if (doc[doc.length - 1] != '.') {
-                result = raise(
-                    message(
-                        "Documentation is not terminated with a period. The" +
-                            " documentation should report what is being measured, how, and what units" +
-                            " or ranges are applicable. Abbreviations and acronyms in the" +
-                            " documentation should be written out. Please end the sentence with a" +
-                            " period '.'.",
-                        schema,
-                    ),
+                raise(
+                    schema,
+                    "Documentation is not terminated with a period. The" +
+                        " documentation should report what is being measured, how, and what units" +
+                        " or ranges are applicable. Abbreviations and acronyms in the" +
+                        " documentation should be written out. Please end the sentence with a" +
+                        " period '.'.",
                 )
             }
             if (!Character.isUpperCase(doc[0])) {
-                result = Stream.concat(
-                    result,
-                    raise(
-                        message(
-                            "Documentation does not start with a capital letter. The" +
-                                " documentation should report what is being measured, how, and what" +
-                                " units or ranges are applicable. Abbreviations and acronyms in the" +
-                                " documentation should be written out. Please end the sentence with a" +
-                                " period '.'.",
-                            schema,
-                        ),
-                    ),
+                raise(
+                    schema,
+                    "Documentation does not start with a capital letter. The" +
+                        " documentation should report what is being measured, how, and what" +
+                        " units or ranges are applicable. Abbreviations and acronyms in the" +
+                        " documentation should be written out. Please end the sentence with a" +
+                        " period '.'.",
                 )
             }
-            return result
         }
     }
 }

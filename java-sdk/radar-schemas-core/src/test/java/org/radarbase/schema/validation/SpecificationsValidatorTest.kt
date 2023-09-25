@@ -1,6 +1,6 @@
 package org.radarbase.schema.validation
 
-import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.radarbase.schema.Scope.ACTIVE
@@ -29,8 +29,8 @@ class SpecificationsValidatorTest {
     @Test
     @Throws(IOException::class)
     fun activeIsYml() {
-        Assertions.assertTrue(validator.specificationsAreYmlFiles(ACTIVE))
-        Assertions.assertTrue(
+        assertTrue(validator.specificationsAreYmlFiles(ACTIVE))
+        assertTrue(
             validator.checkSpecificationParsing(
                 ACTIVE,
                 ActiveSource::class.java,
@@ -41,8 +41,8 @@ class SpecificationsValidatorTest {
     @Test
     @Throws(IOException::class)
     fun monitorIsYml() {
-        Assertions.assertTrue(validator.specificationsAreYmlFiles(MONITOR))
-        Assertions.assertTrue(
+        assertTrue(validator.specificationsAreYmlFiles(MONITOR))
+        assertTrue(
             validator.checkSpecificationParsing(
                 MONITOR,
                 MonitorSource::class.java,
@@ -53,8 +53,8 @@ class SpecificationsValidatorTest {
     @Test
     @Throws(IOException::class)
     fun passiveIsYml() {
-        Assertions.assertTrue(validator.specificationsAreYmlFiles(PASSIVE))
-        Assertions.assertTrue(
+        assertTrue(validator.specificationsAreYmlFiles(PASSIVE))
+        assertTrue(
             validator.checkSpecificationParsing(
                 PASSIVE,
                 PassiveSource::class.java,
@@ -65,8 +65,8 @@ class SpecificationsValidatorTest {
     @Test
     @Throws(IOException::class)
     fun connectorIsYml() {
-        Assertions.assertTrue(validator.specificationsAreYmlFiles(CONNECTOR))
-        Assertions.assertTrue(
+        assertTrue(validator.specificationsAreYmlFiles(CONNECTOR))
+        assertTrue(
             validator.checkSpecificationParsing(
                 CONNECTOR,
                 ConnectorSource::class.java,
@@ -77,15 +77,15 @@ class SpecificationsValidatorTest {
     @Test
     @Throws(IOException::class)
     fun pushIsYml() {
-        Assertions.assertTrue(validator.specificationsAreYmlFiles(PUSH))
-        Assertions.assertTrue(validator.checkSpecificationParsing(PUSH, PushSource::class.java))
+        assertTrue(validator.specificationsAreYmlFiles(PUSH))
+        assertTrue(validator.checkSpecificationParsing(PUSH, PushSource::class.java))
     }
 
     @Test
     @Throws(IOException::class)
     fun streamIsYml() {
-        Assertions.assertTrue(validator.specificationsAreYmlFiles(STREAM))
-        Assertions.assertTrue(
+        assertTrue(validator.specificationsAreYmlFiles(STREAM))
+        assertTrue(
             validator.checkSpecificationParsing(
                 STREAM,
                 StreamGroup::class.java,

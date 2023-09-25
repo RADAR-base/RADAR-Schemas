@@ -15,42 +15,36 @@
  */
 package org.radarbase.schema.validation.rules
 
-import org.radarbase.schema.validation.ValidationException
-import java.util.stream.Stream
+import org.radarbase.schema.validation.ValidationContext
+import java.nio.file.Path
+import kotlin.io.path.extension
 
-class Validator<T>(
-    private val validation: (T) -> Stream<ValidationException>,
+open class Validator<T>(
+    private val validation: ValidationContext.(T) -> Unit,
 ) {
-    fun and(other: Validator<T>): Validator<T> = Validator { obj ->
-        Stream.concat(
-            this.validate(obj),
-            other.validate(obj),
-        )
+    open fun ValidationContext.runValidation(value: T) {
+        this.validation(value)
+    }
+}
+
+fun <T> validator(predicate: (T) -> Boolean, message: String): Validator<T> =
+    Validator { obj ->
+        if (!predicate(obj)) raise(message)
     }
 
-    fun validate(value: T): Stream<ValidationException> = this.validation.invoke(value)
+fun <T> validator(predicate: (T) -> Boolean, message: (T) -> String): Validator<T> =
+    Validator { obj ->
+        if (!predicate(obj)) raise(message(obj))
+    }
 
-    companion object {
-        fun check(test: Boolean, message: String): Stream<ValidationException> =
-            if (test) valid() else raise(message)
+fun <T> all(vararg validators: Validator<T>) = Validator<T> { obj ->
+    validators.forEach {
+        it.launchValidation(obj)
+    }
+}
 
-        inline fun check(test: Boolean, message: () -> String): Stream<ValidationException> {
-            return if (test) valid() else raise(message())
-        }
-
-        fun <T> validate(predicate: (T) -> Boolean, message: String): Validator<T> =
-            Validator { obj ->
-                check(predicate(obj), message)
-            }
-
-        fun <T> validate(predicate: (T) -> Boolean, message: (T) -> String): Validator<T> =
-            Validator { obj: T ->
-                check(predicate(obj), message(obj))
-            }
-
-        fun raise(message: String, ex: Exception? = null): Stream<ValidationException> =
-            Stream.of(ValidationException(message, ex))
-
-        fun valid(): Stream<ValidationException> = Stream.empty()
+fun pathExtensionValidator(extension: String) = Validator<Path> { path ->
+    if (!path.extension.equals(extension, ignoreCase = true)) {
+        raise("Path $path does not have extension $extension")
     }
 }

@@ -15,6 +15,7 @@
  */
 package org.radarbase.schema.validation.rules
 
+import kotlinx.coroutines.runBlocking
 import org.apache.avro.SchemaBuilder
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
@@ -25,10 +26,9 @@ import org.radarbase.schema.Scope.PASSIVE
 import org.radarbase.schema.specification.config.SchemaConfig
 import org.radarbase.schema.validation.SchemaValidator.Companion.format
 import org.radarbase.schema.validation.SourceCatalogueValidationTest
-import org.radarbase.schema.validation.ValidationException
 import org.radarbase.schema.validation.ValidationHelper
+import org.radarbase.schema.validation.validate
 import java.nio.file.Paths
-import java.util.stream.Stream
 
 /**
  * TODO.
@@ -59,7 +59,7 @@ class RadarSchemaMetadataRulesTest {
     }
 
     @Test
-    fun nameSpaceInvalidPlural() {
+    fun nameSpaceInvalidPlural() = runBlocking {
         val schema = SchemaBuilder
             .builder("org.radarcns.monitors.test")
             .record(RECORD_NAME_MOCK)
@@ -69,13 +69,13 @@ class RadarSchemaMetadataRulesTest {
             MONITOR.getPath(SourceCatalogueValidationTest.BASE_PATH.resolve(ValidationHelper.COMMONS_PATH))
         assertNotNull(root)
         val path = root.resolve("test/record_name.avsc")
-        val result = validator.validateSchemaLocation()
+        val result = validator.isShemaLocationCorrect
             .validate(SchemaMetadata(schema, MONITOR, path))
         assertEquals(1, result.count())
     }
 
     @Test
-    fun nameSpaceInvalidLastPartPlural() {
+    fun nameSpaceInvalidLastPartPlural() = runBlocking {
         val schema = SchemaBuilder
             .builder("org.radarcns.monitor.tests")
             .record(RECORD_NAME_MOCK)
@@ -85,13 +85,13 @@ class RadarSchemaMetadataRulesTest {
             MONITOR.getPath(SourceCatalogueValidationTest.BASE_PATH.resolve(ValidationHelper.COMMONS_PATH))
         assertNotNull(root)
         val path = root.resolve("test/record_name.avsc")
-        val result = validator.validateSchemaLocation()
+        val result = validator.isShemaLocationCorrect
             .validate(SchemaMetadata(schema, MONITOR, path))
         assertEquals(1, result.count())
     }
 
     @Test
-    fun recordNameTest() {
+    fun recordNameTest() = runBlocking {
         // misspell aceleration
         var fieldName = "EmpaticaE4Aceleration"
         var filePath = Paths.get("/path/to/empatica_e4_acceleration.avsc")
@@ -100,7 +100,7 @@ class RadarSchemaMetadataRulesTest {
             .record(fieldName)
             .fields()
             .endRecord()
-        var result: Stream<ValidationException> = validator.validateSchemaLocation()
+        var result = validator.isShemaLocationCorrect
             .validate(SchemaMetadata(schema, PASSIVE, filePath))
         assertEquals(2, result.count())
         fieldName = "EmpaticaE4Acceleration"
@@ -111,7 +111,7 @@ class RadarSchemaMetadataRulesTest {
             .record(fieldName)
             .fields()
             .endRecord()
-        result = validator.validateSchemaLocation()
+        result = validator.isShemaLocationCorrect
             .validate(SchemaMetadata(schema, PASSIVE, filePath))
         assertEquals("", format(result))
     }

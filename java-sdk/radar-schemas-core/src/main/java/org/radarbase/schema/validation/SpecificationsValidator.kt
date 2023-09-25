@@ -17,35 +17,32 @@ package org.radarbase.schema.validation
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import org.radarbase.schema.Scope
 import org.radarbase.schema.specification.config.SchemaConfig
 import org.radarbase.schema.validation.ValidationHelper.SPECIFICATIONS_PATH
-import org.radarbase.schema.validation.ValidationHelper.matchesExtension
+import org.radarbase.schema.validation.rules.Validator
+import org.radarbase.schema.validation.rules.pathExtensionValidator
 import org.slf4j.LoggerFactory
 import java.io.IOException
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.PathMatcher
-import kotlin.io.path.walk
+import java.util.stream.Collectors
 
 /**
  * Validates RADAR-Schemas specifications.
+ *
+ * @param root RADAR-Schemas directory.
+ * @param config configuration to exclude certain schemas or fields from validation.
+ *
  */
 class SpecificationsValidator(root: Path, config: SchemaConfig) {
-    private val specificationsRoot: Path
-    private val mapper: ObjectMapper
-    private val pathMatcher: PathMatcher
-
-    /**
-     * Specifications validator for given RADAR-Schemas directory.
-     * @param root RADAR-Schemas directory.
-     * @param config configuration to exclude certain schemas or fields from validation.
-     */
-    init {
-        specificationsRoot = root.resolve(SPECIFICATIONS_PATH)
-        pathMatcher = config.pathMatcher(specificationsRoot)
-        mapper = ObjectMapper(YAMLFactory())
-    }
+    private val specificationsRoot: Path = root.resolve(SPECIFICATIONS_PATH)
+    private val mapper: ObjectMapper = ObjectMapper(YAMLFactory())
+    private val pathMatcher: PathMatcher = config.pathMatcher(specificationsRoot)
 
     /** Check that all files in the specifications directory are YAML files.  */
     @Throws(IOException::class)
@@ -59,10 +56,17 @@ class SpecificationsValidator(root: Path, config: SchemaConfig) {
             )
             return false
         }
-        Files.walk(baseFolder).use { walker ->
-            return walker
-                .filter { path: Path? -> pathMatcher.matches(path) }
-                .allMatch { path: Path -> isYmlFile(path) }
+        return runBlocking {
+            val paths = baseFolder.fetchChildren()
+            val exceptions = validationContext {
+                paths.forEach { isYmlFile.launchValidation(it) }
+            }
+            if (exceptions.isEmpty()) {
+                true
+            } else {
+                logger.error("Not all specification files have the right extension: {}", exceptions.joinToString())
+                false
+            }
         }
     }
 
@@ -77,32 +81,41 @@ class SpecificationsValidator(root: Path, config: SchemaConfig) {
             )
             return false
         }
-        Files.walk(baseFolder).use { walker ->
-            return walker
-                .filter { path: Path? -> pathMatcher.matches(path) }
-                .allMatch { f: Path ->
-                    try {
-                        mapper.readerFor(clazz).readValue<T>(f.toFile())
-                        return@allMatch true
-                    } catch (ex: IOException) {
-                        logger.error(
-                            "Failed to load configuration {}: {}",
-                            f,
-                            ex.toString(),
-                        )
-                        return@allMatch false
-                    }
-                }
+        val validator = isValidYmlFile(clazz)
+
+        return runBlocking {
+            val paths = baseFolder.fetchChildren()
+            val exceptions = validationContext {
+                paths.forEach { validator.launchValidation(it) }
+            }
+            if (exceptions.isEmpty()) {
+                true
+            } else {
+                logger.error("Not all specification files have the right format: {}", exceptions.joinToString())
+                false
+            }
+        }
+    }
+
+    private suspend fun Path.fetchChildren(): List<Path> = withContext(Dispatchers.IO) {
+        Files.walk(this@fetchChildren).use { walker ->
+            walker
+                .filter { pathMatcher.matches(it) }
+                .collect(Collectors.toList())
+        }
+    }
+
+    private fun <T> isValidYmlFile(clazz: Class<T>?) = Validator<Path> { path ->
+        try {
+            mapper.readerFor(clazz).readValue<T>(path.toFile())
+        } catch (ex: IOException) {
+            raise("Failed to load configuration $path", ex)
         }
     }
 
     companion object {
-        private val logger = LoggerFactory.getLogger(
-            SpecificationsValidator::class.java,
-        )
-        const val YML_EXTENSION = "yml"
-        private fun isYmlFile(path: Path): Boolean {
-            return matchesExtension(path, YML_EXTENSION)
-        }
+        private val logger = LoggerFactory.getLogger(SpecificationsValidator::class.java)
+
+        private val isYmlFile: Validator<Path> = pathExtensionValidator("yml")
     }
 }

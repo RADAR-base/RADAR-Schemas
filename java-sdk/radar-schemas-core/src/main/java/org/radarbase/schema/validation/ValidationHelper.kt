@@ -19,9 +19,6 @@ import org.radarbase.schema.Scope
 import org.radarbase.schema.util.SchemaUtils.projectGroup
 import org.radarbase.schema.util.SchemaUtils.snakeToCamelCase
 import java.nio.file.Path
-import java.util.Objects
-import java.util.function.Predicate
-import java.util.regex.Pattern
 
 /**
  * TODO.
@@ -31,73 +28,27 @@ object ValidationHelper {
     const val SPECIFICATIONS_PATH = "specifications"
 
     // snake case
-    private val TOPIC_PATTERN = Pattern.compile(
-        "[A-Za-z][a-z0-9-]*(_[A-Za-z0-9-]+)*",
-    )
+    private val TOPIC_PATTERN = "[A-Za-z][a-z0-9-]*(_[A-Za-z0-9-]+)*".toRegex()
 
-    /**
-     * TODO.
-     * @param scope TODO
-     * @return TODO
-     */
     fun getNamespace(schemaRoot: Path?, schemaPath: Path?, scope: Scope): String {
         // add subfolder of root to namespace
-        val rootPath = scope.getPath(schemaRoot)
-            ?: throw IllegalArgumentException("Scope $scope does not have a commons path")
+        val rootPath = requireNotNull(scope.getPath(schemaRoot)) { "Scope $scope does not have a commons path" }
+        requireNotNull(schemaPath) { "Missing schema path" }
         val relativePath = rootPath.relativize(schemaPath)
-        val builder = StringBuilder(50)
-        builder.append(projectGroup).append('.').append(scope.lower)
-        for (i in 0 until relativePath.nameCount - 1) {
-            builder.append('.').append(relativePath.getName(i))
+        return buildString(50) {
+            append(projectGroup)
+            append('.')
+            append(scope.lower)
+            for (i in 0 until relativePath.nameCount - 1) {
+                append('.')
+                append(relativePath.getName(i))
+            }
         }
-        return builder.toString()
     }
 
-    /**
-     * TODO.
-     * @param path TODO
-     * @return TODO
-     */
-    @JvmStatic
     fun getRecordName(path: Path): String {
-        Objects.requireNonNull(path)
         return snakeToCamelCase(path.fileName.toString())
     }
 
-    /**
-     * TODO.
-     * @param topicName TODO
-     * @return TODO
-     */
-    @JvmStatic
-    fun isValidTopic(topicName: String?): Boolean {
-        return topicName != null && TOPIC_PATTERN.matcher(topicName).matches()
-    }
-
-    /**
-     * TODO.
-     * @param file TODO.
-     * @return TODO.
-     */
-    @JvmStatic
-    fun matchesExtension(file: Path, extension: String): Boolean {
-        return file.toString().lowercase()
-            .endsWith("." + extension.lowercase())
-    }
-
-    /**
-     * TODO.
-     * @param file TODO
-     * @param extension TODO
-     * @return TODO
-     */
-    fun equalsFileName(file: Path, extension: String): Predicate<String> {
-        return Predicate { str: String ->
-            var fileName = file.fileName.toString()
-            if (fileName.endsWith(extension)) {
-                fileName = fileName.substring(0, fileName.length - extension.length)
-            }
-            str.equals(fileName, ignoreCase = true)
-        }
-    }
+    fun isValidTopic(topicName: String?): Boolean = topicName?.matches(TOPIC_PATTERN) == true
 }

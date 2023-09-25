@@ -2,10 +2,8 @@ package org.radarbase.schema.validation.rules
 
 import org.apache.avro.Schema
 import org.radarbase.schema.specification.config.SchemaConfig
-import org.radarbase.schema.validation.ValidationHelper
-import org.radarbase.schema.validation.rules.Validator.Companion.check
-import org.radarbase.schema.validation.rules.Validator.Companion.raise
-import org.radarbase.schema.validation.rules.Validator.Companion.valid
+import org.radarbase.schema.validation.ValidationHelper.getNamespace
+import org.radarbase.schema.validation.ValidationHelper.getRecordName
 import java.nio.file.Path
 import java.nio.file.PathMatcher
 
@@ -22,54 +20,42 @@ class RadarSchemaMetadataRules(
 ) : SchemaMetadataRules {
     private val pathMatcher: PathMatcher = config.pathMatcher(schemaRoot)
 
-    override fun validateSchemaLocation(): Validator<SchemaMetadata> =
-        validateNamespaceSchemaLocation()
-            .and(validateNameSchemaLocation())
+    override val isShemaLocationCorrect = all(
+        isNamespaceSchemaLocationCorrect(),
+        isNameSchemaLocationCorrect(),
+    )
 
-    private fun validateNamespaceSchemaLocation(): Validator<SchemaMetadata> =
-        Validator { metadata ->
-            try {
-                val expected = ValidationHelper.getNamespace(
-                    schemaRoot,
-                    metadata.path,
-                    metadata.scope,
-                )
-                val namespace = metadata.schema?.namespace
-                return@Validator check(
-                    expected.equals(namespace, ignoreCase = true),
-                    message(
-                        metadata,
-                        "Namespace cannot be null and must fully lowercase dot separated without numeric. In this case the expected value is \"$expected\".",
-                    ),
-                )
-            } catch (ex: IllegalArgumentException) {
-                return@Validator raise(
-                    "Path " + metadata.path +
-                        " is not part of root " + schemaRoot,
-                    ex,
+    private fun isNamespaceSchemaLocationCorrect() = Validator<SchemaMetadata> { metadata ->
+        try {
+            val expected = getNamespace(schemaRoot, metadata.path, metadata.scope)
+            val namespace = metadata.schema?.namespace
+            if (!expected.equals(namespace, ignoreCase = true)) {
+                raise(
+                    metadata,
+                    "Namespace cannot be null and must fully lowercase dot separated without numeric. In this case the expected value is \"$expected\".",
                 )
             }
+        } catch (ex: IllegalArgumentException) {
+            raise("Path ${metadata.path} is not part of root $schemaRoot", ex)
         }
+    }
 
-    private fun validateNameSchemaLocation(): Validator<SchemaMetadata> =
-        Validator { metadata ->
-            if (metadata.path == null) {
-                return@Validator raise(message(metadata, "Missing metadata path"))
-            }
-            val expected = ValidationHelper.getRecordName(metadata.path)
-            if (expected.equals(metadata.schema?.name, ignoreCase = true)) {
-                valid()
-            } else {
-                raise(message(metadata, "Record name should match file name. Expected record name is \"$expected\"."))
-            }
+    private fun isNameSchemaLocationCorrect() = Validator<SchemaMetadata> { metadata ->
+        if (metadata.path == null) {
+            raise(metadata, "Missing metadata path")
+            return@Validator
         }
+        val expected = getRecordName(metadata.path)
+        if (!expected.equals(metadata.schema?.name, ignoreCase = true)) {
+            raise(metadata, "Record name should match file name. Expected record name is \"$expected\".")
+        }
+    }
 
-    override fun schema(validator: Validator<Schema>): Validator<SchemaMetadata> =
-        Validator { metadata ->
-            when {
-                metadata.schema == null -> raise("Missing schema")
-                pathMatcher.matches(metadata.path) -> validator.validate(metadata.schema)
-                else -> valid()
-            }
+    override fun isSchemaCorrect(validator: Validator<Schema>) = Validator<SchemaMetadata> { metadata ->
+        when {
+            metadata.schema == null -> raise("Missing schema")
+            pathMatcher.matches(metadata.path) -> validator.launchValidation(metadata.schema)
+            else -> Unit
         }
+    }
 }

@@ -15,6 +15,7 @@
  */
 package org.radarbase.schema.validation.rules
 
+import kotlinx.coroutines.runBlocking
 import org.apache.avro.Schema
 import org.apache.avro.Schema.Parser
 import org.apache.avro.SchemaBuilder
@@ -23,8 +24,7 @@ import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.radarbase.schema.validation.ValidationException
-import java.util.stream.Stream
+import org.radarbase.schema.validation.validate
 
 /**
  * TODO.
@@ -80,49 +80,47 @@ class RadarSchemaRulesTest {
     }
 
     @Test
-    fun nameSpaceTest() {
+    fun nameSpaceTest() = runBlocking {
         val schema = SchemaBuilder
             .builder("org.radarcns.active.questionnaire")
             .record("Questionnaire")
             .fields()
             .endRecord()
-        val result: Stream<ValidationException> = validator.validateNameSpace()
-            .validate(schema)
+        val result = validator.isNamespaceValid.validate(schema)
         Assertions.assertEquals(0, result.count())
     }
 
     @Test
-    fun nameSpaceInvalidDashTest() {
+    fun nameSpaceInvalidDashTest() = runBlocking {
         val schema = SchemaBuilder
             .builder("org.radar-cns.monitors.test")
             .record(RECORD_NAME_MOCK)
             .fields()
             .endRecord()
-        val result: Stream<ValidationException> = validator.validateNameSpace()
+        val result = validator.isNamespaceValid
             .validate(schema)
         Assertions.assertEquals(1, result.count())
     }
 
     @Test
-    fun recordNameTest() {
+    fun recordNameTest() = runBlocking {
         val schema = SchemaBuilder
             .builder("org.radarcns.active.testactive")
             .record("Schema")
             .fields()
             .endRecord()
-        val result: Stream<ValidationException> = validator.validateName()
-            .validate(schema)
+        val result = validator.isNameValid.validate(schema)
         Assertions.assertEquals(0, result.count())
     }
 
     @Test
-    fun fieldsTest() {
+    fun fieldsTest() = runBlocking {
         var schema: Schema = SchemaBuilder
             .builder(MONITOR_NAME_SPACE_MOCK)
             .record(RECORD_NAME_MOCK)
             .fields()
             .endRecord()
-        var result: Stream<ValidationException> = validator.fields(
+        var result = validator.isFieldsValid(
             validator.fieldRules.validateFieldTypes(validator),
         ).validate(schema)
         Assertions.assertEquals(1, result.count())
@@ -132,20 +130,20 @@ class RadarSchemaRulesTest {
             .fields()
             .optionalBoolean("optional")
             .endRecord()
-        result = validator.fields(validator.fieldRules.validateFieldTypes(validator))
+        result = validator.isFieldsValid(validator.fieldRules.validateFieldTypes(validator))
             .validate(schema)
         Assertions.assertEquals(0, result.count())
     }
 
     @Test
-    fun timeTest() {
+    fun timeTest() = runBlocking {
         var schema: Schema = SchemaBuilder
             .builder("org.radarcns.time.test")
             .record(RECORD_NAME_MOCK)
             .fields()
             .requiredString("string")
             .endRecord()
-        var result: Stream<ValidationException> = validator.validateTime().validate(schema)
+        var result = validator.hasTime.validate(schema)
         Assertions.assertEquals(1, result.count())
         schema = SchemaBuilder
             .builder("org.radarcns.time.test")
@@ -153,21 +151,21 @@ class RadarSchemaRulesTest {
             .fields()
             .requiredDouble(RadarSchemaRules.TIME)
             .endRecord()
-        result = validator.validateTime().validate(schema)
+        result = validator.hasTime.validate(schema)
         Assertions.assertEquals(0, result.count())
     }
 
     @Test
-    fun timeCompletedTest() {
+    fun timeCompletedTest() = runBlocking {
         var schema: Schema = SchemaBuilder
             .builder(ACTIVE_NAME_SPACE_MOCK)
             .record(RECORD_NAME_MOCK)
             .fields()
             .requiredString("field")
             .endRecord()
-        var result: Stream<ValidationException> = validator.validateTimeCompleted().validate(schema)
+        var result = validator.hasTimeCompleted.validate(schema)
         Assertions.assertEquals(1, result.count())
-        result = validator.validateNotTimeCompleted().validate(schema)
+        result = validator.hasNoTimeCompleted.validate(schema)
         Assertions.assertEquals(0, result.count())
         schema = SchemaBuilder
             .builder(ACTIVE_NAME_SPACE_MOCK)
@@ -175,23 +173,23 @@ class RadarSchemaRulesTest {
             .fields()
             .requiredDouble("timeCompleted")
             .endRecord()
-        result = validator.validateTimeCompleted().validate(schema)
+        result = validator.hasTimeCompleted.validate(schema)
         Assertions.assertEquals(0, result.count())
-        result = validator.validateNotTimeCompleted().validate(schema)
+        result = validator.hasNoTimeCompleted.validate(schema)
         Assertions.assertEquals(1, result.count())
     }
 
     @Test
-    fun timeReceivedTest() {
+    fun timeReceivedTest() = runBlocking {
         var schema: Schema = SchemaBuilder
             .builder(MONITOR_NAME_SPACE_MOCK)
             .record(RECORD_NAME_MOCK)
             .fields()
             .requiredString("field")
             .endRecord()
-        var result: Stream<ValidationException> = validator.validateTimeReceived().validate(schema)
+        var result = validator.hasTimeReceived.validate(schema)
         Assertions.assertEquals(1, result.count())
-        result = validator.validateNotTimeReceived().validate(schema)
+        result = validator.hasNoTimeReceived.validate(schema)
         Assertions.assertEquals(0, result.count())
         schema = SchemaBuilder
             .builder(MONITOR_NAME_SPACE_MOCK)
@@ -199,20 +197,20 @@ class RadarSchemaRulesTest {
             .fields()
             .requiredDouble("timeReceived")
             .endRecord()
-        result = validator.validateTimeReceived().validate(schema)
+        result = validator.hasTimeReceived.validate(schema)
         Assertions.assertEquals(0, result.count())
-        result = validator.validateNotTimeReceived().validate(schema)
+        result = validator.hasNoTimeReceived.validate(schema)
         Assertions.assertEquals(1, result.count())
     }
 
     @Test
-    fun schemaDocumentationTest() {
+    fun schemaDocumentationTest() = runBlocking {
         var schema: Schema = SchemaBuilder
             .builder(MONITOR_NAME_SPACE_MOCK)
             .record(RECORD_NAME_MOCK)
             .fields()
             .endRecord()
-        var result: Stream<ValidationException> = validator.validateSchemaDocumentation().validate(schema)
+        var result = validator.isDocumentationValid.validate(schema)
         Assertions.assertEquals(1, result.count())
         schema = SchemaBuilder
             .builder(MONITOR_NAME_SPACE_MOCK)
@@ -220,29 +218,29 @@ class RadarSchemaRulesTest {
             .doc("Documentation.")
             .fields()
             .endRecord()
-        result = validator.validateSchemaDocumentation().validate(schema)
+        result = validator.isDocumentationValid.validate(schema)
         Assertions.assertEquals(0, result.count())
     }
 
     @Test
-    fun enumerationSymbolsTest() {
+    fun enumerationSymbolsTest() = runBlocking {
         var schema: Schema = SchemaBuilder.enumeration(ENUMERATOR_NAME_SPACE_MOCK)
             .symbols("TEST", UNKNOWN_MOCK)
-        var result: Stream<ValidationException> = validator.validateSymbols().validate(schema)
+        var result = validator.isEnumSymbolsValid.validate(schema)
         Assertions.assertEquals(0, result.count())
         schema = SchemaBuilder.enumeration(ENUMERATOR_NAME_SPACE_MOCK).symbols()
-        result = validator.validateSymbols().validate(schema)
+        result = validator.isEnumSymbolsValid.validate(schema)
         Assertions.assertEquals(1, result.count())
     }
 
     @Test
-    fun enumerationSymbolTest() {
+    fun enumerationSymbolTest() = runBlocking {
         val enumName = "org.radarcns.monitor.application.ApplicationServerStatus"
         val connected = "CONNECTED"
         var schema: Schema = SchemaBuilder
             .enumeration(enumName)
             .symbols(connected, "DISCONNECTED", UNKNOWN_MOCK)
-        var result: Stream<ValidationException> = validator.validateSymbols().validate(schema)
+        var result = validator.isEnumSymbolsValid.validate(schema)
         Assertions.assertEquals(0, result.count())
         val schemaTxtInit = (
             "{\"namespace\": \"org.radarcns.monitor.application\", " +
@@ -254,39 +252,39 @@ class RadarSchemaRulesTest {
             schemaTxtInit +
                 "\"CONNECTED\", \"NOT_CONNECTED\", \"" + UNKNOWN_MOCK + "\"" + schemaTxtEnd,
         )
-        result = validator.validateSymbols().validate(schema)
+        result = validator.isEnumSymbolsValid.validate(schema)
         Assertions.assertEquals(0, result.count())
         schema = SchemaBuilder
             .enumeration(enumName)
             .symbols(connected, "disconnected", UNKNOWN_MOCK)
-        result = validator.validateSymbols().validate(schema)
+        result = validator.isEnumSymbolsValid.validate(schema)
         Assertions.assertEquals(1, result.count())
         schema = SchemaBuilder
             .enumeration(enumName)
             .symbols(connected, "Not_Connected", UNKNOWN_MOCK)
-        result = validator.validateSymbols().validate(schema)
+        result = validator.isEnumSymbolsValid.validate(schema)
         Assertions.assertEquals(1, result.count())
         schema = SchemaBuilder
             .enumeration(enumName)
             .symbols(connected, "NotConnected", UNKNOWN_MOCK)
-        result = validator.validateSymbols().validate(schema)
+        result = validator.isEnumSymbolsValid.validate(schema)
         Assertions.assertEquals(1, result.count())
         schema = Parser().parse(
             schemaTxtInit +
                 "\"CONNECTED\", \"Not_Connected\", \"" + UNKNOWN_MOCK + "\"" + schemaTxtEnd,
         )
-        result = validator.validateSymbols().validate(schema)
+        result = validator.isEnumSymbolsValid.validate(schema)
         Assertions.assertEquals(1, result.count())
         schema = Parser().parse(
             schemaTxtInit +
                 "\"Connected\", \"NotConnected\", \"" + UNKNOWN_MOCK + "\"" + schemaTxtEnd,
         )
-        result = validator.validateSymbols().validate(schema)
+        result = validator.isEnumSymbolsValid.validate(schema)
         Assertions.assertEquals(2, result.count())
     }
 
     @Test
-    fun testUniqueness() {
+    fun testUniqueness() = runBlocking {
         val prefix = (
             "{\"namespace\": \"org.radarcns.monitor.application\", " +
                 "\"name\": \""
@@ -297,33 +295,33 @@ class RadarSchemaRulesTest {
             prefix + "ServerStatus" +
                 infix + "[\"A\", \"B\"]" + suffix,
         )
-        var result: Stream<ValidationException> = validator.validateUniqueness().validate(schema)
+        var result = validator.isUnique.validate(schema)
         Assertions.assertEquals(0, result.count())
-        result = validator.validateUniqueness().validate(schema)
+        result = validator.isUnique.validate(schema)
         Assertions.assertEquals(0, result.count())
         val schemaAlt = Parser().parse(
             prefix + "ServerStatus" +
                 infix + "[\"A\", \"B\", \"C\"]" + suffix,
         )
-        result = validator.validateUniqueness().validate(schemaAlt)
+        result = validator.isUnique.validate(schemaAlt)
         Assertions.assertEquals(1, result.count())
-        result = validator.validateUniqueness().validate(schemaAlt)
+        result = validator.isUnique.validate(schemaAlt)
         Assertions.assertEquals(1, result.count())
         val schema2 = Parser().parse(
             prefix + "ServerStatus2" +
                 infix + "[\"A\", \"B\"]" + suffix,
         )
-        result = validator.validateUniqueness().validate(schema2)
+        result = validator.isUnique.validate(schema2)
         Assertions.assertEquals(0, result.count())
         val schema3 = Parser().parse(
             prefix + "ServerStatus" +
                 infix + "[\"A\", \"B\"]" + suffix,
         )
-        result = validator.validateUniqueness().validate(schema3)
+        result = validator.isUnique.validate(schema3)
         Assertions.assertEquals(0, result.count())
-        result = validator.validateUniqueness().validate(schema3)
+        result = validator.isUnique.validate(schema3)
         Assertions.assertEquals(0, result.count())
-        result = validator.validateUniqueness().validate(schemaAlt)
+        result = validator.isUnique.validate(schemaAlt)
         Assertions.assertEquals(1, result.count())
     }
 

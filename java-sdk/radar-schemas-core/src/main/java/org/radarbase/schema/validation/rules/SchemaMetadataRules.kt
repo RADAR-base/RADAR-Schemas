@@ -2,45 +2,48 @@ package org.radarbase.schema.validation.rules
 
 import org.apache.avro.Schema
 import org.radarbase.schema.Scope
+import org.radarbase.schema.validation.ValidationContext
 
 interface SchemaMetadataRules {
     val schemaRules: SchemaRules
 
     /** Checks the location of a schema with its internal data.  */
-    fun validateSchemaLocation(): Validator<SchemaMetadata>
+    val isShemaLocationCorrect: Validator<SchemaMetadata>
 
     /**
      * Validates any schema file. It will choose the correct validation method based on the scope
      * and type of the schema.
      */
-    fun getValidator(validateScopeSpecific: Boolean): Validator<SchemaMetadata> =
-        Validator { metadata ->
-            if (metadata.schema == null) {
-                return@Validator Validator.raise("Missing schema")
-            }
-            val schemaRules = schemaRules
-
-            var validator = validateSchemaLocation()
-            validator = if (metadata.schema.type == Schema.Type.ENUM) {
-                validator.and(schema(schemaRules.validateEnum()))
-            } else if (validateScopeSpecific) {
-                when (metadata.scope) {
-                    Scope.ACTIVE -> validator.and(schema(schemaRules.validateActiveSource()))
-                    Scope.MONITOR -> validator.and(schema(schemaRules.validateMonitor()))
-                    Scope.PASSIVE -> validator.and(schema(schemaRules.validatePassive()))
-                    else -> validator.and(schema(schemaRules.validateRecord()))
-                }
-            } else {
-                validator.and(schema(schemaRules.validateRecord()))
-            }
-            validator.validate(metadata)
+    fun isSchemaMetadataValid(scopeSpecificValidation: Boolean) = Validator<SchemaMetadata> { metadata ->
+        if (metadata.schema == null) {
+            raise("Missing schema")
+            return@Validator
         }
+        val schemaRules = schemaRules
+
+        isShemaLocationCorrect.launchValidation(metadata)
+
+        val ruleset = when {
+            metadata.schema.type == Schema.Type.ENUM -> schemaRules.isEnumValid
+            !scopeSpecificValidation -> schemaRules.isRecordValid
+            metadata.scope == Scope.ACTIVE -> schemaRules.isActiveSourceValid
+            metadata.scope == Scope.MONITOR -> schemaRules.isMonitorSourceValid
+            metadata.scope == Scope.PASSIVE -> schemaRules.isPassiveSourceValid
+            else -> schemaRules.isRecordValid
+        }
+        isSchemaCorrect(ruleset).launchValidation(metadata)
+    }
 
     /** Validates schemas without their metadata.  */
-    fun schema(validator: Validator<Schema>): Validator<SchemaMetadata> =
-        Validator { metadata -> validator.validate(metadata.schema!!) }
-
-    fun message(metadata: SchemaMetadata, text: String): String {
-        return "Schema ${metadata.schema!!.fullName} at ${metadata.path} is invalid. $text"
+    fun isSchemaCorrect(validator: Validator<Schema>) = Validator<SchemaMetadata> { metadata ->
+        if (metadata.schema == null) {
+            raise(metadata, "Schema is empty")
+        } else {
+            validator.launchValidation(metadata.schema)
+        }
     }
+}
+
+fun ValidationContext.raise(metadata: SchemaMetadata, text: String) {
+    raise("Schema ${metadata.schema?.fullName} at ${metadata.path} is invalid. $text")
 }

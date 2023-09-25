@@ -21,7 +21,6 @@ import org.radarbase.schema.Scope
 import org.radarbase.schema.specification.DataProducer
 import org.radarbase.schema.specification.SourceCatalogue
 import org.radarbase.schema.specification.config.SchemaConfig
-import org.radarbase.schema.validation.ValidationHelper.matchesExtension
 import org.radarbase.schema.validation.rules.RadarSchemaMetadataRules
 import org.radarbase.schema.validation.rules.RadarSchemaRules
 import org.radarbase.schema.validation.rules.SchemaMetadata
@@ -29,10 +28,9 @@ import org.radarbase.schema.validation.rules.SchemaMetadataRules
 import org.radarbase.schema.validation.rules.Validator
 import java.nio.file.Path
 import java.nio.file.PathMatcher
-import java.util.Arrays
-import java.util.Objects
 import java.util.stream.Collectors
 import java.util.stream.Stream
+import kotlin.io.path.extension
 
 /**
  * Validator for a set of RADAR-Schemas.
@@ -43,13 +41,13 @@ import java.util.stream.Stream
 class SchemaValidator(schemaRoot: Path, config: SchemaConfig) {
     val rules: SchemaMetadataRules = RadarSchemaMetadataRules(schemaRoot, config)
     private val pathMatcher: PathMatcher = config.pathMatcher(schemaRoot)
-    private var validator: Validator<SchemaMetadata> = rules.getValidator(false)
+    private var validator: Validator<SchemaMetadata> = rules.isSchemaMetadataValid(false)
 
-    fun analyseSourceCatalogue(
+    suspend fun analyseSourceCatalogue(
         scope: Scope?,
         catalogue: SourceCatalogue,
-    ): Stream<ValidationException> {
-        validator = rules.getValidator(true)
+    ): List<ValidationException> {
+        validator = rules.isSchemaMetadataValid(true)
         val producers: Stream<DataProducer<*>> = if (scope != null) {
             catalogue.sources.stream()
                 .filter { it.scope == scope }
@@ -57,29 +55,61 @@ class SchemaValidator(schemaRoot: Path, config: SchemaConfig) {
             catalogue.sources.stream()
         }
         return try {
-            producers
-                .flatMap { it.data.stream() }
-                .flatMap { topic ->
-                    val (keySchema, valueSchema) = catalogue.schemaCatalogue.getSchemaMetadata(topic)
-                    Stream.of(keySchema, valueSchema).filter { it.schema != null }
+            validationContext {
+                val schemas = producers
+                    .flatMap { it.data.stream() }
+                    .flatMap { topic ->
+                        val (keySchema, valueSchema) = catalogue.schemaCatalogue.getSchemaMetadata(topic)
+                        Stream.of(keySchema, valueSchema)
+                    }
+                    .filter { it.schema != null }
+                    .sorted(Comparator.comparing { it.schema!!.fullName })
+                    .collect(Collectors.toSet())
+
+                schemas.forEach { metadata ->
+                    if (pathMatcher.matches(metadata.path)) {
+                        validator.launchValidation(metadata)
+                    }
                 }
-                .sorted(Comparator.comparing { it.schema!!.fullName })
-                .distinct()
-                .flatMap(this::validate)
-                .distinct()
+            }
         } finally {
-            validator = rules.getValidator(false)
+            validator = rules.isSchemaMetadataValid(false)
         }
     }
 
-    fun analyseFiles(
+    suspend fun analyseFiles(
+        schemaCatalogue: SchemaCatalogue,
+        scope: Scope? = null,
+    ): List<ValidationException> = validationContext {
+        if (scope == null) {
+            Scope.entries.forEach { scope -> analyseFilesInternal(schemaCatalogue, scope) }
+        } else {
+            analyseFilesInternal(schemaCatalogue, scope)
+        }
+    }
+
+    private fun ValidationContext.analyseFilesInternal(
+        schemaCatalogue: SchemaCatalogue,
+        scope: Scope,
+    ) {
+        validator = rules.isSchemaMetadataValid(false)
+        val parsingValidator = parsingValidator(scope, schemaCatalogue)
+
+        schemaCatalogue.unmappedAvroFiles.forEach { metadata ->
+            parsingValidator.launchValidation(metadata)
+        }
+
+        schemaCatalogue.schemas.values.forEach { metadata ->
+            if (pathMatcher.matches(metadata.path)) {
+                validator.launchValidation(metadata)
+            }
+        }
+    }
+
+    private fun parsingValidator(
         scope: Scope?,
         schemaCatalogue: SchemaCatalogue,
-    ): Stream<ValidationException> {
-        if (scope == null) {
-            return analyseFiles(schemaCatalogue)
-        }
-        validator = rules.getValidator(false)
+    ): Validator<SchemaMetadata> {
         val useTypes = buildMap {
             schemaCatalogue.schemas.forEach { (key, value) ->
                 if (value.scope == scope) {
@@ -87,41 +117,27 @@ class SchemaValidator(schemaRoot: Path, config: SchemaConfig) {
                 }
             }
         }
-
-        return Stream.concat(
-            schemaCatalogue.unmappedAvroFiles.stream()
-                .filter { s -> s.scope == scope && s.path != null }
-                .map { p ->
-                    val parser = Schema.Parser()
-                    parser.addTypes(useTypes)
-                    try {
-                        parser.parse(p.path?.toFile())
-                        return@map null
-                    } catch (ex: Exception) {
-                        return@map ValidationException("Cannot parse schema", ex)
-                    }
-                }
-                .filter(Objects::nonNull)
-                .map { obj -> requireNotNull(obj) },
-            schemaCatalogue.schemas.values.stream()
-                .flatMap { this.validate(it) },
-        ).distinct()
+        return Validator { metadata ->
+            val parser = Schema.Parser()
+            parser.addTypes(useTypes)
+            try {
+                parser.parse(metadata.path?.toFile())
+            } catch (ex: Exception) {
+                raise("Cannot parse schema", ex)
+            }
+        }
     }
-    private fun analyseFiles(schemaCatalogue: SchemaCatalogue): Stream<ValidationException> =
-        Arrays.stream(Scope.entries.toTypedArray())
-            .flatMap { scope -> analyseFiles(scope, schemaCatalogue) }
 
     /** Validate a single schema in given path.  */
-    fun validate(schema: Schema, path: Path, scope: Scope): Stream<ValidationException> =
+    fun ValidationContext.validate(schema: Schema, path: Path, scope: Scope) =
         validate(SchemaMetadata(schema, scope, path))
 
     /** Validate a single schema in given path.  */
-    private fun validate(schemaMetadata: SchemaMetadata): Stream<ValidationException> =
+    private fun ValidationContext.validate(schemaMetadata: SchemaMetadata) {
         if (pathMatcher.matches(schemaMetadata.path)) {
-            validator.validate(schemaMetadata)
-        } else {
-            Stream.empty()
+            validator.launchValidation(schemaMetadata)
         }
+    }
 
     val validatedSchemas: Map<String, Schema>
         get() = (rules.schemaRules as RadarSchemaRules).schemaStore
@@ -130,22 +146,18 @@ class SchemaValidator(schemaRoot: Path, config: SchemaConfig) {
         private const val AVRO_EXTENSION = "avsc"
 
         /** Formats a stream of validation exceptions.  */
-        @JvmStatic
-        fun format(exceptionStream: Stream<ValidationException>): String {
-            return exceptionStream
-                .map { ex: ValidationException ->
-                    """
+        fun format(exceptions: List<ValidationException>): String {
+            return exceptions.joinToString(separator = "") { ex: ValidationException ->
+                """
                      |Validation FAILED:
                      |${ex.message}
                      |
                      |
                      |
-                    """.trimMargin()
-                }
-                .collect(Collectors.joining())
+                """.trimMargin()
+            }
         }
 
-        fun isAvscFile(file: Path): Boolean =
-            matchesExtension(file, AVRO_EXTENSION)
+        fun isAvscFile(file: Path): Boolean = file.extension.equals(AVRO_EXTENSION, ignoreCase = true)
     }
 }

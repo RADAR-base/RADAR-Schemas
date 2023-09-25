@@ -15,6 +15,7 @@
  */
 package org.radarbase.schema.validation.rules
 
+import kotlinx.coroutines.runBlocking
 import org.apache.avro.Schema
 import org.apache.avro.Schema.Parser
 import org.apache.avro.SchemaBuilder
@@ -23,10 +24,9 @@ import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.radarbase.schema.validation.ValidationException
 import org.radarbase.schema.validation.ValidationHelper.getRecordName
+import org.radarbase.schema.validation.validate
 import java.nio.file.Paths
-import java.util.stream.Stream
 
 /**
  * TODO.
@@ -67,14 +67,13 @@ class RadarSchemaFieldRulesTest {
     }
 
     @Test
-    fun fieldsTest() {
-        var result: Stream<ValidationException>
+    fun fieldsTest() = runBlocking {
         var schema: Schema = SchemaBuilder
             .builder(MONITOR_NAME_SPACE_MOCK)
             .record(RECORD_NAME_MOCK)
             .fields()
             .endRecord()
-        result = schemaValidator.fields(validator.validateFieldTypes(schemaValidator))
+        var result = schemaValidator.isFieldsValid(validator.validateFieldTypes(schemaValidator))
             .validate(schema)
         Assertions.assertEquals(1, result.count())
         schema = SchemaBuilder
@@ -83,21 +82,20 @@ class RadarSchemaFieldRulesTest {
             .fields()
             .optionalBoolean("optional")
             .endRecord()
-        result = schemaValidator.fields(validator.validateFieldTypes(schemaValidator))
+        result = schemaValidator.isFieldsValid(validator.validateFieldTypes(schemaValidator))
             .validate(schema)
         Assertions.assertEquals(0, result.count())
     }
 
     @Test
-    fun fieldNameTest() {
-        var result: Stream<ValidationException>
+    fun fieldNameTest() = runBlocking {
         var schema: Schema = SchemaBuilder
             .builder(MONITOR_NAME_SPACE_MOCK)
             .record(RECORD_NAME_MOCK)
             .fields()
             .requiredString(FIELD_NUMBER_MOCK)
             .endRecord()
-        result = schemaValidator.fields(validator.validateFieldName()).validate(schema)
+        var result = schemaValidator.isFieldsValid(validator.isNameValid).validate(schema)
         Assertions.assertEquals(1, result.count())
         schema = SchemaBuilder
             .builder(MONITOR_NAME_SPACE_MOCK)
@@ -105,13 +103,12 @@ class RadarSchemaFieldRulesTest {
             .fields()
             .requiredDouble("timeReceived")
             .endRecord()
-        result = schemaValidator.fields(validator.validateFieldName()).validate(schema)
+        result = schemaValidator.isFieldsValid(validator.isNameValid).validate(schema)
         Assertions.assertEquals(0, result.count())
     }
 
     @Test
-    fun fieldDocumentationTest() {
-        var result: Stream<ValidationException>
+    fun fieldDocumentationTest() = runBlocking {
         var schema: Schema = Parser().parse(
             """{
                 |"namespace": "org.radarcns.kafka.key",
@@ -124,7 +121,7 @@ class RadarSchemaFieldRulesTest {
                 |}
             """.trimMargin(),
         )
-        result = schemaValidator.fields(validator.validateFieldDocumentation()).validate(schema)
+        var result = schemaValidator.isFieldsValid(validator.isDocumentationValid).validate(schema)
         Assertions.assertEquals(2, result.count())
         schema = Parser().parse(
             """{
@@ -137,14 +134,14 @@ class RadarSchemaFieldRulesTest {
                 |}
             """.trimMargin(),
         )
-        result = schemaValidator.fields(validator.validateFieldDocumentation()).validate(schema)
+        result = schemaValidator.isFieldsValid(validator.isDocumentationValid).validate(schema)
         Assertions.assertEquals(0, result.count())
     }
 
     @Test
-    fun defaultValueExceptionTest() {
-        val result: Stream<ValidationException> = schemaValidator.fields(
-            validator.validateDefault(),
+    fun defaultValueExceptionTest() = runBlocking {
+        val result = schemaValidator.isFieldsValid(
+            validator.isDefaultValueValid,
         )
             .validate(
                 SchemaBuilder.record(RECORD_NAME_MOCK)
@@ -161,7 +158,7 @@ class RadarSchemaFieldRulesTest {
     }
 
     @Test // TODO improve test after having define the default guideline
-    fun defaultValueTest() {
+    fun defaultValueTest() = runBlocking {
         val schemaTxtInit = (
             "{\"namespace\": \"org.radarcns.test\", " +
                 "\"type\": \"record\", \"name\": \"TestRecord\", \"fields\": "
@@ -172,8 +169,8 @@ class RadarSchemaFieldRulesTest {
                 "\"enum\", \"symbols\": [\"Connected\", \"NotConnected\", \"UNKNOWN\"] }, " +
                 "\"default\": \"UNKNOWN\" } ] }",
         )
-        var result: Stream<ValidationException> =
-            schemaValidator.fields(validator.validateDefault()).validate(schema)
+        var result =
+            schemaValidator.isFieldsValid(validator.isDefaultValueValid).validate(schema)
         Assertions.assertEquals(0, result.count())
         schema = Parser().parse(
             schemaTxtInit +
@@ -181,7 +178,7 @@ class RadarSchemaFieldRulesTest {
                 "\"enum\", \"symbols\": [\"Connected\", \"NotConnected\", \"UNKNOWN\"] }, " +
                 "\"default\": \"null\" } ] }",
         )
-        result = schemaValidator.fields(validator.validateDefault()).validate(schema)
+        result = schemaValidator.isFieldsValid(validator.isDefaultValueValid).validate(schema)
         Assertions.assertEquals(1, result.count())
     }
 

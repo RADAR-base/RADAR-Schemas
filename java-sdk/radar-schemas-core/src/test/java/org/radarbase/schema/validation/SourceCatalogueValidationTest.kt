@@ -43,10 +43,7 @@ class SourceCatalogueValidationTest {
     @Test
     fun validateTopicNames() {
         catalogue.topicNames.forEach { topic: String ->
-            assertTrue(
-                isValidTopic(topic),
-                "$topic is invalid",
-            )
+            assertTrue(isValidTopic(topic), "$topic is invalid")
         }
     }
 
