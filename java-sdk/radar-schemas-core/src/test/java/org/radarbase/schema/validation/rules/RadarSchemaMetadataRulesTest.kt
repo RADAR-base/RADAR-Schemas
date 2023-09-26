@@ -30,9 +30,6 @@ import org.radarbase.schema.validation.ValidationHelper
 import org.radarbase.schema.validation.validate
 import java.nio.file.Paths
 
-/**
- * TODO.
- */
 class RadarSchemaMetadataRulesTest {
     private lateinit var validator: RadarSchemaMetadataRules
 

@@ -29,9 +29,6 @@ import org.radarbase.schema.specification.DataProducer
 import org.radarbase.schema.specification.DataTopic
 import org.radarbase.schema.specification.active.questionnaire.QuestionnaireSource
 
-/**
- * TODO.
- */
 @JsonTypeInfo(use = NAME, property = "assessment_type")
 @JsonSubTypes(
     value = [
@@ -63,6 +60,5 @@ open class ActiveSource<T : DataTopic> : DataProducer<T>() {
 
     @JsonProperty
     val version: String? = null
-    override val scope: Scope
-        get() = ACTIVE
+    override val scope: Scope = ACTIVE
 }

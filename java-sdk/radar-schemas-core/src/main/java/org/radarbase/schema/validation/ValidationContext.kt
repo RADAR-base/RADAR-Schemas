@@ -8,13 +8,15 @@ import kotlinx.coroutines.launch
 import org.radarbase.schema.validation.rules.Validator
 
 interface ValidationContext {
+    val coroutineScope: CoroutineScope
+
     fun raise(message: String, ex: Exception? = null)
 
     fun <T> Validator<T>.launchValidation(value: T)
 }
 
 private class ValidationContextImpl(
-    private val coroutineScope: CoroutineScope,
+    override val coroutineScope: CoroutineScope,
 ) : ValidationContext {
     private val channel = Channel<ValidationException>(Channel.UNLIMITED)
     private lateinit var producerCoroutineScope: CoroutineScope

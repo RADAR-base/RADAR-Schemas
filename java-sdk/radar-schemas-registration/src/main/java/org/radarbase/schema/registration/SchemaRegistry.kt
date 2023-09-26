@@ -128,9 +128,12 @@ class SchemaRegistry(
             }
             .toList()
 
-        val remainingTopics = topicConfiguration.toMutableMap()
-        sourceTopics.forEach { remainingTopics -= it.name }
-
+        val remainingTopics = buildMap(topicConfiguration.size) {
+            putAll(topicConfiguration)
+            sourceTopics.forEach {
+                remove(it.name)
+            }
+        }
         val configuredTopics = remainingTopics
             .mapNotNull { (name, topicConfig) -> loadAvroTopic(name, topicConfig) }
 

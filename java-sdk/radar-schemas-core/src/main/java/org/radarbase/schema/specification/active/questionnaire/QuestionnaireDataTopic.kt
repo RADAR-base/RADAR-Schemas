@@ -22,9 +22,6 @@ import org.radarbase.config.OpenConfig
 import org.radarbase.schema.specification.DataTopic
 import java.net.URL
 
-/**
- * TODO.
- */
 @JsonInclude(NON_NULL)
 @OpenConfig
 class QuestionnaireDataTopic : DataTopic() {

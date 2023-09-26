@@ -9,7 +9,7 @@ import org.radarbase.config.AvroTopicConfig
 import org.radarbase.config.OpenConfig
 import org.radarbase.schema.SchemaCatalogue
 import org.radarbase.schema.specification.DataTopic
-import org.radarbase.schema.util.SchemaUtils
+import org.radarbase.schema.util.SchemaUtils.applyOrEmpty
 import org.radarbase.stream.TimeWindowMetadata
 import org.radarbase.topic.AvroTopic
 import org.radarcns.kafka.AggregateKey
@@ -81,7 +81,7 @@ class StreamDataTopic : DataTopic() {
     override fun topics(schemaCatalogue: SchemaCatalogue): Stream<AvroTopic<*, *>> {
         return topicNames
             .flatMap(
-                SchemaUtils.applyOrEmpty { topic ->
+                applyOrEmpty { topic ->
                     val config = AvroTopicConfig()
                     config.topic = topic
                     config.keySchema = keySchema

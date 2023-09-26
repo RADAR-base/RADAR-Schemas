@@ -26,9 +26,6 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.radarbase.schema.validation.validate
 
-/**
- * TODO.
- */
 class RadarSchemaRulesTest {
     private lateinit var validator: RadarSchemaRules
 

@@ -21,50 +21,38 @@ import java.util.Properties
 import java.util.function.Function
 import java.util.stream.Stream
 
-/**
- * TODO.
- */
 object SchemaUtils {
     private val logger = LoggerFactory.getLogger(SchemaUtils::class.java)
     private const val GRADLE_PROPERTIES = "exchange.properties"
     private const val GROUP_PROPERTY = "project.group"
 
-    @JvmStatic
-    @get:Synchronized
-    var projectGroup: String? = null
-        /**
-         * TODO.
-         * @return TODO
-         */
-        get() {
-            if (field == null) {
-                val prop = Properties()
-                val loader = ClassLoader.getSystemClassLoader()
-                try {
-                    loader.getResourceAsStream(GRADLE_PROPERTIES).use { `in` ->
-                        if (`in` == null) {
-                            field = "org.radarcns"
-                            logger.debug("Project group not specified. Using \"{}\".", field)
-                        } else {
-                            prop.load(`in`)
-                            field = prop.getProperty(GROUP_PROPERTY)
-                            if (field == null) {
-                                field = "org.radarcns"
-                                logger.debug("Project group not specified. Using \"{}\".", field)
-                            }
-                        }
+    val projectGroup: String by lazy {
+        val prop = Properties()
+        val loader = ClassLoader.getSystemClassLoader()
+        try {
+            loader.getResourceAsStream(GRADLE_PROPERTIES).use { inputStream ->
+                var result = "org.radarcns"
+                if (inputStream == null) {
+                    logger.debug("Project group not specified. Using \"{}\".", result)
+                } else {
+                    prop.load(inputStream)
+                    val groupProp = prop.getProperty(GROUP_PROPERTY)
+                    if (groupProp == null) {
+                        logger.debug("Project group not specified. Using \"{}\".", result)
+                    } else {
+                        result = groupProp
                     }
-                } catch (exc: IOException) {
-                    throw IllegalStateException(
-                        GROUP_PROPERTY +
-                            " cannot be extracted from " + GRADLE_PROPERTIES,
-                        exc,
-                    )
                 }
+                result
             }
-            return field
+        } catch (exc: IOException) {
+            throw IllegalStateException(
+                GROUP_PROPERTY +
+                    " cannot be extracted from " + GRADLE_PROPERTIES,
+                exc,
+            )
         }
-        private set
+    }
 
     /**
      * Expand a class name with the group name if it starts with a dot.
@@ -86,28 +74,27 @@ object SchemaUtils {
      * @param value file name in snake_case
      * @return main part of file name in CamelCase.
      */
-    @JvmStatic
     fun snakeToCamelCase(value: String): String {
         val fileName = value.toCharArray()
-        val builder = StringBuilder(fileName.size)
-        var nextIsUpperCase = true
-        for (c in fileName) {
-            when (c) {
-                '_' -> nextIsUpperCase = true
-                '.' -> return builder.toString()
-                else -> if (nextIsUpperCase) {
-                    builder.append(c.toString().uppercase())
-                    nextIsUpperCase = false
-                } else {
-                    builder.append(c)
+        return buildString(fileName.size) {
+            var nextIsUpperCase = true
+            for (c in fileName) {
+                when (c) {
+                    '_' -> nextIsUpperCase = true
+                    '.' -> return@buildString
+                    else -> if (nextIsUpperCase) {
+                        append(c.toString().uppercase())
+                        nextIsUpperCase = false
+                    } else {
+                        append(c)
+                    }
                 }
             }
         }
-        return builder.toString()
     }
 
     /** Apply a throwing function, and if it throws, log it and let it return an empty Stream.  */
-    fun <T, R> applyOrEmpty(func: ThrowingFunction<T, Stream<R>?>): Function<T, Stream<R>?> {
+    fun <T, R> applyOrEmpty(func: ThrowingFunction<T, Stream<R>>): Function<T, Stream<R>> {
         return Function { t: T ->
             try {
                 return@Function func.apply(t)
@@ -118,24 +105,11 @@ object SchemaUtils {
         }
     }
 
-    /** Apply a throwing function, and if it throws, log it and let it return an empty Stream.  */
-    fun <T, R> applyOrIllegalException(
-        func: ThrowingFunction<T, Stream<R>?>,
-    ): Function<T, Stream<R>?> {
-        return Function { t: T ->
-            try {
-                return@Function func.apply(t)
-            } catch (ex: Exception) {
-                throw IllegalStateException(ex.message, ex)
-            }
-        }
-    }
-
     /**
      * Function that may throw an exception.
-     * @param <T> type of value taken.
-     * @param <R> type of value returned.
-     </R></T> */
+     * @param T type of value taken.
+     * @param R type of value returned.
+     */
     fun interface ThrowingFunction<T, R> {
         /**
          * Apply containing function.

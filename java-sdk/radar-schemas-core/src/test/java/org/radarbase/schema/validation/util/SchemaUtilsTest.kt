@@ -13,21 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.radarbase.schema.validation.util
 
-package org.radarbase.schema.validation.util;
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Test
+import org.radarbase.schema.util.SchemaUtils.projectGroup
 
-import org.junit.jupiter.api.Test;
-import org.radarbase.schema.util.SchemaUtils;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-/**
- * TODO.
- */
-public class SchemaUtilsTest {
-
+class SchemaUtilsTest {
     @Test
-    public void projectGroupTest() {
-        assertEquals("org.radarcns", SchemaUtils.getProjectGroup());
+    fun projectGroupTest() {
+        assertEquals("org.radarcns", projectGroup)
     }
 }

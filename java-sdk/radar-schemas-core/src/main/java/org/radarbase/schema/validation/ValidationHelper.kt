@@ -20,9 +20,6 @@ import org.radarbase.schema.util.SchemaUtils.projectGroup
 import org.radarbase.schema.util.SchemaUtils.snakeToCamelCase
 import java.nio.file.Path
 
-/**
- * TODO.
- */
 object ValidationHelper {
     const val COMMONS_PATH = "commons"
     const val SPECIFICATIONS_PATH = "specifications"

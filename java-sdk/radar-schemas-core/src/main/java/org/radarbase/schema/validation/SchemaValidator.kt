@@ -15,6 +15,8 @@
  */
 package org.radarbase.schema.validation
 
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.apache.avro.Schema
 import org.radarbase.schema.SchemaCatalogue
 import org.radarbase.schema.Scope
@@ -115,10 +117,12 @@ class SchemaValidator(schemaRoot: Path, config: SchemaConfig) {
         return Validator { metadata ->
             val parser = Schema.Parser()
             parser.addTypes(useTypes)
-            try {
-                parser.parse(metadata.path?.toFile())
-            } catch (ex: Exception) {
-                raise("Cannot parse schema", ex)
+            coroutineScope.launch(Dispatchers.IO) {
+                try {
+                    parser.parse(metadata.path?.toFile())
+                } catch (ex: Exception) {
+                    raise("Cannot parse schema", ex)
+                }
             }
         }
     }

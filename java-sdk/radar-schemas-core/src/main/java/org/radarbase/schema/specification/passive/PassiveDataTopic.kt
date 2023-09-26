@@ -22,9 +22,6 @@ import org.radarbase.schema.specification.AppDataTopic
 import org.radarcns.catalogue.ProcessingState
 import java.util.Objects
 
-/**
- * TODO.
- */
 @JsonInclude(NON_NULL)
 class PassiveDataTopic : AppDataTopic() {
     @JsonProperty("processing_state")

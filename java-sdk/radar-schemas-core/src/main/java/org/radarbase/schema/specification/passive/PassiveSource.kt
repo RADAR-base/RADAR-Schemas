@@ -24,9 +24,6 @@ import org.radarbase.schema.Scope
 import org.radarbase.schema.Scope.PASSIVE
 import org.radarbase.schema.specification.AppSource
 
-/**
- * TODO.
- */
 @JsonInclude(NON_NULL)
 @OpenConfig
 class PassiveSource : AppSource<PassiveDataTopic>() {
