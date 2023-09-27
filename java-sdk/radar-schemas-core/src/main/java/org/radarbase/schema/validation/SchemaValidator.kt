@@ -24,9 +24,7 @@ import org.radarbase.schema.specification.SourceCatalogue
 import org.radarbase.schema.specification.config.SchemaConfig
 import org.radarbase.schema.validation.rules.FailedSchemaMetadata
 import org.radarbase.schema.validation.rules.RadarSchemaMetadataRules
-import org.radarbase.schema.validation.rules.RadarSchemaRules
 import org.radarbase.schema.validation.rules.SchemaMetadata
-import org.radarbase.schema.validation.rules.SchemaMetadataRules
 import org.radarbase.schema.validation.rules.Validator
 import java.nio.file.Path
 import java.nio.file.PathMatcher
@@ -41,7 +39,7 @@ import kotlin.io.path.extension
  * @param config configuration to exclude certain schemas or fields from validation.
  */
 class SchemaValidator(schemaRoot: Path, config: SchemaConfig) {
-    val rules: SchemaMetadataRules = RadarSchemaMetadataRules(schemaRoot, config)
+    val rules = RadarSchemaMetadataRules(schemaRoot, config)
     private val pathMatcher: PathMatcher = config.pathMatcher(schemaRoot)
 
     suspend fun analyseSourceCatalogue(
@@ -138,7 +136,7 @@ class SchemaValidator(schemaRoot: Path, config: SchemaConfig) {
     }
 
     val validatedSchemas: Map<String, Schema>
-        get() = (rules.schemaRules as RadarSchemaRules).schemaStore
+        get() = rules.schemaRules.schemaStore
 
     companion object {
         private const val AVRO_EXTENSION = "avsc"

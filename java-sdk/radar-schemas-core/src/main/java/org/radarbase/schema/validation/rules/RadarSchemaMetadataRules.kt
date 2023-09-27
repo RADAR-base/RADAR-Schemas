@@ -1,7 +1,9 @@
 package org.radarbase.schema.validation.rules
 
 import org.apache.avro.Schema
+import org.radarbase.schema.Scope
 import org.radarbase.schema.specification.config.SchemaConfig
+import org.radarbase.schema.validation.ValidationContext
 import org.radarbase.schema.validation.ValidationHelper.getNamespace
 import org.radarbase.schema.validation.ValidationHelper.toRecordName
 import java.nio.file.Path
@@ -16,14 +18,32 @@ import java.nio.file.PathMatcher
 class RadarSchemaMetadataRules(
     private val schemaRoot: Path,
     config: SchemaConfig,
-    override val schemaRules: SchemaRules = RadarSchemaRules(),
-) : SchemaMetadataRules {
+    val schemaRules: RadarSchemaRules = RadarSchemaRules(),
+) {
     private val pathMatcher: PathMatcher = config.pathMatcher(schemaRoot)
 
-    override val isSchemaLocationCorrect = all(
+    val isSchemaLocationCorrect = all(
         isNamespaceSchemaLocationCorrect(),
         isNameSchemaLocationCorrect(),
     )
+
+    /**
+     * Validates any schema file. It will choose the correct validation method based on the scope
+     * and type of the schema.
+     */
+    fun isSchemaMetadataValid(scopeSpecificValidation: Boolean) = Validator<SchemaMetadata> { metadata ->
+        isSchemaLocationCorrect.launchValidation(metadata)
+
+        val ruleset = when {
+            metadata.schema.type == Schema.Type.ENUM -> schemaRules.isEnumValid
+            !scopeSpecificValidation -> schemaRules.isRecordValid
+            metadata.scope == Scope.ACTIVE -> schemaRules.isActiveSourceValid
+            metadata.scope == Scope.MONITOR -> schemaRules.isMonitorSourceValid
+            metadata.scope == Scope.PASSIVE -> schemaRules.isPassiveSourceValid
+            else -> schemaRules.isRecordValid
+        }
+        isSchemaCorrect(ruleset).launchValidation(metadata)
+    }
 
     private fun isNamespaceSchemaLocationCorrect() = Validator<SchemaMetadata> { metadata ->
         try {
@@ -47,9 +67,13 @@ class RadarSchemaMetadataRules(
         }
     }
 
-    override fun isSchemaCorrect(validator: Validator<Schema>) = Validator<SchemaMetadata> { metadata ->
+    fun isSchemaCorrect(validator: Validator<Schema>) = Validator<SchemaMetadata> { metadata ->
         if (pathMatcher.matches(metadata.path)) {
             validator.launchValidation(metadata.schema)
         }
     }
+}
+
+fun ValidationContext.raise(metadata: SchemaMetadata, text: String) {
+    raise("Schema ${metadata.schema.fullName} at ${metadata.path} is invalid. $text")
 }

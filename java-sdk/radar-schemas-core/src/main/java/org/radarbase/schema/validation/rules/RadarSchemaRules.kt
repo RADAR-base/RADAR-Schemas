@@ -28,11 +28,11 @@ import org.radarbase.schema.validation.ValidationContext
  * Schema validation rules enforced for the RADAR-Schemas repository.
  */
 class RadarSchemaRules(
-    override val fieldRules: RadarSchemaFieldRules = RadarSchemaFieldRules(),
-) : SchemaRules {
+    val fieldRules: RadarSchemaFieldRules = RadarSchemaFieldRules(),
+) {
     val schemaStore: MutableMap<String, Schema> = HashMap()
 
-    override val isUnique = Validator { schema: Schema ->
+    val isUnique = Validator { schema: Schema ->
         val key = schema.fullName
         val oldSchema = schemaStore.putIfAbsent(key, schema)
         if (oldSchema != null && oldSchema != schema) {
@@ -43,17 +43,17 @@ class RadarSchemaRules(
         }
     }
 
-    override val isNamespaceValid = validator(
+    val isNamespaceValid = validator(
         predicate = { it.namespace?.matches(NAMESPACE_PATTERN) == true },
         message = schemaErrorMessage("Namespace cannot be null and must fully lowercase, period-separated, without numeric characters."),
     )
 
-    override val isNameValid = validator(
+    val isNameValid = validator(
         predicate = { it.name?.matches(RECORD_NAME_PATTERN) == true },
         message = schemaErrorMessage("Record names must be camel case."),
     )
 
-    override val isDocumentationValid = Validator<Schema> { schema ->
+    val isDocumentationValid = Validator<Schema> { schema ->
         validateDocumentation(
             schema.doc,
             ValidationContext::raise,
@@ -61,7 +61,7 @@ class RadarSchemaRules(
         )
     }
 
-    override val isEnumSymbolsValid = Validator<Schema> { schema ->
+    val isEnumSymbolsValid = Validator<Schema> { schema ->
         if (schema.enumSymbols.isNullOrEmpty()) {
             raise(schema, "Avro Enumerator must have symbol list.")
             return@Validator
@@ -77,37 +77,35 @@ class RadarSchemaRules(
         }
     }
 
-    override val hasTime: Validator<Schema> = validator(
+    val hasTime: Validator<Schema> = validator(
         predicate = { it.getField(TIME)?.schema()?.type == DOUBLE },
         message = schemaErrorMessage("Any schema representing collected data must have a \"$TIME$WITH_TYPE_DOUBLE"),
     )
 
-    override val hasTimeCompleted: Validator<Schema> = validator(
+    val hasTimeCompleted: Validator<Schema> = validator(
         predicate = { it.getField(TIME_COMPLETED)?.schema()?.type == DOUBLE },
         message = schemaErrorMessage("Any ACTIVE schema must have a \"$TIME_COMPLETED$WITH_TYPE_DOUBLE"),
     )
 
-    override val hasNoTimeCompleted: Validator<Schema> = validator(
+    val hasNoTimeCompleted: Validator<Schema> = validator(
         predicate = { it.getField(TIME_COMPLETED) == null },
         message = schemaErrorMessage("\"$TIME_COMPLETED\" is allow only in ACTIVE schemas."),
     )
 
-    override val hasTimeReceived: Validator<Schema> = validator(
+    val hasTimeReceived: Validator<Schema> = validator(
         predicate = { it.getField(TIME_RECEIVED)?.schema()?.type == DOUBLE },
         message = schemaErrorMessage("Any PASSIVE schema must have a \"$TIME_RECEIVED$WITH_TYPE_DOUBLE"),
     )
 
-    override val hasNoTimeReceived: Validator<Schema> = validator(
+    val hasNoTimeReceived: Validator<Schema> = validator(
         predicate = { it.getField(TIME_RECEIVED) == null },
         message = schemaErrorMessage("\"$TIME_RECEIVED\" is allow only in PASSIVE schemas."),
     )
 
-    override val isAvroConnectCompatible: Validator<Schema>
-
     /**
      * Validate an enum.
      */
-    override val isEnumValid: Validator<Schema> = all(
+    val isEnumValid: Validator<Schema> = all(
         isUnique,
         isNamespaceValid,
         isEnumSymbolsValid,
@@ -118,31 +116,63 @@ class RadarSchemaRules(
     /**
      * Validate a record that is defined inline.
      */
-    override val isRecordValid: Validator<Schema>
+    val isRecordValid: Validator<Schema>
 
     /**
      * Validates record schemas of an active source.
      */
-    override val isActiveSourceValid: Validator<Schema>
+    val isActiveSourceValid: Validator<Schema>
 
     /**
      * Validates schemas of monitor sources.
      */
-    override val isMonitorSourceValid: Validator<Schema>
+    val isMonitorSourceValid: Validator<Schema>
 
     /**
      * Validates schemas of passive sources.
      */
-    override val isPassiveSourceValid: Validator<Schema>
+    val isPassiveSourceValid: Validator<Schema>
 
     init {
+        fieldRules.schemaRules = this
+
+        isRecordValid = all(
+            isUnique,
+            isAvroConnectCompatible(),
+            isNamespaceValid,
+            isNameValid,
+            isDocumentationValid,
+            isFieldsValid(fieldRules.isFieldValid),
+        )
+
+        isActiveSourceValid = all(isRecordValid, hasTime)
+
+        isMonitorSourceValid = all(isRecordValid, hasTime)
+
+        isPassiveSourceValid = all(isRecordValid, hasTime, hasTimeReceived, hasNoTimeCompleted)
+    }
+
+    fun isFieldsValid(validator: Validator<SchemaField>): Validator<Schema> =
+        Validator { schema: Schema ->
+            when {
+                schema.type != RECORD -> raise(
+                    "Default validation can be applied only to an Avro RECORD, not to ${schema.type} of schema ${schema.fullName}.",
+                )
+                schema.fields.isEmpty() -> raise("Schema ${schema.fullName} does not contain any fields.")
+                else -> schema.fields.forEach { field ->
+                    validator.launchValidation(SchemaField(schema, field))
+                }
+            }
+        }
+
+    private fun isAvroConnectCompatible(): Validator<Schema> {
         val avroConfig = Builder()
             .with(AvroDataConfig.CONNECT_META_DATA_CONFIG, false)
             .with(AbstractDataConfig.SCHEMAS_CACHE_SIZE_CONFIG, 10)
             .with(AvroDataConfig.ENHANCED_AVRO_SCHEMA_SUPPORT_CONFIG, true)
             .build()
 
-        isAvroConnectCompatible = Validator { schema: Schema ->
+        return Validator { schema: Schema ->
             val encoder = AvroData(10)
             val decoder = AvroData(avroConfig)
             try {
@@ -157,35 +187,11 @@ class RadarSchemaRules(
                 raise("Failed to convert schema back to itself")
             }
         }
-
-        isRecordValid = all(
-            isUnique,
-            isAvroConnectCompatible,
-            isNamespaceValid,
-            isNameValid,
-            isDocumentationValid,
-            isFieldsValid(fieldRules.isFieldValid(this)),
-        )
-
-        isActiveSourceValid = all(isRecordValid, hasTime)
-
-        isMonitorSourceValid = all(isRecordValid, hasTime)
-
-        isPassiveSourceValid = all(isRecordValid, hasTime, hasTimeReceived, hasNoTimeCompleted)
     }
 
-    override fun isFieldsValid(validator: Validator<SchemaField>): Validator<Schema> =
-        Validator { schema: Schema ->
-            when {
-                schema.type != RECORD -> raise(
-                    "Default validation can be applied only to an Avro RECORD, not to ${schema.type} of schema ${schema.fullName}.",
-                )
-                schema.fields.isEmpty() -> raise("Schema ${schema.fullName} does not contain any fields.")
-                else -> schema.fields.forEach { field ->
-                    validator.launchValidation(SchemaField(schema, field))
-                }
-            }
-        }
+    private fun schemaErrorMessage(text: String): (Schema) -> String {
+        return { schema -> "Schema ${schema.fullName} is invalid. $text" }
+    }
 
     companion object {
         // used in testing
@@ -242,4 +248,8 @@ class RadarSchemaRules(
             }
         }
     }
+}
+
+fun ValidationContext.raise(schema: Schema, text: String) {
+    raise("Schema ${schema.fullName} is invalid. $text")
 }

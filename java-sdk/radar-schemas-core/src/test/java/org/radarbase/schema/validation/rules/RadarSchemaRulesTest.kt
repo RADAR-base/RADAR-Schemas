@@ -118,7 +118,7 @@ class RadarSchemaRulesTest {
             .fields()
             .endRecord()
         var result = validator.isFieldsValid(
-            validator.fieldRules.validateFieldTypes(validator),
+            validator.fieldRules.isFieldTypeValid,
         ).validate(schema)
         Assertions.assertEquals(1, result.count())
         schema = SchemaBuilder
@@ -127,7 +127,7 @@ class RadarSchemaRulesTest {
             .fields()
             .optionalBoolean("optional")
             .endRecord()
-        result = validator.isFieldsValid(validator.fieldRules.validateFieldTypes(validator))
+        result = validator.isFieldsValid(validator.fieldRules.isFieldTypeValid)
             .validate(schema)
         Assertions.assertEquals(0, result.count())
     }

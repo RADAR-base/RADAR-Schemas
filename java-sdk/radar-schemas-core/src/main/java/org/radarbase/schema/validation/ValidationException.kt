@@ -30,6 +30,6 @@ fun List<ValidationException>.toFormattedString(): String {
                      |
                      |
                      |
-                """.trimMargin()
+        """.trimMargin()
     }
 }

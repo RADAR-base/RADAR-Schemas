@@ -14,8 +14,9 @@ import java.util.EnumMap
 /**
  * Rules for RADAR-Schemas schema fields.
  */
-class RadarSchemaFieldRules : SchemaFieldRules {
+class RadarSchemaFieldRules {
     private val defaultsValidator: MutableMap<Type, Validator<SchemaField>>
+    internal lateinit var schemaRules: RadarSchemaRules
 
     /**
      * Rules for RADAR-Schemas schema fields.
@@ -26,20 +27,32 @@ class RadarSchemaFieldRules : SchemaFieldRules {
         defaultsValidator[UNION] = Validator { isDefaultUnionCompatible(it) }
     }
 
-    override fun validateFieldTypes(schemaRules: SchemaRules): Validator<SchemaField> {
-        return Validator { field ->
-            val schema = field.field.schema()
-            val subType = schema.type
-            when (subType) {
-                UNION -> validateInternalUnion(schemaRules).launchValidation(field)
-                RECORD -> schemaRules.isRecordValid.launchValidation(schema)
-                ENUM -> schemaRules.isEnumValid.launchValidation(schema)
-                else -> Unit
+    /** Get a validator for a union inside a record.  */
+    private val validateInternalUnion = Validator<SchemaField> { field ->
+        field.field.schema().types
+            .forEach { schema: Schema ->
+                val type = schema.type
+                when (type) {
+                    RECORD -> schemaRules.isRecordValid.launchValidation(schema)
+                    ENUM -> schemaRules.isEnumValid.launchValidation(schema)
+                    UNION -> raise(field, "Cannot have a nested union.")
+                    else -> Unit
+                }
             }
+    }
+
+    val isFieldTypeValid: Validator<SchemaField> = Validator { field ->
+        val schema = field.field.schema()
+        val subType = schema.type
+        when (subType) {
+            UNION -> validateInternalUnion.launchValidation(field)
+            RECORD -> schemaRules.isRecordValid.launchValidation(schema)
+            ENUM -> schemaRules.isEnumValid.launchValidation(schema)
+            else -> Unit
         }
     }
 
-    override val isDefaultValueValid = Validator { input: SchemaField ->
+    val isDefaultValueValid = Validator { input: SchemaField ->
         defaultsValidator
             .getOrDefault(
                 input.field.schema().type,
@@ -48,19 +61,26 @@ class RadarSchemaFieldRules : SchemaFieldRules {
             .launchValidation(input)
     }
 
-    override val isNameValid = validator<SchemaField>(
+    val isNameValid = validator<SchemaField>(
         predicate = { f -> f.field.name()?.matches(FIELD_NAME_PATTERN) == true },
         message = "Field name does not respect lowerCamelCase name convention." +
             " Please avoid abbreviations and write out the field name instead.",
     )
 
-    override val isDocumentationValid = Validator { field: SchemaField ->
+    val isDocumentationValid = Validator { field: SchemaField ->
         validateDocumentation(
             doc = field.field.doc(),
             raise = ValidationContext::raise,
             schema = field,
         )
     }
+
+    val isFieldValid: Validator<SchemaField> = all(
+        isFieldTypeValid,
+        isNameValid,
+        isDefaultValueValid,
+        isDocumentationValid,
+    )
 
     private fun ValidationContext.isEnumDefaultUnknown(field: SchemaField) {
         if (
@@ -104,4 +124,8 @@ class RadarSchemaFieldRules : SchemaFieldRules {
         // lowerCamelCase
         internal val FIELD_NAME_PATTERN = "[a-z][a-z0-9]*([a-z0-9][A-Z][a-z0-9]+)?([A-Z][a-z0-9]+)*[A-Z]?".toRegex()
     }
+}
+
+fun ValidationContext.raise(field: SchemaField, text: String) {
+    raise("Field ${field.field.name()} in schema ${field.schema.fullName} is invalid. $text")
 }

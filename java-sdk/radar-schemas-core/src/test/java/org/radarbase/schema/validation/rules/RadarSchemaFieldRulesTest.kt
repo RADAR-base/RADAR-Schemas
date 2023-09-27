@@ -64,9 +64,9 @@ class RadarSchemaFieldRulesTest {
 
     @Test
     fun fieldsTest() = runBlocking {
-        assertFieldsErrorCount(1, validator.validateFieldTypes(schemaValidator), "Should have at least one field")
+        assertFieldsErrorCount(1, validator.isFieldTypeValid, "Should have at least one field")
 
-        assertFieldsErrorCount(0, validator.validateFieldTypes(schemaValidator), "Single optional field should be fine") {
+        assertFieldsErrorCount(0, validator.isFieldTypeValid, "Single optional field should be fine") {
             optionalBoolean("optional")
         }
     }
