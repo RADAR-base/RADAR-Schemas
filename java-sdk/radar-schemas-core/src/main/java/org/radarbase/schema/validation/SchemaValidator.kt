@@ -16,13 +16,13 @@
 package org.radarbase.schema.validation
 
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import org.apache.avro.Schema
 import org.radarbase.schema.SchemaCatalogue
 import org.radarbase.schema.Scope
 import org.radarbase.schema.specification.DataProducer
 import org.radarbase.schema.specification.SourceCatalogue
 import org.radarbase.schema.specification.config.SchemaConfig
+import org.radarbase.schema.validation.rules.FailedSchemaMetadata
 import org.radarbase.schema.validation.rules.RadarSchemaMetadataRules
 import org.radarbase.schema.validation.rules.RadarSchemaRules
 import org.radarbase.schema.validation.rules.SchemaMetadata
@@ -55,17 +55,15 @@ class SchemaValidator(schemaRoot: Path, config: SchemaConfig) {
         } else {
             catalogue.sources.stream()
         }
-        return validationContext {
-            val schemas = producers
-                .flatMap { it.data.stream() }
-                .flatMap { topic ->
-                    val (keySchema, valueSchema) = catalogue.schemaCatalogue.getSchemaMetadata(topic)
-                    Stream.of(keySchema, valueSchema)
-                }
-                .filter { it.schema != null }
-                .sorted(Comparator.comparing { it.schema!!.fullName })
-                .collect(Collectors.toSet())
+        val schemas = producers
+            .flatMap { it.data.stream() }
+            .flatMap { topic ->
+                val (keySchema, valueSchema) = catalogue.schemaCatalogue.getSchemaMetadata(topic)
+                Stream.of(keySchema, valueSchema)
+            }
+            .collect(Collectors.toSet())
 
+        return validationContext {
             schemas.forEach { metadata ->
                 if (pathMatcher.matches(metadata.path)) {
                     validator.launchValidation(metadata)
@@ -106,7 +104,7 @@ class SchemaValidator(schemaRoot: Path, config: SchemaConfig) {
     private fun parsingValidator(
         scope: Scope?,
         schemaCatalogue: SchemaCatalogue,
-    ): Validator<SchemaMetadata> {
+    ): Validator<FailedSchemaMetadata> {
         val useTypes = buildMap {
             schemaCatalogue.schemas.forEach { (key, value) ->
                 if (value.scope == scope) {
@@ -117,9 +115,9 @@ class SchemaValidator(schemaRoot: Path, config: SchemaConfig) {
         return Validator { metadata ->
             val parser = Schema.Parser()
             parser.addTypes(useTypes)
-            coroutineScope.launch(Dispatchers.IO) {
+            launchValidation(Dispatchers.IO) {
                 try {
-                    parser.parse(metadata.path?.toFile())
+                    parser.parse(metadata.path.toFile())
                 } catch (ex: Exception) {
                     raise("Cannot parse schema", ex)
                 }
@@ -158,6 +156,6 @@ class SchemaValidator(schemaRoot: Path, config: SchemaConfig) {
             }
         }
 
-        fun isAvscFile(file: Path): Boolean = file.extension.equals(AVRO_EXTENSION, ignoreCase = true)
+        fun Path.isAvscFile(): Boolean = extension.equals(AVRO_EXTENSION, ignoreCase = true)
     }
 }

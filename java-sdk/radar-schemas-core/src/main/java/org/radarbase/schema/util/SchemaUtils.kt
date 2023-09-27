@@ -15,11 +15,17 @@
  */
 package org.radarbase.schema.util
 
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.slf4j.LoggerFactory
 import java.io.IOException
+import java.nio.file.Files
+import java.nio.file.Path
 import java.util.Properties
 import java.util.function.Function
+import java.util.stream.Collectors
 import java.util.stream.Stream
+import kotlin.io.path.walk
 
 object SchemaUtils {
     private val logger = LoggerFactory.getLogger(SchemaUtils::class.java)
@@ -102,6 +108,14 @@ object SchemaUtils {
                 logger.error("Failed to apply function, returning empty.", ex)
                 return@Function Stream.empty<R>()
             }
+        }
+    }
+
+    suspend fun Path.listRecursive(pathMatcher: (Path) -> Boolean): List<Path> = withContext(Dispatchers.IO) {
+        Files.walk(this@listRecursive).use { walker ->
+            walker
+                .filter(pathMatcher)
+                .collect(Collectors.toList())
         }
     }
 

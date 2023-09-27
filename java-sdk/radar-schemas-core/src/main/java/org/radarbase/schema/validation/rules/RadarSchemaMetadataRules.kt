@@ -20,7 +20,7 @@ class RadarSchemaMetadataRules(
 ) : SchemaMetadataRules {
     private val pathMatcher: PathMatcher = config.pathMatcher(schemaRoot)
 
-    override val isShemaLocationCorrect = all(
+    override val isSchemaLocationCorrect = all(
         isNamespaceSchemaLocationCorrect(),
         isNameSchemaLocationCorrect(),
     )
@@ -28,7 +28,7 @@ class RadarSchemaMetadataRules(
     private fun isNamespaceSchemaLocationCorrect() = Validator<SchemaMetadata> { metadata ->
         try {
             val expected = getNamespace(schemaRoot, metadata.path, metadata.scope)
-            val namespace = metadata.schema?.namespace
+            val namespace = metadata.schema.namespace
             if (!expected.equals(namespace, ignoreCase = true)) {
                 raise(
                     metadata,
@@ -41,21 +41,15 @@ class RadarSchemaMetadataRules(
     }
 
     private fun isNameSchemaLocationCorrect() = Validator<SchemaMetadata> { metadata ->
-        if (metadata.path == null) {
-            raise(metadata, "Missing metadata path")
-            return@Validator
-        }
         val expected = getRecordName(metadata.path)
-        if (!expected.equals(metadata.schema?.name, ignoreCase = true)) {
+        if (!expected.equals(metadata.schema.name, ignoreCase = true)) {
             raise(metadata, "Record name should match file name. Expected record name is \"$expected\".")
         }
     }
 
     override fun isSchemaCorrect(validator: Validator<Schema>) = Validator<SchemaMetadata> { metadata ->
-        when {
-            metadata.schema == null -> raise("Missing schema")
-            pathMatcher.matches(metadata.path) -> validator.launchValidation(metadata.schema)
-            else -> Unit
+        if (pathMatcher.matches(metadata.path)) {
+            validator.launchValidation(metadata.schema)
         }
     }
 }

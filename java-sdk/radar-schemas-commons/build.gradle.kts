@@ -4,14 +4,23 @@ plugins {
     id("com.github.davidmc24.gradle.plugin.avro-base")
 }
 
-// Generated avro files
-val avroOutputDir = file("$projectDir/src/generated/java")
-
 description = "RADAR Schemas Commons SDK"
+
+// ---------------------------------------------------------------------------//
+// AVRO file manipulation                                                    //
+// ---------------------------------------------------------------------------//
+val generateAvro by tasks.registering(GenerateAvroJavaTask::class) {
+    source(
+        rootProject.fileTree("../commons") {
+            include("**/*.avsc")
+        },
+    )
+    setOutputDir(layout.projectDirectory.dir("src/generated/java").asFile)
+}
 
 sourceSets {
     main {
-        java.srcDir(avroOutputDir)
+        java.srcDir(generateAvro.map { it.outputs })
     }
 }
 
@@ -30,21 +39,5 @@ dependencies {
 // Clean settings                                                            //
 // ---------------------------------------------------------------------------//
 tasks.clean {
-    delete(avroOutputDir)
+    delete(generateAvro.map { it.outputs })
 }
-
-// ---------------------------------------------------------------------------//
-// AVRO file manipulation                                                    //
-// ---------------------------------------------------------------------------//
-val generateAvro by tasks.registering(GenerateAvroJavaTask::class) {
-    source(
-        rootProject.fileTree("../commons") {
-            include("**/*.avsc")
-        },
-    )
-    setOutputDir(avroOutputDir)
-}
-
-tasks["compileJava"].dependsOn(generateAvro)
-tasks["compileKotlin"].dependsOn(generateAvro)
-tasks["dokkaJavadoc"].dependsOn(generateAvro)

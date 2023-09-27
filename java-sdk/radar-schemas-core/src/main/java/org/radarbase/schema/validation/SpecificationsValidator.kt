@@ -17,18 +17,15 @@ package org.radarbase.schema.validation
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import org.radarbase.schema.Scope
 import org.radarbase.schema.specification.config.SchemaConfig
+import org.radarbase.schema.util.SchemaUtils.listRecursive
 import org.radarbase.schema.validation.rules.Validator
 import org.radarbase.schema.validation.rules.pathExtensionValidator
 import org.slf4j.LoggerFactory
 import java.io.IOException
-import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.PathMatcher
-import java.util.stream.Collectors
 
 /**
  * Validates RADAR-Schemas specifications.
@@ -59,21 +56,13 @@ class SpecificationsValidator(
     }
 
     suspend fun <T> isValidSpecification(clazz: Class<T>?): List<ValidationException> {
-        val paths = root.fetchChildren()
+        val paths = root.listRecursive { pathMatcher.matches(it) }
         return validationContext {
             val isParseableAsClass = isYmlFileParseable(clazz)
             paths.forEach { p ->
                 isYmlFile.launchValidation(p)
                 isParseableAsClass.launchValidation(p)
             }
-        }
-    }
-
-    private suspend fun Path.fetchChildren(): List<Path> = withContext(Dispatchers.IO) {
-        Files.walk(this@fetchChildren).use { walker ->
-            walker
-                .filter { pathMatcher.matches(it) }
-                .collect(Collectors.toList())
         }
     }
 

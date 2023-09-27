@@ -8,7 +8,12 @@ import java.nio.file.Path
  * Schema with metadata.
  */
 data class SchemaMetadata(
-    val schema: Schema?,
+    val schema: Schema,
     val scope: Scope,
-    val path: Path?,
+    val path: Path,
+)
+
+data class FailedSchemaMetadata(
+    val scope: Scope,
+    val path: Path,
 )

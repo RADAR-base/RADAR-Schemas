@@ -13,6 +13,7 @@ dependencies {
     }
     api("jakarta.validation:jakarta.validation-api:${Versions.jakartaValidation}")
     api(project(":radar-schemas-commons"))
+    implementation("org.radarbase:radar-commons-kotlin:${Versions.radarCommons}")
 
     api(platform("com.fasterxml.jackson:jackson-bom:${Versions.jackson}"))
     api("com.fasterxml.jackson.core:jackson-databind")

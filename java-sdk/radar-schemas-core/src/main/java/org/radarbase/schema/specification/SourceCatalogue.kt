@@ -19,6 +19,10 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.PropertyNamingStrategies
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.runBlocking
+import org.radarbase.kotlin.coroutines.forkJoin
 import org.radarbase.schema.SchemaCatalogue
 import org.radarbase.schema.Scope
 import org.radarbase.schema.specification.active.ActiveSource
@@ -29,18 +33,17 @@ import org.radarbase.schema.specification.monitor.MonitorSource
 import org.radarbase.schema.specification.passive.PassiveSource
 import org.radarbase.schema.specification.push.PushSource
 import org.radarbase.schema.specification.stream.StreamGroup
+import org.radarbase.schema.util.SchemaUtils.listRecursive
 import org.radarbase.schema.validation.ValidationHelper
 import org.radarbase.schema.validation.ValidationHelper.SPECIFICATIONS_PATH
 import org.radarbase.topic.AvroTopic
 import org.slf4j.LoggerFactory
 import java.io.IOException
-import java.nio.file.Files
 import java.nio.file.InvalidPathException
 import java.nio.file.Path
 import java.nio.file.PathMatcher
 import java.util.stream.Stream
 import kotlin.io.path.exists
-import kotlin.streams.asSequence
 
 class SourceCatalogue internal constructor(
     val schemaCatalogue: SchemaCatalogue,
@@ -104,19 +107,41 @@ class SourceCatalogue internal constructor(
                 schemaConfig,
             )
             val pathMatcher = sourceConfig.pathMatcher(specRoot)
-            return SourceCatalogue(
-                schemaCatalogue,
-                initSources(mapper, specRoot, Scope.ACTIVE, pathMatcher, sourceConfig.active),
-                initSources(mapper, specRoot, Scope.MONITOR, pathMatcher, sourceConfig.monitor),
-                initSources(mapper, specRoot, Scope.PASSIVE, pathMatcher, sourceConfig.passive),
-                initSources(mapper, specRoot, Scope.STREAM, pathMatcher, sourceConfig.stream),
-                initSources(mapper, specRoot, Scope.CONNECTOR, pathMatcher, sourceConfig.connector),
-                initSources(mapper, specRoot, Scope.PUSH, pathMatcher, sourceConfig.push),
-            )
+
+            return runBlocking {
+                val activeJob = async {
+                    initSources(mapper, specRoot, Scope.ACTIVE, pathMatcher, sourceConfig.active)
+                }
+                val monitorJob = async {
+                    initSources(mapper, specRoot, Scope.MONITOR, pathMatcher, sourceConfig.monitor)
+                }
+                val passiveJob = async {
+                    initSources(mapper, specRoot, Scope.PASSIVE, pathMatcher, sourceConfig.passive)
+                }
+                val streamJob = async {
+                    initSources(mapper, specRoot, Scope.STREAM, pathMatcher, sourceConfig.stream)
+                }
+                val connectorJob = async {
+                    initSources(mapper, specRoot, Scope.CONNECTOR, pathMatcher, sourceConfig.connector)
+                }
+                val pushJob = async {
+                    initSources(mapper, specRoot, Scope.PUSH, pathMatcher, sourceConfig.push)
+                }
+
+                SourceCatalogue(
+                    schemaCatalogue,
+                    activeSources = activeJob.await(),
+                    monitorSources = monitorJob.await(),
+                    passiveSources = passiveJob.await(),
+                    streamGroups = streamJob.await(),
+                    connectorSources = connectorJob.await(),
+                    pushSources = pushJob.await(),
+                )
+            }
         }
 
         @Throws(IOException::class)
-        private inline fun <reified T> initSources(
+        private suspend inline fun <reified T> initSources(
             mapper: ObjectMapper,
             root: Path,
             scope: Scope,
@@ -129,19 +154,18 @@ class SourceCatalogue internal constructor(
                 return otherSources
             }
             val reader = mapper.readerFor(T::class.java)
-            return buildList {
-                Files.walk(baseFolder).use { walker ->
-                    walker
-                        .asSequence()
-                        .filter(sourceRootPathMatcher::matches)
-                        .forEach { p ->
-                            try {
-                                add(reader.readValue(p.toFile()))
-                            } catch (ex: IOException) {
-                                logger.error("Failed to load configuration {}: {}", p, ex.toString())
-                            }
+            val fileList = baseFolder.listRecursive(sourceRootPathMatcher::matches)
+            return buildList(fileList.size + otherSources.size) {
+                fileList
+                    .forkJoin<Path, T?>(Dispatchers.IO) { p ->
+                        try {
+                            reader.readValue<T>(p.toFile())
+                        } catch (ex: IOException) {
+                            logger.error("Failed to load configuration {}: {}", p, ex.toString())
+                            null
                         }
-                }
+                    }
+                    .filterIsInstanceTo(this@buildList)
                 addAll(otherSources)
             }
         }

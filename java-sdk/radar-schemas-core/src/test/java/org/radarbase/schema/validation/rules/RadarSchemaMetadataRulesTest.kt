@@ -66,7 +66,7 @@ class RadarSchemaMetadataRulesTest {
             MONITOR.getPath(SourceCatalogueValidationTest.BASE_PATH.resolve(ValidationHelper.COMMONS_PATH))
         assertNotNull(root)
         val path = root.resolve("test/record_name.avsc")
-        val result = validator.isShemaLocationCorrect
+        val result = validator.isSchemaLocationCorrect
             .validate(SchemaMetadata(schema, MONITOR, path))
         assertEquals(1, result.count())
     }
@@ -82,7 +82,7 @@ class RadarSchemaMetadataRulesTest {
             MONITOR.getPath(SourceCatalogueValidationTest.BASE_PATH.resolve(ValidationHelper.COMMONS_PATH))
         assertNotNull(root)
         val path = root.resolve("test/record_name.avsc")
-        val result = validator.isShemaLocationCorrect
+        val result = validator.isSchemaLocationCorrect
             .validate(SchemaMetadata(schema, MONITOR, path))
         assertEquals(1, result.count())
     }
@@ -97,7 +97,7 @@ class RadarSchemaMetadataRulesTest {
             .record(fieldName)
             .fields()
             .endRecord()
-        var result = validator.isShemaLocationCorrect
+        var result = validator.isSchemaLocationCorrect
             .validate(SchemaMetadata(schema, PASSIVE, filePath))
         assertEquals(2, result.count())
         fieldName = "EmpaticaE4Acceleration"
@@ -108,7 +108,7 @@ class RadarSchemaMetadataRulesTest {
             .record(fieldName)
             .fields()
             .endRecord()
-        result = validator.isShemaLocationCorrect
+        result = validator.isSchemaLocationCorrect
             .validate(SchemaMetadata(schema, PASSIVE, filePath))
         assertEquals("", format(result))
     }

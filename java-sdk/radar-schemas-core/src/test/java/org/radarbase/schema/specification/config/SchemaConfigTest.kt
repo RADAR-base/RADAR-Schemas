@@ -36,7 +36,7 @@ internal class SchemaConfigTest {
         assertEquals(1, schemaCatalogue.schemas.size)
         val (fullName, schemaMetadata) = schemaCatalogue.schemas.entries.first()
         assertEquals("org.radarcns.monitor.application.ApplicationUptime2", fullName)
-        assertEquals("org.radarcns.monitor.application.ApplicationUptime2", schemaMetadata.schema!!.fullName)
+        assertEquals("org.radarcns.monitor.application.ApplicationUptime2", schemaMetadata.schema.fullName)
         assertEquals(commonsRoot.resolve("monitor/application/test.avsc"), schemaMetadata.path)
         assertEquals(Scope.MONITOR, schemaMetadata.scope)
     }
