@@ -27,8 +27,8 @@ import org.radarbase.schema.validation.ValidationContext
 /**
  * Schema validation rules enforced for the RADAR-Schemas repository.
  */
-class RadarSchemaRules(
-    val fieldRules: RadarSchemaFieldRules = RadarSchemaFieldRules(),
+class SchemaRules(
+    val fieldRules: SchemaFieldRules = SchemaFieldRules(),
 ) {
     val schemaStore: MutableMap<String, Schema> = HashMap()
 
@@ -159,9 +159,7 @@ class RadarSchemaRules(
                     "Default validation can be applied only to an Avro RECORD, not to ${schema.type} of schema ${schema.fullName}.",
                 )
                 schema.fields.isEmpty() -> raise("Schema ${schema.fullName} does not contain any fields.")
-                else -> schema.fields.forEach { field ->
-                    validator.launchValidation(SchemaField(schema, field))
-                }
+                else -> validator.validateAll(schema.fields.map { SchemaField(schema, it) })
             }
         }
 

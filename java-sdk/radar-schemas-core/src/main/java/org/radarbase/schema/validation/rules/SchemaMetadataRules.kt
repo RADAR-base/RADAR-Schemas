@@ -15,10 +15,10 @@ import java.nio.file.PathMatcher
  * @param config configuration for excluding schemas from validation.
  * @param schemaRules schema rules implementation.
  */
-class RadarSchemaMetadataRules(
+class SchemaMetadataRules(
     private val schemaRoot: Path,
     config: SchemaConfig,
-    val schemaRules: RadarSchemaRules = RadarSchemaRules(),
+    val schemaRules: SchemaRules = SchemaRules(),
 ) {
     private val pathMatcher: PathMatcher = config.pathMatcher(schemaRoot)
 
@@ -32,6 +32,10 @@ class RadarSchemaMetadataRules(
      * and type of the schema.
      */
     fun isSchemaMetadataValid(scopeSpecificValidation: Boolean) = Validator<SchemaMetadata> { metadata ->
+        if (!pathMatcher.matches(metadata.path)) {
+            return@Validator
+        }
+
         isSchemaLocationCorrect.launchValidation(metadata)
 
         val ruleset = when {
@@ -42,7 +46,7 @@ class RadarSchemaMetadataRules(
             metadata.scope == Scope.PASSIVE -> schemaRules.isPassiveSourceValid
             else -> schemaRules.isRecordValid
         }
-        isSchemaCorrect(ruleset).launchValidation(metadata)
+        ruleset.launchValidation(metadata.schema)
     }
 
     private fun isNamespaceSchemaLocationCorrect() = Validator<SchemaMetadata> { metadata ->
@@ -64,12 +68,6 @@ class RadarSchemaMetadataRules(
         val expected = metadata.path.toRecordName()
         if (!expected.equals(metadata.schema.name, ignoreCase = true)) {
             raise(metadata, "Record name should match file name. Expected record name is \"$expected\".")
-        }
-    }
-
-    fun isSchemaCorrect(validator: Validator<Schema>) = Validator<SchemaMetadata> { metadata ->
-        if (pathMatcher.matches(metadata.path)) {
-            validator.launchValidation(metadata.schema)
         }
     }
 }

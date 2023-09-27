@@ -32,12 +32,12 @@ import org.radarbase.schema.validation.validate
 import java.nio.file.Paths
 
 class RadarSchemaMetadataRulesTest {
-    private lateinit var validator: RadarSchemaMetadataRules
+    private lateinit var validator: SchemaMetadataRules
 
     @BeforeEach
     fun setUp() {
         val config = SchemaConfig()
-        validator = RadarSchemaMetadataRules(
+        validator = SchemaMetadataRules(
             SourceCatalogueValidationTest.BASE_PATH.resolve(ValidationHelper.COMMONS_PATH), config,
         )
     }

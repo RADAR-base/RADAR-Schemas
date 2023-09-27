@@ -29,14 +29,14 @@ import org.radarbase.schema.validation.toFormattedString
 import org.radarbase.schema.validation.validate
 import java.nio.file.Paths
 
-class RadarSchemaFieldRulesTest {
-    private lateinit var validator: RadarSchemaFieldRules
-    private lateinit var schemaValidator: RadarSchemaRules
+class SchemaFieldRulesTest {
+    private lateinit var validator: SchemaFieldRules
+    private lateinit var schemaValidator: SchemaRules
 
     @BeforeEach
     fun setUp() {
-        validator = RadarSchemaFieldRules()
-        schemaValidator = RadarSchemaRules(validator)
+        validator = SchemaFieldRules()
+        schemaValidator = SchemaRules(validator)
     }
 
     @Test
@@ -53,13 +53,13 @@ class RadarSchemaFieldRulesTest {
 
     @Test
     fun fieldNameRegex() {
-        assertTrue("interBeatInterval".matches(RadarSchemaFieldRules.FIELD_NAME_PATTERN))
-        assertTrue("x".matches(RadarSchemaFieldRules.FIELD_NAME_PATTERN))
-        assertTrue(RadarSchemaRules.TIME.matches(RadarSchemaFieldRules.FIELD_NAME_PATTERN))
-        assertTrue("subjectId".matches(RadarSchemaFieldRules.FIELD_NAME_PATTERN))
-        assertTrue("listOfSeveralThings".matches(RadarSchemaFieldRules.FIELD_NAME_PATTERN))
-        assertFalse("Time".matches(RadarSchemaFieldRules.FIELD_NAME_PATTERN))
-        assertFalse("E4Heart".matches(RadarSchemaFieldRules.FIELD_NAME_PATTERN))
+        assertTrue("interBeatInterval".matches(SchemaFieldRules.FIELD_NAME_PATTERN))
+        assertTrue("x".matches(SchemaFieldRules.FIELD_NAME_PATTERN))
+        assertTrue(SchemaRules.TIME.matches(SchemaFieldRules.FIELD_NAME_PATTERN))
+        assertTrue("subjectId".matches(SchemaFieldRules.FIELD_NAME_PATTERN))
+        assertTrue("listOfSeveralThings".matches(SchemaFieldRules.FIELD_NAME_PATTERN))
+        assertFalse("Time".matches(SchemaFieldRules.FIELD_NAME_PATTERN))
+        assertFalse("E4Heart".matches(SchemaFieldRules.FIELD_NAME_PATTERN))
     }
 
     @Test

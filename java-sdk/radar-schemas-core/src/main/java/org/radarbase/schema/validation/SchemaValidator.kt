@@ -23,11 +23,10 @@ import org.radarbase.schema.specification.DataProducer
 import org.radarbase.schema.specification.SourceCatalogue
 import org.radarbase.schema.specification.config.SchemaConfig
 import org.radarbase.schema.validation.rules.FailedSchemaMetadata
-import org.radarbase.schema.validation.rules.RadarSchemaMetadataRules
 import org.radarbase.schema.validation.rules.SchemaMetadata
+import org.radarbase.schema.validation.rules.SchemaMetadataRules
 import org.radarbase.schema.validation.rules.Validator
 import java.nio.file.Path
-import java.nio.file.PathMatcher
 import java.util.stream.Collectors
 import java.util.stream.Stream
 import kotlin.io.path.extension
@@ -38,9 +37,11 @@ import kotlin.io.path.extension
  * @param schemaRoot RADAR-Schemas commons directory.
  * @param config configuration to exclude certain schemas or fields from validation.
  */
-class SchemaValidator(schemaRoot: Path, config: SchemaConfig) {
-    val rules = RadarSchemaMetadataRules(schemaRoot, config)
-    private val pathMatcher: PathMatcher = config.pathMatcher(schemaRoot)
+class SchemaValidator(
+    schemaRoot: Path,
+    config: SchemaConfig,
+) {
+    val rules = SchemaMetadataRules(schemaRoot, config)
 
     suspend fun analyseSourceCatalogue(
         scope: Scope?,
@@ -61,13 +62,7 @@ class SchemaValidator(schemaRoot: Path, config: SchemaConfig) {
             }
             .collect(Collectors.toSet())
 
-        return validationContext {
-            schemas.forEach { metadata ->
-                if (pathMatcher.matches(metadata.path)) {
-                    validator.launchValidation(metadata)
-                }
-            }
-        }
+        return validator.validateAll(schemas)
     }
 
     suspend fun analyseFiles(
@@ -75,7 +70,11 @@ class SchemaValidator(schemaRoot: Path, config: SchemaConfig) {
         scope: Scope? = null,
     ): List<ValidationException> = validationContext {
         if (scope == null) {
-            Scope.entries.forEach { scope -> analyseFilesInternal(schemaCatalogue, scope) }
+            Scope.entries.forEach { scope ->
+                launch {
+                    analyseFilesInternal(schemaCatalogue, scope)
+                }
+            }
         } else {
             analyseFilesInternal(schemaCatalogue, scope)
         }
@@ -85,18 +84,11 @@ class SchemaValidator(schemaRoot: Path, config: SchemaConfig) {
         schemaCatalogue: SchemaCatalogue,
         scope: Scope,
     ) {
-        val validator = rules.isSchemaMetadataValid(false)
-        val parsingValidator = parsingValidator(scope, schemaCatalogue)
+        parsingValidator(scope, schemaCatalogue)
+            .validateAll(schemaCatalogue.unmappedSchemas)
 
-        schemaCatalogue.unmappedSchemas.forEach { metadata ->
-            parsingValidator.launchValidation(metadata)
-        }
-
-        schemaCatalogue.schemas.values.forEach { metadata ->
-            if (pathMatcher.matches(metadata.path)) {
-                validator.launchValidation(metadata)
-            }
-        }
+        rules.isSchemaMetadataValid(false)
+            .validateAll(schemaCatalogue.schemas.values)
     }
 
     private fun parsingValidator(
@@ -113,7 +105,7 @@ class SchemaValidator(schemaRoot: Path, config: SchemaConfig) {
         return Validator { metadata ->
             val parser = Schema.Parser()
             parser.addTypes(useTypes)
-            launchValidation(Dispatchers.IO) {
+            launch(Dispatchers.IO) {
                 try {
                     parser.parse(metadata.path.toFile())
                 } catch (ex: Exception) {
@@ -129,10 +121,8 @@ class SchemaValidator(schemaRoot: Path, config: SchemaConfig) {
 
     /** Validate a single schema in given path.  */
     private fun ValidationContext.validate(schemaMetadata: SchemaMetadata) {
-        val validator = rules.isSchemaMetadataValid(false)
-        if (pathMatcher.matches(schemaMetadata.path)) {
-            validator.launchValidation(schemaMetadata)
-        }
+        rules.isSchemaMetadataValid(false)
+            .validate(schemaMetadata)
     }
 
     val validatedSchemas: Map<String, Schema>

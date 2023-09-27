@@ -27,53 +27,53 @@ import org.junit.jupiter.api.Test
 import org.radarbase.schema.validation.validate
 
 class RadarSchemaRulesTest {
-    private lateinit var validator: RadarSchemaRules
+    private lateinit var validator: SchemaRules
 
     @BeforeEach
     fun setUp() {
-        validator = RadarSchemaRules()
+        validator = SchemaRules()
     }
 
     @Test
     fun nameSpaceRegex() {
-        assertTrue("org.radarcns".matches(RadarSchemaRules.NAMESPACE_PATTERN))
-        assertFalse("Org.radarcns".matches(RadarSchemaRules.NAMESPACE_PATTERN))
-        assertFalse("org.radarCns".matches(RadarSchemaRules.NAMESPACE_PATTERN))
-        assertFalse(".org.radarcns".matches(RadarSchemaRules.NAMESPACE_PATTERN))
-        assertFalse("org.radar-cns".matches(RadarSchemaRules.NAMESPACE_PATTERN))
-        assertFalse("org.radarcns.empaticaE4".matches(RadarSchemaRules.NAMESPACE_PATTERN))
+        assertTrue("org.radarcns".matches(SchemaRules.NAMESPACE_PATTERN))
+        assertFalse("Org.radarcns".matches(SchemaRules.NAMESPACE_PATTERN))
+        assertFalse("org.radarCns".matches(SchemaRules.NAMESPACE_PATTERN))
+        assertFalse(".org.radarcns".matches(SchemaRules.NAMESPACE_PATTERN))
+        assertFalse("org.radar-cns".matches(SchemaRules.NAMESPACE_PATTERN))
+        assertFalse("org.radarcns.empaticaE4".matches(SchemaRules.NAMESPACE_PATTERN))
     }
 
     @Test
     fun recordNameRegex() {
-        assertTrue("Questionnaire".matches(RadarSchemaRules.RECORD_NAME_PATTERN))
-        assertTrue("EmpaticaE4Acceleration".matches(RadarSchemaRules.RECORD_NAME_PATTERN))
-        assertTrue("Heart4Me".matches(RadarSchemaRules.RECORD_NAME_PATTERN))
-        assertTrue("Heart4M".matches(RadarSchemaRules.RECORD_NAME_PATTERN))
-        assertTrue("Heart4".matches(RadarSchemaRules.RECORD_NAME_PATTERN))
-        assertFalse("Heart4me".matches(RadarSchemaRules.RECORD_NAME_PATTERN))
-        assertTrue("Heart4ME".matches(RadarSchemaRules.RECORD_NAME_PATTERN))
-        assertFalse("4Me".matches(RadarSchemaRules.RECORD_NAME_PATTERN))
-        assertTrue("TTest".matches(RadarSchemaRules.RECORD_NAME_PATTERN))
-        assertFalse("questionnaire".matches(RadarSchemaRules.RECORD_NAME_PATTERN))
-        assertFalse("questionnaire4".matches(RadarSchemaRules.RECORD_NAME_PATTERN))
-        assertFalse("questionnaire4Me".matches(RadarSchemaRules.RECORD_NAME_PATTERN))
-        assertFalse("questionnaire4me".matches(RadarSchemaRules.RECORD_NAME_PATTERN))
-        assertTrue("A4MM".matches(RadarSchemaRules.RECORD_NAME_PATTERN))
-        assertTrue("Aaaa4MMaa".matches(RadarSchemaRules.RECORD_NAME_PATTERN))
+        assertTrue("Questionnaire".matches(SchemaRules.RECORD_NAME_PATTERN))
+        assertTrue("EmpaticaE4Acceleration".matches(SchemaRules.RECORD_NAME_PATTERN))
+        assertTrue("Heart4Me".matches(SchemaRules.RECORD_NAME_PATTERN))
+        assertTrue("Heart4M".matches(SchemaRules.RECORD_NAME_PATTERN))
+        assertTrue("Heart4".matches(SchemaRules.RECORD_NAME_PATTERN))
+        assertFalse("Heart4me".matches(SchemaRules.RECORD_NAME_PATTERN))
+        assertTrue("Heart4ME".matches(SchemaRules.RECORD_NAME_PATTERN))
+        assertFalse("4Me".matches(SchemaRules.RECORD_NAME_PATTERN))
+        assertTrue("TTest".matches(SchemaRules.RECORD_NAME_PATTERN))
+        assertFalse("questionnaire".matches(SchemaRules.RECORD_NAME_PATTERN))
+        assertFalse("questionnaire4".matches(SchemaRules.RECORD_NAME_PATTERN))
+        assertFalse("questionnaire4Me".matches(SchemaRules.RECORD_NAME_PATTERN))
+        assertFalse("questionnaire4me".matches(SchemaRules.RECORD_NAME_PATTERN))
+        assertTrue("A4MM".matches(SchemaRules.RECORD_NAME_PATTERN))
+        assertTrue("Aaaa4MMaa".matches(SchemaRules.RECORD_NAME_PATTERN))
     }
 
     @Test
     fun enumerationRegex() {
-        assertTrue("PHQ8".matches(RadarSchemaRules.ENUM_SYMBOL_PATTERN))
-        assertTrue("HELLO".matches(RadarSchemaRules.ENUM_SYMBOL_PATTERN))
-        assertTrue("HELLOTHERE".matches(RadarSchemaRules.ENUM_SYMBOL_PATTERN))
-        assertTrue("HELLO_THERE".matches(RadarSchemaRules.ENUM_SYMBOL_PATTERN))
-        assertFalse("Hello".matches(RadarSchemaRules.ENUM_SYMBOL_PATTERN))
-        assertFalse("hello".matches(RadarSchemaRules.ENUM_SYMBOL_PATTERN))
-        assertFalse("HelloThere".matches(RadarSchemaRules.ENUM_SYMBOL_PATTERN))
-        assertFalse("Hello_There".matches(RadarSchemaRules.ENUM_SYMBOL_PATTERN))
-        assertFalse("HELLO.THERE".matches(RadarSchemaRules.ENUM_SYMBOL_PATTERN))
+        assertTrue("PHQ8".matches(SchemaRules.ENUM_SYMBOL_PATTERN))
+        assertTrue("HELLO".matches(SchemaRules.ENUM_SYMBOL_PATTERN))
+        assertTrue("HELLOTHERE".matches(SchemaRules.ENUM_SYMBOL_PATTERN))
+        assertTrue("HELLO_THERE".matches(SchemaRules.ENUM_SYMBOL_PATTERN))
+        assertFalse("Hello".matches(SchemaRules.ENUM_SYMBOL_PATTERN))
+        assertFalse("hello".matches(SchemaRules.ENUM_SYMBOL_PATTERN))
+        assertFalse("HelloThere".matches(SchemaRules.ENUM_SYMBOL_PATTERN))
+        assertFalse("Hello_There".matches(SchemaRules.ENUM_SYMBOL_PATTERN))
+        assertFalse("HELLO.THERE".matches(SchemaRules.ENUM_SYMBOL_PATTERN))
     }
 
     @Test
@@ -146,7 +146,7 @@ class RadarSchemaRulesTest {
             .builder("org.radarcns.time.test")
             .record(RECORD_NAME_MOCK)
             .fields()
-            .requiredDouble(RadarSchemaRules.TIME)
+            .requiredDouble(SchemaRules.TIME)
             .endRecord()
         result = validator.hasTime.validate(schema)
         Assertions.assertEquals(0, result.count())

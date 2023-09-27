@@ -8,15 +8,15 @@ import org.apache.avro.Schema.Type.NULL
 import org.apache.avro.Schema.Type.RECORD
 import org.apache.avro.Schema.Type.UNION
 import org.radarbase.schema.validation.ValidationContext
-import org.radarbase.schema.validation.rules.RadarSchemaRules.Companion.validateDocumentation
+import org.radarbase.schema.validation.rules.SchemaRules.Companion.validateDocumentation
 import java.util.EnumMap
 
 /**
  * Rules for RADAR-Schemas schema fields.
  */
-class RadarSchemaFieldRules {
+class SchemaFieldRules {
     private val defaultsValidator: MutableMap<Type, Validator<SchemaField>>
-    internal lateinit var schemaRules: RadarSchemaRules
+    internal lateinit var schemaRules: SchemaRules
 
     /**
      * Rules for RADAR-Schemas schema fields.
@@ -45,10 +45,20 @@ class RadarSchemaFieldRules {
         val schema = field.field.schema()
         val subType = schema.type
         when (subType) {
-            UNION -> validateInternalUnion.launchValidation(field)
-            RECORD -> schemaRules.isRecordValid.launchValidation(schema)
-            ENUM -> schemaRules.isEnumValid.launchValidation(schema)
+            UNION -> validateInternalUnion.validate(field)
+            RECORD -> schemaRules.isRecordValid.validate(schema)
+            ENUM -> schemaRules.isEnumValid.validate(schema)
             else -> Unit
+        }
+    }
+
+    private val isDefaultValueNullable = Validator<SchemaField> { field ->
+        if (field.field.defaultVal() != null) {
+            raise(
+                field,
+                "Default of type ${field.field.schema().type} is set to ${field.field.defaultVal()}. " +
+                    "The only acceptable default values are the \"UNKNOWN\" enum symbol and null.",
+            )
         }
     }
 
@@ -56,15 +66,15 @@ class RadarSchemaFieldRules {
         defaultsValidator
             .getOrDefault(
                 input.field.schema().type,
-                Validator { isDefaultValueNullable(it) },
+                isDefaultValueNullable,
             )
-            .launchValidation(input)
+            .validate(input)
     }
 
     val isNameValid = validator<SchemaField>(
         predicate = { f -> f.field.name()?.matches(FIELD_NAME_PATTERN) == true },
-        message = "Field name does not respect lowerCamelCase name convention." +
-            " Please avoid abbreviations and write out the field name instead.",
+        message = "Field name does not respect lowerCamelCase name convention. " +
+            "Please avoid abbreviations and write out the field name instead.",
     )
 
     val isDocumentationValid = Validator { field: SchemaField ->
@@ -85,7 +95,7 @@ class RadarSchemaFieldRules {
     private fun ValidationContext.isEnumDefaultUnknown(field: SchemaField) {
         if (
             field.field.schema().enumSymbols.contains(UNKNOWN) &&
-            !(field.field.defaultVal() != null && field.field.defaultVal().toString() == UNKNOWN)
+            field.field.defaultVal()?.toString() != UNKNOWN
         ) {
             raise(
                 field,
@@ -96,30 +106,19 @@ class RadarSchemaFieldRules {
 
     private fun ValidationContext.isDefaultUnionCompatible(field: SchemaField) {
         if (
-            field.field.schema().types.contains(Schema.create(NULL)) &&
-            !(field.field.defaultVal() != null && field.field.defaultVal() == JsonProperties.NULL_VALUE)
+            field.field.schema().types.contains(NULL_SCHEMA) &&
+            field.field.defaultVal() != JsonProperties.NULL_VALUE
         ) {
             raise(
                 field,
-                "Default is not null. Any nullable Avro field must" +
-                    " specify have its default value set to null.",
-            )
-        }
-    }
-
-    private fun ValidationContext.isDefaultValueNullable(field: SchemaField) {
-        if (field.field.defaultVal() != null) {
-            raise(
-                field,
-                "Default of type " + field.field.schema().type + " is set to " +
-                    field.field.defaultVal() + ". The only acceptable default values are the" +
-                    " \"UNKNOWN\" enum symbol and null.",
+                "Default is not null. Any nullable Avro field must specify have its default value set to null.",
             )
         }
     }
 
     companion object {
         private const val UNKNOWN = "UNKNOWN"
+        private val NULL_SCHEMA = Schema.create(NULL)
 
         // lowerCamelCase
         internal val FIELD_NAME_PATTERN = "[a-z][a-z0-9]*([a-z0-9][A-Z][a-z0-9]+)?([A-Z][a-z0-9]+)*[A-Z]?".toRegex()

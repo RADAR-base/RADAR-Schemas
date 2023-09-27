@@ -21,7 +21,7 @@ import org.radarbase.schema.Scope
 import org.radarbase.schema.specification.config.SchemaConfig
 import org.radarbase.schema.util.SchemaUtils.listRecursive
 import org.radarbase.schema.validation.rules.Validator
-import org.radarbase.schema.validation.rules.pathExtensionValidator
+import org.radarbase.schema.validation.rules.hasExtension
 import org.slf4j.LoggerFactory
 import java.io.IOException
 import java.nio.file.Path
@@ -58,11 +58,8 @@ class SpecificationsValidator(
     suspend fun <T> isValidSpecification(clazz: Class<T>?): List<ValidationException> {
         val paths = root.listRecursive { pathMatcher.matches(it) }
         return validationContext {
-            val isParseableAsClass = isYmlFileParseable(clazz)
-            paths.forEach { p ->
-                isYmlFile.launchValidation(p)
-                isParseableAsClass.launchValidation(p)
-            }
+            isYmlFile.validateAll(paths)
+            isYmlFileParseable(clazz).validateAll(paths)
         }
     }
 
@@ -77,6 +74,6 @@ class SpecificationsValidator(
     companion object {
         private val logger = LoggerFactory.getLogger(SpecificationsValidator::class.java)
 
-        private val isYmlFile: Validator<Path> = pathExtensionValidator("yml")
+        private val isYmlFile: Validator<Path> = hasExtension("yml")
     }
 }
