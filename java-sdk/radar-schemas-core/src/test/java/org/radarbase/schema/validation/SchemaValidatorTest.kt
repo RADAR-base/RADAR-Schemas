@@ -29,10 +29,9 @@ import org.radarbase.schema.Scope.CONNECTOR
 import org.radarbase.schema.Scope.KAFKA
 import org.radarbase.schema.Scope.MONITOR
 import org.radarbase.schema.Scope.PASSIVE
-import org.radarbase.schema.specification.SourceCatalogue.Companion.load
+import org.radarbase.schema.specification.SourceCatalogue
 import org.radarbase.schema.specification.config.SchemaConfig
 import org.radarbase.schema.specification.config.SourceConfig
-import org.radarbase.schema.validation.SchemaValidator.Companion.format
 import org.radarbase.schema.validation.ValidationHelper.COMMONS_PATH
 import java.io.IOException
 import java.nio.file.Path
@@ -121,10 +120,8 @@ class SchemaValidatorTest {
 
     @Throws(IOException::class)
     private fun testFromSpecification(scope: Scope) = runBlocking {
-        val sourceCatalogue = load(ROOT, SchemaConfig(), SourceConfig())
-        val result = format(
-            validator.analyseSourceCatalogue(scope, sourceCatalogue),
-        )
+        val sourceCatalogue = SourceCatalogue(ROOT, SchemaConfig(), SourceConfig())
+        val result = validator.analyseSourceCatalogue(scope, sourceCatalogue).toFormattedString()
         if (result.isNotEmpty()) {
             fail<Any>(result)
         }
@@ -137,9 +134,7 @@ class SchemaValidatorTest {
             SchemaConfig(),
             scope,
         )
-        val result = format(
-            validator.analyseFiles(schemaCatalogue, scope),
-        )
+        val result = validator.analyseFiles(schemaCatalogue, scope).toFormattedString()
         if (result.isNotEmpty()) {
             fail<Any>(result)
         }

@@ -20,7 +20,7 @@ import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.radarbase.schema.specification.SourceCatalogue.Companion.load
+import org.radarbase.schema.specification.SourceCatalogue
 import org.radarbase.schema.specification.config.SchemaConfig
 import org.radarbase.schema.specification.config.SourceConfig
 import java.nio.file.Paths
@@ -37,7 +37,9 @@ internal class SourceCatalogueServerTest {
         server = SourceCatalogueServer(9876)
         serverThread = Thread {
             try {
-                val sourceCatalog = load(Paths.get("../.."), SchemaConfig(), SourceConfig())
+                val sourceCatalog = runBlocking {
+                    SourceCatalogue(Paths.get("../.."), SchemaConfig(), SourceConfig())
+                }
                 server.start(sourceCatalog)
             } catch (e: IllegalStateException) {
                 // this is acceptable

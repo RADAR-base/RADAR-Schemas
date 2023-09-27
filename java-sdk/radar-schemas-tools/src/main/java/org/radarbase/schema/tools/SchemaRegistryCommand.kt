@@ -1,6 +1,5 @@
 package org.radarbase.schema.tools
 
-import kotlinx.coroutines.runBlocking
 import net.sourceforge.argparse4j.impl.Arguments
 import net.sourceforge.argparse4j.inf.ArgumentParser
 import net.sourceforge.argparse4j.inf.Namespace
@@ -17,7 +16,7 @@ import java.util.regex.Pattern
 class SchemaRegistryCommand : SubCommand {
     override val name = "register"
 
-    override fun execute(options: Namespace, app: CommandLineApp): Int {
+    override suspend fun execute(options: Namespace, app: CommandLineApp): Int {
         val url = options.get<String>("schemaRegistry")
         val apiKey = options.getString("api_key")
             ?: System.getenv("SCHEMA_REGISTRY_API_KEY")
@@ -25,22 +24,20 @@ class SchemaRegistryCommand : SubCommand {
             ?: System.getenv("SCHEMA_REGISTRY_API_SECRET")
         val toolConfigFile = options.getString("config")
         return try {
-            runBlocking {
-                val registration = createSchemaRegistry(url, apiKey, apiSecret, app.config)
-                val forced = options.getBoolean("force")
-                if (forced && !registration.putCompatibility(SchemaRegistry.Compatibility.NONE)) {
-                    return@runBlocking 1
-                }
-                val pattern: Pattern? = TopicRegistrar.matchTopic(
-                    options.getString("topic"),
-                    options.getString("match"),
-                )
-                val result = registerSchemas(app, registration, pattern)
-                if (forced) {
-                    registration.putCompatibility(SchemaRegistry.Compatibility.FULL)
-                }
-                if (result) 0 else 1
+            val registration = SchemaRegistry(url, apiKey, apiSecret, app.config)
+            val forced = options.getBoolean("force")
+            if (forced && !registration.putCompatibility(SchemaRegistry.Compatibility.NONE)) {
+                return 1
             }
+            val pattern: Pattern? = TopicRegistrar.matchTopic(
+                options.getString("topic"),
+                options.getString("match"),
+            )
+            val result = registerSchemas(app, registration, pattern)
+            if (forced) {
+                registration.putCompatibility(SchemaRegistry.Compatibility.FULL)
+            }
+            if (result) 0 else 1
         } catch (ex: MalformedURLException) {
             logger.error(
                 "Schema registry URL {} is invalid: {}",
@@ -88,7 +85,7 @@ class SchemaRegistryCommand : SubCommand {
         )
 
         @Throws(MalformedURLException::class, InterruptedException::class)
-        private suspend fun createSchemaRegistry(
+        private suspend fun SchemaRegistry(
             url: String,
             apiKey: String?,
             apiSecret: String?,

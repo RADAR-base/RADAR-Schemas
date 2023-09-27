@@ -15,7 +15,21 @@
  */
 package org.radarbase.schema.validation
 
+/** Exception raised by a validtor. */
 class ValidationException : RuntimeException {
     constructor(message: String?) : super(message)
     constructor(message: String?, exception: Throwable?) : super(message, exception)
+}
+
+/** Formats a stream of validation exceptions.  */
+fun List<ValidationException>.toFormattedString(): String {
+    return joinToString(separator = "") { ex: ValidationException ->
+        """
+                     |Validation FAILED:
+                     |${ex.message}
+                     |
+                     |
+                     |
+                """.trimMargin()
+    }
 }

@@ -18,34 +18,14 @@ import java.io.IOException
 import java.nio.file.Path
 import java.nio.file.PathMatcher
 import java.util.*
+import kotlin.collections.HashSet
 import kotlin.io.path.exists
-import kotlin.io.path.inputStream
+import kotlin.io.path.readText
 
-class SchemaCatalogue @JvmOverloads constructor(
-    private val schemaRoot: Path,
-    config: SchemaConfig,
-    scope: Scope? = null,
+class SchemaCatalogue(
+    val schemas: Map<String, SchemaMetadata>,
+    val unmappedSchemas: List<FailedSchemaMetadata>,
 ) {
-    val schemas: Map<String, SchemaMetadata>
-    val unmappedAvroFiles: List<FailedSchemaMetadata>
-
-    init {
-        val schemaTemp = HashMap<String, SchemaMetadata>()
-        val unmappedTemp = mutableListOf<FailedSchemaMetadata>()
-        val matcher = config.pathMatcher(schemaRoot)
-        runBlocking {
-            if (scope != null) {
-                loadSchemas(schemaTemp, unmappedTemp, scope, matcher, config)
-            } else {
-                for (useScope in Scope.entries) {
-                    loadSchemas(schemaTemp, unmappedTemp, useScope, matcher, config)
-                }
-            }
-        }
-        schemas = schemaTemp.toMap()
-        unmappedAvroFiles = unmappedTemp.toList()
-    }
-
     /**
      * Returns an avro topic with the schemas from this catalogue.
      * @param config avro topic configuration
@@ -54,8 +34,8 @@ class SchemaCatalogue @JvmOverloads constructor(
      * @throws NullPointerException if the key or value schema configurations are null
      * @throws IllegalArgumentException if the topic configuration is null
      */
-    fun getGenericAvroTopic(config: AvroTopicConfig): AvroTopic<GenericRecord, GenericRecord> {
-        val (keySchema, valueSchema) = getSchemaMetadata(config)
+    fun genericAvroTopic(config: AvroTopicConfig): AvroTopic<GenericRecord, GenericRecord> {
+        val (keySchema, valueSchema) = topicSchemas(config)
         return AvroTopic(
             requireNotNull(config.topic) { "Missing Avro topic in configuration" },
             requireNotNull(keySchema.schema) { "Missing Avro key schema" },
@@ -65,75 +45,6 @@ class SchemaCatalogue @JvmOverloads constructor(
         )
     }
 
-    @Throws(IOException::class)
-    private suspend fun loadSchemas(
-        schemas: MutableMap<String, SchemaMetadata>,
-        unmappedFiles: MutableList<FailedSchemaMetadata>,
-        scope: Scope,
-        matcher: PathMatcher,
-        config: SchemaConfig,
-    ) {
-        val walkRoot = schemaRoot.resolve(scope.lower)
-        val avroFiles = buildMap<Path, String> {
-            if (walkRoot.exists()) {
-                walkRoot
-                    .listRecursive { matcher.matches(it) && it.isAvscFile() }
-                    .forkJoin(Dispatchers.IO) { p ->
-                        p.inputStream().reader().use {
-                            p to it.readText()
-                        }
-                    }
-                    .toMap(this@buildMap)
-            }
-            config.schemas(scope).forEach { (key, value) ->
-                put(walkRoot.resolve(key), value)
-            }
-        }
-
-        var prevSize = -1
-
-        // Recursively parse all schemas.
-        // If the parsed schema size does not change anymore, the final schemas cannot be parsed
-        // at all.
-        while (prevSize != schemas.size) {
-            prevSize = schemas.size
-            val useTypes = schemas.mapValues { (_, v) -> v.schema }
-            val ignoreFiles = schemas.values.mapTo(HashSet()) { it.path }
-
-            schemas.putParsedSchemas(avroFiles, ignoreFiles, useTypes, scope)
-        }
-        val mappedPaths = schemas.values.mapTo(HashSet()) { it.path }
-
-        avroFiles.keys.asSequence()
-            .filter { it !in mappedPaths }
-            .distinct()
-            .mapTo(unmappedFiles) { p -> FailedSchemaMetadata(scope, p) }
-    }
-
-    private suspend fun MutableMap<String, SchemaMetadata>.putParsedSchemas(
-        customSchemas: Map<Path, String>,
-        ignoreFiles: Set<Path>,
-        useTypes: Map<String, Schema>,
-        scope: Scope,
-    ) = customSchemas
-        .filter { (p, _) -> p !in ignoreFiles }
-        .entries
-        .forkJoin { (p, schema) ->
-            val parser = Schema.Parser()
-            parser.addTypes(useTypes)
-            withContext(Dispatchers.IO) {
-                try {
-                    val parsedSchema = parser.parse(schema)
-                    parsedSchema.fullName to SchemaMetadata(parsedSchema, scope, p)
-                } catch (ex: Exception) {
-                    logger.debug("Cannot parse schema {}: {}", p, ex.toString())
-                    null
-                }
-            }
-        }
-        .filterNotNull()
-        .toMap(this@putParsedSchemas)
-
     /**
      * Returns an avro topic with the schemas from this catalogue.
      * @param config avro topic configuration
@@ -142,7 +53,7 @@ class SchemaCatalogue @JvmOverloads constructor(
      * @throws NullPointerException if the key or value schema configurations are null
      * @throws IllegalArgumentException if the topic configuration is null
      */
-    fun getSchemaMetadata(config: AvroTopicConfig): Pair<SchemaMetadata, SchemaMetadata> {
+    fun topicSchemas(config: AvroTopicConfig): Pair<SchemaMetadata, SchemaMetadata> {
         val parsedKeySchema = schemas[config.keySchema]
             ?: throw NoSuchElementException(
                 "Key schema " + config.keySchema +
@@ -155,8 +66,97 @@ class SchemaCatalogue @JvmOverloads constructor(
             )
         return Pair(parsedKeySchema, parsedValueSchema)
     }
-
-    companion object {
-        private val logger = LoggerFactory.getLogger(SchemaCatalogue::class.java)
-    }
 }
+
+private val logger = LoggerFactory.getLogger(SchemaCatalogue::class.java)
+
+/**
+ * Load a schema catalogue.
+ * @param schemaRoot root of schema directory.
+ * @param config schema configuration
+ * @param scope scope to read. If null, all scopes are read.
+ */
+suspend fun SchemaCatalogue(
+    schemaRoot: Path,
+    config: SchemaConfig,
+    scope: Scope? = null,
+): SchemaCatalogue {
+    val matcher = config.pathMatcher(schemaRoot)
+    val (schemas, unmapped) = runBlocking {
+        if (scope != null) {
+            loadSchemas(schemaRoot, scope, matcher, config)
+        } else {
+            Scope.entries
+                .forkJoin { s -> loadSchemas(schemaRoot, s, matcher, config) }
+                .reduce { (m1, l1), (m2, l2) -> Pair(m1 + m2, l1 + l2) }
+        }
+    }
+    return SchemaCatalogue(schemas, unmapped)
+}
+
+@Throws(IOException::class)
+private suspend fun loadSchemas(
+    schemaRoot: Path,
+    scope: Scope,
+    matcher: PathMatcher,
+    config: SchemaConfig,
+): Pair<Map<String, SchemaMetadata>, List<FailedSchemaMetadata>> {
+    val scopeRoot = schemaRoot.resolve(scope.lower)
+    val avroFiles = buildMap<Path, String> {
+        if (scopeRoot.exists()) {
+            scopeRoot
+                .listRecursive { matcher.matches(it) && it.isAvscFile() }
+                .forkJoin(Dispatchers.IO) { p ->
+                    p to p.readText()
+                }
+                .toMap(this@buildMap)
+        }
+        config.schemas(scope).forEach { (key, value) ->
+            put(scopeRoot.resolve(key), value)
+        }
+    }
+
+    var prevSize = -1
+
+    // Recursively parse all schemas.
+    // If the parsed schema size does not change anymore, the final schemas cannot be parsed
+    // at all.
+    val schemas = buildMap<String, SchemaMetadata> {
+        while (prevSize != size) {
+            prevSize = size
+            val useTypes = mapValues { (_, v) -> v.schema }
+            val ignoreFiles = values.mapTo(HashSet()) { it.path }
+
+            putAll(avroFiles.parseSchemas(ignoreFiles, useTypes, scope))
+        }
+    }
+    val mappedPaths = schemas.values.mapTo(HashSet()) { it.path }
+
+    val unmapped = avroFiles.keys
+        .filterTo(HashSet()) { it !in mappedPaths }
+        .map { p -> FailedSchemaMetadata(scope, p) }
+
+    return Pair(schemas, unmapped)
+}
+
+private suspend fun Map<Path, String>.parseSchemas(
+    ignoreFiles: Set<Path>,
+    useTypes: Map<String, Schema>,
+    scope: Scope,
+) = filter { (p, _) -> p !in ignoreFiles }
+    .entries
+    .forkJoin { (p, schema) ->
+        val parser = Schema.Parser()
+        parser.addTypes(useTypes)
+        withContext(Dispatchers.IO) {
+            try {
+                val parsedSchema = parser.parse(schema)
+                parsedSchema.fullName to SchemaMetadata(parsedSchema, scope, p)
+            } catch (ex: Exception) {
+                logger.debug("Cannot parse schema {}: {}", p, ex.toString())
+                null
+            }
+        }
+    }
+    .filterNotNull()
+    .toMap()

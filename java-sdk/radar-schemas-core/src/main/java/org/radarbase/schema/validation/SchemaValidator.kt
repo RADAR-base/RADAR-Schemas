@@ -58,7 +58,7 @@ class SchemaValidator(schemaRoot: Path, config: SchemaConfig) {
         val schemas = producers
             .flatMap { it.data.stream() }
             .flatMap { topic ->
-                val (keySchema, valueSchema) = catalogue.schemaCatalogue.getSchemaMetadata(topic)
+                val (keySchema, valueSchema) = catalogue.schemaCatalogue.topicSchemas(topic)
                 Stream.of(keySchema, valueSchema)
             }
             .collect(Collectors.toSet())
@@ -90,7 +90,7 @@ class SchemaValidator(schemaRoot: Path, config: SchemaConfig) {
         val validator = rules.isSchemaMetadataValid(false)
         val parsingValidator = parsingValidator(scope, schemaCatalogue)
 
-        schemaCatalogue.unmappedAvroFiles.forEach { metadata ->
+        schemaCatalogue.unmappedSchemas.forEach { metadata ->
             parsingValidator.launchValidation(metadata)
         }
 
@@ -142,19 +142,6 @@ class SchemaValidator(schemaRoot: Path, config: SchemaConfig) {
 
     companion object {
         private const val AVRO_EXTENSION = "avsc"
-
-        /** Formats a stream of validation exceptions.  */
-        fun format(exceptions: List<ValidationException>): String {
-            return exceptions.joinToString(separator = "") { ex: ValidationException ->
-                """
-                     |Validation FAILED:
-                     |${ex.message}
-                     |
-                     |
-                     |
-                """.trimMargin()
-            }
-        }
 
         fun Path.isAvscFile(): Boolean = extension.equals(AVRO_EXTENSION, ignoreCase = true)
     }

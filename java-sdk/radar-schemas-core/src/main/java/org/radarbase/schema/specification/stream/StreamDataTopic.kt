@@ -86,7 +86,7 @@ class StreamDataTopic : DataTopic() {
                     config.topic = topic
                     config.keySchema = keySchema
                     config.valueSchema = valueSchema
-                    Stream.of(schemaCatalogue.getGenericAvroTopic(config))
+                    Stream.of(schemaCatalogue.genericAvroTopic(config))
                 },
             )
     }

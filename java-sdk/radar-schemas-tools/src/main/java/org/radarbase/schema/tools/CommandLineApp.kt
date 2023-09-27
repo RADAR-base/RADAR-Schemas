@@ -15,6 +15,7 @@
  */
 package org.radarbase.schema.tools
 
+import kotlinx.coroutines.runBlocking
 import net.sourceforge.argparse4j.ArgumentParsers
 import net.sourceforge.argparse4j.helper.HelpScreenException
 import net.sourceforge.argparse4j.inf.ArgumentParser
@@ -45,9 +46,8 @@ import kotlin.system.exitProcess
 class CommandLineApp(
     val root: Path,
     val config: ToolConfig,
+    val catalogue: SourceCatalogue,
 ) {
-    val catalogue: SourceCatalogue = SourceCatalogue.load(root, config.schemas, config.sources)
-
     init {
         logger.info("radar-schema-tools is initialized with root directory {}", this.root)
     }
@@ -131,22 +131,27 @@ class CommandLineApp(
             val toolConfig = loadConfig(ns.getString("config"))
 
             logger.info("Loading radar-schemas-tools with configuration {}", toolConfig)
-
-            val app: CommandLineApp = try {
-                CommandLineApp(root, toolConfig)
-            } catch (e: IOException) {
-                logger.error("Failed to load catalog from root.")
-                exitProcess(1)
-            }
-            val subparser = ns.getString("subparser")
-            val command = subCommands.find { it.name == subparser }
-                ?: run {
-                    parser.handleError(
-                        ArgumentParserException("Subcommand $subparser not implemented", parser),
-                    )
+            runBlocking {
+                val app: CommandLineApp = try {
+                    val catalogue = SourceCatalogue(root, toolConfig.schemas, toolConfig.sources)
+                    CommandLineApp(root, toolConfig, catalogue)
+                } catch (e: IOException) {
+                    logger.error("Failed to load catalog from root.")
                     exitProcess(1)
                 }
-            exitProcess(command.execute(ns, app))
+                val subparser = ns.getString("subparser")
+                val command = subCommands.find { it.name == subparser }
+                    ?: run {
+                        parser.handleError(
+                            ArgumentParserException(
+                                "Subcommand $subparser not implemented",
+                                parser,
+                            ),
+                        )
+                        exitProcess(1)
+                    }
+                exitProcess(command.execute(ns, app))
+            }
         }
 
         private fun loadConfig(fileName: String): ToolConfig = try {

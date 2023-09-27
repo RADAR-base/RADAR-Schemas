@@ -1,5 +1,6 @@
 package org.radarbase.schema.specification.config
 
+import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.radarbase.schema.SchemaCatalogue
@@ -32,7 +33,9 @@ internal class SchemaConfigTest {
         val commonsRoot = Paths.get("../..").resolve(COMMONS_PATH)
             .absolute()
             .normalize()
-        val schemaCatalogue = SchemaCatalogue(commonsRoot, config)
+        val schemaCatalogue = runBlocking {
+            SchemaCatalogue(commonsRoot, config)
+        }
         assertEquals(1, schemaCatalogue.schemas.size)
         val (fullName, schemaMetadata) = schemaCatalogue.schemas.entries.first()
         assertEquals("org.radarcns.monitor.application.ApplicationUptime2", fullName)

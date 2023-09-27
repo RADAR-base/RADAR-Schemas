@@ -33,7 +33,7 @@ class SpecificationsValidatorTest {
     fun activeIsYml() = runBlocking {
         val validator = validator.ofScope(ACTIVE) ?: return@runBlocking
         val result = validator.isValidSpecification(ActiveSource::class.java)
-        assertEquals("", SchemaValidator.format(result))
+        assertEquals("", result.toFormattedString())
     }
 
     @Test
@@ -41,7 +41,7 @@ class SpecificationsValidatorTest {
     fun monitorIsYml() = runBlocking {
         val validator = validator.ofScope(MONITOR) ?: return@runBlocking
         val result = validator.isValidSpecification(MonitorSource::class.java)
-        assertEquals("", SchemaValidator.format(result))
+        assertEquals("", result.toFormattedString())
     }
 
     @Test
@@ -49,7 +49,7 @@ class SpecificationsValidatorTest {
     fun passiveIsYml() = runBlocking {
         val validator = validator.ofScope(PASSIVE) ?: return@runBlocking
         val result = validator.isValidSpecification(PassiveSource::class.java)
-        assertEquals("", SchemaValidator.format(result))
+        assertEquals("", result.toFormattedString())
     }
 
     @Test
@@ -57,7 +57,7 @@ class SpecificationsValidatorTest {
     fun connectorIsYml() = runBlocking {
         val validator = validator.ofScope(CONNECTOR) ?: return@runBlocking
         val result = validator.isValidSpecification(ConnectorSource::class.java)
-        assertEquals("", SchemaValidator.format(result))
+        assertEquals("", result.toFormattedString())
     }
 
     @Test
@@ -65,7 +65,7 @@ class SpecificationsValidatorTest {
     fun pushIsYml() = runBlocking {
         val validator = validator.ofScope(PUSH) ?: return@runBlocking
         val result = validator.isValidSpecification(PushSource::class.java)
-        assertEquals("", SchemaValidator.format(result))
+        assertEquals("", result.toFormattedString())
     }
 
     @Test
@@ -73,6 +73,6 @@ class SpecificationsValidatorTest {
     fun streamIsYml() = runBlocking {
         val validator = validator.ofScope(STREAM) ?: return@runBlocking
         val result = validator.isValidSpecification(StreamGroup::class.java)
-        assertEquals("", SchemaValidator.format(result))
+        assertEquals("", result.toFormattedString())
     }
 }

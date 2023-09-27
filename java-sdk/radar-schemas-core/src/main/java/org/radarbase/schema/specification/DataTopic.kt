@@ -55,7 +55,7 @@ class DataTopic : AvroTopicConfig() {
     @JsonIgnore
     @Throws(IOException::class)
     fun topics(schemaCatalogue: SchemaCatalogue): Stream<AvroTopic<*, *>> {
-        return Stream.of(schemaCatalogue.getGenericAvroTopic(this))
+        return Stream.of(schemaCatalogue.genericAvroTopic(this))
     }
 
     @JsonProperty("key_schema")

@@ -24,8 +24,8 @@ import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.radarbase.schema.validation.SchemaValidator
-import org.radarbase.schema.validation.ValidationHelper.getRecordName
+import org.radarbase.schema.validation.ValidationHelper.toRecordName
+import org.radarbase.schema.validation.toFormattedString
 import org.radarbase.schema.validation.validate
 import java.nio.file.Paths
 
@@ -43,13 +43,11 @@ class RadarSchemaFieldRulesTest {
     fun fileNameTest() {
         assertEquals(
             "Questionnaire",
-            getRecordName(Paths.get("/path/to/questionnaire.avsc")),
+            Paths.get("/path/to/questionnaire.avsc").toRecordName(),
         )
         assertEquals(
             "ApplicationExternalTime",
-            getRecordName(
-                Paths.get("/path/to/application_external_time.avsc"),
-            ),
+            Paths.get("/path/to/application_external_time.avsc").toRecordName(),
         )
     }
 
@@ -87,7 +85,7 @@ class RadarSchemaFieldRulesTest {
                     .apply(schemaBuilder)
                     .endRecord(),
             )
-        assertEquals(count, result.size) { message + SchemaValidator.format(result) }
+        assertEquals(count, result.size) { message + result.toFormattedString() }
     }
 
     @Test

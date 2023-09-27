@@ -43,9 +43,7 @@ object ValidationHelper {
         }
     }
 
-    fun getRecordName(path: Path): String {
-        return snakeToCamelCase(path.fileName.toString())
-    }
+    fun Path.toRecordName(): String = snakeToCamelCase(fileName.toString())
 
     fun isValidTopic(topicName: String?): Boolean = topicName?.matches(TOPIC_PATTERN) == true
 }

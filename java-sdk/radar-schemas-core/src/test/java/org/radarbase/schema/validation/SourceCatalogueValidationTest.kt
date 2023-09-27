@@ -16,6 +16,7 @@
 package org.radarbase.schema.validation
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
@@ -26,11 +27,11 @@ import org.opentest4j.MultipleFailuresError
 import org.radarbase.schema.specification.DataProducer
 import org.radarbase.schema.specification.DataTopic
 import org.radarbase.schema.specification.SourceCatalogue
-import org.radarbase.schema.specification.SourceCatalogue.Companion.load
 import org.radarbase.schema.specification.config.SchemaConfig
 import org.radarbase.schema.specification.config.SourceConfig
 import org.radarbase.schema.validation.ValidationHelper.isValidTopic
 import java.io.IOException
+import java.nio.file.Path
 import java.nio.file.Paths
 import java.util.Objects
 import java.util.stream.Collectors
@@ -106,13 +107,15 @@ class SourceCatalogueValidationTest {
     companion object {
         private lateinit var catalogue: SourceCatalogue
 
-        val BASE_PATH = Paths.get("../..").toAbsolutePath().normalize()
+        val BASE_PATH: Path = Paths.get("../..").toAbsolutePath().normalize()
 
         @BeforeAll
         @JvmStatic
         @Throws(IOException::class)
         fun setUp() {
-            catalogue = load(BASE_PATH, SchemaConfig(), SourceConfig())
+            catalogue = runBlocking {
+                SourceCatalogue(BASE_PATH, SchemaConfig(), SourceConfig())
+            }
         }
     }
 }

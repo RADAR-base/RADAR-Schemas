@@ -1,6 +1,5 @@
 package org.radarbase.schema.tools
 
-import kotlinx.coroutines.runBlocking
 import net.sourceforge.argparse4j.inf.ArgumentParser
 import net.sourceforge.argparse4j.inf.Namespace
 import org.radarbase.schema.registration.KafkaTopics
@@ -15,7 +14,7 @@ import org.slf4j.LoggerFactory
 class KafkaTopicsCommand : SubCommand {
     override val name = "create"
 
-    override fun execute(options: Namespace, app: CommandLineApp): Int {
+    override suspend fun execute(options: Namespace, app: CommandLineApp): Int {
         val brokers = options.getInt("brokers")
         val replication = options.getShort("replication") ?: 3
         if (brokers < replication) {
@@ -30,23 +29,21 @@ class KafkaTopicsCommand : SubCommand {
         val toolConfig: ToolConfig = app.config
             .configureKafka(bootstrapServers = options.getString("bootstrap_servers"))
 
-        return runBlocking {
-            KafkaTopics(toolConfig).use { topics ->
-                try {
-                    val numTries = options.getInt("num_tries")
-                    topics.initialize(brokers, numTries)
-                } catch (ex: IllegalStateException) {
-                    logger.error("Kafka brokers not yet available. Aborting.")
-                    return@use 1
-                }
-                topics.createTopics(
-                    app.catalogue,
-                    options.getInt("partitions") ?: 3,
-                    replication,
-                    options.getString("topic"),
-                    options.getString("match"),
-                )
+        return KafkaTopics(toolConfig).use { topics ->
+            try {
+                val numTries = options.getInt("num_tries")
+                topics.initialize(brokers, numTries)
+            } catch (ex: IllegalStateException) {
+                logger.error("Kafka brokers not yet available. Aborting.")
+                return@use 1
             }
+            topics.createTopics(
+                app.catalogue,
+                options.getInt("partitions") ?: 3,
+                replication,
+                options.getString("topic"),
+                options.getString("match"),
+            )
         }
     }
 

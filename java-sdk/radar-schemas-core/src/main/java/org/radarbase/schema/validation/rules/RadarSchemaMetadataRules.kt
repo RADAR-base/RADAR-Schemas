@@ -3,7 +3,7 @@ package org.radarbase.schema.validation.rules
 import org.apache.avro.Schema
 import org.radarbase.schema.specification.config.SchemaConfig
 import org.radarbase.schema.validation.ValidationHelper.getNamespace
-import org.radarbase.schema.validation.ValidationHelper.getRecordName
+import org.radarbase.schema.validation.ValidationHelper.toRecordName
 import java.nio.file.Path
 import java.nio.file.PathMatcher
 
@@ -41,7 +41,7 @@ class RadarSchemaMetadataRules(
     }
 
     private fun isNameSchemaLocationCorrect() = Validator<SchemaMetadata> { metadata ->
-        val expected = getRecordName(metadata.path)
+        val expected = metadata.path.toRecordName()
         if (!expected.equals(metadata.schema.name, ignoreCase = true)) {
             raise(metadata, "Record name should match file name. Expected record name is \"$expected\".")
         }

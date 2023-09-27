@@ -1,5 +1,6 @@
 package org.radarbase.schema.service
 
+import kotlinx.coroutines.runBlocking
 import net.sourceforge.argparse4j.ArgumentParsers
 import net.sourceforge.argparse4j.helper.HelpScreenException
 import net.sourceforge.argparse4j.inf.ArgumentParserException
@@ -10,7 +11,6 @@ import org.radarbase.jersey.enhancer.Enhancers.exception
 import org.radarbase.jersey.enhancer.Enhancers.health
 import org.radarbase.jersey.enhancer.Enhancers.mapper
 import org.radarbase.schema.specification.SourceCatalogue
-import org.radarbase.schema.specification.SourceCatalogue.Companion.load
 import org.radarbase.schema.specification.config.ToolConfig
 import org.radarbase.schema.specification.config.loadToolConfig
 import org.slf4j.LoggerFactory
@@ -50,7 +50,7 @@ class SourceCatalogueServer(
         private val logger = LoggerFactory.getLogger(SourceCatalogueServer::class.java)
 
         @JvmStatic
-        fun main(args: Array<String>) {
+        fun main(vararg args: String) {
             val logger = LoggerFactory.getLogger(SourceCatalogueServer::class.java)
             val parser = ArgumentParsers.newFor("radar-catalog-server")
                 .addHelp(true)
@@ -77,11 +77,13 @@ class SourceCatalogueServer(
             }
             val config = loadConfig(parsedArgs.getString("config"))
             val sourceCatalogue: SourceCatalogue = try {
-                load(
-                    Paths.get(parsedArgs.getString("root")),
-                    schemaConfig = config.schemas,
-                    sourceConfig = config.sources,
-                )
+                runBlocking {
+                    SourceCatalogue(
+                        Paths.get(parsedArgs.getString("root")),
+                        schemaConfig = config.schemas,
+                        sourceConfig = config.sources,
+                    )
+                }
             } catch (e: IOException) {
                 logger.error("Failed to load source catalogue", e)
                 logger.error(parser.formatUsage())

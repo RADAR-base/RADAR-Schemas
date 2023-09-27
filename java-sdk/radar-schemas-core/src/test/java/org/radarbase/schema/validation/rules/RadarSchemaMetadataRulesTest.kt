@@ -24,9 +24,10 @@ import org.junit.jupiter.api.Test
 import org.radarbase.schema.Scope.MONITOR
 import org.radarbase.schema.Scope.PASSIVE
 import org.radarbase.schema.specification.config.SchemaConfig
-import org.radarbase.schema.validation.SchemaValidator.Companion.format
 import org.radarbase.schema.validation.SourceCatalogueValidationTest
 import org.radarbase.schema.validation.ValidationHelper
+import org.radarbase.schema.validation.ValidationHelper.toRecordName
+import org.radarbase.schema.validation.toFormattedString
 import org.radarbase.schema.validation.validate
 import java.nio.file.Paths
 
@@ -45,13 +46,11 @@ class RadarSchemaMetadataRulesTest {
     fun fileNameTest() {
         assertEquals(
             "Questionnaire",
-            ValidationHelper.getRecordName(Paths.get("/path/to/questionnaire.avsc")),
+            Paths.get("/path/to/questionnaire.avsc").toRecordName(),
         )
         assertEquals(
             "ApplicationExternalTime",
-            ValidationHelper.getRecordName(
-                Paths.get("/path/to/application_external_time.avsc"),
-            ),
+            Paths.get("/path/to/application_external_time.avsc").toRecordName(),
         )
     }
 
@@ -110,7 +109,7 @@ class RadarSchemaMetadataRulesTest {
             .endRecord()
         result = validator.isSchemaLocationCorrect
             .validate(SchemaMetadata(schema, PASSIVE, filePath))
-        assertEquals("", format(result))
+        assertEquals("", result.toFormattedString())
     }
 
     companion object {
