@@ -13,7 +13,7 @@
     {"name": "design", "type":
       {"name": "OuraRingDesign", "type": "enum", "symbols": ["HERITAGE", "HORIZON", "UNKNOWN"], "doc": "Oura ring designs."},
       "doc": "Oura ring design.", "default": "UNKNOWN" },
-    {"name": "firmwareVersion", "type": ["null", "string"], "doc": "End date of the rest mode period. Null if unknown.", "default": null},
+    {"name": "firmwareVersion", "type": ["null", "string"], "doc": "Firmware version of the ring. Null if unknown.", "default": null},
     {"name": "hardwareType", "type":
       {"name": "OuraRingHardwareType", "type": "enum", "symbols": ["GEN1", "GEN2", "GEN2M", "GEN3", "UNKNOWN"], "doc": "Oura ring hardware type."},
       "doc": "Oura ring hardware types.", "default": "UNKNOWN" },
