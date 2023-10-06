@@ -4,7 +4,7 @@
   "type": "record",
   "doc": "The Ring Configuration scope includes information about the user's ring(s). This includes the model, size, color, etc.",
   "fields": [
-    {"name": "time", "type": "double", "doc": "Start time of the rest mode period in seconds since January 1, 1970, 00:00:00 UTC (Unix timestamp)."},
+    {"name": "time", "type": "double", "doc": "Timestamp of the record in seconds since January 1, 1970, 00:00:00 UTC (Unix timestamp)."},
     {"name": "timeReceived", "type": "double", "doc": "Time that this record was collected by a service in seconds since the Unix Epoch (s)."},
     {"name": "id", "type": ["null", "string"], "doc": "Unique identifier of the ring configuration from Oura.", "default": null},
     {"name": "color", "type":

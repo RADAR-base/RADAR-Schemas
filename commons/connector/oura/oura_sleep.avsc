@@ -4,7 +4,7 @@
   "type": "record",
   "doc": "Oura Sleep data for the specified Oura user within a given timeframe. A user can have multiple sleep periods per day.",
   "fields": [
-    {"name": "time", "type": "double", "doc": "Timestamp of the note containing the Oura tags."},
+    {"name": "time", "type": "double", "doc": "Start time of the sleep in seconds."},
     {"name": "timeReceived", "type": "double", "doc": "Time that this record was collected by a service in seconds since the Unix Epoch (s)."},
     {"name": "id", "type": ["null", "string"], "doc": "ID of the sleep record.", "default": null},
     {"name": "averageBreath", "type": ["null", "float"], "doc": "Average breathing rate during sleep as breaths/second.", "default": null},    

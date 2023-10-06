@@ -1,6 +1,6 @@
 {
   "namespace": "org.radarcns.connector.oura",
-  "name": "OuraDailyOxygenSaturation",
+  "name": "OuraDailySpo2",
   "type": "record",
   "doc": "This includes the daily blood oxygen saturation (spO2) average. Data only available for Gen 3 rings.",
   "fields": [

@@ -4,7 +4,7 @@
   "type": "record",
   "doc": "The Heart Rate data scope includes time-series heart rate data throughout the day and night. Heart rate is provided at 5-minute increments.",
   "fields": [
-    {"name": "time", "type": "double", "doc": "Start time of the activity in seconds since January 1, 1970, 00:00:00 UTC (Unix timestamp)."},
+    {"name": "time", "type": "double", "doc": "Timestamp of the heart rate in seconds since January 1, 1970, 00:00:00 UTC (Unix timestamp)."},
     {"name": "timeReceived", "type": "double", "doc": "Time that this record was collected by a service in seconds since the Unix Epoch (s)."},
     {"name": "id", "type": ["null", "string"], "doc": "Unique identifier of the Oura session or sleep record the heart rate data is taken from.", "default": null},
     {"name": "bpm", "type": ["null", "int"], "doc": "Heart rate in beats per minute.", "default": null},    

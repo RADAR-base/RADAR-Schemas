@@ -4,7 +4,7 @@
   "type": "record",
   "doc": "Oura Sleep phases in 5-minute intervals as defined in https://cloud.ouraring.com/v2/docs#operation/Single_sleep_Document_v2_usercollection_sleep__document_id__get.",
   "fields": [
-    {"name": "time", "type": "double", "doc": "Start time of the activity in seconds since January 1, 1970, 00:00:00 UTC (Unix timestamp)."},
+    {"name": "time", "type": "double", "doc": "Start time of the sleep phase in seconds since January 1, 1970, 00:00:00 UTC (Unix timestamp)."},
     {"name": "timeReceived", "type": "double", "doc": "Time that this record was collected by a service in seconds since the Unix Epoch (s)."},
     {"name": "id", "type": ["null", "string"], "doc": "Unique identifier of the Oura sleep record the sleep stage data is taken from.", "default": null},
     {"name": "phase", "type":
