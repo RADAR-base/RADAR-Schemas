@@ -49,3 +49,15 @@ data:
   - doc: Activity data with 5-minute granularity. 'Activity Classes' include non-wear, rest, inactive, high, low, and medium activity.
     topic: connect_oura_activity_class
     value_schema: .connector.oura.OuraActivityClass
+  - doc: The daily spO2 data of the user. This contains the spO2 average.
+    topic: connect_oura_daily_spo2
+    value_schema: .connector.oura.OuraDailySpo2
+  - doc: The Rest Mode scope includes information about rest mode periods.
+    topic: connect_oura_rest_mode_period
+    value_schema: .connector.oura.OuraRestModePeriod
+  - doc: The Ring Configuration scope includes information about the user's ring(s). This includes the model, size, color, etc.
+    topic: connect_oura_ring_configuration
+    value_schema: .connector.oura.OuraRingConfiguration
+  - doc: This includes recommendations for the optimal bedtime window that is calculated based on sleep data.
+    topic: connect_oura_recommended_sleep_time
+    value_schema: .connector.oura.OuraRecommendedSleepTime
