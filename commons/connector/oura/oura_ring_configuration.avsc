@@ -1,0 +1,23 @@
+{
+  "namespace": "org.radarcns.connector.oura",
+  "name": "OuraRingConfiguration",
+  "type": "record",
+  "doc": "The Ring Configuration scope includes information about the user's ring(s). This includes the model, size, color, etc.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Timestamp of the record in seconds since January 1, 1970, 00:00:00 UTC (Unix timestamp)."},
+    {"name": "timeReceived", "type": "double", "doc": "Time that this record was collected by a service in seconds since the Unix Epoch (s)."},
+    {"name": "id", "type": ["null", "string"], "doc": "Unique identifier of the ring configuration from Oura.", "default": null},
+    {"name": "color", "type":
+      {"name": "OuraRingColor", "type": "enum", "symbols": ["GLOSSY_BLACK", "STEALTH_BLACK", "ROSE", "SILVER", "GLOSSY_GOLD", "UNKNOWN"], "doc": "Oura ring colors."},
+      "doc": "Oura ring color.", "default": "UNKNOWN" },
+    {"name": "design", "type":
+      {"name": "OuraRingDesign", "type": "enum", "symbols": ["HERITAGE", "HORIZON", "UNKNOWN"], "doc": "Oura ring designs."},
+      "doc": "Oura ring design.", "default": "UNKNOWN" },
+    {"name": "firmwareVersion", "type": ["null", "string"], "doc": "Firmware version of the ring. Null if unknown.", "default": null},
+    {"name": "hardwareType", "type":
+      {"name": "OuraRingHardwareType", "type": "enum", "symbols": ["GEN1", "GEN2", "GEN2M", "GEN3", "UNKNOWN"], "doc": "Oura ring hardware type."},
+      "doc": "Oura ring hardware types.", "default": "UNKNOWN" },
+    {"name": "setUpAt", "type": ["null", "double"], "doc": "Timestamp indicating when the ring was set up. Null if unknown.", "default": null},
+    {"name": "size", "type": ["null", "int"], "doc": "US size of the Oura ring. Null if unknown.", "default": null}
+  ]
+}

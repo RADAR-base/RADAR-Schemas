@@ -1,0 +1,23 @@
+{
+  "namespace": "org.radarcns.connector.oura",
+  "name": "OuraWorkout",
+  "type": "record",
+  "doc": "The Workout data scope includes information about user workouts. This is a diverse, growing list of workouts that help inform how the user is training and exercising.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Start time of the workout in seconds since January 1, 1970, 00:00:00 UTC (Unix timestamp)."},
+    {"name": "endTime", "type": "double", "doc": "End time of the workout in seconds since January 1, 1970, 00:00:00 UTC (Unix timestamp)."},
+    {"name": "timeReceived", "type": "double", "doc": "Time that this record was collected by a service in seconds since the Unix Epoch (s)."},
+    {"name": "id", "type": ["null", "string"], "doc": "Unique identifier of the workout from Oura.", "default": null},    
+    {"name": "activity", "type": ["null", "string"], "doc": "Type of the workout activity.", "default": null},
+    {"name": "calories", "type": ["null", "float"], "doc": "Energy burned in kilocalories during the workout. Null if unknown.", "default": null},
+    {"name": "day", "type": ["null", "string"], "doc": "Day when the workout occurred. Null if unknown.", "default": null},
+    {"name": "distance", "type": ["null", "float"], "doc": "Distance traveled in meters during the workout. Null if unknown.", "default": null},
+    {"name": "intensity", "type":
+      {"name": "OuraWorkoutIntensity", "type": "enum", "symbols": ["EASY", "MODERATE", "HARD", "UNKNOWN"], "doc": "Workout intensity as computed by Oura."},
+      "doc": "Workout intensity as computed by Oura. UNKNOWN when this data is not provided by Oura.", "default": "UNKNOWN" },
+    {"name": "label", "type": ["null", "string"], "doc": "User-defined label for the workout. Null if unknown.", "default": null},
+    {"name": "source", "type":
+      {"name": "OuraWorkoutSource", "type": "enum", "symbols": ["MANUAL", "AUTODETECTED", "CONFIRMED", "WORKOUT_HEART_RATE", "UNKNOWN"], "doc": "Workout source type as computed by Oura."},
+      "doc": "Workout source type as computed by Oura. UNKNOWN when this data is not provided by Oura.", "default": "UNKNOWN" }
+  ]
+}

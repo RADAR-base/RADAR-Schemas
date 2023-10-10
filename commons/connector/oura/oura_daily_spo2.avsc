@@ -1,0 +1,13 @@
+{
+  "namespace": "org.radarcns.connector.oura",
+  "name": "OuraDailySpo2",
+  "type": "record",
+  "doc": "This includes the daily blood oxygen saturation (spO2) average. Data only available for Gen 3 rings.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Start time of the sleep in seconds since January 1, 1970, 00:00:00 UTC (Unix timestamp)."},
+    {"name": "timeReceived", "type": "double", "doc": "Time that this record was collected by a service in seconds since the Unix Epoch (s)."},
+    {"name": "id", "type": ["null", "string"], "doc": "Unique identifier of the spO2 data from Oura.", "default": null},
+    {"name": "spo2AveragePercentage", "type": ["null", "float"], "doc": "The average oxygen saturation percentage value over a single day.", "default": null},    
+    {"name": "day", "type": ["null", "string"], "doc": "Day that the daily oxygen saturation data belongs to. Null if unknown.", "default": null}
+  ]
+}
