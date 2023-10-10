@@ -1,0 +1,12 @@
+{
+  "namespace": "org.radarcns.connector.oura",
+  "name": "OuraHeartRateVariability",
+  "type": "record",
+  "doc": "This describes the heart rate variability provided by the Oura Ring.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Start time of the hrv in seconds since January 1, 1970, 00:00:00 UTC (Unix timestamp)."},
+    {"name": "timeReceived", "type": "double", "doc": "Time that this record was collected by a service in seconds since the Unix Epoch (s)."},
+    {"name": "id", "type": ["null", "string"], "doc": "Unique identifier of the Oura session or sleep record the hrv data is taken from.", "default": null},
+    {"name": "hrv", "type": ["null", "float"], "doc": "The HRV value in milliseconds.", "default": null}   
+  ]
+}

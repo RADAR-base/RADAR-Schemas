@@ -1,0 +1,16 @@
+{
+  "namespace": "org.radarcns.connector.oura",
+  "name": "OuraPersonalInfo",
+  "type": "record",
+  "doc": "This describes personal information (e.g. age, email, weight, and height) about the user. You can access the id on the personal_info route with any access token (no scopes are required).",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Timestamp of the record."},
+    {"name": "timeReceived", "type": "double", "doc": "Time that this record was collected by a service in seconds since the Unix Epoch (s)."},
+    {"name": "id", "type": ["null", "string"], "doc": "ID of the record.", "default": null},
+    {"name": "age", "type": ["null", "int"], "doc": "Age of the user.", "default": null},    
+    {"name": "weight", "type": ["null", "float"], "doc": "Weight of the user.", "default": null},    
+    {"name": "height", "type": ["null", "float"], "doc": "Height of the user.", "default": null},         
+    {"name": "biologicalSex", "type": ["null", "string"], "doc": "Biological sex of the user.", "default": null},      
+    {"name": "email", "type": ["null", "string"], "doc": "Email of the user.", "default": null}    
+  ]
+}

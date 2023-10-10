@@ -1,0 +1,14 @@
+{
+  "namespace": "org.radarcns.connector.oura",
+  "name": "OuraSleepMovement",
+  "type": "record",
+  "doc": "Oura Sleep movement in 30-second intervals as defined in https://cloud.ouraring.com/v2/docs#operation/Single_sleep_Document_v2_usercollection_sleep__document_id__get.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Start time of the sleep movement in seconds since January 1, 1970, 00:00:00 UTC (Unix timestamp)."},
+    {"name": "timeReceived", "type": "double", "doc": "Time that this record was collected by a service in seconds since the Unix Epoch (s)."},
+    {"name": "id", "type": ["null", "string"], "doc": "Unique identifier of the Oura sleep record the sleep movement data is taken from.", "default": null},
+    {"name": "movement", "type":
+      {"name": "OuraSleepMovementType", "type": "enum", "symbols": ["NO_MOTION", "RESTLESS", "TOSSING_AND_TURNING", "ACTIVE", "UNKNOWN"], "doc": "Sleep movement type as computed by Oura."},
+      "doc": "Sleep movement at a 30-second interval. UNKNOWN when this data is not provided (e.g. samples from sleep API).", "default": "UNKNOWN" }
+  ]
+}

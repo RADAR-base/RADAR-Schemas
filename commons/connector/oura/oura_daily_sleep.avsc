@@ -1,0 +1,20 @@
+{
+  "namespace": "org.radarcns.connector.oura",
+  "name": "OuraDailySleep",
+  "type": "record",
+  "doc": "This includes the daily sleep summary values. Sleep period is a nearly continuous, longish period of time spent lying down in bed.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Start time of the sleep in seconds since January 1, 1970, 00:00:00 UTC (Unix timestamp)."},
+    {"name": "timeReceived", "type": "double", "doc": "Time that this record was collected by a service in seconds since the Unix Epoch (s)."},
+    {"name": "id", "type": ["null", "string"], "doc": "Unique identifier of the sleep data from Oura.", "default": null},    
+    {"name": "contributorDeepSleep", "type": ["null", "int"], "doc": "Contribution of deep sleep in range [1, 100] to the sleep score. Null if unknown.", "default": null},    
+    {"name": "contributorEfficiency", "type": ["null", "int"], "doc": "Contribution of sleep efficiency in range [1, 100] to the sleep score. Null if unknown.", "default": null},
+    {"name": "contributorLatency", "type": ["null", "int"], "doc": "Contribution of sleep latency in range [1, 100] to the sleep score. Null if unknown.", "default": null},
+    {"name": "contributorRemSleep", "type": ["null", "int"], "doc": "Contribution of REM sleep in range [1, 100] to the sleep score. Null if unknown.", "default": null},
+    {"name": "contributorRestfulness", "type": ["null", "int"], "doc": "Contribution of sleep restfulness in range [1, 100] to the sleep score. Null if unknown.", "default": null},
+    {"name": "contributorTiming", "type": ["null", "int"], "doc": "Contribution of sleep timing in range [1, 100] to the sleep score. Null if unknown.", "default": null},
+    {"name": "contributorTotalSleep", "type": ["null", "int"], "doc": "Contribution of total sleep in range [1, 100] to the sleep score. Null if unknown.", "default": null},
+    {"name": "day", "type": ["null", "string"], "doc": "Day that the daily sleep belongs to. Null if unknown.", "default": null},
+    {"name": "score", "type": ["null", "int"], "doc": "Daily sleep score in range [1, 100]. Null if unknown.", "default": null}
+  ]
+}

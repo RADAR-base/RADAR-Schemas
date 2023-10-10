@@ -1,0 +1,22 @@
+{
+  "namespace": "org.radarcns.passive.google",
+  "type": "record",
+  "name": "GoogleActivityTransitionEvent",
+  "doc": "Represents an activity transition event, for example start to walk, stop running etc.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "The UNIX epoch time (s) for the moment when the activity takes place.." },
+    { "name": "timeReceived", "type": "double", "doc": "Device receiver timestamp in UTC (s)." },
+    { "name": "activity", "type": ["null",{
+      "name": "ActivityType",
+      "type": "enum",
+      "doc": "The detected activity of the device. \nIN_VEHICLE indicates the device is in a vehicle, such as a car. \nON_BICYCLE indicates the device is on a bicycle. \n ON_FOOT indicates the device is on a user who is walking or running. \nRUNNING indicates the device is on a user who is running. This is a sub-activity of ON_FOOT. \nSTILL indicates the device is still (not moving). \nWALKING indicates the device is on a user who is walking. This is a sub-activity of ON_FOOT.",
+      "symbols": ["IN_VEHICLE", "ON_BICYCLE", "ON_FOOT", "RUNNING", "STILL", "WALKING", "UNKNOWN"]
+    }], "doc": "Gets the type of the activity of the transition.", "default": null },
+    { "name": "transition", "type": {
+      "name": "TransitionType",
+      "type": "enum",
+      "doc": "Represents the transition associated with an activity listed in ActivityType. For instance start to walk, stop running etc. \nENTER represents user enters the given activity from ActivityType. \nEXIT represents user exits the given activity from ActivityType.",
+      "symbols": ["ENTER", "EXIT", "UNKNOWN"]
+    }, "doc": "Represents the transition associated with an activity listed in ActivityType.", "default": "UNKNOWN" }
+  ]
+}

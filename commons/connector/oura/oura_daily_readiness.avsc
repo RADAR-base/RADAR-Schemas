@@ -1,0 +1,23 @@
+{
+  "namespace": "org.radarcns.connector.oura",
+  "name": "OuraDailyReadiness",
+  "type": "record",
+  "doc": "This includes the daily readiness summary values. Readiness tells how ready you are for the day.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Time the daily readiness record belongs to in seconds since January 1, 1970, 00:00:00 UTC (Unix timestamp)."},
+    {"name": "timeReceived", "type": "double", "doc": "Time that this record was collected by a service in seconds since the Unix Epoch (s)."},
+    {"name": "id", "type": ["null", "string"], "doc": "Unique identifier of the readiness data from Oura.", "default": null},    
+    {"name": "contributorActivityBalance", "type": ["null", "int"], "doc": "Contribution of cumulative activity balance in range [1, 100] to the readiness score. Null if unknown.", "default": null},    
+    {"name": "contributorBodyTemperature", "type": ["null", "int"], "doc": "Contribution of body temperature in range [1, 100] to the readiness score. Null if unknown.", "default": null},
+    {"name": "contributorHrvBalance", "type": ["null", "int"], "doc": "Contribution of heart rate variability balance in range [1, 100] to the readiness score. Null if unknown.", "default": null},
+    {"name": "contributorPreviousDayActivity", "type": ["null", "int"], "doc": "Contribution of previous day's activity in range [1, 100] to the readiness score. Null if unknown.", "default": null},
+    {"name": "contributorPreviousNight", "type": ["null", "int"], "doc": "Contribution of previous night's sleep in range [1, 100] to the readiness score. Null if unknown.", "default": null},
+    {"name": "contributorRecoveryIndex", "type": ["null", "int"], "doc": "Contribution of previous 7-day exercise volume in range [1, 100] to the readiness score. Null if unknown.", "default": null},
+    {"name": "contributorRestingHeartRate", "type": ["null", "int"], "doc": "Contribution of resting heart rate in range [1, 100] to the readiness score. Null if unknown.", "default": null},
+    {"name": "contributorSleepBalance", "type": ["null", "int"], "doc": "Contribution of sleep balance in range [1, 100] to the readiness score. Null if unknown.", "default": null},
+    {"name": "day", "type": ["null", "string"], "doc": "Day that the daily readiness belongs to. Null if unknown.", "default": null},
+    {"name": "score", "type": ["null", "int"], "doc": "Daily readiness score in range [1, 100]. Null if unknown.", "default": null},
+    {"name": "temperatureDeviation", "type": ["null", "float"], "doc": "Temperature deviation in degrees Celsius. Null if unknown.", "default": null},
+    {"name": "temperatureTrendDeviation", "type": ["null", "float"], "doc": "Temperature trend deviation in degrees Celsius. Null if unknown.", "default": null}
+  ]
+}

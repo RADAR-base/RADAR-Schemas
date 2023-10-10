@@ -1,0 +1,14 @@
+{
+  "namespace": "org.radarcns.connector.oura",
+  "name": "OuraRestModePeriod",
+  "type": "record",
+  "doc": "The Rest Mode scope includes information about rest mode periods.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Start time of the rest mode period in seconds since January 1, 1970, 00:00:00 UTC (Unix timestamp)."},
+    {"name": "endTime", "type": "double", "doc": "End time of the rest mode period in seconds since January 1, 1970, 00:00:00 UTC (Unix timestamp)."},
+    {"name": "timeReceived", "type": "double", "doc": "Time that this record was collected by a service in seconds since the Unix Epoch (s)."},
+    {"name": "id", "type": ["null", "string"], "doc": "Unique identifier of the rest mode period from Oura.", "default": null},
+    {"name": "startDay", "type": ["null", "string"], "doc": "Start date of the rest mode period. Null if unknown.", "default": null},
+    {"name": "endDay", "type": ["null", "string"], "doc": "End date of the rest mode period. Null if unknown.", "default": null}
+  ]
+}
