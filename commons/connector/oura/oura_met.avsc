@@ -1,0 +1,12 @@
+{
+  "namespace": "org.radarcns.connector.oura",
+  "name": "OuraMet",
+  "type": "record",
+  "doc": "This describes the metabolic equivalent data (MET) during an activity. MET is a common measure used to express the energy expenditure and intensity of different physical activities.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Start time of the activity in seconds since January 1, 1970, 00:00:00 UTC (Unix timestamp)."},
+    {"name": "timeReceived", "type": "double", "doc": "Time that this record was collected by a service in seconds since the Unix Epoch (s)."},
+    {"name": "id", "type": ["null", "string"], "doc": "Unique identifier of the Oura activity record the met data is taken from.", "default": null},
+    {"name": "met", "type": ["null", "float"], "doc": "Activity metabolic equivalent (MET) in seconds.", "default": null}  
+  ]
+}

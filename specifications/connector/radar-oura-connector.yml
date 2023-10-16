@@ -1,0 +1,63 @@
+name: RADAR-OURA-CONNECTOR
+vendor: RADAR-base
+model: radar-connect-oura-source
+version: 0.0.1
+doc: Spec for Radar Oura connector. Schemas should be registered in the connector.
+data:
+  - doc: The daily activity summary values and detailed activity levels.
+    topic: connect_oura_daily_activity
+    value_schema: .connector.oura.OuraDailyActivity
+  - doc: The daily readiness summary values.
+    topic: connect_oura_daily_readiness
+    value_schema: .connector.oura.OuraDailyReadiness
+  - doc: The daily sleep summary values.
+    topic: connect_oura_daily_sleep
+    value_schema: .connector.oura.OuraDailySleep
+  - doc: Timeseries heart rate data.
+    topic: connect_oura_heart_rate
+    value_schema: .connector.oura.OuraHeartRate
+  - doc: Timeseries heart rate variability data.
+    topic: connect_oura_heart_rate_variability
+    value_schema: .connector.oura.OuraHeartRateVariability
+  - doc: Timeseries MET (metabolic equivalent) data. This describes MET data during an activity.
+    topic: connect_oura_met
+    value_schema: .connector.oura.OuraMet  
+  - doc: Timeseries motion count data. This describes motion count during a session.
+    topic: connect_oura_motion_count
+    value_schema: .connector.oura.OuraMotionCount
+  - doc: The tag data scope provides information on the tags the users enter in the mobile app, which includes activities, symptoms, etc.
+    topic: connect_oura_tag
+    value_schema: .connector.oura.OuraTag
+  - doc: The Sessions data scope provides information on how users engage with guided and unguided sessions in the Oura app.
+    topic: connect_oura_session
+    value_schema: .connector.oura.OuraSession
+  - doc: The sleep data for the specified Oura user within a given timeframe. A user can have multiple sleep periods per day.
+    topic: connect_oura_sleep
+    value_schema: .connector.oura.OuraSleep
+  - doc: The workout data scope includes information about user workouts.
+    topic: connect_oura_workout
+    value_schema: .connector.oura.OuraWorkout
+  - doc: The personal info scope includes personal information (e.g. age, email, weight, and height) about the user. 
+    topic: connect_oura_personal_info
+    value_schema: .connector.oura.OuraPersonalInfo
+  - doc: Sleep data with 5-minute granularity. 'Sleep Phase' levels include deep, light, rem, and awake.
+    topic: connect_oura_sleep_phase
+    value_schema: .connector.oura.OuraSleepPhase
+  - doc: Sleep movement data with 30-second granularity. 'Sleep Movement' levels include no motion, restless, tossing and turning, and active.
+    topic: connect_oura_sleep_movement
+    value_schema: .connector.oura.OuraSleepMovement
+  - doc: Activity data with 5-minute granularity. 'Activity Classes' include non-wear, rest, inactive, high, low, and medium activity.
+    topic: connect_oura_activity_class
+    value_schema: .connector.oura.OuraActivityClass
+  - doc: The daily spO2 data of the user. This contains the spO2 average.
+    topic: connect_oura_daily_spo2
+    value_schema: .connector.oura.OuraDailySpo2
+  - doc: The Rest Mode scope includes information about rest mode periods.
+    topic: connect_oura_rest_mode_period
+    value_schema: .connector.oura.OuraRestModePeriod
+  - doc: The Ring Configuration scope includes information about the user's ring(s). This includes the model, size, color, etc.
+    topic: connect_oura_ring_configuration
+    value_schema: .connector.oura.OuraRingConfiguration
+  - doc: This includes recommendations for the optimal bedtime window that is calculated based on sleep data.
+    topic: connect_oura_recommended_sleep_time
+    value_schema: .connector.oura.OuraRecommendedSleepTime

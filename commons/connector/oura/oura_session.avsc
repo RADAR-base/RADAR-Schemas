@@ -1,0 +1,18 @@
+{
+  "namespace": "org.radarcns.connector.oura",
+  "name": "OuraSession",
+  "type": "record",
+  "doc": "The Sessions data scope provides information on how users engage with guided and unguided sessions in the Oura app, including the user’s biometric trends during the sessions.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Start time of the session in seconds since January 1, 1970, 00:00:00 UTC (Unix timestamp)."},
+    {"name": "endTime", "type": "double", "doc": "End time of the session in seconds since January 1, 1970, 00:00:00 UTC (Unix timestamp)."},
+    {"name": "timeReceived", "type": "double", "doc": "Time that this record was collected by a service in seconds since the Unix Epoch (s)."},
+    {"name": "id", "type": ["null", "string"], "doc": "Unique identifier of the session from Oura.", "default": null},    
+    {"name": "type", "type":
+      {"name": "OuraMomentType", "type": "enum", "symbols": ["BREATHING", "MEDITATION", "NAP", "RELAXATION", "REST", "BODY_STATUS", "UNKNOWN"], "doc": "Possible Oura Moment types."},
+      "doc": "Oura Moment type. UNKNOWN when this data is not provided by Oura.", "default": "UNKNOWN" },
+    {"name": "mood", "type":
+      {"name": "OuraMomentMood", "type": "enum", "symbols": ["BAD", "WORSE", "SAME", "GOOD", "GREAT", "UNKNOWN"], "doc": "Possible Oura Moment moods."},
+      "doc": "Oura Moment mood. UNKNOWN when this data is not provided by Oura.", "default": "UNKNOWN" }
+  ]
+}
