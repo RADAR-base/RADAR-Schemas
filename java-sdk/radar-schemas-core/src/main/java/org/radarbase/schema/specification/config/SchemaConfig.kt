@@ -1,7 +1,6 @@
 package org.radarbase.schema.specification.config
 
 import org.radarbase.schema.Scope
-import org.radarbase.schema.Scope.*
 
 data class SchemaConfig(
     override val include: List<String> = listOf(),
@@ -15,14 +14,14 @@ data class SchemaConfig(
     val push: Map<String, String> = emptyMap(),
     val stream: Map<String, String> = emptyMap(),
 ) : PathMatcherConfig {
-    fun schemas(scope: Scope): Map<String, String> = when(scope) {
-        ACTIVE -> active
-        KAFKA -> kafka
-        CATALOGUE -> catalogue
-        MONITOR -> monitor
-        PASSIVE -> passive
-        STREAM -> stream
-        CONNECTOR -> connector
-        PUSH -> push
+    fun schemas(scope: Scope): Map<String, String> = when (scope) {
+        Scope.ACTIVE -> active
+        Scope.KAFKA -> kafka
+        Scope.CATALOGUE -> catalogue
+        Scope.MONITOR -> monitor
+        Scope.PASSIVE -> passive
+        Scope.STREAM -> stream
+        Scope.CONNECTOR -> connector
+        Scope.PUSH -> push
     }
 }

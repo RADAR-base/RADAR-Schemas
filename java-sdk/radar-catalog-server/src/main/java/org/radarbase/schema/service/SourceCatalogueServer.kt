@@ -1,5 +1,6 @@
 package org.radarbase.schema.service
 
+import kotlinx.coroutines.runBlocking
 import net.sourceforge.argparse4j.ArgumentParsers
 import net.sourceforge.argparse4j.helper.HelpScreenException
 import net.sourceforge.argparse4j.inf.ArgumentParserException
@@ -9,9 +10,7 @@ import org.radarbase.jersey.config.ConfigLoader.createResourceConfig
 import org.radarbase.jersey.enhancer.Enhancers.exception
 import org.radarbase.jersey.enhancer.Enhancers.health
 import org.radarbase.jersey.enhancer.Enhancers.mapper
-import org.radarbase.jersey.enhancer.Enhancers.okhttp
 import org.radarbase.schema.specification.SourceCatalogue
-import org.radarbase.schema.specification.SourceCatalogue.Companion.load
 import org.radarbase.schema.specification.config.ToolConfig
 import org.radarbase.schema.specification.config.loadToolConfig
 import org.slf4j.LoggerFactory
@@ -25,18 +24,19 @@ import kotlin.system.exitProcess
  * This server provides a webservice to share the SourceType Catalogues provided in *.yml files as
  * [org.radarbase.schema.service.SourceCatalogueService.SourceTypeResponse]
  */
-class SourceCatalogueServer(private val serverPort: Int) : Closeable {
+class SourceCatalogueServer(
+    private val serverPort: Int,
+) : Closeable {
     private lateinit var server: GrizzlyServer
 
     fun start(sourceCatalogue: SourceCatalogue) {
         val config = createResourceConfig(
             listOf(
                 mapper,
-                okhttp,
                 exception,
                 health,
-                SourceCatalogueJerseyEnhancer(sourceCatalogue)
-            )
+                SourceCatalogueJerseyEnhancer(sourceCatalogue),
+            ),
         )
         server = GrizzlyServer(URI.create("http://0.0.0.0:$serverPort/"), config, false)
         server.listen()
@@ -49,15 +49,8 @@ class SourceCatalogueServer(private val serverPort: Int) : Closeable {
     companion object {
         private val logger = LoggerFactory.getLogger(SourceCatalogueServer::class.java)
 
-        init {
-            System.setProperty(
-                "java.util.logging.manager",
-                "org.apache.logging.log4j.jul.LogManager"
-            )
-        }
-
         @JvmStatic
-        fun main(args: Array<String>) {
+        fun main(vararg args: String) {
             val logger = LoggerFactory.getLogger(SourceCatalogueServer::class.java)
             val parser = ArgumentParsers.newFor("radar-catalog-server")
                 .addHelp(true)
@@ -84,11 +77,13 @@ class SourceCatalogueServer(private val serverPort: Int) : Closeable {
             }
             val config = loadConfig(parsedArgs.getString("config"))
             val sourceCatalogue: SourceCatalogue = try {
-                load(
-                    Paths.get(parsedArgs.getString("root")),
-                    schemaConfig = config.schemas,
-                    sourceConfig = config.sources,
-                )
+                runBlocking {
+                    SourceCatalogue(
+                        Paths.get(parsedArgs.getString("root")),
+                        schemaConfig = config.schemas,
+                        sourceConfig = config.sources,
+                    )
+                }
             } catch (e: IOException) {
                 logger.error("Failed to load source catalogue", e)
                 logger.error(parser.formatUsage())
@@ -108,8 +103,11 @@ class SourceCatalogueServer(private val serverPort: Int) : Closeable {
         private fun loadConfig(fileName: String): ToolConfig = try {
             loadToolConfig(fileName)
         } catch (ex: IOException) {
-            logger.error("Cannot configure radar-catalog-server from config file {}: {}",
-                fileName, ex.message)
+            logger.error(
+                "Cannot configure radar-catalog-server from config file {}: {}",
+                fileName,
+                ex.message,
+            )
             exitProcess(1)
         }
     }

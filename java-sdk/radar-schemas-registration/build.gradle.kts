@@ -7,18 +7,14 @@ repositories {
 dependencies {
     api(project(":radar-schemas-commons"))
     api(project(":radar-schemas-core"))
-    val okHttpVersion: String by project
-    api("com.squareup.okhttp3:okhttp:$okHttpVersion")
-    val radarCommonsVersion: String by project
-    api("org.radarbase:radar-commons-server:$radarCommonsVersion")
 
-    val confluentVersion: String by project
-    implementation("io.confluent:kafka-connect-avro-converter:$confluentVersion")
-    implementation("io.confluent:kafka-schema-registry-client:$confluentVersion")
+    implementation("org.radarbase:radar-commons:${Versions.radarCommons}")
+    api("org.radarbase:radar-commons-server:${Versions.radarCommons}")
+    implementation("org.radarbase:radar-commons-kotlin:${Versions.radarCommons}")
 
-    val kafkaVersion: String by project
-    implementation("org.apache.kafka:connect-json:$kafkaVersion")
+    implementation("io.confluent:kafka-connect-avro-converter:${Versions.confluent}")
+    implementation("io.confluent:kafka-schema-registry-client:${Versions.confluent}")
 
-    val slf4jVersion: String by project
-    implementation("org.slf4j:slf4j-api:$slf4jVersion")
+    implementation("org.apache.kafka:connect-json:${Versions.kafka}")
+    implementation("io.ktor:ktor-client-auth:2.3.4")
 }

@@ -1,6 +1,10 @@
 package org.radarbase.schema.specification.config
 
-import java.nio.file.*
+import java.nio.file.FileSystem
+import java.nio.file.FileSystems
+import java.nio.file.Files
+import java.nio.file.Path
+import java.nio.file.PathMatcher
 import kotlin.io.path.relativeTo
 
 interface PathMatcherConfig {
@@ -48,6 +52,8 @@ interface PathMatcherConfig {
     companion object {
         fun Path.relativeToAbsolutePath(absoluteBase: Path) = if (isAbsolute) {
             relativeTo(absoluteBase)
-        } else this
+        } else {
+            this
+        }
     }
 }

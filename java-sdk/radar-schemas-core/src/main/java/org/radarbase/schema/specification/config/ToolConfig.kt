@@ -6,9 +6,7 @@ import com.fasterxml.jackson.module.kotlin.KotlinFeature
 import com.fasterxml.jackson.module.kotlin.kotlinModule
 import java.io.IOException
 import java.nio.file.Paths
-import kotlin.io.path.bufferedReader
 import kotlin.io.path.inputStream
-import kotlin.io.path.reader
 
 data class ToolConfig(
     val kafka: Map<String, Any> = emptyMap(),
@@ -24,9 +22,11 @@ fun loadToolConfig(fileName: String?): ToolConfig {
     }
 
     val mapper = ObjectMapper(YAMLFactory.builder().build())
-        .registerModule(kotlinModule {
-            enable(KotlinFeature.NullIsSameAsDefault)
-        })
+        .registerModule(
+            kotlinModule {
+                enable(KotlinFeature.NullIsSameAsDefault)
+            },
+        )
 
     return Paths.get(fileName).inputStream().use { stream ->
         mapper.readValue(stream, ToolConfig::class.java)

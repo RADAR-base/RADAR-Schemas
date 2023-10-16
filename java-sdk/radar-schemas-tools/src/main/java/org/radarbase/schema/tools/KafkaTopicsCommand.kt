@@ -14,37 +14,36 @@ import org.slf4j.LoggerFactory
 class KafkaTopicsCommand : SubCommand {
     override val name = "create"
 
-    override fun execute(options: Namespace, app: CommandLineApp): Int {
+    override suspend fun execute(options: Namespace, app: CommandLineApp): Int {
         val brokers = options.getInt("brokers")
         val replication = options.getShort("replication") ?: 3
         if (brokers < replication) {
-            logger.error("Cannot assign a replication factor {}"
-                + " higher than number of brokers {}", replication, brokers)
+            logger.error(
+                "Cannot assign a replication factor {}" +
+                    " higher than number of brokers {}",
+                replication,
+                brokers,
+            )
             return 1
         }
         val toolConfig: ToolConfig = app.config
             .configureKafka(bootstrapServers = options.getString("bootstrap_servers"))
-        try {
-            KafkaTopics(toolConfig).use { topics ->
-                try {
-                    val numTries = options.getInt("num_tries")
-                    topics.initialize(brokers, numTries)
-                } catch (ex: IllegalStateException) {
-                    logger.error("Kafka brokers not yet available. Aborting.")
-                    return 1
-                }
-                return topics.createTopics(
-                    app.catalogue,
-                    options.getInt("partitions") ?: 3,
-                    replication,
-                    options.getString("topic"),
-                    options.getString("match"),
-                )
+
+        return KafkaTopics(toolConfig).use { topics ->
+            try {
+                val numTries = options.getInt("num_tries")
+                topics.initialize(brokers, numTries)
+            } catch (ex: IllegalStateException) {
+                logger.error("Kafka brokers not yet available. Aborting.")
+                return@use 1
             }
-        } catch (e: InterruptedException) {
-            logger.error("Cannot retrieve number of addActive Kafka brokers."
-                + " Please check that Zookeeper is running.")
-            return 1
+            topics.createTopics(
+                app.catalogue,
+                options.getInt("partitions") ?: 3,
+                replication,
+                options.getString("topic"),
+                options.getString("match"),
+            )
         }
     }
 
@@ -69,8 +68,10 @@ class KafkaTopicsCommand : SubCommand {
                 .help("register the schemas of one topic")
                 .type(String::class.java)
             addArgument("-m", "--match")
-                .help("register the schemas of all topics matching the given regex"
-                    + "; does not do anything if --topic is specified")
+                .help(
+                    "register the schemas of all topics matching the given regex" +
+                        "; does not do anything if --topic is specified",
+                )
                 .type(String::class.java)
             addArgument("-s", "--bootstrap-servers")
                 .help("Kafka hosts, ports and protocols, comma-separated")

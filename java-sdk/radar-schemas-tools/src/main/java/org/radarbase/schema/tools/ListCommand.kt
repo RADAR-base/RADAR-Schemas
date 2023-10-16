@@ -10,7 +10,7 @@ import java.util.stream.Stream
 class ListCommand : SubCommand {
     override val name: String = "list"
 
-    override fun execute(options: Namespace, app: CommandLineApp): Int {
+    override suspend fun execute(options: Namespace, app: CommandLineApp): Int {
         val out: Stream<String> = when {
             options.getBoolean("raw") -> app.rawTopics
             options.getBoolean("stream") -> app.resultsCacheTopics
@@ -21,7 +21,7 @@ class ListCommand : SubCommand {
             out
                 .sorted()
                 .distinct()
-                .collect(Collectors.joining("\n"))
+                .collect(Collectors.joining("\n")),
         )
         return 0
     }
