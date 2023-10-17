@@ -23,7 +23,7 @@ jobs:
 
       - name: Has SNAPSHOT version
         id: is-snapshot
-        run: grep 'version = ".*-SNAPSHOT"' build.gradle.kts
+        run: grep 'const val project = ".*-SNAPSHOT"' buildSrc/src/main/kotlin/Versions.kt
 
       - uses: actions/setup-java@v3
         with:
