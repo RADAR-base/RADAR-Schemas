@@ -1,0 +1,14 @@
+{
+  "namespace": "org.radarcns.connector.fitbit",
+  "type": "record",
+  "name": "FitbitIntradayHeartRateVariability",
+  "doc": "Intra day heart rate variability (HRV) data from fitbit device. HRV data applies specifically to a user’s “main sleep,” which is the longest single period of time asleep on a given date.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+    { "name": "timeReceived", "type": "double", "doc": "Time that the data was received from the Fitbit API (seconds since the Unix Epoch)." },
+    { "name": "rmssd", "type": "float", "doc": "The Root Mean Square of Successive Differences (RMSSD) between heart beats. It measures short-term variability in the user’s heart rate in milliseconds (ms)."},
+    { "name": "coverage", "type": "float", "doc": "Data completeness in terms of the number of interbeat intervals (0-1)."},
+    { "name": "highFrequency", "type": "float", "doc": "The power in interbeat interval fluctuations within the high frequency band (0.15 Hz - 0.4 Hz)."},
+    { "name": "lowFrequency", "type": "float", "doc": "The power in interbeat interval fluctuations within the low frequency band (0.04 Hz - 0.15 Hz)."}
+  ]
+}
