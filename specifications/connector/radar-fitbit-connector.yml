@@ -31,3 +31,9 @@ data:
   - doc: Intraday heart rate variability
     topic: connect_fitbit_intraday_heart_rate_variability
     value_schema: .connector.fitbit.FitbitIntradayHeartRateVariability
+  - doc: Intraday breathing rate
+    topic: connect_fitbit_intraday_breathing_rate
+    value_schema: .connector.fitbit.FitbitIntradayBreathingRate
+  - doc: Skin temperature
+    topic: connect_fitbit_skin_temperature
+    value_schema: .connector.fitbit.FitbitSkinTemperature
