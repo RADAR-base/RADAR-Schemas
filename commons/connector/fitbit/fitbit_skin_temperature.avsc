@@ -6,7 +6,7 @@
   "fields": [
     { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
     { "name": "timeReceived", "type": "double", "doc": "Time that the data was received from the Fitbit API (seconds since the Unix Epoch)." },
-    { "name": "nightlyRelative", "type": "float", "doc": "The user's average temperature during a period of sleep. It is displayed to the user as a delta from their baseline temperature in degrees Celsius or Fahrenheit depending on the country specified in the Accept-Language header."},
+    { "name": "relativeTemperature", "type": "float", "doc": "The user's average temperature during a period of sleep. It is displayed to the user as a delta from their baseline temperature in degrees Celsius."},
     { "name": "logType", "type": { "name": "FitbitSkinTemperatureLogType", "type": "enum", "symbols": ["DEDICATED_TEMP_SENSOR", "OTHER_SENSORS", "UNKNOWN"], "doc": "The type of skin temperature log created."}, "doc": "The type of skin temperature log created.", "default": "UNKNOWN"},
   ]
 }
