@@ -9,6 +9,6 @@
     { "name": "lightSleep", "type": "float", "doc": "Average number of breaths taken per minute when the user was in light sleep."},
     { "name": "deepSleep", "type": "float", "doc": "Average number of breaths taken per minute when the user was in deep sleep."},
     { "name": "remSleep", "type": "float", "doc": "Average number of breaths taken per minute when the user was in rem sleep."},
-    { "name": "fullSleep", "type": "float", "doc": "Average number of breaths taken per minute throughout the entire period of sleep which you can compare to the sleep stage-specific measurements."},
+    { "name": "fullSleep", "type": "float", "doc": "Average number of breaths taken per minute throughout the entire period of sleep which you can compare to the sleep stage-specific measurements."}
   ]
 }
