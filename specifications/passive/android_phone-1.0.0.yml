@@ -134,6 +134,12 @@ data:
     sample_rate:
       interval: 3600
       configurable: true
+  - type: PHONE_BLUETOOTH_DEVICE_SCANNED
+    app_provider: .phone.PhoneBluetoothService
+    unit: NON_DIMENSIONAL
+    processing_state: RAW
+    topic: android_phone_bluetooth_device_scanned
+    value_schema: .passive.phone.PhoneBluetoothDeviceScanned      
   # Usage
   - type: USAGE_EVENT
     app_provider: .phone.PhoneUsageProvider
