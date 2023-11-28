@@ -1,5 +1,7 @@
 package org.radarbase.schema.tools
 
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
 import net.sourceforge.argparse4j.impl.Arguments
 import net.sourceforge.argparse4j.inf.ArgumentParser
 import net.sourceforge.argparse4j.inf.Namespace
@@ -8,14 +10,14 @@ import org.radarbase.schema.tools.SubCommand.Companion.addRootArgument
 import org.radarbase.schema.validation.SchemaValidator
 import org.radarbase.schema.validation.ValidationException
 import org.radarbase.schema.validation.ValidationHelper.COMMONS_PATH
+import org.radarbase.schema.validation.toFormattedString
 import java.io.IOException
-import java.util.stream.Stream
 import kotlin.streams.asSequence
 
 class ValidatorCommand : SubCommand {
     override val name: String = "validate"
 
-    override fun execute(options: Namespace, app: CommandLineApp): Int {
+    override suspend fun execute(options: Namespace, app: CommandLineApp): Int {
         try {
             println()
             println("Validated topics:")
@@ -23,7 +25,7 @@ class ValidatorCommand : SubCommand {
                 .flatMap { it.data.asSequence() }
                 .flatMap { d ->
                     try {
-                        d.getTopics(app.catalogue.schemaCatalogue).asSequence()
+                        d.topics(app.catalogue.schemaCatalogue).asSequence()
                     } catch (ex: Exception) {
                         throw IllegalArgumentException(ex)
                     }
@@ -45,21 +47,34 @@ class ValidatorCommand : SubCommand {
         return try {
             val validator = SchemaValidator(app.root.resolve(COMMONS_PATH), app.config.schemas)
 
-            var exceptionStream = Stream.empty<ValidationException>()
-            if (options.getBoolean("full")) {
-                exceptionStream = validator.analyseFiles(
-                    scope,
-                    app.catalogue.schemaCatalogue)
-            }
-            if (options.getBoolean("from_specification")) {
-                exceptionStream = Stream.concat(
-                    exceptionStream,
-                    validator.analyseSourceCatalogue(scope, app.catalogue)).distinct()
-            }
+            coroutineScope {
+                val fullValidationJob = async {
+                    if (options.getBoolean("full")) {
+                        if (scope == null) {
+                            validator.analyseFiles(app.catalogue.schemaCatalogue)
+                        } else {
+                            validator.analyseFiles(app.catalogue.schemaCatalogue, scope)
+                        }
+                    } else {
+                        emptyList()
+                    }
+                }
+                val fromSpecJob = async {
+                    if (options.getBoolean("from_specification")) {
+                        validator.analyseSourceCatalogue(scope, app.catalogue)
+                    } else {
+                        emptyList()
+                    }
+                }
+                val exceptions = fullValidationJob.await() + fromSpecJob.await()
 
-            resolveValidation(exceptionStream, validator,
-                options.getBoolean("verbose"),
-                options.getBoolean("quiet"))
+                resolveValidation(
+                    exceptions,
+                    validator,
+                    options.getBoolean("verbose"),
+                    options.getBoolean("quiet"),
+                )
+            }
         } catch (e: IOException) {
             System.err.println("Failed to load schemas: $e")
             1
@@ -71,7 +86,7 @@ class ValidatorCommand : SubCommand {
             description("Validate a set of specifications.")
             addArgument("-s", "--scope")
                 .help("type of specifications to validate")
-                .choices(*Scope.values())
+                .choices(Scope.entries)
             addArgument("-v", "--verbose")
                 .help("verbose validation message")
                 .action(Arguments.storeTrue())
@@ -89,13 +104,13 @@ class ValidatorCommand : SubCommand {
     }
 
     private fun resolveValidation(
-        stream: Stream<ValidationException>,
+        stream: List<ValidationException>,
         validator: SchemaValidator,
         verbose: Boolean,
-        quiet: Boolean
+        quiet: Boolean,
     ): Int = when {
         !quiet -> {
-            val result = SchemaValidator.format(stream)
+            val result = stream.toFormattedString()
             println(result)
             if (verbose) {
                 println("Validated schemas:")
@@ -106,7 +121,7 @@ class ValidatorCommand : SubCommand {
             }
             if (result.isNotEmpty()) 1 else 0
         }
-        stream.count() > 0 -> 1
+        stream.isNotEmpty() -> 1
         else -> 0
     }
 }

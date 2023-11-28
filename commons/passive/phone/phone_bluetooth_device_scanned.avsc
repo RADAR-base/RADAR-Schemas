@@ -1,0 +1,13 @@
+{
+  "namespace": "org.radarcns.passive.phone",
+  "type": "record",
+  "name": "PhoneBluetoothDeviceScanned",
+  "doc": "Phone Bluetooth device info.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Device timestamp in UTC (s)."},
+    {"name": "timeReceived", "type": "double", "doc": "Device receiver timestamp in UTC (s)."},
+    {"name": "macAddressHash", "type": ["null", "bytes"], "default": null, "doc":"Hash of Nearby Bluetooth device MAC address."},
+    {"name": "hashSaltReference", "type": ["null", "int"], "doc": "Random identifier associated with the device or installation of the app. If the app gets reinstalled or installed on another device, it's clear during analysis that the mac addresses between iterations are not comparable.", "default": null},
+    {"name": "isPaired", "type": ["null","boolean"], "doc": "Whether the bluetooth device is paired.", "default": null}
+  ]
+}

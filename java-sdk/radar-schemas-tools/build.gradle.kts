@@ -6,17 +6,14 @@ repositories {
 
 dependencies {
     implementation(project(":radar-schemas-registration"))
-    val jacksonVersion: String by project
-    implementation(platform("com.fasterxml.jackson:jackson-bom:$jacksonVersion"))
+    implementation(platform("com.fasterxml.jackson:jackson-bom:${Versions.jackson}"))
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml")
 
-    val argparseVersion: String by project
-    implementation("net.sourceforge.argparse4j:argparse4j:$argparseVersion")
+    implementation("org.radarbase:radar-commons-kotlin:${Versions.radarCommons}")
 
-    val log4j2Version: String by project
-    implementation("org.apache.logging.log4j:log4j-core:$log4j2Version")
-    runtimeOnly("org.apache.logging.log4j:log4j-slf4j2-impl:$log4j2Version")
-    runtimeOnly("org.apache.logging.log4j:log4j-jul:$log4j2Version")
+    implementation("org.apache.logging.log4j:log4j-core:${Versions.log4j2}")
+
+    implementation("net.sourceforge.argparse4j:argparse4j:${Versions.argparse}")
 }
 
 application {

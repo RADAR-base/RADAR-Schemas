@@ -1,22 +1,30 @@
 package org.radarbase.schema.registration
 
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.take
+import kotlinx.coroutines.withContext
+import org.apache.kafka.clients.admin.Admin
 import org.apache.kafka.clients.admin.AdminClient
 import org.apache.kafka.clients.admin.AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG
 import org.apache.kafka.clients.admin.ListTopicsOptions
 import org.apache.kafka.clients.admin.NewTopic
 import org.apache.kafka.common.config.SaslConfigs.SASL_JAAS_CONFIG
+import org.radarbase.kotlin.coroutines.suspendGet
+import org.radarbase.schema.specification.SourceCatalogue
 import org.radarbase.schema.specification.config.ToolConfig
 import org.radarbase.schema.specification.config.TopicConfig
-import org.radarbase.schema.specification.SourceCatalogue
 import org.slf4j.LoggerFactory
-import java.time.Duration
-import java.time.Instant
-import java.util.*
-import java.util.concurrent.ExecutionException
-import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException
 import java.util.stream.Collectors
 import java.util.stream.Stream
+import kotlin.time.Duration.Companion.seconds
+import kotlin.time.TimeMark
+import kotlin.time.TimeSource
 
 /**
  * Registers Kafka topics with Zookeeper.
@@ -25,7 +33,8 @@ class KafkaTopics(
     private val toolConfig: ToolConfig,
 ) : TopicRegistrar {
     private var initialized = false
-    private var topics: Set<String>? = null
+    override lateinit var topics: Set<String>
+
     private val adminClient: AdminClient = AdminClient.create(toolConfig.kafka)
 
     /**
@@ -35,8 +44,7 @@ class KafkaTopics(
      * @param brokers number of brokers to wait for
      * @throws InterruptedException when waiting for the brokers is interrupted.
      */
-    @Throws(InterruptedException::class)
-    override fun initialize(brokers: Int) {
+    override suspend fun initialize(brokers: Int) {
         initialize(brokers, 20)
     }
 
@@ -47,28 +55,34 @@ class KafkaTopics(
      *
      * @param brokers number of brokers to wait for.
      * @param numTries Number of times to retry in case of failure.
-     * @throws InterruptedException when waiting for the brokers is interrupted.
      */
-    @Throws(InterruptedException::class)
-    override fun initialize(brokers: Int, numTries: Int) {
-        val numBrokers = retrySequence(Duration.ofSeconds(2), MAX_SLEEP)
+    override suspend fun initialize(brokers: Int, numTries: Int) {
+        val numBrokers = retryFlow(2.seconds, MAX_SLEEP)
             .take(numTries)
             .map { sleep ->
                 try {
-                    adminClient.describeCluster()
-                        .nodes()
-                        .get(sleep.toSeconds(), TimeUnit.SECONDS)
-                        .size
+                    withContext(Dispatchers.IO) {
+                        adminClient.describeCluster()
+                            .nodes()
+                            .suspendGet(sleep)
+                            .size
+                    }
                 } catch (ex: InterruptedException) {
                     logger.error("Refreshing topics interrupted")
                     throw ex
                 } catch (ex: TimeoutException) {
-                    logger.error("Failed to connect to bootstrap server {} within {} seconds",
-                        kafkaProperties[BOOTSTRAP_SERVERS_CONFIG], sleep)
+                    logger.error(
+                        "Failed to connect to bootstrap server {} within {} seconds",
+                        kafkaProperties[BOOTSTRAP_SERVERS_CONFIG],
+                        sleep,
+                    )
                     0
                 } catch (ex: Throwable) {
-                    logger.error("Failed to connect to bootstrap server {}",
-                        kafkaProperties[BOOTSTRAP_SERVERS_CONFIG], ex.cause)
+                    logger.error(
+                        "Failed to connect to bootstrap server {}",
+                        kafkaProperties[BOOTSTRAP_SERVERS_CONFIG],
+                        ex.cause,
+                    )
                     0
                 }
             }
@@ -90,7 +104,7 @@ class KafkaTopics(
         check(initialized) { "Manager is not initialized yet" }
     }
 
-    override fun createTopics(
+    override suspend fun createTopics(
         catalogue: SourceCatalogue,
         partitions: Int,
         replication: Short,
@@ -105,9 +119,12 @@ class KafkaTopics(
                 .filter { s -> pattern.matcher(s).find() }
                 .collect(Collectors.toList())
             if (topicNames.isEmpty()) {
-                logger.error("Topic {} does not match a known topic."
-                    + " Find the list of acceptable topics"
-                    + " with the `radar-schemas-tools list` command. Aborting.", pattern)
+                logger.error(
+                    "Topic {} does not match a known topic." +
+                        " Find the list of acceptable topics" +
+                        " with the `radar-schemas-tools list` command. Aborting.",
+                    pattern,
+                )
                 return 1
             }
             if (createTopics(topicNames.stream(), partitions, replication)) 0 else 1
@@ -117,7 +134,7 @@ class KafkaTopics(
     private fun topicNames(catalogue: SourceCatalogue): Stream<String> {
         return Stream.concat(
             catalogue.topicNames,
-            toolConfig.topics.keys.stream()
+            toolConfig.topics.keys.stream(),
         ).filter { t -> toolConfig.topics[t]?.enabled != false }
     }
 
@@ -129,29 +146,29 @@ class KafkaTopics(
      * @param replication number of replicas for a topic
      * @return whether the whole catalogue was registered
      */
-    private fun createTopics(
+    private suspend fun createTopics(
         catalogue: SourceCatalogue,
         partitions: Int,
-        replication: Short
+        replication: Short,
     ): Boolean {
         ensureInitialized()
         return createTopics(topicNames(catalogue), partitions, replication)
     }
 
-    override fun createTopics(
-        topicsToCreate: Stream<String>,
+    override suspend fun createTopics(
+        topics: Stream<String>,
         partitions: Int,
-        replication: Short
+        replication: Short,
     ): Boolean {
         ensureInitialized()
         return try {
             refreshTopics()
             logger.info("Creating topics. Topics marked with [*] already exist.")
-            val newTopics = topicsToCreate
+            val newTopics = topics
                 .sorted()
                 .distinct()
                 .filter { t: String ->
-                    if (topics?.contains(t) == true) {
+                    if (this.topics.contains(t)) {
                         logger.info("[*] {}", t)
                         return@filter false
                     } else {
@@ -174,7 +191,7 @@ class KafkaTopics(
                 kafkaClient
                     .createTopics(newTopics)
                     .all()
-                    .get()
+                    .suspendGet()
                 logger.info("Created {} topics. Requesting to refresh topics", newTopics.size)
                 refreshTopics()
             } else {
@@ -188,23 +205,23 @@ class KafkaTopics(
     }
 
     @Throws(InterruptedException::class)
-    override fun refreshTopics(): Boolean {
+    override suspend fun refreshTopics(): Boolean {
         ensureInitialized()
         logger.info("Waiting for topics to become available.")
 
-        topics = null
+        topics = emptySet()
         val opts = ListTopicsOptions().apply {
             listInternal(true)
         }
 
-        topics = retrySequence(Duration.ofSeconds(2), MAX_SLEEP)
+        topics = retryFlow(2.seconds, MAX_SLEEP)
             .take(10)
             .map { sleep ->
                 try {
                     kafkaClient
                         .listTopics(opts)
                         .names()
-                        .get(sleep.toSeconds(), TimeUnit.SECONDS)
+                        .suspendGet(sleep)
                 } catch (ex: TimeoutException) {
                     logger.error("Failed to list topics within {} seconds", sleep)
                     emptySet()
@@ -217,15 +234,9 @@ class KafkaTopics(
                 }
             }
             .firstOrNull { it.isNotEmpty() }
+            ?: emptySet()
 
-        return topics != null
-    }
-
-    override fun getTopics(): Set<String> {
-        ensureInitialized()
-        return Collections.unmodifiableSet(checkNotNull(topics) {
-            "Topics were not properly initialized"
-        })
+        return topics.isNotEmpty()
     }
 
     override fun close() {
@@ -236,71 +247,72 @@ class KafkaTopics(
      * Get current number of Kafka brokers according to Zookeeper.
      *
      * @return number of Kafka brokers
-     * @throws ExecutionException if kafka cannot connect
-     * @throws InterruptedException if the query is interrupted.
      */
-    @get:Throws(ExecutionException::class,
-        InterruptedException::class)
-    val numberOfBrokers: Int
-        get() = adminClient.describeCluster()
+    suspend fun numberOfBrokers(): Int {
+        return adminClient.describeCluster()
             .nodes()
-            .get()
+            .suspendGet()
             .size
-
-    override fun getKafkaClient(): AdminClient {
-        ensureInitialized()
-        return adminClient
     }
 
-    override fun getKafkaProperties(): Map<String, Any?> = toolConfig.kafka
+    override val kafkaClient: Admin
+        get() {
+            ensureInitialized()
+            return adminClient
+        }
+
+    override val kafkaProperties: Map<String, *>
+        get() = toolConfig.kafka
 
     companion object {
         private val logger = LoggerFactory.getLogger(KafkaTopics::class.java)
-        private val MAX_SLEEP = Duration.ofSeconds(32)
+        private val MAX_SLEEP = 32.seconds
+
         @JvmStatic
         fun ToolConfig.configureKafka(
-            bootstrapServers: String?
+            bootstrapServers: String?,
         ): ToolConfig = if (bootstrapServers.isNullOrEmpty()) {
             check(BOOTSTRAP_SERVERS_CONFIG in kafka) {
                 "Cannot configure Kafka without $BOOTSTRAP_SERVERS_CONFIG property"
             }
             this
         } else {
-            copy(kafka = buildMap {
-                putAll(kafka)
-                put(BOOTSTRAP_SERVERS_CONFIG, bootstrapServers)
-                System.getenv("KAFKA_SASL_JAAS_CONFIG")?.let {
-                    put(SASL_JAAS_CONFIG, it)
-                }
-            })
+            copy(
+                kafka = buildMap {
+                    putAll(kafka)
+                    put(BOOTSTRAP_SERVERS_CONFIG, bootstrapServers)
+                    System.getenv("KAFKA_SASL_JAAS_CONFIG")?.let {
+                        put(SASL_JAAS_CONFIG, it)
+                    }
+                },
+            )
         }
 
-        fun retrySequence(
-            startSleep: Duration,
-            maxSleep: Duration,
-        ): Sequence<Duration> = sequence {
+        fun retryFlow(
+            startSleep: kotlin.time.Duration,
+            maxSleep: kotlin.time.Duration,
+        ): Flow<kotlin.time.Duration> = flow {
             var sleep = startSleep
 
             while (true) {
                 // All computation for the sequence will be done in yield. It should be excluded
                 // from sleep.
-                val endTime = Instant.now() + sleep
-                yield(sleep)
-                sleepUntil(endTime) { sleepMillis ->
-                    logger.info("Waiting {} seconds to retry", (sleepMillis / 100) / 10.0)
+                val endTime = TimeSource.Monotonic.markNow() + sleep
+                emit(sleep)
+                sleepUntil(endTime) { timeUntil ->
+                    logger.info("Waiting {} seconds to retry", timeUntil)
                 }
                 if (sleep < maxSleep) {
-                    sleep = sleep.multipliedBy(2L).coerceAtMost(maxSleep)
+                    sleep = (sleep * 2).coerceAtMost(maxSleep)
                 }
             }
         }
 
-        private inline fun sleepUntil(time: Instant, beforeSleep: (Long) -> Unit) {
-            val timeToSleep = Duration.between(time, Instant.now())
-            if (!timeToSleep.isNegative) {
-                val sleepMillis = timeToSleep.toMillis()
-                beforeSleep(sleepMillis)
-                Thread.sleep(sleepMillis)
+        private suspend fun sleepUntil(time: TimeMark, beforeSleep: (kotlin.time.Duration) -> Unit) {
+            val timeUntil = -time.elapsedNow()
+            if (timeUntil.isPositive()) {
+                beforeSleep(timeUntil)
+                delay(timeUntil)
             }
         }
     }

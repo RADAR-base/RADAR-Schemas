@@ -20,7 +20,7 @@ interface SubCommand {
      * @param app     application with source catalogue.
      * @return command exit code.
      */
-    fun execute(options: Namespace, app: CommandLineApp): Int
+    suspend fun execute(options: Namespace, app: CommandLineApp): Int
 
     /**
      * Add the description and arguments for this sub-command to the argument parser. The values of
