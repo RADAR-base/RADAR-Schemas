@@ -13,6 +13,6 @@
       "type": "enum",
       "doc": "Represent the bond state of the remote device. \nNOT_PAIRED indicates the remote device is not paired. \nPAIRING indicates pairing is in progress with the remote device. \nPAIRED Indicates the remote device is paired.",
       "symbols": ["NOT_PAIRED", "PAIRING", "PAIRED"]
-    }], "doc": "Indicates the current paired status of the remote device", "default": null }
+    }], "doc": "Indicates the current paired status of the remote device.", "default": null }
   ]
 }
