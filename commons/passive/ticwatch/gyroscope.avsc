@@ -1,7 +1,7 @@
 {
     "namespace": "org.radarcns.passive.ticWatch",
     "type": "record",
-    "name": "TicWatchGyroscope ",
+    "name": "TicWatchGyroscope",
     "doc": "Data from 3-axis gyroscope sensor of a Mobovi TicWatch device.",
     "fields": [
         { "name": "time", "type": "double", "doc": "Device timestamp in UTC (ms)." },
