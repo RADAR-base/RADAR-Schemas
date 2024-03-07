@@ -1,7 +1,8 @@
 #====================================== TicWatch device =====================================#
-vendor: MOBOVI
+vendor: Mobobi
 model: TicWatch
 version: 1.0.0
+app_provider: .ticwatch.TicwatchSeviceProvier
 data:
   - type: ACCELEROMETER
     sample_rate:
@@ -9,27 +10,27 @@ data:
     unit: g
     processing_state: RAW
     topic: android_esl_ticwatch_acceleration
-    value_schema: .passive.esl.TicWatchAcceleration
+    value_schema: .passive.ticwatch.TicwatchAcceleration
   - type: GYROSCOPE
     sample_rate:
       dynamic: true
     unit: rad/s
     processing_state: RAW
     topic: android_esl_ticwatch_gyroscope
-    value_schema: .passive.esl.TicWatchGyroscope
+    value_schema: .passive.ticwatch.TicwatchGyroscope
   - type: BATTERY
     sample_rate:
       dynamic: true
     unit: PERCENTAGE
     processing_state: RAW
     topic: android_esl_ticwatch_battery_level
-    value_schema: .passive.esl.TicWatchBatteryLevel
+    value_schema: .passive.ticwatch.TicwatchBatteryLevel
   - type: PPG
     sample_rate:
       dynamic: true
     processing_state: RAW
     topic: android_esl_ticwatch_ppg
-    value_schema: .passive.esl.TicWatchPPG
+    value_schema: .passive.ticwatch.TicwatchPpg
   - type: EXTERNAL_TIME
     doc: Information sent by the Mobovi Ticwatch about time synchronisation with a NTP server.
     sample_rate:
@@ -38,7 +39,7 @@ data:
     topic: application_external_time
     value_schema: .monitor.application.ApplicationExternalTime
   - type: DEVICE_INFO
-    doc: Device information where the app is installed
+    doc: Device information where the app is installed.
     sample_rate:
       dynamic: true
     topic: application_device_info
