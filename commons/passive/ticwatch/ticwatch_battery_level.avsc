@@ -1,7 +1,7 @@
 {
-    "namespace": "org.radarcns.passive.ticWatch",
+    "namespace": "org.radarcns.passive.ticwatch",
     "type": "record",
-    "name": "TicWatchBatteryLevel",
+    "name": "TicwatchBatteryLevel",
     "doc": "Battery level of a TicWatch device.",
     "fields": [
         { "name": "time", "type": "double", "doc": "Device timestamp in UTC (ms)." },
