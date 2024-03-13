@@ -9,7 +9,7 @@ object Versions {
     const val avro = "1.11.1"
     const val jackson = "2.15.2"
     const val argparse = "0.9.0"
-    const val radarJersey = "0.11.0-SNAPSHOT"
+    const val radarJersey = "0.11.1-SNAPSHOT"
     const val junit = "5.10.0"
     const val confluent = "7.5.0"
     const val kafka = "$confluent-ce"
