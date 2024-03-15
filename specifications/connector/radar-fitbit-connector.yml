@@ -37,3 +37,9 @@ data:
   - doc: Skin temperature
     topic: connect_fitbit_skin_temperature
     value_schema: .connector.fitbit.FitbitSkinTemperature
+  - doc: Spo2 or Blood oxygen saturation
+    topic: connect_fitbit_intraday_spo2
+    value_schema: .connector.fitbit.FitbitIntradaySpo2
+  - doc: Resting heart rate
+    topic: connect_fitbit_resting_heart_rate
+    value_schema: .connector.fitbit.FitbitRestingHeartRate
