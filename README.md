@@ -10,7 +10,7 @@
   - In the `passive` subdirectory, add schemas for passive data collection, like wearables.
   - In the `stream` subdirectory, add schemas used in Kafka Streams.
 - The `specifications` directory contains specifications of what data types are collected through which devices.
-- Java SDKs for each of the components are provided in the `java-sdk` folder, see installation instructions there. They are automatically generated from the Avro schemas using the Avro 1.8.2 specification.
+  - Java SDKs for each of the components are provided in the `java-sdk` folder, see installation instructions there. They are automatically generated from the Avro schemas using the Avro specification (version in [Versions.kt](java-sdk/buildSrc/src/main/kotlin/Versions.kt)).
 
 ## Usage
 

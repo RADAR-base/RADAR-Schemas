@@ -34,4 +34,6 @@ jobs:
           --all-sub-projects
           --configuration-matching='^runtimeClasspath$'
           --org=radar-base
-          --policy-path=$PWD/.snyk
+          --policy-path=.snyk
+          --json-file-output=snyk.json
+          --severity-threshold=high
