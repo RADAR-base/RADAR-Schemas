@@ -16,5 +16,5 @@ dependencies {
     implementation("io.confluent:kafka-schema-registry-client:${Versions.confluent}")
 
     implementation("org.apache.kafka:connect-json:${Versions.kafka}")
-    implementation("io.ktor:ktor-client-auth:2.3.4")
+    implementation("io.ktor:ktor-client-auth:${Versions.ktor}")
 }

@@ -57,7 +57,7 @@ configure(listOf(
     apply(plugin = "org.radarbase.radar-publishing")
 
     radarKotlin {
-        javaVersion.set(11)
+        javaVersion.set(Versions.java)
     }
 
     radarPublishing {
