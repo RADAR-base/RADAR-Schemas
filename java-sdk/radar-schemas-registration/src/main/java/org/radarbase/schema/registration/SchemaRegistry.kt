@@ -18,8 +18,7 @@ package org.radarbase.schema.registration
 import io.ktor.client.plugins.auth.Auth
 import io.ktor.client.plugins.auth.providers.BasicAuthCredentials
 import io.ktor.client.plugins.auth.providers.basic
-import io.ktor.client.request.setBody
-import io.ktor.client.request.url
+import io.ktor.client.request.*
 import io.ktor.http.ContentType
 import io.ktor.http.HttpMethod
 import io.ktor.http.contentType
@@ -56,8 +55,8 @@ import kotlin.time.toKotlinDuration
  */
 class SchemaRegistry(
     private val baseUrl: String,
-    apiKey: String? = null,
-    apiSecret: String? = null,
+    private val apiKey: String? = null,
+    private val apiSecret: String? = null,
     private val topicConfiguration: Map<String, TopicConfig> = emptyMap(),
 ) {
     private val schemaClient: SchemaRetriever = schemaRetriever(baseUrl) {
@@ -66,6 +65,7 @@ class SchemaRegistry(
             if (apiKey != null && apiSecret != null) {
                 install(Auth) {
                     basic {
+                        sendWithoutRequest { true }
                         credentials {
                             BasicAuthCredentials(username = apiKey, password = apiSecret)
                         }
@@ -93,6 +93,9 @@ class SchemaRegistry(
                     try {
                         httpClient.request<List<String>> {
                             url("subjects")
+                            if (apiKey != null && apiSecret != null) {
+                                basicAuth(apiKey, apiSecret)
+                            }
                         }
                     } catch (ex: RestException) {
                         logger.error(
