@@ -17,6 +17,7 @@
       "name": "ThincItSpotterQuarterSummary",
       "doc": "Trial summary for SymbolCheck assessment.",
       "fields": [
+        { "name": "meanLatency", "type": "int", "doc": "Mean latency of correct responses expressed in milliseconds." },
         { "name": "timeouts", "type": "int", "doc": "The number of times that a subject failed to input a response within the time limit." },
         { "name": "anticipations", "type": "int", "doc": "The number of responses within 100ms of stimulus presentation." },
         { "name": "incorrect", "type": "int", "doc": "The number of incorrect response." },
