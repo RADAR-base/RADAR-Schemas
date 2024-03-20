@@ -18,7 +18,9 @@ package org.radarbase.schema.registration
 import io.ktor.client.plugins.auth.Auth
 import io.ktor.client.plugins.auth.providers.BasicAuthCredentials
 import io.ktor.client.plugins.auth.providers.basic
-import io.ktor.client.request.*
+import io.ktor.client.request.basicAuth
+import io.ktor.client.request.url
+import io.ktor.client.request.setBody
 import io.ktor.http.ContentType
 import io.ktor.http.HttpMethod
 import io.ktor.http.contentType
@@ -178,6 +180,7 @@ class SchemaRegistry(
                 val record: SpecificRecord = AvroTopic.parseSpecificRecord(topicValueSchema)
                 record.javaClass to record.schema
             }
+
             defaultTopic != null -> defaultTopic.valueClass to defaultTopic.valueSchema
             else -> {
                 logger.warn(
