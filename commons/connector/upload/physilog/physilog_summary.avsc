@@ -1,0 +1,18 @@
+{
+  "namespace": "org.radarcns.connector.upload.physilog",
+  "type": "record",
+  "name": "PhysilogSummary",
+  "doc": "Summary of the physilog test analysis.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Timestamp in unix time acquired locally from the device."},
+    {"name": "timeReceived", "type": "double", "doc": "Timestamp in unix time received from Physilog device."},
+    {"name": "testTime", "type": "double", "doc": "Time taken to perform the test in seconds."},
+    {"name": "gaitTime", "type": "double", "doc": "Time of gait activity during the test in seconds."},
+    {"name": "turnTime", "type": "double", "doc": "Time took to turn in seconds."},
+    {"name": "totalCycles", "type": "int", "doc": "Total amount of cycles analysed from the test."},
+    {"name": "discardedCycles", "type": "int", "doc": "Total amount of cycles discarded from the test."},
+    {"name": "analysedCycles", "type": "int", "doc": "Total amount of cycles performed during the test."},
+    {"name": "turningCycles", "type": "int", "doc": "Total amount of cycles performed to make turns."},
+    {"name": "distance", "type": "double", "doc": "Distance walked during the recording in meters."}
+  ]
+}
