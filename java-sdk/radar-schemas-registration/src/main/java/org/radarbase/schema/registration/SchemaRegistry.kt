@@ -95,9 +95,8 @@ class SchemaRegistry(
                     try {
                         httpClient.request<List<String>> {
                             url("subjects")
-                            logger.info("Trying basic auth for schema registry with key {} and secret {}", apiKey, apiSecret)
                             if (apiKey != null && apiSecret != null) {
-                                logger.info("Basic auth applied!!!")
+                                logger.info("Basic auth applied.")
                                 basicAuth(apiKey, apiSecret)
                             }
                         }
@@ -226,6 +225,10 @@ class SchemaRegistry(
         return try {
             httpClient.requestEmpty {
                 url("config")
+                if (apiKey != null && apiSecret != null) {
+                    logger.info("Basic auth applied.")
+                    basicAuth(apiKey, apiSecret)
+                }
                 method = HttpMethod.Put
                 contentType(ContentType("application", "vnd.schemaregistry.v1+json"))
                 setBody("{\"compatibility\": \"${compatibility.name}\"}")
