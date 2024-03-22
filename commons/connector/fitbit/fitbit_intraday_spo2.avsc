@@ -1,0 +1,11 @@
+{
+  "namespace": "org.radarcns.connector.fitbit",
+  "type": "record",
+  "name": "FitbitIntradaySpo2",
+  "doc": "Intra day spo2 data from fitbit device.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+    { "name": "timeReceived", "type": "double", "doc": "Time that the data was received from the Fitbit API (seconds since the Unix Epoch)." },
+    { "name": "spo2", "type": "float", "doc": "Percentage value of SpO2 in the bloodstream. SpO2 data is collected when the user is in an extended period of sleep (at least 3 hours of quality sleep). Spo2 values are calculated on a 5-minute exponentially-moving average and provided at the end of a period of sleep."}
+  ]
+}
