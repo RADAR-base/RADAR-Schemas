@@ -93,7 +93,9 @@ class SchemaRegistry(
                     try {
                         httpClient.request<List<String>> {
                             url("subjects")
+                            logger.info("Trying basic auth for schema registry with key {} and secret {}", apiKey, apiSecret)
                             if (apiKey != null && apiSecret != null) {
+                                logger.info("Basic auth applied!!!")
                                 basicAuth(apiKey, apiSecret)
                             }
                         }
