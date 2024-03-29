@@ -1,0 +1,11 @@
+{
+  "namespace": "org.radarcns.passive.empaticaembraceplus",
+  "type": "record",
+  "name": "EmpaticaEmbracePlusSystolicPeaks",
+  "doc": "Timestamps of the systolic peaks in the PPG signal.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+    { "name": "timeReceived", "type": "double", "doc": "Device receiver timestamp in UTC (s)." },
+    { "name": "peakTimes", "type": "float", "doc": "Timestamps in UTC (ns) of systolic peaks' positions." }
+  ]
+}

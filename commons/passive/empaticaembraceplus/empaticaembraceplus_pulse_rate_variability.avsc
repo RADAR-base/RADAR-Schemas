@@ -1,0 +1,12 @@
+{
+  "namespace": "org.radarcns.passive.empaticaembraceplus",
+  "type": "record",
+  "name": "EmpaticaEmbracePlusPulseRateVariability",
+  "doc": "Data from photoplethysmograph.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+    { "name": "timeReceived", "type": "double", "doc": "Device receiver timestamp in UTC (s)." },
+    { "name": "prvRmssd", "type": "float", "doc": "Root mean square of successive differences between normal heartbeats (RMSSD) from PRV (ms)." },
+    { "name": "missingValueReason", "type": "string", "doc": "Reason for missing value." }
+  ]
+}

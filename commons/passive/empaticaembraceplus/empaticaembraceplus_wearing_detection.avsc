@@ -1,0 +1,12 @@
+{
+  "namespace": "org.radarcns.passive.empaticaembraceplus",
+  "type": "record",
+  "name": "EmpaticaEmbracePlusWearingDetection",
+  "doc": "Wearing detection as percentage.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+    { "name": "timeReceived", "type": "double", "doc": "Device receiver timestamp in UTC (s)." },
+    { "name": "wearingDetectionPercentage", "type": "int", "doc": "Wearing detection percentage." },
+    { "name": "missingValueReason", "type": "string", "doc": "Reason for missing value." }
+  ]
+}

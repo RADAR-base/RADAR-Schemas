@@ -1,0 +1,11 @@
+{
+  "namespace": "org.radarcns.passive.empaticaembraceplus",
+  "type": "record",
+  "name": "EmpaticaEmbracePlusSteps",
+  "doc": "Data on number of steps taken in the time interval defined by the sampling frequency (counts).",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+    { "name": "timeReceived", "type": "double", "doc": "Device receiver timestamp in UTC (s)." },
+    { "name": "steps", "type": "int", "doc": "Number of steps taken in the time interval defined by the sampling frequency (counts)." }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "namespace": "org.radarcns.passive.empaticaembraceplus",
+  "type": "record",
+  "name": "EmpaticaEmbracePlusElectroDermalActivity",
+  "doc": "Data from the electrodermal activity sensor expressed as microsiemens (µS). Uses a galvanic skin response sensor.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+    { "name": "timeReceived", "type": "double", "doc": "Device receiver timestamp in UTC (s)." },
+    { "name": "electroDermalActivity", "type": "float", "doc": "EDA skin conductance level (µS)." },
+    { "name": "missingValueReason", "type": "string", "doc": "Reason for missing value." }
+  ]
+}
