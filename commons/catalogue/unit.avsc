@@ -4,7 +4,7 @@
   "name": "Unit",
   "doc": "Measurement units.",
   "symbols": [
-    "BEATS_PER_MIN" ,
+    "BEATS_PER_MIN",
     "CALORIES_PER_SEC",
     "CELSIUS",
     "DEGREE",
@@ -21,6 +21,11 @@
     "RMSSD_IN_MILLI_SEC",
     "SECOND",
     "MICRO_VOLT",
+    "ADC_COUNTS",
+    "COUNTS",
+    "MILLI_SEC",
+    "BREATHS_PER_MIN",
+    "NANO_SEC",
     "UNKNOWN"
   ]
 }
