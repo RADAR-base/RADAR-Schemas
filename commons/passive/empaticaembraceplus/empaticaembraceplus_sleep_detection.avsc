@@ -6,7 +6,7 @@
   "fields": [
     { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
     { "name": "timeReceived", "type": "double", "doc": "Device receiver timestamp in UTC (s)." },
-    { "name": "sleepDetectionStage", "type": "int", "doc": "Sleep stage." },
+    { "name": "sleepStage", "type": "int", "doc": "Sleep stage." },
     { "name": "missingValueReason", "type": "string", "doc": "Reason for missing value." }
   ]
 }

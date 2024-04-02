@@ -6,113 +6,113 @@ app_provider: .empaticaembraceplus.EmpaticaEmbracePlusServiceProvider
 data:
   - type: ACCELEROMETER
     sample_rate:
-      frequency: 32
+      frequency: 64
     unit: ADC_COUNTS
     processing_state: RAW
-    topic: android_empatica_embraceplus_acceleration
+    topic: android_empatica_embrace_plus_acceleration
     value_schema: .passive.empaticaembraceplus.EmpaticaEmbracePlusAcceleration
   - type: BATTERY
     sample_rate:
       dynamic: true
     unit: PERCENTAGE
     processing_state: RAW
-    topic: android_empatica_embraceplus_battery_level
+    topic: android_empatica_embrace_plus_battery_level
     value_schema: .passive.empaticaembraceplus.EmpaticaEmbracePlusBatteryLevel
   - type: BLOOD_VOLUME_PULSE
     sample_rate:
       frequency: 32
     unit: NANO_WATT
     processing_state: RAW
-    topic: android_empatica_embraceplus_blood_volume_pulse
+    topic: android_empatica_embrace_plus_blood_volume_pulse
     value_schema: .passive.empaticaembraceplus.EmpaticaEmbracePlusBloodVolumePulse
   - type: ELECTRODERMAL_ACTIVITY
     sample_rate:
       frequency: 4
     unit: MICRO_SIEMENS
     processing_state: RAW
-    topic: android_empatica_embraceplus_electrodermal_activity
+    topic: android_empatica_embrace_plus_electrodermal_activity
     value_schema: .passive.empaticaembraceplus.EmpaticaEmbracePlusElectroDermalActivity
   - type: GYROSCOPE
     sample_rate:
-      frequency: 32
+      frequency: 64
     unit: ADC_COUNTS
     processing_state: RAW
-    topic: android_empatica_embraceplus_gyroscope
+    topic: android_empatica_embrace_plus_gyroscope
     value_schema: .passive.empaticaembraceplus.EmpaticaEmbracePlusGyroscope
   - type: MOVEMENT_INTENSITY  #Biomarker
     sample_rate:
       frequency: 32
     unit: COUNTS
     processing_state: RAW
-    topic: android_empatica_embraceplus_movement_intensity
+    topic: android_empatica_embrace_plus_movement_intensity
     value_schema: .passive.empaticaembraceplus.EmpaticaEmbracePlusMovementIntensity
   - type: OXYGEN_SATURATION  #Biomarker
     sample_rate:
       frequency: 32
     unit: PERCENTAGE
     processing_state: RAW
-    topic: android_empatica_embraceplus_oxygen_saturation
+    topic: android_empatica_embrace_plus_oxygen_saturation
     value_schema: .passive.empaticaembraceplus.EmpaticaEmbracePlusOxygenSaturation
   - type: PULSE_RATE  #Biomarker
     sample_rate:
       frequency: 32
     unit: BEATS_PER_MIN
     processing_state: RAW
-    topic: android_empatica_embraceplus_pulse_rate
+    topic: android_empatica_embrace_plus_pulse_rate
     value_schema: .passive.empaticaembraceplus.EmpaticaEmbracePlusPulseRate
   - type: PULSE_RATE_VARIABILITY  #Biomarker
     sample_rate:
       frequency: 32
     unit: MILLI_SEC
     processing_state: RAW
-    topic: android_empatica_embraceplus_pulse_rate_variability
+    topic: android_empatica_embrace_plus_pulse_rate_variability
     value_schema: .passive.empaticaembraceplus.EmpaticaEmbracePlusPulseRateVariability
   - type: RESPIRATORY_RATE #Biomarker
     sample_rate:
       frequency: 32
     unit: BREATHS_PER_MIN
     processing_state: RAW
-    topic: android_empatica_embraceplus_respiratory_rate
+    topic: android_empatica_embrace_plus_respiratory_rate
     value_schema: .passive.empaticaembraceplus.EmpaticaEmbracePlusRespiratoryRate
   - type: SLEEP_DETECTION  #Biomarker
     sample_rate:
-      frequency: 32
+      dynamic: true
     unit: NON_DIMENSIONAL
     processing_state: RAW
-    topic: android_empatica_embraceplus_sleep_detection
+    topic: android_empatica_embrace_plus_sleep_detection
     value_schema: .passive.empaticaembraceplus.EmpaticaEmbracePlusSleepDetection
   - type: STEPS
     sample_rate:
       frequency: 32
     unit: COUNTS
     processing_state: RAW
-    topic: android_empatica_embraceplus_steps
+    topic: android_empatica_embrace_plus_steps
     value_schema: .passive.empaticaembraceplus.EmpaticaEmbracePlusSteps
   - type: SYSTOLIC_PEAKS
     sample_rate:
       dynamic: true
     unit: NANO_SEC
     processing_state: VENDOR
-    topic: android_empatica_embraceplus_systolic_peaks
+    topic: android_empatica_embrace_plus_systolic_peaks
     value_schema: .passive.empaticaembraceplus.EmpaticaEmbracePlusSystolicPeaks
   - type: TAGS
     sample_rate:
-      frequency: 32
+      dynamic: true
     unit: MILLI_SEC
     processing_state: RAW
-    topic: android_empatica_embraceplus_tags
+    topic: android_empatica_embrace_plus_tags
     value_schema: .passive.empaticaembraceplus.EmpaticaEmbracePlusTags
   - type: THERMOMETER
     sample_rate:
-      frequency: 4
+      frequency: 1
     unit: CELSIUS
     processing_state: RAW
-    topic: android_empatica_embraceplus_temperature
+    topic: android_empatica_embrace_plus_temperature
     value_schema: .passive.empaticaembraceplus.EmpaticaEmbracePlusTemperature
   - type: WEARING_DETECTION #Biomarker
     sample_rate:
       frequency: 4
     unit: PERCENTAGE
     processing_state: RAW
-    topic: android_empatica_embraceplus_wearing_detection
+    topic: android_empatica_embrace_plus_wearing_detection
     value_schema: .passive.empaticaembraceplus.EmpaticaEmbracePlusWearingDetection

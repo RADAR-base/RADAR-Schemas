@@ -6,7 +6,7 @@
   "fields": [
     { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
     { "name": "timeReceived", "type": "double", "doc": "Device receiver timestamp in UTC (s)." },
-    { "name": "pulseRateBpm", "type": "int", "doc": "Pulse rate in beats per minute (BPM)." },
+    { "name": "pulseRate", "type": "int", "doc": "Pulse rate in beats per minute (BPM)." },
     { "name": "missingValueReason", "type": "string", "doc": "Reason for missing value." }
   ]
 }

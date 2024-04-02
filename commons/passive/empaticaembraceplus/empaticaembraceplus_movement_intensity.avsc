@@ -7,7 +7,7 @@
     { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
     { "name": "timeReceived", "type": "double", "doc": "Device receiver timestamp in UTC (s)." },
     { "name": "activityCounts", "type": "int", "doc": "Activity counts (counts)." },
-    { "name": "accelerometersStdG", "type": "float", "doc": "Standard deviation of the accelerometer magnitude (g)." },
+    { "name": "accelerometersStd", "type": "float", "doc": "Standard deviation of the accelerometer magnitude (g)." },
     { "name": "stepCount", "type": "int", "doc": "Number of steps (counts)." },
     { "name": "missingValueReason", "type": "string", "doc": "Reason for missing value." }
   ]
