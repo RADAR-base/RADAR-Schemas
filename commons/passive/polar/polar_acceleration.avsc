@@ -1,7 +1,7 @@
 {
   "namespace": "org.radarcns.passive.polar",
   "type": "record",
-  "name": "PolarVantageV3Acceleration",
+  "name": "PolarAcceleration",
   "doc": "Accelerometer data with sample rate of 50 Hz and range of 8 G. Axis specific acceleration data in mG.",
   "fields": [
     { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },

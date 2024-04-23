@@ -1,0 +1,62 @@
+#====================================== POLAR H10 or Vantage V3 device =====================================#
+vendor: POLAR
+model: GENERIC
+version: 1.0.0
+app_provider: .polar.PolarProvider
+data:
+  - type: ACCELEROMETER
+    sample_rate:
+      frequency: 50
+    unit: MILLI_G
+    processing_state: RAW
+    topic: android_polar_acceleration
+    value_schema: .passive.polar.PolarAcceleration
+  - type: BATTERY
+    sample_rate:
+      dynamic: true
+    unit: PERCENTAGE
+    processing_state: RAW
+    topic: android_polar_battery_level
+    value_schema: .passive.polar.PolarBatteryLevel
+  - type: ECG
+    sample_rate:
+      dynamic: true
+    unit: VOLT
+    processing_state: RAW
+    topic: android_polar_ecg
+    value_schema: .passive.polar.PolarEcg
+  - type: GYROSCOPE
+    sample_rate:
+      frequency: 50
+    unit: MILLI_G
+    processing_state: RAW
+    topic: android_polar_gyroscope
+    value_schema: .passive.polar.PolarGyroscope
+  - type: HEART_RATE
+    sample_rate:
+      frequency: 1
+    unit: BEATS_PER_MIN
+    processing_state: VENDOR
+    topic: android_polar_heart_rate
+    value_schema: .passive.polar.PolarHeartRate
+  - type: MAGNETOMETER
+    sample_rate:
+      frequency: 50
+    unit: MILLI_G
+    processing_state: RAW
+    topic: android_polar_magnetometer
+    value_schema: .passive.polar.PolarMagnetometer
+  - type: PULSE_TO_PULSE_INTERVAL
+    sample_rate:
+      dynamic: true
+    unit: SECOND
+    processing_state: VENDOR
+    topic: android_polar_pulse_to_pulse_interval
+    value_schema: .passive.polar.PolarPpInterval
+  - type: THERMOMETER
+    sample_rate:
+      dynamic: true
+    unit: CELSIUS
+    processing_state: VENDOR
+    topic: android_polar_temperature
+    value_schema: .passive.polar.PolarTemperature

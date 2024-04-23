@@ -1,7 +1,7 @@
 {
   "namespace": "org.radarcns.passive.polar",
   "type": "record",
-  "name": "PolarVantageV3PpInterval",
+  "name": "PolarPpInterval",
   "doc": "PP interval (milliseconds) representing cardiac pulse-to-pulse interval extracted from PPG signal.",
   "fields": [
     { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
