@@ -7,14 +7,14 @@ data:
   - type: ACCELEROMETER
     sample_rate:
       dynamic: true
-    unit: g
+    unit: G
     processing_state: RAW
     topic: android_esl_ticwatch_acceleration
     value_schema: .passive.ticwatch.TicwatchAcceleration
   - type: GYROSCOPE
     sample_rate:
       dynamic: true
-    unit: rad/s
+    unit: RADAIAN_PER_SEC
     processing_state: RAW
     topic: android_esl_ticwatch_gyroscope
     value_schema: .passive.ticwatch.TicwatchGyroscope
@@ -28,6 +28,7 @@ data:
   - type: PPG
     sample_rate:
       dynamic: true
+    unit: UNKNOWN
     processing_state: RAW
     topic: android_esl_ticwatch_ppg
     value_schema: .passive.ticwatch.TicwatchPpg
