@@ -1,0 +1,13 @@
+{
+    "namespace": "org.radarcns.passive.ticwatch",
+    "type": "record",
+    "name": "TicwatchGyroscope",
+    "doc": "Data from 3-axis gyroscope sensor of a Mobovi TicWatch device.",
+    "fields": [
+        { "name": "time", "type": "double", "doc": "Device timestamp in UTC (ms)." },
+        { "name": "timeReceived", "type": "double", "doc": "Processed time since the Unix Epoch (seconds)." },
+        { "name": "x", "type": "float", "doc": "Angular velocity in the x-axis (rad/s)." },
+        { "name": "y", "type": "float", "doc": "Angular velocity in the y-axis (rad/s)." },
+        { "name": "z", "type": "float", "doc": "Angular velocity in the z-axis (rad/s)." }
+    ]
+}
