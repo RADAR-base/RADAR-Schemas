@@ -1,0 +1,12 @@
+{
+    "namespace": "org.radarcns.passive.ticwatch",
+    "type": "record",
+    "name": "TicwatchPpg",
+    "doc": "PPG collected using a Mobovi TicWatch.",
+    "fields": [
+        { "name": "time", "type": "double", "doc": "Device timestamp in UTC (ms)." },
+        { "name": "timeReceived", "type": "double", "doc": "Processed time since the Unix Epoch (seconds)." },
+        { "name": "redled", "type": "float", "doc": "Red LED." },
+        { "name": "iredled", "type": "float", "doc": "Infrared LED." }
+    ]
+}
