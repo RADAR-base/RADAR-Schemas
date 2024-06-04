@@ -25,6 +25,13 @@ data:
     processing_state: RAW
     topic: android_polar_ecg
     value_schema: .passive.polar.PolarEcg
+  - type: PPG
+    sample_rate:
+      dynamic: true
+    unit: UNKNOWN
+    processing_state: RAW
+    topic: android_polar_ppg
+    value_schema: .passive.polar.PolarPpg
   - type: HEART_RATE
     sample_rate:
       frequency: 1
