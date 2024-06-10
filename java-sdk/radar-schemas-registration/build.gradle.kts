@@ -1,9 +1,5 @@
 description = "RADAR Schemas specification and validation tools"
 
-repositories {
-    maven(url = "https://jitpack.io")
-}
-
 dependencies {
     api(project(":radar-schemas-commons"))
     api(project(":radar-schemas-core"))

@@ -15,6 +15,8 @@
  */
 package org.radarbase.schema.registration
 
+import io.ktor.client.HttpClient
+import io.ktor.client.engine.cio.CIO
 import io.ktor.client.plugins.auth.Auth
 import io.ktor.client.plugins.auth.providers.BasicAuthCredentials
 import io.ktor.client.plugins.auth.providers.basic
@@ -44,6 +46,7 @@ import org.radarcns.kafka.ObservationKey
 import org.slf4j.LoggerFactory
 import java.io.IOException
 import java.net.MalformedURLException
+import java.net.URI
 import java.time.Duration
 import kotlin.streams.asSequence
 import kotlin.time.Duration.Companion.seconds
@@ -62,7 +65,7 @@ class SchemaRegistry(
     private val topicConfiguration: Map<String, TopicConfig> = emptyMap(),
 ) {
     private val schemaClient: SchemaRetriever = schemaRetriever(baseUrl) {
-        httpClient {
+        httpClient = HttpClient(CIO) {
             timeout(10.seconds)
             if (apiKey != null && apiSecret != null) {
                 install(Auth) {
@@ -94,7 +97,7 @@ class SchemaRegistry(
                 .mapNotNull {
                     try {
                         httpClient.request<List<String>> {
-                            url("subjects")
+                            url(URI(baseUrl).resolve("subjects").toString())
                             if (apiKey != null && apiSecret != null) {
                                 basicAuth(apiKey, apiSecret)
                             }
@@ -224,7 +227,7 @@ class SchemaRegistry(
         logger.info("Setting compatibility to {}", compatibility)
         return try {
             httpClient.requestEmpty {
-                url("config")
+                url(URI(baseUrl).resolve("config").toString())
                 method = HttpMethod.Put
                 contentType(ContentType("application", "vnd.schemaregistry.v1+json"))
                 setBody("{\"compatibility\": \"${compatibility.name}\"}")

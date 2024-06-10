@@ -1,9 +1,5 @@
 description = "RADAR Schemas specification and validation tools."
 
-repositories {
-    maven(url = "https://jitpack.io")
-}
-
 dependencies {
     implementation(project(":radar-schemas-registration"))
     implementation(platform("com.fasterxml.jackson:jackson-bom:${Versions.jackson}"))
