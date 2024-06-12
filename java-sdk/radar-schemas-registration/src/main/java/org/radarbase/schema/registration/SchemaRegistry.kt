@@ -46,7 +46,6 @@ import org.radarcns.kafka.ObservationKey
 import org.slf4j.LoggerFactory
 import java.io.IOException
 import java.net.MalformedURLException
-import java.net.URI
 import java.time.Duration
 import kotlin.streams.asSequence
 import kotlin.time.Duration.Companion.seconds
@@ -97,7 +96,7 @@ class SchemaRegistry(
                 .mapNotNull {
                     try {
                         httpClient.request<List<String>> {
-                            url(URI(baseUrl).resolve("subjects").toString())
+                            url("subjects")
                             if (apiKey != null && apiSecret != null) {
                                 basicAuth(apiKey, apiSecret)
                             }
@@ -227,7 +226,7 @@ class SchemaRegistry(
         logger.info("Setting compatibility to {}", compatibility)
         return try {
             httpClient.requestEmpty {
-                url(URI(baseUrl).resolve("config").toString())
+                url("config")
                 method = HttpMethod.Put
                 contentType(ContentType("application", "vnd.schemaregistry.v1+json"))
                 setBody("{\"compatibility\": \"${compatibility.name}\"}")

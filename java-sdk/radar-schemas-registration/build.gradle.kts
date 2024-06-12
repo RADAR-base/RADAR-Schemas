@@ -13,4 +13,5 @@ dependencies {
 
     implementation("org.apache.kafka:connect-json:${Versions.kafka}")
     implementation("io.ktor:ktor-client-auth:${Versions.ktor}")
+    testImplementation("com.squareup.okhttp3:mockwebserver:${Versions.okHttp}")
 }
