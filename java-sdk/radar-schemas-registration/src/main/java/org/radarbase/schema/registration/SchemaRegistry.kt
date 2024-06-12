@@ -15,6 +15,8 @@
  */
 package org.radarbase.schema.registration
 
+import io.ktor.client.HttpClient
+import io.ktor.client.engine.cio.CIO
 import io.ktor.client.plugins.auth.Auth
 import io.ktor.client.plugins.auth.providers.BasicAuthCredentials
 import io.ktor.client.plugins.auth.providers.basic
@@ -62,7 +64,7 @@ class SchemaRegistry(
     private val topicConfiguration: Map<String, TopicConfig> = emptyMap(),
 ) {
     private val schemaClient: SchemaRetriever = schemaRetriever(baseUrl) {
-        httpClient {
+        httpClient = HttpClient(CIO) {
             timeout(10.seconds)
             if (apiKey != null && apiSecret != null) {
                 install(Auth) {

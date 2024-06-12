@@ -23,6 +23,12 @@ val githubIssueUrl = "https://github.com/$githubRepoName/issues"
 subprojects {
     apply(plugin = "org.radarbase.radar-kotlin")
 
+    repositories{
+        mavenCentral()
+        gradlePluginPortal()
+        maven(url = "https://jitpack.io")
+    }
+
     radarKotlin {
         javaVersion.set(Versions.java)
         kotlinVersion.set(Versions.kotlin)
@@ -64,9 +70,9 @@ configure(listOf(
         githubUrl.set("https://github.com/$githubRepoName")
         developers {
             developer {
-                id.set("blootsvoets")
-                name.set("Joris Borgdorff")
-                email.set("joris@thehyve.nl")
+                id.set("bdegraaf1234")
+                name.set("Bastiaan de Graaf")
+                email.set("bastiaan@thehyve.nl")
                 organization.set("The Hyve")
             }
             developer {

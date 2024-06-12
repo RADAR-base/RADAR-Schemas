@@ -1,9 +1,5 @@
 description = "RADAR Schemas specification and validation tools"
 
-repositories {
-    maven(url = "https://jitpack.io")
-}
-
 dependencies {
     api(project(":radar-schemas-commons"))
     api(project(":radar-schemas-core"))
@@ -17,4 +13,5 @@ dependencies {
 
     implementation("org.apache.kafka:connect-json:${Versions.kafka}")
     implementation("io.ktor:ktor-client-auth:${Versions.ktor}")
+    testImplementation("com.squareup.okhttp3:mockwebserver:${Versions.okHttp}")
 }
