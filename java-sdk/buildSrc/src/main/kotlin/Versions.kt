@@ -1,11 +1,11 @@
 object Versions {
-    const val project = "0.8.10-SNAPSHOT"
+    const val project = "0.8.11-SNAPSHOT"
 
     const val kotlin = "1.9.10"
-    const val java = 17
+    const val java = 11
     const val avroGenerator = "1.9.1"
 
-    const val radarCommons = "1.1.2"
+    const val radarCommons = "1.1.1"
     const val avro = "1.11.3"
     const val jackson = "2.16.1"
     const val argparse = "0.9.0"
