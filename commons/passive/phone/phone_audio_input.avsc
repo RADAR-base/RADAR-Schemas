@@ -1,0 +1,11 @@
+{
+    "namespace": "org.radarcns.passive.phone",
+    "type": "record",
+    "name": "PhoneAudioInput",
+    "doc": "Uncompressed high-quality audio data collected by the PhoneAudioInput plugin, making use of low-level classes that interact directly with hardware.",
+    "fields": [
+        {"name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+        {"name": "timeReceived", "type": "double", "doc": "Device receiver timestamp in UTC (s)." },
+        {"name": "audioInputData", "type": "string", "doc": "Base64 encoded uncompressed audio input data captured by the device, sourced from a 16kHz .wav file." }
+    ]
+}
