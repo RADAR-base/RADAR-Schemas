@@ -13,7 +13,7 @@
         { "name": "deviceSampleRates", "type": "string", "doc": "Supported sample rates of the input audio device." },
         { "name": "deviceEncodings", "type": "string", "doc": "Supported encodings of the input audio device." },
         { "name": "deviceType", "type": "string", "doc": "Type of the input audio device used for recording." },
-        { "name": "deviceChannelCounts", "type": "int", "doc": "Supported channel counts of the input audio device." },
+        { "name": "deviceChannelCounts", "type": "string", "doc": "Supported channel counts of the input audio device." },
         { "name": "audioLength", "type": "long", "doc": "Length of the audio recording (in milliseconds)." },
         { "name": "audioFileSize", "type": "long", "doc": "Size of the audio file (in bytes)." },
         { "name": "hadPlayback", "type": "boolean", "doc": "Whether the recorded audio file was played before uploading to s3 storage." },
