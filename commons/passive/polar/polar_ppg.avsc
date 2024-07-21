@@ -4,8 +4,8 @@
   "name": "PolarPpg",
   "doc": "Data from PPG channels.",
   "fields": [
-    { "name": "deviceName", "type": "string", "doc": "Polar device name" },
-    { "name": "time", "type": "long", "doc": "Device timestamp in UTC (ns)." },
+    { "name": "deviceName", "type": "string", "doc": "Polar device name." },
+    { "name": "time", "type": "double", "doc": "Device timestamp in UTC (ns)." },
     { "name": "timeReceived", "type": "double", "doc": "Device receiver timestamp in UTC (s)." } ,
     { "name": "ppg0", "type": "int", "doc": "PPG0." },
     { "name": "ppg1", "type": "int", "doc": "PPG1." },
