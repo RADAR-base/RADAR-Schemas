@@ -8,6 +8,7 @@
     "CALORIES_PER_SEC",
     "CELSIUS",
     "DEGREE",
+    "MILLI_G",
     "G",
     "KILO_OHM",
     "LUX",
@@ -21,6 +22,7 @@
     "RMSSD_IN_MILLI_SEC",
     "SECOND",
     "MICRO_VOLT",
+    "VOLT",
     "UNKNOWN"
   ]
 }

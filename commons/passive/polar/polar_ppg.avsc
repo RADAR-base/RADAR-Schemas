@@ -1,0 +1,15 @@
+{
+  "namespace": "org.radarcns.passive.polar",
+  "type": "record",
+  "name": "PolarPpg",
+  "doc": "Data from PPG channels.",
+  "fields": [
+    { "name": "deviceName", "type": "string", "doc": "Polar device name." },
+    { "name": "time", "type": "double", "doc": "Device timestamp in UTC (ns)." },
+    { "name": "timeReceived", "type": "double", "doc": "Device receiver timestamp in UTC (s)." } ,
+    { "name": "ppg0", "type": "int", "doc": "PPG0." },
+    { "name": "ppg1", "type": "int", "doc": "PPG1." },
+    { "name": "ppg2", "type": "int", "doc": "PPG2." },
+    { "name": "ambient", "type": "int", "doc": "Ambient channel representing the background noise caused by other light sources, so it can be used to remove the background noise from ppg channels." }
+  ]
+}
