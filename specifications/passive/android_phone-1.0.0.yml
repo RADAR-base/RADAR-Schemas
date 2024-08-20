@@ -156,11 +156,3 @@ data:
     value_schema: .passive.phone.PhoneUserInteraction
     sample_rate:
       dynamic: true
-  # Phone Audio Input
-  - type: PHONE_AUDIO_INPUT
-    app_provider: .phone.PhoneAudioInputProvider
-    processing_state: RADAR
-    topic: android_phone_audio_input
-    value_schema: .passive.phone.PhoneAudioInput
-    sample_rate:
-      dynamic: true
