@@ -1,0 +1,24 @@
+{
+    "namespace": "org.radarcns.passive.audio",
+    "type": "record",
+    "name": "PhoneAudioInput",
+    "doc": "Uncompressed high-quality audio data collected by the PhoneAudioInput plugin, making use of low-level classes that interact directly with hardware.",
+    "fields": [
+        { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+        { "name": "timeReceived", "type": "double", "doc": "Device receiver timestamp in UTC (s)." },
+        { "name": "fileName", "type": "string", "doc": "Name of the audio file after it is saved to S3." },
+        { "name": "filePath", "type": "string", "doc": "Path of the audio file retrieved after uploading to S3 storage." },
+        { "name": "deviceName", "type": "string", "doc": "Name of the input audio device used for routing during this recording." },
+        { "name": "deviceId", "type": "string", "doc": "Identifier associated with the input device used for audio recording." },
+        { "name": "deviceSampleRates", "type": "string", "doc": "Supported sample rates of the input audio device." },
+        { "name": "deviceEncodings", "type": "string", "doc": "Supported encodings of the input audio device." },
+        { "name": "deviceType", "type": "string", "doc": "Type of the input audio device used for recording." },
+        { "name": "deviceChannelCounts", "type": "string", "doc": "Supported channel counts of the input audio device." },
+        { "name": "audioLength", "type": "long", "doc": "Length of the audio recording (in milliseconds)." },
+        { "name": "audioFileSize", "type": "long", "doc": "Size of the audio file (in bytes)." },
+        { "name": "hadPlayback", "type": "boolean", "doc": "Whether the recorded audio file was played before uploading to s3 storage." },
+        { "name": "audioFileExtension", "type": "string", "doc": "Extension of the audio file." },
+        { "name": "configuredSampleRate", "type": "int", "doc": "Sample rate for audio recording configured by firebase remote configs in application."},
+        { "name": "configuredEncoding", "type": "string", "doc": "Encoding for audio recording configured by firebase remote configs in application." }
+    ]
+}
