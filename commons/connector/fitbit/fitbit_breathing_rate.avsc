@@ -1,0 +1,14 @@
+{
+  "namespace": "org.radarcns.connector.fitbit",
+  "type": "record",
+  "name": "FitbitBreathingRate",
+  "doc": "Breathing rate (BR) data from fitbit device. BR measures the average breathing rate throughout the day and categories your breathing rate by sleep stage. Sleep stages vary between light sleep, deep sleep, REM sleep, and full sleep.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+    { "name": "timeReceived", "type": "double", "doc": "Time that the data was received from the Fitbit API (seconds since the Unix Epoch)." },
+    { "name": "lightSleep", "type": "float", "doc": "Average number of breaths taken per minute when the user was in light sleep."},
+    { "name": "deepSleep", "type": "float", "doc": "Average number of breaths taken per minute when the user was in deep sleep."},
+    { "name": "remSleep", "type": "float", "doc": "Average number of breaths taken per minute when the user was in rem sleep."},
+    { "name": "fullSleep", "type": "float", "doc": "Average number of breaths taken per minute throughout the entire period of sleep which you can compare to the sleep stage-specific measurements."}
+  ]
+}

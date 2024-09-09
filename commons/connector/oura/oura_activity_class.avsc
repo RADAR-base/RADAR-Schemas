@@ -1,0 +1,14 @@
+{
+  "namespace": "org.radarcns.connector.oura",
+  "name": "OuraActivityClass",
+  "type": "record",
+  "doc": "Oura Activity class in 5-minute intervals as defined in https://cloud.ouraring.com/v2/docs#operation/Single_daily_activity_Document_v2_usercollection_daily_activity__document_id__get.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Start time of the activity in seconds since January 1, 1970, 00:00:00 UTC (Unix timestamp)."},
+    {"name": "timeReceived", "type": "double", "doc": "Time that this record was collected by a service in seconds since the Unix Epoch (s)."},
+    {"name": "id", "type": ["null", "string"], "doc": "Unique identifier of the Oura activity record the activity class data is taken from.", "default": null},
+    {"name": "type", "type":
+      {"name": "OuraActivityClassType", "type": "enum", "symbols": ["NON_WEAR", "REST", "INACTIVE", "LOW_ACTIVITY", "MEDIUM_ACTIVITY", "HIGH_ACTIVITY", "UNKNOWN"], "doc": "Activity class type as computed by Oura."},
+      "doc": "Activity classification at a 5-minute interval. UNKNOWN when this data is not provided.", "default": "UNKNOWN" }
+  ]
+}

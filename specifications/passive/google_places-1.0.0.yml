@@ -1,0 +1,16 @@
+#======================================== Google Places =============================================#
+vendor: GOOGLE
+model: PLACES
+version: 1.0.0
+data:
+  #Google Places
+  - type: GOOGLE_PLACES
+    app_provider: .google.GooglePlacesProvider
+    unit: NON_DIMENSIONAL
+    processing_state: RAW
+    topic: android_google_places_info
+    value_schema: .passive.google.GooglePlacesInfo
+    sample_rate:
+      interval: 600
+      configurable: true
+      dynamic: true 

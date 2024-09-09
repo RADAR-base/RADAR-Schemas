@@ -1,0 +1,17 @@
+{
+  "namespace": "org.radarcns.passive.google",
+  "type": "record",
+  "name": "GoogleSleepSegmentEvent",
+  "doc": "Represents the result of sleep data after the user is awake.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "The UNIX epoch time (s) for the moment when the user goes to sleep." },
+    { "name": "timeReceived", "type": "double", "doc": "Device receiver timestamp in UTC (s)." },
+    { "name": "endTime", "type": "double", "doc": "The UNIX epoch time (s) for the moment when the user wakes up." },
+    { "name": "status", "type": [ "null", {
+      "name": "SleepClassificationStatus",
+      "type": "enum",
+      "doc": "The status of the sleep segment detection. \nSUCCESSFUL indicates successful detection of sleep segment in the past day.\nNOT_DETECTED indicates Sleep segment is not detected in the past day, or there isn't enough confidence that the user slept during the past day. This could happen for a variety of reasons, including the following: too much missing data, the user sleeps with the light, the user interacts with their device often, or the user's device doesn't support the sensors needed for sleep detection. \nMISSING_DATA indicates sleep segment was detected, but there was some missing data near the detected sleep segment. This could happen for a variety of reasons, including the following: the user turned off their device, the user delayed logging into their device after a system reboot or system upgrade, or an event occurred that paused the detection.",
+      "symbols": ["SUCCESSFUL", "MISSING_DATA", "NOT_DETECTED", "UNKNOWN"]
+    }], "doc": "Status that indicates whether the system succeeded in detecting sleep.", "default": null }
+  ]
+}

@@ -1,0 +1,14 @@
+#======================================= Google Activity ==========================================#
+vendor: GOOGLE
+model: ACTIVITY
+version: 1.0.0
+data:
+  #Google Activity Recognition
+  - type: ACTIVITY_TRANSITION_EVENT
+    app_provider: .google.GoogleActivityProvider
+    unit: NON_DIMENSIONAL
+    processing_state: RAW
+    topic: android_google_activity_transition_event
+    value_schema: .passive.google.GoogleActivityTransitionEvent
+    sample_rate:
+      dynamic: true

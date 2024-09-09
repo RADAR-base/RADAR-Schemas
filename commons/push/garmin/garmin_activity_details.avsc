@@ -7,6 +7,7 @@
     {"name": "time", "type": "double", "doc": "Start time of the activity in seconds since January 1, 1970, 00:00:00 UTC (Unix timestamp)."},
     {"name": "timeReceived", "type": "double", "doc": "Time that this record was collected by a service in seconds since the Unix Epoch (s)."},
     {"name": "summaryId", "type": "string", "doc": "Unique identifier for the summary."},
+    {"name": "activityId", "type": ["null", "string"], "doc": "Unique identifier of the activity at Garmin Connect.", "default": null},
     {"name": "startTimeOffset", "type": ["null", "int"], "doc": "Offset in seconds to add to time to derive the 'local' time of the device that captured the data.", "default": null},
     {"name": "activityType", "type": ["null", "string"], "doc": "Text description of the activity type. See Appendix A for a complete list. e.g - SEDENTARY, SLEEP, RUNNING, CYCLING, WALKING, etc.", "default": null},
     {"name": "duration", "type": ["null", "int"], "doc": "Length of the monitoring period in seconds.", "default": null},

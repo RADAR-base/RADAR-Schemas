@@ -1,0 +1,16 @@
+{
+  "namespace": "org.radarcns.passive.polar",
+  "type": "record",
+  "name": "PolarHeartRate",
+  "doc": "Heart rate as beats per minute.",
+  "fields": [
+    { "name": "deviceName", "type": "string", "doc": "Polar device name." },
+    { "name": "time", "type": "double", "doc": "Device receiver timestamp in UTC (ns)." },
+    { "name": "timeReceived", "type": "double", "doc": "Device receiver timestamp in UTC (s)." },
+    { "name": "heartRate", "type": "int", "doc": "Heart rate (bpm)." },
+    { "name": "rrsMs", "type": {"type": "array", "items": "int"}, "doc": "Data for rrsMs." },
+    { "name": "rrAvailable", "type": "boolean", "doc": "Data for rrAvailable." },
+    { "name": "contactStatus", "type": "boolean", "doc": "Data for contactStatus." },
+    { "name": "contactStatusSupported", "type": "boolean", "doc": "Data for contactStatusSupported." }
+  ]
+}

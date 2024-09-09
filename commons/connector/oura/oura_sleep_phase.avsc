@@ -1,0 +1,14 @@
+{
+  "namespace": "org.radarcns.connector.oura",
+  "name": "OuraSleepPhase",
+  "type": "record",
+  "doc": "Oura Sleep phases in 5-minute intervals as defined in https://cloud.ouraring.com/v2/docs#operation/Single_sleep_Document_v2_usercollection_sleep__document_id__get.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Start time of the sleep phase in seconds since January 1, 1970, 00:00:00 UTC (Unix timestamp)."},
+    {"name": "timeReceived", "type": "double", "doc": "Time that this record was collected by a service in seconds since the Unix Epoch (s)."},
+    {"name": "id", "type": ["null", "string"], "doc": "Unique identifier of the Oura sleep record the sleep stage data is taken from.", "default": null},
+    {"name": "phase", "type":
+      {"name": "OuraSleepPhaseType", "type": "enum", "symbols": ["DEEP", "LIGHT", "REM", "AWAKE", "UNKNOWN"], "doc": "Sleep phase type as computed by Oura."},
+      "doc": "Sleep phase at a 5-minute interval. UNKNOWN when this data is not provided (e.g. samples from sleep API).", "default": "UNKNOWN" }
+  ]
+}

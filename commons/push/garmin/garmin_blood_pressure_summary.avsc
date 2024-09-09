@@ -1,0 +1,16 @@
+{
+  "namespace": "org.radarcns.push.garmin",
+  "name": "GarminBloodPressureSummary",
+  "type": "record",
+  "doc": "Blood pressure summaries offer data from blood pressure readings taken using an Index BPM device or from a user’s manually uploaded blood pressure data. This includes systolic, diastolic, and pulse values taken at the time of the blood pressure reading. For more information about the validation of data using the Index BPM, please visit https://www.garmin.com/en-US/bpmvalidation/.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Time that this record was collected by a service in seconds since the Unix Epoch (s)."},
+    {"name": "timeReceived", "type": "double", "doc": "Time that this record was collected by a service in seconds since the Unix Epoch (s)."},
+    {"name": "summaryId", "type": "string", "doc": "Unique identifier for the summary."},
+    {"name": "measurementTimeOffset", "type": ["null", "int"], "doc": "Offset in seconds to add to time to derive the 'local' time of the device that captured the data.", "default": null},
+    {"name": "systolic", "type": ["null", "int"], "doc": "The systolic value of the blood pressure reading.", "default": null},
+    {"name": "diastolic", "type": ["null", "int"], "doc": "The diastolic value of the blood pressure reading.", "default": null},
+    {"name": "pulse", "type": ["null", "int"], "doc": "Pulse rate at the time the blood pressure reading.", "default": null},
+    {"name": "sourceType", "type": ["null", "string"], "doc": "This field is used to determine if blood pressure data was entered manually or synced from a Garmin Device. Possible values: MANUAL: The user entered blood pressure information manually through a web form. DEVICE: The user used a Garmin device to perform a blood pressure reading.", "default": null}
+  ]
+}

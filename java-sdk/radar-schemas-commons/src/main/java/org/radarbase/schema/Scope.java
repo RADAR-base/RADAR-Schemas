@@ -10,11 +10,11 @@ public enum Scope {
     private final String lower;
 
     Scope() {
-        this.lower = name().toLowerCase(Locale.ENGLISH);
+        this.lower = name().toLowerCase(Locale.ROOT);
     }
 
     public Path getPath(Path root) {
-        Path path = root.resolve(name().toLowerCase(Locale.ENGLISH));
+        Path path = root.resolve(lower);
         return Files.exists(path) ? path : null;
     }
 

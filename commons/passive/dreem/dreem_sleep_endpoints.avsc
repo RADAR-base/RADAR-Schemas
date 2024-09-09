@@ -1,0 +1,133 @@
+{
+  "type": "record",
+  "namespace": "org.radarcns.passive.dreem",
+  "name": "DreemSleepEndpoints",
+  "doc": "AVRO Schema for DREEM sleep endpoints. These are statistics (metrics) calculated from DREEM Hypnogram.",
+  "fields": [
+    {
+      "name": "time",
+      "type": "double",
+      "doc": "This refers to the recDateTime field from the dataset."
+    },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "This is the processing time in UTC (s)."
+    },
+    {
+      "name": "offHead",
+      "type": "float",
+      "doc": "Percentage of the total recording time TRT during which the headband was on head."
+    },
+    {
+      "name": "totalRecordingTime",
+      "type": "org.radarcns.passive.dreem.DreemMetric",
+      "doc": "TRT stands for Total Recording Time. Unit is min. It is amount of time from record start to record stop."
+    },
+    {
+      "name": "totalSleepTime",
+      "type": "org.radarcns.passive.dreem.DreemMetric",
+      "doc": "TST stands for Total Sleep Time. Unit is min. It is amount of sleep from record start to record stop."
+    },
+    {
+      "name": "sleepEfficiency",
+      "type": "org.radarcns.passive.dreem.DreemMetric",
+      "doc": "SE stands for Sleep Efficiency. Unit is %. It is portion of the TRT spent asleep."
+    },
+    {
+      "name": "sleepOnsetLatency",
+      "type": "org.radarcns.passive.dreem.DreemMetric",
+      "doc": "SOL stands for Sleep Onset Latency. Unit is min. Time from 'Lights out' to unequivocal sleep onset (first of three consecutive N1 sleep epochs, or any non-N1 sleep stage)."
+    },
+    {
+      "name": "latencyPersistentSleep",
+      "type": "org.radarcns.passive.dreem.DreemMetric",
+      "doc": "LPS stands for Latency to Persistent Sleep. Unit is min. Time from 'Lights out' to the first epoch of persistent sleep (persistent sleep defined as the first epoch of 10 min of persistent sleep)."
+    },
+    {
+      "name": "wakeAfterSleepOnset",
+      "type": "org.radarcns.passive.dreem.DreemMetric",
+      "doc": "WASO stands for Wake After Sleep Onset. Unit is min. It is wakefulness between SO and final epoch of sleep."
+    },
+    {
+      "name": "rapidEyeMovementLatency",
+      "type": "org.radarcns.passive.dreem.DreemMetric",
+      "doc": "RL stands for REM Latency. Unit is min. It is SO to first epoch of REM sleep."
+    },
+    {
+      "name": "nonRapidEyeMovement",
+      "type": "org.radarcns.passive.dreem.DreemMetric",
+      "doc": "NREM stands for Total Sleep Non-REM Sleep. Unit is min. It is N1 + N2 + N3."
+    },
+    {
+      "name": "nonRapidEyeMovement1Duration",
+      "type": "org.radarcns.passive.dreem.DreemMetric",
+      "doc": "N1 stands for NREM 1 duration. Unit is min. It is minutes of N1 sleep."
+    },
+    {
+      "name": "nonRapidEyeMovement2Duration",
+      "type": "org.radarcns.passive.dreem.DreemMetric",
+      "doc": "N2 stands for NREM 2 duration. Unit is min. It is minutes of N2 sleep."
+    },
+    {
+      "name": "nonRapidEyeMovement3Duration",
+      "type": "org.radarcns.passive.dreem.DreemMetric",
+      "doc": "N3 stands for NREM 3 duration. Unit is min. It is minutes of N3 sleep."
+    },
+    {
+      "name": "totalRapidEyeMovementSleepDuration",
+      "type": "org.radarcns.passive.dreem.DreemMetric",
+      "doc": "REM stands for Total Rapid Eye Movement Sleep duration. Unit is min. It is minutes of REM sleep."
+    },
+    {
+      "name": "totalSleepTimeSpentInNonRapidEyeMovement1Sleep",
+      "type": "org.radarcns.passive.dreem.DreemMetric",
+      "doc": "The p_N1 stands for percentage Stage N1 Sleep. Unit is %. It is percentage of TST spent in N1 sleep."
+    },
+	{
+      "name": "totalSleepTimeSpentInNonRapidEyeMovement2Sleep",
+      "type": "org.radarcns.passive.dreem.DreemMetric",
+      "doc": "The p_N2 stands for percentage Stage N2 Sleep. Unit is %. It is percentage of TST spent in N2 sleep."
+    },
+    {
+      "name": "totalSleepTimeSpentInNonRapidEyeMovement3Sleep",
+      "type": "org.radarcns.passive.dreem.DreemMetric",
+      "doc": "The p_N3 stands for percentage Stage N3 Sleep. Unit is %. It is percentage of TST spent in N3 sleep."
+    },	
+    {
+      "name": "totalSleepTimeSpentInRapidEyeMovementSleep",
+      "type": "org.radarcns.passive.dreem.DreemMetric",
+      "doc": "The p_REM stands for Percentage Stage REM Sleep. Unit is %. It is percentage of TST spent in REM sleep."
+    },
+    {
+      "name": "totalSleepTimeSpentInNonRapidEyeMovementSleep",
+      "type": "org.radarcns.passive.dreem.DreemMetric",
+      "doc": "The p_NREM stands for Total Sleep NREM Sleep/ Total Sleep Time. Unit is %. It is percentage of TST spent in NREM sleep (N1 + N2 + N3)."
+    },
+    {
+      "name": "meanRespiratoryRate",
+      "type": "org.radarcns.passive.dreem.DreemMetric",
+      "doc": "RR stands for Mean Respiratory rate. Unit is BPM. Is is average number of breaths per minute through the recording."
+    },
+    {
+      "name": "respiratoryRateDuringNonRapidEyeMovement1Duration",
+      "type": "org.radarcns.passive.dreem.DreemMetric",
+      "doc": "RRN1 stands for respiratory rate during N1. Unit is BPM. It is average number of breaths per minute in N1 sleep."
+    },
+    {
+      "name": "respiratoryRateDuringNonRapidEyeMovement2Duration",
+      "type": "org.radarcns.passive.dreem.DreemMetric",
+      "doc": "RRN2 stands for respiratory rate during N2. Unit is BPM. It is average number of breaths per minute in N2 sleep."
+    },
+    {
+      "name": "respiratoryRateDuringNonRapidEyeMovement3Duration",
+      "type": "org.radarcns.passive.dreem.DreemMetric",
+      "doc": "RRN3 stands for respiratory rate during N3. Unit is BPM. It is average number of breaths per minute in N3 sleep."
+    },
+    {
+      "name": "recordingQuality",
+      "type": "org.radarcns.passive.dreem.DreemMetric",
+      "doc": "QUAL stands for recording quality. Unit is %. It is proportion of recording that is unequivocally scorable by a sleep expert."
+    }
+  ]
+}

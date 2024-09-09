@@ -1,0 +1,19 @@
+{
+  "namespace": "org.radarcns.passive.phone",
+  "type": "record",
+  "name": "PhoneBluetoothDeviceScanned",
+  "doc": "Phone Bluetooth device info.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Device timestamp in UTC (s)."},
+    {"name": "timeReceived", "type": "double", "doc": "Device receiver timestamp in UTC (s)."},
+    {"name": "macAddressHash", "type": ["null", "bytes"], "default": null, "doc":"Hash of Nearby Bluetooth device MAC address."},
+    {"name": "hashSaltReference", "type": ["null", "int"], "doc": "Random identifier associated with the device or installation of the app. If the app gets reinstalled or installed on another device, it's clear during analysis that the mac addresses between iterations are not comparable.", "default": null},
+    {"name": "isPaired", "type": ["null","boolean"], "doc": "Whether the bluetooth device is paired. This has been deprecated in favor of pairedState in newer versions.", "default": null},
+    {"name": "pairedState", "type": ["null", {
+      "name": "PairedState",
+      "type": "enum",
+      "doc": "Represent the bond state of the remote device. \nNOT_PAIRED indicates the remote device is not paired. \nPAIRING indicates pairing is in progress with the remote device. \nPAIRED Indicates the remote device is paired. \nUNKNOWN indicates the pairing status is not known.",
+      "symbols": ["NOT_PAIRED", "PAIRING", "PAIRED", "UNKNOWN"]
+    }], "doc": "Indicates the current paired status of the remote device.", "default": null }
+  ]
+}

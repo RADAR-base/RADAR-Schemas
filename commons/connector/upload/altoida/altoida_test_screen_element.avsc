@@ -1,0 +1,22 @@
+{
+  "namespace": "org.radarcns.connector.upload.altoida",
+  "name": "AltoidaTestScreenElement",
+  "type": "record",
+  "doc": "Schema for the Altoida test screen element.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Timestamp in UTC (s) when the assessment is started by the subject." },
+    { "name": "assessmentName", "type": "string", "doc": "Assessment name." },
+    { "name": "id", "type": ["null", "int"], "doc": "Circle id.", "default": null },
+    { "name": "name", "type": ["null", "string"], "doc": "Element name.", "default": null },
+    { "name": "width", "type": ["null", "double"], "doc": "Element width in cm.", "default": null},
+    { "name": "height", "type": ["null", "double"], "doc": "Element height in cm.", "default": null },
+    { "name": "radius", "type": ["null", "double"], "doc": "Circle radius.", "default": null },
+    { "name": "xCenterOffset", "type": ["null", "double"], "doc": "Circle location x center offset in cm.", "default": null },
+    { "name": "yCenterOffset", "type": ["null", "double"], "doc": "Circle location y center offset in cm.", "default": null },
+    { "name": "colorAlpha", "type": ["null", "float"], "doc": "Circle alpha value in RGBA color space.", "default": null },
+    { "name": "colorRed", "type": ["null", "float"], "doc": "Circle red value in RGBA color space.", "default": null },
+    { "name": "colorGreen", "type": ["null", "float"], "doc": "Circle green value in RGBA color space.", "default": null },
+    { "name": "colorBlue", "type": ["null", "float"], "doc": "Circle blue value in RGBA color space.", "default": null }
+  ]
+  }
+  

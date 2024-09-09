@@ -52,3 +52,20 @@ data:
   - doc: Stress levels are provided as 3-minute averages of the real-time stress scores generated on the device with values ranging from 1 to 100. A value of -1 means there was not enough data to detect stress, and -2 means there was too much motion (e.g. the user was walking or running). Scores between 1 and 25 are considered “rest” (i.e. not stressful), 26-50 as “low” stress, 51-75 “medium” stress, and 76- 100 as “high” stress. Usually assocaited with Stress Details Summary using the summaryId.
     topic: push_garmin_stress_level
     value_schema: .push.garmin.GarminStressLevelSample
+  - doc: Blood pressure summaries offer data from blood pressure readings taken using an Index BPM device or from a user’s manually uploaded blood pressure data. This includes systolic, diastolic, and pulse values taken at the time of the blood pressure reading. For more information about the validation of data using the Index BPM, please visit https://www.garmin.com/en-US/bpmvalidation/.
+    topic: push_garmin_blood_pressure
+    value_schema: .push.garmin.GarminBloodPressureSummary
+  - doc: A map of sleep score string descriptions for each type of sleep as well as restless periods and stress levels during sleep. Each entry in the sleepScores will have a qualifierKey value of EXCELLENT, GOOD, FAIR, or POOR that is used as a qualitative description of the user’s period of sleep.
+    topic: push_garmin_sleep_score
+    value_schema: .push.garmin.GarminSleepScoreSample
+  - doc: The Garmin Health Snapshot is a collection of key health-related insights recorded during a two-minute session on a compatible device. Heart rate (HR), heart rate variability (HRV), Pulse Ox, respiration, and stress are the metrics included this summary, which collectively provide you a glimpse of your overall cardiovascular status. More information about Health Snapshot can be found at https://support.garmin.com/en-US/?faq=PB1duL5p6V64IQwhNvcRK9.
+    topic: push_garmin_health_snapshot_summary
+    value_schema: .push.garmin.GarminHealthSnapshotSummary
+  - doc: Heart rate variability (HRV) refers to beat-to-beat variations in heart rate and is data collected during the overnight sleep window for select devices. To gain a deeper understanding of your overall health, recovery and training performance through heart rate variability while you sleep, based on technology developed by our Firstbeat Analytics team, please visit https://discover.garmin.com/en-US/performance-data/running/#heart-rate-variability.
+    topic: push_garmin_heart_rate_variability
+    value_schema: .push.garmin.GarminHeartRateVariabilitySummary
+  - doc: Mapping between time (in seconds) to a heart rate variability value recorded for the time, in milliseconds. Lack of entry for a given time should be interpreted as no data available. These are accompanied with the HRV summary data and can be associated using the summaryId.
+    topic: push_garmin_heart_rate_variability_sample
+    value_schema: .push.garmin.GarminHeartRateVariabilitySample
+
+    

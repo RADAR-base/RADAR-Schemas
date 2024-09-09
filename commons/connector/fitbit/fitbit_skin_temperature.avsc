@@ -1,0 +1,12 @@
+{
+  "namespace": "org.radarcns.connector.fitbit",
+  "type": "record",
+  "name": "FitbitSkinTemperature",
+  "doc": "Skin temperature (tempSkin) data from fitbit device. tempSkin measures skin temperature data for a date range. It only returns a value for dates on which the Fitbit device was able to record Temperature (skin) data and the maximum date range cannot exceed 30 days. Temperature (Skin) data applies specifically to a user’s “main sleep,” which is the longest single period of time asleep on a given date.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+    { "name": "timeReceived", "type": "double", "doc": "Time that the data was received from the Fitbit API (seconds since the Unix Epoch)." },
+    { "name": "relativeTemperature", "type": "float", "doc": "The user's average temperature during a period of sleep. It is displayed to the user as a delta from their baseline temperature in degrees Celsius."},
+    { "name": "logType", "type": { "name": "FitbitSkinTemperatureLogType", "type": "enum", "symbols": ["DEDICATED_TEMP_SENSOR", "OTHER_SENSORS", "UNKNOWN"], "doc": "The type of skin temperature log created."}, "doc": "The type of skin temperature log created.", "default": "UNKNOWN"}
+  ]
+}

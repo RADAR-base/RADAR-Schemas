@@ -1,0 +1,17 @@
+{
+  "namespace": "org.radarcns.passive.polar",
+  "type": "record",
+  "name": "PolarPpInterval",
+  "doc": "PP interval representing cardiac pulse-to-pulse interval extracted from PPG signal.",
+  "fields": [
+    { "name": "deviceName", "type": "string", "doc": "Polar device name." },
+    { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+    { "name": "timeReceived", "type": "double", "doc": "Device receiver timestamp in UTC (s)." },
+    { "name": "blockerBit", "type": "boolean", "doc": "Data for blockerBit." },
+    { "name": "errorEstimate", "type": "int", "doc": "Data for errorEstimate." },
+    { "name": "heartRate", "type": "int", "doc": "Data for errorEstimate." },
+    { "name": "ppInterval", "type": "int", "doc": "The duration (s) of the detected inter-beat interval (i.e., the distance in seconds from the previous beat)." },
+    { "name": "skinContactStatus", "type": "boolean", "doc": "Data for skinContactStatus." },
+    { "name": "skinContactSupported", "type": "boolean", "doc": "Data for skinContactSupported." }
+  ]
+}

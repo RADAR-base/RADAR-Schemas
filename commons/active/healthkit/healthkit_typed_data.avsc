@@ -1,0 +1,67 @@
+{
+  "namespace": "org.radarcns.active.healthkit",
+  "name": "HealthKitTypedData",
+  "type": "record",
+  "doc": "HealthKit generic typed data schema.",
+  "fields": [
+    {
+      "name": "time",
+      "type": "double",
+      "doc": "Start time of this activity period in UTC (s)."
+    },
+    {
+      "name": "endTime",
+      "type": "double",
+      "doc": "End time of this activity period in UTC (s)."
+    },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Time that the data was received from the Apple Healthkit ."
+    },
+    {
+      "name": "sourceId",
+      "type": "string",
+      "doc": "The identifier of the app that produced the data."
+    },
+    {
+      "name": "sourceName",
+      "type": "string",
+      "doc": "The name of the app that produced the data (as it appears to the user)."
+    },
+    {
+      "name": "unit",
+      "type": "string",
+      "doc": "The unit of the measurement."
+    },
+    {
+      "name": "key",
+      "type": "string",
+      "doc": "Type of data retrived e.g. weight, height, etc."
+    },
+    {
+      "name": "intValue",
+      "type": ["null", "int"],
+      "doc": "Value of the int data retrieved.",
+      "default": null
+    },
+    {
+      "name": "floatValue",
+      "type": ["null", "float"],
+      "doc": "Value of the float data retrieved.",
+      "default": null
+    },
+    {
+      "name": "doubleValue",
+      "type": ["null", "double"],
+      "doc": "Value of the double data retrieved.",
+      "default": null
+    },
+    {
+      "name": "stringValue",
+      "type": ["null", "string"],
+      "doc": "Value of the string data retrieved.",
+      "default": null
+    }
+  ]
+}

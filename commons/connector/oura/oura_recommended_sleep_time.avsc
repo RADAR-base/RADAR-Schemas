@@ -1,0 +1,21 @@
+{
+  "namespace": "org.radarcns.connector.oura",
+  "name": "OuraRecommendedSleepTime",
+  "type": "record",
+  "doc": "Oura recommendations for the optimal bedtime window that is calculated based on sleep data.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Start time of the recomended sleep time period in seconds since January 1, 1970, 00:00:00 UTC (Unix timestamp)."},
+    {"name": "timeReceived", "type": "double", "doc": "Time that this record was collected by a service in seconds since the Unix Epoch (s)."},
+    {"name": "id", "type": ["null", "string"], "doc": "Unique identifier of the Oura sleep time recommendation.", "default": null},
+    {"name": "day", "type": ["null", "string"], "doc": "Day that the sleep recommendation record belongs to. Null if unknown.", "default": null},
+    {"name": "optimalBedtimeStartOffset", "type": ["null", "int"], "doc": "Recommended optimal bedtime start offset from midnight. Null if unknown.", "default": null},
+    {"name": "optimalBedtimeEndOffset", "type": ["null", "int"], "doc": "Recommended optimal bedtime end offset from midnight. Null if unknown.", "default": null},
+    {"name": "optimalBedtimeTimezoneOffset", "type": ["null", "int"], "doc": "Timezone offset in second from GMT of the day. Null if unknown.", "default": null},
+    {"name": "recommendation", "type":
+      {"name": "OuraSleepRecommendation", "type": "enum", "symbols": ["IMPROVE_EFFICIENCY", "EARLIER_BEDTIME", "LATER_BEDTIME", "EARLIER_WAKE_UP_TIME", "LATER_WAKE_UP_TIME", "FOLLOW_OPTIMAL_BEDTIME", "UNKNOWN"], "doc": "Sleep phase type as computed by Oura."},
+      "doc": "Oura recommendation action type for bedtime.", "default": "UNKNOWN" },
+    {"name": "status", "type":
+      {"name": "OuraSleepStatus", "type": "enum", "symbols": ["NOT_ENOUGH_NIGHTS", "NOT_ENOUGH_RECENT_NIGHTS", "BAD_SLEEP_QUALITY", "ONLY_RECOMMENDED_FOUND", "OPTIMAL_FOUND", "UNKNOWN"], "doc": "Sleep phase type as computed by Oura."},
+      "doc": "Oura sleep time status type. This is used to inform sleep time recommendation.", "default": "UNKNOWN" }
+  ]
+}

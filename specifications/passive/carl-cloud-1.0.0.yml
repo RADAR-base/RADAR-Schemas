@@ -1,0 +1,32 @@
+#==================== CARL Cloud Specification ======================#
+name: CARLCLoud
+vendor: CERTH
+model: CARLCLoud
+version: 1.0.0
+doc: CARL CLoud schemas and topics
+data:
+  - type: FIBAROSECTION
+    doc: A section of a building that can include one or multiple different rooms.
+    unit: NON_DIMENSIONAL
+    topic: certh_carl_cloud_fibaro_section
+    value_schema: .passive.carl.FibaroSection
+  - type: FIBAROROOM
+    doc: A building Room that has Fibaro Devices assigned to it.
+    unit: NON_DIMENSIONAL
+    topic: certh_carl_cloud_fibaro_room
+    value_schema: .passive.carl.FibaroRoom
+  - type: FIBARODEVICE
+    doc: A Fibaro Device, capturing multiple variables for a specific Fibaro device. More information can be found https://www.fibaro.com/.
+    unit: NON_DIMENSIONAL
+    topic: certh_carl_cloud_fibaro_device
+    value_schema: .passive.carl.FibaroDevice
+  - type: FIBAROCONSUMPTION
+    doc: Record of wattage that a home device consumed at a point in time.
+    unit: NON_DIMENSIONAL
+    topic: certh_carl_cloud_fibaro_consumption
+    value_schema: .passive.carl.FibaroConsumption
+  - type: FIBAROEVENT
+    doc: An event that was registered with a Fibaro Device that captures the previous value of the last event that was registered with the same device - old and the new value - new.
+    unit: NON_DIMENSIONAL
+    topic: certh_carl_cloud_fibaro_event
+    value_schema: .passive.carl.FibaroEvent
