@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  ~ /*
+  ~  *  Copyright 2024 The Hyve
+  ~  *
+  ~  *  Licensed under the Apache License, Version 2.0 (the "License");
+  ~  *  you may not use this file except in compliance with the License.
+  ~  *  You may obtain a copy of the License at
+  ~  *
+  ~  *    http://www.apache.org/licenses/LICENSE-2.0
+  ~  *
+  ~  *  Unless required by applicable law or agreed to in writing, software
+  ~  *  distributed under the License is distributed on an "AS IS" BASIS,
+  ~  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~  *  See the License for the specific language governing permissions and
+  ~  *  limitations under the License.
+  ~  */
+  -->
+
+<configuration status="INFO">
+    <appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout
+                    pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"
+            />
+        </Console>
+        <!-- For Sentry to work the DSN must be set via SENTRY_DSN environment variable
+             When SENTRY_DSN is empty string, the Sentry SDK is disabled -->
+        <Sentry name="Sentry" debug="false"/>
+    </appenders>
+
+    <loggers>
+        <root level="INFO">
+            <appender-ref ref="Console" />
+            <!-- Note that the Sentry logging threshold is at WARN level by default -->
+            <appender-ref ref="Sentry" level="${env:SENTRY_LOG_LEVEL:-WARN}" />
+        </root>
+    </loggers>
+</configuration>
