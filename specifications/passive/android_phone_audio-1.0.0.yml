@@ -1,0 +1,13 @@
+#====================================== Android Phone Audio =======================================#
+vendor: ANDROID
+model: PHONE
+version: 1.0.0
+data:
+  # Phone Audio Input
+  - type: PHONE_AUDIO_INPUT
+    app_provider: .phone.PhoneAudioInputProvider
+    processing_state: RADAR
+    topic: android_phone_audio_input
+    value_schema: .passive.audio.PhoneAudioInput
+    sample_rate:
+      dynamic: true
