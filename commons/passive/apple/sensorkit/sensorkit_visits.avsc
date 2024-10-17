@@ -1,11 +1,12 @@
 {
-  "namespace": "org.radarcns.passive.phone",
+  "namespace": "org.radarcns.passive.apple.sensorkit",
   "type": "record",
   "name": "SensorKitVisits",
   "doc": "The user’s progress in their daily travel routine.",
   "fields": [
     { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
     { "name": "timeReceived", "type": "double", "doc": "Device receiver timestamp in UTC (s)." },
+    { "name": "device", "type": "string", "doc": "Device model." },
     { "name": "identifier", "type": "string", "doc": "A value that maps to a unique geographic location." },
     { "name": "arrivalDateIntervalStart", "type": "double", "doc": "The start date of a range of time within which the user arrives at a location of interest timestamp in UTC (s)." },
     { "name": "arrivalDateIntervalEnd", "type": "double", "doc": "The end date of a range of time within which the user arrives at a location of interest timestamp in UTC (s)." },
@@ -19,6 +20,6 @@
       "type": "enum",
       "doc": "Types of locations.",
       "symbols": ["GYM", "HOME", "SCHOOL", "WORK", "UNKNOWN"]
-      }, "doc": "The location’s type.", "default": "UNKNOWN"},
+      }, "doc": "The location’s type.", "default": "UNKNOWN"}
   ]
 }
