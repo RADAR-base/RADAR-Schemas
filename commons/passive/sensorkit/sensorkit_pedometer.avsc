@@ -1,0 +1,19 @@
+{
+  "namespace": "org.radarcns.passive.phone",
+  "type": "record",
+  "name": "SensorKitPedometer",
+  "doc": "Data about the distance traveled by a user on foot.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+    {"name": "timeReceived", "type": "double", "doc": "Device receiver timestamp in UTC (s)." },
+    {"name": "startDate", "type": "double", "doc": "The start time for the pedometer data timestamp in UTC (s)." },
+    {"name": "endDate", "type": "double", "doc": "The end time for the pedometer data timestamp in UTC (s)." },
+    {"name": "numberOfSteps", "type": "int", "doc": "Number of steps taken between this and the previous record." }
+    {"name": "distance", "type": "double", "doc": "The estimated distance (in meters) traveled by the user." }
+    {"name": "averageActivePace", "type": "double", "doc": "The average pace of the user, measured in seconds per meter." }
+    {"name": "currentPace", "type": "double", "doc": "The current pace of the user, measured in seconds per meter." }
+    {"name": "currentCadence", "type": "double", "doc": "The rate at which steps are taken, measured in steps per second." }
+    {"name": "floorsAscended", "type": "int", "doc": "The approximate number of floors ascended by walking." }
+    {"name": "floorsDescended", "type": "int", "doc": "The approximate number of floors descended by walking." }
+  ]
+}

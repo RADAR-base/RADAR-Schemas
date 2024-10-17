@@ -1,0 +1,14 @@
+{
+  "namespace": "org.radarcns.passive.phone",
+  "type": "record",
+  "name": "SensorKitMessageUsage",
+  "doc": "Data that describes the user’s Messages app activity over a period of time.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+    { "name": "timeReceived", "type": "double", "doc": "Device receiver timestamp in UTC (s)." },
+    { "name": "duration", "type": "double", "doc": "The duration that the report spans (s)." },
+    { "name": "totalIncomingMessages", "type": "int", "doc": "The number of messages the user receives." },
+    { "name": "totalOutgoingMessages", "type": "int", "doc": "The number of messages the user sends." },
+    { "name": "totalUniqueContacts", "type": "int", "doc": "The user’s number of contacts." },
+  ]
+}

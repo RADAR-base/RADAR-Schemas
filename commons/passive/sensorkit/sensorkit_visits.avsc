@@ -1,0 +1,24 @@
+{
+  "namespace": "org.radarcns.passive.phone",
+  "type": "record",
+  "name": "SensorKitVisits",
+  "doc": "The user’s progress in their daily travel routine.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+    { "name": "timeReceived", "type": "double", "doc": "Device receiver timestamp in UTC (s)." },
+    { "name": "identifier", "type": "string", "doc": "A value that maps to a unique geographic location." },
+    { "name": "arrivalDateIntervalStart", "type": "double", "doc": "The start date of a range of time within which the user arrives at a location of interest timestamp in UTC (s)." },
+    { "name": "arrivalDateIntervalEnd", "type": "double", "doc": "The end date of a range of time within which the user arrives at a location of interest timestamp in UTC (s)." },
+    { "name": "arrivalDateIntervalDuration", "type": "double", "doc": "The duration of a range of time within which the user arrives at a location of interest (s)." },
+    { "name": "departureDateIntervalStart", "type": "double", "doc": "The start date of a range of time within which the user departs from a location of interest timestamp in UTC (s)." },
+    { "name": "departureDateIntervalEnd", "type": "double", "doc": "The end date of a range of time within which the user departs from a location of interest timestamp in UTC (s)." },
+    { "name": "departureDateIntervalDuration", "type": "double", "doc": "The duration of a range of time within which the user departs from a location of interest (s)." },
+    { "name": "distanceFromHome", "type": "double", "doc": "The location’s distance from the home-category location." },
+    { "name": "locationCategory", "type": {
+      "name": "LocationCategory",
+      "type": "enum",
+      "doc": "Types of locations.",
+      "symbols": ["GYM", "HOME", "SCHOOL", "WORK", "UNKNOWN"]
+      }, "doc": "The location’s type.", "default": "UNKNOWN"},
+  ]
+}

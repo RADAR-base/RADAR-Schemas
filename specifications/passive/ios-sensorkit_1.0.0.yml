@@ -1,0 +1,30 @@
+#====================================== Apple SensorKit =====================================#
+name: apple-sensorkit
+vendor: Apple
+model: SensorKit
+version: 1.0.0
+doc:
+data:
+  - type: ACCELEROMETER
+    topic: sensorkit_acceleration
+    doc:
+  - type: LIGHT
+    topic: sensorkit_ambient_light
+    doc:
+  - type: STEP_COUNT
+    topic: sensorkit_pedometer
+  - type: RELATIVE_LOCATION
+    topic: android_phone_relative_location
+  - type: PHONE_CALL
+    topic: android_phone_call
+  - type: PHONE_SMS
+    topic: android_phone_sms
+  - type: PHONE_SMS_UNREAD
+    topic: android_phone_sms_unread
+  - type: USAGE_EVENT
+    app_provider: .phone.PhoneUsageProvider
+    processing_state: RAW
+    topic: android_phone_usage_event
+    value_schema: .passive.phone.PhoneUsageEvent
+    sample_rate:
+      dynamic: true
