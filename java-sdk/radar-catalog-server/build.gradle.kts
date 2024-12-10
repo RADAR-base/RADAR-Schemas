@@ -21,3 +21,7 @@ dependencies {
 application {
     mainClass.set("org.radarbase.schema.service.SourceCatalogueServer")
 }
+
+radarKotlin {
+    sentryEnabled.set(true)
+}

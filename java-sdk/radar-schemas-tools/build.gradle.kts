@@ -19,3 +19,7 @@ dependencies {
 application {
     mainClass.set("org.radarbase.schema.tools.CommandLineApp")
 }
+
+radarKotlin {
+    sentryEnabled.set(true)
+}
