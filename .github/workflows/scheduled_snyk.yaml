@@ -15,7 +15,7 @@ jobs:
         working-directory: java-sdk
 
     env:
-      REPORT_FILE: test.json
+      REPORT_FILE: /tmp/test.json
 
     steps:
       - uses: actions/checkout@v3
