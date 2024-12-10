@@ -1,7 +1,7 @@
 name: aRMT
 vendor: RADAR
 model: aRMT-App
-version: 1.0.0
+version: 1.0.1
 assessment_type: QUESTIONNAIRE
 doc: aRMT Healthkit data definition. In this specification, a generic schema is used for all data types. Data received from Apple Healthkit follow a similar schema, thus a shared schema can be used. Each Healthkit source type can have a different data type (this can either be a numerical or string value). The appropriate key (floatValue, doubleValue, stringValue, etc) can then be filled.
 data:
