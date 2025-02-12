@@ -13,7 +13,7 @@ jobs:
             - uses: actions/checkout@v3
             - uses: snyk/actions/setup@master
               with:
-                  snyk-version: v1.1032.0
+                  snyk-version: v1.1295.2
 
             - name: Run Snyk to check for vulnerabilities
               env:
@@ -23,6 +23,8 @@ jobs:
                   --severity-threshold=high
                   --fail-on=upgradable
                   --file=Dockerfile
+                  --policy-path=$PWD/.snyk
+                  --json-file-output=snyk.json
                   radarbase/radar-schemas-tools
                   
             - name: Report new vulnerabilities
