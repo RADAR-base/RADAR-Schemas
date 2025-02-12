@@ -1,10 +1,8 @@
-name: Snyk scheduled test
+name: Snyk scheduled code base scan
 on:
   schedule:
     - cron: '0 2 * * 1'
-  push:
-    branches:
-      - master
+  workflow_dispatch:
 
 jobs:
   security:
@@ -13,9 +11,6 @@ jobs:
     defaults:
       run:
         working-directory: java-sdk
-
-    env:
-      REPORT_FILE: /tmp/test.json
 
     steps:
       - uses: actions/checkout@v3
@@ -31,7 +26,7 @@ jobs:
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
 
-      - name: Run Snyk
+      - name: Run Snyk to check for vulnerabilities
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         run: >
@@ -39,14 +34,13 @@ jobs:
           --all-sub-projects
           --configuration-matching='^runtimeClasspath$'
           --fail-on=upgradable
-          --json-file-output=${{ env.REPORT_FILE }}
           --org=radar-base
           --policy-path=$PWD/.snyk
 
       - name: Report new vulnerabilities
         uses: thehyve/report-vulnerability@master
-        if: success() || failure()
         with:
-          report-file: ${{ env.REPORT_FILE }}
+          report-file: snyk.json
         env:
           TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        if: success() || failure()
