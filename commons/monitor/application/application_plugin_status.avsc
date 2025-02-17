@@ -8,7 +8,7 @@
         {"name": "pluginName", "type": "string", "doc": "Name of the plugin for which status information is provided."},
         {"name": "sourceStatus",
             "type": {
-                "name": "sourceStatus",
+                "name": "SourceStatus",
                 "type": "enum",
                 "doc": "Represents the current connection state of the plugin.",
                 "symbols": [

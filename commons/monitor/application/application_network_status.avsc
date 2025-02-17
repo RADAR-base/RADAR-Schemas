@@ -5,9 +5,9 @@
     "doc": "Represents the network connectivity status of an application, indicating whether it is connected to the internet and, if so, whether the connection is via Wi-Fi or cellular data. Data for this topic is not transmitted automatically; it is sent only after the user explicitly submits the metrics following their review in the application.",
     "fields": [
         {"name": "time", "type": "double", "doc": "Timestamp of the event recorded on the device, in UTC seconds."},
-        {"name": "connectionState",
+        {"name": "connectionStatus",
             "type": {
-                "name": "connectionState",
+                "name": "ConnectionStatus",
                 "type": "enum",
                 "doc": "Represents the application's network connectivity status.",
                 "symbols": [
