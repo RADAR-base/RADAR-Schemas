@@ -1,0 +1,68 @@
+#====================================== Apple SensorKit =====================================#
+name: apple-sensorkit
+vendor: Apple
+model: SensorKit
+version: 1.0.0
+doc: "Apple SensorKit integration"
+data:
+  - type: ACCELERATION
+    topic: sensorkit_acceleration
+    value_schema: .passive.apple.sensorkit.SensorKitAcceleration
+    sample_rate:
+      dynamic: true
+  - type: GYROSCOPE
+    topic: sensorkit_rotation_rate
+    value_schema: .passive.apple.sensorkit.SensorKitRotationRate
+    sample_rate:
+      dynamic: true
+    unit: RADAIAN_PER_SEC
+  - type: AMBIENT_LIGHT
+    topic: sensorkit_ambient_light
+    value_schema: .passive.apple.sensorkit.SensorKitAmbientLight
+    sample_rate:
+      dynamic: true
+  - type: AMBIENT_PRESSURE
+    topic: sensorkit_ambient_pressure
+    value_schema: .passive.apple.sensorkit.SensorKitAmbientPressure
+    sample_rate:
+      dynamic: true
+  - type: KEYBOARD_METRICS
+    topic: sensorkit_keyboard_metrics
+    value_schema: .passive.apple.sensorkit.SensorKitKeyboardMetrics
+    sample_rate:
+      dynamic: true
+  - type: MESSAGE_USAGE
+    topic: sensorkit_message_usage
+    value_schema: .passive.apple.sensorkit.SensorKitMessageUsage
+    sample_rate:
+      dynamic: true
+  - type: ON_WRIST
+    topic: sensorkit_on_wrist
+    value_schema: .passive.apple.sensorkit.SensorKitOnWrist
+    sample_rate:
+      dynamic: true
+  - type: PEDOMETER
+    topic: sensorkit_pedometer
+    value_schema: .passive.apple.sensorkit.SensorKitPedometer
+    sample_rate:
+      dynamic: true
+  - type: PHONE_USAGE
+    topic: sensorkit_phone_usage
+    value_schema: .passive.apple.sensorkit.SensorKitPhoneUsage
+    sample_rate:
+      dynamic: true
+  - type: VISITS
+    topic: sensorkit_visits
+    value_schema: .passive.apple.sensorkit.SensorKitVisits
+    sample_rate:
+      dynamic: true
+  - type: DEVICE_USAGE
+    topic: sensorkit_device_usage
+    value_schema: .passive.apple.sensorkit.SensorKitDeviceUsage
+    sample_rate:
+      dynamic: true
+  - type: TELEPHONY_SPEECH_METRICS
+    topic: sensorkit_telephony_speech_metrics
+    value_schema: .passive.apple.sensorkit.SensorKitTelephonySpeechMetrics
+    sample_rate:
+      dynamic: true
