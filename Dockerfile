@@ -12,6 +12,7 @@ COPY java-sdk/radar-schemas-core/build.gradle.kts /code/java-sdk/radar-schemas-c
 COPY java-sdk/radar-schemas-registration/build.gradle.kts /code/java-sdk/radar-schemas-registration/
 COPY java-sdk/radar-schemas-tools/build.gradle.kts /code/java-sdk/radar-schemas-tools/
 COPY java-sdk/radar-catalog-server/build.gradle.kts /code/java-sdk/radar-catalog-server/
+COPY java-sdk/gradle/libs.versions.toml /code/java-sdk/gradle/libs.versions.toml
 RUN gradle downloadDependencies copyDependencies startScripts
 
 COPY commons /code/commons
