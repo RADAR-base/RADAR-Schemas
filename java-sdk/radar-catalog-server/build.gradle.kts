@@ -1,11 +1,18 @@
+import org.radarbase.gradle.plugin.radarKotlin
+
+plugins {
+    application
+    id("kotlin-convention")
+}
+
 description = "RADAR Schemas specification and validation tools."
 
 dependencies {
-    implementation("org.radarbase:radar-jersey:${Versions.radarJersey}")
+    implementation(libs.radar.jersey)
     implementation(project(":radar-schemas-core"))
-    implementation("org.radarbase:radar-commons-kotlin:${Versions.radarCommons}")
+    implementation(libs.radar.commons.kotlin)
 
-    implementation("net.sourceforge.argparse4j:argparse4j:${Versions.argparse}")
+    implementation(libs.argparse4j)
 
     testImplementation("io.ktor:ktor-client-content-negotiation")
     testImplementation("io.ktor:ktor-serialization-kotlinx-json")
@@ -13,4 +20,9 @@ dependencies {
 
 application {
     mainClass.set("org.radarbase.schema.service.SourceCatalogueServer")
+}
+
+radarKotlin {
+    sentryEnabled.set(true)
+    openTelemetryAgentEnabled.set(true)
 }
