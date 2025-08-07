@@ -8,6 +8,7 @@
     {"name": "timeReceived", "type": "double", "doc": "Time that this record was collected by a service in seconds since the Unix Epoch (s)."},
     {"name": "id", "type": ["null", "string"], "doc": "Unique identifier of the spO2 data from Oura.", "default": null},
     {"name": "spo2AveragePercentage", "type": ["null", "float"], "doc": "The average oxygen saturation percentage value over a single day.", "default": null},    
-    {"name": "day", "type": ["null", "string"], "doc": "Day that the daily oxygen saturation data belongs to. Null if unknown.", "default": null}
+    {"name": "day", "type": ["null", "string"], "doc": "Day that the daily oxygen saturation data belongs to. Null if unknown.", "default": null},
+    {"name": "breathingDisturbanceIndex", "type": ["null", "int"], "doc": "The breathing disturbance index which indicates sleep breathing disturbances. Null if unknown.", "default": null}
   ]
 }
