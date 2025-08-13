@@ -1,0 +1,21 @@
+{
+  "namespace": "org.radarcns.connector.oura",
+  "name": "OuraDailyResilience",
+  "type": "record",
+  "doc": "This includes the daily resilience data from Oura. Resilience is a measure of how well your body is managing stress and recovering from challenges, based on sleep recovery, daytime recovery, and stress levels.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Time the resilience record belongs to in seconds since January 1, 1970, 00:00:00 UTC (Unix timestamp)."},
+    {"name": "timeReceived", "type": "double", "doc": "Time that this record was collected by a service in seconds since the Unix Epoch (s)."},
+    {"name": "id", "type": ["null", "string"], "doc": "Unique identifier of the resilience data from Oura.", "default": null},
+    {"name": "day", "type": ["null", "string"], "doc": "Day that the resilience data belongs to in YYYY-MM-DD format. Null if unknown.", "default": null},
+    {"name": "contributorSleepRecovery", "type": ["null", "float"], "doc": "Sleep recovery contribution to resilience score. Null if unknown.", "default": null},
+    {"name": "contributorDaytimeRecovery", "type": ["null", "float"], "doc": "Daytime recovery contribution to resilience score. Null if unknown.", "default": null},
+    {"name": "contributorStress", "type": ["null", "float"], "doc": "Stress contribution to resilience score. Null if unknown.", "default": null},
+    {"name": "level", "type": {
+      "name": "OuraResilienceLevel",
+      "type": "enum",
+      "symbols": ["LIMITED", "ADEQUATE", "SOLID", "STRONG", "EXCEPTIONAL", "UNKNOWN"],
+      "doc": "Resilience level categories as computed by Oura."
+    }, "doc": "Overall resilience level for the day. UNKNOWN when this data is not provided.", "default": "UNKNOWN"}
+  ]
+}

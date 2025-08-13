@@ -1,0 +1,13 @@
+{
+  "namespace": "org.radarcns.connector.oura",
+  "name": "OuraVO2Max",
+  "type": "record",
+  "doc": "Oura VO2 Max data which is the measure of the maximum volume of oxygen that an individual can use during intense exercise.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Start time of the activity in seconds since January 1, 1970, 00:00:00 UTC (Unix timestamp)."},
+    {"name": "timeReceived", "type": "double", "doc": "Time that this record was collected by a service in seconds since the Unix Epoch (s)."},
+    {"name": "id", "type": ["null", "string"], "doc": "Unique identifier of the Oura activity record the activity class data is taken from.", "default": null},
+    {"name": "vo2Max", "type": ["null", "float"], "doc": "The VO2 Max value in milliliters of oxygen per kilogram of body weight per minute (ml/kg/min).", "default": null},
+    {"name": "day", "type": ["null", "string"], "doc": "Day that the VO2 Max data belongs to. Null if unknown.", "default": null}
+  ]
+}
