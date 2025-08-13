@@ -61,3 +61,15 @@ data:
   - doc: This includes recommendations for the optimal bedtime window that is calculated based on sleep data.
     topic: connect_oura_recommended_sleep_time
     value_schema: .connector.oura.OuraRecommendedSleepTime
+  - doc: Oura resilience is a measure of how well your body is managing stress and recovering from challenges, based on sleep recovery, daytime recovery, and stress levels.
+    topic: connect_oura_daily_resilience
+    value_schema: .connector.oura.OuraDailyResilience
+  - doc: The daily cardiovascular age data provides insights into the user's cardiovascular health.
+    topic: connect_oura_daily_cardiovascular_age
+    value_schema: .connector.oura.OuraDailyCardiovascularAge
+  - doc: The daily stress level data provides insights into the user's stress levels throughout the day.
+    topic: connect_oura_daily_stress
+    value_schema: .connector.oura.OuraDailyStress
+  - doc: This describes the tags with added metadata that are added for any lifestyle choice, habit, mood change, or environmental factor an Oura user wants to monitor the effects of
+    topic: connect_oura_enhanced_tag
+    value_schema: .connector.oura.OuraEnhancedTag

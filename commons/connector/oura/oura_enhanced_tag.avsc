@@ -1,0 +1,18 @@
+{
+  "namespace": "org.radarcns.connector.oura",
+  "name": "OuraEnhancedTag",
+  "type": "record",
+  "doc": "This describes the tags with added metadata that are added for any lifestyle choice, habit, mood change, or environmental factor an Oura user wants to monitor the effects of.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Start time of the enhanced tag in seconds since January 1, 1970, 00:00:00 UTC (Unix timestamp)."},
+    {"name": "timeReceived", "type": "double", "doc": "Time that this record was collected by a service in seconds since the Unix Epoch (s)."},
+    {"name": "id", "type": ["null", "string"], "doc": "Unique identifier of the enhanced tag from Oura.", "default": null},
+    {"name": "tagTypeCode", "type": ["null", "string"], "doc": "The tag type code that categorizes the enhanced tag (e.g., 'tag_generic_nocaffeine', 'tag_generic_outdoors', 'tag_generic_relaxed').", "default": null},
+    {"name": "tagStartTime", "type": ["null", "double"], "doc": "Start time of the enhanced tag in seconds since January 1, 1970, 00:00:00 UTC (Unix timestamp). Null if the tag doesn't have a start time.", "default": null},
+    {"name": "tagEndTime", "type": ["null", "double"], "doc": "End time of the enhanced tag in seconds since January 1, 1970, 00:00:00 UTC (Unix timestamp). Null if the tag doesn't have an end time.", "default": null},
+    {"name": "startDay", "type": ["null", "string"], "doc": "Start date of the enhanced tag in YYYY-MM-DD format. Null if unknown.", "default": null},
+    {"name": "endDay", "type": ["null", "string"], "doc": "End date of the enhanced tag in YYYY-MM-DD format. Null if the tag doesn't have an end date.", "default": null},
+    {"name": "comment", "type": ["null", "string"], "doc": "User comment or note associated with the enhanced tag. Null if no comment provided.", "default": null},
+    {"name": "customName", "type": ["null", "string"], "doc": "Custom name assigned by the user to the enhanced tag. Null if no custom name provided.", "default": null}
+  ]
+}
