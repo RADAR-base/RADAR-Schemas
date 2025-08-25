@@ -1,0 +1,18 @@
+{
+  "namespace": "org.radarcns.passive.apple.sensorkit",
+  "type": "record",
+  "name": "SensorKitKeyboardMetrics",
+  "doc": "Data that describes the configuration of a device’s keyboard and its usage patterns.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+    { "name": "timeReceived", "type": "double", "doc": "Device receiver timestamp in UTC (s)." },
+    { "name": "device", "type": "string", "doc": "Device model." },
+    { "name": "totalWords", "type": "int", "doc": "The total number of typed words for the keyboard." },
+    { "name": "totalAlteredWords", "type": "int", "doc": "The total number of altered words for the keyboard." },
+    { "name": "totalTaps", "type": "int", "doc": "The total number of taps for the keyboard." },
+    { "name": "totalEmojis", "type": "int", "doc": "The total number of emojis for the keyboard." },
+    { "name": "totalTypingDuration", "type": "double", "doc": "The total amount of typing time for the keyboard." },
+    { "name": "totalPauses", "type": "int", "doc": "The total number of pauses during the session." },
+    { "name": "totalTypingEpisodes", "type": "int", "doc": "The total number of continuous typing episodes during the session." }
+  ]
+}
