@@ -1,0 +1,15 @@
+{
+    "namespace": "org.radarcns.monitor.application",
+    "type": "record",
+    "name": "ApplicationTopicRecordsSent",
+    "doc": "Represents the number of records sent for a Kafka topic since the last update.",
+    "fields": [
+        {"name": "time", "type": "double", "doc": "Device timestamp in UTC seconds."},
+        {"name": "topicName", "type": ["null", "string"], "doc": "Name of the Kafka topic for which record information is provided.", "default": null},
+        {
+            "name": "recordsSent",
+            "type": "long",
+            "doc": "Number of records sent for the topic since the last report. For example, if a total of 20,000 records have been sent overall, and last call reported 15000 topics then the most recent report indicates that 5,000 records were sent since the previous upload."
+        }
+    ]
+}
