@@ -33,6 +33,8 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
 
+      - name: Compile code
+        run: ./gradlew assemble
 
       - name: Install gpg secret key
         run: |
