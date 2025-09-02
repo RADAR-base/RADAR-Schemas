@@ -40,7 +40,8 @@ jobs:
     needs: prepare-matrix
     runs-on: ubuntu-latest
     permissions:
-      contents: write
+      contents: read
+      security-events: write
     strategy:
       matrix:
         module: ${{ fromJson(needs.prepare-matrix.outputs.modules ) }}
