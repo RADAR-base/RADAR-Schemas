@@ -5,11 +5,11 @@ object Versions {
     const val java = 17
     const val avroGenerator = "1.9.1"
 
-    const val radarCommons = "1.2.3"
-    const val avro = "1.11.4"
-    const val jackson = "2.16.1"
+    const val radarCommons = "1.2.4"
+    const val avro = "1.12.0"
+    const val jackson = "2.17.3"
     const val argparse = "0.9.0"
-    const val radarJersey = "0.11.1"
+    const val radarJersey = "0.12.4"
     const val junit = "5.10.1"
     const val confluent = "7.6.0"
     const val kafka = "$confluent-ce"
