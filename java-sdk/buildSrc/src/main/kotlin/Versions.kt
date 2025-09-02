@@ -19,5 +19,5 @@ object Versions {
     const val jakartaValidation = "3.0.2"
     const val log4j2 = "2.20.0"
 
-    const val gradle = "8.3"
+    const val gradle = "8.13"
 }
