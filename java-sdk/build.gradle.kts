@@ -70,15 +70,9 @@ configure(listOf(
         githubUrl.set("https://github.com/$githubRepoName")
         developers {
             developer {
-                id.set("bdegraaf1234")
-                name.set("Bastiaan de Graaf")
-                email.set("bastiaan@thehyve.nl")
-                organization.set("The Hyve")
-            }
-            developer {
-                id.set("nivemaham")
-                name.set("Nivethika Mahasivam")
-                email.set("nivethika@thehyve.nl")
+                id.set("pvannierop")
+                name.set("Pim van Nierop")
+                email.set("pim@thehyve.nl")
                 organization.set("The Hyve")
             }
         }
