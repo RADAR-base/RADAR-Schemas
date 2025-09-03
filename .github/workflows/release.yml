@@ -12,9 +12,7 @@ env:
 jobs:
   upload:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
+    permissions: write-all
 
     defaults:
       run:
