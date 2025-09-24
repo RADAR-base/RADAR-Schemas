@@ -1,0 +1,13 @@
+{
+  "namespace": "org.radarcns.connector.upload.physilog",
+  "type": "record",
+  "name": "PhysilogGyroscope",
+  "doc": "Data from the 3-axis gyroscope.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+    { "name": "timeReceived", "type": "double", "doc": "Timestamp in unix time received from Physilog device." },
+    { "name": "x", "type": "float", "doc": "Gyration in the x-axis (deg/s)." },
+    { "name": "y", "type": "float", "doc": "Gyration in the y-axis (deg/s)." },
+    { "name": "z", "type": "float", "doc": "Gyration in the z-axis (deg/s)." }
+  ]
+}
