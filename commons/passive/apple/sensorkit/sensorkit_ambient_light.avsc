@@ -1,0 +1,20 @@
+{
+  "namespace": "org.radarcns.passive.apple.sensorkit",
+  "type": "record",
+  "name": "SensorKitAmbientLight",
+  "doc": "Data describes the amount of ambient light in the user’s environment.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+    { "name": "timeReceived", "type": "double", "doc": "Device receiver timestamp in UTC (s)." },
+    { "name": "device", "type": "string", "doc": "Device model." },
+    { "name": "chromaticityX", "type": "float", "doc": "Chromaticity x coordinate of the ambient light in the CIE xy color space (dimensionless)." },
+      { "name": "chromaticityY", "type": "float", "doc": "Chromaticity y coordinate of the ambient light in the CIE xy color space (dimensionless)." },
+      { "name": "lux", "type": "float", "doc": "Illuminance (lx)." },
+      { "name": "placement", "type": {
+            "name": "SensorPlacement",
+            "type": "enum",
+            "doc": "Directional values that describe light-source location with respect to the sensor.",
+            "symbols": ["FRONT_BOTTOM", "FRONT_BOTTOM_LEFT", "FRONT_BOTTOM_RIGHT", "FRONT_LEFT", "FRONT_RIGHT", "FRONT_TOP", "FRONT_TOP_LEFT", "FRONT_TOP_RIGHT", "UNKNOWN"]
+            }, "doc": "The light’s location relative to the sensor.", "default": "UNKNOWN"}
+    ]
+}

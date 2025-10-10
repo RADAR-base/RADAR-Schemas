@@ -1,0 +1,28 @@
+{
+  "namespace": "org.radarcns.passive.apple.sensorkit",
+  "type": "record",
+  "name": "SensorKitTelephonySpeechMetrics",
+  "doc": "Describes the metrics about a range of speech.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+    { "name": "timeReceived", "type": "double", "doc": "Device receiver timestamp in UTC (s)." },
+    { "name": "device", "type": "string", "doc": "Device model." },
+
+    { "name": "audioLevelStart", "type": ["null", "double"], "doc": "The start time of the time range in the audio stream that the level applies to, in seconds relative to time (s).", "default": null },
+    { "name": "audioLevelDuration", "type": ["null", "double"], "doc": "The duration of the time range in the audio stream that the level applies to (s).", "default": null },
+    { "name": "audioLevelLoudness", "type": ["null", "double"], "doc": "The measure of the audio level in decibels.", "default": null },
+
+    { "name": "soundClassificationStart", "type": ["null", "double"], "doc": "The start time of the time span that corresponds to the result’s classifications, in seconds relative to time (s).", "default": null },
+    { "name": "soundClassificationDuration", "type": ["null", "double"], "doc": "The duration of the time span that corresponds to the result’s classifications (s).", "default": null },
+    { "name": "soundClassification", "type": ["null", "string"], "doc": "The confidence value the model has in its prediction.", "default": null },
+
+    { "name": "speechExpressionStart", "type": ["null", "double"], "doc": "The start time of the time range in the audio stream that the metrics and analytics apply to, in seconds relative to time (s).", "default": null },
+    { "name": "speechExpressionDuration", "type": ["null", "double"], "doc": "The duration of the time range in the audio stream that the metrics and analytics apply to (s).", "default": null },
+    { "name": "speechExpressionActivation", "type": ["null", "double"], "doc": "The level of energy or activation of the speaker.", "default": null },
+    { "name": "speechExpressionConfidence", "type": ["null", "double"], "doc": "The level of confidence of the speaker.", "default": null },
+    { "name": "speechExpressionDominance", "type": ["null", "double"], "doc": "The degree of how strong or meek the speaker sounds.", "default": null },
+    { "name": "speechExpressionMood", "type": ["null", "double"], "doc": "An indication of how slurry, tired, or exhausted the speaker sounds compared to normal speech.", "default": null },
+    { "name": "speechExpressionValence", "type": ["null", "double"], "doc": "The degree of positive or negative emotion or sentiment of the speaker.", "default": null }
+
+  ]
+}
