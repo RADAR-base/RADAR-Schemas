@@ -7,8 +7,8 @@
     { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
     { "name": "timeReceived", "type": "double", "doc": "Device receiver timestamp in UTC (s)." },
     { "name": "device", "type": "string", "doc": "Device model." },
-    { "name": "chromaticityX", "type": "float", "doc": "x-value of the coordinate pair that describes the light brightness and tint." },
-      { "name": "chromaticityY", "type": "float", "doc": "y-value of the coordinate pair that describes the light brightness and tint." },
+    { "name": "chromaticityX", "type": "float", "doc": "Chromaticity x coordinate of the ambient light in the CIE xy color space (dimensionless)." },
+      { "name": "chromaticityY", "type": "float", "doc": "Chromaticity y coordinate of the ambient light in the CIE xy color space (dimensionless)." },
       { "name": "lux", "type": "float", "doc": "Illuminance (lx)." },
       { "name": "placement", "type": {
             "name": "SensorPlacement",

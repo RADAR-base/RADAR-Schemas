@@ -10,7 +10,7 @@
     { "name": "duration", "type": "double", "doc": "The duration that the report spans (s)." },
     { "name": "totalIncomingCalls", "type": "int", "doc": "The number of calls the user receives." },
     { "name": "totalOutgoingCalls", "type": "int", "doc": "The number of calls the user makes." },
-    { "name": "totalPhoneCallDuration", "type": "double", "doc": "The total duration of all calls. (s)" },
+    { "name": "totalPhoneCallDuration", "type": "double", "doc": "The total duration of all calls (s)." },
     { "name": "totalUniqueContacts", "type": "int", "doc": "The user’s number of contacts." }
   ]
 }

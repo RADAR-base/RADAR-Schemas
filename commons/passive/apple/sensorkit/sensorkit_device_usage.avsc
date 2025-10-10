@@ -10,8 +10,8 @@
     { "name": "duration", "type": "double", "doc": "The duration that the report spans (s)." },
     { "name": "totalScreenWakes", "type": "int", "doc": "The total number of screen wakes for the device." },
     { "name": "totalUnlocks", "type": "int", "doc": "The total number of unlocks for the device." },
-    { "name": "totalUnlockDuration", "type": "double", "doc": " The duration of time the device is in an unlocked state (s)." },
-    { "name": "version", "type": "string", "doc": "Version" },
+    { "name": "totalUnlockDuration", "type": "double", "doc": "The duration of time the device is in an unlocked state (s)." },
+    { "name": "version", "type": "string", "doc": "Version of the SensorKit device usage report format." },
     { "name": "applicationUsageByCategory", "type": "string", "doc": "The usage time of apps per category." },
     { "name": "notificationUsageByCategory", "type": "string", "doc": "The frequency of notifications per category." },
     { "name": "webUsageByCategory", "type": "string", "doc": "The amount of time the user accesses domains per category." }
