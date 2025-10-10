@@ -1,0 +1,12 @@
+{
+  "namespace": "org.radarcns.connector.oura",
+  "name": "OuraDailyCardiovascularAge",
+  "type": "record",
+  "doc": "This includes the daily cardiovascular age data from Oura. Cardiovascular age represents the estimated age of your cardiovascular system based on various health metrics.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Time the cardiovascular age record belongs to in seconds since January 1, 1970, 00:00:00 UTC (Unix timestamp)."},
+    {"name": "timeReceived", "type": "double", "doc": "Time that this record was collected by a service in seconds since the Unix Epoch (s)."},
+    {"name": "day", "type": ["null", "string"], "doc": "Day that the cardiovascular age data belongs to in YYYY-MM-DD format. Null if unknown.", "default": null},
+    {"name": "vascularAge", "type": ["null", "int"], "doc": "The estimated cardiovascular/vascular age in years. Null if unknown.", "default": null}
+  ]
+}

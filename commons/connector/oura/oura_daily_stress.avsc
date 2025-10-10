@@ -1,0 +1,20 @@
+{
+  "namespace": "org.radarcns.connector.oura",
+  "name": "OuraDailyStress",
+  "type": "record",
+  "doc": "This includes the daily stress summary values includes a summary of the number of minutes the user spends in high stress and high recovery each day.",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Start time of the stress period in seconds since January 1, 1970, 00:00:00 UTC (Unix timestamp)."},
+    {"name": "timeReceived", "type": "double", "doc": "Time that this record was collected by a service in seconds since the Unix Epoch (s)."},
+    {"name": "id", "type": ["null", "string"], "doc": "Unique identifier of the stress data from Oura.", "default": null},
+    {"name": "day", "type": ["null", "string"], "doc": "Day that the daily stress data belongs to in YYYY-MM-DD format. Null if unknown.", "default": null},
+    {"name": "stressHigh", "type": ["null", "int"], "doc": "The number of minutes the user spends in high stress each day. Null if unknown.", "default": null},
+    {"name": "recoveryHigh", "type": ["null", "int"], "doc": "The number of minutes the user spends in high recovery each day. Null if unknown.", "default": null},
+    {"name": "daySummary", "type": ["null", {
+        "name": "OuraDaySummaryType",
+        "type": "enum",
+        "symbols": ["NORMAL", "STRESSFUL", "RESTORED", "UNKNOWN"],
+        "doc": "Summary of the daily stress levels."
+    }], "doc": "Summary of the daily stress levels. Null if unknown.", "default": null}
+  ]
+}
