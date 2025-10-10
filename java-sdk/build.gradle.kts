@@ -37,6 +37,17 @@ subprojects {
         junitVersion.set(Versions.junit)
     }
 
+    configurations.all {
+        resolutionStrategy {
+            /* The entries in the block below are added here to force the version of
+            *  transitive dependencies and mitigate reported vulnerabilities */
+            force(
+                "com.fasterxml.jackson.core:jackson-databind:2.17.2",
+                "org.apache.commons:commons-lang3:3.18.0"
+            )
+        }
+    }
+
     afterEvaluate {
         configurations.all {
             exclude(group = "org.slf4j", module = "slf4j-log4j12")
@@ -70,15 +81,9 @@ configure(listOf(
         githubUrl.set("https://github.com/$githubRepoName")
         developers {
             developer {
-                id.set("bdegraaf1234")
-                name.set("Bastiaan de Graaf")
-                email.set("bastiaan@thehyve.nl")
-                organization.set("The Hyve")
-            }
-            developer {
-                id.set("nivemaham")
-                name.set("Nivethika Mahasivam")
-                email.set("nivethika@thehyve.nl")
+                id.set("pvannierop")
+                name.set("Pim van Nierop")
+                email.set("pim@thehyve.nl")
                 organization.set("The Hyve")
             }
         }
