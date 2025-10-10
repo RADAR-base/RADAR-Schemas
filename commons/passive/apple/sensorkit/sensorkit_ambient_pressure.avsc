@@ -1,0 +1,13 @@
+{
+  "namespace": "org.radarcns.passive.apple.sensorkit",
+  "type": "record",
+  "name": "SensorKitAmbientPressure",
+  "doc": "A measurement of the ambient pressure and temperature.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+    { "name": "timeReceived", "type": "double", "doc": "Device receiver timestamp in UTC (s)." },
+    { "name": "device", "type": "string", "doc": "Device model." },
+    { "name": "pressure", "type": "double", "doc": "The ambient pressure (Pascal)." },
+    { "name": "temperature", "type": "double", "doc": "The temperature (Celsius)." }
+  ]
+}

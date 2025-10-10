@@ -1,0 +1,26 @@
+{
+  "namespace": "org.radarcns.passive.apple.sensorkit",
+  "type": "record",
+  "name": "SensorKitOnWrist",
+  "doc": "Data about the configuration of a watch on the wearer’s wrist.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+    { "name": "timeReceived", "type": "double", "doc": "Device receiver timestamp in UTC (s)." },
+    { "name": "device", "type": "string", "doc": "Device model." },
+    { "name": "crownOrientation", "type": {
+          "name": "CrownOrientation",
+          "type": "enum",
+          "doc": "Directions the Digital Crown can face with respect to the wearer.",
+          "symbols": ["LEFT", "RIGHT"]
+          }, "doc": "A value that indicates the direction the Digital Crown faces with respect to the wearer." },
+    { "name": "onWrist", "type": "boolean", "doc": "A value that indicates whether the watch is on the user’s wrist." },
+    { "name": "wristLocation", "type": {
+              "name": "WristLocation",
+              "type": "enum",
+              "doc": "Preferences for where a user wears a watch.",
+              "symbols": ["LEFT", "RIGHT"]
+              }, "doc": "A value that indicates the wrist where the user wears the watch." },
+    { "name": "offWristDate", "type": "double", "doc": "Off Wrist Date timestamp in UTC (s)." },
+    { "name": "onWristDate", "type": "double", "doc": "On Wrist Date timestamp in UTC (s)." }
+  ]
+}
