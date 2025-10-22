@@ -9,11 +9,32 @@
     { "name": "packageName", "type": "string", "doc": "Package name of the launched app." },
     { "name": "categoryName", "type": ["null", "string"], "doc": "App category as given by the play store, null if a category is not listed or unable to be fetched.", "default": null },
     { "name": "categoryNameFetchTime", "type": ["null", "double"], "doc": "Timestamp in UTC when the category was attempted to fetch from the play store (s), null if not fetched.", "default": null },
-    { "name": "eventType", "type": {
-      "name": "UsageEventType",
-      "type": "enum",
-      "doc": "Android activity usage event type.",
-      "symbols": ["FOREGROUND", "BACKGROUND", "CONFIG", "SHORTCUT", "INTERACTION", "FOREGROUND_SERVICE_START", "FOREGROUND_SERVICE_STOP", "STANDBY_BUCKET_CHANGED", "STOPPED", "OTHER", "UNKNOWN"]
-      }, "doc": "Whether the event brought app to foreground or background or neither.", "default": "UNKNOWN" }
+      {
+          "name": "eventType",
+          "type": {
+              "name": "UsageEventType",
+              "type": "enum",
+              "doc": "Android activity and system usage event type. \nFOREGROUND: Activity moved to the foreground (onResume), app became visible and interactive to the user. \nBACKGROUND: Activity moved to the background (onPause), activity lost focus but may still be partially visible or resumable. \nSTOPPED: Activity became fully invisible (onStop), activity is no longer visible to the user. \nCONFIG: Configuration change (e.g., orientation or locale), activity may be recreated or resources updated. \nSHORTCUT: App launched via a launcher or pinned shortcut. \nINTERACTION: Direct user interaction with the app (tap, gesture, or other user action reported by the system). \nFOREGROUND_SERVICE_START: A foreground service was started by the package, long-running, user-visible work usually backed by a notification. \nFOREGROUND_SERVICE_STOP: A foreground service was stopped. \nSTANDBY_BUCKET_CHANGED: The system changed the app’s App Standby Bucket (ACTIVE, WORKING_SET, FREQUENT, RARE, RESTRICTED), affects background scheduling. \nKEYGUARD_SHOWN: The lock screen (keyguard) became visible, device entered locked UI. \nKEYGUARD_HIDDEN: The lock screen was dismissed or the device was unlocked, device became accessible. \nSCREEN_INTERACTIVE: Screen became interactive (turned on and ready for input), device ready for touch/input (may still be locked). \nSCREEN_NON_INTERACTIVE: Screen became non-interactive (turned off or in low-interaction mode), device not accepting input. \nOTHER: Any other unclassified event type; UNKNOWN: Fallback when the event type cannot be determined.",
+              "symbols": [
+                  "FOREGROUND",
+                  "BACKGROUND",
+                  "CONFIG",
+                  "SHORTCUT",
+                  "INTERACTION",
+                  "FOREGROUND_SERVICE_START",
+                  "FOREGROUND_SERVICE_STOP",
+                  "STANDBY_BUCKET_CHANGED",
+                  "STOPPED",
+                  "KEYGUARD_SHOWN",
+                  "KEYGUARD_HIDDEN",
+                  "SCREEN_INTERACTIVE",
+                  "SCREEN_NON_INTERACTIVE",
+                  "OTHER",
+                  "UNKNOWN"
+              ]
+          },
+          "doc": "Android app usage event types where an event represents a state change for component/app.",
+          "default": "UNKNOWN"
+      }
   ]
 }
