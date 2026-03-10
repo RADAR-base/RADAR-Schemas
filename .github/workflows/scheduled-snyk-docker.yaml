@@ -18,6 +18,10 @@ jobs:
     
     steps:
       - uses: actions/checkout@v3
+        
+      - name: Lowercase image name
+        run: |
+            echo "DOCKER_IMAGE=${DOCKER_IMAGE,,}" >>${GITHUB_ENV}
 
       - name: Run Snyk to check for vulnerabilities
         continue-on-error: true # To make sure that SARIF upload gets called
