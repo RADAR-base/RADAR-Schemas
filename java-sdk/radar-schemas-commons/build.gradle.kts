@@ -15,19 +15,17 @@ val generateAvro by tasks.registering(GenerateAvroJavaTask::class) {
             include("**/*.avsc")
         },
     )
-    setOutputDir(layout.projectDirectory.dir("src/generated/java").asFile)
+    setOutputDir(layout.buildDirectory.dir("generated/java").get().asFile)
 }
 
 sourceSets {
     main {
-        java.srcDir(generateAvro.map { it.outputs })
+        java.srcDir(generateAvro)
     }
 }
 
 dependencies {
     api(libs.apache.avro) {
-        api(libs.jackson.core)
-        api(libs.jackson.databind)
         exclude(group = "org.xerial.snappy", module = "snappy-java")
         exclude(group = "com.thoughtworks.paranamer", module = "paranamer")
         exclude(group = "org.apache.commons", module = "commons-compress")
@@ -41,5 +39,5 @@ dependencies {
 // Clean settings                                                            //
 // ---------------------------------------------------------------------------//
 tasks.clean {
-    delete(generateAvro.map { it.outputs })
+    delete(generateAvro)
 }
