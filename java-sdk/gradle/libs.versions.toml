@@ -2,11 +2,13 @@
 project = "0.8.15"
 kotlin = "1.9.10"
 java = "17"
+gradle = "8.14"
 avroGenerator = "1.9.1"
-#radarCommons = "1.2.5-SNAPSHOT"
-radarCommons = "1.2.4"
-avro = "1.12.0"
-jackson = "2.17.3"
+# radar-commons depends on radar-schemas repo, so we cannot use final version.
+radarCommons = "1.2.5-SNAPSHOT"
+avro = "1.12.1"
+# @pin Upgrade to 2.21.x requires kotlin v2 minimum
+jackson = "2.20.2"
 argparse = "0.9.0"
 radarJersey = "0.12.4"
 junit = "5.10.1"
@@ -16,12 +18,15 @@ ktor = "2.3.4"
 slf4j = "2.0.9"
 jakartaValidation = "3.0.2"
 log4j2 = "2.20.0"
-gradle = "8.14"
+apacheCommonsLang = "3.18.0"
+lz4 = "1.8.1"
 
 [libraries]
 
 # External libraries
+lz4 = { module = "at.yawk.lz4:lz4-java", version.ref = "lz4" }
 apache-avro = { group = "org.apache.avro", name = "avro", version.ref = "avro" }
+apache-commons-lang = { group = "org.apache.commons", name = "commons-lang3", version.ref = "apacheCommonsLang" }
 jakarta-validation = { group = "jakarta.validation", name = "jakarta.validation-api", version.ref = "jakartaValidation" }
 radar-commons-kotlin = { group = "org.radarbase", name = "radar-commons-kotlin", version.ref = "radarCommons" }
 radar-commons = { group = "org.radarbase", name = "radar-commons", version.ref = "radarCommons" }

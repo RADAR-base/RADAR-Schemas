@@ -37,19 +37,29 @@ subprojects {
         junitVersion.set(rootProject.libs.versions.junit)
     }
 
+    // --- Vulnerability fixes start ---
+    dependencies {
+        constraints {
+            add("implementation", rootProject.libs.jackson.bom) {
+                because("Force safe version of Jackson across all modules")
+            }
+            add("implementation", rootProject.libs.apache.commons.lang) {
+                because("Force safe version of commons-lang across all modules")
+            }
+        }
+    }
+
     configurations.all {
-        resolutionStrategy {
-            /* The entries in the block below are added here to force the version of
-            *  transitive dependencies and mitigate reported vulnerabilities */
-            force(
-                "com.fasterxml.jackson.core:jackson-databind:2.17.2",
-                "org.apache.commons:commons-lang3:3.18.0"
-            )
+        resolutionStrategy.dependencySubstitution {
+            // Substitute the old group/module with the new one
+            substitute(module("org.lz4:lz4-java"))
+                .using(module(rootProject.libs.lz4.get().toString()))
+                .because("Force safe version of LZ4 across all modules")
         }
     }
 }
+// --- Vulnerability fixes end ---
 
-// Configure applications
 configure(listOf(
     project(":radar-schemas-tools"),
     project(":radar-catalog-server"),
