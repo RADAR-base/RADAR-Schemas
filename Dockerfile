@@ -5,7 +5,6 @@ WORKDIR /code/java-sdk
 ENV GRADLE_USER_HOME=/code/.gradlecache \
    GRADLE_OPTS="-Djdk.lang.Process.launchMechanism=vfork -Dorg.gradle.vfs.watch=false"
 
-COPY java-sdk/buildSrc /code/java-sdk/buildSrc
 COPY java-sdk/gradle/libs.versions.toml /code/java-sdk/gradle/
 COPY java-sdk/*.gradle.kts java-sdk/gradle.properties /code/java-sdk/
 COPY java-sdk/radar-schemas-commons/build.gradle.kts /code/java-sdk/radar-schemas-commons/
