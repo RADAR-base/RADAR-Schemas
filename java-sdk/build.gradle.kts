@@ -21,6 +21,7 @@ val githubUrl = "https://github.com/${githubRepoName}.git"
 val githubIssueUrl = "https://github.com/$githubRepoName/issues"
 
 subprojects {
+    apply(plugin = "java-library")
     apply(plugin = "org.radarbase.radar-kotlin")
 
     repositories{
@@ -47,12 +48,6 @@ subprojects {
             )
         }
     }
-
-    afterEvaluate {
-        configurations.all {
-            exclude(group = "org.slf4j", module = "slf4j-log4j12")
-        }
-    }
 }
 
 // Configure applications
@@ -69,8 +64,6 @@ configure(listOf(
     project(":radar-schemas-core"),
     project(":radar-schemas-registration")
 )) {
-    apply(plugin = "java-library")
-    apply(plugin = "org.radarbase.radar-kotlin")
     apply(plugin = "org.radarbase.radar-publishing")
 
     radarKotlin {
