@@ -5,7 +5,7 @@ object Versions {
     const val java = 17
     const val avroGenerator = "1.9.1"
 
-    const val radarCommons = "1.2.4"
+    const val radarCommons = "1.2.5-SNAPSHOT"
     const val avro = "1.12.0"
     const val jackson = "2.17.3"
     const val argparse = "0.9.0"
