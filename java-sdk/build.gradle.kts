@@ -2,17 +2,17 @@ import org.radarbase.gradle.plugin.radarKotlin
 import org.radarbase.gradle.plugin.radarPublishing
 
 plugins {
-    id("org.radarbase.radar-root-project") version Versions.radarCommons
-    id("org.radarbase.radar-dependency-management") version Versions.radarCommons
-    id("org.radarbase.radar-kotlin") version Versions.radarCommons apply false
-    id("org.radarbase.radar-publishing") version Versions.radarCommons apply false
-    id("com.github.davidmc24.gradle.plugin.avro-base") version Versions.avroGenerator apply false
-    kotlin("plugin.allopen") version Versions.kotlin apply false
+    alias(libs.plugins.radar.root.project)
+    alias(libs.plugins.radar.dependency.management)
+    alias(libs.plugins.radar.kotlin) apply false
+    alias(libs.plugins.radar.publishing) apply false
+    alias(libs.plugins.avro.base) apply false
+    alias(libs.plugins.kotlin.allopen) apply false
 }
 
 radarRootProject {
-    projectVersion.set(Versions.project)
-    gradleVersion.set(Versions.gradle)
+    projectVersion.set(libs.versions.project)
+    gradleVersion.set(libs.versions.gradle)
 }
 
 // Configuration
@@ -30,11 +30,11 @@ subprojects {
     }
 
     radarKotlin {
-        javaVersion.set(Versions.java)
-        kotlinVersion.set(Versions.kotlin)
-        slf4jVersion.set(Versions.slf4j)
-        log4j2Version.set(Versions.log4j2)
-        junitVersion.set(Versions.junit)
+        javaVersion.set(rootProject.libs.versions.java.get().toInt())
+        kotlinVersion.set(rootProject.libs.versions.kotlin)
+        slf4jVersion.set(rootProject.libs.versions.slf4j)
+        log4j2Version.set(rootProject.libs.versions.log4j2)
+        junitVersion.set(rootProject.libs.versions.junit)
     }
 
     configurations.all {
@@ -74,7 +74,7 @@ configure(listOf(
     apply(plugin = "org.radarbase.radar-publishing")
 
     radarKotlin {
-        javaVersion.set(Versions.java)
+        javaVersion.set(rootProject.libs.versions.java.get().toInt())
     }
 
     radarPublishing {
