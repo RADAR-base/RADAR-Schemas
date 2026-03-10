@@ -147,7 +147,7 @@ private suspend fun Map<Path, String>.parseSchemas(
     .entries
     .forkJoin { (p, schema) ->
         val parser = Schema.Parser()
-        parser.addTypes(useTypes)
+        parser.addTypes(useTypes.values)
         withContext(Dispatchers.IO) {
             try {
                 val parsedSchema = parser.parse(schema)

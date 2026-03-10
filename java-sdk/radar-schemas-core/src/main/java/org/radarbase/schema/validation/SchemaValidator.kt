@@ -104,7 +104,7 @@ class SchemaValidator(
         }
         return Validator { metadata ->
             val parser = Schema.Parser()
-            parser.addTypes(useTypes)
+            parser.addTypes(useTypes.values)
             launch(Dispatchers.IO) {
                 try {
                     parser.parse(metadata.path.toFile())
