@@ -16,7 +16,7 @@ ktor = "2.3.4"
 slf4j = "2.0.9"
 jakartaValidation = "3.0.2"
 log4j2 = "2.20.0"
-gradle = "8.13"
+gradle = "8.14"
 
 [libraries]
 
