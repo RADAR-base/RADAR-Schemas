@@ -1,4 +1,6 @@
 plugins {
+    id("java-library")
+    id("publishing-convention")
     alias(libs.plugins.kotlin.allopen)
 }
 
@@ -16,9 +18,9 @@ dependencies {
     implementation(libs.radar.commons.kotlin)
 
     api(platform(libs.jackson.bom))
-    api(libs.jackson.databind)
-    implementation(libs.jackson.module.kotlin)
-    implementation(libs.jackson.dataformat.yaml)
+    api("com.fasterxml.jackson.core:jackson-databind")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml")
 
     implementation(libs.confluent.kafka.connect.avro.data) {
         exclude(group = "org.glassfish.jersey.core", module = "jersey-common")
