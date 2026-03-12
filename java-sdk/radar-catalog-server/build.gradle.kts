@@ -24,4 +24,6 @@ application {
 
 radarKotlin {
     log4j2Version.set(libs.versions.log4j2)
+    sentryEnabled.set(true)
+    openTelemetryAgentEnabled.set(true)
 }
