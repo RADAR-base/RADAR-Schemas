@@ -8,5 +8,5 @@ val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
 radarKotlin {
     log4j2Version.set(libs.findVersion("log4j2").get().toString())
     sentryEnabled.set(true)
-    openTelemetryAgentEnabled.set(true)
+    openTelemetryAgentEnabled.set(false)
 }
