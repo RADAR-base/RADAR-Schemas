@@ -19,10 +19,3 @@ dependencies {
 application {
     mainClass.set("org.radarbase.schema.tools.CommandLineApp")
 }
-
-// Versions of many dependencies defined by radar-commons-kotlin.
-radarKotlin {
-    log4j2Version.set(libs.versions.log4j2)
-    sentryEnabled.set(true)
-    openTelemetryAgentEnabled.set(true)
-}
