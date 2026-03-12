@@ -1,3 +1,10 @@
+import org.radarbase.gradle.plugin.radarKotlin
+
+plugins {
+    application
+    id("kotlin-convention")
+}
+
 description = "RADAR Schemas specification and validation tools."
 
 dependencies {
@@ -13,4 +20,8 @@ dependencies {
 
 application {
     mainClass.set("org.radarbase.schema.service.SourceCatalogueServer")
+}
+
+radarKotlin {
+    log4j2Version.set(libs.versions.log4j2)
 }

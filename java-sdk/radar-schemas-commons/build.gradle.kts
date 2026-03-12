@@ -1,6 +1,8 @@
 import com.github.davidmc24.gradle.plugin.avro.GenerateAvroJavaTask
 
 plugins {
+    id("java-library")
+    id("publishing-convention")
     alias(libs.plugins.avro.base)
 }
 
