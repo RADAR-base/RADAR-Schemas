@@ -1,7 +1,7 @@
 plugins {
     id("org.radarbase.radar-root-project")
     id("org.radarbase.radar-dependency-management")
-    id("org.radarbase.radar-kotlin")
+    id("org.radarbase.radar-kotlin") apply false
 }
 
 radarRootProject {
