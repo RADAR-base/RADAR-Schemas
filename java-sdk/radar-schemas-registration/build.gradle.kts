@@ -1,8 +1,3 @@
-plugins {
-    id("java-library")
-    id("publishing-convention")
-}
-
 description = "RADAR Schemas specification and validation tools"
 
 dependencies {

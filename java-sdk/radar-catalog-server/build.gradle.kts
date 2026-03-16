@@ -1,8 +1,3 @@
-plugins {
-    application
-    id("kotlin-convention")
-}
-
 description = "RADAR Schemas specification and validation tools."
 
 dependencies {

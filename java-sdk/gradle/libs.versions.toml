@@ -5,12 +5,12 @@ java = "17"
 gradle = "8.14"
 avroGenerator = "1.9.1"
 # radar-commons depends on radar-schemas repo, so we cannot use final version.
-radarCommons = "1.2.4"
+radarCommons = "1.2.5-SNAPSHOT"
 avro = "1.12.1"
 # @pin Upgrade to 2.21.x requires kotlin v2 minimum
 jackson = "2.20.2"
 argparse = "0.9.0"
-radarJersey = "0.12.6"
+radarJersey = "0.12.7"
 junit = "5.10.1"
 confluent = "7.6.0"
 okHttp = "4.12.0"
@@ -22,9 +22,6 @@ apacheCommonsLang = "3.18.0"
 lz4 = "1.10.1"
 
 [libraries]
-# For buildSrc project
-gradle-radar-kotlin = { group = "org.radarbase.radar-kotlin", name = "org.radarbase.radar-kotlin.gradle.plugin", version.ref = "radarCommons" }
-gradle-radar-publishing = { group = "org.radarbase.radar-publishing", name = "org.radarbase.radar-publishing.gradle.plugin", version.ref = "radarCommons" }
 
 # External libraries
 lz4 = { module = "at.yawk.lz4:lz4-java", version.ref = "lz4" }

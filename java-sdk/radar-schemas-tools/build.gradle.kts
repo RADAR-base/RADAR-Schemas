@@ -1,9 +1,3 @@
-plugins {
-    application
-    id("kotlin-convention")
-    id("org.radarbase.radar-kotlin")
-}
-
 description = "RADAR Schemas specification and validation tools."
 
 dependencies {
@@ -12,7 +6,9 @@ dependencies {
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml")
 
     implementation(libs.radar.commons.kotlin)
+
     implementation(libs.log4j.core)
+
     implementation(libs.argparse4j)
 }
 

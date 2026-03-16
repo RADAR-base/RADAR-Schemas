@@ -1,7 +1,13 @@
+import org.radarbase.gradle.plugin.radarKotlin
+import org.radarbase.gradle.plugin.radarPublishing
+
 plugins {
-    id("org.radarbase.radar-root-project")
-    id("org.radarbase.radar-dependency-management")
-    id("org.radarbase.radar-kotlin") apply false
+    alias(libs.plugins.radar.root.project)
+    alias(libs.plugins.radar.dependency.management)
+    alias(libs.plugins.radar.kotlin) apply false
+    alias(libs.plugins.radar.publishing) apply false
+    alias(libs.plugins.avro.base) apply false
+    alias(libs.plugins.kotlin.allopen) apply false
 }
 
 radarRootProject {
@@ -9,8 +15,24 @@ radarRootProject {
     gradleVersion.set(libs.versions.gradle)
 }
 
+val githubRepoName = "RADAR-base/RADAR-Schemas"
+val githubUrl = "https://github.com/${githubRepoName}.git"
+val githubIssueUrl = "https://github.com/$githubRepoName/issues"
+
 subprojects {
-    apply(plugin = "java-library")
+    apply(plugin = "org.radarbase.radar-kotlin")
+
+    repositories {
+        mavenCentral()
+        gradlePluginPortal()
+        maven(url = "https://jitpack.io")
+    }
+
+    radarKotlin {
+        log4j2Version.set(rootProject.libs.versions.log4j2)
+        sentryEnabled.set(true)
+        openTelemetryAgentEnabled.set(true)
+    }
 
     // --- Vulnerability fixes start ---
     dependencies {
@@ -33,4 +55,42 @@ subprojects {
         }
     }
     // --- Vulnerability fixes end ---
+
+}
+
+configure(
+    listOf(
+        project(":radar-schemas-tools"),
+        project(":radar-catalog-server"),
+    ),
+) {
+    apply(plugin = "application")
+}
+
+configure(
+    listOf(
+        project(":radar-schemas-commons"),
+        project(":radar-schemas-core"),
+        project(":radar-schemas-registration"),
+    ),
+) {
+    apply(plugin = "java-library")
+    apply(plugin = "org.radarbase.radar-publishing")
+    apply(plugin = "org.radarbase.radar-kotlin")
+
+    radarKotlin {
+        log4j2Version.set(rootProject.libs.versions.log4j2)
+    }
+
+    radarPublishing {
+        githubUrl.set("https://github.com/$githubRepoName")
+        developers {
+            developer {
+                id.set("pvannierop")
+                name.set("Pim van Nierop")
+                email.set("pim@thehyve.nl")
+                organization.set("The Hyve")
+            }
+        }
+    }
 }

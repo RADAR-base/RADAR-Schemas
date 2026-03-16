@@ -1,6 +1,4 @@
 plugins {
-    id("java-library")
-    id("publishing-convention")
     alias(libs.plugins.kotlin.allopen)
 }
 
