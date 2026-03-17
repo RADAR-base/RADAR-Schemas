@@ -30,8 +30,7 @@ subprojects {
 
     radarKotlin {
         log4j2Version.set(rootProject.libs.versions.log4j2)
-        sentryEnabled.set(true)
-        openTelemetryAgentEnabled.set(true)
+        sentryEnabled.set(false)
     }
 
     // --- Vulnerability fixes start ---
@@ -65,6 +64,11 @@ configure(
     ),
 ) {
     apply(plugin = "application")
+
+    radarKotlin {
+        log4j2Version.set(rootProject.libs.versions.log4j2)
+        sentryEnabled.set(true)
+    }
 }
 
 configure(
@@ -76,11 +80,6 @@ configure(
 ) {
     apply(plugin = "java-library")
     apply(plugin = "org.radarbase.radar-publishing")
-    apply(plugin = "org.radarbase.radar-kotlin")
-
-    radarKotlin {
-        log4j2Version.set(rootProject.libs.versions.log4j2)
-    }
 
     radarPublishing {
         githubUrl.set("https://github.com/$githubRepoName")
