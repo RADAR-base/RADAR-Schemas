@@ -1,0 +1,63 @@
+[versions]
+project = "0.8.16"
+kotlin = "1.9.10"
+java = "17"
+gradle = "8.14"
+avroGenerator = "1.9.1"
+# Because of the circular dependencies between radar-commons -> radar-jersey -> radar-schemas, we make
+# two almost identical releases of radar-commons, say A and B (i.e. 1.2.5 and 1.2.6). radar-jersey
+# and radar-schemas use release A. radar-commons is then upgraded to B while referencing the new
+# radar-jersey and radar-commons releases. All other radar-base repos will use radar-commons B release.
+radarCommons = "1.2.5"
+# radar-jersey release that points to radar-commons A release (see comment above).
+radarJersey = "0.12.7"
+avro = "1.12.1"
+# @pin Upgrade to 2.21.x requires kotlin v2 minimum
+jackson = "2.20.2"
+argparse = "0.9.0"
+junit = "5.10.1"
+confluent = "7.6.0"
+okHttp = "4.12.0"
+ktor = "2.3.4"
+slf4j = "2.0.9"
+jakartaValidation = "3.0.2"
+log4j2 = "2.20.0"
+apacheCommonsLang = "3.18.0"
+lz4 = "1.10.1"
+
+[libraries]
+
+# External libraries
+lz4 = { module = "at.yawk.lz4:lz4-java", version.ref = "lz4" }
+apache-avro = { group = "org.apache.avro", name = "avro", version.ref = "avro" }
+apache-commons-lang = { group = "org.apache.commons", name = "commons-lang3", version.ref = "apacheCommonsLang" }
+jakarta-validation = { group = "jakarta.validation", name = "jakarta.validation-api", version.ref = "jakartaValidation" }
+radar-commons-kotlin = { group = "org.radarbase", name = "radar-commons-kotlin", version.ref = "radarCommons" }
+radar-commons = { group = "org.radarbase", name = "radar-commons", version.ref = "radarCommons" }
+radar-commons-server = { group = "org.radarbase", name = "radar-commons-server", version.ref = "radarCommons" }
+jackson-bom = { group = "com.fasterxml.jackson", name = "jackson-bom", version.ref = "jackson" }
+jackson-databind = { group = "com.fasterxml.jackson.core", name = "jackson-databind" }
+jackson-module-kotlin = { group = "com.fasterxml.jackson.module", name = "jackson-module-kotlin" }
+jackson-dataformat-yaml = { group = "com.fasterxml.jackson.dataformat", name = "jackson-dataformat-yaml" }
+jackson-core = { group = "com.fasterxml.jackson.core", name = "jackson-core", version.ref = "jackson" }
+confluent-kafka-connect-avro-data = { group = "io.confluent", name = "kafka-connect-avro-data", version.ref = "confluent" }
+confluent-kafka-connect-avro-converter = { group = "io.confluent", name = "kafka-connect-avro-converter", version.ref = "confluent" }
+confluent-kafka-schema-registry-client = { group = "io.confluent", name = "kafka-schema-registry-client", version.ref = "confluent" }
+kafka-connect-api = { group = "org.apache.kafka", name = "connect-api", version = "7.6.0-ce" }
+kafka-connect-json = { group = "org.apache.kafka", name = "connect-json", version = "7.6.0-ce" }
+okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okHttp" }
+okhttp-mockwebserver = { group = "com.squareup.okhttp3", name = "mockwebserver", version.ref = "okHttp" }
+argparse4j = { group = "net.sourceforge.argparse4j", name = "argparse4j", version.ref = "argparse" }
+radar-jersey = { group = "org.radarbase", name = "radar-jersey", version.ref = "radarJersey" }
+ktor-client-auth = { group = "io.ktor", name = "ktor-client-auth", version.ref = "ktor" }
+ktor-client-content-negotiation = { group = "io.ktor", name = "ktor-client-content-negotiation", version.ref = "ktor" }
+ktor-serialization-kotlinx-json = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktor" }
+log4j-core = { group = "org.apache.logging.log4j", name = "log4j-core", version.ref = "log4j2" }
+
+[plugins]
+radar-root-project = { id = "org.radarbase.radar-root-project", version.ref = "radarCommons" }
+radar-dependency-management = { id = "org.radarbase.radar-dependency-management", version.ref = "radarCommons" }
+radar-kotlin = { id = "org.radarbase.radar-kotlin", version.ref = "radarCommons" }
+radar-publishing = { id = "org.radarbase.radar-publishing", version.ref = "radarCommons" }
+avro-base = { id = "com.github.davidmc24.gradle.plugin.avro-base", version.ref = "avroGenerator" }
+kotlin-allopen = { id = "org.jetbrains.kotlin.plugin.allopen", version.ref = "kotlin" }
