@@ -31,6 +31,7 @@ subprojects {
     radarKotlin {
         log4j2Version.set(rootProject.libs.versions.log4j2)
         sentryEnabled.set(false)
+        openTelemetryAgentEnabled.set(false)
     }
 
     // --- Vulnerability fixes start ---
@@ -68,6 +69,7 @@ configure(
     radarKotlin {
         log4j2Version.set(rootProject.libs.versions.log4j2)
         sentryEnabled.set(true)
+        openTelemetryAgentEnabled.set(true)
     }
 }
 
