@@ -4,13 +4,17 @@ kotlin = "1.9.10"
 java = "17"
 gradle = "8.14"
 avroGenerator = "1.9.1"
-# radar-commons depends on radar-schemas repo, so we cannot use final version.
-radarCommons = "1.2.5-SNAPSHOT"
+# Because of the circular dependencies between radar-commons -> radar-jersey -> radar-schemas, we make
+# two almost identical releases of radar-commons, say A and B (i.e. 1.2.5 and 1.2.6). radar-jersey
+# and radar-schemas use release A. radar-commons is then upgraded to B while referencing the new
+# radar-jersey and radar-commons releases. All other radar-base repos will use radar-commons B release.
+radarCommons = "1.2.5"
+# radar-jersey release that points to radar-commons A release (see comment above).
+radarJersey = "0.12.7"
 avro = "1.12.1"
 # @pin Upgrade to 2.21.x requires kotlin v2 minimum
 jackson = "2.20.2"
 argparse = "0.9.0"
-radarJersey = "0.12.7"
 junit = "5.10.1"
 confluent = "7.6.0"
 okHttp = "4.12.0"
