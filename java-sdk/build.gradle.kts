@@ -39,6 +39,12 @@ subprojects {
             add("implementation", rootProject.libs.jackson.bom) {
                 because("Force safe version of Jackson across all modules")
             }
+            add("implementation", rootProject.libs.jackson.databind) {
+                because("Force safe version of Jackson across all modules")
+            }
+            add("implementation", rootProject.libs.jackson.core) {
+                because("Force safe version of Jackson across all modules")
+            }
             add("implementation", rootProject.libs.apache.commons.lang) {
                 because("Force safe version of commons-lang across all modules")
             }
