@@ -84,12 +84,14 @@ configure(
     // --- Vulnerability fixes start for libraries ---
     dependencies {
         constraints {
+            val jacksonVersion = rootProject.libs.versions.jackson.get()
             // Force safe version of Jackson across all modules
-            add("api", rootProject.libs.jackson.databind)
-            add("api", rootProject.libs.jackson.core)
-            add("api", rootProject.libs.jackson.bom)
+            add("api", "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion")
+            add("api", "com.fasterxml.jackson.core:jackson-core:$jacksonVersion")
+            add("api", "com.fasterxml.jackson:jackson-bom:$jacksonVersion")
             // Force safe version of commons-lang across all modules
-            add("api", rootProject.libs.apache.commons.lang)
+            val commonsLangVersion = rootProject.libs.versions.apacheCommonsLang.get()
+            add("api", "org.apache.commons:commons-lang3:$commonsLangVersion")
         }
     }
     // --- Vulnerability fixes end ---
