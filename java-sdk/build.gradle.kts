@@ -34,26 +34,9 @@ subprojects {
     }
 
     // --- Vulnerability fixes start ---
-    dependencies {
-        constraints {
-            add("implementation", rootProject.libs.jackson.databind) {
-                because("Force safe version of Jackson across all modules")
-            }
-            add("implementation", rootProject.libs.jackson.core) {
-                because("Force safe version of Jackson across all modules")
-            }
-            add("implementation", rootProject.libs.jackson.bom) {
-                because("Force safe version of Jackson across all modules")
-            }
-            add("implementation", rootProject.libs.apache.commons.lang) {
-                because("Force safe version of commons-lang across all modules")
-            }
-        }
-    }
-
     configurations.all {
         resolutionStrategy.dependencySubstitution {
-            // Substitute the old group/module with the new one
+            // Substitute the old group/module with drop-in replacement
             substitute(module("org.lz4:lz4-java"))
                 .using(module(rootProject.libs.lz4.get().toString()))
                 .because("Force safe version of LZ4 across all modules")
@@ -71,6 +54,17 @@ configure(
 ) {
     apply(plugin = "application")
 
+    // --- Vulnerability fixes start for applications --
+    dependencies {
+        constraints {
+            // Force safe version of Jackson across all modules
+            add("implementation", rootProject.libs.jackson.databind) {
+                version { strictly(rootProject.libs.versions.jackson.get()) }
+            }
+        }
+    }
+    // --- Vulnerability fixes end ---
+
     radarKotlin {
         log4j2Version.set(rootProject.libs.versions.log4j2)
         sentryEnabled.set(true)
@@ -86,6 +80,19 @@ configure(
 ) {
     apply(plugin = "java-library")
     apply(plugin = "org.radarbase.radar-publishing")
+
+    // --- Vulnerability fixes start for libraries ---
+    dependencies {
+        constraints {
+            // Force safe version of Jackson across all modules
+            add("api", rootProject.libs.jackson.databind)
+            add("api", rootProject.libs.jackson.core)
+            add("api", rootProject.libs.jackson.bom)
+            // Force safe version of commons-lang across all modules
+            add("api", rootProject.libs.apache.commons.lang)
+        }
+    }
+    // --- Vulnerability fixes end ---
 
     radarPublishing {
         githubUrl.set("https://github.com/$githubRepoName")
