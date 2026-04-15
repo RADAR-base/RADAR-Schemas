@@ -12,6 +12,10 @@
 - The `specifications` directory contains specifications of what data types are collected through which devices.
   - Java SDKs for each of the components are provided in the `java-sdk` folder, see installation instructions there. They are automatically generated from the Avro schemas using the Avro specification (version in [Versions.kt](java-sdk/buildSrc/src/main/kotlin/Versions.kt)).
 
+## Data source catalog
+
+A browsable reference for supported data sources, Kafka topics, sampling metadata, and Avro payloads is published with [GitHub Pages](https://pages.github.com/) at **[https://radar-base.github.io/RADAR-Schemas/](https://radar-base.github.io/RADAR-Schemas/)**. It is generated from the `commons/` and `specifications/` directories in this repository when changes land on `master`.
+
 ## Usage
 
 This project can be used in RADAR-base by using the `radarbase/kafka-init` Docker image. The schemas and specifications can be extended by locally creating a directory structure that includes a `commons` and `specifications` directory and mounting it to the image, to the `/schema/conf/commons` and `/schema/conf/specifications` directories, respectively. You can provide a file path in `CONFIG_YAML` that points to a `config.yaml` file that is mounted in the docker container. The config file has the following format:
