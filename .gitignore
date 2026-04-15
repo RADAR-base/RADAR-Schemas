@@ -1,4 +1,6 @@
 .DS_Store
+__pycache__/
+*.py[cod]
 build/
 out/
 .idea/
@@ -8,4 +10,6 @@ out/
 exchange.properties
 *.class
 /doc/
+_site/
+.venv-docs/
 .vscode/
