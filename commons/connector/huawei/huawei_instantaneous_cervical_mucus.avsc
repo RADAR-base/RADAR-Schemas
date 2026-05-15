@@ -29,7 +29,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'texture' for data type com.huawei.instantaneous.cervical_mucus.",
+      "doc": "Cervical mucus texture: 1=dry, 2=sticky, 3=creamy, 4=watery, 5=egg white.",
       "default": null
     },
     {
@@ -38,7 +38,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'amount' for data type com.huawei.instantaneous.cervical_mucus.",
+      "doc": "Cervical mucus amount: 1=light, 2=medium, 3=heavy.",
       "default": null
     }
   ]

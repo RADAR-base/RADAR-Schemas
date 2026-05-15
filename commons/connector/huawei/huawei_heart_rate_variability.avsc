@@ -29,7 +29,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'heart_rate_variability_rmssd' for data type com.huawei.heart_rate_variability.",
+      "doc": "Heart rate variability measured as RMSSD (root mean square of successive differences between adjacent RR intervals, ms).",
       "default": null
     }
   ]

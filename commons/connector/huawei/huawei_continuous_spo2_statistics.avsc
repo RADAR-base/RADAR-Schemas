@@ -29,7 +29,7 @@
         "null",
         "double"
       ],
-      "doc": "Value of Huawei field 'saturation_avg' for data type com.huawei.continuous.spo2.statistics.",
+      "doc": "Average blood oxygen saturation over the period (SpO2, %).",
       "default": null
     },
     {
@@ -38,7 +38,7 @@
         "null",
         "double"
       ],
-      "doc": "Value of Huawei field 'saturation_max' for data type com.huawei.continuous.spo2.statistics.",
+      "doc": "Maximum blood oxygen saturation over the period (SpO2, %).",
       "default": null
     },
     {
@@ -47,7 +47,7 @@
         "null",
         "double"
       ],
-      "doc": "Value of Huawei field 'saturation_min' for data type com.huawei.continuous.spo2.statistics.",
+      "doc": "Minimum blood oxygen saturation over the period (SpO2, %).",
       "default": null
     },
     {
@@ -56,7 +56,7 @@
         "null",
         "double"
       ],
-      "doc": "Value of Huawei field 'saturation_last' for data type com.huawei.continuous.spo2.statistics.",
+      "doc": "Most recent blood oxygen saturation in the period (SpO2, %).",
       "default": null
     }
   ]

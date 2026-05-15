@@ -29,7 +29,7 @@
         "null",
         "string"
       ],
-      "doc": "Value of Huawei field 'intensity_map' for data type com.huawei.continuous.exercise_intensity.v2.statistics. Stored as a JSON string when the source value is a map.",
+      "doc": "Exercise intensity zone distribution stored as a JSON map.",
       "default": null
     }
   ]

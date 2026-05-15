@@ -29,7 +29,7 @@
         "null",
         "float"
       ],
-      "doc": "Value of Huawei field 'high_body_temperature_alarm' for data type com.huawei.health.record.hyperthermia.",
+      "doc": "Flag indicating a high body temperature alarm was triggered.",
       "default": null
     }
   ]

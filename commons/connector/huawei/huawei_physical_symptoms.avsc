@@ -29,7 +29,7 @@
         "null",
         "string"
       ],
-      "doc": "Value of Huawei field 'physicalSymptoms' for data type com.huawei.physical_symptoms.",
+      "doc": "Physical symptoms reported by the user, stored as a structured string.",
       "default": null
     }
   ]

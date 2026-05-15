@@ -29,7 +29,7 @@
         "null",
         "double"
       ],
-      "doc": "Value of Huawei field 'threshold' for data type com.huawei.health.record.bradycardia.",
+      "doc": "Heart rate threshold that triggered the alert (bpm).",
       "default": null
     },
     {
@@ -38,7 +38,7 @@
         "null",
         "double"
       ],
-      "doc": "Value of Huawei field 'avg_heart_rate' for data type com.huawei.health.record.bradycardia.",
+      "doc": "Average heart rate over the episode (bpm).",
       "default": null
     },
     {
@@ -47,7 +47,7 @@
         "null",
         "double"
       ],
-      "doc": "Value of Huawei field 'max_heart_rate' for data type com.huawei.health.record.bradycardia.",
+      "doc": "Maximum heart rate over the episode (bpm).",
       "default": null
     },
     {
@@ -56,7 +56,7 @@
         "null",
         "double"
       ],
-      "doc": "Value of Huawei field 'min_heart_rate' for data type com.huawei.health.record.bradycardia.",
+      "doc": "Minimum heart rate over the episode (bpm).",
       "default": null
     }
   ]

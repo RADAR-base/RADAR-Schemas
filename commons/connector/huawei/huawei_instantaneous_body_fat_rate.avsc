@@ -29,7 +29,7 @@
         "null",
         "double"
       ],
-      "doc": "Value of Huawei field 'body_fat_rate' for data type com.huawei.instantaneous.body.fat.rate.",
+      "doc": "Body fat percentage (%), ranging from 0 to 100.",
       "default": null
     }
   ]

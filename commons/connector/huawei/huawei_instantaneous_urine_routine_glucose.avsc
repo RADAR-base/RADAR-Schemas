@@ -29,7 +29,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'glucose' for data type com.huawei.instantaneous.urine_routine.glucose.",
+      "doc": "Glucose level in the urine routine test result.",
       "default": null
     }
   ]

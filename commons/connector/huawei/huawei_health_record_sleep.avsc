@@ -29,7 +29,7 @@
         "null",
         "long"
       ],
-      "doc": "Value of Huawei field 'fall_asleep_time' for data type com.huawei.health.record.sleep.",
+      "doc": "Unix timestamp (ms) when the user fell asleep.",
       "default": null
     },
     {
@@ -38,7 +38,7 @@
         "null",
         "long"
       ],
-      "doc": "Value of Huawei field 'wakeup_time' for data type com.huawei.health.record.sleep.",
+      "doc": "Unix timestamp (ms) when the user woke up.",
       "default": null
     },
     {
@@ -47,7 +47,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'light_sleep_time' for data type com.huawei.health.record.sleep.",
+      "doc": "Light sleep duration (ms).",
       "default": null
     },
     {
@@ -56,7 +56,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'deep_sleep_time' for data type com.huawei.health.record.sleep.",
+      "doc": "Deep (slow-wave) sleep duration (ms).",
       "default": null
     },
     {
@@ -65,7 +65,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'dream_time' for data type com.huawei.health.record.sleep.",
+      "doc": "REM sleep duration (ms).",
       "default": null
     },
     {
@@ -74,7 +74,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'awake_time' for data type com.huawei.health.record.sleep.",
+      "doc": "Time spent awake after sleep onset (ms).",
       "default": null
     },
     {
@@ -83,7 +83,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'all_sleep_time' for data type com.huawei.health.record.sleep.",
+      "doc": "Total sleep duration (ms).",
       "default": null
     },
     {
@@ -92,7 +92,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'wakeup_count' for data type com.huawei.health.record.sleep.",
+      "doc": "Number of times the user woke up during the sleep period.",
       "default": null
     },
     {
@@ -101,7 +101,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'deep_sleep_part' for data type com.huawei.health.record.sleep.",
+      "doc": "Number of deep sleep segments.",
       "default": null
     },
     {
@@ -110,7 +110,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'sleep_score' for data type com.huawei.health.record.sleep.",
+      "doc": "Overall sleep quality score.",
       "default": null
     },
     {
@@ -119,7 +119,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'sleep_latency' for data type com.huawei.health.record.sleep.",
+      "doc": "Time taken to fall asleep (ms).",
       "default": null
     },
     {
@@ -128,7 +128,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'sleep_efficiency' for data type com.huawei.health.record.sleep.",
+      "doc": "Sleep efficiency as a percentage of time in bed spent asleep.",
       "default": null
     },
     {
@@ -137,7 +137,7 @@
         "null",
         "long"
       ],
-      "doc": "Value of Huawei field 'go_bed_time' for data type com.huawei.health.record.sleep.",
+      "doc": "Unix timestamp (ms) when the user went to bed.",
       "default": null
     },
     {
@@ -146,7 +146,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'sleep_type' for data type com.huawei.health.record.sleep.",
+      "doc": "Sleep type indicator.",
       "default": null
     },
     {
@@ -155,7 +155,7 @@
         "null",
         "long"
       ],
-      "doc": "Value of Huawei field 'prepare_sleep_time' for data type com.huawei.health.record.sleep.",
+      "doc": "Unix timestamp (ms) when the user started preparing for sleep.",
       "default": null
     },
     {
@@ -164,7 +164,7 @@
         "null",
         "long"
       ],
-      "doc": "Value of Huawei field 'off_bed_time' for data type com.huawei.health.record.sleep.",
+      "doc": "Unix timestamp (ms) when the user last got out of bed.",
       "default": null
     }
   ]

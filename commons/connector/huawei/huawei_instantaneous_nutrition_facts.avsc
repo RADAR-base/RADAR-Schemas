@@ -29,7 +29,7 @@
         "null",
         "string"
       ],
-      "doc": "Value of Huawei field 'nutrients_facts' for data type com.huawei.instantaneous.nutrition_facts. Stored as a JSON string when the source value is a map.",
+      "doc": "Detailed nutrition facts stored as a JSON map.",
       "default": null
     },
     {
@@ -38,7 +38,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'meal' for data type com.huawei.instantaneous.nutrition_facts.",
+      "doc": "Meal type: 0=unknown, 1=breakfast, 2=lunch, 3=dinner, 4=snack.",
       "default": null
     },
     {
@@ -47,7 +47,7 @@
         "null",
         "string"
       ],
-      "doc": "Value of Huawei field 'food' for data type com.huawei.instantaneous.nutrition_facts.",
+      "doc": "Food type name.",
       "default": null
     }
   ]

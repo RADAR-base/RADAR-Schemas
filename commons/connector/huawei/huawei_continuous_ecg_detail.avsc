@@ -29,7 +29,7 @@
         "null",
         "string"
       ],
-      "doc": "Value of Huawei field 'ecg_record_id' for data type com.huawei.continuous.ecg_detail.",
+      "doc": "Unique identifier for the ECG recording.",
       "default": null
     },
     {
@@ -38,7 +38,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'average_heart_rate' for data type com.huawei.continuous.ecg_detail.",
+      "doc": "Average heart rate during the ECG recording (bpm).",
       "default": null
     },
     {
@@ -47,7 +47,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'ecg_arrhythmia_type' for data type com.huawei.continuous.ecg_detail.",
+      "doc": "Arrhythmia type code detected in the ECG.",
       "default": null
     },
     {
@@ -56,7 +56,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'ecg_arrhythmia_result' for data type com.huawei.continuous.ecg_detail.",
+      "doc": "Arrhythmia analysis result code from the ECG.",
       "default": null
     },
     {
@@ -65,7 +65,7 @@
         "null",
         "string"
       ],
-      "doc": "Value of Huawei field 'user_symptom' for data type com.huawei.continuous.ecg_detail.",
+      "doc": "User-reported symptoms during the ECG recording.",
       "default": null
     },
     {
@@ -74,7 +74,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'sampling_frequency' for data type com.huawei.continuous.ecg_detail.",
+      "doc": "ECG sampling frequency (Hz).",
       "default": null
     },
     {
@@ -83,7 +83,7 @@
         "null",
         "string"
       ],
-      "doc": "Value of Huawei field 'voltage_data' for data type com.huawei.continuous.ecg_detail.",
+      "doc": "Raw ECG voltage data as a string.",
       "default": null
     }
   ]

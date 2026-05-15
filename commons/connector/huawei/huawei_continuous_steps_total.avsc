@@ -29,7 +29,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'steps' for data type com.huawei.continuous.steps.total.",
+      "doc": "Step count.",
       "default": null
     },
     {
@@ -38,7 +38,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'duration' for data type com.huawei.continuous.steps.total.",
+      "doc": "Duration (ms).",
       "default": null
     }
   ]

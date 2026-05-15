@@ -29,7 +29,7 @@
         "null",
         "double"
       ],
-      "doc": "Value of Huawei field 'avg' for data type com.huawei.continuous.blood_glucose.statistics.",
+      "doc": "Average value over the aggregation period.",
       "default": null
     },
     {
@@ -38,7 +38,7 @@
         "null",
         "double"
       ],
-      "doc": "Value of Huawei field 'max' for data type com.huawei.continuous.blood_glucose.statistics.",
+      "doc": "Maximum value over the aggregation period.",
       "default": null
     },
     {
@@ -47,7 +47,7 @@
         "null",
         "double"
       ],
-      "doc": "Value of Huawei field 'min' for data type com.huawei.continuous.blood_glucose.statistics.",
+      "doc": "Minimum value over the aggregation period.",
       "default": null
     },
     {
@@ -56,7 +56,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'correlation_with_mealtime' for data type com.huawei.continuous.blood_glucose.statistics.",
+      "doc": "Relationship of the measurement to meals: 1=general, 2=fasting, 3=before meal, 4=after meal.",
       "default": null
     },
     {
@@ -65,7 +65,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'meal' for data type com.huawei.continuous.blood_glucose.statistics.",
+      "doc": "Meal type: 0=unknown, 1=breakfast, 2=lunch, 3=dinner, 4=snack.",
       "default": null
     },
     {
@@ -74,7 +74,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'correlation_with_sleep_state' for data type com.huawei.continuous.blood_glucose.statistics.",
+      "doc": "Relationship of the measurement to sleep state: 1=fully awake, 2=before sleep, 3=on waking, 4=during sleep.",
       "default": null
     },
     {
@@ -83,7 +83,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'sample_source' for data type com.huawei.continuous.blood_glucose.statistics.",
+      "doc": "Blood sample source: 1=interstitial fluid, 2=capillary blood, 3=plasma, 4=serum, 5=tears, 6=whole blood.",
       "default": null
     }
   ]

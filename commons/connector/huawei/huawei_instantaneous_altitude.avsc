@@ -29,7 +29,7 @@
         "null",
         "double"
       ],
-      "doc": "Value of Huawei field 'altitude' for data type com.huawei.instantaneous.altitude.",
+      "doc": "Altitude above sea level (m).",
       "default": null
     }
   ]

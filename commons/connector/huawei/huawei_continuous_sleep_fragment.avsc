@@ -29,7 +29,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'sleep_state' for data type com.huawei.continuous.sleep.fragment.",
+      "doc": "Sleep stage: 1=awake, 2=REM, 3=light sleep, 4=deep sleep.",
       "default": null
     }
   ]

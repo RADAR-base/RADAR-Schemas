@@ -56,7 +56,7 @@
         "null",
         "string"
       ],
-      "doc": "Time zone of the activity record.",
+      "doc": "Time zone identifier for the record.",
       "default": null
     },
     {
@@ -74,7 +74,7 @@
         "null",
         "long"
       ],
-      "doc": "Active duration of the activity in milliseconds.",
+      "doc": "Active duration of the activity (ms).",
       "default": null
     },
     {

@@ -29,7 +29,7 @@
         "null",
         "float"
       ],
-      "doc": "Value of Huawei field 'threshold' for data type com.huawei.health.record.lowSpo2Alert.",
+      "doc": "Heart rate threshold that triggered the alert (bpm).",
       "default": null
     },
     {
@@ -38,7 +38,7 @@
         "null",
         "float"
       ],
-      "doc": "Value of Huawei field 'max_spo2' for data type com.huawei.health.record.lowSpo2Alert.",
+      "doc": "Maximum blood oxygen saturation (SpO2, %).",
       "default": null
     },
     {
@@ -47,7 +47,7 @@
         "null",
         "float"
       ],
-      "doc": "Value of Huawei field 'min_spo2' for data type com.huawei.health.record.lowSpo2Alert.",
+      "doc": "Minimum blood oxygen saturation (SpO2, %).",
       "default": null
     }
   ]

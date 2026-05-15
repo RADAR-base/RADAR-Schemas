@@ -29,7 +29,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'avg' for data type com.huawei.instantaneous.stress.statistics.",
+      "doc": "Average stress score, ranging from 1 to 99.",
       "default": null
     },
     {
@@ -38,7 +38,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'max' for data type com.huawei.instantaneous.stress.statistics.",
+      "doc": "Highest stress score, ranging from 1 to 99.",
       "default": null
     },
     {
@@ -47,7 +47,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'min' for data type com.huawei.instantaneous.stress.statistics.",
+      "doc": "Lowest stress score, ranging from 1 to 99.",
       "default": null
     },
     {
@@ -56,7 +56,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'last' for data type com.huawei.instantaneous.stress.statistics.",
+      "doc": "Most recent stress score, ranging from 1 to 99.",
       "default": null
     },
     {
@@ -65,7 +65,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'measure_count' for data type com.huawei.instantaneous.stress.statistics.",
+      "doc": "Number of stress measurements taken.",
       "default": null
     }
   ]

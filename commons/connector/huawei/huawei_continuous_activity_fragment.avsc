@@ -29,7 +29,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'type_of_activity' for data type com.huawei.continuous.activity.fragment.",
+      "doc": "Detected activity type identifier (Huawei activity constant).",
       "default": null
     }
   ]

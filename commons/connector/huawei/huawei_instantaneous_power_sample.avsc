@@ -29,7 +29,7 @@
         "null",
         "double"
       ],
-      "doc": "Value of Huawei field 'power' for data type com.huawei.instantaneous.power.sample.",
+      "doc": "Power output (W).",
       "default": null
     }
   ]

@@ -29,7 +29,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'sysMode' for data type com.huawei.health.record.ventilator.",
+      "doc": "Ventilator operating mode code.",
       "default": null
     },
     {
@@ -38,7 +38,7 @@
         "null",
         "long"
       ],
-      "doc": "Value of Huawei field 'sysSessionDate' for data type com.huawei.health.record.ventilator.",
+      "doc": "Unix timestamp (ms) of the ventilator session date.",
       "default": null
     },
     {
@@ -47,7 +47,7 @@
         "null",
         "double"
       ],
-      "doc": "Value of Huawei field 'eventAhi' for data type com.huawei.health.record.ventilator.",
+      "doc": "Apnea-hypopnea index (AHI) for the session, measuring sleep-disordered breathing severity.",
       "default": null
     },
     {
@@ -56,7 +56,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'sysDuration' for data type com.huawei.health.record.ventilator.",
+      "doc": "Duration of the ventilator session (s).",
       "default": null
     },
     {
@@ -65,7 +65,7 @@
         "null",
         "double"
       ],
-      "doc": "Value of Huawei field 'lumisTidvolMedian' for data type com.huawei.health.record.ventilator.",
+      "doc": "Median tidal volume during the ventilator session (Lumis device).",
       "default": null
     },
     {
@@ -74,7 +74,7 @@
         "null",
         "double"
       ],
-      "doc": "Value of Huawei field 'lumisTidvol95' for data type com.huawei.health.record.ventilator.",
+      "doc": "95th-percentile tidal volume during the ventilator session (Lumis device).",
       "default": null
     },
     {
@@ -83,7 +83,7 @@
         "null",
         "double"
       ],
-      "doc": "Value of Huawei field 'lumisTidvolMax' for data type com.huawei.health.record.ventilator.",
+      "doc": "Maximum tidal volume during the ventilator session (Lumis device).",
       "default": null
     },
     {
@@ -92,7 +92,7 @@
         "null",
         "double"
       ],
-      "doc": "Value of Huawei field 'clinicalRespRateMedian' for data type com.huawei.health.record.ventilator.",
+      "doc": "Median respiratory rate during the ventilator session (breaths/min).",
       "default": null
     },
     {
@@ -101,7 +101,7 @@
         "null",
         "double"
       ],
-      "doc": "Value of Huawei field 'clinicalRespRate95' for data type com.huawei.health.record.ventilator.",
+      "doc": "95th-percentile respiratory rate during the ventilator session (breaths/min).",
       "default": null
     },
     {
@@ -110,7 +110,7 @@
         "null",
         "double"
       ],
-      "doc": "Value of Huawei field 'clinicalRespRateMax' for data type com.huawei.health.record.ventilator.",
+      "doc": "Maximum respiratory rate during the ventilator session (breaths/min).",
       "default": null
     },
     {
@@ -119,7 +119,7 @@
         "null",
         "double"
       ],
-      "doc": "Value of Huawei field 'lumisIeratioMedian' for data type com.huawei.health.record.ventilator.",
+      "doc": "Median inspiratory-to-expiratory (I:E) ratio during the ventilator session (Lumis device).",
       "default": null
     },
     {
@@ -128,7 +128,7 @@
         "null",
         "double"
       ],
-      "doc": "Value of Huawei field 'lumisIeratioQuantile95' for data type com.huawei.health.record.ventilator.",
+      "doc": "95th-percentile I:E ratio during the ventilator session (Lumis device).",
       "default": null
     },
     {
@@ -137,7 +137,7 @@
         "null",
         "double"
       ],
-      "doc": "Value of Huawei field 'lumisIeratioMax' for data type com.huawei.health.record.ventilator.",
+      "doc": "Maximum I:E ratio during the ventilator session (Lumis device).",
       "default": null
     },
     {
@@ -146,7 +146,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'maskOff' for data type com.huawei.health.record.ventilator.",
+      "doc": "Number of mask-off events during the ventilator session.",
       "default": null
     },
     {
@@ -155,7 +155,7 @@
         "null",
         "double"
       ],
-      "doc": "Value of Huawei field 'hypoventilationIndex' for data type com.huawei.health.record.ventilator.",
+      "doc": "Hypoventilation index for the ventilator session.",
       "default": null
     },
     {
@@ -164,7 +164,7 @@
         "null",
         "double"
       ],
-      "doc": "Value of Huawei field 'obstructiveApneaIndex' for data type com.huawei.health.record.ventilator.",
+      "doc": "Obstructive apnea index for the ventilator session.",
       "default": null
     },
     {
@@ -173,7 +173,7 @@
         "null",
         "double"
       ],
-      "doc": "Value of Huawei field 'pressureBelow95' for data type com.huawei.health.record.ventilator.",
+      "doc": "Percentage of session time with pressure below the 95th-percentile threshold.",
       "default": null
     },
     {
@@ -182,7 +182,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'hypoventilationEventTimes' for data type com.huawei.health.record.ventilator.",
+      "doc": "Number of hypoventilation events detected during the session.",
       "default": null
     },
     {
@@ -191,7 +191,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'snoringEventTimes' for data type com.huawei.health.record.ventilator.",
+      "doc": "Number of snoring events detected during the session.",
       "default": null
     },
     {
@@ -200,7 +200,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'obstructiveApneaEventTimes' for data type com.huawei.health.record.ventilator.",
+      "doc": "Number of obstructive apnea events detected during the session.",
       "default": null
     },
     {
@@ -209,7 +209,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'centerApneaEventTimes' for data type com.huawei.health.record.ventilator.",
+      "doc": "Number of central apnea events detected during the session.",
       "default": null
     },
     {
@@ -218,7 +218,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'airflowLimitEventTimes' for data type com.huawei.health.record.ventilator.",
+      "doc": "Number of airflow limitation events detected during the session.",
       "default": null
     },
     {
@@ -227,7 +227,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'massiveLeakEventTimes' for data type com.huawei.health.record.ventilator.",
+      "doc": "Number of large mask-leak events detected during the session.",
       "default": null
     },
     {
@@ -236,7 +236,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'unknowEventTimes' for data type com.huawei.health.record.ventilator.",
+      "doc": "Number of unclassified respiratory events during the session.",
       "default": null
     },
     {
@@ -245,7 +245,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'allEventTimes' for data type com.huawei.health.record.ventilator.",
+      "doc": "Total number of respiratory events during the ventilator session.",
       "default": null
     }
   ]

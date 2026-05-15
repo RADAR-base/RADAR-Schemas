@@ -29,7 +29,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'emotion_status' for data type com.huawei.emotion.",
+      "doc": "Emotion status code detected by the device.",
       "default": null
     }
   ]

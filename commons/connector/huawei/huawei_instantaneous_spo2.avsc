@@ -29,7 +29,7 @@
         "null",
         "double"
       ],
-      "doc": "Value of Huawei field 'saturation' for data type com.huawei.instantaneous.spo2.",
+      "doc": "Blood oxygen saturation (SpO2, %).",
       "default": null
     },
     {
@@ -38,7 +38,7 @@
         "null",
         "double"
       ],
-      "doc": "Value of Huawei field 'oxygen_supply_flow_rate' for data type com.huawei.instantaneous.spo2.",
+      "doc": "Oxygen therapy supply flow rate (L/min).",
       "default": null
     },
     {
@@ -47,7 +47,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'oxygen_therapy' for data type com.huawei.instantaneous.spo2.",
+      "doc": "Oxygen therapy delivery method: 1=nasal cannula.",
       "default": null
     },
     {
@@ -56,7 +56,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'spo2_measurement_mechanism' for data type com.huawei.instantaneous.spo2.",
+      "doc": "SpO2 measurement mechanism: 1=peripheral capillary.",
       "default": null
     },
     {
@@ -65,7 +65,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'spo2_measurement_approach' for data type com.huawei.instantaneous.spo2.",
+      "doc": "SpO2 measurement approach: 1=pulse oximetry.",
       "default": null
     }
   ]

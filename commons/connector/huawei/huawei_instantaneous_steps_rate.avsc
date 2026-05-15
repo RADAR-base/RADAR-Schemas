@@ -29,7 +29,7 @@
         "null",
         "double"
       ],
-      "doc": "Value of Huawei field 'step_rate' for data type com.huawei.instantaneous.steps.rate.",
+      "doc": "Step frequency (steps/min).",
       "default": null
     }
   ]

@@ -29,7 +29,7 @@
         "null",
         "double"
       ],
-      "doc": "Value of Huawei field 'systolic_pressure_avg' for data type com.huawei.continuous.body.blood_pressure.statistics.",
+      "doc": "Average systolic blood pressure over the period (mmHg).",
       "default": null
     },
     {
@@ -38,7 +38,7 @@
         "null",
         "double"
       ],
-      "doc": "Value of Huawei field 'systolic_pressure_max' for data type com.huawei.continuous.body.blood_pressure.statistics.",
+      "doc": "Maximum systolic blood pressure over the period (mmHg).",
       "default": null
     },
     {
@@ -47,7 +47,7 @@
         "null",
         "double"
       ],
-      "doc": "Value of Huawei field 'systolic_pressure_min' for data type com.huawei.continuous.body.blood_pressure.statistics.",
+      "doc": "Minimum systolic blood pressure over the period (mmHg).",
       "default": null
     },
     {
@@ -56,7 +56,7 @@
         "null",
         "double"
       ],
-      "doc": "Value of Huawei field 'diastolic_pressure_avg' for data type com.huawei.continuous.body.blood_pressure.statistics.",
+      "doc": "Average diastolic blood pressure over the period (mmHg).",
       "default": null
     },
     {
@@ -65,7 +65,7 @@
         "null",
         "double"
       ],
-      "doc": "Value of Huawei field 'diastolic_pressure_max' for data type com.huawei.continuous.body.blood_pressure.statistics.",
+      "doc": "Maximum diastolic blood pressure over the period (mmHg).",
       "default": null
     },
     {
@@ -74,7 +74,7 @@
         "null",
         "double"
       ],
-      "doc": "Value of Huawei field 'diastolic_pressure_min' for data type com.huawei.continuous.body.blood_pressure.statistics.",
+      "doc": "Minimum diastolic blood pressure over the period (mmHg).",
       "default": null
     },
     {
@@ -83,7 +83,7 @@
         "null",
         "double"
       ],
-      "doc": "Value of Huawei field 'sphygmus_avg' for data type com.huawei.continuous.body.blood_pressure.statistics.",
+      "doc": "Average pulse rate over the period (bpm).",
       "default": null
     },
     {
@@ -92,7 +92,7 @@
         "null",
         "double"
       ],
-      "doc": "Value of Huawei field 'sphygmus_max' for data type com.huawei.continuous.body.blood_pressure.statistics.",
+      "doc": "Maximum pulse rate over the period (bpm).",
       "default": null
     },
     {
@@ -101,7 +101,7 @@
         "null",
         "double"
       ],
-      "doc": "Value of Huawei field 'sphygmus_min' for data type com.huawei.continuous.body.blood_pressure.statistics.",
+      "doc": "Minimum pulse rate over the period (bpm).",
       "default": null
     },
     {
@@ -110,7 +110,7 @@
         "null",
         "double"
       ],
-      "doc": "Value of Huawei field 'sphygmus_last' for data type com.huawei.continuous.body.blood_pressure.statistics.",
+      "doc": "Most recent pulse rate in the period (bpm).",
       "default": null
     }
   ]

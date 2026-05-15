@@ -29,7 +29,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'type' for data type com.huawei.sleep_respiratory_detail.",
+      "doc": "Sleep respiratory measurement type code.",
       "default": null
     },
     {
@@ -38,7 +38,7 @@
         "null",
         "double"
       ],
-      "doc": "Value of Huawei field 'value' for data type com.huawei.sleep_respiratory_detail.",
+      "doc": "Value of the sleep respiratory measurement.",
       "default": null
     }
   ]

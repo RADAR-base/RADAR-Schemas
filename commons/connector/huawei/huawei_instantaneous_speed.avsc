@@ -29,7 +29,7 @@
         "null",
         "double"
       ],
-      "doc": "Value of Huawei field 'speed' for data type com.huawei.instantaneous.speed.",
+      "doc": "Speed (m/s).",
       "default": null
     }
   ]

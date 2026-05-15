@@ -29,7 +29,7 @@
         "null",
         "double"
       ],
-      "doc": "Value of Huawei field 'intensity' for data type com.huawei.continuous.exercise_intensity.",
+      "doc": "Workout intensity.",
       "default": null
     }
   ]

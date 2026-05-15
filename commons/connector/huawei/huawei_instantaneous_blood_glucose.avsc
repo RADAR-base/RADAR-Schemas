@@ -29,7 +29,7 @@
         "null",
         "double"
       ],
-      "doc": "Value of Huawei field 'level' for data type com.huawei.instantaneous.blood_glucose.",
+      "doc": "Blood glucose level (mmol/L).",
       "default": null
     },
     {
@@ -38,7 +38,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'measure_time' for data type com.huawei.instantaneous.blood_glucose.",
+      "doc": "Timing of measurement relative to meals: 1=before breakfast, 2=after breakfast, 3=before lunch, 4=after lunch, 5=before dinner, 6=after dinner, 7=before sleep, 8=before dawn, 9=random.",
       "default": null
     },
     {
@@ -47,7 +47,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'sample_source' for data type com.huawei.instantaneous.blood_glucose.",
+      "doc": "Blood sample source: 1=interstitial fluid, 2=capillary blood, 3=plasma, 4=serum, 5=tears, 6=whole blood.",
       "default": null
     }
   ]

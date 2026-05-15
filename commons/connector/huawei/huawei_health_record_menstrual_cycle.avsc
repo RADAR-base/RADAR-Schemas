@@ -29,7 +29,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'recordDay' for data type com.huawei.health.record.menstrual_cycle.",
+      "doc": "Day number within the menstrual cycle record.",
       "default": null
     },
     {
@@ -38,7 +38,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'status' for data type com.huawei.health.record.menstrual_cycle.",
+      "doc": "Menstrual cycle phase status code.",
       "default": null
     },
     {
@@ -47,7 +47,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'subStatus' for data type com.huawei.health.record.menstrual_cycle.",
+      "doc": "Menstrual cycle sub-status code providing additional phase detail.",
       "default": null
     },
     {
@@ -56,7 +56,7 @@
         "null",
         "string"
       ],
-      "doc": "Value of Huawei field 'remarks' for data type com.huawei.health.record.menstrual_cycle.",
+      "doc": "Free-text remarks about the menstrual cycle record.",
       "default": null
     },
     {
@@ -65,7 +65,7 @@
         "null",
         "string"
       ],
-      "doc": "Value of Huawei field 'timeZone' for data type com.huawei.health.record.menstrual_cycle.",
+      "doc": "Time zone identifier for the record.",
       "default": null
     }
   ]

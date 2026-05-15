@@ -29,7 +29,7 @@
         "null",
         "double"
       ],
-      "doc": "Value of Huawei field 'calories' for data type com.huawei.continuous.calories.consumed.",
+      "doc": "Energy expenditure (kcal).",
       "default": null
     }
   ]

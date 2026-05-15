@@ -29,7 +29,7 @@
         "null",
         "double"
       ],
-      "doc": "Value of Huawei field 'distance' for data type com.huawei.continuous.distance.total.",
+      "doc": "Distance (m).",
       "default": null
     }
   ]

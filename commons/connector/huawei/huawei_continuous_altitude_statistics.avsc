@@ -29,7 +29,7 @@
         "null",
         "double"
       ],
-      "doc": "Value of Huawei field 'avg' for data type com.huawei.continuous.altitude.statistics.",
+      "doc": "Average value over the aggregation period.",
       "default": null
     },
     {
@@ -38,7 +38,7 @@
         "null",
         "double"
       ],
-      "doc": "Value of Huawei field 'max' for data type com.huawei.continuous.altitude.statistics.",
+      "doc": "Maximum value over the aggregation period.",
       "default": null
     },
     {
@@ -47,7 +47,7 @@
         "null",
         "double"
       ],
-      "doc": "Value of Huawei field 'min' for data type com.huawei.continuous.altitude.statistics.",
+      "doc": "Minimum value over the aggregation period.",
       "default": null
     },
     {
@@ -56,7 +56,7 @@
         "null",
         "double"
       ],
-      "doc": "Value of Huawei field 'ascent_total' for data type com.huawei.continuous.altitude.statistics.",
+      "doc": "Total ascent over the session (m).",
       "default": null
     },
     {
@@ -65,7 +65,7 @@
         "null",
         "double"
       ],
-      "doc": "Value of Huawei field 'descent_total' for data type com.huawei.continuous.altitude.statistics.",
+      "doc": "Total descent over the session (m).",
       "default": null
     }
   ]

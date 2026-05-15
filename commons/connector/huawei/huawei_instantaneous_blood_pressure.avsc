@@ -29,7 +29,7 @@
         "null",
         "double"
       ],
-      "doc": "Value of Huawei field 'systolic_pressure' for data type com.huawei.instantaneous.blood_pressure.",
+      "doc": "Systolic blood pressure (mmHg).",
       "default": null
     },
     {
@@ -38,7 +38,7 @@
         "null",
         "double"
       ],
-      "doc": "Value of Huawei field 'diastolic_pressure' for data type com.huawei.instantaneous.blood_pressure.",
+      "doc": "Diastolic blood pressure (mmHg).",
       "default": null
     },
     {
@@ -47,7 +47,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'body_posture' for data type com.huawei.instantaneous.blood_pressure.",
+      "doc": "Body posture during measurement: 1=standing, 2=sitting, 3=lying down, 4=semi-recumbent.",
       "default": null
     },
     {
@@ -56,7 +56,7 @@
         "null",
         "float"
       ],
-      "doc": "Value of Huawei field 'measure_body_part_of_blood_pressure' for data type com.huawei.instantaneous.blood_pressure.",
+      "doc": "Body part where blood pressure was measured: 1=left wrist, 2=right wrist, 3=left upper arm, 4=right upper arm.",
       "default": null
     },
     {
@@ -65,7 +65,7 @@
         "null",
         "double"
       ],
-      "doc": "Value of Huawei field 'sphygmus' for data type com.huawei.instantaneous.blood_pressure.",
+      "doc": "Pulse rate (bpm).",
       "default": null
     },
     {
@@ -74,7 +74,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'measurement_anomaly_flag' for data type com.huawei.instantaneous.blood_pressure.",
+      "doc": "Flag indicating a measurement anomaly (0=normal, non-zero=anomalous).",
       "default": null
     },
     {
@@ -83,7 +83,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'before_measure_activity' for data type com.huawei.instantaneous.blood_pressure.",
+      "doc": "Activity performed before the measurement.",
       "default": null
     }
   ]

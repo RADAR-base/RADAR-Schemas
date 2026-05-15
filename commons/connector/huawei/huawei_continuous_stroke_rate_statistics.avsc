@@ -29,7 +29,7 @@
         "null",
         "double"
       ],
-      "doc": "Value of Huawei field 'avg' for data type com.huawei.continuous.stroke_rate.statistics.",
+      "doc": "Average value over the aggregation period.",
       "default": null
     },
     {
@@ -38,7 +38,7 @@
         "null",
         "double"
       ],
-      "doc": "Value of Huawei field 'max' for data type com.huawei.continuous.stroke_rate.statistics.",
+      "doc": "Maximum value over the aggregation period.",
       "default": null
     },
     {
@@ -47,7 +47,7 @@
         "null",
         "double"
       ],
-      "doc": "Value of Huawei field 'min' for data type com.huawei.continuous.stroke_rate.statistics.",
+      "doc": "Minimum value over the aggregation period.",
       "default": null
     }
   ]

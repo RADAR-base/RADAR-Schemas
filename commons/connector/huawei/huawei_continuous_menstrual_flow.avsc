@@ -29,7 +29,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'volume' for data type com.huawei.continuous.menstrual_flow.",
+      "doc": "Menstrual flow volume: 1=spotting, 2=light, 3=medium, 4=heavy.",
       "default": null
     }
   ]

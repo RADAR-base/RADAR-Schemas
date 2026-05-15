@@ -29,7 +29,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'on_off_bed_state' for data type com.huawei.sleep.on_off_bed_record.",
+      "doc": "Bed occupancy state: indicates whether the user is in or out of bed.",
       "default": null
     }
   ]

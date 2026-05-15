@@ -29,7 +29,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'score' for data type com.huawei.instantaneous.stress.",
+      "doc": "Stress score, ranging from 1 to 99.",
       "default": null
     },
     {
@@ -38,7 +38,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'grade' for data type com.huawei.instantaneous.stress.",
+      "doc": "Stress grade, ranging from 1 (low) to 4 (high).",
       "default": null
     },
     {
@@ -47,7 +47,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'measure_type' for data type com.huawei.instantaneous.stress.",
+      "doc": "Stress measurement mode: 1=active, 2=passive.",
       "default": null
     }
   ]

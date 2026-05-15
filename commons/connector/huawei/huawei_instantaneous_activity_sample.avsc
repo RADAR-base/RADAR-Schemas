@@ -29,7 +29,7 @@
         "null",
         "double"
       ],
-      "doc": "Value of Huawei field 'possibility' for data type com.huawei.instantaneous.activity.sample.",
+      "doc": "Confidence of the activity type detection, ranging from 0.0 to 100.0.",
       "default": null
     }
   ]

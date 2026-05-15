@@ -29,7 +29,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'appearance' for data type com.huawei.instantaneous.vaginal_speckle.",
+      "doc": "Number of occurrences within the time period.",
       "default": null
     }
   ]

@@ -29,7 +29,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'max_breathe_rate' for data type com.huawei.continuous.breathe_rate.statistics.",
+      "doc": "Maximum breathing rate over the period (breaths/min).",
       "default": null
     },
     {
@@ -38,7 +38,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'min_breathe_rate' for data type com.huawei.continuous.breathe_rate.statistics.",
+      "doc": "Minimum breathing rate over the period (breaths/min).",
       "default": null
     },
     {
@@ -47,7 +47,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'avg_breathe_rate' for data type com.huawei.continuous.breathe_rate.statistics.",
+      "doc": "Average breathing rate over the period (breaths/min).",
       "default": null
     },
     {
@@ -56,7 +56,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'min_breathrate_baseline' for data type com.huawei.continuous.breathe_rate.statistics.",
+      "doc": "Minimum baseline breathing rate (breaths/min).",
       "default": null
     },
     {
@@ -65,7 +65,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'max_breathrate_baseline' for data type com.huawei.continuous.breathe_rate.statistics.",
+      "doc": "Maximum baseline breathing rate (breaths/min).",
       "default": null
     }
   ]

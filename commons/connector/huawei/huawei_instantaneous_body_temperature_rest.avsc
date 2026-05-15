@@ -29,7 +29,7 @@
         "null",
         "double"
       ],
-      "doc": "Value of Huawei field 'temperature' for data type com.huawei.instantaneous.body.temperature.rest.",
+      "doc": "Body temperature (°C).",
       "default": null
     },
     {
@@ -38,7 +38,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'measure_body_part_of_temperature' for data type com.huawei.instantaneous.body.temperature.rest.",
+      "doc": "Body site for temperature measurement: 1=axillary, 2=finger, 3=forehead, 4=oral, 5=rectal, 6=temporal artery, 7=toe, 8=tympanic, 9=wrist, 10=vaginal.",
       "default": null
     }
   ]

@@ -29,7 +29,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'steps' for data type com.huawei.daily_activity_summary.",
+      "doc": "Step count.",
       "default": null
     },
     {
@@ -38,7 +38,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'active_calories' for data type com.huawei.daily_activity_summary.",
+      "doc": "Active energy expenditure excluding basal metabolism (kcal).",
       "default": null
     },
     {
@@ -47,7 +47,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'exercise_time' for data type com.huawei.daily_activity_summary.",
+      "doc": "Active exercise duration (ms).",
       "default": null
     },
     {
@@ -56,7 +56,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'active_hours' for data type com.huawei.daily_activity_summary.",
+      "doc": "Number of hours with at least moderate-intensity activity.",
       "default": null
     },
     {
@@ -65,7 +65,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'steps_goal' for data type com.huawei.daily_activity_summary.",
+      "doc": "Daily step count goal.",
       "default": null
     },
     {
@@ -74,7 +74,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'active_calories_goal' for data type com.huawei.daily_activity_summary.",
+      "doc": "Daily active calorie expenditure goal (kcal).",
       "default": null
     },
     {
@@ -83,7 +83,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'exercise_time_goal' for data type com.huawei.daily_activity_summary.",
+      "doc": "Daily exercise duration goal (ms).",
       "default": null
     },
     {
@@ -92,7 +92,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'active_hours_goal' for data type com.huawei.daily_activity_summary.",
+      "doc": "Daily active hours goal.",
       "default": null
     }
   ]

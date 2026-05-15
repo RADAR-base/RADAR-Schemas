@@ -29,7 +29,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'avg' for data type com.huawei.cgm_blood_glucose.statistics.",
+      "doc": "Average CGM blood glucose over the period (mmol/L).",
       "default": null
     },
     {
@@ -38,7 +38,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'max' for data type com.huawei.cgm_blood_glucose.statistics.",
+      "doc": "Maximum CGM blood glucose over the period (mmol/L).",
       "default": null
     },
     {
@@ -47,7 +47,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'min' for data type com.huawei.cgm_blood_glucose.statistics.",
+      "doc": "Minimum CGM blood glucose over the period (mmol/L).",
       "default": null
     },
     {
@@ -56,7 +56,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'last' for data type com.huawei.cgm_blood_glucose.statistics.",
+      "doc": "Most recent CGM blood glucose value in the period (mmol/L).",
       "default": null
     }
   ]

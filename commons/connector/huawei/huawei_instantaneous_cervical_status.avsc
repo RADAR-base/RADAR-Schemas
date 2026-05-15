@@ -29,7 +29,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'position' for data type com.huawei.instantaneous.cervical_status.",
+      "doc": "Cervical position: 1=low, 2=medium, 3=high.",
       "default": null
     },
     {
@@ -38,7 +38,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'dilation_status' for data type com.huawei.instantaneous.cervical_status.",
+      "doc": "Cervical dilation status: 1=closed, 2=medium, 3=open.",
       "default": null
     },
     {
@@ -47,7 +47,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'firmness_level' for data type com.huawei.instantaneous.cervical_status.",
+      "doc": "Cervical firmness: 1=soft, 2=medium, 3=firm.",
       "default": null
     }
   ]

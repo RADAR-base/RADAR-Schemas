@@ -29,7 +29,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'active_hours' for data type com.huawei.active_hours.",
+      "doc": "Number of hours with at least moderate-intensity activity.",
       "default": null
     },
     {
@@ -38,7 +38,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'moderate_intensity_minutes' for data type com.huawei.active_hours.",
+      "doc": "Duration of moderate-intensity activity within the active hour (min).",
       "default": null
     },
     {
@@ -47,7 +47,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'high_intensity_minutes' for data type com.huawei.active_hours.",
+      "doc": "Duration of high-intensity activity within the active hour (min).",
       "default": null
     }
   ]

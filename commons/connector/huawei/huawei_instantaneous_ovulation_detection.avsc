@@ -29,7 +29,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'detection_result' for data type com.huawei.instantaneous.ovulation_detection.",
+      "doc": "Ovulation detection result: 1=negative, 2=positive.",
       "default": null
     }
   ]

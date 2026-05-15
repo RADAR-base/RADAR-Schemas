@@ -29,7 +29,7 @@
         "null",
         "double"
       ],
-      "doc": "Value of Huawei field 'distance_delta' for data type com.huawei.continuous.distance.delta.",
+      "doc": "Distance covered since the last reading (m).",
       "default": null
     }
   ]

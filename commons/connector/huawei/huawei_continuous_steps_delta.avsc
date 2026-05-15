@@ -29,7 +29,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'steps_delta' for data type com.huawei.continuous.steps.delta.",
+      "doc": "Number of steps taken since the last reading.",
       "default": null
     }
   ]

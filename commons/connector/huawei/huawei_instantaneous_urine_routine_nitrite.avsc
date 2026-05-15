@@ -29,7 +29,7 @@
         "null",
         "int"
       ],
-      "doc": "Value of Huawei field 'nitrite' for data type com.huawei.instantaneous.urine_routine.nitrite.",
+      "doc": "Nitrite level in the urine routine test result.",
       "default": null
     }
   ]

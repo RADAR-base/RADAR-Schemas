@@ -29,7 +29,7 @@
         "null",
         "double"
       ],
-      "doc": "Value of Huawei field 'level' for data type com.huawei.cgm_blood_glucose.",
+      "doc": "Continuous glucose monitoring (CGM) blood glucose level (mmol/L).",
       "default": null
     }
   ]
