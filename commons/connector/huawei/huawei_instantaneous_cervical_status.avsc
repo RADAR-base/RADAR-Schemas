@@ -1,0 +1,54 @@
+{
+  "namespace": "org.radarcns.connector.huawei",
+  "type": "record",
+  "name": "HuaweiInstantaneousCervicalStatus",
+  "doc": "Huawei Health Kit REST data for com.huawei.instantaneous.cervical_status. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "fields": [
+    {
+      "name": "time",
+      "type": "double",
+      "doc": "Start time of the sample or record in UTC (s)."
+    },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Time the connector received this record from the Huawei Health API (s)."
+    },
+    {
+      "name": "endTime",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "End time of the sample or record in UTC (s), when provided by Huawei.",
+      "default": null
+    },
+    {
+      "name": "position",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Value of Huawei field 'position' for data type com.huawei.instantaneous.cervical_status.",
+      "default": null
+    },
+    {
+      "name": "dilationStatus",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Value of Huawei field 'dilation_status' for data type com.huawei.instantaneous.cervical_status.",
+      "default": null
+    },
+    {
+      "name": "firmnessLevel",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Value of Huawei field 'firmness_level' for data type com.huawei.instantaneous.cervical_status.",
+      "default": null
+    }
+  ]
+}

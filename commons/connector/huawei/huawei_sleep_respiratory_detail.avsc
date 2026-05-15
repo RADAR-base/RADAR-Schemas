@@ -1,0 +1,45 @@
+{
+  "namespace": "org.radarcns.connector.huawei",
+  "type": "record",
+  "name": "HuaweiSleepRespiratoryDetail",
+  "doc": "Huawei Health Kit REST data for com.huawei.sleep_respiratory_detail. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "fields": [
+    {
+      "name": "time",
+      "type": "double",
+      "doc": "Start time of the sample or record in UTC (s)."
+    },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Time the connector received this record from the Huawei Health API (s)."
+    },
+    {
+      "name": "endTime",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "End time of the sample or record in UTC (s), when provided by Huawei.",
+      "default": null
+    },
+    {
+      "name": "type",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Value of Huawei field 'type' for data type com.huawei.sleep_respiratory_detail.",
+      "default": null
+    },
+    {
+      "name": "value",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Value of Huawei field 'value' for data type com.huawei.sleep_respiratory_detail.",
+      "default": null
+    }
+  ]
+}

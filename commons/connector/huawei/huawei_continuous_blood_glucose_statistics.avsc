@@ -1,0 +1,90 @@
+{
+  "namespace": "org.radarcns.connector.huawei",
+  "type": "record",
+  "name": "HuaweiContinuousBloodGlucoseStatistics",
+  "doc": "Huawei Health Kit REST data for com.huawei.continuous.blood_glucose.statistics. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "fields": [
+    {
+      "name": "time",
+      "type": "double",
+      "doc": "Start time of the sample or record in UTC (s)."
+    },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Time the connector received this record from the Huawei Health API (s)."
+    },
+    {
+      "name": "endTime",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "End time of the sample or record in UTC (s), when provided by Huawei.",
+      "default": null
+    },
+    {
+      "name": "avg",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Value of Huawei field 'avg' for data type com.huawei.continuous.blood_glucose.statistics.",
+      "default": null
+    },
+    {
+      "name": "max",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Value of Huawei field 'max' for data type com.huawei.continuous.blood_glucose.statistics.",
+      "default": null
+    },
+    {
+      "name": "min",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Value of Huawei field 'min' for data type com.huawei.continuous.blood_glucose.statistics.",
+      "default": null
+    },
+    {
+      "name": "correlationWithMealtime",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Value of Huawei field 'correlation_with_mealtime' for data type com.huawei.continuous.blood_glucose.statistics.",
+      "default": null
+    },
+    {
+      "name": "meal",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Value of Huawei field 'meal' for data type com.huawei.continuous.blood_glucose.statistics.",
+      "default": null
+    },
+    {
+      "name": "correlationWithSleepState",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Value of Huawei field 'correlation_with_sleep_state' for data type com.huawei.continuous.blood_glucose.statistics.",
+      "default": null
+    },
+    {
+      "name": "sampleSource",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Value of Huawei field 'sample_source' for data type com.huawei.continuous.blood_glucose.statistics.",
+      "default": null
+    }
+  ]
+}

@@ -1,0 +1,252 @@
+{
+  "namespace": "org.radarcns.connector.huawei",
+  "type": "record",
+  "name": "HuaweiHealthRecordVentilator",
+  "doc": "Huawei Health Kit REST data for com.huawei.health.record.ventilator. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "fields": [
+    {
+      "name": "time",
+      "type": "double",
+      "doc": "Start time of the sample or record in UTC (s)."
+    },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Time the connector received this record from the Huawei Health API (s)."
+    },
+    {
+      "name": "endTime",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "End time of the sample or record in UTC (s), when provided by Huawei.",
+      "default": null
+    },
+    {
+      "name": "sysmode",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Value of Huawei field 'sysMode' for data type com.huawei.health.record.ventilator.",
+      "default": null
+    },
+    {
+      "name": "syssessiondate",
+      "type": [
+        "null",
+        "long"
+      ],
+      "doc": "Value of Huawei field 'sysSessionDate' for data type com.huawei.health.record.ventilator.",
+      "default": null
+    },
+    {
+      "name": "eventahi",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Value of Huawei field 'eventAhi' for data type com.huawei.health.record.ventilator.",
+      "default": null
+    },
+    {
+      "name": "sysduration",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Value of Huawei field 'sysDuration' for data type com.huawei.health.record.ventilator.",
+      "default": null
+    },
+    {
+      "name": "lumistidvolmedian",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Value of Huawei field 'lumisTidvolMedian' for data type com.huawei.health.record.ventilator.",
+      "default": null
+    },
+    {
+      "name": "lumistidvol95",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Value of Huawei field 'lumisTidvol95' for data type com.huawei.health.record.ventilator.",
+      "default": null
+    },
+    {
+      "name": "lumistidvolmax",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Value of Huawei field 'lumisTidvolMax' for data type com.huawei.health.record.ventilator.",
+      "default": null
+    },
+    {
+      "name": "clinicalrespratemedian",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Value of Huawei field 'clinicalRespRateMedian' for data type com.huawei.health.record.ventilator.",
+      "default": null
+    },
+    {
+      "name": "clinicalresprate95",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Value of Huawei field 'clinicalRespRate95' for data type com.huawei.health.record.ventilator.",
+      "default": null
+    },
+    {
+      "name": "clinicalrespratemax",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Value of Huawei field 'clinicalRespRateMax' for data type com.huawei.health.record.ventilator.",
+      "default": null
+    },
+    {
+      "name": "lumisieratiomedian",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Value of Huawei field 'lumisIeratioMedian' for data type com.huawei.health.record.ventilator.",
+      "default": null
+    },
+    {
+      "name": "lumisieratioquantile95",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Value of Huawei field 'lumisIeratioQuantile95' for data type com.huawei.health.record.ventilator.",
+      "default": null
+    },
+    {
+      "name": "lumisieratiomax",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Value of Huawei field 'lumisIeratioMax' for data type com.huawei.health.record.ventilator.",
+      "default": null
+    },
+    {
+      "name": "maskoff",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Value of Huawei field 'maskOff' for data type com.huawei.health.record.ventilator.",
+      "default": null
+    },
+    {
+      "name": "hypoventilationindex",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Value of Huawei field 'hypoventilationIndex' for data type com.huawei.health.record.ventilator.",
+      "default": null
+    },
+    {
+      "name": "obstructiveapneaindex",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Value of Huawei field 'obstructiveApneaIndex' for data type com.huawei.health.record.ventilator.",
+      "default": null
+    },
+    {
+      "name": "pressurebelow95",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Value of Huawei field 'pressureBelow95' for data type com.huawei.health.record.ventilator.",
+      "default": null
+    },
+    {
+      "name": "hypoventilationeventtimes",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Value of Huawei field 'hypoventilationEventTimes' for data type com.huawei.health.record.ventilator.",
+      "default": null
+    },
+    {
+      "name": "snoringeventtimes",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Value of Huawei field 'snoringEventTimes' for data type com.huawei.health.record.ventilator.",
+      "default": null
+    },
+    {
+      "name": "obstructiveapneaeventtimes",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Value of Huawei field 'obstructiveApneaEventTimes' for data type com.huawei.health.record.ventilator.",
+      "default": null
+    },
+    {
+      "name": "centerapneaeventtimes",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Value of Huawei field 'centerApneaEventTimes' for data type com.huawei.health.record.ventilator.",
+      "default": null
+    },
+    {
+      "name": "airflowlimiteventtimes",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Value of Huawei field 'airflowLimitEventTimes' for data type com.huawei.health.record.ventilator.",
+      "default": null
+    },
+    {
+      "name": "massiveleakeventtimes",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Value of Huawei field 'massiveLeakEventTimes' for data type com.huawei.health.record.ventilator.",
+      "default": null
+    },
+    {
+      "name": "unknoweventtimes",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Value of Huawei field 'unknowEventTimes' for data type com.huawei.health.record.ventilator.",
+      "default": null
+    },
+    {
+      "name": "alleventtimes",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Value of Huawei field 'allEventTimes' for data type com.huawei.health.record.ventilator.",
+      "default": null
+    }
+  ]
+}

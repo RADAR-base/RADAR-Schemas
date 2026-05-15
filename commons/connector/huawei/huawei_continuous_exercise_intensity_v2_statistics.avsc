@@ -1,0 +1,36 @@
+{
+  "namespace": "org.radarcns.connector.huawei",
+  "type": "record",
+  "name": "HuaweiContinuousExerciseIntensityV2Statistics",
+  "doc": "Huawei Health Kit REST data for com.huawei.continuous.exercise_intensity.v2.statistics. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "fields": [
+    {
+      "name": "time",
+      "type": "double",
+      "doc": "Start time of the sample or record in UTC (s)."
+    },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Time the connector received this record from the Huawei Health API (s)."
+    },
+    {
+      "name": "endTime",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "End time of the sample or record in UTC (s), when provided by Huawei.",
+      "default": null
+    },
+    {
+      "name": "intensityMap",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "Value of Huawei field 'intensity_map' for data type com.huawei.continuous.exercise_intensity.v2.statistics. Stored as a JSON string when the source value is a map.",
+      "default": null
+    }
+  ]
+}

@@ -1,0 +1,171 @@
+{
+  "namespace": "org.radarcns.connector.huawei",
+  "type": "record",
+  "name": "HuaweiHealthRecordSleep",
+  "doc": "Huawei Health Kit REST data for com.huawei.health.record.sleep. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "fields": [
+    {
+      "name": "time",
+      "type": "double",
+      "doc": "Start time of the sample or record in UTC (s)."
+    },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Time the connector received this record from the Huawei Health API (s)."
+    },
+    {
+      "name": "endTime",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "End time of the sample or record in UTC (s), when provided by Huawei.",
+      "default": null
+    },
+    {
+      "name": "fallAsleepTime",
+      "type": [
+        "null",
+        "long"
+      ],
+      "doc": "Value of Huawei field 'fall_asleep_time' for data type com.huawei.health.record.sleep.",
+      "default": null
+    },
+    {
+      "name": "wakeupTime",
+      "type": [
+        "null",
+        "long"
+      ],
+      "doc": "Value of Huawei field 'wakeup_time' for data type com.huawei.health.record.sleep.",
+      "default": null
+    },
+    {
+      "name": "lightSleepTime",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Value of Huawei field 'light_sleep_time' for data type com.huawei.health.record.sleep.",
+      "default": null
+    },
+    {
+      "name": "deepSleepTime",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Value of Huawei field 'deep_sleep_time' for data type com.huawei.health.record.sleep.",
+      "default": null
+    },
+    {
+      "name": "dreamTime",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Value of Huawei field 'dream_time' for data type com.huawei.health.record.sleep.",
+      "default": null
+    },
+    {
+      "name": "awakeTime",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Value of Huawei field 'awake_time' for data type com.huawei.health.record.sleep.",
+      "default": null
+    },
+    {
+      "name": "allSleepTime",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Value of Huawei field 'all_sleep_time' for data type com.huawei.health.record.sleep.",
+      "default": null
+    },
+    {
+      "name": "wakeupCount",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Value of Huawei field 'wakeup_count' for data type com.huawei.health.record.sleep.",
+      "default": null
+    },
+    {
+      "name": "deepSleepPart",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Value of Huawei field 'deep_sleep_part' for data type com.huawei.health.record.sleep.",
+      "default": null
+    },
+    {
+      "name": "sleepScore",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Value of Huawei field 'sleep_score' for data type com.huawei.health.record.sleep.",
+      "default": null
+    },
+    {
+      "name": "sleepLatency",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Value of Huawei field 'sleep_latency' for data type com.huawei.health.record.sleep.",
+      "default": null
+    },
+    {
+      "name": "sleepEfficiency",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Value of Huawei field 'sleep_efficiency' for data type com.huawei.health.record.sleep.",
+      "default": null
+    },
+    {
+      "name": "goBedTime",
+      "type": [
+        "null",
+        "long"
+      ],
+      "doc": "Value of Huawei field 'go_bed_time' for data type com.huawei.health.record.sleep.",
+      "default": null
+    },
+    {
+      "name": "sleepType",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Value of Huawei field 'sleep_type' for data type com.huawei.health.record.sleep.",
+      "default": null
+    },
+    {
+      "name": "prepareSleepTime",
+      "type": [
+        "null",
+        "long"
+      ],
+      "doc": "Value of Huawei field 'prepare_sleep_time' for data type com.huawei.health.record.sleep.",
+      "default": null
+    },
+    {
+      "name": "offBedTime",
+      "type": [
+        "null",
+        "long"
+      ],
+      "doc": "Value of Huawei field 'off_bed_time' for data type com.huawei.health.record.sleep.",
+      "default": null
+    }
+  ]
+}

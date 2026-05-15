@@ -1,0 +1,54 @@
+{
+  "namespace": "org.radarcns.connector.huawei",
+  "type": "record",
+  "name": "HuaweiHealthRecordLowSpo2Alert",
+  "doc": "Huawei Health Kit REST data for com.huawei.health.record.lowSpo2Alert. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "fields": [
+    {
+      "name": "time",
+      "type": "double",
+      "doc": "Start time of the sample or record in UTC (s)."
+    },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Time the connector received this record from the Huawei Health API (s)."
+    },
+    {
+      "name": "endTime",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "End time of the sample or record in UTC (s), when provided by Huawei.",
+      "default": null
+    },
+    {
+      "name": "threshold",
+      "type": [
+        "null",
+        "float"
+      ],
+      "doc": "Value of Huawei field 'threshold' for data type com.huawei.health.record.lowSpo2Alert.",
+      "default": null
+    },
+    {
+      "name": "maxSpO2",
+      "type": [
+        "null",
+        "float"
+      ],
+      "doc": "Value of Huawei field 'max_spo2' for data type com.huawei.health.record.lowSpo2Alert.",
+      "default": null
+    },
+    {
+      "name": "minSpO2",
+      "type": [
+        "null",
+        "float"
+      ],
+      "doc": "Value of Huawei field 'min_spo2' for data type com.huawei.health.record.lowSpo2Alert.",
+      "default": null
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "namespace": "org.radarcns.connector.huawei",
+  "type": "record",
+  "name": "HuaweiContinuousStepsTotal",
+  "doc": "Huawei Health Kit REST data for com.huawei.continuous.steps.total. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "fields": [
+    {
+      "name": "time",
+      "type": "double",
+      "doc": "Start time of the sample or record in UTC (s)."
+    },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Time the connector received this record from the Huawei Health API (s)."
+    },
+    {
+      "name": "endTime",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "End time of the sample or record in UTC (s), when provided by Huawei.",
+      "default": null
+    },
+    {
+      "name": "steps",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Value of Huawei field 'steps' for data type com.huawei.continuous.steps.total.",
+      "default": null
+    },
+    {
+      "name": "duration",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Value of Huawei field 'duration' for data type com.huawei.continuous.steps.total.",
+      "default": null
+    }
+  ]
+}

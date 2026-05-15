@@ -1,0 +1,72 @@
+{
+  "namespace": "org.radarcns.connector.huawei",
+  "type": "record",
+  "name": "HuaweiInstantaneousSpo2",
+  "doc": "Huawei Health Kit REST data for com.huawei.instantaneous.spo2. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "fields": [
+    {
+      "name": "time",
+      "type": "double",
+      "doc": "Start time of the sample or record in UTC (s)."
+    },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Time the connector received this record from the Huawei Health API (s)."
+    },
+    {
+      "name": "endTime",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "End time of the sample or record in UTC (s), when provided by Huawei.",
+      "default": null
+    },
+    {
+      "name": "saturation",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Value of Huawei field 'saturation' for data type com.huawei.instantaneous.spo2.",
+      "default": null
+    },
+    {
+      "name": "oxygenSupplyFlowRate",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Value of Huawei field 'oxygen_supply_flow_rate' for data type com.huawei.instantaneous.spo2.",
+      "default": null
+    },
+    {
+      "name": "oxygenTherapy",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Value of Huawei field 'oxygen_therapy' for data type com.huawei.instantaneous.spo2.",
+      "default": null
+    },
+    {
+      "name": "spo2MeasurementMechanism",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Value of Huawei field 'spo2_measurement_mechanism' for data type com.huawei.instantaneous.spo2.",
+      "default": null
+    },
+    {
+      "name": "spo2MeasurementApproach",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Value of Huawei field 'spo2_measurement_approach' for data type com.huawei.instantaneous.spo2.",
+      "default": null
+    }
+  ]
+}

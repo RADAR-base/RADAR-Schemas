@@ -1,0 +1,90 @@
+{
+  "namespace": "org.radarcns.connector.huawei",
+  "type": "record",
+  "name": "HuaweiInstantaneousBloodPressure",
+  "doc": "Huawei Health Kit REST data for com.huawei.instantaneous.blood_pressure. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "fields": [
+    {
+      "name": "time",
+      "type": "double",
+      "doc": "Start time of the sample or record in UTC (s)."
+    },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Time the connector received this record from the Huawei Health API (s)."
+    },
+    {
+      "name": "endTime",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "End time of the sample or record in UTC (s), when provided by Huawei.",
+      "default": null
+    },
+    {
+      "name": "systolicPressure",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Value of Huawei field 'systolic_pressure' for data type com.huawei.instantaneous.blood_pressure.",
+      "default": null
+    },
+    {
+      "name": "diastolicPressure",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Value of Huawei field 'diastolic_pressure' for data type com.huawei.instantaneous.blood_pressure.",
+      "default": null
+    },
+    {
+      "name": "bodyPosture",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Value of Huawei field 'body_posture' for data type com.huawei.instantaneous.blood_pressure.",
+      "default": null
+    },
+    {
+      "name": "measureBodyPartOfBloodPressure",
+      "type": [
+        "null",
+        "float"
+      ],
+      "doc": "Value of Huawei field 'measure_body_part_of_blood_pressure' for data type com.huawei.instantaneous.blood_pressure.",
+      "default": null
+    },
+    {
+      "name": "sphygmus",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Value of Huawei field 'sphygmus' for data type com.huawei.instantaneous.blood_pressure.",
+      "default": null
+    },
+    {
+      "name": "measurementAnomalyFlag",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Value of Huawei field 'measurement_anomaly_flag' for data type com.huawei.instantaneous.blood_pressure.",
+      "default": null
+    },
+    {
+      "name": "beforeMeasureActivity",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Value of Huawei field 'before_measure_activity' for data type com.huawei.instantaneous.blood_pressure.",
+      "default": null
+    }
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "namespace": "org.radarcns.connector.huawei",
+  "type": "record",
+  "name": "HuaweiContinuousBreatheRateStatistics",
+  "doc": "Huawei Health Kit REST data for com.huawei.continuous.breathe_rate.statistics. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "fields": [
+    {
+      "name": "time",
+      "type": "double",
+      "doc": "Start time of the sample or record in UTC (s)."
+    },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Time the connector received this record from the Huawei Health API (s)."
+    },
+    {
+      "name": "endTime",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "End time of the sample or record in UTC (s), when provided by Huawei.",
+      "default": null
+    },
+    {
+      "name": "maxBreatheRate",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Value of Huawei field 'max_breathe_rate' for data type com.huawei.continuous.breathe_rate.statistics.",
+      "default": null
+    },
+    {
+      "name": "minBreatheRate",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Value of Huawei field 'min_breathe_rate' for data type com.huawei.continuous.breathe_rate.statistics.",
+      "default": null
+    },
+    {
+      "name": "avgBreatheRate",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Value of Huawei field 'avg_breathe_rate' for data type com.huawei.continuous.breathe_rate.statistics.",
+      "default": null
+    },
+    {
+      "name": "minBreathrateBaseline",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Value of Huawei field 'min_breathrate_baseline' for data type com.huawei.continuous.breathe_rate.statistics.",
+      "default": null
+    },
+    {
+      "name": "maxBreathrateBaseline",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Value of Huawei field 'max_breathrate_baseline' for data type com.huawei.continuous.breathe_rate.statistics.",
+      "default": null
+    }
+  ]
+}

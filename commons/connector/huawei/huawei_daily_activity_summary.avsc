@@ -1,0 +1,99 @@
+{
+  "namespace": "org.radarcns.connector.huawei",
+  "type": "record",
+  "name": "HuaweiDailyActivitySummary",
+  "doc": "Huawei Health Kit REST data for com.huawei.daily_activity_summary. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "fields": [
+    {
+      "name": "time",
+      "type": "double",
+      "doc": "Start time of the sample or record in UTC (s)."
+    },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Time the connector received this record from the Huawei Health API (s)."
+    },
+    {
+      "name": "endTime",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "End time of the sample or record in UTC (s), when provided by Huawei.",
+      "default": null
+    },
+    {
+      "name": "steps",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Value of Huawei field 'steps' for data type com.huawei.daily_activity_summary.",
+      "default": null
+    },
+    {
+      "name": "activeCalories",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Value of Huawei field 'active_calories' for data type com.huawei.daily_activity_summary.",
+      "default": null
+    },
+    {
+      "name": "exerciseTime",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Value of Huawei field 'exercise_time' for data type com.huawei.daily_activity_summary.",
+      "default": null
+    },
+    {
+      "name": "activeHours",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Value of Huawei field 'active_hours' for data type com.huawei.daily_activity_summary.",
+      "default": null
+    },
+    {
+      "name": "stepsGoal",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Value of Huawei field 'steps_goal' for data type com.huawei.daily_activity_summary.",
+      "default": null
+    },
+    {
+      "name": "activeCaloriesGoal",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Value of Huawei field 'active_calories_goal' for data type com.huawei.daily_activity_summary.",
+      "default": null
+    },
+    {
+      "name": "exerciseTimeGoal",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Value of Huawei field 'exercise_time_goal' for data type com.huawei.daily_activity_summary.",
+      "default": null
+    },
+    {
+      "name": "activeHoursGoal",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Value of Huawei field 'active_hours_goal' for data type com.huawei.daily_activity_summary.",
+      "default": null
+    }
+  ]
+}

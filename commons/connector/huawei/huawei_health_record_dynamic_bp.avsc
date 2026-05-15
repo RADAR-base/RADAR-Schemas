@@ -1,0 +1,618 @@
+{
+  "namespace": "org.radarcns.connector.huawei",
+  "type": "record",
+  "name": "HuaweiHealthRecordDynamicBp",
+  "doc": "Huawei Health Kit REST data for com.huawei.health.record.dynamic_bp (Ambulatory Blood Pressure Monitoring). See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "fields": [
+    {
+      "name": "time",
+      "type": "double",
+      "doc": "Start time of the sample or record in UTC (s)."
+    },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Time the connector received this record from the Huawei Health API (s)."
+    },
+    {
+      "name": "endTime",
+      "type": ["null", "double"],
+      "doc": "End time of the sample or record in UTC (s), when provided by Huawei.",
+      "default": null
+    },
+    {
+      "name": "planID",
+      "type": ["null", "string"],
+      "doc": "Value of Huawei field 'planID' for data type com.huawei.health.record.dynamic_bp. ABPM plan ID.",
+      "default": null
+    },
+    {
+      "name": "planStartTime",
+      "type": ["null", "long"],
+      "doc": "Value of Huawei field 'planStartTime' for data type com.huawei.health.record.dynamic_bp. Plan start time in milliseconds.",
+      "default": null
+    },
+    {
+      "name": "planEndTime",
+      "type": ["null", "long"],
+      "doc": "Value of Huawei field 'planEndTime' for data type com.huawei.health.record.dynamic_bp. Plan end time in milliseconds.",
+      "default": null
+    },
+    {
+      "name": "planActualTime",
+      "type": ["null", "long"],
+      "doc": "Value of Huawei field 'planActualTime' for data type com.huawei.health.record.dynamic_bp. Actual plan end time in milliseconds.",
+      "default": null
+    },
+    {
+      "name": "planStatus",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'planStatus' for data type com.huawei.health.record.dynamic_bp. Plan state: 1=started, 2=ended, 3=ended in advance.",
+      "default": null
+    },
+    {
+      "name": "gasBagType",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'gasBagType' for data type com.huawei.health.record.dynamic_bp. Cuff specifications.",
+      "default": null
+    },
+    {
+      "name": "sleepStartTime",
+      "type": ["null", "long"],
+      "doc": "Value of Huawei field 'sleepStartTime' for data type com.huawei.health.record.dynamic_bp. Sleep start time in milliseconds.",
+      "default": null
+    },
+    {
+      "name": "sleepEndTime",
+      "type": ["null", "long"],
+      "doc": "Value of Huawei field 'sleepEndTime' for data type com.huawei.health.record.dynamic_bp. Sleep end time in milliseconds.",
+      "default": null
+    },
+    {
+      "name": "validCntAll",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'validCntAll' for data type com.huawei.health.record.dynamic_bp. Valid BP readings within a 24-hour cycle.",
+      "default": null
+    },
+    {
+      "name": "cntAll",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'cntAll' for data type com.huawei.health.record.dynamic_bp. Total BP readings within a 24-hour cycle.",
+      "default": null
+    },
+    {
+      "name": "maxSystolicBpAll",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'maxSystolicBpAll' for data type com.huawei.health.record.dynamic_bp. Maximum systolic BP within a 24-hour cycle (mmHg).",
+      "default": null
+    },
+    {
+      "name": "maxDiastolicBpAll",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'maxDiastolicBpAll' for data type com.huawei.health.record.dynamic_bp. Maximum diastolic BP within a 24-hour cycle (mmHg).",
+      "default": null
+    },
+    {
+      "name": "maxHeartRateAll",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'maxHeartRateAll' for data type com.huawei.health.record.dynamic_bp. Maximum pulse within a 24-hour cycle (bpm).",
+      "default": null
+    },
+    {
+      "name": "midSystolicBpAll",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'midSystolicBpAll' for data type com.huawei.health.record.dynamic_bp. Median systolic BP within a 24-hour cycle (mmHg).",
+      "default": null
+    },
+    {
+      "name": "midDiastolicBpAll",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'midDiastolicBpAll' for data type com.huawei.health.record.dynamic_bp. Median diastolic BP within a 24-hour cycle (mmHg).",
+      "default": null
+    },
+    {
+      "name": "midHeartRateAll",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'midHeartRateAll' for data type com.huawei.health.record.dynamic_bp. Median pulse within a 24-hour cycle (bpm).",
+      "default": null
+    },
+    {
+      "name": "minSystolicBpAll",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'minSystolicBpAll' for data type com.huawei.health.record.dynamic_bp. Minimum systolic BP within a 24-hour cycle (mmHg).",
+      "default": null
+    },
+    {
+      "name": "minDiastolicBpAll",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'minDiastolicBpAll' for data type com.huawei.health.record.dynamic_bp. Minimum diastolic BP within a 24-hour cycle (mmHg).",
+      "default": null
+    },
+    {
+      "name": "minHeartRateAll",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'minHeartRateAll' for data type com.huawei.health.record.dynamic_bp. Minimum pulse within a 24-hour cycle (bpm).",
+      "default": null
+    },
+    {
+      "name": "avgSystolicBpAll",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'avgSystolicBpAll' for data type com.huawei.health.record.dynamic_bp. Average systolic BP within a 24-hour cycle (mmHg).",
+      "default": null
+    },
+    {
+      "name": "avgDiastolicBpAll",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'avgDiastolicBpAll' for data type com.huawei.health.record.dynamic_bp. Average diastolic BP within a 24-hour cycle (mmHg).",
+      "default": null
+    },
+    {
+      "name": "avgHeartRateAll",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'avgHeartRateAll' for data type com.huawei.health.record.dynamic_bp. Average pulse within a 24-hour cycle (bpm).",
+      "default": null
+    },
+    {
+      "name": "stdSystolicBpAll",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'stdSystolicBpAll' for data type com.huawei.health.record.dynamic_bp. Standard deviation of systolic BP within a 24-hour cycle (mmHg).",
+      "default": null
+    },
+    {
+      "name": "stdDiastolicBpAll",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'stdDiastolicBpAll' for data type com.huawei.health.record.dynamic_bp. Standard deviation of diastolic BP within a 24-hour cycle (mmHg).",
+      "default": null
+    },
+    {
+      "name": "stdHeartRateAll",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'stdHeartRateAll' for data type com.huawei.health.record.dynamic_bp. Standard deviation of pulse within a 24-hour cycle (bpm).",
+      "default": null
+    },
+    {
+      "name": "coefSystolicBpAll",
+      "type": ["null", "double"],
+      "doc": "Value of Huawei field 'coefSystolicBpAll' for data type com.huawei.health.record.dynamic_bp. Variation coefficient of systolic BP within a 24-hour cycle.",
+      "default": null
+    },
+    {
+      "name": "coefDiastolicBpAll",
+      "type": ["null", "double"],
+      "doc": "Value of Huawei field 'coefDiastolicBpAll' for data type com.huawei.health.record.dynamic_bp. Variation coefficient of diastolic BP within a 24-hour cycle.",
+      "default": null
+    },
+    {
+      "name": "coefHeartRateAll",
+      "type": ["null", "double"],
+      "doc": "Value of Huawei field 'coefHeartRateAll' for data type com.huawei.health.record.dynamic_bp. Variation coefficient of pulse within a 24-hour cycle.",
+      "default": null
+    },
+    {
+      "name": "loadSystolicBpAll",
+      "type": ["null", "double"],
+      "doc": "Value of Huawei field 'loadSystolicBpAll' for data type com.huawei.health.record.dynamic_bp. Systolic BP load within a 24-hour cycle.",
+      "default": null
+    },
+    {
+      "name": "loadDiastolicBpAll",
+      "type": ["null", "double"],
+      "doc": "Value of Huawei field 'loadDiastolicBpAll' for data type com.huawei.health.record.dynamic_bp. Diastolic BP load within a 24-hour cycle.",
+      "default": null
+    },
+    {
+      "name": "dropSystolicBpAll",
+      "type": ["null", "double"],
+      "doc": "Value of Huawei field 'dropSystolicBpAll' for data type com.huawei.health.record.dynamic_bp. Nocturnal dip of systolic BP within a 24-hour cycle.",
+      "default": null
+    },
+    {
+      "name": "dropDiastolicBpAll",
+      "type": ["null", "double"],
+      "doc": "Value of Huawei field 'dropDiastolicBpAll' for data type com.huawei.health.record.dynamic_bp. Nocturnal dip of diastolic BP within a 24-hour cycle.",
+      "default": null
+    },
+    {
+      "name": "peakSystolicBpAll",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'peakSystolicBpAll' for data type com.huawei.health.record.dynamic_bp. Morning surge of systolic BP within a 24-hour cycle (mmHg).",
+      "default": null
+    },
+    {
+      "name": "peakDiastolicBpAll",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'peakDiastolicBpAll' for data type com.huawei.health.record.dynamic_bp. Morning surge of diastolic BP within a 24-hour cycle (mmHg).",
+      "default": null
+    },
+    {
+      "name": "validCntWake",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'validCntWake' for data type com.huawei.health.record.dynamic_bp. Valid BP readings when awake.",
+      "default": null
+    },
+    {
+      "name": "cntWake",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'cntWake' for data type com.huawei.health.record.dynamic_bp. Total BP readings when awake.",
+      "default": null
+    },
+    {
+      "name": "maxSystolicBpWake",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'maxSystolicBpWake' for data type com.huawei.health.record.dynamic_bp. Maximum systolic BP when awake (mmHg).",
+      "default": null
+    },
+    {
+      "name": "maxDiastolicBpWake",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'maxDiastolicBpWake' for data type com.huawei.health.record.dynamic_bp. Maximum diastolic BP when awake (mmHg).",
+      "default": null
+    },
+    {
+      "name": "maxHeartRateWake",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'maxHeartRateWake' for data type com.huawei.health.record.dynamic_bp. Maximum pulse when awake (bpm).",
+      "default": null
+    },
+    {
+      "name": "midSystolicBpWake",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'midSystolicBpWake' for data type com.huawei.health.record.dynamic_bp. Median systolic BP when awake (mmHg).",
+      "default": null
+    },
+    {
+      "name": "midDiastolicBpWake",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'midDiastolicBpWake' for data type com.huawei.health.record.dynamic_bp. Median diastolic BP when awake (mmHg).",
+      "default": null
+    },
+    {
+      "name": "midHeartRateWake",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'midHeartRateWake' for data type com.huawei.health.record.dynamic_bp. Median pulse when awake (bpm).",
+      "default": null
+    },
+    {
+      "name": "minSystolicBpWake",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'minSystolicBpWake' for data type com.huawei.health.record.dynamic_bp. Minimum systolic BP when awake (mmHg).",
+      "default": null
+    },
+    {
+      "name": "minDiastolicBpWake",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'minDiastolicBpWake' for data type com.huawei.health.record.dynamic_bp. Minimum diastolic BP when awake (mmHg).",
+      "default": null
+    },
+    {
+      "name": "minHeartRateWake",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'minHeartRateWake' for data type com.huawei.health.record.dynamic_bp. Minimum pulse when awake (bpm).",
+      "default": null
+    },
+    {
+      "name": "avgSystolicBpWake",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'avgSystolicBpWake' for data type com.huawei.health.record.dynamic_bp. Average systolic BP when awake (mmHg).",
+      "default": null
+    },
+    {
+      "name": "avgDiastolicBpWake",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'avgDiastolicBpWake' for data type com.huawei.health.record.dynamic_bp. Average diastolic BP when awake (mmHg).",
+      "default": null
+    },
+    {
+      "name": "avgHeartRateWake",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'avgHeartRateWake' for data type com.huawei.health.record.dynamic_bp. Average pulse when awake (bpm).",
+      "default": null
+    },
+    {
+      "name": "stdSystolicBpWake",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'stdSystolicBpWake' for data type com.huawei.health.record.dynamic_bp. Standard deviation of systolic BP when awake (mmHg).",
+      "default": null
+    },
+    {
+      "name": "stdDiastolicBpWake",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'stdDiastolicBpWake' for data type com.huawei.health.record.dynamic_bp. Standard deviation of diastolic BP when awake (mmHg).",
+      "default": null
+    },
+    {
+      "name": "stdHeartRateWake",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'stdHeartRateWake' for data type com.huawei.health.record.dynamic_bp. Standard deviation of pulse when awake (bpm).",
+      "default": null
+    },
+    {
+      "name": "coefSystolicBpWake",
+      "type": ["null", "double"],
+      "doc": "Value of Huawei field 'coefSystolicBpWake' for data type com.huawei.health.record.dynamic_bp. Variation coefficient of systolic BP when awake.",
+      "default": null
+    },
+    {
+      "name": "coefDiastolicBpWake",
+      "type": ["null", "double"],
+      "doc": "Value of Huawei field 'coefDiastolicBpWake' for data type com.huawei.health.record.dynamic_bp. Variation coefficient of diastolic BP when awake.",
+      "default": null
+    },
+    {
+      "name": "coefHeartRateWake",
+      "type": ["null", "double"],
+      "doc": "Value of Huawei field 'coefHeartRateWake' for data type com.huawei.health.record.dynamic_bp. Variation coefficient of pulse when awake.",
+      "default": null
+    },
+    {
+      "name": "loadSystolicBpWake",
+      "type": ["null", "double"],
+      "doc": "Value of Huawei field 'loadSystolicBpWake' for data type com.huawei.health.record.dynamic_bp. Systolic BP load when awake.",
+      "default": null
+    },
+    {
+      "name": "loadDiastolicBpWake",
+      "type": ["null", "double"],
+      "doc": "Value of Huawei field 'loadDiastolicBpWake' for data type com.huawei.health.record.dynamic_bp. Diastolic BP load when awake.",
+      "default": null
+    },
+    {
+      "name": "validCntSleep",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'validCntSleep' for data type com.huawei.health.record.dynamic_bp. Valid BP readings when asleep.",
+      "default": null
+    },
+    {
+      "name": "cntSleep",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'cntSleep' for data type com.huawei.health.record.dynamic_bp. Total BP readings when asleep.",
+      "default": null
+    },
+    {
+      "name": "maxSystolicBpSleep",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'maxSystolicBpSleep' for data type com.huawei.health.record.dynamic_bp. Maximum systolic BP when asleep (mmHg).",
+      "default": null
+    },
+    {
+      "name": "maxDiastolicBpSleep",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'maxDiastolicBpSleep' for data type com.huawei.health.record.dynamic_bp. Maximum diastolic BP when asleep (mmHg).",
+      "default": null
+    },
+    {
+      "name": "maxHeartRateSleep",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'maxHeartRateSleep' for data type com.huawei.health.record.dynamic_bp. Maximum pulse when asleep (bpm).",
+      "default": null
+    },
+    {
+      "name": "midSystolicBpSleep",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'midSystolicBpSleep' for data type com.huawei.health.record.dynamic_bp. Median systolic BP when asleep (mmHg).",
+      "default": null
+    },
+    {
+      "name": "midDiastolicBpSleep",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'midDiastolicBpSleep' for data type com.huawei.health.record.dynamic_bp. Median diastolic BP when asleep (mmHg).",
+      "default": null
+    },
+    {
+      "name": "midHeartRateSleep",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'midHeartRateSleep' for data type com.huawei.health.record.dynamic_bp. Median pulse when asleep (bpm).",
+      "default": null
+    },
+    {
+      "name": "minSystolicBpSleep",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'minSystolicBpSleep' for data type com.huawei.health.record.dynamic_bp. Minimum systolic BP when asleep (mmHg).",
+      "default": null
+    },
+    {
+      "name": "minDiastolicBpSleep",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'minDiastolicBpSleep' for data type com.huawei.health.record.dynamic_bp. Minimum diastolic BP when asleep (mmHg).",
+      "default": null
+    },
+    {
+      "name": "minHeartRateSleep",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'minHeartRateSleep' for data type com.huawei.health.record.dynamic_bp. Minimum pulse when asleep (bpm).",
+      "default": null
+    },
+    {
+      "name": "avgSystolicBpSleep",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'avgSystolicBpSleep' for data type com.huawei.health.record.dynamic_bp. Average systolic BP when asleep (mmHg).",
+      "default": null
+    },
+    {
+      "name": "avgDiastolicBpSleep",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'avgDiastolicBpSleep' for data type com.huawei.health.record.dynamic_bp. Average diastolic BP when asleep (mmHg).",
+      "default": null
+    },
+    {
+      "name": "avgHeartRateSleep",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'avgHeartRateSleep' for data type com.huawei.health.record.dynamic_bp. Average pulse when asleep (bpm).",
+      "default": null
+    },
+    {
+      "name": "stdSystolicBpSleep",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'stdSystolicBpSleep' for data type com.huawei.health.record.dynamic_bp. Standard deviation of systolic BP when asleep (mmHg).",
+      "default": null
+    },
+    {
+      "name": "stdDiastolicBpSleep",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'stdDiastolicBpSleep' for data type com.huawei.health.record.dynamic_bp. Standard deviation of diastolic BP when asleep (mmHg).",
+      "default": null
+    },
+    {
+      "name": "stdHeartRateSleep",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'stdHeartRateSleep' for data type com.huawei.health.record.dynamic_bp. Standard deviation of pulse when asleep (bpm).",
+      "default": null
+    },
+    {
+      "name": "coefSystolicBpSleep",
+      "type": ["null", "double"],
+      "doc": "Value of Huawei field 'coefSystolicBpSleep' for data type com.huawei.health.record.dynamic_bp. Variation coefficient of systolic BP when asleep.",
+      "default": null
+    },
+    {
+      "name": "coefDiastolicBpSleep",
+      "type": ["null", "double"],
+      "doc": "Value of Huawei field 'coefDiastolicBpSleep' for data type com.huawei.health.record.dynamic_bp. Variation coefficient of diastolic BP when asleep.",
+      "default": null
+    },
+    {
+      "name": "coefHeartRateSleep",
+      "type": ["null", "double"],
+      "doc": "Value of Huawei field 'coefHeartRateSleep' for data type com.huawei.health.record.dynamic_bp. Variation coefficient of pulse when asleep.",
+      "default": null
+    },
+    {
+      "name": "loadSystolicBpSleep",
+      "type": ["null", "double"],
+      "doc": "Value of Huawei field 'loadSystolicBpSleep' for data type com.huawei.health.record.dynamic_bp. Systolic BP load when asleep.",
+      "default": null
+    },
+    {
+      "name": "loadDiastolicBpSleep",
+      "type": ["null", "double"],
+      "doc": "Value of Huawei field 'loadDiastolicBpSleep' for data type com.huawei.health.record.dynamic_bp. Diastolic BP load when asleep.",
+      "default": null
+    },
+    {
+      "name": "validCntWakeTwo",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'validCntWakeTwo' for data type com.huawei.health.record.dynamic_bp. Valid BP readings within 2 hours after waking.",
+      "default": null
+    },
+    {
+      "name": "cntWakeTwo",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'cntWakeTwo' for data type com.huawei.health.record.dynamic_bp. Total BP readings within 2 hours after waking.",
+      "default": null
+    },
+    {
+      "name": "maxSystolicBpWakeTwo",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'maxSystolicBpWakeTwo' for data type com.huawei.health.record.dynamic_bp. Maximum systolic BP within 2 hours after waking (mmHg).",
+      "default": null
+    },
+    {
+      "name": "maxDiastolicBpWakeTwo",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'maxDiastolicBpWakeTwo' for data type com.huawei.health.record.dynamic_bp. Maximum diastolic BP within 2 hours after waking (mmHg).",
+      "default": null
+    },
+    {
+      "name": "maxHeartRateWakeTwo",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'maxHeartRateWakeTwo' for data type com.huawei.health.record.dynamic_bp. Maximum pulse within 2 hours after waking (bpm).",
+      "default": null
+    },
+    {
+      "name": "midSystolicBpWakeTwo",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'midSystolicBpWakeTwo' for data type com.huawei.health.record.dynamic_bp. Median systolic BP within 2 hours after waking (mmHg).",
+      "default": null
+    },
+    {
+      "name": "midDiastolicBpWakeTwo",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'midDiastolicBpWakeTwo' for data type com.huawei.health.record.dynamic_bp. Median diastolic BP within 2 hours after waking (mmHg).",
+      "default": null
+    },
+    {
+      "name": "midHeartRateWakeTwo",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'midHeartRateWakeTwo' for data type com.huawei.health.record.dynamic_bp. Median pulse within 2 hours after waking (bpm).",
+      "default": null
+    },
+    {
+      "name": "minSystolicBpWakeTwo",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'minSystolicBpWakeTwo' for data type com.huawei.health.record.dynamic_bp. Minimum systolic BP within 2 hours after waking (mmHg).",
+      "default": null
+    },
+    {
+      "name": "minDiastolicBpWakeTwo",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'minDiastolicBpWakeTwo' for data type com.huawei.health.record.dynamic_bp. Minimum diastolic BP within 2 hours after waking (mmHg).",
+      "default": null
+    },
+    {
+      "name": "minHeartRateWakeTwo",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'minHeartRateWakeTwo' for data type com.huawei.health.record.dynamic_bp. Minimum pulse within 2 hours after waking (bpm).",
+      "default": null
+    },
+    {
+      "name": "avgSystolicBpWakeTwo",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'avgSystolicBpWakeTwo' for data type com.huawei.health.record.dynamic_bp. Average systolic BP within 2 hours after waking (mmHg).",
+      "default": null
+    },
+    {
+      "name": "avgDiastolicBpWakeTwo",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'avgDiastolicBpWakeTwo' for data type com.huawei.health.record.dynamic_bp. Average diastolic BP within 2 hours after waking (mmHg).",
+      "default": null
+    },
+    {
+      "name": "avgHeartRateWakeTwo",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'avgHeartRateWakeTwo' for data type com.huawei.health.record.dynamic_bp. Average pulse within 2 hours after waking (bpm).",
+      "default": null
+    },
+    {
+      "name": "stdSystolicBpWakeTwo",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'stdSystolicBpWakeTwo' for data type com.huawei.health.record.dynamic_bp. Standard deviation of systolic BP within 2 hours after waking (mmHg).",
+      "default": null
+    },
+    {
+      "name": "stdDiastolicBpWakeTwo",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'stdDiastolicBpWakeTwo' for data type com.huawei.health.record.dynamic_bp. Standard deviation of diastolic BP within 2 hours after waking (mmHg).",
+      "default": null
+    },
+    {
+      "name": "stdHeartRateWakeTwo",
+      "type": ["null", "int"],
+      "doc": "Value of Huawei field 'stdHeartRateWakeTwo' for data type com.huawei.health.record.dynamic_bp. Standard deviation of pulse within 2 hours after waking (bpm).",
+      "default": null
+    },
+    {
+      "name": "coefSystolicBpWakeTwo",
+      "type": ["null", "double"],
+      "doc": "Value of Huawei field 'coefSystolicBpWakeTwo' for data type com.huawei.health.record.dynamic_bp. Variation coefficient of systolic BP within 2 hours after waking.",
+      "default": null
+    },
+    {
+      "name": "coefDiastolicBpWakeTwo",
+      "type": ["null", "double"],
+      "doc": "Value of Huawei field 'coefDiastolicBpWakeTwo' for data type com.huawei.health.record.dynamic_bp. Variation coefficient of diastolic BP within 2 hours after waking.",
+      "default": null
+    },
+    {
+      "name": "coefHeartRateWakeTwo",
+      "type": ["null", "double"],
+      "doc": "Value of Huawei field 'coefHeartRateWakeTwo' for data type com.huawei.health.record.dynamic_bp. Variation coefficient of pulse within 2 hours after waking.",
+      "default": null
+    },
+    {
+      "name": "extendData",
+      "type": ["null", "string"],
+      "doc": "Value of Huawei field 'extendData' for data type com.huawei.health.record.dynamic_bp. Extended field.",
+      "default": null
+    }
+  ]
+}

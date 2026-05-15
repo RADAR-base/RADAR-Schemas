@@ -1,0 +1,36 @@
+{
+  "namespace": "org.radarcns.connector.huawei",
+  "type": "record",
+  "name": "HuaweiInstantaneousPowerSample",
+  "doc": "Huawei Health Kit REST data for com.huawei.instantaneous.power.sample. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "fields": [
+    {
+      "name": "time",
+      "type": "double",
+      "doc": "Start time of the sample or record in UTC (s)."
+    },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Time the connector received this record from the Huawei Health API (s)."
+    },
+    {
+      "name": "endTime",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "End time of the sample or record in UTC (s), when provided by Huawei.",
+      "default": null
+    },
+    {
+      "name": "power",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Value of Huawei field 'power' for data type com.huawei.instantaneous.power.sample.",
+      "default": null
+    }
+  ]
+}

@@ -1,0 +1,117 @@
+{
+  "namespace": "org.radarcns.connector.huawei",
+  "type": "record",
+  "name": "HuaweiContinuousBodyBloodPressureStatistics",
+  "doc": "Huawei Health Kit REST data for com.huawei.continuous.body.blood_pressure.statistics. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "fields": [
+    {
+      "name": "time",
+      "type": "double",
+      "doc": "Start time of the sample or record in UTC (s)."
+    },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Time the connector received this record from the Huawei Health API (s)."
+    },
+    {
+      "name": "endTime",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "End time of the sample or record in UTC (s), when provided by Huawei.",
+      "default": null
+    },
+    {
+      "name": "systolicPressureAvg",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Value of Huawei field 'systolic_pressure_avg' for data type com.huawei.continuous.body.blood_pressure.statistics.",
+      "default": null
+    },
+    {
+      "name": "systolicPressureMax",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Value of Huawei field 'systolic_pressure_max' for data type com.huawei.continuous.body.blood_pressure.statistics.",
+      "default": null
+    },
+    {
+      "name": "systolicPressureMin",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Value of Huawei field 'systolic_pressure_min' for data type com.huawei.continuous.body.blood_pressure.statistics.",
+      "default": null
+    },
+    {
+      "name": "diastolicPressureAvg",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Value of Huawei field 'diastolic_pressure_avg' for data type com.huawei.continuous.body.blood_pressure.statistics.",
+      "default": null
+    },
+    {
+      "name": "diastolicPressureMax",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Value of Huawei field 'diastolic_pressure_max' for data type com.huawei.continuous.body.blood_pressure.statistics.",
+      "default": null
+    },
+    {
+      "name": "diastolicPressureMin",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Value of Huawei field 'diastolic_pressure_min' for data type com.huawei.continuous.body.blood_pressure.statistics.",
+      "default": null
+    },
+    {
+      "name": "sphygmusAvg",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Value of Huawei field 'sphygmus_avg' for data type com.huawei.continuous.body.blood_pressure.statistics.",
+      "default": null
+    },
+    {
+      "name": "sphygmusMax",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Value of Huawei field 'sphygmus_max' for data type com.huawei.continuous.body.blood_pressure.statistics.",
+      "default": null
+    },
+    {
+      "name": "sphygmusMin",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Value of Huawei field 'sphygmus_min' for data type com.huawei.continuous.body.blood_pressure.statistics.",
+      "default": null
+    },
+    {
+      "name": "sphygmusLast",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Value of Huawei field 'sphygmus_last' for data type com.huawei.continuous.body.blood_pressure.statistics.",
+      "default": null
+    }
+  ]
+}
