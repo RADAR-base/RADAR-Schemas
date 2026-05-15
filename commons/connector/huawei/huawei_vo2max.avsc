@@ -1,7 +1,7 @@
 {
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
-  "name": "HuaweiVo2max",
+  "name": "HuaweiVo2Max",
   "doc": "Huawei Health Kit REST data for com.huawei.vo2max. See Huawei HMS Core Health Kit RESTful data type documentation.",
   "fields": [
     {

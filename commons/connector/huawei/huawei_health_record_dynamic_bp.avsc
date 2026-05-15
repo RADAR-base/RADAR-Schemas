@@ -21,7 +21,7 @@
       "default": null
     },
     {
-      "name": "planID",
+      "name": "planId",
       "type": ["null", "string"],
       "doc": "Value of Huawei field 'planID' for data type com.huawei.health.record.dynamic_bp. ABPM plan ID.",
       "default": null

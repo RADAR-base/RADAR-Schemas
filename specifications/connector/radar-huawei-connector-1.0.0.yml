@@ -264,7 +264,7 @@ data:
     value_schema: .connector.huawei.HuaweiSleepRespiratoryEvent
   - doc: Huawei Health Kit data type vo2max.
     topic: connect_huawei_vo2max
-    value_schema: .connector.huawei.HuaweiVo2max
+    value_schema: .connector.huawei.HuaweiVo2Max
   - doc: Huawei Health Kit data type vo2max.statistics.
     topic: connect_huawei_vo2max_statistics
-    value_schema: .connector.huawei.HuaweiVo2maxStatistics
+    value_schema: .connector.huawei.HuaweiVo2MaxStatistics
