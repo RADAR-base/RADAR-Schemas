@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiActiveHours",
-  "doc": "Huawei Health Kit REST data for com.huawei.active_hours. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "doc": "Active hours data recording whether a given hour contained sufficient moderate or high intensity activity, as collected by the Huawei Health Kit active_hours data type.",
   "fields": [
     {
       "name": "time",

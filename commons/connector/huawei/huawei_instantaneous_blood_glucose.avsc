@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiInstantaneousBloodGlucose",
-  "doc": "Huawei Health Kit REST data for com.huawei.instantaneous.blood_glucose. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "doc": "A single point-in-time blood glucose measurement including sample source and meal timing context, as collected by the Huawei Health Kit instantaneous.blood_glucose data type.",
   "fields": [
     {
       "name": "time",

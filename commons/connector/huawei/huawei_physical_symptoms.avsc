@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiPhysicalSymptoms",
-  "doc": "Huawei Health Kit REST data for com.huawei.physical_symptoms. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "doc": "Physical symptoms reported by the user, stored as a structured string, used in reproductive health tracking, as collected by the Huawei Health Kit physical_symptoms data type.",
   "fields": [
     {
       "name": "time",

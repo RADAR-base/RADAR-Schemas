@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiContinuousSpo2Statistics",
-  "doc": "Huawei Health Kit REST data for com.huawei.continuous.spo2.statistics. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "doc": "Aggregated blood oxygen saturation (SpO2) statistics (average, maximum, minimum, most recent) over a time interval, as collected by the Huawei Health Kit continuous.spo2.statistics data type.",
   "fields": [
     {
       "name": "time",

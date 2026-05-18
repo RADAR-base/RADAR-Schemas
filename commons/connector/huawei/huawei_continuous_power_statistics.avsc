@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiContinuousPowerStatistics",
-  "doc": "Huawei Health Kit REST data for com.huawei.continuous.power.statistics. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "doc": "Aggregated power output statistics (average, maximum, minimum) during exercise over a time interval, measured in watts, as collected by the Huawei Health Kit continuous.power.statistics data type.",
   "fields": [
     {
       "name": "time",

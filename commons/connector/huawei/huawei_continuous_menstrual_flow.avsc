@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiContinuousMenstrualFlow",
-  "doc": "Huawei Health Kit REST data for com.huawei.continuous.menstrual_flow. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "doc": "Menstrual flow volume recorded over a continuous interval, as collected by the Huawei Health Kit continuous.menstrual_flow data type.",
   "fields": [
     {
       "name": "time",

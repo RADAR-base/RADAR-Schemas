@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiContinuousActivityFragment",
-  "doc": "Huawei Health Kit REST data for com.huawei.continuous.activity.fragment. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "doc": "A detected physical activity segment with an activity type, confidence score, and associated step and distance metrics, as collected by the Huawei Health Kit continuous.activity.fragment data type.",
   "fields": [
     {
       "name": "time",

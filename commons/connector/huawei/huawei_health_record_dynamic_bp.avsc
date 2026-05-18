@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiHealthRecordDynamicBp",
-  "doc": "Huawei Health Kit REST data for com.huawei.health.record.dynamic_bp (Ambulatory Blood Pressure Monitoring). See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "doc": "A 24-hour ambulatory blood pressure monitoring (ABPM) session record, containing aggregated systolic, diastolic, and pulse statistics for the full day, waking period, sleep period, and the 2 hours after waking, as collected by the Huawei Health Kit health.record.dynamic_bp data type.",
   "fields": [
     {
       "name": "time",

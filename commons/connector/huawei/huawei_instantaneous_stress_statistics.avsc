@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiInstantaneousStressStatistics",
-  "doc": "Huawei Health Kit REST data for com.huawei.instantaneous.stress.statistics. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "doc": "Aggregated stress level statistics (average, maximum, minimum, most recent, count) over a time window, as collected by the Huawei Health Kit instantaneous.stress.statistics data type.",
   "fields": [
     {
       "name": "time",

@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiSleepOnOffBedRecord",
-  "doc": "Huawei Health Kit REST data for com.huawei.sleep.on_off_bed_record. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "doc": "A record of the user getting into or out of bed during a sleep period, as collected by the Huawei Health Kit sleep.on_off_bed_record data type.",
   "fields": [
     {
       "name": "time",

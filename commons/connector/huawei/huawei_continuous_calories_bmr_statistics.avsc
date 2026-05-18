@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiContinuousCaloriesBmrStatistics",
-  "doc": "Huawei Health Kit REST data for com.huawei.continuous.calories.bmr.statistics. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "doc": "Aggregated basal metabolic rate (BMR) calorie statistics over a time interval, representing energy expended at rest, as collected by the Huawei Health Kit continuous.calories.bmr.statistics data type.",
   "fields": [
     {
       "name": "time",

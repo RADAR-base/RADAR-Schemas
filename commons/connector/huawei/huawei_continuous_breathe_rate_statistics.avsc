@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiContinuousBreatheRateStatistics",
-  "doc": "Huawei Health Kit REST data for com.huawei.continuous.breathe_rate.statistics. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "doc": "Aggregated breathing rate statistics (average, maximum, minimum) over a time interval, measured in breaths per minute, as collected by the Huawei Health Kit continuous.breathe_rate.statistics data type.",
   "fields": [
     {
       "name": "time",

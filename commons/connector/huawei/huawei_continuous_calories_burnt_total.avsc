@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiContinuousCaloriesBurntTotal",
-  "doc": "Huawei Health Kit REST data for com.huawei.continuous.calories.burnt.total. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "doc": "Total calorie expenditure over a continuous interval, including both active and resting (BMR) calories, as collected by the Huawei Health Kit continuous.calories.burnt.total data type.",
   "fields": [
     {
       "name": "time",

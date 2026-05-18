@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiVo2Max",
-  "doc": "Huawei Health Kit REST data for com.huawei.vo2max. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "doc": "A single maximum oxygen uptake (VO2 max) measurement in mL/(kg\u00b7min), indicating aerobic fitness, as collected by the Huawei Health Kit vo2max data type.",
   "fields": [
     {
       "name": "time",
@@ -29,7 +29,7 @@
         "null",
         "int"
       ],
-      "doc": "Maximum oxygen uptake (VO2 max, mL/(kg·min)).",
+      "doc": "Maximum oxygen uptake (VO2 max, mL/(kg\u00b7min)).",
       "default": null
     }
   ]

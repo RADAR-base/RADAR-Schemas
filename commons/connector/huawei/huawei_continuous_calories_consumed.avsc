@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiContinuousCaloriesConsumed",
-  "doc": "Huawei Health Kit REST data for com.huawei.continuous.calories.consumed. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "doc": "Caloric intake from food consumed during a continuous interval, optionally tagged by meal type, as collected by the Huawei Health Kit continuous.calories.consumed data type.",
   "fields": [
     {
       "name": "time",

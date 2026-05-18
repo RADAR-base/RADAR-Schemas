@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiHealthRecordLowSpo2Alert",
-  "doc": "Huawei Health Kit REST data for com.huawei.health.record.lowSpo2Alert. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "doc": "A low blood oxygen saturation (SpO2) alert record triggered when SpO2 drops below a configured threshold, as collected by the Huawei Health Kit health.record.lowSpo2Alert data type.",
   "fields": [
     {
       "name": "time",

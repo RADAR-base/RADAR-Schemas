@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiContinuousSpeedStatistics",
-  "doc": "Huawei Health Kit REST data for com.huawei.continuous.speed.statistics. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "doc": "Aggregated movement speed statistics (average, maximum, minimum) over a continuous interval, measured in metres per second, as collected by the Huawei Health Kit continuous.speed.statistics data type.",
   "fields": [
     {
       "name": "time",

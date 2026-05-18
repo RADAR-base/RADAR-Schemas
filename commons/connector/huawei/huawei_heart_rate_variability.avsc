@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiHeartRateVariability",
-  "doc": "Huawei Health Kit REST data for com.huawei.heart_rate_variability. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "doc": "Heart rate variability (HRV) measured as RMSSD (root mean square of successive differences between adjacent RR intervals), as collected by the Huawei Health Kit heart_rate_variability data type.",
   "fields": [
     {
       "name": "time",

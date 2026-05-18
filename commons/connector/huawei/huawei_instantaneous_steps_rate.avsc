@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiInstantaneousStepsRate",
-  "doc": "Huawei Health Kit REST data for com.huawei.instantaneous.steps.rate. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "doc": "A single instantaneous step cadence measurement in steps per minute, as collected by the Huawei Health Kit instantaneous.steps.rate data type.",
   "fields": [
     {
       "name": "time",

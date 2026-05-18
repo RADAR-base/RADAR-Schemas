@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiInstantaneousNutritionFacts",
-  "doc": "Huawei Health Kit REST data for com.huawei.instantaneous.nutrition_facts. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "doc": "A single food intake record with detailed nutrition facts and meal type, as collected by the Huawei Health Kit instantaneous.nutrition_facts data type.",
   "fields": [
     {
       "name": "time",

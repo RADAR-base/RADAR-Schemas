@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiCgmBloodGlucoseStatistics",
-  "doc": "Huawei Health Kit REST data for com.huawei.cgm_blood_glucose.statistics. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "doc": "Aggregated statistics (average, maximum, minimum, most recent) for continuous glucose monitoring readings over a time interval, as collected by the Huawei Health Kit cgm_blood_glucose.statistics data type.",
   "fields": [
     {
       "name": "time",

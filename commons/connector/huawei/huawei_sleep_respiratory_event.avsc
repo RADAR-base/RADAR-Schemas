@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiSleepRespiratoryEvent",
-  "doc": "Huawei Health Kit REST data for com.huawei.sleep_respiratory_event. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "doc": "A respiratory event detected during sleep (such as apnoea or hypopnoea), classified by event type code, as collected by the Huawei Health Kit sleep_respiratory_event data type.",
   "fields": [
     {
       "name": "time",

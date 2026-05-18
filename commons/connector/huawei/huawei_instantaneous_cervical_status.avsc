@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiInstantaneousCervicalStatus",
-  "doc": "Huawei Health Kit REST data for com.huawei.instantaneous.cervical_status. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "doc": "A single cervical status observation recording position, dilation status, and firmness, used in fertility tracking, as collected by the Huawei Health Kit instantaneous.cervical_status data type.",
   "fields": [
     {
       "name": "time",

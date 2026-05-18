@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiContinuousEcgDetail",
-  "doc": "Huawei Health Kit REST data for com.huawei.continuous.ecg_detail. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "doc": "Detailed ECG recording including raw voltage data, sampling frequency, detected arrhythmia type and result, and user-reported symptoms, as collected by the Huawei Health Kit continuous.ecg_detail data type.",
   "fields": [
     {
       "name": "time",

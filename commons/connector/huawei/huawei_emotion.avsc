@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiEmotion",
-  "doc": "Huawei Health Kit REST data for com.huawei.emotion. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "doc": "Emotion or mood state detected by the device, as collected by the Huawei Health Kit emotion data type.",
   "fields": [
     {
       "name": "time",

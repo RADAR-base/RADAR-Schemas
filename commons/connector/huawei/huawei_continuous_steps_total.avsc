@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiContinuousStepsTotal",
-  "doc": "Huawei Health Kit REST data for com.huawei.continuous.steps.total. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "doc": "Cumulative step count over a continuous interval, as collected by the Huawei Health Kit continuous.steps.total data type.",
   "fields": [
     {
       "name": "time",

@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiVo2MaxStatistics",
-  "doc": "Huawei Health Kit REST data for com.huawei.vo2max.statistics. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "doc": "Aggregated VO2 max statistics (average, maximum, minimum, most recent) over a time window, as collected by the Huawei Health Kit vo2max.statistics data type.",
   "fields": [
     {
       "name": "time",

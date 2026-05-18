@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiInstantaneousUrineRoutineGlucose",
-  "doc": "Huawei Health Kit REST data for com.huawei.instantaneous.urine_routine.glucose. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "doc": "A single urine glucose level result from a urine routine test strip, as collected by the Huawei Health Kit instantaneous.urine_routine.glucose data type.",
   "fields": [
     {
       "name": "time",

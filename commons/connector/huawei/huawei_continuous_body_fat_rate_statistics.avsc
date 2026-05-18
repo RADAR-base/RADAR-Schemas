@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiContinuousBodyFatRateStatistics",
-  "doc": "Huawei Health Kit REST data for com.huawei.continuous.body.fat.rate.statistics. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "doc": "Aggregated body fat percentage statistics (average, maximum, minimum) over a time interval, as collected by the Huawei Health Kit continuous.body.fat.rate.statistics data type.",
   "fields": [
     {
       "name": "time",

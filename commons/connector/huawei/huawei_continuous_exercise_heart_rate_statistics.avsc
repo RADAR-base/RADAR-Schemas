@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiContinuousExerciseHeartRateStatistics",
-  "doc": "Huawei Health Kit REST data for com.huawei.continuous.exercise_heart_rate.statistics. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "doc": "Aggregated heart rate statistics recorded during exercise sessions over a time window, as collected by the Huawei Health Kit continuous.exercise_heart_rate.statistics data type.",
   "fields": [
     {
       "name": "time",

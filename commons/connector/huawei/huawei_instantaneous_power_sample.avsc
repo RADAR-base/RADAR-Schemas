@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiInstantaneousPowerSample",
-  "doc": "Huawei Health Kit REST data for com.huawei.instantaneous.power.sample. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "doc": "A single instantaneous power output sample during exercise, measured in watts, as collected by the Huawei Health Kit instantaneous.power.sample data type.",
   "fields": [
     {
       "name": "time",

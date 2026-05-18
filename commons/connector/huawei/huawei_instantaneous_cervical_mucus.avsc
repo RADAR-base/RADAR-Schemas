@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiInstantaneousCervicalMucus",
-  "doc": "Huawei Health Kit REST data for com.huawei.instantaneous.cervical_mucus. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "doc": "A single cervical mucus observation recording texture and amount, used in fertility tracking, as collected by the Huawei Health Kit instantaneous.cervical_mucus data type.",
   "fields": [
     {
       "name": "time",

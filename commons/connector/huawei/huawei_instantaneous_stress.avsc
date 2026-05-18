@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiInstantaneousStress",
-  "doc": "Huawei Health Kit REST data for com.huawei.instantaneous.stress. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "doc": "A single stress level measurement including score, grade, and whether the measurement was active or passive, as collected by the Huawei Health Kit instantaneous.stress data type.",
   "fields": [
     {
       "name": "time",

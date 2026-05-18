@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiHealthRecordSleep",
-  "doc": "Huawei Health Kit REST data for com.huawei.health.record.sleep. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "doc": "A comprehensive sleep health record covering sleep onset and wake times, durations of each sleep stage (light, deep, REM), awake time, sleep score, latency, efficiency, and time in bed, as collected by the Huawei Health Kit health.record.sleep data type.",
   "fields": [
     {
       "name": "time",

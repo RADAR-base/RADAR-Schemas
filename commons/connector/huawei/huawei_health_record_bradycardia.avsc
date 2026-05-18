@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiHealthRecordBradycardia",
-  "doc": "Huawei Health Kit REST data for com.huawei.health.record.bradycardia. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "doc": "A bradycardia episode record generated when heart rate drops below a configured threshold, including the threshold, and average, maximum, and minimum heart rates during the episode, as collected by the Huawei Health Kit health.record.bradycardia data type.",
   "fields": [
     {
       "name": "time",

@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiDysmenorrhoea",
-  "doc": "Huawei Health Kit REST data for com.huawei.dysmenorrhoea. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "doc": "Dysmenorrhoea (menstrual pain) record capturing the self-reported pain level, as collected by the Huawei Health Kit dysmenorrhoea data type.",
   "fields": [
     {
       "name": "time",

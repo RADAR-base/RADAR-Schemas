@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiInstantaneousUricAcid",
-  "doc": "Huawei Health Kit REST data for com.huawei.instantaneous.uric_acid. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "doc": "A single uric acid concentration measurement from a urine routine test, as collected by the Huawei Health Kit instantaneous.uric_acid data type.",
   "fields": [
     {
       "name": "time",

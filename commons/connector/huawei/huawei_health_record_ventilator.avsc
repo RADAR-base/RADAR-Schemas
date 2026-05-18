@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiHealthRecordVentilator",
-  "doc": "Huawei Health Kit REST data for com.huawei.health.record.ventilator. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "doc": "A CPAP or BiPAP ventilator therapy session record from a Lumis or compatible device, including session duration, apnea-hypopnea index, tidal volume, respiratory rate, I:E ratio, mask-off events, and counts of respiratory event types, as collected by the Huawei Health Kit health.record.ventilator data type.",
   "fields": [
     {
       "name": "time",

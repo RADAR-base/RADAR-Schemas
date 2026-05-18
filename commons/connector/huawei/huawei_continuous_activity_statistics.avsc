@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiContinuousActivityStatistics",
-  "doc": "Huawei Health Kit REST data for com.huawei.continuous.activity.statistics. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "doc": "Aggregated statistics for physical activity over a time window, including calories, distance, steps, and exercise time, as collected by the Huawei Health Kit continuous.activity.statistics data type.",
   "fields": [
     {
       "name": "time",

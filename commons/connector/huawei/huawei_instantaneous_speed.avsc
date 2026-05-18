@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiInstantaneousSpeed",
-  "doc": "Huawei Health Kit REST data for com.huawei.instantaneous.speed. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "doc": "A single instantaneous movement speed measurement in metres per second, as collected by the Huawei Health Kit instantaneous.speed data type.",
   "fields": [
     {
       "name": "time",

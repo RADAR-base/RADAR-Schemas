@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiSleepRespiratoryDetail",
-  "doc": "Huawei Health Kit REST data for com.huawei.sleep_respiratory_detail. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "doc": "A detailed respiratory measurement sampled during sleep, tagged with measurement type and value, as collected by the Huawei Health Kit sleep_respiratory_detail data type.",
   "fields": [
     {
       "name": "time",

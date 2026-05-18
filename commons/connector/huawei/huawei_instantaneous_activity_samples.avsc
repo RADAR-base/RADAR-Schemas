@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiInstantaneousActivitySamples",
-  "doc": "Huawei Health Kit REST data for com.huawei.instantaneous.activity.samples. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "doc": "A set of instantaneous physical activity detection samples grouped into a single record, as collected by the Huawei Health Kit instantaneous.activity.samples data type.",
   "fields": [
     {
       "name": "time",

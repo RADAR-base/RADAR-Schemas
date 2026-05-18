@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiContinuousDistanceTotal",
-  "doc": "Huawei Health Kit REST data for com.huawei.continuous.distance.total. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "doc": "Cumulative distance travelled over a continuous interval, as collected by the Huawei Health Kit continuous.distance.total data type.",
   "fields": [
     {
       "name": "time",

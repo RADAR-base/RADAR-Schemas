@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiContinuousStepsDelta",
-  "doc": "Huawei Health Kit REST data for com.huawei.continuous.steps.delta. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "doc": "Incremental step count since the previous reading, suitable for accumulating total steps over a period, as collected by the Huawei Health Kit continuous.steps.delta data type.",
   "fields": [
     {
       "name": "time",

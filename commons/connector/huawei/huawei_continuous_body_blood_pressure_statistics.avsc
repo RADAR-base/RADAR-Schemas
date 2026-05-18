@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiContinuousBodyBloodPressureStatistics",
-  "doc": "Huawei Health Kit REST data for com.huawei.continuous.body.blood_pressure.statistics. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "doc": "Aggregated blood pressure statistics (systolic and diastolic averages, maxima, minima) and associated pulse rate over a time window, as collected by the Huawei Health Kit continuous.body.blood_pressure.statistics data type.",
   "fields": [
     {
       "name": "time",

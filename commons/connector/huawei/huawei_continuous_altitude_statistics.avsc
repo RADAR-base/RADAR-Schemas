@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiContinuousAltitudeStatistics",
-  "doc": "Huawei Health Kit REST data for com.huawei.continuous.altitude.statistics. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "doc": "Aggregated altitude statistics (average, maximum, minimum) over a time interval derived from barometric or GPS data, as collected by the Huawei Health Kit continuous.altitude.statistics data type.",
   "fields": [
     {
       "name": "time",

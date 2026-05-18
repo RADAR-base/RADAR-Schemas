@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiContinuousBloodGlucoseStatistics",
-  "doc": "Huawei Health Kit REST data for com.huawei.continuous.blood_glucose.statistics. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "doc": "Aggregated blood glucose statistics over a time window, including meal timing and sample source context, as collected by the Huawei Health Kit continuous.blood_glucose.statistics data type.",
   "fields": [
     {
       "name": "time",

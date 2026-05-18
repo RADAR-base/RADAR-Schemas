@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiInstantaneousSpo2",
-  "doc": "Huawei Health Kit REST data for com.huawei.instantaneous.spo2. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "doc": "A single blood oxygen saturation (SpO2) measurement including oxygen therapy context and measurement method, as collected by the Huawei Health Kit instantaneous.spo2 data type.",
   "fields": [
     {
       "name": "time",

@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiDailyActivitySummary",
-  "doc": "Huawei Health Kit REST data for com.huawei.daily_activity_summary. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "doc": "Daily activity summary including total steps, distance, active calories, exercise time, and goal attainment, as collected by the Huawei Health Kit daily_activity_summary data type.",
   "fields": [
     {
       "name": "time",

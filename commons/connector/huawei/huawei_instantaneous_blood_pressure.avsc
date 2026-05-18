@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiInstantaneousBloodPressure",
-  "doc": "Huawei Health Kit REST data for com.huawei.instantaneous.blood_pressure. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "doc": "A single blood pressure measurement including systolic and diastolic pressures, body posture, measurement site, pulse rate, and any anomaly flag, as collected by the Huawei Health Kit instantaneous.blood_pressure data type.",
   "fields": [
     {
       "name": "time",

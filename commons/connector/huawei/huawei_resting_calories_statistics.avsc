@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiRestingCaloriesStatistics",
-  "doc": "Huawei Health Kit REST data for com.huawei.resting_calories.statistics. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "doc": "Aggregated resting (basal metabolic rate) calorie statistics over a time window, as collected by the Huawei Health Kit resting_calories.statistics data type.",
   "fields": [
     {
       "name": "time",

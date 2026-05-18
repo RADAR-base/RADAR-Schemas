@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiHealthRecordHyperthermia",
-  "doc": "Huawei Health Kit REST data for com.huawei.health.record.hyperthermia. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "doc": "A hyperthermia (high body temperature) alarm record triggered when body temperature exceeds a threshold, as collected by the Huawei Health Kit health.record.hyperthermia data type.",
   "fields": [
     {
       "name": "time",

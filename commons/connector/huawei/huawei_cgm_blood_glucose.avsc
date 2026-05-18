@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiCgmBloodGlucose",
-  "doc": "Huawei Health Kit REST data for com.huawei.cgm_blood_glucose. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "doc": "A continuous glucose monitoring (CGM) blood glucose reading captured at a point in time by a CGM sensor, as collected by the Huawei Health Kit cgm_blood_glucose data type.",
   "fields": [
     {
       "name": "time",

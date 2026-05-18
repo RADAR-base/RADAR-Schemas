@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiInstantaneousVaginalSpeckle",
-  "doc": "Huawei Health Kit REST data for com.huawei.instantaneous.vaginal_speckle. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "doc": "A single vaginal discharge (speckle) observation recording the number of occurrences, used in fertility and reproductive health tracking, as collected by the Huawei Health Kit instantaneous.vaginal_speckle data type.",
   "fields": [
     {
       "name": "time",

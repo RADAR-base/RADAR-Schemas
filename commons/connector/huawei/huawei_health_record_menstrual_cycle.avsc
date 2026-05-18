@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiHealthRecordMenstrualCycle",
-  "doc": "Huawei Health Kit REST data for com.huawei.health.record.menstrual_cycle. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "doc": "A menstrual cycle phase record capturing the cycle day, phase status, sub-status, and any user remarks, as collected by the Huawei Health Kit health.record.menstrual_cycle data type.",
   "fields": [
     {
       "name": "time",

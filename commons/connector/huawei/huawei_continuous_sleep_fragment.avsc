@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiContinuousSleepFragment",
-  "doc": "Huawei Health Kit REST data for com.huawei.continuous.sleep.fragment. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "doc": "A single sleep stage segment classified by sleep state (awake, REM, light, or deep sleep), as collected by the Huawei Health Kit continuous.sleep.fragment data type.",
   "fields": [
     {
       "name": "time",

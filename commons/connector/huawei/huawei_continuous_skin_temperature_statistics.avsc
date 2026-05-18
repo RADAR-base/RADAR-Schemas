@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiContinuousSkinTemperatureStatistics",
-  "doc": "Huawei Health Kit REST data for com.huawei.continuous.skin.temperature.statistics. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "doc": "Aggregated skin surface temperature statistics (average, maximum, minimum) over a time interval, as collected by the Huawei Health Kit continuous.skin.temperature.statistics data type.",
   "fields": [
     {
       "name": "time",

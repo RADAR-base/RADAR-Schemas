@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiActivityRecord",
-  "doc": "Huawei Health Kit activity record from the Activity Records REST API (/healthkit/v1/activityRecords). Describes a single workout or activity session.",
+  "doc": "A single workout or physical activity session retrieved from the Huawei Health Kit Activity Records REST API (/healthkit/v1/activityRecords), including session metadata, device information, and an optional nested activity summary.",
   "fields": [
     {
       "name": "time",

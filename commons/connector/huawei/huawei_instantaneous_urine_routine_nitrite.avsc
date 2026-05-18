@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiInstantaneousUrineRoutineNitrite",
-  "doc": "Huawei Health Kit REST data for com.huawei.instantaneous.urine_routine.nitrite. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "doc": "A single urine nitrite level result from a urine routine test strip, indicating possible urinary tract infection, as collected by the Huawei Health Kit instantaneous.urine_routine.nitrite data type.",
   "fields": [
     {
       "name": "time",

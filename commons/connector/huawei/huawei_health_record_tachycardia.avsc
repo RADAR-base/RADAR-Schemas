@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiHealthRecordTachycardia",
-  "doc": "Huawei Health Kit REST data for com.huawei.health.record.tachycardia. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "doc": "A tachycardia episode record generated when heart rate exceeds a configured threshold, including the threshold, and average, maximum, and minimum heart rates during the episode, as collected by the Huawei Health Kit health.record.tachycardia data type.",
   "fields": [
     {
       "name": "time",

@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiInstantaneousBodyTemperatureRest",
-  "doc": "Huawei Health Kit REST data for com.huawei.instantaneous.body.temperature.rest. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "doc": "A single resting body temperature measurement at a specified body site, taken while the user is at rest, as collected by the Huawei Health Kit instantaneous.body.temperature.rest data type.",
   "fields": [
     {
       "name": "time",
@@ -29,7 +29,7 @@
         "null",
         "double"
       ],
-      "doc": "Body temperature (°C).",
+      "doc": "Body temperature (\u00b0C).",
       "default": null
     },
     {

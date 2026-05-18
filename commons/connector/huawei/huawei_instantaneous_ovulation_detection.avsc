@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiInstantaneousOvulationDetection",
-  "doc": "Huawei Health Kit REST data for com.huawei.instantaneous.ovulation_detection. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "doc": "A single ovulation test result (positive or negative) from an ovulation predictor kit, as collected by the Huawei Health Kit instantaneous.ovulation_detection data type.",
   "fields": [
     {
       "name": "time",

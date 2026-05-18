@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiContinuousExerciseIntensity",
-  "doc": "Huawei Health Kit REST data for com.huawei.continuous.exercise_intensity. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "doc": "Exercise intensity level recorded over a continuous interval, classifying effort into intensity zones, as collected by the Huawei Health Kit continuous.exercise_intensity data type.",
   "fields": [
     {
       "name": "time",

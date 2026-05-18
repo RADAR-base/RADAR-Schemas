@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiContinuousStrokeRateStatistics",
-  "doc": "Huawei Health Kit REST data for com.huawei.continuous.stroke_rate.statistics. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "doc": "Aggregated swimming stroke rate statistics over a time window, as collected by the Huawei Health Kit continuous.stroke_rate.statistics data type.",
   "fields": [
     {
       "name": "time",

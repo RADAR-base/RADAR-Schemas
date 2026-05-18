@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiInstantaneousBodyFatRate",
-  "doc": "Huawei Health Kit REST data for com.huawei.instantaneous.body.fat.rate. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "doc": "A single body fat percentage measurement, as collected by the Huawei Health Kit instantaneous.body.fat.rate data type.",
   "fields": [
     {
       "name": "time",

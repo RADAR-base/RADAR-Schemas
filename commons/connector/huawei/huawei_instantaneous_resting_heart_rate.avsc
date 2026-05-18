@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiInstantaneousRestingHeartRate",
-  "doc": "Huawei Health Kit REST data for com.huawei.instantaneous.resting_heart_rate. See Huawei HMS Core Health Kit RESTful data type documentation.",
+  "doc": "A single resting heart rate measurement recorded when the user is at rest, as collected by the Huawei Health Kit instantaneous.resting_heart_rate data type.",
   "fields": [
     {
       "name": "time",
