@@ -74,7 +74,7 @@
         "null",
         "double"
       ],
-      "doc": "95th-percentile tidal volume during the ventilator session (Lumis device).",
+      "doc": "Tidal volume at the 95th percentile during the ventilator session (Lumis device).",
       "default": null
     },
     {
@@ -101,7 +101,7 @@
         "null",
         "double"
       ],
-      "doc": "95th-percentile respiratory rate during the ventilator session (breaths/min).",
+      "doc": "Respiratory rate at the 95th percentile during the ventilator session (breaths/min).",
       "default": null
     },
     {
@@ -128,7 +128,7 @@
         "null",
         "double"
       ],
-      "doc": "95th-percentile I:E ratio during the ventilator session (Lumis device).",
+      "doc": "Inspiratory-to-expiratory ratio at the 95th percentile during the ventilator session (Lumis device).",
       "default": null
     },
     {
