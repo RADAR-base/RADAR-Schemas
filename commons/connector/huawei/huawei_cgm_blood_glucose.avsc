@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiCgmBloodGlucose",
-  "doc": "A continuous glucose monitoring (CGM) blood glucose reading captured at a point in time by a CGM sensor, as collected by the Huawei Health Kit cgm_blood_glucose data type.",
+  "doc": "A continuous glucose monitoring (CGM) blood glucose reading or aggregated statistics, as collected by the Huawei Health Kit cgm_blood_glucose and cgm_blood_glucose.statistics data types.",
   "fields": [
     {
       "name": "time",
@@ -15,21 +15,48 @@
       "doc": "Time the connector received this record from the Huawei Health API (s)."
     },
     {
-      "name": "endTime",
-      "type": [
-        "null",
-        "double"
-      ],
-      "doc": "End time of the sample or record in UTC (s), when provided by Huawei.",
-      "default": null
-    },
-    {
       "name": "level",
       "type": [
         "null",
         "double"
       ],
       "doc": "Continuous glucose monitoring (CGM) blood glucose level (mmol/L).",
+      "default": null
+    },
+    {
+      "name": "avg",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Average CGM blood glucose over the period (mmol/L).",
+      "default": null
+    },
+    {
+      "name": "max",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Maximum CGM blood glucose over the period (mmol/L).",
+      "default": null
+    },
+    {
+      "name": "min",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Minimum CGM blood glucose over the period (mmol/L).",
+      "default": null
+    },
+    {
+      "name": "last",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Most recent CGM blood glucose value in the period (mmol/L).",
       "default": null
     }
   ]

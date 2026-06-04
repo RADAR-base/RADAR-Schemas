@@ -15,15 +15,6 @@
       "doc": "Time the connector received this record from the Huawei Health API (s)."
     },
     {
-      "name": "endTime",
-      "type": [
-        "null",
-        "double"
-      ],
-      "doc": "End time of the sample or record in UTC (s), when provided by Huawei.",
-      "default": null
-    },
-    {
       "name": "hydrate",
       "type": [
         "null",

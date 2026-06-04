@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiContinuousExerciseIntensity",
-  "doc": "Exercise intensity level recorded over a continuous interval, classifying effort into intensity zones, as collected by the Huawei Health Kit continuous.exercise_intensity data type.",
+  "doc": "Exercise intensity level recorded over a continuous interval, classifying effort into intensity zones, with optional aggregated duration, as collected by the Huawei Health Kit continuous.exercise_intensity and continuous.exercise_intensity.statistics data types.",
   "fields": [
     {
       "name": "time",
@@ -30,6 +30,15 @@
         "double"
       ],
       "doc": "Workout intensity.",
+      "default": null
+    },
+    {
+      "name": "span",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Duration of the segment (ms).",
       "default": null
     }
   ]

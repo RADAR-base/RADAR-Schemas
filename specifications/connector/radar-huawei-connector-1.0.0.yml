@@ -12,7 +12,7 @@ data:
     value_schema: .connector.huawei.HuaweiCgmBloodGlucose
   - doc: Huawei Health Kit data type cgm_blood_glucose.statistics.
     topic: connect_huawei_cgm_blood_glucose_statistics
-    value_schema: .connector.huawei.HuaweiCgmBloodGlucoseStatistics
+    value_schema: .connector.huawei.HuaweiCgmBloodGlucose
   - doc: Huawei Health Kit data type daily_activity_summary.
     topic: connect_huawei_daily_activity_summary
     value_schema: .connector.huawei.HuaweiDailyActivitySummary
@@ -21,10 +21,10 @@ data:
     value_schema: .connector.huawei.HuaweiActiveHours
   - doc: Huawei Health Kit data type active_hours.statistics.
     topic: connect_huawei_active_hours_statistics
-    value_schema: .connector.huawei.HuaweiActiveHoursStatistics
+    value_schema: .connector.huawei.HuaweiActiveHours
   - doc: Huawei Health Kit data type continuous.activity.fragment.
     topic: connect_huawei_continuous_activity_fragment
-    value_schema: .connector.huawei.HuaweiContinuousActivityFragment
+    value_schema: .connector.huawei.HuaweiContinuousActivityStatistics
   - doc: Huawei Health Kit data type continuous.activity.statistics.
     topic: connect_huawei_continuous_activity_statistics
     value_schema: .connector.huawei.HuaweiContinuousActivityStatistics
@@ -42,16 +42,16 @@ data:
     value_schema: .connector.huawei.HuaweiContinuousBodyBloodPressureStatistics
   - doc: Huawei Health Kit data type continuous.body.fat.rate.statistics.
     topic: connect_huawei_continuous_body_fat_rate_statistics
-    value_schema: .connector.huawei.HuaweiContinuousBodyFatRateStatistics
+    value_schema: .connector.huawei.HuaweiStatistics
   - doc: Huawei Health Kit data type continuous.body.temperature.rest.statistics.
     topic: connect_huawei_continuous_body_temperature_rest_statistics
-    value_schema: .connector.huawei.HuaweiContinuousBodyTemperatureRestStatistics
+    value_schema: .connector.huawei.HuaweiStatistics
   - doc: Huawei Health Kit data type continuous.body.temperature.statistics.
     topic: connect_huawei_continuous_body_temperature_statistics
-    value_schema: .connector.huawei.HuaweiContinuousBodyTemperatureStatistics
+    value_schema: .connector.huawei.HuaweiStatistics
   - doc: Huawei Health Kit data type continuous.calories.bmr.statistics.
     topic: connect_huawei_continuous_calories_bmr_statistics
-    value_schema: .connector.huawei.HuaweiContinuousCaloriesBmrStatistics
+    value_schema: .connector.huawei.HuaweiStatistics
   - doc: Huawei Health Kit data type continuous.calories.burnt.
     topic: connect_huawei_continuous_calories_burnt
     value_schema: .connector.huawei.HuaweiContinuousCaloriesBurnt
@@ -60,7 +60,7 @@ data:
     value_schema: .connector.huawei.HuaweiContinuousCaloriesBurntTotal
   - doc: Huawei Health Kit data type continuous.calories.consumed.
     topic: connect_huawei_continuous_calories_consumed
-    value_schema: .connector.huawei.HuaweiContinuousCaloriesConsumed
+    value_schema: .connector.huawei.HuaweiContinuousCaloriesBurnt
   - doc: Huawei Health Kit data type continuous.distance.delta.
     topic: connect_huawei_continuous_distance_delta
     value_schema: .connector.huawei.HuaweiContinuousDistanceDelta
@@ -72,13 +72,13 @@ data:
     value_schema: .connector.huawei.HuaweiContinuousEcgDetail
   - doc: Huawei Health Kit data type continuous.exercise_heart_rate.statistics.
     topic: connect_huawei_continuous_exercise_heart_rate_statistics
-    value_schema: .connector.huawei.HuaweiContinuousExerciseHeartRateStatistics
+    value_schema: .connector.huawei.HuaweiStatistics
   - doc: Huawei Health Kit data type continuous.exercise_intensity.
     topic: connect_huawei_continuous_exercise_intensity
     value_schema: .connector.huawei.HuaweiContinuousExerciseIntensity
   - doc: Huawei Health Kit data type continuous.exercise_intensity.statistics.
     topic: connect_huawei_continuous_exercise_intensity_statistics
-    value_schema: .connector.huawei.HuaweiContinuousExerciseIntensityStatistics
+    value_schema: .connector.huawei.HuaweiContinuousExerciseIntensity
   - doc: Huawei Health Kit data type continuous.exercise_intensity.v2.
     topic: connect_huawei_continuous_exercise_intensity_v2
     value_schema: .connector.huawei.HuaweiContinuousExerciseIntensityV2
@@ -87,7 +87,7 @@ data:
     value_schema: .connector.huawei.HuaweiContinuousExerciseIntensityV2Statistics
   - doc: Huawei Health Kit data type continuous.heart_rate.statistics.
     topic: connect_huawei_continuous_heart_rate_statistics
-    value_schema: .connector.huawei.HuaweiContinuousHeartRateStatistics
+    value_schema: .connector.huawei.HuaweiStatistics
   - doc: Huawei Health Kit data type continuous.menstrual_flow.
     topic: connect_huawei_continuous_menstrual_flow
     value_schema: .connector.huawei.HuaweiContinuousMenstrualFlow
@@ -96,16 +96,16 @@ data:
     value_schema: .connector.huawei.HuaweiContinuousNutritionFactsStatistics
   - doc: Huawei Health Kit data type continuous.power.statistics.
     topic: connect_huawei_continuous_power_statistics
-    value_schema: .connector.huawei.HuaweiContinuousPowerStatistics
+    value_schema: .connector.huawei.HuaweiStatistics
   - doc: Huawei Health Kit data type continuous.skin.temperature.statistics.
     topic: connect_huawei_continuous_skin_temperature_statistics
-    value_schema: .connector.huawei.HuaweiContinuousSkinTemperatureStatistics
+    value_schema: .connector.huawei.HuaweiStatistics
   - doc: Huawei Health Kit data type continuous.sleep.fragment.
     topic: connect_huawei_continuous_sleep_fragment
     value_schema: .connector.huawei.HuaweiContinuousSleepFragment
   - doc: Huawei Health Kit data type continuous.speed.statistics.
     topic: connect_huawei_continuous_speed_statistics
-    value_schema: .connector.huawei.HuaweiContinuousSpeedStatistics
+    value_schema: .connector.huawei.HuaweiStatistics
   - doc: Huawei Health Kit data type continuous.spo2.statistics.
     topic: connect_huawei_continuous_spo2_statistics
     value_schema: .connector.huawei.HuaweiContinuousSpo2Statistics
@@ -114,13 +114,13 @@ data:
     value_schema: .connector.huawei.HuaweiContinuousStepsDelta
   - doc: Huawei Health Kit data type continuous.steps.rate.statistics.
     topic: connect_huawei_continuous_steps_rate_statistics
-    value_schema: .connector.huawei.HuaweiContinuousStepsRateStatistics
+    value_schema: .connector.huawei.HuaweiStatistics
   - doc: Huawei Health Kit data type continuous.steps.total.
     topic: connect_huawei_continuous_steps_total
     value_schema: .connector.huawei.HuaweiContinuousStepsTotal
   - doc: Huawei Health Kit data type continuous.stroke_rate.statistics.
     topic: connect_huawei_continuous_stroke_rate_statistics
-    value_schema: .connector.huawei.HuaweiContinuousStrokeRateStatistics
+    value_schema: .connector.huawei.HuaweiStatistics
   - doc: Huawei Health Kit data type dysmenorrhoea.
     topic: connect_huawei_dysmenorrhoea
     value_schema: .connector.huawei.HuaweiDysmenorrhoea
@@ -148,15 +148,12 @@ data:
   - doc: Huawei Health Kit data type health.record.tachycardia.
     topic: connect_huawei_health_record_tachycardia
     value_schema: .connector.huawei.HuaweiHealthRecordTachycardia
-  - doc: Huawei Health Kit data type health.record.ventilator.
-    topic: connect_huawei_health_record_ventilator
-    value_schema: .connector.huawei.HuaweiHealthRecordVentilator
   - doc: Huawei Health Kit data type heart_rate_variability.
     topic: connect_huawei_heart_rate_variability
     value_schema: .connector.huawei.HuaweiHeartRateVariability
   - doc: Huawei Health Kit data type instantaneous.activity.sample.
     topic: connect_huawei_instantaneous_activity_sample
-    value_schema: .connector.huawei.HuaweiInstantaneousActivitySample
+    value_schema: .connector.huawei.HuaweiInstantaneousActivitySamples
   - doc: Huawei Health Kit data type instantaneous.activity.samples.
     topic: connect_huawei_instantaneous_activity_samples
     value_schema: .connector.huawei.HuaweiInstantaneousActivitySamples
@@ -177,7 +174,7 @@ data:
     value_schema: .connector.huawei.HuaweiInstantaneousBodyTemperature
   - doc: Huawei Health Kit data type instantaneous.body.temperature.rest.
     topic: connect_huawei_instantaneous_body_temperature_rest
-    value_schema: .connector.huawei.HuaweiInstantaneousBodyTemperatureRest
+    value_schema: .connector.huawei.HuaweiInstantaneousBodyTemperature
   - doc: Huawei Health Kit data type instantaneous.calories.bmr.
     topic: connect_huawei_instantaneous_calories_bmr
     value_schema: .connector.huawei.HuaweiInstantaneousCaloriesBmr
@@ -189,7 +186,7 @@ data:
     value_schema: .connector.huawei.HuaweiInstantaneousCervicalStatus
   - doc: Huawei Health Kit data type instantaneous.exercise_heart_rate.
     topic: connect_huawei_instantaneous_exercise_heart_rate
-    value_schema: .connector.huawei.HuaweiInstantaneousExerciseHeartRate
+    value_schema: .connector.huawei.HuaweiInstantaneousHeartRate
   - doc: Huawei Health Kit data type instantaneous.heart_rate.
     topic: connect_huawei_instantaneous_heart_rate
     value_schema: .connector.huawei.HuaweiInstantaneousHeartRate
@@ -210,7 +207,7 @@ data:
     value_schema: .connector.huawei.HuaweiInstantaneousRestingHeartRate
   - doc: Huawei Health Kit data type instantaneous.resting_heart_rate.statistics.
     topic: connect_huawei_instantaneous_resting_heart_rate_statistics
-    value_schema: .connector.huawei.HuaweiInstantaneousRestingHeartRateStatistics
+    value_schema: .connector.huawei.HuaweiStatistics
   - doc: Huawei Health Kit data type instantaneous.skin.temperature.
     topic: connect_huawei_instantaneous_skin_temperature
     value_schema: .connector.huawei.HuaweiInstantaneousSkinTemperature
