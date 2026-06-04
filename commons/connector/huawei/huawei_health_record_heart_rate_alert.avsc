@@ -1,8 +1,8 @@
 {
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
-  "name": "HuaweiHealthRecordBradycardia",
-  "doc": "A bradycardia episode record generated when heart rate drops below a configured threshold, including the threshold, and average, maximum, and minimum heart rates during the episode, as collected by the Huawei Health Kit health.record.bradycardia data type.",
+  "name": "HuaweiHealthRecordHeartRateAlert",
+  "doc": "A heart rate alert episode (bradycardia or tachycardia) generated when heart rate crosses a configured threshold, including the threshold and average, maximum, and minimum heart rates during the episode, as collected by the Huawei Health Kit health.record.bradycardia and health.record.tachycardia data types.",
   "fields": [
     {
       "name": "time",
@@ -20,7 +20,7 @@
         "null",
         "double"
       ],
-      "doc": "End time of the sample or record in UTC (s), when provided by Huawei.",
+      "doc": "End time of the alert episode in UTC (s).",
       "default": null
     },
     {

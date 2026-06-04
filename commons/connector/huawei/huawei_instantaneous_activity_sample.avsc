@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiInstantaneousActivitySample",
-  "doc": "A single instantaneous physical activity detection sample, including the detected activity type and confidence, as collected by the Huawei Health Kit instantaneous.activity.sample data type.",
+  "doc": "A single instantaneous physical activity detection sample with the activity type and detection confidence, as collected by the Huawei Health Kit instantaneous.activity.sample data type.",
   "fields": [
     {
       "name": "time",
@@ -13,6 +13,15 @@
       "name": "timeReceived",
       "type": "double",
       "doc": "Time the connector received this record from the Huawei Health API (s)."
+    },
+    {
+      "name": "typeOfActivity",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Detected activity type identifier (Huawei activity constant, e.g. 0=unknown, 3=walking, 4=running, 8=cycling).",
+      "default": null
     },
     {
       "name": "possibility",

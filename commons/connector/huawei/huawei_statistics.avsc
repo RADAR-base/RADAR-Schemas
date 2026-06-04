@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiStatistics",
-  "doc": "Generic aggregated statistics (average, maximum, minimum, most recent) for a Huawei Health Kit data type over a time window, reused across multiple statistics topics.",
+  "doc": "Generic aggregated statistics (average, maximum, minimum, most recent, count) for a Huawei Health Kit data type over a time window, reused across multiple statistics topics.",
   "fields": [
     {
       "name": "time",
@@ -57,6 +57,15 @@
         "double"
       ],
       "doc": "Most recent value in the aggregation period.",
+      "default": null
+    },
+    {
+      "name": "count",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Number of measurements in the aggregation period.",
       "default": null
     }
   ]

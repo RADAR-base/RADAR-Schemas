@@ -7,10 +7,10 @@ data:
   - doc: Huawei Health Kit Activity Records REST API (/healthkit/v1/activityRecords).
     topic: connect_huawei_activity_record
     value_schema: .connector.huawei.HuaweiActivityRecord
-  - doc: Huawei Health Kit data type cgm_blood_glucose.
+  - doc: Huawei Health Kit data type cgm_blood_glucose (unit: mmol/L).
     topic: connect_huawei_cgm_blood_glucose
     value_schema: .connector.huawei.HuaweiCgmBloodGlucose
-  - doc: Huawei Health Kit data type cgm_blood_glucose.statistics.
+  - doc: Huawei Health Kit data type cgm_blood_glucose.statistics (unit: mmol/L).
     topic: connect_huawei_cgm_blood_glucose_statistics
     value_schema: .connector.huawei.HuaweiCgmBloodGlucose
   - doc: Huawei Health Kit data type daily_activity_summary.
@@ -28,49 +28,49 @@ data:
   - doc: Huawei Health Kit data type continuous.activity.statistics.
     topic: connect_huawei_continuous_activity_statistics
     value_schema: .connector.huawei.HuaweiContinuousActivityStatistics
-  - doc: Huawei Health Kit data type continuous.altitude.statistics.
+  - doc: Huawei Health Kit data type continuous.altitude.statistics (unit: m).
     topic: connect_huawei_continuous_altitude_statistics
     value_schema: .connector.huawei.HuaweiContinuousAltitudeStatistics
-  - doc: Huawei Health Kit data type continuous.blood_glucose.statistics.
+  - doc: Huawei Health Kit data type continuous.blood_glucose.statistics (unit: mmol/L).
     topic: connect_huawei_continuous_blood_glucose_statistics
     value_schema: .connector.huawei.HuaweiContinuousBloodGlucoseStatistics
-  - doc: Huawei Health Kit data type continuous.breathe_rate.statistics.
+  - doc: Huawei Health Kit data type continuous.breathe_rate.statistics (unit: breaths/min).
     topic: connect_huawei_continuous_breathe_rate_statistics
     value_schema: .connector.huawei.HuaweiContinuousBreatheRateStatistics
-  - doc: Huawei Health Kit data type continuous.body.blood_pressure.statistics.
+  - doc: Huawei Health Kit data type continuous.body.blood_pressure.statistics (unit: mmHg / bpm).
     topic: connect_huawei_continuous_body_blood_pressure_statistics
     value_schema: .connector.huawei.HuaweiContinuousBodyBloodPressureStatistics
-  - doc: Huawei Health Kit data type continuous.body.fat.rate.statistics.
+  - doc: Huawei Health Kit data type continuous.body.fat.rate.statistics (unit: %).
     topic: connect_huawei_continuous_body_fat_rate_statistics
     value_schema: .connector.huawei.HuaweiStatistics
-  - doc: Huawei Health Kit data type continuous.body.temperature.rest.statistics.
+  - doc: Huawei Health Kit data type continuous.body.temperature.rest.statistics (unit: °C).
     topic: connect_huawei_continuous_body_temperature_rest_statistics
     value_schema: .connector.huawei.HuaweiStatistics
-  - doc: Huawei Health Kit data type continuous.body.temperature.statistics.
+  - doc: Huawei Health Kit data type continuous.body.temperature.statistics (unit: °C).
     topic: connect_huawei_continuous_body_temperature_statistics
     value_schema: .connector.huawei.HuaweiStatistics
-  - doc: Huawei Health Kit data type continuous.calories.bmr.statistics.
+  - doc: Huawei Health Kit data type continuous.calories.bmr.statistics (unit: kcal).
     topic: connect_huawei_continuous_calories_bmr_statistics
     value_schema: .connector.huawei.HuaweiStatistics
-  - doc: Huawei Health Kit data type continuous.calories.burnt.
+  - doc: Huawei Health Kit data type continuous.calories.burnt (unit: kcal).
     topic: connect_huawei_continuous_calories_burnt
     value_schema: .connector.huawei.HuaweiContinuousCaloriesBurnt
-  - doc: Huawei Health Kit data type continuous.calories.burnt.total.
+  - doc: Huawei Health Kit data type continuous.calories.burnt.total (unit: kcal).
     topic: connect_huawei_continuous_calories_burnt_total
     value_schema: .connector.huawei.HuaweiContinuousCaloriesBurntTotal
-  - doc: Huawei Health Kit data type continuous.calories.consumed.
+  - doc: Huawei Health Kit data type continuous.calories.consumed (unit: kcal).
     topic: connect_huawei_continuous_calories_consumed
     value_schema: .connector.huawei.HuaweiContinuousCaloriesBurnt
-  - doc: Huawei Health Kit data type continuous.distance.delta.
+  - doc: Huawei Health Kit data type continuous.distance.delta (unit: m).
     topic: connect_huawei_continuous_distance_delta
     value_schema: .connector.huawei.HuaweiContinuousDistanceDelta
-  - doc: Huawei Health Kit data type continuous.distance.total.
+  - doc: Huawei Health Kit data type continuous.distance.total (unit: m).
     topic: connect_huawei_continuous_distance_total
     value_schema: .connector.huawei.HuaweiContinuousDistanceTotal
   - doc: Huawei Health Kit data type continuous.ecg_detail.
     topic: connect_huawei_continuous_ecg_detail
     value_schema: .connector.huawei.HuaweiContinuousEcgDetail
-  - doc: Huawei Health Kit data type continuous.exercise_heart_rate.statistics.
+  - doc: Huawei Health Kit data type continuous.exercise_heart_rate.statistics (unit: bpm).
     topic: connect_huawei_continuous_exercise_heart_rate_statistics
     value_schema: .connector.huawei.HuaweiStatistics
   - doc: Huawei Health Kit data type continuous.exercise_intensity.
@@ -85,48 +85,48 @@ data:
   - doc: Huawei Health Kit data type continuous.exercise_intensity.v2.statistics.
     topic: connect_huawei_continuous_exercise_intensity_v2_statistics
     value_schema: .connector.huawei.HuaweiContinuousExerciseIntensityV2Statistics
-  - doc: Huawei Health Kit data type continuous.heart_rate.statistics.
+  - doc: Huawei Health Kit data type continuous.heart_rate.statistics (unit: bpm).
     topic: connect_huawei_continuous_heart_rate_statistics
     value_schema: .connector.huawei.HuaweiStatistics
-  - doc: Huawei Health Kit data type continuous.power.statistics.
+  - doc: Huawei Health Kit data type continuous.power.statistics (unit: W).
     topic: connect_huawei_continuous_power_statistics
     value_schema: .connector.huawei.HuaweiStatistics
-  - doc: Huawei Health Kit data type continuous.skin.temperature.statistics.
+  - doc: Huawei Health Kit data type continuous.skin.temperature.statistics (unit: °C).
     topic: connect_huawei_continuous_skin_temperature_statistics
     value_schema: .connector.huawei.HuaweiStatistics
   - doc: Huawei Health Kit data type continuous.sleep.fragment.
     topic: connect_huawei_continuous_sleep_fragment
     value_schema: .connector.huawei.HuaweiContinuousSleepFragment
-  - doc: Huawei Health Kit data type continuous.speed.statistics.
+  - doc: Huawei Health Kit data type continuous.speed.statistics (unit: m/s).
     topic: connect_huawei_continuous_speed_statistics
     value_schema: .connector.huawei.HuaweiStatistics
-  - doc: Huawei Health Kit data type continuous.spo2.statistics.
+  - doc: Huawei Health Kit data type continuous.spo2.statistics (unit: %).
     topic: connect_huawei_continuous_spo2_statistics
     value_schema: .connector.huawei.HuaweiContinuousSpo2Statistics
-  - doc: Huawei Health Kit data type continuous.steps.delta.
+  - doc: Huawei Health Kit data type continuous.steps.delta (unit: steps).
     topic: connect_huawei_continuous_steps_delta
     value_schema: .connector.huawei.HuaweiContinuousStepsDelta
-  - doc: Huawei Health Kit data type continuous.steps.rate.statistics.
+  - doc: Huawei Health Kit data type continuous.steps.rate.statistics (unit: steps/min).
     topic: connect_huawei_continuous_steps_rate_statistics
     value_schema: .connector.huawei.HuaweiStatistics
-  - doc: Huawei Health Kit data type continuous.steps.total.
+  - doc: Huawei Health Kit data type continuous.steps.total (unit: steps).
     topic: connect_huawei_continuous_steps_total
     value_schema: .connector.huawei.HuaweiContinuousStepsTotal
-  - doc: Huawei Health Kit data type continuous.stroke_rate.statistics.
+  - doc: Huawei Health Kit data type continuous.stroke_rate.statistics (unit: strokes/min).
     topic: connect_huawei_continuous_stroke_rate_statistics
     value_schema: .connector.huawei.HuaweiStatistics
-  - doc: Huawei Health Kit data type dysmenorrhoea.
-    topic: connect_huawei_dysmenorrhoea
-    value_schema: .connector.huawei.HuaweiDysmenorrhoea
   - doc: Huawei Health Kit data type emotion.
     topic: connect_huawei_emotion
     value_schema: .connector.huawei.HuaweiEmotion
-  - doc: Huawei Health Kit data type health.record.bradycardia.
-    topic: connect_huawei_health_record_bradycardia
-    value_schema: .connector.huawei.HuaweiHealthRecordBradycardia
   - doc: Huawei Health Kit data type health.record.dynamic_bp.
     topic: connect_huawei_health_record_dynamic_bp
     value_schema: .connector.huawei.HuaweiHealthRecordDynamicBp
+  - doc: Huawei Health Kit data type health.record.bradycardia (low heart rate alert episode).
+    topic: connect_huawei_health_record_bradycardia
+    value_schema: .connector.huawei.HuaweiHealthRecordHeartRateAlert
+  - doc: Huawei Health Kit data type health.record.tachycardia (high heart rate alert episode).
+    topic: connect_huawei_health_record_tachycardia
+    value_schema: .connector.huawei.HuaweiHealthRecordHeartRateAlert
   - doc: Huawei Health Kit data type health.record.hyperthermia.
     topic: connect_huawei_health_record_hyperthermia
     value_schema: .connector.huawei.HuaweiHealthRecordHyperthermia
@@ -139,82 +139,70 @@ data:
   - doc: Huawei Health Kit data type health.record.sleep.
     topic: connect_huawei_health_record_sleep
     value_schema: .connector.huawei.HuaweiHealthRecordSleep
-  - doc: Huawei Health Kit data type health.record.tachycardia.
-    topic: connect_huawei_health_record_tachycardia
-    value_schema: .connector.huawei.HuaweiHealthRecordTachycardia
-  - doc: Huawei Health Kit data type heart_rate_variability.
+  - doc: Huawei Health Kit data type heart_rate_variability (unit: ms RMSSD).
     topic: connect_huawei_heart_rate_variability
     value_schema: .connector.huawei.HuaweiHeartRateVariability
   - doc: Huawei Health Kit data type instantaneous.activity.sample.
     topic: connect_huawei_instantaneous_activity_sample
-    value_schema: .connector.huawei.HuaweiInstantaneousActivitySamples
+    value_schema: .connector.huawei.HuaweiInstantaneousActivitySample
   - doc: Huawei Health Kit data type instantaneous.activity.samples.
     topic: connect_huawei_instantaneous_activity_samples
-    value_schema: .connector.huawei.HuaweiInstantaneousActivitySamples
-  - doc: Huawei Health Kit data type instantaneous.altitude.
+    value_schema: .connector.huawei.HuaweiInstantaneousActivitySample
+  - doc: Huawei Health Kit data type instantaneous.altitude (unit: m).
     topic: connect_huawei_instantaneous_altitude
     value_schema: .connector.huawei.HuaweiInstantaneousAltitude
-  - doc: Huawei Health Kit data type instantaneous.blood_glucose.
+  - doc: Huawei Health Kit data type instantaneous.blood_glucose (unit: mmol/L).
     topic: connect_huawei_instantaneous_blood_glucose
     value_schema: .connector.huawei.HuaweiInstantaneousBloodGlucose
-  - doc: Huawei Health Kit data type instantaneous.blood_pressure.
+  - doc: Huawei Health Kit data type instantaneous.blood_pressure (unit: mmHg).
     topic: connect_huawei_instantaneous_blood_pressure
     value_schema: .connector.huawei.HuaweiInstantaneousBloodPressure
-  - doc: Huawei Health Kit data type instantaneous.body.fat.rate.
+  - doc: Huawei Health Kit data type instantaneous.body.fat.rate (unit: %).
     topic: connect_huawei_instantaneous_body_fat_rate
     value_schema: .connector.huawei.HuaweiInstantaneousBodyFatRate
-  - doc: Huawei Health Kit data type instantaneous.body.temperature.
+  - doc: Huawei Health Kit data type instantaneous.body.temperature (unit: °C).
     topic: connect_huawei_instantaneous_body_temperature
     value_schema: .connector.huawei.HuaweiInstantaneousBodyTemperature
-  - doc: Huawei Health Kit data type instantaneous.body.temperature.rest.
+  - doc: Huawei Health Kit data type instantaneous.body.temperature.rest (unit: °C).
     topic: connect_huawei_instantaneous_body_temperature_rest
     value_schema: .connector.huawei.HuaweiInstantaneousBodyTemperature
-  - doc: Huawei Health Kit data type instantaneous.calories.bmr.
+  - doc: Huawei Health Kit data type instantaneous.calories.bmr (unit: kcal).
     topic: connect_huawei_instantaneous_calories_bmr
     value_schema: .connector.huawei.HuaweiInstantaneousCaloriesBmr
-  - doc: Huawei Health Kit data type instantaneous.exercise_heart_rate.
+  - doc: Huawei Health Kit data type instantaneous.exercise_heart_rate (unit: bpm).
     topic: connect_huawei_instantaneous_exercise_heart_rate
     value_schema: .connector.huawei.HuaweiInstantaneousHeartRate
-  - doc: Huawei Health Kit data type instantaneous.heart_rate.
+  - doc: Huawei Health Kit data type instantaneous.heart_rate (unit: bpm).
     topic: connect_huawei_instantaneous_heart_rate
     value_schema: .connector.huawei.HuaweiInstantaneousHeartRate
-  - doc: Huawei Health Kit data type instantaneous.hydrate.
-    topic: connect_huawei_instantaneous_hydrate
-    value_schema: .connector.huawei.HuaweiInstantaneousHydrate
-  - doc: Huawei Health Kit data type instantaneous.ovulation_detection.
-    topic: connect_huawei_instantaneous_ovulation_detection
-    value_schema: .connector.huawei.HuaweiInstantaneousOvulationDetection
-  - doc: Huawei Health Kit data type instantaneous.power.sample.
+  - doc: Huawei Health Kit data type instantaneous.power.sample (unit: W).
     topic: connect_huawei_instantaneous_power_sample
     value_schema: .connector.huawei.HuaweiInstantaneousPowerSample
-  - doc: Huawei Health Kit data type instantaneous.resting_heart_rate.
+  - doc: Huawei Health Kit data type instantaneous.resting_heart_rate (unit: bpm).
     topic: connect_huawei_instantaneous_resting_heart_rate
-    value_schema: .connector.huawei.HuaweiInstantaneousRestingHeartRate
-  - doc: Huawei Health Kit data type instantaneous.resting_heart_rate.statistics.
+    value_schema: .connector.huawei.HuaweiInstantaneousHeartRate
+  - doc: Huawei Health Kit data type instantaneous.resting_heart_rate.statistics (unit: bpm).
     topic: connect_huawei_instantaneous_resting_heart_rate_statistics
     value_schema: .connector.huawei.HuaweiStatistics
-  - doc: Huawei Health Kit data type instantaneous.skin.temperature.
+  - doc: Huawei Health Kit data type instantaneous.skin.temperature (unit: °C).
     topic: connect_huawei_instantaneous_skin_temperature
-    value_schema: .connector.huawei.HuaweiInstantaneousSkinTemperature
-  - doc: Huawei Health Kit data type instantaneous.speed.
+    value_schema: .connector.huawei.HuaweiInstantaneousBodyTemperature
+  - doc: Huawei Health Kit data type instantaneous.speed (unit: m/s).
     topic: connect_huawei_instantaneous_speed
     value_schema: .connector.huawei.HuaweiInstantaneousSpeed
-  - doc: Huawei Health Kit data type instantaneous.spo2.
+  - doc: Huawei Health Kit data type instantaneous.spo2 (unit: %).
     topic: connect_huawei_instantaneous_spo2
     value_schema: .connector.huawei.HuaweiInstantaneousSpo2
-  - doc: Huawei Health Kit data type instantaneous.steps.rate.
+  - doc: Huawei Health Kit data type instantaneous.steps.rate (unit: steps/min).
     topic: connect_huawei_instantaneous_steps_rate
     value_schema: .connector.huawei.HuaweiInstantaneousStepsRate
-  - doc: Huawei Health Kit data type instantaneous.stress.
+  - doc: Huawei Health Kit data type instantaneous.stress (unit: score 1–99).
     topic: connect_huawei_instantaneous_stress
     value_schema: .connector.huawei.HuaweiInstantaneousStress
-  - doc: Huawei Health Kit data type instantaneous.stress.statistics.
+  - doc: Huawei Health Kit data type instantaneous.stress.statistics (unit: score 1–99).
     topic: connect_huawei_instantaneous_stress_statistics
-    value_schema: .connector.huawei.HuaweiInstantaneousStressStatistics
-  - doc: Huawei Health Kit data type physical_symptoms.
-    topic: connect_huawei_physical_symptoms
-    value_schema: .connector.huawei.HuaweiPhysicalSymptoms
-  - doc: Huawei Health Kit data type resting_calories.statistics.
+    value_schema: .connector.huawei.HuaweiStatistics
+  - doc: Huawei Health Kit data type resting_calories.statistics (unit: kcal).
     topic: connect_huawei_resting_calories_statistics
     value_schema: .connector.huawei.HuaweiRestingCaloriesStatistics
   - doc: Huawei Health Kit data type sleep.on_off_bed_record.
@@ -229,6 +217,6 @@ data:
   - doc: Huawei Health Kit data type vo2max.
     topic: connect_huawei_vo2max
     value_schema: .connector.huawei.HuaweiVo2Max
-  - doc: Huawei Health Kit data type vo2max.statistics.
+  - doc: Huawei Health Kit data type vo2max.statistics (unit: mL/(kg·min)).
     topic: connect_huawei_vo2max_statistics
-    value_schema: .connector.huawei.HuaweiVo2MaxStatistics
+    value_schema: .connector.huawei.HuaweiStatistics
