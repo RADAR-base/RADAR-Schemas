@@ -88,12 +88,6 @@ data:
   - doc: Huawei Health Kit data type continuous.heart_rate.statistics.
     topic: connect_huawei_continuous_heart_rate_statistics
     value_schema: .connector.huawei.HuaweiStatistics
-  - doc: Huawei Health Kit data type continuous.menstrual_flow.
-    topic: connect_huawei_continuous_menstrual_flow
-    value_schema: .connector.huawei.HuaweiContinuousMenstrualFlow
-  - doc: Huawei Health Kit data type continuous.nutrition_facts.statistics.
-    topic: connect_huawei_continuous_nutrition_facts_statistics
-    value_schema: .connector.huawei.HuaweiContinuousNutritionFactsStatistics
   - doc: Huawei Health Kit data type continuous.power.statistics.
     topic: connect_huawei_continuous_power_statistics
     value_schema: .connector.huawei.HuaweiStatistics
@@ -178,12 +172,6 @@ data:
   - doc: Huawei Health Kit data type instantaneous.calories.bmr.
     topic: connect_huawei_instantaneous_calories_bmr
     value_schema: .connector.huawei.HuaweiInstantaneousCaloriesBmr
-  - doc: Huawei Health Kit data type instantaneous.cervical_mucus.
-    topic: connect_huawei_instantaneous_cervical_mucus
-    value_schema: .connector.huawei.HuaweiInstantaneousCervicalMucus
-  - doc: Huawei Health Kit data type instantaneous.cervical_status.
-    topic: connect_huawei_instantaneous_cervical_status
-    value_schema: .connector.huawei.HuaweiInstantaneousCervicalStatus
   - doc: Huawei Health Kit data type instantaneous.exercise_heart_rate.
     topic: connect_huawei_instantaneous_exercise_heart_rate
     value_schema: .connector.huawei.HuaweiInstantaneousHeartRate
@@ -193,9 +181,6 @@ data:
   - doc: Huawei Health Kit data type instantaneous.hydrate.
     topic: connect_huawei_instantaneous_hydrate
     value_schema: .connector.huawei.HuaweiInstantaneousHydrate
-  - doc: Huawei Health Kit data type instantaneous.nutrition_facts.
-    topic: connect_huawei_instantaneous_nutrition_facts
-    value_schema: .connector.huawei.HuaweiInstantaneousNutritionFacts
   - doc: Huawei Health Kit data type instantaneous.ovulation_detection.
     topic: connect_huawei_instantaneous_ovulation_detection
     value_schema: .connector.huawei.HuaweiInstantaneousOvulationDetection
@@ -226,24 +211,6 @@ data:
   - doc: Huawei Health Kit data type instantaneous.stress.statistics.
     topic: connect_huawei_instantaneous_stress_statistics
     value_schema: .connector.huawei.HuaweiInstantaneousStressStatistics
-  - doc: Huawei Health Kit data type instantaneous.uric_acid.
-    topic: connect_huawei_instantaneous_uric_acid
-    value_schema: .connector.huawei.HuaweiInstantaneousUricAcid
-  - doc: Huawei Health Kit data type instantaneous.urine_routine.bilirubin.
-    topic: connect_huawei_instantaneous_urine_routine_bilirubin
-    value_schema: .connector.huawei.HuaweiInstantaneousUrineRoutineBilirubin
-  - doc: Huawei Health Kit data type instantaneous.urine_routine.glucose.
-    topic: connect_huawei_instantaneous_urine_routine_glucose
-    value_schema: .connector.huawei.HuaweiInstantaneousUrineRoutineGlucose
-  - doc: Huawei Health Kit data type instantaneous.urine_routine.nitrite.
-    topic: connect_huawei_instantaneous_urine_routine_nitrite
-    value_schema: .connector.huawei.HuaweiInstantaneousUrineRoutineNitrite
-  - doc: Huawei Health Kit data type instantaneous.urine_routine.urobilinogen.
-    topic: connect_huawei_instantaneous_urine_routine_urobilinogen
-    value_schema: .connector.huawei.HuaweiInstantaneousUrineRoutineUrobilinogen
-  - doc: Huawei Health Kit data type instantaneous.vaginal_speckle.
-    topic: connect_huawei_instantaneous_vaginal_speckle
-    value_schema: .connector.huawei.HuaweiInstantaneousVaginalSpeckle
   - doc: Huawei Health Kit data type physical_symptoms.
     topic: connect_huawei_physical_symptoms
     value_schema: .connector.huawei.HuaweiPhysicalSymptoms
