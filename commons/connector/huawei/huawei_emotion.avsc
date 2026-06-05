@@ -20,7 +20,7 @@
         "null",
         "int"
       ],
-      "doc": "Emotion status code detected by the device.",
+      "doc": "Emotion status detected by the device: 1=bad, 2=fair, 3=neutral, 4=good, 5=excellent.",
       "default": null
     }
   ]

@@ -29,7 +29,7 @@
         "null",
         "int"
       ],
-      "doc": "Sleep respiratory measurement type code.",
+      "doc": "Sleep respiratory measurement type: 1=breathing rate (breaths/min), 2=SpO2 (%), 3=snore index.",
       "default": null
     },
     {
@@ -38,7 +38,7 @@
         "null",
         "double"
       ],
-      "doc": "Value of the sleep respiratory measurement.",
+      "doc": "Measured value for the respiratory parameter, in the unit indicated by the type field.",
       "default": null
     }
   ]

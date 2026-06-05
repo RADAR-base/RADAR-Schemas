@@ -38,7 +38,7 @@
         "null",
         "int"
       ],
-      "doc": "Menstrual cycle phase status code.",
+      "doc": "Menstrual cycle phase: 1=menstruation, 2=follicular, 3=ovulation, 4=luteal.",
       "default": null
     },
     {
@@ -47,7 +47,7 @@
         "null",
         "int"
       ],
-      "doc": "Menstrual cycle sub-status code providing additional phase detail.",
+      "doc": "Menstrual cycle sub-phase detail code providing finer granularity within the main phase (see Huawei Health Kit API documentation for values).",
       "default": null
     },
     {

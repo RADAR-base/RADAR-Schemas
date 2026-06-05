@@ -105,12 +105,48 @@
       "default": null
     },
     {
-      "name": "activitySummary",
+      "name": "activitySummaryAvgPace",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Average pace from the activity summary (s/km).",
+      "default": null
+    },
+    {
+      "name": "activitySummaryBestPace",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Best (fastest) pace from the activity summary (s/km).",
+      "default": null
+    },
+    {
+      "name": "activitySummaryPaceMap",
       "type": [
         "null",
         "string"
       ],
-      "doc": "Optional nested activity summary as a JSON string.",
+      "doc": "Pace per kilometre segment stored as a JSON map (key: segment label, value: pace in s/km).",
+      "default": null
+    },
+    {
+      "name": "activitySummaryDataSummary",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "Statistical data points for the activity stored as a JSON array of sample points.",
+      "default": null
+    },
+    {
+      "name": "activitySummarySectionSummary",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "Segment statistical data for the activity stored as a JSON array of section entries.",
       "default": null
     }
   ]

@@ -911,7 +911,7 @@
         "null",
         "string"
       ],
-      "doc": "Extended data field stored as a JSON string.",
+      "doc": "Extended ABPM data stored as a JSON string containing additional device-specific measurement fields not captured in the typed fields above.",
       "default": null
     }
   ]
