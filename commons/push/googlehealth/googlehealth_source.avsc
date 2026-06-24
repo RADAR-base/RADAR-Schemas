@@ -2,11 +2,11 @@
   "namespace": "org.radarcns.push.googlehealth",
   "type": "record",
   "name": "GoogleHealthSource",
-  "doc": "Data source of an exercise session. Not populated by the Google Health integration; the exercise record's source is always null. Retained for schema continuity.",
+  "doc": "The device and platform that recorded a data point, from its dataSource.",
   "fields": [
-    { "name": "id", "type": "string", "doc": "Source id." },
-    { "name": "name", "type": ["null", "string"], "doc": "Source name. Null if unknown.", "default": null },
-    { "name": "type", "type": ["null", "string"], "doc": "Source type. Null if unknown.", "default": null },
-    { "name": "url", "type": ["null", "string"], "doc": "Source URL. Null if unknown.", "default": null }
+    { "name": "name", "type": ["null", "string"], "doc": "Device display name. Null if unknown.", "default": null },
+    { "name": "formFactor", "type": ["null", "string"], "doc": "Device form factor, e.g. WATCH or PHONE. Null if unknown.", "default": null },
+    { "name": "manufacturer", "type": ["null", "string"], "doc": "Device manufacture, null if unknown.", "default": null },
+    { "name": "platform", "type": ["null", "string"], "doc": "Platform that uploaded the data, e.g. FITBIT. Null if unknown.", "default": null }
   ]
 }
