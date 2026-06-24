@@ -2,11 +2,11 @@
   "namespace": "org.radarcns.push.googlehealth",
   "type": "record",
   "name": "GoogleHealthHeartRate",
-  "doc": "Google Health `heart-rate` data points. A Sample type: each record is a single instantaneous heart-rate observation.",
+  "doc": "Google Health `heart-rate` data points. Each record is a single instantaneous heart-rate observation.",
   "fields": [
-    { "name": "time", "type": "double", "doc": "Physical (UTC) time of the sample, seconds since the Unix Epoch (from sampleTime.physicalTime)." },
-    { "name": "timeReceived", "type": "double", "doc": "Time this record was collected by the connector, seconds since the Unix Epoch." },
+    { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+    { "name": "timeReceived", "type": "double", "doc": "Time this record was collected by push endpoint, seconds since the Unix Epoch." },
     { "name": "timeInterval", "type": "int", "doc": "Sampling window in seconds. Google reports instantaneous samples, so this is always 1." },
-    { "name": "heartRate", "type": "int", "doc": "Heart rate in beats per minute (from heartRate.beatsPerMinute)." }
+    { "name": "heartRate", "type": "int", "doc": "Heart rate in beats per minute." }
   ]
 }

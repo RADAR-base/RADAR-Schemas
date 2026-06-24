@@ -4,11 +4,8 @@
   "name": "GoogleHealthHeartRateVariability",
   "doc": "Google Health `heart-rate-variability` data points. A Sample type measured during sleep.",
   "fields": [
-    { "name": "time", "type": "double", "doc": "Physical (UTC) time of the sample, seconds since the Unix Epoch (from sampleTime.physicalTime)." },
-    { "name": "timeReceived", "type": "double", "doc": "Time this record was collected by the connector, seconds since the Unix Epoch." },
-    { "name": "rmssd", "type": "float", "doc": "Root mean square of successive differences between heartbeats, in milliseconds (from rootMeanSquareOfSuccessiveDifferencesMilliseconds)." },
-    { "name": "coverage", "type": "float", "doc": "Not provided by the Google Health API; always 0. Retained for schema continuity." },
-    { "name": "highFrequency", "type": "float", "doc": "Not provided by the Google Health API; always 0. Retained for schema continuity." },
-    { "name": "lowFrequency", "type": "float", "doc": "Not provided by the Google Health API; always 0. Retained for schema continuity." }
+    { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+    { "name": "timeReceived", "type": "double", "doc": "Time this record was collected by the push endpoint, seconds since the Unix Epoch." },
+    { "name": "rmssd", "type": "float", "doc": "Root mean square of successive differences between heartbeats, in milliseconds (from rootMeanSquareOfSuccessiveDifferencesMilliseconds)." }
   ]
 }
