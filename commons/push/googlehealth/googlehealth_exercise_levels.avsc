@@ -1,0 +1,12 @@
+{
+  "namespace": "org.radarcns.push.googlehealth",
+  "type": "record",
+  "name": "GoogleHealthExerciseLevels",
+  "doc": "Per-intensity durations within an exercise session. Not populated by the Google Health integration; the exercise record's levels is always null. Retained for schema continuity.",
+  "fields": [
+    { "name": "durationSedentary", "type": ["null", "int"], "doc": "Seconds spent sedentary. Null if unknown.", "default": null },
+    { "name": "durationLightly", "type": ["null", "int"], "doc": "Seconds spent lightly active. Null if unknown.", "default": null },
+    { "name": "durationFairly", "type": ["null", "int"], "doc": "Seconds spent fairly active. Null if unknown.", "default": null },
+    { "name": "durationVery", "type": ["null", "int"], "doc": "Seconds spent very active. Null if unknown.", "default": null }
+  ]
+}

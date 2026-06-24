@@ -1,0 +1,11 @@
+{
+  "namespace": "org.radarcns.push.googlehealth",
+  "type": "record",
+  "name": "GoogleHealthOxygenSaturation",
+  "doc": "Google Health `oxygen-saturation` (SpO2) data points. A Sample type, measured during sleep.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Physical (UTC) time of the sample, seconds since the Unix Epoch (from sampleTime.physicalTime)." },
+    { "name": "timeReceived", "type": "double", "doc": "Time this record was collected by the connector, seconds since the Unix Epoch." },
+    { "name": "percentage", "type": "float", "doc": "Blood oxygen saturation as a percentage (from oxygenSaturation.percentage)." }
+  ]
+}

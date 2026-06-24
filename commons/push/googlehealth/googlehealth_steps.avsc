@@ -1,0 +1,12 @@
+{
+  "namespace": "org.radarcns.push.googlehealth",
+  "type": "record",
+  "name": "GoogleHealthSteps",
+  "doc": "Google Health `steps` data points. An Interval type: each record is the step count over a time interval reported by the device.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Start of the interval, seconds since the Unix Epoch (from interval.startTime)." },
+    { "name": "timeReceived", "type": "double", "doc": "Time this record was collected by the connector, seconds since the Unix Epoch." },
+    { "name": "timeInterval", "type": "int", "doc": "Length of the interval in seconds (interval.endTime - interval.startTime)." },
+    { "name": "steps", "type": "int", "doc": "Number of steps recorded in the interval (steps.count)." }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "namespace": "org.radarcns.push.googlehealth",
+  "type": "record",
+  "name": "GoogleHealthRespiratoryRateSleepSummary",
+  "doc": "Google Health `respiratory-rate-sleep-summary` data points. A Sample type giving the average breathing rate per sleep stage for a sleep period.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Physical (UTC) time of the sample, seconds since the Unix Epoch (from sampleTime.physicalTime)." },
+    { "name": "timeReceived", "type": "double", "doc": "Time this record was collected by the connector, seconds since the Unix Epoch." },
+    { "name": "lightSleep", "type": "float", "doc": "Average breaths per minute during light sleep (from lightSleepStats.breathsPerMinute); 0 if not reported." },
+    { "name": "deepSleep", "type": "float", "doc": "Average breaths per minute during deep sleep (from deepSleepStats.breathsPerMinute); 0 if not reported." },
+    { "name": "remSleep", "type": "float", "doc": "Average breaths per minute during REM sleep (from remSleepStats.breathsPerMinute); 0 if not reported." },
+    { "name": "fullSleep", "type": "float", "doc": "Average breaths per minute across the whole sleep period (from fullSleepStats.breathsPerMinute); 0 if not reported." }
+  ]
+}

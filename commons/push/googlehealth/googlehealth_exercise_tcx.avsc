@@ -4,83 +4,15 @@
   "name": "GoogleHealthExerciseTcx",
   "doc": "A single TCX trackpoint of a recorded exercise session, from the Google Health exportExerciseTcx endpoint. One record is emitted per trackpoint in the session's track.",
   "fields": [
-    {
-      "name": "time",
-      "type": "double",
-      "doc": "Trackpoint time, seconds since the Unix Epoch (from the trackpoint Time)."
-    },
-    {
-      "name": "timeReceived",
-      "type": "double",
-      "doc": "Time this record was collected by the connector, seconds since the Unix Epoch."
-    },
-    {
-      "name": "id",
-      "type": "long",
-      "doc": "Exercise (log) id this trackpoint belongs to; matches GoogleHealthExercise.id."
-    },
-    {
-      "name": "latitude",
-      "type": [
-        "null",
-        "double"
-      ],
-      "doc": "Latitude in degrees. Null if GPS was unavailable.",
-      "default": null
-    },
-    {
-      "name": "longitude",
-      "type": [
-        "null",
-        "double"
-      ],
-      "doc": "Longitude in degrees. Null if GPS was unavailable.",
-      "default": null
-    },
-    {
-      "name": "altitude",
-      "type": [
-        "null",
-        "float"
-      ],
-      "doc": "Altitude in metres. Null if unknown.",
-      "default": null
-    },
-    {
-      "name": "distance",
-      "type": [
-        "null",
-        "float"
-      ],
-      "doc": "Cumulative distance up to this trackpoint, in metres. Null if unknown.",
-      "default": null
-    },
-    {
-      "name": "heartRate",
-      "type": [
-        "null",
-        "int"
-      ],
-      "doc": "Heart rate at this trackpoint, bpm. Null if unknown.",
-      "default": null
-    },
-    {
-      "name": "cadence",
-      "type": [
-        "null",
-        "int"
-      ],
-      "doc": "Cadence at this trackpoint, rpm/spm. Null if unknown.",
-      "default": null
-    },
-    {
-      "name": "speed",
-      "type": [
-        "null",
-        "float"
-      ],
-      "doc": "Instantaneous speed at this trackpoint, m/s (from TCX extensions). Null if unknown.",
-      "default": null
-    }
+    { "name": "time", "type": "double", "doc": "Trackpoint time, seconds since the Unix Epoch (from the trackpoint Time)." },
+    { "name": "timeReceived", "type": "double", "doc": "Time this record was collected by the connector, seconds since the Unix Epoch." },
+    { "name": "id", "type": "long", "doc": "Exercise (log) id this trackpoint belongs to; matches GoogleHealthExercise.id." },
+    { "name": "latitude", "type": ["null", "double"], "doc": "Latitude in degrees. Null if GPS was unavailable.", "default": null },
+    { "name": "longitude", "type": ["null", "double"], "doc": "Longitude in degrees. Null if GPS was unavailable.", "default": null },
+    { "name": "altitude", "type": ["null", "float"], "doc": "Altitude in metres. Null if unknown.", "default": null },
+    { "name": "distance", "type": ["null", "float"], "doc": "Cumulative distance up to this trackpoint, in metres. Null if unknown.", "default": null },
+    { "name": "heartRate", "type": ["null", "int"], "doc": "Heart rate at this trackpoint, bpm. Null if unknown.", "default": null },
+    { "name": "cadence", "type": ["null", "int"], "doc": "Cadence at this trackpoint, rpm/spm. Null if unknown.", "default": null },
+    { "name": "speed", "type": ["null", "float"], "doc": "Instantaneous speed at this trackpoint, m/s (from TCX extensions). Null if unknown.", "default": null }
   ]
 }

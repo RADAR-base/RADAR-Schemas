@@ -1,0 +1,18 @@
+{
+  "namespace": "org.radarcns.push.googlehealth",
+  "type": "record",
+  "name": "GoogleHealthExerciseHeartRate",
+  "doc": "Aggregate heart rate over an exercise session. The Google Health integration populates only `mean` (from metricsSummary.averageHeartRateBeatsPerMinute); the remaining fields are not provided by Google and stay null.",
+  "fields": [
+    { "name": "mean", "type": ["null", "int"], "doc": "Mean heart rate over the session, bpm (from metricsSummary.averageHeartRateBeatsPerMinute). Null if unknown.", "default": null },
+    { "name": "min", "type": ["null", "int"], "doc": "Not provided by the Google Health API; always null.", "default": null },
+    { "name": "max", "type": ["null", "int"], "doc": "Not provided by the Google Health API; always null.", "default": null },
+    { "name": "minFatBurn", "type": ["null", "int"], "doc": "Not provided by the Google Health API; always null.", "default": null },
+    { "name": "minCardio", "type": ["null", "int"], "doc": "Not provided by the Google Health API; always null.", "default": null },
+    { "name": "minPeak", "type": ["null", "int"], "doc": "Not provided by the Google Health API; always null.", "default": null },
+    { "name": "durationOutOfRange", "type": ["null", "int"], "doc": "Not provided by the Google Health API; always null.", "default": null },
+    { "name": "durationFatBurn", "type": ["null", "int"], "doc": "Not provided by the Google Health API; always null.", "default": null },
+    { "name": "durationCardio", "type": ["null", "int"], "doc": "Not provided by the Google Health API; always null.", "default": null },
+    { "name": "durationPeak", "type": ["null", "int"], "doc": "Not provided by the Google Health API; always null.", "default": null }
+  ]
+}

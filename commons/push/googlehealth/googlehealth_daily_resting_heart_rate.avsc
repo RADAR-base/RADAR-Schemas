@@ -1,0 +1,11 @@
+{
+  "namespace": "org.radarcns.push.googlehealth",
+  "type": "record",
+  "name": "GoogleHealthDailyRestingHeartRate",
+  "doc": "Google Health `daily-resting-heart-rate` data points. A Daily summary, one value per civil day.",
+  "fields": [
+    { "name": "date", "type": "string", "doc": "Civil date in the user's timezone, formatted yyyy-MM-dd (from the data point's date)." },
+    { "name": "timeReceived", "type": "double", "doc": "Time this record was collected by the connector, seconds since the Unix Epoch." },
+    { "name": "restingHeartRate", "type": "int", "doc": "Resting heart rate for the day, in beats per minute (from dailyRestingHeartRate.beatsPerMinute)." }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "namespace": "org.radarcns.push.googlehealth",
+  "type": "record",
+  "name": "GoogleHealthDailySleepTemperatureDerivations",
+  "doc": "Google Health `daily-sleep-temperature-derivations` data points. A Daily summary of nightly skin temperature relative to the user's baseline.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Civil date of the derivation as an instant, seconds since the Unix Epoch (from the data point's date)." },
+    { "name": "timeReceived", "type": "double", "doc": "Time this record was collected by the connector, seconds since the Unix Epoch." },
+    { "name": "relativeTemperature", "type": "float", "doc": "Nightly temperature relative to the user's baseline, in degrees Celsius (nightlyTemperatureCelsius - baselineTemperatureCelsius)." },
+    { "name": "logType", "type": {"name": "GoogleHealthSleepTemperatureLogType", "type": "enum", "symbols": ["DEDICATED_TEMP_SENSOR", "OTHER_SENSORS", "UNKNOWN"], "doc": "Sensor source of the temperature derivation. Not provided by the Google Health API; always UNKNOWN."}, "doc": "Sensor source of the temperature derivation. Not provided by the Google Health API; always UNKNOWN.", "default": "UNKNOWN" }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "namespace": "org.radarcns.push.googlehealth",
+  "type": "record",
+  "name": "GoogleHealthSleepClassic",
+  "doc": "Google Health `sleep` data for CLASSIC sessions (devices without a heart-rate sensor). One record per sleep level (ASLEEP, RESTLESS, AWAKE).",
+  "fields": [
+    { "name": "dateTime", "type": "string", "doc": "Local start time of the level, ISO-8601 yyyy-MM-ddTHH:mm:ss (from stages[].startTime)." },
+    { "name": "timeReceived", "type": "double", "doc": "Time this record was collected by the connector, seconds since the Unix Epoch." },
+    { "name": "duration", "type": "int", "doc": "Duration at this sleep level in seconds (endTime - startTime)." },
+    { "name": "level", "type": {"name": "GoogleHealthSleepClassicLevel", "type": "enum", "symbols": ["AWAKE", "RESTLESS", "ASLEEP", "UNKNOWN"], "doc": "Classic sleep level, from stages[].type."}, "doc": "Classic sleep level, from stages[].type.", "default": "UNKNOWN" },
+    { "name": "efficiency", "type": ["null", "int"], "doc": "Not provided by the Google Health API; always null. Retained for schema continuity.", "default": null }
+  ]
+}
