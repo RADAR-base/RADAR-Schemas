@@ -40,3 +40,9 @@ data:
   - doc: Per-trackpoint TCX export of an `exercise` session (GPS, altitude, distance, heart rate, cadence). Correlates with the exercise via its id.
     topic: push_googlehealth_exercise_tcx
     value_schema: .push.googlehealth.GoogleHealthExerciseTcx
+  - doc: A single waveform sample of an `electrocardiogram` (ECG) reading (Session). One record per sample, with the reading-level metadata (heart rate, sampling parameters, device info) repeated on each sample and correlated via its id.
+    topic: push_googlehealth_electrocardiogram
+    value_schema: .push.googlehealth.GoogleHealthElectrocardiogram
+  - doc: A single heartbeat of an `irregular-rhythm-notification` (Session), a potential sign of atrial fibrillation. The session -> alert window -> heartbeat hierarchy is flattened to one record per heartbeat, each carrying its parent window and session context, correlated via its id.
+    topic: push_googlehealth_irregular_rhythm_notification
+    value_schema: .push.googlehealth.GoogleHealthIrregularRhythmNotification
