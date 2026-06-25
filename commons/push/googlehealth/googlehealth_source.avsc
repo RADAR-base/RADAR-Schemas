@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.push.googlehealth",
   "type": "record",
   "name": "GoogleHealthSource",
-  "doc": "The device and platform that recorded a data point, from its dataSource.",
+  "doc": "The device and platform that recorded a data point, from its dataSource. This record is not emitted to its own topic, it is used as a nested field of other data types (currently the `source` field of GoogleHealthExercise).",
   "fields": [
     { "name": "name", "type": ["null", "string"], "doc": "Device display name. Null if unknown.", "default": null },
     { "name": "formFactor", "type": ["null", "string"], "doc": "Device form factor, e.g. WATCH or PHONE. Null if unknown.", "default": null },

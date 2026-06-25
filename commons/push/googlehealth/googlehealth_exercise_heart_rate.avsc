@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.push.googlehealth",
   "type": "record",
   "name": "GoogleHealthExerciseHeartRate",
-  "doc": "Aggregate heart rate measured over an exercise session, including time spent in each heart rate zone.",
+  "doc": "Aggregate heart rate measured over an exercise session, including time spent in each heart rate zone. This record is not emitted to its own topic, it is used as a nested field of other data types (currently the `heartRate` field of GoogleHealthExercise).",
   "fields": [
     { "name": "mean", "type": ["null", "int"], "doc": "Mean heart rate over the duration of the exercise (bpm). Null if unknown.", "default": null },
     { "name": "durationLight", "type": ["null", "int"], "doc": "Time spent in the light heart rate zone during the exercise (s). Null if unknown.", "default": null },
