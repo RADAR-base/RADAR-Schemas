@@ -1,0 +1,67 @@
+# Build the HTML schema catalog and deploy to GitHub Pages.
+# Enable in repo Settings → Pages → Build and deployment → Source: GitHub Actions.
+
+name: Schema catalog (GitHub Pages)
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - "commons/**"
+      - "specifications/**"
+      - "scripts/generate_schema_catalog.py"
+      - "requirements-docs.txt"
+      - ".github/workflows/schema-catalog-pages.yml"
+  pull_request:
+    branches: [master]
+    paths:
+      - "commons/**"
+      - "specifications/**"
+      - "scripts/generate_schema_catalog.py"
+      - "requirements-docs.txt"
+      - ".github/workflows/schema-catalog-pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages-schema-catalog
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements-docs.txt
+
+      - name: Install dependencies
+        run: pip install -r requirements-docs.txt
+
+      - name: Generate site
+        env:
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: python scripts/generate_schema_catalog.py --out _site
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

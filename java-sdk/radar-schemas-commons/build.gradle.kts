@@ -1,7 +1,7 @@
 import com.github.davidmc24.gradle.plugin.avro.GenerateAvroJavaTask
 
 plugins {
-    id("com.github.davidmc24.gradle.plugin.avro-base")
+    alias(libs.plugins.avro.base)
 }
 
 description = "RADAR Schemas Commons SDK"
@@ -15,29 +15,29 @@ val generateAvro by tasks.registering(GenerateAvroJavaTask::class) {
             include("**/*.avsc")
         },
     )
-    setOutputDir(layout.projectDirectory.dir("src/generated/java").asFile)
+    setOutputDir(layout.buildDirectory.dir("generated/java").get().asFile)
 }
 
 sourceSets {
     main {
-        java.srcDir(generateAvro.map { it.outputs })
+        java.srcDir(generateAvro)
     }
 }
 
 dependencies {
-    api("org.apache.avro:avro:${Versions.avro}") {
-        api("com.fasterxml.jackson.core:jackson-core:${Versions.jackson}")
-        api("com.fasterxml.jackson.core:jackson-databind:${Versions.jackson}")
+    api(libs.apache.avro) {
         exclude(group = "org.xerial.snappy", module = "snappy-java")
         exclude(group = "com.thoughtworks.paranamer", module = "paranamer")
         exclude(group = "org.apache.commons", module = "commons-compress")
         exclude(group = "org.tukaani", module = "xz")
     }
+    implementation(libs.jackson.core)
+    implementation(libs.jackson.databind)
 }
 
 // ---------------------------------------------------------------------------//
 // Clean settings                                                            //
 // ---------------------------------------------------------------------------//
 tasks.clean {
-    delete(generateAvro.map { it.outputs })
+    delete(generateAvro)
 }

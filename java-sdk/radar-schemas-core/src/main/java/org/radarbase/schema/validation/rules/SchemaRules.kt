@@ -22,6 +22,7 @@ import io.confluent.connect.schema.AbstractDataConfig
 import org.apache.avro.Schema
 import org.apache.avro.Schema.Type.DOUBLE
 import org.apache.avro.Schema.Type.RECORD
+import org.apache.avro.SchemaFormatter
 import org.radarbase.schema.validation.ValidationContext
 
 /**
@@ -178,8 +179,8 @@ class SchemaRules(
                 val originalSchema = decoder.fromConnectSchema(connectSchema)
                 check(schema == originalSchema) {
                     "Schema changed by validation: " +
-                        schema.toString(true) + " is not equal to " +
-                        originalSchema.toString(true)
+                        SchemaFormatter.format(schema.name, schema) + " is not equal to " +
+                        SchemaFormatter.format(originalSchema.name, originalSchema)
                 }
             } catch (ex: Exception) {
                 raise("Failed to convert schema back to itself")
