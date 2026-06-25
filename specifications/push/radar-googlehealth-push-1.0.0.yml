@@ -1,0 +1,48 @@
+name: RADAR-GOOGLEHEALTH-PUSH
+vendor: RADAR-base
+model: radar-push-googlehealth
+version: 1.0.0
+doc: Spec for the RADAR Push integration for the Google Health API (successor to the Fitbit Web API). Topics map one-to-one to Google Health data types.
+data:
+  - doc: The `steps` data type (Interval). Step count per device-reported interval.
+    topic: push_googlehealth_steps
+    value_schema: .push.googlehealth.GoogleHealthSteps
+  - doc: The `heart-rate` data type (Sample). Instantaneous heart-rate observations in beats per minute.
+    topic: push_googlehealth_heart_rate
+    value_schema: .push.googlehealth.GoogleHealthHeartRate
+  - doc: The `heart-rate-variability` data type (Sample). RMSSD between heartbeats, measured during sleep.
+    topic: push_googlehealth_heart_rate_variability
+    value_schema: .push.googlehealth.GoogleHealthHeartRateVariability
+  - doc: The `oxygen-saturation` data type (Sample). Blood oxygen saturation percentage, measured during sleep.
+    topic: push_googlehealth_oxygen_saturation
+    value_schema: .push.googlehealth.GoogleHealthOxygenSaturation
+  - doc: The `total-calories` data type, aggregated per window via the rollUp endpoint (kilocalories).
+    topic: push_googlehealth_total_calories
+    value_schema: .push.googlehealth.GoogleHealthTotalCalories
+  - doc: The `daily-resting-heart-rate` data type (Daily summary). One resting heart-rate value per civil day.
+    topic: push_googlehealth_daily_resting_heart_rate
+    value_schema: .push.googlehealth.GoogleHealthDailyRestingHeartRate
+  - doc: The `respiratory-rate-sleep-summary` data type (Sample). Average breaths per minute per sleep stage.
+    topic: push_googlehealth_respiratory_rate_sleep_summary
+    value_schema: .push.googlehealth.GoogleHealthRespiratoryRateSleepSummary
+  - doc: The `daily-sleep-temperature-derivations` data type (Daily summary). Nightly skin temperature relative to baseline.
+    topic: push_googlehealth_daily_sleep_temperature_derivations
+    value_schema: .push.googlehealth.GoogleHealthDailySleepTemperatureDerivations
+  - doc: The `sleep` data type for STAGES sessions (devices with a heart-rate sensor). One record per sleep stage.
+    topic: push_googlehealth_sleep_stage
+    value_schema: .push.googlehealth.GoogleHealthSleepStage
+  - doc: The `sleep` data type for CLASSIC sessions (devices without a heart-rate sensor). One record per sleep level.
+    topic: push_googlehealth_sleep_classic
+    value_schema: .push.googlehealth.GoogleHealthSleepClassic
+  - doc: The `exercise` data type (Session). One record per recorded exercise/activity.
+    topic: push_googlehealth_exercise
+    value_schema: .push.googlehealth.GoogleHealthExercise
+  - doc: Per-trackpoint TCX export of an `exercise` session (GPS, altitude, distance, heart rate, cadence). Correlates with the exercise via its id.
+    topic: push_googlehealth_exercise_tcx
+    value_schema: .push.googlehealth.GoogleHealthExerciseTcx
+  - doc: A single waveform sample of an `electrocardiogram` (ECG) reading (Session). One record per sample, with the reading-level metadata (heart rate, sampling parameters, device info) repeated on each sample and correlated via its id.
+    topic: push_googlehealth_electrocardiogram
+    value_schema: .push.googlehealth.GoogleHealthElectrocardiogram
+  - doc: A single heartbeat of an `irregular-rhythm-notification` (Session), a potential sign of atrial fibrillation. The session -> alert window -> heartbeat hierarchy is flattened to one record per heartbeat, each carrying its parent window and session context, correlated via its id.
+    topic: push_googlehealth_irregular_rhythm_notification
+    value_schema: .push.googlehealth.GoogleHealthIrregularRhythmNotification
