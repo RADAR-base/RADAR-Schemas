@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.push.googlehealth",
   "type": "record",
   "name": "GoogleHealthRespiratoryRateSleepSummary",
-  "doc": "Google Health respiratory rate details during sleep. Can have multiple per day if the user sleeps multiple times..",
+  "doc": "Google Health respiratory rate details during sleep. Can have multiple per day if the user sleeps multiple times.",
   "fields": [
     { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
     { "name": "timeReceived", "type": "double", "doc": "Time this record was collected by the connector, seconds since the Unix Epoch." },
