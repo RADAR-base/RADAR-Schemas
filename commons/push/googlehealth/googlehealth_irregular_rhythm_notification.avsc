@@ -1,0 +1,69 @@
+{
+  "namespace": "org.radarcns.push.googlehealth",
+  "type": "record",
+  "name": "GoogleHealthIrregularRhythmNotification",
+  "doc": "A single heartbeat sample from a Google Health Irregular Rhythm Notification (IRN). The API structures this data hierarchically: a top-level session interval contains multiple alert windows, which in turn contain individual heartbeats. This schema flattens that structure down to the individual heartbeat level for efficient Kafka streaming.",
+  "fields": [
+    {
+      "name": "time",
+      "type": "double",
+      "doc": "Device timestamp in UTC (s)."
+    },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "The time that this record was collected by the connector, in seconds since the Unix Epoch."
+    },
+    {
+      "name": "id",
+      "type": "string",
+      "doc": "The ID of the notification this heartbeat belongs to, extracted from the dataPointName."
+    },
+    {
+      "name": "sessionStartTime",
+      "type": ["null", "double"],
+      "doc": "The start time of the top-level session interval, representing the overarching IRN event. All windows and heartbeats within the same API payload share this timestamp, measured in seconds since the Unix Epoch.",
+      "default": null
+    },
+    {
+      "name": "windowStartTime",
+      "type": "double",
+      "doc": "The start time of the specific alert window that contains this heartbeat, in seconds since the Unix Epoch."
+    },
+    {
+      "name": "windowEndTime",
+      "type": "double",
+      "doc": "The end time of the specific alert window that contains this heartbeat, in seconds since the Unix Epoch."
+    },
+    {
+      "name": "positive",
+      "type": ["null", "boolean"],
+      "doc": "Indicates whether AFib was detected during the alert window that contains this heartbeat. A true value means AFib was detected. Null if unknown.",
+      "default": null
+    },
+    {
+      "name": "beatsPerMinute",
+      "type": ["null", "int"],
+      "doc": "The detected heart rate for this specific heartbeat sample.",
+      "default": null
+    },
+    {
+      "name": "firmwareVersion",
+      "type": ["null", "string"],
+      "doc": "The firmware version of the medical device that captured the overarching session. Null if unknown.",
+      "default": null
+    },
+    {
+      "name": "featureVersion",
+      "type": ["null", "string"],
+      "doc": "The feature version of the medical device that captured the overarching session. Null if unknown.",
+      "default": null
+    },
+    {
+      "name": "deviceModel",
+      "type": ["null", "string"],
+      "doc": "The model of the medical device that captured the overarching session (e.g., Google Pixel Watch 2). Null if unknown.",
+      "default": null
+    }
+  ]
+}

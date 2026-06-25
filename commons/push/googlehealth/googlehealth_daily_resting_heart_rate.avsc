@@ -1,0 +1,11 @@
+{
+  "namespace": "org.radarcns.push.googlehealth",
+  "type": "record",
+  "name": "GoogleHealthDailyRestingHeartRate",
+  "doc": "Google Health daily resting heart rate for a user, calculated using the all day heart rate measurements.",
+  "fields": [
+    { "name": "date", "type": "string", "doc": "Civil date in the user's timezone, formatted yyyy-MM-dd" },
+    { "name": "timeReceived", "type": "double", "doc": "Time this record was collected by the push endpoint, seconds since the Unix Epoch." },
+    { "name": "restingHeartRate", "type": "int", "doc": "Resting heart rate for the day, in beats per minute." }
+  ]
+}

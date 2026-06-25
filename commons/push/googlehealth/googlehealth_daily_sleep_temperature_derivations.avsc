@@ -1,0 +1,11 @@
+{
+  "namespace": "org.radarcns.push.googlehealth",
+  "type": "record",
+  "name": "GoogleHealthDailySleepTemperatureDerivations",
+  "doc": "Google Health derived sleep temperature values, calculated from skin or internal device temperature readings during sleep",
+  "fields": [
+    { "name": "date", "type": "string", "doc": "Civil date (yyyy-MM-dd, in the user's timezone) for which the sleep temperature derivations are calculated." },
+    { "name": "timeReceived", "type": "double", "doc": "Time this record was collected by the push endpoint, seconds since the Unix Epoch." },
+    { "name": "relativeTemperature", "type": "float", "doc": "Nightly temperature relative to the user's baseline, in degrees Celsius (nightlyTemperatureCelsius - baselineTemperatureCelsius)." }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "namespace": "org.radarcns.push.googlehealth",
+  "type": "record",
+  "name": "GoogleHealthElectrocardiogram",
+  "doc": "A single waveform sample of a Google Health electrocardiogram (ECG) reading. One record is emitted per waveform sample; the reading-level metadata (heart rate, sampling parameters, device info) is repeated on every sample of the reading identified by id.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Time of this sample, seconds since the Unix Epoch (s), computed as the reading start plus index / samplingFrequencyHertz." },
+    { "name": "timeReceived", "type": "double", "doc": "Time that this record was collected by the connector, seconds since the Unix Epoch (s)." },
+    { "name": "id", "type": "string", "doc": "ECG reading id, shared by every sample of the same reading." },
+    { "name": "sample", "type": "int", "doc": "Raw ECG waveform sample (ADC count) as reported by the device. Convert to millivolts with sample / millivoltsScalingFactor." },
+    { "name": "beatsPerMinuteAvg", "type": ["null", "int"], "doc": "Average heart rate recorded during the reading (bpm). Null if unknown.", "default": null },
+    { "name": "samplingFrequencyHertz", "type": ["null", "int"], "doc": "Sampling frequency of the waveform (Hz). Null if unknown.", "default": null },
+    { "name": "millivoltsScalingFactor", "type": ["null", "int"], "doc": "Factor used to convert a raw sample to millivolts (millivolts = sample / factor). Null if unknown.", "default": null },
+    { "name": "leadNumber", "type": ["null", "int"], "doc": "Lead identifier of the reading (e.g. 1 = Lead I for a single-lead watch ECG). Null if unknown.", "default": null },
+    { "name": "deviceModel", "type": ["null", "string"], "doc": "Model of the device that took the reading. Null if unknown.", "default": null },
+    { "name": "firmwareVersion", "type": ["null", "string"], "doc": "Firmware version of the device. Null if unknown.", "default": null },
+    { "name": "featureVersion", "type": ["null", "string"], "doc": "Feature version running on the device. Null if unknown.", "default": null }
+  ]
+}
