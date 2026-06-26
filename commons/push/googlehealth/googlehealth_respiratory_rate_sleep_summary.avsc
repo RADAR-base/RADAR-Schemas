@@ -6,9 +6,9 @@
   "fields": [
     { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
     { "name": "timeReceived", "type": "double", "doc": "Time this record was collected by the connector, seconds since the Unix Epoch." },
-    { "name": "lightSleep", "type": "float", "doc": "Average number of breaths taken per minute when the user was in light sleep." },
-    { "name": "deepSleep", "type": "float", "doc": "Average number of breaths taken per minute when the user was in deep sleep." },
-    { "name": "remSleep", "type": "float", "doc": "Average number of breaths taken per minute when the user was in rem sleep." },
-    { "name": "fullSleep", "type": "float", "doc": "Average number of breaths taken per minute throughout the entire period of sleep which you can compare to the sleep stage-specific measurements." }
+    { "name": "lightSleep", "type": ["null", "float"], "doc": "Average number of breaths taken per minute when the user was in light sleep. Null if the user did not enter this stage or no value was reported.", "default": null },
+    { "name": "deepSleep", "type": ["null", "float"], "doc": "Average number of breaths taken per minute when the user was in deep sleep. Null if the user did not enter this stage or no value was reported.", "default": null },
+    { "name": "remSleep", "type": ["null", "float"], "doc": "Average number of breaths taken per minute when the user was in rem sleep. Null if the user did not enter this stage or no value was reported.", "default": null },
+    { "name": "fullSleep", "type": ["null", "float"], "doc": "Average number of breaths taken per minute throughout the entire period of sleep which you can compare to the sleep stage-specific measurements. Null if no value was reported.", "default": null }
   ]
 }
