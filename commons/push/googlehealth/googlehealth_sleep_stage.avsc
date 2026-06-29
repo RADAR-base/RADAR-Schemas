@@ -1,0 +1,28 @@
+{
+  "namespace": "org.radarcns.push.googlehealth",
+  "type": "record",
+  "name": "GoogleHealthSleepStage",
+  "doc": "Google Health sleep data for STAGES sessions. One record per sleep stage (DEEP, LIGHT, REM, AWAKE).",
+  "fields": [
+    { "name": "dateTime", "type": "string", "doc": "ISO 6801 formatted local date time of device (yyyy-MM-ddTHH:mm:ss)." },
+    { "name": "timeReceived", "type": "double", "doc": "Time this record was collected by the connector, seconds since the Unix Epoch." },
+    { "name": "duration", "type": "int", "doc": "Duration of this stage in seconds." },
+      {
+          "name": "level",
+          "type": {
+              "name": "GoogleHealthSleepStageLevel",
+              "type": "enum",
+              "symbols": [
+                  "DEEP",
+                  "LIGHT",
+                  "REM",
+                  "AWAKE",
+                  "UNKNOWN"
+              ],
+              "doc": "Level of sleep as computed by device."
+          },
+          "doc": "Level of sleep as computed by device.",
+          "default": "UNKNOWN"
+      }
+  ]
+}

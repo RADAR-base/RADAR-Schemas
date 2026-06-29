@@ -1,0 +1,24 @@
+{
+  "namespace": "org.radarcns.push.googlehealth",
+  "type": "record",
+  "name": "GoogleHealthExercise",
+  "doc": "Google Health exercise log record, containing the aggregate data of a single recorded exercise (activity) session.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Start time of the exercise, time since the Unix Epoch (s)." },
+    { "name": "timeReceived", "type": "double", "doc": "Time that this record was collected by the connector, seconds since the Unix Epoch (s)." },
+    { "name": "timeZoneOffset", "type": "int", "doc": "Time zone offset compared to UTC (s)." },
+    { "name": "timeLastModified", "type": "double", "doc": "Time when the exercise was last modified, time since the Unix Epoch (s)." },
+    { "name": "duration", "type": "float", "doc": "Duration of the exercise (s)." },
+    { "name": "durationActive", "type": "float", "doc": "Duration of the part of the exercise where the participant was active (s)." },
+    { "name": "id", "type": "long", "doc": "Exercise log ID." },
+    { "name": "name", "type": ["null", "string"], "doc": "Exercise name. Null if none or unknown.", "default": null },
+    { "name": "logType", "type": ["null", "string"], "doc": "How the exercise was recorded, e.g. ACTIVELY_MEASURED, PASSIVELY_MEASURED or MANUAL. Null if unknown.", "default": null },
+    { "name": "type", "type": ["null", "string"], "doc": "Type of exercise, e.g. RUNNING, WALKING, OUTDOOR_BIKE or YOGA (ref: https://developers.google.com/health/reference/rest/v4/users.dataTypes.dataPoints#exercise.exercisetype). Null if unknown.", "default": null },
+    { "name": "source", "type": ["null", "GoogleHealthSource"], "doc": "Device and platform that recorded the exercise. Null if unknown.", "default": null },
+    { "name": "energy", "type": ["null", "float"], "doc": "Estimate of energy expended during the exercise (kJ). Null if unknown.", "default": null },
+    { "name": "heartRate", "type": ["null", "GoogleHealthExerciseHeartRate"], "doc": "Heart rate aggregate information collected during the exercise. Null if unknown.", "default": null },
+    { "name": "steps", "type": ["null", "int"], "doc": "Number of steps made during the exercise. Null if unknown or if the type of exercise is not step-based.", "default": null },
+    { "name": "distance", "type": ["null", "float"], "doc": "Distance covered during the exercise (km). Null if unknown or if the type of exercise is not distance-based.", "default": null },
+    { "name": "speed", "type": ["null", "double"], "doc": "Mean speed during the exercise (km/h). Null if unknown or if the type of exercise is not distance-based.", "default": null }
+  ]
+}

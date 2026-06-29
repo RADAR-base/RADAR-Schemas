@@ -1,0 +1,11 @@
+{
+  "namespace": "org.radarcns.push.googlehealth",
+  "type": "record",
+  "name": "GoogleHealthOxygenSaturation",
+  "doc": "Google Health user's instantaneous oxygen saturation percentage (SpO2).",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
+    { "name": "timeReceived", "type": "double", "doc": "Time this record was collected by the push endpoint, seconds since the Unix Epoch." },
+    { "name": "percentage", "type": "float", "doc": "Blood oxygen saturation as a percentage." }
+  ]
+}
