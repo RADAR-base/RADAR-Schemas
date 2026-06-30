@@ -1,0 +1,54 @@
+{
+  "namespace": "org.radarcns.connector.huawei",
+  "type": "record",
+  "name": "HuaweiContinuousActivityStatistics",
+  "doc": "Aggregated statistics for physical activity over a time window, including calories, distance, steps, and exercise time, as collected by the Huawei Health Kit continuous.activity.statistics data type.",
+  "fields": [
+    {
+      "name": "time",
+      "type": "double",
+      "doc": "Start time of the sample or record in UTC (s)."
+    },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Time the connector received this record from the Huawei Health API (s)."
+    },
+    {
+      "name": "endTime",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "End time of the sample or record in UTC (s), when provided by Huawei.",
+      "default": null
+    },
+    {
+      "name": "typeOfActivity",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Detected activity type identifier (Huawei activity constant).",
+      "default": null
+    },
+    {
+      "name": "span",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Duration of the segment (ms).",
+      "default": null
+    },
+    {
+      "name": "fragments",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Number of sleep fragments.",
+      "default": null
+    }
+  ]
+}

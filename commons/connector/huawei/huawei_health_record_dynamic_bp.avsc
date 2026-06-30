@@ -1,0 +1,918 @@
+{
+  "namespace": "org.radarcns.connector.huawei",
+  "type": "record",
+  "name": "HuaweiHealthRecordDynamicBp",
+  "doc": "A 24-hour ambulatory blood pressure monitoring (ABPM) session record, containing aggregated systolic, diastolic, and pulse statistics for the full day, waking period, sleep period, and the 2 hours after waking, as collected by the Huawei Health Kit health.record.dynamic_bp data type.",
+  "fields": [
+    {
+      "name": "time",
+      "type": "double",
+      "doc": "Start time of the sample or record in UTC (s)."
+    },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Time the connector received this record from the Huawei Health API (s)."
+    },
+    {
+      "name": "endTime",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "End time of the sample or record in UTC (s), when provided by Huawei.",
+      "default": null
+    },
+    {
+      "name": "planId",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "ABPM plan identifier.",
+      "default": null
+    },
+    {
+      "name": "planStartTime",
+      "type": [
+        "null",
+        "long"
+      ],
+      "doc": "ABPM plan start time (ms since epoch).",
+      "default": null
+    },
+    {
+      "name": "planEndTime",
+      "type": [
+        "null",
+        "long"
+      ],
+      "doc": "ABPM plan scheduled end time (ms since epoch).",
+      "default": null
+    },
+    {
+      "name": "planActualTime",
+      "type": [
+        "null",
+        "long"
+      ],
+      "doc": "ABPM plan actual end time (ms since epoch).",
+      "default": null
+    },
+    {
+      "name": "planStatus",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "ABPM plan state: 1=started, 2=completed, 3=ended early.",
+      "default": null
+    },
+    {
+      "name": "gasBagType",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Cuff specification type for the ABPM device.",
+      "default": null
+    },
+    {
+      "name": "sleepStartTime",
+      "type": [
+        "null",
+        "long"
+      ],
+      "doc": "Sleep period start time (ms).",
+      "default": null
+    },
+    {
+      "name": "sleepEndTime",
+      "type": [
+        "null",
+        "long"
+      ],
+      "doc": "Sleep period end time (ms).",
+      "default": null
+    },
+    {
+      "name": "validCntAll",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Number of valid blood pressure readings over 24 hours.",
+      "default": null
+    },
+    {
+      "name": "cntAll",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Total number of blood pressure readings over 24 hours.",
+      "default": null
+    },
+    {
+      "name": "maxSystolicBpAll",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Maximum systolic blood pressure over 24 hours (mmHg).",
+      "default": null
+    },
+    {
+      "name": "maxDiastolicBpAll",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Maximum diastolic blood pressure over 24 hours (mmHg).",
+      "default": null
+    },
+    {
+      "name": "maxHeartRateAll",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Maximum pulse over 24 hours (bpm).",
+      "default": null
+    },
+    {
+      "name": "midSystolicBpAll",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Median systolic blood pressure over 24 hours (mmHg).",
+      "default": null
+    },
+    {
+      "name": "midDiastolicBpAll",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Median diastolic blood pressure over 24 hours (mmHg).",
+      "default": null
+    },
+    {
+      "name": "midHeartRateAll",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Median pulse over 24 hours (bpm).",
+      "default": null
+    },
+    {
+      "name": "minSystolicBpAll",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Minimum systolic blood pressure over 24 hours (mmHg).",
+      "default": null
+    },
+    {
+      "name": "minDiastolicBpAll",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Minimum diastolic blood pressure over 24 hours (mmHg).",
+      "default": null
+    },
+    {
+      "name": "minHeartRateAll",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Minimum pulse over 24 hours (bpm).",
+      "default": null
+    },
+    {
+      "name": "avgSystolicBpAll",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Average systolic blood pressure over 24 hours (mmHg).",
+      "default": null
+    },
+    {
+      "name": "avgDiastolicBpAll",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Average diastolic blood pressure over 24 hours (mmHg).",
+      "default": null
+    },
+    {
+      "name": "avgHeartRateAll",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Average pulse over 24 hours (bpm).",
+      "default": null
+    },
+    {
+      "name": "stdSystolicBpAll",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Standard deviation of systolic blood pressure over 24 hours (mmHg).",
+      "default": null
+    },
+    {
+      "name": "stdDiastolicBpAll",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Standard deviation of diastolic blood pressure over 24 hours (mmHg).",
+      "default": null
+    },
+    {
+      "name": "stdHeartRateAll",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Standard deviation of pulse over 24 hours (bpm).",
+      "default": null
+    },
+    {
+      "name": "coefSystolicBpAll",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Coefficient of variation of systolic blood pressure over 24 hours.",
+      "default": null
+    },
+    {
+      "name": "coefDiastolicBpAll",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Coefficient of variation of diastolic blood pressure over 24 hours.",
+      "default": null
+    },
+    {
+      "name": "coefHeartRateAll",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Coefficient of variation of pulse over 24 hours.",
+      "default": null
+    },
+    {
+      "name": "loadSystolicBpAll",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Systolic blood pressure load over 24 hours (proportion of readings above threshold).",
+      "default": null
+    },
+    {
+      "name": "loadDiastolicBpAll",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Diastolic blood pressure load over 24 hours (proportion of readings above threshold).",
+      "default": null
+    },
+    {
+      "name": "dropSystolicBpAll",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Nocturnal dip of systolic blood pressure over 24 hours (mmHg).",
+      "default": null
+    },
+    {
+      "name": "dropDiastolicBpAll",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Nocturnal dip of diastolic blood pressure over 24 hours (mmHg).",
+      "default": null
+    },
+    {
+      "name": "peakSystolicBpAll",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Morning surge of systolic blood pressure over 24 hours (mmHg).",
+      "default": null
+    },
+    {
+      "name": "peakDiastolicBpAll",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Morning surge of diastolic blood pressure over 24 hours (mmHg).",
+      "default": null
+    },
+    {
+      "name": "validCntWake",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Number of valid blood pressure readings while awake.",
+      "default": null
+    },
+    {
+      "name": "cntWake",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Total number of blood pressure readings while awake.",
+      "default": null
+    },
+    {
+      "name": "maxSystolicBpWake",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Maximum systolic blood pressure while awake (mmHg).",
+      "default": null
+    },
+    {
+      "name": "maxDiastolicBpWake",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Maximum diastolic blood pressure while awake (mmHg).",
+      "default": null
+    },
+    {
+      "name": "maxHeartRateWake",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Maximum pulse while awake (bpm).",
+      "default": null
+    },
+    {
+      "name": "midSystolicBpWake",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Median systolic blood pressure while awake (mmHg).",
+      "default": null
+    },
+    {
+      "name": "midDiastolicBpWake",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Median diastolic blood pressure while awake (mmHg).",
+      "default": null
+    },
+    {
+      "name": "midHeartRateWake",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Median pulse while awake (bpm).",
+      "default": null
+    },
+    {
+      "name": "minSystolicBpWake",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Minimum systolic blood pressure while awake (mmHg).",
+      "default": null
+    },
+    {
+      "name": "minDiastolicBpWake",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Minimum diastolic blood pressure while awake (mmHg).",
+      "default": null
+    },
+    {
+      "name": "minHeartRateWake",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Minimum pulse while awake (bpm).",
+      "default": null
+    },
+    {
+      "name": "avgSystolicBpWake",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Average systolic blood pressure while awake (mmHg).",
+      "default": null
+    },
+    {
+      "name": "avgDiastolicBpWake",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Average diastolic blood pressure while awake (mmHg).",
+      "default": null
+    },
+    {
+      "name": "avgHeartRateWake",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Average pulse while awake (bpm).",
+      "default": null
+    },
+    {
+      "name": "stdSystolicBpWake",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Standard deviation of systolic blood pressure while awake (mmHg).",
+      "default": null
+    },
+    {
+      "name": "stdDiastolicBpWake",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Standard deviation of diastolic blood pressure while awake (mmHg).",
+      "default": null
+    },
+    {
+      "name": "stdHeartRateWake",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Standard deviation of pulse while awake (bpm).",
+      "default": null
+    },
+    {
+      "name": "coefSystolicBpWake",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Coefficient of variation of systolic blood pressure while awake.",
+      "default": null
+    },
+    {
+      "name": "coefDiastolicBpWake",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Coefficient of variation of diastolic blood pressure while awake.",
+      "default": null
+    },
+    {
+      "name": "coefHeartRateWake",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Coefficient of variation of pulse while awake.",
+      "default": null
+    },
+    {
+      "name": "loadSystolicBpWake",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Systolic blood pressure load while awake.",
+      "default": null
+    },
+    {
+      "name": "loadDiastolicBpWake",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Diastolic blood pressure load while awake.",
+      "default": null
+    },
+    {
+      "name": "validCntSleep",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Number of valid blood pressure readings while asleep.",
+      "default": null
+    },
+    {
+      "name": "cntSleep",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Total number of blood pressure readings while asleep.",
+      "default": null
+    },
+    {
+      "name": "maxSystolicBpSleep",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Maximum systolic blood pressure while asleep (mmHg).",
+      "default": null
+    },
+    {
+      "name": "maxDiastolicBpSleep",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Maximum diastolic blood pressure while asleep (mmHg).",
+      "default": null
+    },
+    {
+      "name": "maxHeartRateSleep",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Maximum pulse while asleep (bpm).",
+      "default": null
+    },
+    {
+      "name": "midSystolicBpSleep",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Median systolic blood pressure while asleep (mmHg).",
+      "default": null
+    },
+    {
+      "name": "midDiastolicBpSleep",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Median diastolic blood pressure while asleep (mmHg).",
+      "default": null
+    },
+    {
+      "name": "midHeartRateSleep",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Median pulse while asleep (bpm).",
+      "default": null
+    },
+    {
+      "name": "minSystolicBpSleep",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Minimum systolic blood pressure while asleep (mmHg).",
+      "default": null
+    },
+    {
+      "name": "minDiastolicBpSleep",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Minimum diastolic blood pressure while asleep (mmHg).",
+      "default": null
+    },
+    {
+      "name": "minHeartRateSleep",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Minimum pulse while asleep (bpm).",
+      "default": null
+    },
+    {
+      "name": "avgSystolicBpSleep",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Average systolic blood pressure while asleep (mmHg).",
+      "default": null
+    },
+    {
+      "name": "avgDiastolicBpSleep",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Average diastolic blood pressure while asleep (mmHg).",
+      "default": null
+    },
+    {
+      "name": "avgHeartRateSleep",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Average pulse while asleep (bpm).",
+      "default": null
+    },
+    {
+      "name": "stdSystolicBpSleep",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Standard deviation of systolic blood pressure while asleep (mmHg).",
+      "default": null
+    },
+    {
+      "name": "stdDiastolicBpSleep",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Standard deviation of diastolic blood pressure while asleep (mmHg).",
+      "default": null
+    },
+    {
+      "name": "stdHeartRateSleep",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Standard deviation of pulse while asleep (bpm).",
+      "default": null
+    },
+    {
+      "name": "coefSystolicBpSleep",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Coefficient of variation of systolic blood pressure while asleep.",
+      "default": null
+    },
+    {
+      "name": "coefDiastolicBpSleep",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Coefficient of variation of diastolic blood pressure while asleep.",
+      "default": null
+    },
+    {
+      "name": "coefHeartRateSleep",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Coefficient of variation of pulse while asleep.",
+      "default": null
+    },
+    {
+      "name": "loadSystolicBpSleep",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Systolic blood pressure load while asleep.",
+      "default": null
+    },
+    {
+      "name": "loadDiastolicBpSleep",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Diastolic blood pressure load while asleep.",
+      "default": null
+    },
+    {
+      "name": "validCntWakeTwo",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Number of valid blood pressure readings in the 2 hours after waking.",
+      "default": null
+    },
+    {
+      "name": "cntWakeTwo",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Total number of blood pressure readings in the 2 hours after waking.",
+      "default": null
+    },
+    {
+      "name": "maxSystolicBpWakeTwo",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Maximum systolic blood pressure in the 2 hours after waking (mmHg).",
+      "default": null
+    },
+    {
+      "name": "maxDiastolicBpWakeTwo",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Maximum diastolic blood pressure in the 2 hours after waking (mmHg).",
+      "default": null
+    },
+    {
+      "name": "maxHeartRateWakeTwo",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Maximum pulse in the 2 hours after waking (bpm).",
+      "default": null
+    },
+    {
+      "name": "midSystolicBpWakeTwo",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Median systolic blood pressure in the 2 hours after waking (mmHg).",
+      "default": null
+    },
+    {
+      "name": "midDiastolicBpWakeTwo",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Median diastolic blood pressure in the 2 hours after waking (mmHg).",
+      "default": null
+    },
+    {
+      "name": "midHeartRateWakeTwo",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Median pulse in the 2 hours after waking (bpm).",
+      "default": null
+    },
+    {
+      "name": "minSystolicBpWakeTwo",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Minimum systolic blood pressure in the 2 hours after waking (mmHg).",
+      "default": null
+    },
+    {
+      "name": "minDiastolicBpWakeTwo",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Minimum diastolic blood pressure in the 2 hours after waking (mmHg).",
+      "default": null
+    },
+    {
+      "name": "minHeartRateWakeTwo",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Minimum pulse in the 2 hours after waking (bpm).",
+      "default": null
+    },
+    {
+      "name": "avgSystolicBpWakeTwo",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Average systolic blood pressure in the 2 hours after waking (mmHg).",
+      "default": null
+    },
+    {
+      "name": "avgDiastolicBpWakeTwo",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Average diastolic blood pressure in the 2 hours after waking (mmHg).",
+      "default": null
+    },
+    {
+      "name": "avgHeartRateWakeTwo",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Average pulse in the 2 hours after waking (bpm).",
+      "default": null
+    },
+    {
+      "name": "stdSystolicBpWakeTwo",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Standard deviation of systolic blood pressure in the 2 hours after waking (mmHg).",
+      "default": null
+    },
+    {
+      "name": "stdDiastolicBpWakeTwo",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Standard deviation of diastolic blood pressure in the 2 hours after waking (mmHg).",
+      "default": null
+    },
+    {
+      "name": "stdHeartRateWakeTwo",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Standard deviation of pulse in the 2 hours after waking (bpm).",
+      "default": null
+    },
+    {
+      "name": "coefSystolicBpWakeTwo",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Coefficient of variation of systolic blood pressure in the 2 hours after waking.",
+      "default": null
+    },
+    {
+      "name": "coefDiastolicBpWakeTwo",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Coefficient of variation of diastolic blood pressure in the 2 hours after waking.",
+      "default": null
+    },
+    {
+      "name": "coefHeartRateWakeTwo",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Coefficient of variation of pulse in the 2 hours after waking.",
+      "default": null
+    },
+    {
+      "name": "extendData",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "Extended ABPM data stored as a JSON string containing additional device-specific measurement fields not captured in the typed fields above.",
+      "default": null
+    }
+  ]
+}

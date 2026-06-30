@@ -1,0 +1,63 @@
+{
+  "namespace": "org.radarcns.connector.huawei",
+  "type": "record",
+  "name": "HuaweiContinuousSpo2Statistics",
+  "doc": "Aggregated blood oxygen saturation (SpO2) statistics (average, maximum, minimum, most recent) over a time interval, as collected by the Huawei Health Kit continuous.spo2.statistics data type.",
+  "fields": [
+    {
+      "name": "time",
+      "type": "double",
+      "doc": "Start time of the sample or record in UTC (s)."
+    },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Time the connector received this record from the Huawei Health API (s)."
+    },
+    {
+      "name": "endTime",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "End time of the sample or record in UTC (s), when provided by Huawei.",
+      "default": null
+    },
+    {
+      "name": "saturationAvg",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Average blood oxygen saturation over the period (SpO2, %).",
+      "default": null
+    },
+    {
+      "name": "saturationMax",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Maximum blood oxygen saturation over the period (SpO2, %).",
+      "default": null
+    },
+    {
+      "name": "saturationMin",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Minimum blood oxygen saturation over the period (SpO2, %).",
+      "default": null
+    },
+    {
+      "name": "saturationLast",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Most recent blood oxygen saturation in the period (SpO2, %).",
+      "default": null
+    }
+  ]
+}

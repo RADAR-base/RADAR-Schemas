@@ -1,0 +1,36 @@
+{
+  "namespace": "org.radarcns.connector.huawei",
+  "type": "record",
+  "name": "HuaweiContinuousDistanceTotal",
+  "doc": "Cumulative distance travelled over a continuous interval, as collected by the Huawei Health Kit continuous.distance.total data type.",
+  "fields": [
+    {
+      "name": "time",
+      "type": "double",
+      "doc": "Start time of the sample or record in UTC (s)."
+    },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Time the connector received this record from the Huawei Health API (s)."
+    },
+    {
+      "name": "endTime",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "End time of the sample or record in UTC (s), when provided by Huawei.",
+      "default": null
+    },
+    {
+      "name": "distance",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Distance (m).",
+      "default": null
+    }
+  ]
+}

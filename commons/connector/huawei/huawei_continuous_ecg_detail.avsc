@@ -1,0 +1,90 @@
+{
+  "namespace": "org.radarcns.connector.huawei",
+  "type": "record",
+  "name": "HuaweiContinuousEcgDetail",
+  "doc": "Detailed ECG recording including raw voltage data, sampling frequency, detected arrhythmia type and result, and user-reported symptoms, as collected by the Huawei Health Kit continuous.ecg_detail data type.",
+  "fields": [
+    {
+      "name": "time",
+      "type": "double",
+      "doc": "Start time of the sample or record in UTC (s)."
+    },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Time the connector received this record from the Huawei Health API (s)."
+    },
+    {
+      "name": "endTime",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "End time of the sample or record in UTC (s), when provided by Huawei.",
+      "default": null
+    },
+    {
+      "name": "ecgRecordId",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "Unique identifier for the ECG recording.",
+      "default": null
+    },
+    {
+      "name": "averageHeartRate",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Average heart rate during the ECG recording (bpm).",
+      "default": null
+    },
+    {
+      "name": "ecgArrhythmiaType",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Arrhythmia type code detected in the ECG.",
+      "default": null
+    },
+    {
+      "name": "ecgArrhythmiaResult",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Arrhythmia analysis result code from the ECG.",
+      "default": null
+    },
+    {
+      "name": "userSymptom",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "User-reported symptoms during the ECG recording.",
+      "default": null
+    },
+    {
+      "name": "samplingFrequency",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "ECG sampling frequency (Hz).",
+      "default": null
+    },
+    {
+      "name": "voltageData",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "Raw ECG voltage data as a string.",
+      "default": null
+    }
+  ]
+}

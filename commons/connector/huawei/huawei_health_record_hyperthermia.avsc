@@ -1,0 +1,36 @@
+{
+  "namespace": "org.radarcns.connector.huawei",
+  "type": "record",
+  "name": "HuaweiHealthRecordHyperthermia",
+  "doc": "A hyperthermia (high body temperature) alarm record triggered when body temperature exceeds a threshold, as collected by the Huawei Health Kit health.record.hyperthermia data type.",
+  "fields": [
+    {
+      "name": "time",
+      "type": "double",
+      "doc": "Start time of the sample or record in UTC (s)."
+    },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Time the connector received this record from the Huawei Health API (s)."
+    },
+    {
+      "name": "endTime",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "End time of the sample or record in UTC (s), when provided by Huawei.",
+      "default": null
+    },
+    {
+      "name": "highBodyTemperatureAlarm",
+      "type": [
+        "null",
+        "float"
+      ],
+      "doc": "Flag indicating a high body temperature alarm was triggered.",
+      "default": null
+    }
+  ]
+}

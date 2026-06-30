@@ -1,0 +1,171 @@
+{
+  "namespace": "org.radarcns.connector.huawei",
+  "type": "record",
+  "name": "HuaweiHealthRecordSleep",
+  "doc": "A comprehensive sleep health record covering sleep onset and wake times, durations of each sleep stage (light, deep, REM), awake time, sleep score, latency, efficiency, and time in bed, as collected by the Huawei Health Kit health.record.sleep data type.",
+  "fields": [
+    {
+      "name": "time",
+      "type": "double",
+      "doc": "Start time of the sample or record in UTC (s)."
+    },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Time the connector received this record from the Huawei Health API (s)."
+    },
+    {
+      "name": "endTime",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "End time of the sample or record in UTC (s), when provided by Huawei.",
+      "default": null
+    },
+    {
+      "name": "fallAsleepTime",
+      "type": [
+        "null",
+        "long"
+      ],
+      "doc": "Unix timestamp (ms) when the user fell asleep.",
+      "default": null
+    },
+    {
+      "name": "wakeupTime",
+      "type": [
+        "null",
+        "long"
+      ],
+      "doc": "Unix timestamp (ms) when the user woke up.",
+      "default": null
+    },
+    {
+      "name": "lightSleepTime",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Light sleep duration (ms).",
+      "default": null
+    },
+    {
+      "name": "deepSleepTime",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Deep (slow-wave) sleep duration (ms).",
+      "default": null
+    },
+    {
+      "name": "dreamTime",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "REM sleep duration (ms).",
+      "default": null
+    },
+    {
+      "name": "awakeTime",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Time spent awake after sleep onset (ms).",
+      "default": null
+    },
+    {
+      "name": "allSleepTime",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Total sleep duration (ms).",
+      "default": null
+    },
+    {
+      "name": "wakeupCount",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Number of times the user woke up during the sleep period.",
+      "default": null
+    },
+    {
+      "name": "deepSleepPart",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Number of deep sleep segments.",
+      "default": null
+    },
+    {
+      "name": "sleepScore",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Overall sleep quality score.",
+      "default": null
+    },
+    {
+      "name": "sleepLatency",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Time taken to fall asleep (ms).",
+      "default": null
+    },
+    {
+      "name": "sleepEfficiency",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Sleep efficiency as a percentage of time in bed spent asleep.",
+      "default": null
+    },
+    {
+      "name": "goBedTime",
+      "type": [
+        "null",
+        "long"
+      ],
+      "doc": "Unix timestamp (ms) when the user went to bed.",
+      "default": null
+    },
+    {
+      "name": "sleepType",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Sleep type indicator.",
+      "default": null
+    },
+    {
+      "name": "prepareSleepTime",
+      "type": [
+        "null",
+        "long"
+      ],
+      "doc": "Unix timestamp (ms) when the user started preparing for sleep.",
+      "default": null
+    },
+    {
+      "name": "offBedTime",
+      "type": [
+        "null",
+        "long"
+      ],
+      "doc": "Unix timestamp (ms) when the user last got out of bed.",
+      "default": null
+    }
+  ]
+}

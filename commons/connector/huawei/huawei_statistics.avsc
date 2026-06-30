@@ -1,0 +1,72 @@
+{
+  "namespace": "org.radarcns.connector.huawei",
+  "type": "record",
+  "name": "HuaweiStatistics",
+  "doc": "Generic aggregated statistics (average, maximum, minimum, most recent, count) for a Huawei Health Kit data type over a time window, reused across multiple statistics topics.",
+  "fields": [
+    {
+      "name": "time",
+      "type": "double",
+      "doc": "Start time of the sample or record in UTC (s)."
+    },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Time the connector received this record from the Huawei Health API (s)."
+    },
+    {
+      "name": "endTime",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "End time of the aggregation window in UTC (s).",
+      "default": null
+    },
+    {
+      "name": "avg",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Average value over the aggregation period.",
+      "default": null
+    },
+    {
+      "name": "max",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Maximum value over the aggregation period.",
+      "default": null
+    },
+    {
+      "name": "min",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Minimum value over the aggregation period.",
+      "default": null
+    },
+    {
+      "name": "last",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Most recent value in the aggregation period.",
+      "default": null
+    },
+    {
+      "name": "count",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Number of measurements in the aggregation period.",
+      "default": null
+    }
+  ]
+}

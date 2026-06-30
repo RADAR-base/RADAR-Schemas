@@ -1,0 +1,72 @@
+{
+  "namespace": "org.radarcns.connector.huawei",
+  "type": "record",
+  "name": "HuaweiContinuousExerciseIntensityV2Statistics",
+  "doc": "Aggregated exercise intensity statistics (version 2) over a time window, including time spent in each of five heart rate zones, as collected by the Huawei Health Kit continuous.exercise_intensity.v2.statistics data type.",
+  "fields": [
+    {
+      "name": "time",
+      "type": "double",
+      "doc": "Start time of the sample or record in UTC (s)."
+    },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Time the connector received this record from the Huawei Health API (s)."
+    },
+    {
+      "name": "endTime",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "End time of the sample or record in UTC (s), when provided by Huawei.",
+      "default": null
+    },
+    {
+      "name": "zone1Duration",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Duration spent in zone 1 (warm-up, 50–60% max HR) during the session (s).",
+      "default": null
+    },
+    {
+      "name": "zone2Duration",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Duration spent in zone 2 (easy aerobic, 60–70% max HR) during the session (s).",
+      "default": null
+    },
+    {
+      "name": "zone3Duration",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Duration spent in zone 3 (aerobic, 70–80% max HR) during the session (s).",
+      "default": null
+    },
+    {
+      "name": "zone4Duration",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Duration spent in zone 4 (threshold, 80–90% max HR) during the session (s).",
+      "default": null
+    },
+    {
+      "name": "zone5Duration",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Duration spent in zone 5 (maximum effort, 90–100% max HR) during the session (s).",
+      "default": null
+    }
+  ]
+}
