@@ -1,0 +1,63 @@
+{
+  "namespace": "org.radarcns.connector.huawei",
+  "type": "record",
+  "name": "HuaweiHealthRecordHeartRateAlert",
+  "doc": "A heart rate alert episode (bradycardia or tachycardia) generated when heart rate crosses a configured threshold, including the threshold and average, maximum, and minimum heart rates during the episode, as collected by the Huawei Health Kit health.record.bradycardia and health.record.tachycardia data types.",
+  "fields": [
+    {
+      "name": "time",
+      "type": "double",
+      "doc": "Start time of the sample or record in UTC (s)."
+    },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Time the connector received this record from the Huawei Health API (s)."
+    },
+    {
+      "name": "endTime",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "End time of the alert episode in UTC (s).",
+      "default": null
+    },
+    {
+      "name": "threshold",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Heart rate threshold that triggered the alert (bpm).",
+      "default": null
+    },
+    {
+      "name": "avgHeartRate",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Average heart rate over the episode (bpm).",
+      "default": null
+    },
+    {
+      "name": "maxHeartRate",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Maximum heart rate over the episode (bpm).",
+      "default": null
+    },
+    {
+      "name": "minHeartRate",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Minimum heart rate over the episode (bpm).",
+      "default": null
+    }
+  ]
+}

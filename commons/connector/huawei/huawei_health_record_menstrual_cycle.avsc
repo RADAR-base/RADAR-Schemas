@@ -1,0 +1,72 @@
+{
+  "namespace": "org.radarcns.connector.huawei",
+  "type": "record",
+  "name": "HuaweiHealthRecordMenstrualCycle",
+  "doc": "A menstrual cycle phase record capturing the cycle day, phase status, sub-status, and any user remarks, as collected by the Huawei Health Kit health.record.menstrual_cycle data type.",
+  "fields": [
+    {
+      "name": "time",
+      "type": "double",
+      "doc": "Start time of the sample or record in UTC (s)."
+    },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Time the connector received this record from the Huawei Health API (s)."
+    },
+    {
+      "name": "endTime",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "End time of the sample or record in UTC (s), when provided by Huawei.",
+      "default": null
+    },
+    {
+      "name": "recordday",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Day number within the menstrual cycle record.",
+      "default": null
+    },
+    {
+      "name": "status",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Menstrual cycle phase: 1=menstruation, 2=follicular, 3=ovulation, 4=luteal.",
+      "default": null
+    },
+    {
+      "name": "substatus",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Menstrual cycle sub-phase detail code providing finer granularity within the main phase (see Huawei Health Kit API documentation for values).",
+      "default": null
+    },
+    {
+      "name": "remarks",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "Free-text remarks about the menstrual cycle record.",
+      "default": null
+    },
+    {
+      "name": "timezone",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "Time zone identifier for the record.",
+      "default": null
+    }
+  ]
+}

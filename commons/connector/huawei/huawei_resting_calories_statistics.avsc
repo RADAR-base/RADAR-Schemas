@@ -1,0 +1,45 @@
+{
+  "namespace": "org.radarcns.connector.huawei",
+  "type": "record",
+  "name": "HuaweiRestingCaloriesStatistics",
+  "doc": "Aggregated resting (basal metabolic rate) calorie statistics over a time window, as collected by the Huawei Health Kit resting_calories.statistics data type.",
+  "fields": [
+    {
+      "name": "time",
+      "type": "double",
+      "doc": "Start time of the sample or record in UTC (s)."
+    },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Time the connector received this record from the Huawei Health API (s)."
+    },
+    {
+      "name": "endTime",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "End time of the sample or record in UTC (s), when provided by Huawei.",
+      "default": null
+    },
+    {
+      "name": "predictedCalories",
+      "type": [
+        "null",
+        "float"
+      ],
+      "doc": "Predicted calorie expenditure (kcal).",
+      "default": null
+    },
+    {
+      "name": "totalCalories",
+      "type": [
+        "null",
+        "float"
+      ],
+      "doc": "Total energy expenditure including resting metabolism (kcal).",
+      "default": null
+    }
+  ]
+}

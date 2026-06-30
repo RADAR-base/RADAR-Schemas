@@ -1,0 +1,36 @@
+{
+  "namespace": "org.radarcns.connector.huawei",
+  "type": "record",
+  "name": "HuaweiSleepRespiratoryEvent",
+  "doc": "A respiratory event detected during sleep (such as apnoea or hypopnoea), classified by event type code, as collected by the Huawei Health Kit sleep_respiratory_event data type.",
+  "fields": [
+    {
+      "name": "time",
+      "type": "double",
+      "doc": "Start time of the sample or record in UTC (s)."
+    },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Time the connector received this record from the Huawei Health API (s)."
+    },
+    {
+      "name": "endTime",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "End time of the sample or record in UTC (s), when provided by Huawei.",
+      "default": null
+    },
+    {
+      "name": "eventname",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Sleep respiratory event classification code.",
+      "default": null
+    }
+  ]
+}

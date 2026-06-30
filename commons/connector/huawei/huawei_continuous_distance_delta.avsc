@@ -1,0 +1,36 @@
+{
+  "namespace": "org.radarcns.connector.huawei",
+  "type": "record",
+  "name": "HuaweiContinuousDistanceDelta",
+  "doc": "Incremental distance covered since the previous reading, suitable for accumulating total distance over an activity, as collected by the Huawei Health Kit continuous.distance.delta data type.",
+  "fields": [
+    {
+      "name": "time",
+      "type": "double",
+      "doc": "Start time of the sample or record in UTC (s)."
+    },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Time the connector received this record from the Huawei Health API (s)."
+    },
+    {
+      "name": "endTime",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "End time of the sample or record in UTC (s), when provided by Huawei.",
+      "default": null
+    },
+    {
+      "name": "distanceDelta",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Distance covered since the last reading (m).",
+      "default": null
+    }
+  ]
+}

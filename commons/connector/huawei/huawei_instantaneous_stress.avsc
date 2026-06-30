@@ -1,0 +1,45 @@
+{
+  "namespace": "org.radarcns.connector.huawei",
+  "type": "record",
+  "name": "HuaweiInstantaneousStress",
+  "doc": "A single stress level measurement including score, grade, and whether the measurement was active or passive, as collected by the Huawei Health Kit instantaneous.stress data type.",
+  "fields": [
+    {
+      "name": "time",
+      "type": "double",
+      "doc": "Start time of the sample or record in UTC (s)."
+    },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Time the connector received this record from the Huawei Health API (s)."
+    },
+    {
+      "name": "score",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Stress score, ranging from 1 to 99.",
+      "default": null
+    },
+    {
+      "name": "grade",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Stress grade, ranging from 1 (low) to 4 (high).",
+      "default": null
+    },
+    {
+      "name": "measureType",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Stress measurement mode: 1=active, 2=passive.",
+      "default": null
+    }
+  ]
+}

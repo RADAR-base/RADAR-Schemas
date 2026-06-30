@@ -1,0 +1,27 @@
+{
+  "namespace": "org.radarcns.connector.huawei",
+  "type": "record",
+  "name": "HuaweiHeartRateVariability",
+  "doc": "Heart rate variability (HRV) measured as RMSSD (root mean square of successive differences between adjacent RR intervals), as collected by the Huawei Health Kit heart_rate_variability data type.",
+  "fields": [
+    {
+      "name": "time",
+      "type": "double",
+      "doc": "Start time of the sample or record in UTC (s)."
+    },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Time the connector received this record from the Huawei Health API (s)."
+    },
+    {
+      "name": "heartRateVariabilityRmssd",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Heart rate variability measured as RMSSD (root mean square of successive differences between adjacent RR intervals, ms).",
+      "default": null
+    }
+  ]
+}

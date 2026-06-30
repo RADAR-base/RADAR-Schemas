@@ -1,0 +1,54 @@
+{
+  "namespace": "org.radarcns.connector.huawei",
+  "type": "record",
+  "name": "HuaweiActiveHours",
+  "doc": "Active hours data recording whether a given hour contained sufficient moderate or high intensity activity, as collected by the Huawei Health Kit active_hours data type.",
+  "fields": [
+    {
+      "name": "time",
+      "type": "double",
+      "doc": "Start time of the sample or record in UTC (s)."
+    },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Time the connector received this record from the Huawei Health API (s)."
+    },
+    {
+      "name": "endTime",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "End time of the sample or record in UTC (s), when provided by Huawei.",
+      "default": null
+    },
+    {
+      "name": "activeHours",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Number of hours with at least moderate-intensity activity.",
+      "default": null
+    },
+    {
+      "name": "moderateIntensityMinutes",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Duration of moderate-intensity activity within the active hour (min).",
+      "default": null
+    },
+    {
+      "name": "highIntensityMinutes",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Duration of high-intensity activity within the active hour (min).",
+      "default": null
+    }
+  ]
+}
