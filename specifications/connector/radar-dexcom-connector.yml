@@ -7,3 +7,6 @@ data:
   - doc: Estimated glucose values from Dexcom CGM.
     topic: connect_dexcom_egv
     value_schema: .connector.dexcom.DexcomEgv
+  - doc: Alert events from Dexcom CGM.
+    topic: connect_dexcom_alert
+    value_schema: .connector.dexcom.DexcomAlert

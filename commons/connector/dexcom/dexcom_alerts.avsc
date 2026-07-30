@@ -1,0 +1,65 @@
+{
+  "namespace": "org.radarcns.connector.dexcom",
+  "type": "record",
+  "name": "DexcomAlert",
+  "doc": "Alert event from Dexcom CGM API v3.",
+  "fields": [
+    {
+      "name": "recordId",
+      "type": "string",
+      "doc": "Dexcom record UUID."
+    },
+    {
+      "name": "systemTime",
+      "type": "double",
+      "doc": "System time of the alert in UTC (s). Parsed from Dexcom ISO 8601 systemTime."
+    },
+    {
+      "name": "displayTime",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Display time as ISO 8601. Receiver records may have no offset."
+    },
+    {
+      "name": "alertName",
+      "type": "string",
+      "doc": "Alert name (e.g. high, low, rise, fall, urgentLow)."
+    },
+    {
+      "name": "alertState",
+      "type": "string",
+      "doc": "Alert state (e.g. activeAlarming, activeSnoozed, inactive)."
+    },
+    {
+      "name": "displayDevice",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "iOS, android, or receiver."
+    },
+    {
+      "name": "transmitterGeneration",
+      "type": ["null", "string"],
+      "default": null
+    },
+    {
+      "name": "transmitterGenerationVariant",
+      "type": ["null", "string"],
+      "default": null
+    },
+    {
+      "name": "transmitterId",
+      "type": ["null", "string"],
+      "default": null
+    },
+    {
+      "name": "displayApp",
+      "type": ["null", "string"],
+      "default": null
+    },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Time the connector received this record (s). Not in Dexcom JSON."
+    }
+  ]
+}
