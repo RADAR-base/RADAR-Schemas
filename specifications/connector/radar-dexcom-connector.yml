@@ -16,3 +16,6 @@ data:
   - doc: Calibration events from Dexcom CGM.
     topic: connect_dexcom_calibration
     value_schema: .connector.dexcom.DexcomCalibration
+  - doc: Device info and alert settings from Dexcom CGM.
+    topic: connect_dexcom_device
+    value_schema: .connector.dexcom.DexcomDevice

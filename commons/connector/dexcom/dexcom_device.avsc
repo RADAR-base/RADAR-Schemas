@@ -1,0 +1,84 @@
+{
+  "namespace": "org.radarcns.connector.dexcom",
+  "type": "record",
+  "name": "DexcomDevice",
+  "doc": "Device information and alert settings from Dexcom CGM API v3.",
+  "fields": [
+    { "name": "transmitterGeneration", "type": ["null", "string"], "default": null },
+    { "name": "transmitterGenerationVariant", "type": ["null", "string"], "default": null },
+    { "name": "displayDevice", "type": ["null", "string"], "default": null, "doc": "iOS, android, or receiver." },
+    { "name": "displayApp", "type": ["null", "string"], "default": null },
+    { "name": "lastUploadDate", "type": ["null", "string"], "default": null, "doc": "Last upload timestamp as ISO 8601 UTC." },
+    {
+      "name": "alertSchedules",
+      "type": {
+        "type": "array",
+        "items": {
+          "type": "record",
+          "name": "DexcomAlertSchedule",
+          "fields": [
+            {
+              "name": "alertScheduleSettings",
+              "type": {
+                "type": "record",
+                "name": "DexcomAlertScheduleSettings",
+                "fields": [
+                  { "name": "alertScheduleName", "type": "string" },
+                  { "name": "isEnabled", "type": "boolean" },
+                  { "name": "startTime", "type": "string", "doc": "Time of day (HH:mm)." },
+                  { "name": "endTime", "type": "string", "doc": "Time of day (HH:mm)." },
+                  { "name": "isActive", "type": ["null", "boolean"], "default": null },
+                  {
+                    "name": "override",
+                    "type": [
+                      "null",
+                      {
+                        "type": "record",
+                        "name": "DexcomAlertScheduleOverride",
+                        "fields": [
+                          { "name": "isOverrideEnabled", "type": ["null", "boolean"], "default": null },
+                          { "name": "mode", "type": ["null", "string"], "default": null, "doc": "e.g. quiet, vibrate." },
+                          { "name": "endTime", "type": ["null", "string"], "default": null }
+                        ]
+                      }
+                    ],
+                    "default": null
+                  },
+                  {
+                    "name": "daysOfWeek",
+                    "type": { "type": "array", "items": "string" }
+                  }
+                ]
+              }
+            },
+            {
+              "name": "alertSettings",
+              "type": {
+                "type": "array",
+                "items": {
+                  "type": "record",
+                  "name": "DexcomDeviceAlertSetting",
+                  "fields": [
+                    { "name": "systemTime", "type": ["null", "double"], "default": null, "doc": "UTC epoch (s)." },
+                    { "name": "displayTime", "type": ["null", "string"], "default": null },
+                    { "name": "alertName", "type": "string" },
+                    { "name": "value", "type": ["null", "int"], "default": null },
+                    { "name": "unit", "type": ["null", "string"], "default": null },
+                    { "name": "snooze", "type": ["null", "int"], "default": null },
+                    { "name": "enabled", "type": "boolean" },
+                    { "name": "SecondaryTriggerCondition", "type": ["null", "int"], "default": null },
+                    { "name": "soundTheme", "type": ["null", "string"], "default": null },
+                    { "name": "soundOutputMode", "type": ["null", "string"], "default": null }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      },
+      "default": []
+    },
+    { "name": "transmitterId", "type": ["null", "string"], "default": null },
+    { "name": "timeReceived", "type": "double", "doc": "Time the connector received this record (s). Not in Dexcom JSON." }
+  ]
+}
