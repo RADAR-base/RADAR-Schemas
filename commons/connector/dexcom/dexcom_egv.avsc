@@ -1,0 +1,95 @@
+{
+  "namespace": "org.radarcns.connector.dexcom",
+  "type": "record",
+  "name": "DexcomEgv",
+  "doc": "Estimated glucose value (EGV) from Dexcom CGM API v3.",
+  "fields": [
+    {
+      "name": "recordId",
+      "type": "string",
+      "doc": "Dexcom record UUID."
+    },
+    {
+      "name": "systemTime",
+      "type": "double",
+      "doc": "System time of the EGV in UTC (s). Parsed from Dexcom ISO 8601 systemTime."
+    },
+    {
+      "name": "displayTime",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Display time as ISO 8601 with offset when from mobile app."
+    },
+    {
+      "name": "transmitterId",
+      "type": ["null", "string"],
+      "default": null
+    },
+    {
+      "name": "transmitterTicks",
+      "type": ["null", "long"],
+      "default": null
+    },
+    {
+      "name": "value",
+      "type": ["null", "int"],
+      "default": null,
+      "doc": "EGV in mg/dL. 39 and 401 indicate out-of-display-range values."
+    },
+    {
+      "name": "status",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "EGV status when value is special (e.g. low, high)."
+    },
+    {
+      "name": "trend",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Trend arrow (e.g. flat, singleUp)."
+    },
+    {
+      "name": "trendRate",
+      "type": ["null", "double"],
+      "default": null,
+      "doc": "Rate of glucose change."
+    },
+    {
+      "name": "unit",
+      "type": "string",
+      "doc": "Unit of value (mg/dL or mmol/L)."
+    },
+    {
+      "name": "rateUnit",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Unit for trendRate (e.g. mg/dL/min)."
+    },
+    {
+      "name": "displayDevice",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "iOS, android, or receiver."
+    },
+    {
+      "name": "transmitterGeneration",
+      "type": ["null", "string"],
+      "default": null
+    },
+    {
+      "name": "transmitterGenerationVariant",
+      "type": ["null", "string"],
+      "default": null
+    },
+    {
+      "name": "displayApp",
+      "type": ["null", "string"],
+      "default": null
+    },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Time the connector received this record (s). Not in Dexcom JSON."
+    }
+  ]
+}
