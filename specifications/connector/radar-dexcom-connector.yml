@@ -13,3 +13,6 @@ data:
   - doc: User events from Dexcom CGM (insulin, carbs, exercise, etc.).
     topic: connect_dexcom_event
     value_schema: .connector.dexcom.DexcomEvent
+  - doc: Calibration events from Dexcom CGM.
+    topic: connect_dexcom_calibration
+    value_schema: .connector.dexcom.DexcomCalibration

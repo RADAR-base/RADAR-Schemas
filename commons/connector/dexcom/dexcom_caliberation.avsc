@@ -1,0 +1,68 @@
+{
+  "namespace": "org.radarcns.connector.dexcom",
+  "type": "record",
+  "name": "DexcomCalibration",
+  "doc": "Calibration event from Dexcom CGM API v3.",
+  "fields": [
+    {
+      "name": "recordId",
+      "type": "string",
+      "doc": "Dexcom record UUID."
+    },
+    {
+      "name": "systemTime",
+      "type": "double",
+      "doc": "System time of the calibration in UTC (s). Parsed from Dexcom ISO 8601 systemTime."
+    },
+    {
+      "name": "displayTime",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Display time as ISO 8601. May lack UTC offset on receiver-sourced records."
+    },
+    {
+      "name": "unit",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Unit of value (mg/dL or mmol/L)."
+    },
+    {
+      "name": "value",
+      "type": ["null", "int"],
+      "default": null,
+      "doc": "Fingerstick calibration glucose value."
+    },
+    {
+      "name": "displayDevice",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "iOS, android, or receiver."
+    },
+    {
+      "name": "transmitterId",
+      "type": ["null", "string"],
+      "default": null
+    },
+    {
+      "name": "transmitterTicks",
+      "type": ["null", "long"],
+      "default": null,
+      "doc": "Seconds since transmitter initiation."
+    },
+    {
+      "name": "transmitterGeneration",
+      "type": ["null", "string"],
+      "default": null
+    },
+    {
+      "name": "transmitterGenerationVariant",
+      "type": ["null", "string"],
+      "default": null
+    },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Time the connector received this record (s). Not in Dexcom JSON."
+    }
+  ]
+}
