@@ -1,0 +1,78 @@
+{
+  "namespace": "org.radarcns.connector.dexcom",
+  "type": "record",
+  "name": "DexcomEvent",
+  "doc": "User-entered event from Dexcom CGM API v3 (insulin, carbs, exercise, health, etc.).",
+  "fields": [
+    {
+      "name": "recordId",
+      "type": "string",
+      "doc": "Dexcom record UUID."
+    },
+    {
+      "name": "systemTime",
+      "type": "double",
+      "doc": "System time of the event in UTC (s). Parsed from Dexcom ISO 8601 systemTime."
+    },
+    {
+      "name": "displayTime",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Display time as ISO 8601 with offset when from mobile app."
+    },
+    {
+      "name": "eventStatus",
+      "type": "string",
+      "doc": "Record status (created, updated, deleted)."
+    },
+    {
+      "name": "eventType",
+      "type": "string",
+      "doc": "Event type (insulin, carbs, exercise, health, bloodGlucose, notes)."
+    },
+    {
+      "name": "eventSubType",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Subtype (e.g. longActing, fastActing for insulin)."
+    },
+    {
+      "name": "value",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Event value. Dexcom API uses string; coerce numbers (e.g. 400) to string in connector."
+    },
+    {
+      "name": "unit",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Unit for value (e.g. units, grams, mg/dL, minutes)."
+    },
+    {
+      "name": "transmitterId",
+      "type": ["null", "string"],
+      "default": null
+    },
+    {
+      "name": "transmitterGeneration",
+      "type": ["null", "string"],
+      "default": null
+    },
+    {
+      "name": "transmitterGenerationVariant",
+      "type": ["null", "string"],
+      "default": null
+    },
+    {
+      "name": "displayDevice",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "iOS, android, or receiver."
+    },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Time the connector received this record (s). Not in Dexcom JSON."
+    }
+  ]
+}

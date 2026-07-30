@@ -10,3 +10,6 @@ data:
   - doc: Alert events from Dexcom CGM.
     topic: connect_dexcom_alert
     value_schema: .connector.dexcom.DexcomAlert
+  - doc: User events from Dexcom CGM (insulin, carbs, exercise, etc.).
+    topic: connect_dexcom_event
+    value_schema: .connector.dexcom.DexcomEvent
