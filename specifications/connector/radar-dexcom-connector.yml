@@ -1,0 +1,9 @@
+name: RADAR-DEXCOM-CONNECTOR
+vendor: RADAR-base
+model: radar-connect-dexcom-source
+version: 0.0.1
+doc: Spec for Radar Dexcom connector.
+data:
+  - doc: Estimated glucose values from Dexcom CGM.
+    topic: connect_dexcom_egv
+    value_schema: .connector.dexcom.DexcomEgv
