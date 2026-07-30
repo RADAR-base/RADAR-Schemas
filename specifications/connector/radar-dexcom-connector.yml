@@ -19,3 +19,6 @@ data:
   - doc: Device info and alert settings from Dexcom CGM.
     topic: connect_dexcom_device
     value_schema: .connector.dexcom.DexcomDevice
+  - doc: Available data time ranges from Dexcom CGM (for connector sync).
+    topic: connect_dexcom_data_range
+    value_schema: .connector.dexcom.DexcomDataRange
