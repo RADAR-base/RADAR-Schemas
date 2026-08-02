@@ -1,0 +1,11 @@
+{
+  "namespace": "org.radarcns.push.googlehealth",
+  "type": "record",
+  "name": "GoogleHealthSedentaryPeriod",
+  "doc": "Google Health period during which the user was sedentary, i.e. not moving while wearing the device. The interval is the whole observation, Google reports no further fields for this type.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s). Start of the sedentary period." },
+    { "name": "timeReceived", "type": "double", "doc": "Time this record was collected by the push endpoint, seconds since the Unix Epoch." },
+    { "name": "timeInterval", "type": "int", "doc": "Chronological window size (s). Duration the user was sedentary." }
+  ]
+}
