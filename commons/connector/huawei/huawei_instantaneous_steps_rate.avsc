@@ -1,0 +1,27 @@
+{
+  "namespace": "org.radarcns.connector.huawei",
+  "type": "record",
+  "name": "HuaweiInstantaneousStepsRate",
+  "doc": "A single instantaneous step cadence measurement in steps per minute, as collected by the Huawei Health Kit instantaneous.steps.rate data type.",
+  "fields": [
+    {
+      "name": "time",
+      "type": "double",
+      "doc": "Start time of the sample or record in UTC (s)."
+    },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Time the connector received this record from the Huawei Health API (s)."
+    },
+    {
+      "name": "stepRate",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Step frequency (steps/min).",
+      "default": null
+    }
+  ]
+}

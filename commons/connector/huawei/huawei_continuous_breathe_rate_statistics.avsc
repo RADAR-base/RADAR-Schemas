@@ -1,0 +1,72 @@
+{
+  "namespace": "org.radarcns.connector.huawei",
+  "type": "record",
+  "name": "HuaweiContinuousBreatheRateStatistics",
+  "doc": "Aggregated breathing rate statistics (average, maximum, minimum) over a time interval, measured in breaths per minute, as collected by the Huawei Health Kit continuous.breathe_rate.statistics data type.",
+  "fields": [
+    {
+      "name": "time",
+      "type": "double",
+      "doc": "Start time of the sample or record in UTC (s)."
+    },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Time the connector received this record from the Huawei Health API (s)."
+    },
+    {
+      "name": "endTime",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "End time of the sample or record in UTC (s), when provided by Huawei.",
+      "default": null
+    },
+    {
+      "name": "maxBreatheRate",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Maximum breathing rate over the period (breaths/min).",
+      "default": null
+    },
+    {
+      "name": "minBreatheRate",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Minimum breathing rate over the period (breaths/min).",
+      "default": null
+    },
+    {
+      "name": "avgBreatheRate",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Average breathing rate over the period (breaths/min).",
+      "default": null
+    },
+    {
+      "name": "minBreathrateBaseline",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Minimum baseline breathing rate (breaths/min).",
+      "default": null
+    },
+    {
+      "name": "maxBreathrateBaseline",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Maximum baseline breathing rate (breaths/min).",
+      "default": null
+    }
+  ]
+}

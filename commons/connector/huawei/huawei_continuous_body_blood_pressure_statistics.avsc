@@ -1,0 +1,117 @@
+{
+  "namespace": "org.radarcns.connector.huawei",
+  "type": "record",
+  "name": "HuaweiContinuousBodyBloodPressureStatistics",
+  "doc": "Aggregated blood pressure statistics (systolic and diastolic averages, maxima, minima) and associated pulse rate over a time window, as collected by the Huawei Health Kit continuous.body.blood_pressure.statistics data type.",
+  "fields": [
+    {
+      "name": "time",
+      "type": "double",
+      "doc": "Start time of the sample or record in UTC (s)."
+    },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Time the connector received this record from the Huawei Health API (s)."
+    },
+    {
+      "name": "endTime",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "End time of the sample or record in UTC (s), when provided by Huawei.",
+      "default": null
+    },
+    {
+      "name": "systolicPressureAvg",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Average systolic blood pressure over the period (mmHg).",
+      "default": null
+    },
+    {
+      "name": "systolicPressureMax",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Maximum systolic blood pressure over the period (mmHg).",
+      "default": null
+    },
+    {
+      "name": "systolicPressureMin",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Minimum systolic blood pressure over the period (mmHg).",
+      "default": null
+    },
+    {
+      "name": "diastolicPressureAvg",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Average diastolic blood pressure over the period (mmHg).",
+      "default": null
+    },
+    {
+      "name": "diastolicPressureMax",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Maximum diastolic blood pressure over the period (mmHg).",
+      "default": null
+    },
+    {
+      "name": "diastolicPressureMin",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Minimum diastolic blood pressure over the period (mmHg).",
+      "default": null
+    },
+    {
+      "name": "sphygmusAvg",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Average pulse rate over the period (bpm).",
+      "default": null
+    },
+    {
+      "name": "sphygmusMax",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Maximum pulse rate over the period (bpm).",
+      "default": null
+    },
+    {
+      "name": "sphygmusMin",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Minimum pulse rate over the period (bpm).",
+      "default": null
+    },
+    {
+      "name": "sphygmusLast",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Most recent pulse rate in the period (bpm).",
+      "default": null
+    }
+  ]
+}

@@ -1,0 +1,153 @@
+{
+  "namespace": "org.radarcns.connector.huawei",
+  "type": "record",
+  "name": "HuaweiActivityRecord",
+  "doc": "A single workout or physical activity session retrieved from the Huawei Health Kit Activity Records REST API (/healthkit/v1/activityRecords), including session metadata, device information, and an optional nested activity summary.",
+  "fields": [
+    {
+      "name": "time",
+      "type": "double",
+      "doc": "Activity start time in UTC (s)."
+    },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Time the connector received this record from the Huawei Health API (s)."
+    },
+    {
+      "name": "endTime",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Activity end time in UTC (s).",
+      "default": null
+    },
+    {
+      "name": "activityRecordId",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "Unique activity record identifier.",
+      "default": null
+    },
+    {
+      "name": "name",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "Display name of the activity record.",
+      "default": null
+    },
+    {
+      "name": "description",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "Description of the activity record.",
+      "default": null
+    },
+    {
+      "name": "timeZone",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "Time zone identifier for the record.",
+      "default": null
+    },
+    {
+      "name": "activityTypeId",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "Huawei activity type identifier (HiHealth activity constant).",
+      "default": null
+    },
+    {
+      "name": "activeTimeMillis",
+      "type": [
+        "null",
+        "long"
+      ],
+      "doc": "Active duration of the activity (ms).",
+      "default": null
+    },
+    {
+      "name": "isKeepGoing",
+      "type": [
+        "null",
+        "boolean"
+      ],
+      "doc": "Whether the activity record is still in progress.",
+      "default": null
+    },
+    {
+      "name": "deviceManufacturer",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "Manufacturer of the device that recorded the activity.",
+      "default": null
+    },
+    {
+      "name": "deviceType",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Huawei device type code for the recording device.",
+      "default": null
+    },
+    {
+      "name": "activitySummaryAvgPace",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Average pace from the activity summary (s/km).",
+      "default": null
+    },
+    {
+      "name": "activitySummaryBestPace",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Best (fastest) pace from the activity summary (s/km).",
+      "default": null
+    },
+    {
+      "name": "activitySummaryPaceMap",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "Pace per kilometre segment stored as a JSON map (key: segment label, value: pace in s/km).",
+      "default": null
+    },
+    {
+      "name": "activitySummaryDataSummary",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "Statistical data points for the activity stored as a JSON array of sample points.",
+      "default": null
+    },
+    {
+      "name": "activitySummarySectionSummary",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "Segment statistical data for the activity stored as a JSON array of section entries.",
+      "default": null
+    }
+  ]
+}

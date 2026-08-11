@@ -1,0 +1,20 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.25.0
+ignore:
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-15365924:
+    - '*':
+        reason: >
+          jackson-core upgrade to 2.21.x is blocked by jackson-module-kotlin requiring
+          Kotlin v2, while this project is pinned to Kotlin 1.9.x. Tracked for resolution
+          when Kotlin is upgraded.
+        expires: 2027-01-01T00:00:00.000Z
+        created: 2026-06-05T00:00:00.000Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-15907551:
+    - '*':
+        reason: >
+          jackson-core upgrade to 2.21.x is blocked by jackson-module-kotlin requiring
+          Kotlin v2, while this project is pinned to Kotlin 1.9.x. Tracked for resolution
+          when Kotlin is upgraded.
+        expires: 2027-01-01T00:00:00.000Z
+        created: 2026-06-05T00:00:00.000Z
+patch: {}
