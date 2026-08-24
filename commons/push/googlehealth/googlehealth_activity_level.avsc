@@ -1,0 +1,29 @@
+{
+  "namespace": "org.radarcns.push.googlehealth",
+  "type": "record",
+  "name": "GoogleHealthActivityLevel",
+  "doc": "Google Health activity level the user sustained during a time interval. Google reports one record for every interval, one minute long in practice, and labels each interval as sedentary, lightly active, moderately active or very active. This is the detailed view of the day. GoogleHealthSedentaryPeriod covers the sedentary time only, and groups neighbouring sedentary minutes together into one longer record.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s). Start of the interval." },
+    { "name": "timeReceived", "type": "double", "doc": "Time this record was collected by the push endpoint, seconds since the Unix Epoch." },
+    { "name": "timeInterval", "type": "int", "doc": "Chronological window size (s)." },
+    {
+      "name": "level",
+      "type": {
+        "name": "GoogleHealthActivityLevelType",
+        "type": "enum",
+        "symbols": [
+          "SEDENTARY",
+          "LIGHTLY_ACTIVE",
+          "MODERATELY_ACTIVE",
+          "VERY_ACTIVE",
+          "ACTIVITY_LEVEL_TYPE_UNSPECIFIED",
+          "UNKNOWN"
+        ],
+        "doc": "Activity level type as computed by device. ACTIVITY_LEVEL_TYPE_UNSPECIFIED is Google's own value for an interval it did not classify. UNKNOWN covers any other value Google may report that is not read here yet."
+      },
+      "doc": "Activity level type in the given time interval.",
+      "default": "UNKNOWN"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "namespace": "org.radarcns.push.googlehealth",
+  "type": "record",
+  "name": "GoogleHealthSedentaryPeriod",
+  "doc": "Google Health period during which the user was sedentary, i.e. not moving while wearing the device. Google groups each unbroken run of sedentary time into one record, so a period lasts as long as the user stayed still and can run from a few minutes to a few hours. Only sedentary time is reported here, so the periods leave gaps over the rest of the day. GoogleHealthActivityLevel is the detailed view of the same signal, with one record per minute covering the whole day. The interval is the whole observation, Google reports no further fields for this type.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s). Start of the sedentary period." },
+    { "name": "endTime", "type": "double", "doc": "End of the sedentary period, seconds since the Unix Epoch (s)." },
+    { "name": "timeReceived", "type": "double", "doc": "Time this record was collected by the push endpoint, seconds since the Unix Epoch." }
+  ]
+}
