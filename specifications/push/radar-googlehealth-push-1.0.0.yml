@@ -7,6 +7,15 @@ data:
   - doc: The `steps` data type (Interval). Step count per device-reported interval.
     topic: push_googlehealth_steps
     value_schema: .push.googlehealth.GoogleHealthSteps
+  - doc: The `floors` data type (Interval). Elevation gained, in floors, per device-reported interval.
+    topic: push_googlehealth_floors
+    value_schema: .push.googlehealth.GoogleHealthFloors
+  - doc: The `sedentary-period` data type (Interval) per period the user was not moving while wearing the device.
+    topic: push_googlehealth_sedentary_period
+    value_schema: .push.googlehealth.GoogleHealthSedentaryPeriod
+  - doc: The `activity-level` data type (Interval). Activity level (sedentary to very active) sustained over each interval, one minute long in practice.
+    topic: push_googlehealth_activity_level
+    value_schema: .push.googlehealth.GoogleHealthActivityLevel
   - doc: The `heart-rate` data type (Sample). Instantaneous heart-rate observations in beats per minute.
     topic: push_googlehealth_heart_rate
     value_schema: .push.googlehealth.GoogleHealthHeartRate
