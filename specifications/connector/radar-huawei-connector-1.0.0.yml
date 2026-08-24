@@ -142,63 +142,9 @@ data:
   - doc: "Huawei Health Kit data type heart_rate_variability (unit: ms RMSSD)."
     topic: connect_huawei_heart_rate_variability
     value_schema: .connector.huawei.HuaweiHeartRateVariability
-  - doc: Huawei Health Kit data type instantaneous.activity.sample.
-    topic: connect_huawei_instantaneous_activity_sample
-    value_schema: .connector.huawei.HuaweiInstantaneousActivitySample
-  - doc: Huawei Health Kit data type instantaneous.activity.samples.
-    topic: connect_huawei_instantaneous_activity_samples
-    value_schema: .connector.huawei.HuaweiInstantaneousActivitySample
-  - doc: "Huawei Health Kit data type instantaneous.altitude (unit: m)."
-    topic: connect_huawei_instantaneous_altitude
-    value_schema: .connector.huawei.HuaweiInstantaneousAltitude
-  - doc: "Huawei Health Kit data type instantaneous.blood_glucose (unit: mmol/L)."
-    topic: connect_huawei_instantaneous_blood_glucose
-    value_schema: .connector.huawei.HuaweiInstantaneousBloodGlucose
-  - doc: "Huawei Health Kit data type instantaneous.blood_pressure (unit: mmHg)."
-    topic: connect_huawei_instantaneous_blood_pressure
-    value_schema: .connector.huawei.HuaweiInstantaneousBloodPressure
-  - doc: "Huawei Health Kit data type instantaneous.body.fat.rate (unit: %)."
-    topic: connect_huawei_instantaneous_body_fat_rate
-    value_schema: .connector.huawei.HuaweiInstantaneousBodyFatRate
-  - doc: "Huawei Health Kit data type instantaneous.body.temperature (unit: °C)."
-    topic: connect_huawei_instantaneous_body_temperature
-    value_schema: .connector.huawei.HuaweiInstantaneousBodyTemperature
-  - doc: "Huawei Health Kit data type instantaneous.body.temperature.rest (unit: °C)."
-    topic: connect_huawei_instantaneous_body_temperature_rest
-    value_schema: .connector.huawei.HuaweiInstantaneousBodyTemperature
-  - doc: "Huawei Health Kit data type instantaneous.calories.bmr (unit: kcal)."
-    topic: connect_huawei_instantaneous_calories_bmr
-    value_schema: .connector.huawei.HuaweiInstantaneousCaloriesBmr
-  - doc: "Huawei Health Kit data type instantaneous.exercise_heart_rate (unit: bpm)."
-    topic: connect_huawei_instantaneous_exercise_heart_rate
-    value_schema: .connector.huawei.HuaweiInstantaneousHeartRate
-  - doc: "Huawei Health Kit data type instantaneous.heart_rate (unit: bpm)."
-    topic: connect_huawei_instantaneous_heart_rate
-    value_schema: .connector.huawei.HuaweiInstantaneousHeartRate
-  - doc: "Huawei Health Kit data type instantaneous.power.sample (unit: W)."
-    topic: connect_huawei_instantaneous_power_sample
-    value_schema: .connector.huawei.HuaweiInstantaneousPowerSample
-  - doc: "Huawei Health Kit data type instantaneous.resting_heart_rate (unit: bpm)."
-    topic: connect_huawei_instantaneous_resting_heart_rate
-    value_schema: .connector.huawei.HuaweiInstantaneousHeartRate
   - doc: "Huawei Health Kit data type instantaneous.resting_heart_rate.statistics (unit: bpm)."
     topic: connect_huawei_instantaneous_resting_heart_rate_statistics
     value_schema: .connector.huawei.HuaweiStatistics
-  - doc: "Huawei Health Kit data type instantaneous.skin.temperature (unit: °C)."
-    topic: connect_huawei_instantaneous_skin_temperature
-    value_schema: .connector.huawei.HuaweiInstantaneousBodyTemperature
-  - doc: "Huawei Health Kit data type instantaneous.speed (unit: m/s)."
-    topic: connect_huawei_instantaneous_speed
-    value_schema: .connector.huawei.HuaweiInstantaneousSpeed
-  - doc: "Huawei Health Kit data type instantaneous.spo2 (unit: %)."
-    topic: connect_huawei_instantaneous_spo2
-    value_schema: .connector.huawei.HuaweiInstantaneousSpo2
-  - doc: "Huawei Health Kit data type instantaneous.steps.rate (unit: steps/min)."
-    topic: connect_huawei_instantaneous_steps_rate
-    value_schema: .connector.huawei.HuaweiInstantaneousStepsRate
-  - doc: "Huawei Health Kit data type instantaneous.stress (unit: score 1–99)."
-    topic: connect_huawei_instantaneous_stress
-    value_schema: .connector.huawei.HuaweiInstantaneousStress
   - doc: "Huawei Health Kit data type instantaneous.stress.statistics (unit: score 1–99)."
     topic: connect_huawei_instantaneous_stress_statistics
     value_schema: .connector.huawei.HuaweiStatistics
