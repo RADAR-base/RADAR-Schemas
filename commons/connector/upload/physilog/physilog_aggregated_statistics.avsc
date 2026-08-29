@@ -1,0 +1,23 @@
+{
+  "namespace": "org.radarcns.connector.upload.physilog",
+  "type": "record",
+  "name": "PhysilogAggregatedStatistics",
+  "doc": "Summary of aggregated statistics of the physilog test analysis.",
+  "fields": [
+    {"name": "min", "type": ["null", "float"], "doc": "Minimum value of the dataset.", "default": null},
+    {"name": "max", "type": ["null", "float"], "doc": "Maximum value of the dataset.", "default": null},
+    {"name": "mean", "type": ["null", "float"], "doc": "Mean value of the dataset.", "default": null},
+    {"name": "median", "type": ["null", "float"], "doc": "Median value of the dataset.", "default": null},
+    {"name": "interQuartileRange", "type": ["null", "float"], "doc": "Inter quartile range value of the dataset.", "default": null},
+    {"name": "coefficientVariability", "type": ["null", "float"], "doc": "Coefficient of variability.", "default": null},
+    {"name": "ratio", "type": ["null", "string"], "doc": "Ratio scale of the dataset.", "default": null},
+    {"name": "significantDigit", "type": ["null", "int"], "doc": "How many digits after the comma should be displayed on the reports.", "default": null},
+    {"name": "standardDeviation", "type": ["null", "float"], "doc": "Standard deviation value of the dataset.", "default": null},
+    {"name": "unit", "type": ["null", "string"], "doc": "Unit of the data.", "default": null},
+    {"name": "propertyType", "type": {
+              "name": "PropertyType",
+              "type": "enum",
+              "doc": "Type of the parameter to group them together in different categories.",
+              "symbols": ["GENERAL", "TEMPORAL", "SPATIAL", "CLEARANCE", "UNKNOWN"]}, "doc": "Type of the property.", "default": "UNKNOWN"}
+  ]
+}

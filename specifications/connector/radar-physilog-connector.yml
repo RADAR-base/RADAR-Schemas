@@ -1,0 +1,33 @@
+#====================================== Physilog Device Data =======================================#
+name: RADAR-PHYSILOG-CONNECTOR
+vendor: GaitUp
+model: Physilog Device
+version: 1.0.0
+doc: Spec for RADAR-base Physilog data upload connector. Schemas should be registered in the connector.
+data:
+  # raw data
+  - doc: Data from 3-axis accelerometer sensor with gravitational constant g as unit. Data extracted from the CSV file.
+    topic: connect_upload_physilog_acceleration
+    value_schema: .connector.upload.physilog.PhysilogAcceleration
+
+  - doc: Data from the 3-axis gyroscope with deg/s as unit.
+    topic: connect_upload_physilog_gyroscope
+    value_schema: .connector.upload.physilog.PhysilogGyroscope
+
+  # meta-data
+  - doc: Data that contains additional meta-data of the recording.
+    topic: connect_upload_physilog_metadata
+    value_schema: .connector.upload.physilog.PhysilogMetadata
+
+  - doc: Summary of the physilog test analysis.
+    topic: connect_upload_physilog_summary
+    value_schema: .connector.upload.physilog.PhysilogSummary
+
+  # cycle data
+  - doc: Cycle data extracted from the physilog test analysis.
+    topic: connect_upload_physilog_cycle
+    value_schema: .connector.upload.physilog.PhysilogCycle
+
+  - doc: Summary of cycle data computed from the physilog analysis.
+    topic: connect_upload_physilog_cycle_aggregated
+    value_schema: .connector.upload.physilog.PhysilogCycleAggregate
