@@ -1,0 +1,28 @@
+{
+    "namespace": "org.radarcns.monitor.application",
+    "type": "record",
+    "name": "ApplicationPluginStatus",
+    "doc": "Represents the status of a plugin, indicating its current connection state. Data for this topic is not transmitted automatically; it is sent only after the user explicitly submits the metrics following their review in the application.",
+    "fields": [
+        {"name": "time", "type": "double", "doc": "Timestamp of the event recorded on the device, in UTC seconds."},
+        {"name": "pluginName", "type": "string", "doc": "Name of the plugin for which status information is provided."},
+        {"name": "sourceStatus",
+            "type": {
+                "name": "SourceStatus",
+                "type": "enum",
+                "doc": "Represents the current connection state of the plugin.",
+                "symbols": [
+                    "READY",
+                    "CONNECTING",
+                    "CONNECTED",
+                    "DISCONNECTING",
+                    "DISCONNECTED",
+                    "UNAVAILABLE",
+                    "UNKNOWN"
+                ]
+            },
+            "doc": "Current status of the plugin. The meanings of each status are as follows:\n- READY: The source manager is scanning for compatible sources.\n- CONNECTING: A source has been found and the source manager is attempting to connect, but no data has been received yet.\n- CONNECTED: A compatible source has been found and connected, allowing data to stream in.\n- DISCONNECTING: A source is in the process of disconnecting and may still stream data.\n- DISCONNECTED: A source has been disconnected and will no longer stream data. If this status is passed without an argument, it indicates that the source manager is no longer active.\n- UNAVAILABLE: The source cannot be started because certain initial conditions are not met.",
+            "default": "UNKNOWN"
+        }
+    ]
+}

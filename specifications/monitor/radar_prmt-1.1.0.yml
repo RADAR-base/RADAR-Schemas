@@ -50,3 +50,23 @@ data:
       configurable: true
     topic: application_device_info
     value_schema: .monitor.application.ApplicationDeviceInfo
+  - type: PLUGIN_STATUS
+    doc: Status of each plugin running in application
+    sample_rate:
+      dynamic: true
+    topic: application_plugin_status
+    value_schema: .monitor.application.ApplicationPluginStatus
+  - type: NETWORK_STATUS
+    doc: Connectivity status of the application
+    sample_rate:
+      dynamic: true
+    topic: application_network_status
+    value_schema: .monitor.application.ApplicationNetworkStatus
+  - type: TOPIC_RECORDS_SENT
+    doc: Number of records sent per topic since the last report
+    sample_rate:
+      interval: 300
+      configurable: true
+    topic: application_topic_records_sent
+    value_schema: .monitor.application.ApplicationTopicRecordsSent
+
