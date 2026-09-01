@@ -23,12 +23,14 @@
     {
       "name": "transmitterId",
       "type": ["null", "string"],
-      "default": null
+      "default": null,
+      "doc": "Hashed Dexcom transmitter identifier. Null if unknown."
     },
     {
       "name": "transmitterTicks",
       "type": ["null", "long"],
-      "default": null
+      "default": null,
+      "doc": "Seconds since transmitter initiation. Null if unknown."
     },
     {
       "name": "value",
@@ -69,22 +71,25 @@
       "name": "displayDevice",
       "type": ["null", "string"],
       "default": null,
-      "doc": "iOS, android, or receiver."
+      "doc": "Display device type: iOS, Android, or receiver. Null if unknown."
     },
     {
       "name": "transmitterGeneration",
       "type": ["null", "string"],
-      "default": null
+      "default": null,
+      "doc": "Transmitter generation (for example g6 or g7). Null if unknown."
     },
     {
       "name": "transmitterGenerationVariant",
       "type": ["null", "string"],
-      "default": null
+      "default": null,
+      "doc": "Transmitter generation variant. Null if unknown."
     },
     {
       "name": "displayApp",
       "type": ["null", "string"],
-      "default": null
+      "default": null,
+      "doc": "Display application name (for example G6, G7, or Follow). Null if unknown."
     },
     {
       "name": "timeReceived",

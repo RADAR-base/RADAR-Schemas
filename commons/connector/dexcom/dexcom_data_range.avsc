@@ -1,0 +1,196 @@
+{
+  "namespace": "org.radarcns.connector.dexcom",
+  "type": "record",
+  "name": "DexcomDataRange",
+  "doc": "Earliest and latest available times per data type from Dexcom API v3 /dataRange.",
+  "fields": [
+    {
+      "name": "calibrations",
+      "type": [
+        "null",
+        {
+          "type": "record",
+          "name": "DexcomDataRangeWindow",
+          "doc": "Start and end of the available calibration data range.",
+          "fields": [
+            {
+              "name": "start",
+              "type": {
+                "type": "record",
+                "name": "DexcomDataRangeMoment",
+                "doc": "A single timestamp in a data-range window.",
+                "fields": [
+                  {
+                    "name": "systemTime",
+                    "type": ["null", "double"],
+                    "default": null,
+                    "doc": "System time in UTC epoch (s). Null if unknown."
+                  },
+                  {
+                    "name": "displayTime",
+                    "type": ["null", "string"],
+                    "default": null,
+                    "doc": "Display time as ISO 8601. Null if unknown."
+                  }
+                ]
+              },
+              "doc": "Earliest available timestamp in this data range."
+            },
+            {
+              "name": "end",
+              "type": {
+                "type": "record",
+                "name": "DexcomDataRangeMomentEnd",
+                "doc": "A single timestamp in a data-range window.",
+                "fields": [
+                  {
+                    "name": "systemTime",
+                    "type": ["null", "double"],
+                    "default": null,
+                    "doc": "System time in UTC epoch (s). Null if unknown."
+                  },
+                  {
+                    "name": "displayTime",
+                    "type": ["null", "string"],
+                    "default": null,
+                    "doc": "Display time as ISO 8601. Null if unknown."
+                  }
+                ]
+              },
+              "doc": "Latest available timestamp in this data range."
+            }
+          ]
+        }
+      ],
+      "default": null,
+      "doc": "Available time range for calibration records. Null if none."
+    },
+    {
+      "name": "egvs",
+      "type": [
+        "null",
+        {
+          "type": "record",
+          "name": "DexcomDataRangeWindowEgvs",
+          "doc": "Start and end of the available estimated glucose value data range.",
+          "fields": [
+            {
+              "name": "start",
+              "type": {
+                "type": "record",
+                "name": "DexcomDataRangeMomentEgvsStart",
+                "doc": "A single timestamp in a data-range window.",
+                "fields": [
+                  {
+                    "name": "systemTime",
+                    "type": ["null", "double"],
+                    "default": null,
+                    "doc": "System time in UTC epoch (s). Null if unknown."
+                  },
+                  {
+                    "name": "displayTime",
+                    "type": ["null", "string"],
+                    "default": null,
+                    "doc": "Display time as ISO 8601. Null if unknown."
+                  }
+                ]
+              },
+              "doc": "Earliest available timestamp in this data range."
+            },
+            {
+              "name": "end",
+              "type": {
+                "type": "record",
+                "name": "DexcomDataRangeMomentEgvsEnd",
+                "doc": "A single timestamp in a data-range window.",
+                "fields": [
+                  {
+                    "name": "systemTime",
+                    "type": ["null", "double"],
+                    "default": null,
+                    "doc": "System time in UTC epoch (s). Null if unknown."
+                  },
+                  {
+                    "name": "displayTime",
+                    "type": ["null", "string"],
+                    "default": null,
+                    "doc": "Display time as ISO 8601. Null if unknown."
+                  }
+                ]
+              },
+              "doc": "Latest available timestamp in this data range."
+            }
+          ]
+        }
+      ],
+      "default": null,
+      "doc": "Available time range for estimated glucose value records. Null if none."
+    },
+    {
+      "name": "events",
+      "type": [
+        "null",
+        {
+          "type": "record",
+          "name": "DexcomDataRangeWindowEvents",
+          "doc": "Start and end of the available event data range.",
+          "fields": [
+            {
+              "name": "start",
+              "type": {
+                "type": "record",
+                "name": "DexcomDataRangeMomentEventsStart",
+                "doc": "A single timestamp in a data-range window.",
+                "fields": [
+                  {
+                    "name": "systemTime",
+                    "type": ["null", "double"],
+                    "default": null,
+                    "doc": "System time in UTC epoch (s). Null if unknown."
+                  },
+                  {
+                    "name": "displayTime",
+                    "type": ["null", "string"],
+                    "default": null,
+                    "doc": "Display time as ISO 8601. Null if unknown."
+                  }
+                ]
+              },
+              "doc": "Earliest available timestamp in this data range."
+            },
+            {
+              "name": "end",
+              "type": {
+                "type": "record",
+                "name": "DexcomDataRangeMomentEventsEnd",
+                "doc": "A single timestamp in a data-range window.",
+                "fields": [
+                  {
+                    "name": "systemTime",
+                    "type": ["null", "double"],
+                    "default": null,
+                    "doc": "System time in UTC epoch (s). Null if unknown."
+                  },
+                  {
+                    "name": "displayTime",
+                    "type": ["null", "string"],
+                    "default": null,
+                    "doc": "Display time as ISO 8601. Null if unknown."
+                  }
+                ]
+              },
+              "doc": "Latest available timestamp in this data range."
+            }
+          ]
+        }
+      ],
+      "default": null,
+      "doc": "Available time range for event records. Null if none."
+    },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Time the connector received this record (s). Not in Dexcom JSON."
+    }
+  ]
+}
