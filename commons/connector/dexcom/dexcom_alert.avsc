@@ -7,30 +7,30 @@
     {
       "name": "recordId",
       "type": "string",
-      "doc": "Dexcom record UUID."
+      "doc": "A unique id (UUID) that identifies the alert."
     },
     {
       "name": "time",
       "type": "double",
-      "doc": "System time of the alert in UTC (s). Parsed from Dexcom ISO 8601 systemTime."
+      "doc": "The recorded system time of the alerts/egv/calibration/event. This is the ISO 8601 time according to the system clock at which observation was made (UTC). Records sourced from mobile apps (with displayDevice of “iOS” or “android”) will have UTC offsets; records sourced from receivers (with displayDevice of “receiver”) will not have UTC offsets."
     },
     {
       "name": "displayTime",
       "type": ["null", "string"],
       "default": null,
-      "doc": "Display time as ISO 8601. Receiver records may have no offset."
+      "doc": "The recorded display time of the alerts/egv/calibration/event. This is the ISO 8601 time displayed on the receiving device when the observation was made (local). Records sourced from mobile apps (with displayDevice of “iOS” or “android”) will have UTC offsets; records sourced from receivers (with displayDevice of “receiver”) will not have UTC offsets."
     },
     {
       "name": "alertName",
       "type": ["null", { "type": "enum", "name": "DexcomAlertName", "symbols": ["HIGH", "LOW", "RISE", "FALL", "OUT_OF_RANGE", "URGENT_LOW"", "URGENT_LOW_SOON", "NO_READINGS", "UNKNOWN"], "doc": "Dexcom alert name."}],
       "default": null,
-      "doc": "Alert name (e.g. high, low, rise, fall, urgentLow)."
+      "doc": "The name of the alert (e.g. "unknown", "high", "low", "rise", "fall", "outOfRange", "urgentLow", "urgentLowSoon", "noReadings")."
     },
     {
       "name": "alertState",
       "type": ["null", {"type": "enum", "name": "DexcomAlertState", "doc": "Dexcom alert state.", "symbols": ["INACTIVE", "ACTIVE_SNOOZED", "ACTIVE_ALARMING", "UNKNOWN"]}],
       "default": null,
-      "doc": "Alert state (e.g. activeAlarming, activeSnoozed, inactive)."
+      "doc": "The state of the alert (e.g. "unknown" "inactive", "activeSnoozed", "activeAlarming")."
     },
     {
       "name": "displayDevice",
@@ -44,31 +44,31 @@
         }
       ],
       "default": null,
-      "doc": "Display device the alert came from. Null if missing."
+      "doc": "The type of display device the alert came from. Enum: "unknown" "receiver" "iOS" "android""
     }, 
     {
       "name": "transmitterGeneration",
       "type": ["null", "string"],
       "default": null,
-      "doc": "Transmitter generation (for example g6 or g7). Null if unknown."
+      "doc": "The generation of transmitter that was associated with this upload. Enum "unknown", "g6", "g6+", "g6Pro", "g7""
     },
     {
       "name": "transmitterGenerationVariant",
       "type": ["null", "string"],
       "default": null,
-      "doc": "Transmitter generation variant. Null if unknown."
+      "doc": "The generation of transmitter that was associated with this upload- 'd1+','g6','g7','g715day'"
     },
     {
       "name": "transmitterId",
       "type": ["null", "string"],
       "default": null,
-      "doc": "Hashed Dexcom transmitter identifier. Null if unknown."
+      "doc": "A hashed and encrypted version of the unique ID of the transmitter. This may be used to determine uniqueness of transmitter or associate multiple records with the same transmitter, but it cannot be matched to the real transmitter ID."
     },
     {
       "name": "displayApp",
       "type": ["null", "string"],
       "default": null,
-      "doc": "Display application name (for example G6, G7, DexcomOne, D1G7). Null if unknown."
+      "doc": "App that is installed on the display device. For example, G6, G7, DexcomOne, D1G7."
     },
     {
       "name": "timeReceived",
