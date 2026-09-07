@@ -10,7 +10,7 @@
       "doc": "Dexcom record UUID."
     },
     {
-      "name": "systemTime",
+      "name": "time",
       "type": "double",
       "doc": "System time of the EGV in UTC (s). Parsed from Dexcom ISO 8601 systemTime."
     },
@@ -36,14 +36,22 @@
       "name": "value",
       "type": ["null", "int"],
       "default": null,
-      "doc": "EGV in mg/dL. 39 and 401 indicate out-of-display-range values."
+      "doc": "39: Indicates that the value was calculated, and it was less than 40; the value 39 is used in calculations but is not explicitly displayed to end users 40 to 400: This is the measuring range of the Dexcom CGM. 401: Indicates that the value was calculated, and it was greater than 400; the value 401 is used in calculations but is not explicitly displayed to end users."
     },
     {
       "name": "status",
-      "type": ["null", "string"],
+      "type": [
+        "null",
+        {
+          "type": "enum",
+          "name": "DexcomEgvStatus",
+          "doc": "Estimated glucose value status when the value is outside the measuring range.",
+          "symbols": ["HIGH", "LOW", "UNKNOWN"]
+        }
+      ],
       "default": null,
-      "doc": "EGV status when value is special (e.g. low, high)."
-    },
+      "doc": "Explanation of EGV record; used when the value field is outside the measuring range. "high": indicates a glucose value of more than 400. "low": indicates a glucose value of less than 40. "
+    }, 
     {
       "name": "trend",
       "type": ["null", "string"],
@@ -51,28 +59,56 @@
       "doc": "Trend arrow (e.g. flat, singleUp)."
     },
     {
-      "name": "trendRate",
-      "type": ["null", "double"],
+      "name": "trend",
+      "type": [
+        "null",
+        {
+          "type": "enum",
+          "name": "DexcomEgvTrend",
+          "doc": "General trend of estimated glucose value movement. Corresponds to trendRate.",
+          "symbols": [
+            "NONE",
+            "DOUBLE_UP",
+            "SINGLE_UP",
+            "FORTY_FIVE_UP",
+            "FLAT",
+            "FORTY_FIVE_DOWN",
+            "SINGLE_DOWN",
+            "DOUBLE_DOWN",
+            "NOT_COMPUTABLE",
+            "RATE_OUT_OF_RANGE",
+            "UNKNOWN"
+          ]
+        }
+      ],
       "default": null,
-      "doc": "Rate of glucose change."
-    },
+      "doc": ""doubleUp" (+3 ≤ trendRate ≤ +8), "singleUp" (+2 ≤ trendRate < +3), "fortyFiveUp" (+1 ≤ trendRate < +2), "flat" (-1 < trendRate < +1), "fortyFiveDown" (-2 < trendRate ≤ -1), "singleDown" (-3 < trendRate ≤ -2), "doubleDown" (-8 < trendRate ≤ -3), "none" (no arrow (blank)), "notComputable" (The algorithm decides that it is not reasonable to compute trend arrow), "rateOutOfRange" (The computed filtered rate is not within the range for assigning the arrows)"
+    }, 
     {
       "name": "unit",
       "type": "string",
-      "doc": "Unit of value (mg/dL or mmol/L)."
+      "doc": "Unit of value (mg/dL or mmol/L). Dexcom always send mg/dL"
     },
     {
       "name": "rateUnit",
-      "type": ["null", "string"],
+      "type": string,
       "default": null,
-      "doc": "Unit for trendRate (e.g. mg/dL/min)."
+      "doc": "Unit for trendRate (e.g. mg/dL/min). Dexcom always send mg/dL"
     },
     {
       "name": "displayDevice",
-      "type": ["null", "string"],
+      "type": [
+        "null",
+        {
+          "type": "enum",
+          "name": "DexcomDisplayDevice",
+          "doc": "Type of Dexcom display device.",
+          "symbols": ["RECEIVER", "IOS", "ANDROID", "UNKNOWN"]
+        }
+      ],
       "default": null,
-      "doc": "Display device type: iOS, Android, or receiver. Null if unknown."
-    },
+      "doc": "The type of display device the alert came from. Enum: "unknown" "receiver" "iOS" "android""
+    }, 
     {
       "name": "transmitterGeneration",
       "type": ["null", "string"],
