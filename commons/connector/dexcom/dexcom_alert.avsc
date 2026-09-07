@@ -34,10 +34,18 @@
     },
     {
       "name": "displayDevice",
-      "type": ["null", "string"],
+      "type": [
+        "null",
+        {
+          "type": "enum",
+          "name": "DexcomDisplayDevice",
+          "doc": "Type of Dexcom display device.",
+          "symbols": ["RECEIVER", "IOS", "ANDROID", "UNKNOWN"]
+        }
+      ],
       "default": null,
-      "doc": "Display device type: iOS, Android, or receiver. Null if unknown."
-    },
+      "doc": "Display device the alert came from. Null if missing."
+    }, 
     {
       "name": "transmitterGeneration",
       "type": ["null", "string"],
