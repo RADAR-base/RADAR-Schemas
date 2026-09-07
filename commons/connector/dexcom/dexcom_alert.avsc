@@ -68,7 +68,7 @@
       "name": "displayApp",
       "type": ["null", "string"],
       "default": null,
-      "doc": "Display application name (for example G6, G7, or Follow). Null if unknown."
+      "doc": "Display application name (for example G6, G7, DexcomOne, D1G7). Null if unknown."
     },
     {
       "name": "timeReceived",
