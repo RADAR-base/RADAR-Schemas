@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.dexcom",
   "type": "record",
   "name": "DexcomCalibration",
-  "doc": "Calibration event from Dexcom CGM API v3.",
+  "doc": "Calibration event from Dexcom CGM API v3. Dexcom ONE does not support the /calibrations endpoint and will return an empty array.",
   "fields": [
     {
       "name": "recordId",
@@ -10,7 +10,7 @@
       "doc": "Dexcom record UUID."
     },
     {
-      "name": "systemTime",
+      "name": "time",
       "type": "double",
       "doc": "System time of the calibration in UTC (s). Parsed from Dexcom ISO 8601 systemTime."
     },
@@ -30,14 +30,22 @@
       "name": "value",
       "type": ["null", "int"],
       "default": null,
-      "doc": "Fingerstick calibration glucose value."
+      "doc": "This is a blood glucose value the user measured on a normal meter and typed in by hand."
     },
     {
       "name": "displayDevice",
-      "type": ["null", "string"],
+      "type": [
+        "null",
+        {
+          "type": "enum",
+          "name": "DexcomDisplayDevice",
+          "doc": "Type of Dexcom display device.",
+          "symbols": ["RECEIVER", "IOS", "ANDROID", "UNKNOWN"]
+        }
+      ],
       "default": null,
-      "doc": "Display device type: iOS, Android, or receiver. Null if unknown."
-    },
+      "doc": "The type of display device the alert came from. Enum: "unknown" "receiver" "iOS" "android""
+    }, 
     {
       "name": "transmitterId",
       "type": ["null", "string"],
