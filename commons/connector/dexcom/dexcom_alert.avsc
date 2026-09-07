@@ -10,7 +10,7 @@
       "doc": "Dexcom record UUID."
     },
     {
-      "name": "systemTime",
+      "name": "time",
       "type": "double",
       "doc": "System time of the alert in UTC (s). Parsed from Dexcom ISO 8601 systemTime."
     },
@@ -22,7 +22,8 @@
     },
     {
       "name": "alertName",
-      "type": "string",
+      "type": ["null", { "type": "enum", "name": "DexcomAlertName", "symbols": ["HIGH", "LOW", "RISE", "FALL", "OUT_OF_RANGE", "URGENT_LOW"", "URGENT_LOW_SOON", "NO_READINGS", "UNKNOWN"], "doc": "Dexcom alert name."}],
+      "default": null,
       "doc": "Alert name (e.g. high, low, rise, fall, urgentLow)."
     },
     {
