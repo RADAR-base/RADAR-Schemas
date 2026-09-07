@@ -24,7 +24,7 @@
       "name": "alertName",
       "type": ["null", { "type": "enum", "name": "DexcomAlertName", "symbols": ["HIGH", "LOW", "RISE", "FALL", "OUT_OF_RANGE", "URGENT_LOW"", "URGENT_LOW_SOON", "NO_READINGS", "UNKNOWN"], "doc": "Dexcom alert name."}],
       "default": null,
-      "doc": "The name of the alert (e.g. "unknown", "high", "low", "rise", "fall", "outOfRange", "urgentLow", "urgentLowSoon", "noReadings")."
+      "doc": "The name of the alert (e.g. "unknown", "high", "low", "rise", "fall", "outOfRange", "urgentLow", "urgentLowSoon", "noReadings"). Dexcom ONE+ does not support the following alerts: Urgent Low, Urgent Low Soon, Rising Fast, Falling Fast."
     },
     {
       "name": "alertState",
