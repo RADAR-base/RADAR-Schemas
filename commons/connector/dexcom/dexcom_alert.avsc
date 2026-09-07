@@ -28,7 +28,8 @@
     },
     {
       "name": "alertState",
-      "type": "string",
+      "type": ["null", {"type": "enum", "name": "DexcomAlertState", "doc": "Dexcom alert state.", "symbols": ["INACTIVE", "ACTIVE_SNOOZED", "ACTIVE_ALARMING", "UNKNOWN"]}],
+      "default": null,
       "doc": "Alert state (e.g. activeAlarming, activeSnoozed, inactive)."
     },
     {
