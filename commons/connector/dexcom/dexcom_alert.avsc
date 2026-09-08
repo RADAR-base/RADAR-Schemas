@@ -68,10 +68,9 @@
     }, 
     {
       "name": "transmitterId",
-      "type": ["null", "string"],
-      "default": null,
-      "doc": "A hashed and encrypted version of the unique ID of the transmitter. This may be used to determine uniqueness of transmitter or associate multiple records with the same transmitter, but it cannot be matched to the real transmitter ID."
-    },
+      "type": "string",
+      "doc": "A hashed and encrypted version of the unique identifier of the transmitter. This may be used to determine uniqueness of the transmitter or associate multiple records with the same transmitter, but it cannot be matched to the real transmitter identifier."
+    }, 
     {
       "name": "displayApp",
       "type": ["null", "string"],
