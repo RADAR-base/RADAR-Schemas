@@ -5,6 +5,8 @@ import org.radarbase.schema.specification.active.ActiveSource
 import org.radarbase.schema.specification.connector.ConnectorSource
 import org.radarbase.schema.specification.monitor.MonitorSource
 import org.radarbase.schema.specification.passive.PassiveSource
+import org.radarbase.schema.specification.push.PushSource
+import org.radarbase.schema.specification.stream.StreamGroup
 
 /** Response with source types.  */
 class SourceTypeResponse(
@@ -16,4 +18,8 @@ class SourceTypeResponse(
     val monitorSources: List<MonitorSource>? = null,
     @JsonProperty("connector-source-types")
     val connectorSources: List<ConnectorSource>? = null,
+    @JsonProperty("stream-source-types")
+    val streamSources: List<StreamGroup>? = null,
+    @JsonProperty("push-source-types")
+    val pushSources: List<PushSource>? = null,
 )
