@@ -186,7 +186,7 @@
                       "doc": "Whether this alert is enabled."
                     },
                     {
-                      "name": "SecondaryTriggerCondition",
+                      "name": "secondaryTriggerCondition",
                       "type": ["null", "int"],
                       "default": null,
                       "doc": "Secondary trigger condition for the alert. Null if not applicable."
