@@ -128,9 +128,46 @@
                     "doc": "Temporary override of this schedule. Null if none."
                   },
                   {
-                    "name": "daysOfWeek",
-                    "type": { "type": "array", "items": "string" },
-                    "doc": "Days of the week when this schedule applies."
+                    "name": "appliesOnSunday",
+                    "type": ["null", "boolean"],
+                    "default": null,
+                    "doc": "Whether the schedule applies on Sunday. Null if unknown."
+                  },
+                  {
+                    "name": "appliesOnMonday",
+                    "type": ["null", "boolean"],
+                    "default": null,
+                    "doc": "Whether the schedule applies on Monday. Null if unknown."
+                  },
+                  {
+                    "name": "appliesOnTuesday",
+                    "type": ["null", "boolean"],
+                    "default": null,
+                    "doc": "Whether the schedule applies on Tuesday. Null if unknown."
+                  },
+                  {
+                    "name": "appliesOnWednesday",
+                    "type": ["null", "boolean"],
+                    "default": null,
+                    "doc": "Whether the schedule applies on Wednesday. Null if unknown."
+                  },
+                  {
+                    "name": "appliesOnThursday",
+                    "type": ["null", "boolean"],
+                    "default": null,
+                    "doc": "Whether the schedule applies on Thursday. Null if unknown."
+                  },
+                  {
+                    "name": "appliesOnFriday",
+                    "type": ["null", "boolean"],
+                    "default": null,
+                    "doc": "Whether the schedule applies on Friday. Null if unknown."
+                  },
+                  {
+                    "name": "appliesOnSaturday",
+                    "type": ["null", "boolean"],
+                    "default": null,
+                    "doc": "Whether the schedule applies on Saturday. Null if unknown."
                   }
                 ]
               },
