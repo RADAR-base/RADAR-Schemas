@@ -105,10 +105,14 @@
     }, 
     {
       "name": "transmitterGenerationVariant",
-      "type": ["null", "string"],
-      "default": null,
-      "doc": "Transmitter generation variant. Null if unknown."
-    },
+      "type": {
+        "type": "enum",
+        "name": "DexcomTransmitterGenerationVariant",
+        "doc": "Transmitter generation variant associated with this upload.",
+        "symbols": ["D1_PLUS", "G6", "G7", "G7_15_DAY", "UNKNOWN"]
+      },
+      "doc": "Transmitter generation variant associated with this upload."
+    }, 
     {
       "name": "displayDevice",
       "type": [

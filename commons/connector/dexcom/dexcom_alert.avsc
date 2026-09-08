@@ -58,10 +58,14 @@
     }, 
     {
       "name": "transmitterGenerationVariant",
-      "type": ["null", "string"],
-      "default": null,
-      "doc": "The generation of transmitter that was associated with this upload- 'd1+','g6','g7','g715day'"
-    },
+      "type": {
+        "type": "enum",
+        "name": "DexcomTransmitterGenerationVariant",
+        "doc": "Transmitter generation variant associated with this upload.",
+        "symbols": ["D1_PLUS", "G6", "G7", "G7_15_DAY", "UNKNOWN"]
+      },
+      "doc": "Transmitter generation variant associated with this upload."
+    }, 
     {
       "name": "transmitterId",
       "type": ["null", "string"],
