@@ -95,17 +95,13 @@
     },
     {
       "name": "transmitterGeneration",
-      "type": [
-        "null",
-        {
-          "type": "enum",
-          "name": "DexcomTransmitterGeneration",
-          "doc": "Generation of the transmitter associated with this upload.",
-          "symbols": ["G6", "G6_PLUS", "G6_PRO", "G7", "UNKNOWN"]
-        }
-      ],
-      "default": null,
-      "doc": "Generation of the transmitter associated with this upload. Null if missing."
+      "type": {
+        "type": "enum",
+        "name": "DexcomTransmitterGeneration",
+        "doc": "Generation of the transmitter associated with this upload.",
+        "symbols": ["G6", "G6_PLUS", "G6_PRO", "G7", "UNKNOWN"]
+      },
+      "doc": "Generation of the transmitter associated with this upload."
     }, 
     {
       "name": "transmitterGenerationVariant",
