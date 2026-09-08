@@ -22,20 +22,59 @@
     },
     {
       "name": "eventStatus",
-      "type": "string",
-      "doc": "Record status (created, updated, deleted)."
+      "type": [
+        "null",
+        {
+          "type": "enum",
+          "name": "DexcomEventStatus",
+          "doc": "Status of the event record in the health database.",
+          "symbols": ["CREATED", "UPDATED", "DELETED", "UNKNOWN"]
+        }
+      ],
+      "default": null,
+      "doc": "Users can edit and delete their own entries and Dexcom keep sending us the revisions, so a record with status updated or deleted supersedes an earlier one with the same recordId."
     },
     {
       "name": "eventType",
-      "type": "string",
-      "doc": "Event type (insulin, carbs, exercise, health, bloodGlucose, notes)."
-    },
-    {
-      "name": "eventSubType",
-      "type": ["null", "string"],
+      "type": [
+        "null",
+        {
+          "type": "enum",
+          "name": "DexcomEventType",
+          "doc": "Name of the Dexcom event.",
+          "symbols": ["INSULIN", "CARBS", "EXERCISE", "HEALTH", "BLOOD_GLUCOSE", "NOTES", "UNKNOWN"]
+        }
+      ],
       "default": null,
-      "doc": "Subtype (e.g. longActing, fastActing for insulin)."
-    },
+      "doc": "Name of the event. Null if missing."
+    }, 
+    {
+    "name": "eventSubType",
+    "type": [
+      "null",
+      {
+        "type": "enum",
+        "name": "DexcomEventSubType",
+        "doc": "Additional event description corresponding to eventType.",
+        "symbols": [
+          "FAST_ACTING",
+          "LONG_ACTING",
+          "LIGHT",
+          "MEDIUM",
+          "HEAVY",
+          "ILLNESS",
+          "STRESS",
+          "HIGH_SYMPTOMS",
+          "LOW_SYMPTOMS",
+          "CYCLE",
+          "ALCOHOL",
+          "UNKNOWN"
+        ]
+      }
+    ],
+    "default": null,
+    "doc": "Additional event description corresponding to eventType. Insulin: fast acting or long acting. Exercise: light, medium, or heavy. Health: illness, stress, high symptoms, low symptoms, cycle, or alcohol. Null for carbs, notes, and blood glucose."
+    }, 
     {
       "name": "value",
       "type": ["null", "string"],
@@ -56,10 +95,18 @@
     },
     {
       "name": "transmitterGeneration",
-      "type": ["null", "string"],
+      "type": [
+        "null",
+        {
+          "type": "enum",
+          "name": "DexcomTransmitterGeneration",
+          "doc": "Generation of the transmitter associated with this upload.",
+          "symbols": ["G6", "G6_PLUS", "G6_PRO", "G7", "UNKNOWN"]
+        }
+      ],
       "default": null,
-      "doc": "Transmitter generation (for example g6 or g7). Null if unknown."
-    },
+      "doc": "Generation of the transmitter associated with this upload. Null if missing."
+    }, 
     {
       "name": "transmitterGenerationVariant",
       "type": ["null", "string"],
@@ -68,14 +115,34 @@
     },
     {
       "name": "displayDevice",
-      "type": ["null", "string"],
+      "type": [
+        "null",
+        {
+          "type": "enum",
+          "name": "DexcomDisplayDevice",
+          "doc": "Type of Dexcom display device.",
+          "symbols": ["RECEIVER", "IOS", "ANDROID", "UNKNOWN"]
+        }
+      ],
       "default": null,
-      "doc": "Display device type: iOS, Android, or receiver. Null if unknown."
-    },
+      "doc": "The type of display device the alert came from. Enum: "unknown" "receiver" "iOS" "android""
+    }, 
     {
       "name": "timeReceived",
       "type": "double",
       "doc": "Time the connector received this record (s). Not in Dexcom JSON."
+    }
+    {
+      "name": "recordedSystemTime",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Recorded system time as ISO 8601. Null if missing."
+    },
+    {
+      "name": "recordedDisplayTime",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Recorded display time as ISO 8601. Null if missing."
     }
   ]
 }
