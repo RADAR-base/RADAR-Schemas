@@ -49,14 +49,8 @@
         }
       ],
       "default": null,
-      "doc": "Explanation of EGV record; used when the value field is outside the measuring range. "high": indicates a glucose value of more than 400. "low": indicates a glucose value of less than 40. "
+      "doc": "Explanation of the estimated glucose value when outside the measuring range. High indicates a glucose value of more than 400 milligrams per decilitre. Low indicates a glucose value of less than 40 milligrams per decilitre."
     }, 
-    {
-      "name": "trend",
-      "type": ["null", "string"],
-      "default": null,
-      "doc": "Trend arrow (e.g. flat, singleUp)."
-    },
     {
       "name": "trend",
       "type": [
@@ -81,18 +75,17 @@
         }
       ],
       "default": null,
-      "doc": ""doubleUp" (+3 ≤ trendRate ≤ +8), "singleUp" (+2 ≤ trendRate < +3), "fortyFiveUp" (+1 ≤ trendRate < +2), "flat" (-1 < trendRate < +1), "fortyFiveDown" (-2 < trendRate ≤ -1), "singleDown" (-3 < trendRate ≤ -2), "doubleDown" (-8 < trendRate ≤ -3), "none" (no arrow (blank)), "notComputable" (The algorithm decides that it is not reasonable to compute trend arrow), "rateOutOfRange" (The computed filtered rate is not within the range for assigning the arrows)"
+      "doc": "General trend of estimated glucose value movement. Corresponds to trendRate. Double up is plus 3 to plus 8. Single up is plus 2 to less than plus 3. Forty-five up is plus 1 to less than plus 2. Flat is greater than minus 1 and less than plus 1. Forty-five down is greater than minus 2 to minus 1. Single down is greater than minus 3 to minus 2. Double down is greater than minus 8 to minus 3. None means no arrow. Not computable means the algorithm did not compute a trend. Rate out of range means the filtered rate was outside the arrow ranges."
     }, 
     {
       "name": "unit",
       "type": "string",
-      "doc": "Unit of value (mg/dL or mmol/L). Dexcom always send mg/dL"
+      "doc": "Unit of value. Dexcom always sends milligrams per decilitre."
     },
     {
       "name": "rateUnit",
-      "type": string,
-      "default": null,
-      "doc": "Unit for trendRate (e.g. mg/dL/min). Dexcom always send mg/dL"
+      "type": "string",
+      "doc": "Unit for trendRate. Dexcom always sends milligrams per decilitre per minute."
     },
     {
       "name": "displayDevice",
@@ -106,7 +99,7 @@
         }
       ],
       "default": null,
-      "doc": "The type of display device the alert came from. Enum: "unknown" "receiver" "iOS" "android""
+      "doc": "The type of display device the estimated glucose value came from. Values include unknown, receiver, iOS, and android."
     }, 
     {
       "name": "transmitterGeneration",
