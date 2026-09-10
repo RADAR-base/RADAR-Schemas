@@ -44,7 +44,7 @@
         }
       ],
       "default": null,
-      "doc": "The type of display device the alert came from. Enum: "unknown" "receiver" "iOS" "android""
+      "doc": "The type of display device the calibration came from. Values include unknown, receiver, iOS, and android."
     }, 
     {
       "name": "transmitterId",
