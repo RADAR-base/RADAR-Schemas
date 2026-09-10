@@ -124,13 +124,13 @@
         }
       ],
       "default": null,
-      "doc": "The type of display device the alert came from. Enum: "unknown" "receiver" "iOS" "android""
+      "doc": "The type of display device the event came from. Values include unknown, receiver, iOS, and android."
     }, 
     {
       "name": "timeReceived",
       "type": "double",
       "doc": "Time the connector received this record (s). Not in Dexcom JSON."
-    }
+    },
     {
       "name": "recordedSystemTime",
       "type": ["null", "string"],
