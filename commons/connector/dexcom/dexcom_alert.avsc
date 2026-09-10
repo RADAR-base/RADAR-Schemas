@@ -22,15 +22,15 @@
     },
     {
       "name": "alertName",
-      "type": ["null", { "type": "enum", "name": "DexcomAlertName", "symbols": ["HIGH", "LOW", "RISE", "FALL", "OUT_OF_RANGE", "URGENT_LOW"", "URGENT_LOW_SOON", "NO_READINGS", "UNKNOWN"], "doc": "Dexcom alert name."}],
+      "type": ["null", { "type": "enum", "name": "DexcomAlertName", "symbols": ["HIGH", "LOW", "RISE", "FALL", "OUT_OF_RANGE", "URGENT_LOW", "URGENT_LOW_SOON", "NO_READINGS", "UNKNOWN"], "doc": "Dexcom alert name."}],
       "default": null,
-      "doc": "The name of the alert (e.g. "unknown", "high", "low", "rise", "fall", "outOfRange", "urgentLow", "urgentLowSoon", "noReadings"). Dexcom ONE+ does not support the following alerts: Urgent Low, Urgent Low Soon, Rising Fast, Falling Fast."
+      "doc": "The name of the alert. Values include unknown, high, low, rise, fall, out of range, urgent low, urgent low soon, and no readings. Dexcom ONE+ does not support urgent low, urgent low soon, rising fast, and falling fast."
     },
     {
       "name": "alertState",
       "type": ["null", {"type": "enum", "name": "DexcomAlertState", "doc": "Dexcom alert state.", "symbols": ["INACTIVE", "ACTIVE_SNOOZED", "ACTIVE_ALARMING", "UNKNOWN"]}],
       "default": null,
-      "doc": "The state of the alert (e.g. "unknown" "inactive", "activeSnoozed", "activeAlarming")."
+      "doc": "The state of the alert. Values include unknown, inactive, active snoozed, and active alarming."
     },
     {
       "name": "displayDevice",
@@ -44,7 +44,7 @@
         }
       ],
       "default": null,
-      "doc": "The type of display device the alert came from. Enum: "unknown" "receiver" "iOS" "android""
+      "doc": "The type of display device the alert came from. Values include unknown, receiver, iOS, and android."
     }, 
     {
       "name": "transmitterGeneration",
