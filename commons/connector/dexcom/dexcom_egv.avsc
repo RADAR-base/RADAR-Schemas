@@ -100,12 +100,7 @@
     }, 
     {
       "name": "transmitterGenerationVariant",
-      "type": {
-        "type": "enum",
-        "name": "DexcomTransmitterGenerationVariant",
-        "doc": "Transmitter generation variant associated with this upload.",
-        "symbols": ["D1_PLUS", "G6", "G7", "G7_15_DAY", "UNKNOWN"]
-      },
+      "type": "DexcomTransmitterGenerationVariant",
       "doc": "Transmitter generation variant associated with this upload."
     }, 
     {
