@@ -89,15 +89,7 @@
     },
     {
       "name": "displayDevice",
-      "type": [
-        "null",
-        {
-          "type": "enum",
-          "name": "DexcomDisplayDevice",
-          "doc": "Type of Dexcom display device.",
-          "symbols": ["RECEIVER", "IOS", "ANDROID", "UNKNOWN"]
-        }
-      ],
+      "type": ["null", "DexcomDisplayDevice"],
       "default": null,
       "doc": "The type of display device the estimated glucose value came from. Values include unknown, receiver, iOS, and android."
     }, 
