@@ -22,7 +22,7 @@
     },
     {
       "name": "alertName",
-g      "type": ["null", { "type": "enum", "name": "DexcomAlertName", "symbols": ["HIGH", "LOW", "RISE", "FALL", "OUT_OF_RANGE", "URGENT_LOW", "URGENT_LOW_SOON", "NO_READINGS", "UNKNOWN"], "doc": "Dexcom alert name."}],
+      "type": ["null", { "type": "enum", "name": "DexcomAlertName", "symbols": ["HIGH", "LOW", "RISE", "FALL", "OUT_OF_RANGE", "URGENT_LOW", "URGENT_LOW_SOON", "NO_READINGS", "UNKNOWN"], "doc": "Dexcom alert name."}],
       "default": null,
       "doc": "The name of the alert. Values include unknown, high, low, rise, fall, out of range, urgent low, urgent low soon, and no readings. Dexcom ONE+ does not support urgent low, urgent low soon, rising fast, and falling fast."
     },
