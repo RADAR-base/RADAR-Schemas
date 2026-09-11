@@ -6,12 +6,7 @@
   "fields": [
     {
       "name": "transmitterGeneration",
-      "type": {
-        "type": "enum",
-        "name": "DexcomTransmitterGeneration",
-        "doc": "Generation of the transmitter associated with this upload.",
-        "symbols": ["G6", "G6_PLUS", "G6_PRO", "G7", "UNKNOWN"]
-      },
+      "type": "DexcomTransmitterGeneration",
       "doc": "Generation of the transmitter associated with this upload."
     },
     {
