@@ -1,0 +1,68 @@
+{
+  "namespace": "org.radarcns.connector.dexcom",
+  "type": "record",
+  "name": "DexcomCalibration",
+  "doc": "Calibration event from Dexcom CGM API v3. Dexcom ONE does not support the /calibrations endpoint and will return an empty array.",
+  "fields": [
+    {
+      "name": "recordId",
+      "type": "string",
+      "doc": "Dexcom record UUID."
+    },
+    {
+      "name": "time",
+      "type": "double",
+      "doc": "System time of the calibration in UTC (s). Parsed from Dexcom ISO 8601 systemTime."
+    },
+    {
+      "name": "displayTime",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Display time as ISO 8601. May lack UTC offset on receiver-sourced records."
+    },
+    {
+      "name": "unit",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Unit of value (mg/dL or mmol/L)."
+    },
+    {
+      "name": "value",
+      "type": ["null", "int"],
+      "default": null,
+      "doc": "This is a blood glucose value the user measured on a normal meter and typed in by hand."
+    },
+    {
+      "name": "displayDevice",
+      "type": ["null", "DexcomDisplayDevice"],
+      "default": null,
+      "doc": "The type of display device the calibration came from. Values include unknown, receiver, iOS, and android."
+    }, 
+    {
+      "name": "transmitterId",
+      "type": "string",
+      "doc": "A hashed and encrypted version of the unique identifier of the transmitter. This may be used to determine uniqueness of the transmitter or associate multiple records with the same transmitter, but it cannot be matched to the real transmitter identifier."
+    }, 
+    {
+      "name": "transmitterTicks",
+      "type": ["null", "long"],
+      "default": null,
+      "doc": "Seconds since transmitter initiation."
+    },
+    {
+      "name": "transmitterGeneration",
+      "type": "DexcomTransmitterGeneration",
+      "doc": "Generation of the transmitter associated with this upload."
+    }, 
+    {
+      "name": "transmitterGenerationVariant",
+      "type": "DexcomTransmitterGenerationVariant",
+      "doc": "Transmitter generation variant associated with this upload."
+    }, 
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Time the connector received this record (s). Not in Dexcom JSON."
+    }
+  ]
+}

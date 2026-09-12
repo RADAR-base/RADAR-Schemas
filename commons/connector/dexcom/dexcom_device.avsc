@@ -1,0 +1,190 @@
+{
+  "namespace": "org.radarcns.connector.dexcom",
+  "type": "record",
+  "name": "DexcomDevice",
+  "doc": "Device information and one alert setting from Dexcom CGM API v3. The connector emits one record per alert setting. Device and schedule fields are repeated on each row.",
+  "fields": [
+    {
+      "name": "transmitterGeneration",
+      "type": "DexcomTransmitterGeneration",
+      "doc": "Generation of the transmitter associated with this upload."
+    },
+    {
+      "name": "transmitterGenerationVariant",
+      "type": "DexcomTransmitterGenerationVariant",
+      "doc": "Transmitter generation variant associated with this upload."
+    },
+    {
+      "name": "displayDevice",
+      "type": ["null", "DexcomDisplayDevice"],
+      "default": null,
+      "doc": "Type of display device the alert came from."
+    },
+    {
+      "name": "displayApp",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Display application name (for example G6, G7, or Follow). Null if missing."
+    },
+    {
+      "name": "lastUploadDate",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Last upload timestamp as ISO 8601 UTC."
+    },
+    {
+      "name": "transmitterId",
+      "type": "string",
+      "doc": "A hashed and encrypted version of the unique identifier of the transmitter. This may be used to determine uniqueness of the transmitter or associate multiple records with the same transmitter, but it cannot be matched to the real transmitter identifier."
+    },
+    {
+      "name": "alertScheduleName",
+      "type": "string",
+      "doc": "Name of the alert schedule."
+    },
+    {
+      "name": "isEnabled",
+      "type": "boolean",
+      "doc": "Whether this alert schedule is enabled."
+    },
+    {
+      "name": "startTime",
+      "type": "string",
+      "doc": "Time of day when the schedule starts (HH:mm)."
+    },
+    {
+      "name": "endTime",
+      "type": "string",
+      "doc": "Time of day when the schedule ends (HH:mm)."
+    },
+    {
+      "name": "isActive",
+      "type": ["null", "boolean"],
+      "default": null,
+      "doc": "Whether this schedule is currently active. Null if unknown."
+    },
+    {
+      "name": "isOverrideEnabled",
+      "type": ["null", "boolean"],
+      "default": null,
+      "doc": "Whether the override is currently enabled. Null if unknown."
+    },
+    {
+      "name": "overrideMode",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Override mode, for example quiet or vibrate. Null if unknown."
+    },
+    {
+      "name": "overrideEndTime",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Time when the override ends. Null if unknown."
+    },
+    {
+      "name": "appliesOnSunday",
+      "type": ["null", "boolean"],
+      "default": null,
+      "doc": "Whether the schedule applies on Sunday. Null if unknown."
+    },
+    {
+      "name": "appliesOnMonday",
+      "type": ["null", "boolean"],
+      "default": null,
+      "doc": "Whether the schedule applies on Monday. Null if unknown."
+    },
+    {
+      "name": "appliesOnTuesday",
+      "type": ["null", "boolean"],
+      "default": null,
+      "doc": "Whether the schedule applies on Tuesday. Null if unknown."
+    },
+    {
+      "name": "appliesOnWednesday",
+      "type": ["null", "boolean"],
+      "default": null,
+      "doc": "Whether the schedule applies on Wednesday. Null if unknown."
+    },
+    {
+      "name": "appliesOnThursday",
+      "type": ["null", "boolean"],
+      "default": null,
+      "doc": "Whether the schedule applies on Thursday. Null if unknown."
+    },
+    {
+      "name": "appliesOnFriday",
+      "type": ["null", "boolean"],
+      "default": null,
+      "doc": "Whether the schedule applies on Friday. Null if unknown."
+    },
+    {
+      "name": "appliesOnSaturday",
+      "type": ["null", "boolean"],
+      "default": null,
+      "doc": "Whether the schedule applies on Saturday. Null if unknown."
+    },
+    {
+      "name": "systemTime",
+      "type": ["null", "double"],
+      "default": null,
+      "doc": "System time of the setting in UTC epoch (s). Null if unknown."
+    },
+    {
+      "name": "displayTime",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Display time as ISO 8601. Null if unknown."
+    },
+    {
+      "name": "alertName",
+      "type": "string",
+      "doc": "Alert name this setting applies to."
+    },
+    {
+      "name": "value",
+      "type": ["null", "int"],
+      "default": null,
+      "doc": "Alert threshold value. Null if not applicable."
+    },
+    {
+      "name": "unit",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Unit of the threshold value. Null if not applicable."
+    },
+    {
+      "name": "snooze",
+      "type": ["null", "int"],
+      "default": null,
+      "doc": "Snooze duration in minutes. Null if unknown."
+    },
+    {
+      "name": "enabled",
+      "type": "boolean",
+      "doc": "Whether this alert is enabled."
+    },
+    {
+      "name": "secondaryTriggerCondition",
+      "type": ["null", "int"],
+      "default": null,
+      "doc": "Secondary trigger condition for the alert. Null if not applicable."
+    },
+    {
+      "name": "soundTheme",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Sound theme used for the alert. Null if unknown."
+    },
+    {
+      "name": "soundOutputMode",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Sound output mode for the alert. Null if unknown."
+    },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Time the connector received this record (s). Not in Dexcom JSON."
+    }
+  ]
+}

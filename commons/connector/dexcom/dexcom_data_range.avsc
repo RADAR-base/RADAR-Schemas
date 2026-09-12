@@ -1,0 +1,68 @@
+{
+  "namespace": "org.radarcns.connector.dexcom",
+  "type": "record",
+  "name": "DexcomDataRange",
+  "doc": "Earliest and latest available times per data type from Dexcom API v3 /dataRange. Used by the connector to choose a sync window.",
+  "fields": [
+    {
+      "name": "calibrations",
+      "type": [
+        "null",
+        {
+          "type": "record",
+          "name": "DexcomDataRangeWindow",
+          "doc": "Start and end of an available data range.",
+          "fields": [
+            {
+              "name": "start",
+              "type": {
+                "type": "record",
+                "name": "DexcomDataRangeMoment",
+                "doc": "A single timestamp in a data-range window.",
+                "fields": [
+                  {
+                    "name": "systemTime",
+                    "type": ["null", "double"],
+                    "default": null,
+                    "doc": "System time in UTC epoch (s). Null if unknown."
+                  },
+                  {
+                    "name": "displayTime",
+                    "type": ["null", "string"],
+                    "default": null,
+                    "doc": "Display time as ISO 8601. Null if unknown."
+                  }
+                ]
+              },
+              "doc": "Earliest available timestamp in this data range."
+            },
+            {
+              "name": "end",
+              "type": "DexcomDataRangeMoment",
+              "doc": "Latest available timestamp in this data range."
+            }
+          ]
+        }
+      ],
+      "default": null,
+      "doc": "Available time range for calibration records. Null if none."
+    },
+    {
+      "name": "egvs",
+      "type": ["null", "DexcomDataRangeWindow"],
+      "default": null,
+      "doc": "Available time range for estimated glucose value records. Null if none."
+    },
+    {
+      "name": "events",
+      "type": ["null", "DexcomDataRangeWindow"],
+      "default": null,
+      "doc": "Available time range for event records. Null if none."
+    },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Time the connector received this record (s). Not in Dexcom JSON."
+    }
+  ]
+}

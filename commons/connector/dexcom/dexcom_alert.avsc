@@ -1,0 +1,86 @@
+{
+  "namespace": "org.radarcns.connector.dexcom",
+  "type": "record",
+  "name": "DexcomAlert",
+  "doc": "Alert event from Dexcom CGM API v3.",
+  "fields": [
+    {
+      "name": "recordId",
+      "type": "string",
+      "doc": "A unique id (UUID) that identifies the alert."
+    },
+    {
+      "name": "time",
+      "type": "double",
+      "doc": "The recorded system time of the alerts/egv/calibration/event. This is the ISO 8601 time according to the system clock at which observation was made (UTC). Records sourced from mobile apps (with displayDevice of “iOS” or “android”) will have UTC offsets; records sourced from receivers (with displayDevice of “receiver”) will not have UTC offsets."
+    },
+    {
+      "name": "displayTime",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "The recorded display time of the alerts/egv/calibration/event. This is the ISO 8601 time displayed on the receiving device when the observation was made (local). Records sourced from mobile apps (with displayDevice of “iOS” or “android”) will have UTC offsets; records sourced from receivers (with displayDevice of “receiver”) will not have UTC offsets."
+    },
+    {
+      "name": "alertName",
+      "type": ["null", { "type": "enum", "name": "DexcomAlertName", "symbols": ["HIGH", "LOW", "RISE", "FALL", "OUT_OF_RANGE", "URGENT_LOW", "URGENT_LOW_SOON", "NO_READINGS", "UNKNOWN"], "doc": "Dexcom alert name."}],
+      "default": null,
+      "doc": "The name of the alert. Values include unknown, high, low, rise, fall, out of range, urgent low, urgent low soon, and no readings. Dexcom ONE+ does not support urgent low, urgent low soon, rising fast, and falling fast."
+    },
+    {
+      "name": "alertState",
+      "type": ["null", {"type": "enum", "name": "DexcomAlertState", "doc": "Dexcom alert state.", "symbols": ["INACTIVE", "ACTIVE_SNOOZED", "ACTIVE_ALARMING", "UNKNOWN"]}],
+      "default": null,
+      "doc": "The state of the alert. Values include unknown, inactive, active snoozed, and active alarming."
+    },
+    {
+      "name": "displayDevice",
+      "type": [
+        "null",
+        {
+          "type": "enum",
+          "name": "DexcomDisplayDevice",
+          "doc": "Type of Dexcom display device.",
+          "symbols": ["RECEIVER", "IOS", "ANDROID", "UNKNOWN"]
+        }
+      ],
+      "default": null,
+      "doc": "The type of display device the alert came from. Values include unknown, receiver, iOS, and android."
+    }, 
+    {
+      "name": "transmitterGeneration",
+      "type": {
+        "type": "enum",
+        "name": "DexcomTransmitterGeneration",
+        "doc": "Generation of the transmitter associated with this upload.",
+        "symbols": ["G6", "G6_PLUS", "G6_PRO", "G7", "UNKNOWN"]
+      },
+      "doc": "Generation of the transmitter associated with this upload."
+    }, 
+    {
+      "name": "transmitterGenerationVariant",
+      "type": {
+        "type": "enum",
+        "name": "DexcomTransmitterGenerationVariant",
+        "doc": "Transmitter generation variant associated with this upload.",
+        "symbols": ["D1_PLUS", "G6", "G7", "G7_15_DAY", "UNKNOWN"]
+      },
+      "doc": "Transmitter generation variant associated with this upload."
+    }, 
+    {
+      "name": "transmitterId",
+      "type": "string",
+      "doc": "A hashed and encrypted version of the unique identifier of the transmitter. This may be used to determine uniqueness of the transmitter or associate multiple records with the same transmitter, but it cannot be matched to the real transmitter identifier."
+    }, 
+    {
+      "name": "displayApp",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "App that is installed on the display device. For example, G6, G7, DexcomOne, D1G7."
+    },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Time the connector received this record (s). Not in Dexcom JSON."
+    }
+  ]
+}

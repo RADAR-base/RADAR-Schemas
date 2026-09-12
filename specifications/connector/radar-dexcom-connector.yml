@@ -1,0 +1,24 @@
+name: RADAR-DEXCOM-CONNECTOR
+vendor: RADAR-base
+model: radar-connect-dexcom-source
+version: 0.0.1
+doc: Spec for Radar Dexcom connector.
+data:
+  - doc: Estimated glucose values from Dexcom CGM.
+    topic: connect_dexcom_egv
+    value_schema: .connector.dexcom.DexcomEgv
+  - doc: Alert events from Dexcom CGM.
+    topic: connect_dexcom_alert
+    value_schema: .connector.dexcom.DexcomAlert
+  - doc: User events from Dexcom CGM (insulin, carbs, exercise, etc.).
+    topic: connect_dexcom_event
+    value_schema: .connector.dexcom.DexcomEvent
+  - doc: Calibration events from Dexcom CGM.
+    topic: connect_dexcom_calibration
+    value_schema: .connector.dexcom.DexcomCalibration
+  - doc: Device info and alert settings from Dexcom CGM.
+    topic: connect_dexcom_device
+    value_schema: .connector.dexcom.DexcomDevice
+  - doc: Available data time ranges from Dexcom CGM (for connector sync).
+    topic: connect_dexcom_data_range
+    value_schema: .connector.dexcom.DexcomDataRange

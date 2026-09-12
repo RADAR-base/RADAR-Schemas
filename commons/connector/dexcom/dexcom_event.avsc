@@ -1,0 +1,129 @@
+{
+  "namespace": "org.radarcns.connector.dexcom",
+  "type": "record",
+  "name": "DexcomEvent",
+  "doc": "User-entered event from Dexcom CGM API v3 (insulin, carbs, exercise, health, etc.).",
+  "fields": [
+    {
+      "name": "recordId",
+      "type": "string",
+      "doc": "Dexcom record UUID."
+    },
+    {
+      "name": "systemTime",
+      "type": "double",
+      "doc": "System time of the event in UTC (s). Parsed from Dexcom ISO 8601 systemTime."
+    },
+    {
+      "name": "displayTime",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Display time as ISO 8601 with offset when from mobile app."
+    },
+    {
+      "name": "eventStatus",
+      "type": [
+        "null",
+        {
+          "type": "enum",
+          "name": "DexcomEventStatus",
+          "doc": "Status of the event record in the health database.",
+          "symbols": ["CREATED", "UPDATED", "DELETED", "UNKNOWN"]
+        }
+      ],
+      "default": null,
+      "doc": "Users can edit and delete their own entries and Dexcom keep sending us the revisions, so a record with status updated or deleted supersedes an earlier one with the same recordId."
+    },
+    {
+      "name": "eventType",
+      "type": [
+        "null",
+        {
+          "type": "enum",
+          "name": "DexcomEventType",
+          "doc": "Name of the Dexcom event.",
+          "symbols": ["INSULIN", "CARBS", "EXERCISE", "HEALTH", "BLOOD_GLUCOSE", "NOTES", "UNKNOWN"]
+        }
+      ],
+      "default": null,
+      "doc": "Name of the event. Null if missing."
+    }, 
+    {
+    "name": "eventSubType",
+    "type": [
+      "null",
+      {
+        "type": "enum",
+        "name": "DexcomEventSubType",
+        "doc": "Additional event description corresponding to eventType.",
+        "symbols": [
+          "FAST_ACTING",
+          "LONG_ACTING",
+          "LIGHT",
+          "MEDIUM",
+          "HEAVY",
+          "ILLNESS",
+          "STRESS",
+          "HIGH_SYMPTOMS",
+          "LOW_SYMPTOMS",
+          "CYCLE",
+          "ALCOHOL",
+          "UNKNOWN"
+        ]
+      }
+    ],
+    "default": null,
+    "doc": "Additional event description corresponding to eventType. Insulin: fast acting or long acting. Exercise: light, medium, or heavy. Health: illness, stress, high symptoms, low symptoms, cycle, or alcohol. Null for carbs, notes, and blood glucose."
+    }, 
+    {
+      "name": "value",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Event value. Dexcom API uses string; coerce numbers (e.g. 400) to string in connector."
+    },
+    {
+      "name": "unit",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Unit for value (e.g. units, grams, mg/dL, minutes)."
+    },
+    {
+      "name": "transmitterId",
+      "type": "string",
+      "doc": "A hashed and encrypted version of the unique identifier of the transmitter. This may be used to determine uniqueness of the transmitter or associate multiple records with the same transmitter, but it cannot be matched to the real transmitter identifier."
+    }, 
+    {
+      "name": "transmitterGeneration",
+      "type": "DexcomTransmitterGeneration",
+      "doc": "Generation of the transmitter associated with this upload."
+    }, 
+    {
+      "name": "transmitterGenerationVariant",
+      "type": "DexcomTransmitterGenerationVariant",
+      "doc": "Transmitter generation variant associated with this upload."
+    }, 
+    {
+      "name": "displayDevice",
+      "type": ["null", "DexcomDisplayDevice"],
+      "default": null,
+      "doc": "The type of display device the event came from. Values include unknown, receiver, iOS, and android."
+    }, 
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Time the connector received this record (s). Not in Dexcom JSON."
+    },
+    {
+      "name": "recordedSystemTime",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Recorded system time as ISO 8601. Null if missing."
+    },
+    {
+      "name": "recordedDisplayTime",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Recorded display time as ISO 8601. Null if missing."
+    }
+  ]
+}
