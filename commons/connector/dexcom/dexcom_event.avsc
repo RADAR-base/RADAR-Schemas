@@ -10,9 +10,9 @@
       "doc": "Dexcom record UUID."
     },
     {
-      "name": "systemTime",
+      "name": "time",
       "type": "double",
-      "doc": "System time of the event in UTC (s). Parsed from Dexcom ISO 8601 systemTime."
+      "doc": "Dexcom systemTime converted to seconds since the Unix epoch."
     },
     {
       "name": "displayTime",

@@ -12,7 +12,7 @@
     {
       "name": "time",
       "type": "double",
-      "doc": "The recorded system time of the alerts/egv/calibration/event. This is the ISO 8601 time according to the system clock at which observation was made (UTC). Records sourced from mobile apps (with displayDevice of “iOS” or “android”) will have UTC offsets; records sourced from receivers (with displayDevice of “receiver”) will not have UTC offsets."
+      "doc": "Dexcom systemTime converted to seconds since the Unix epoch."
     },
     {
       "name": "displayTime",

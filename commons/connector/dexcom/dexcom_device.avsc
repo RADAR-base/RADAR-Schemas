@@ -54,8 +54,9 @@
     },
     {
       "name": "transmitterId",
-      "type": "string",
-      "doc": "A hashed and encrypted version of the unique identifier of the transmitter. This may be used to determine uniqueness of the transmitter or associate multiple records with the same transmitter, but it cannot be matched to the real transmitter identifier."
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "A hashed and encrypted version of the unique identifier of the transmitter. This may be used to determine uniqueness of the transmitter or associate multiple records with the same transmitter, but it cannot be matched to the real transmitter identifier. Null if unknown."
     },
     {
       "name": "alertScheduleName",
@@ -147,7 +148,7 @@
       "name": "systemTime",
       "type": ["null", "double"],
       "default": null,
-      "doc": "System time of the setting in UTC epoch (s). Null if unknown."
+      "doc": "Dexcom systemTime converted to seconds since the Unix epoch. Null if unknown."
     },
     {
       "name": "displayTime",
@@ -155,10 +156,11 @@
       "default": null,
       "doc": "Display time as ISO 8601. Null if unknown."
     },
-    {
+   {
       "name": "alertName",
-      "type": "string",
-      "doc": "Alert name this setting applies to."
+      "type": ["null", { "type": "enum", "name": "DexcomAlertName", "symbols": ["HIGH", "LOW", "RISE", "FALL", "OUT_OF_RANGE", "URGENT_LOW", "URGENT_LOW_SOON", "NO_READINGS", "UNKNOWN"], "doc": "Dexcom alert name."}],
+      "default": null,
+      "doc": "The name of the alert. Values include unknown, high, low, rise, fall, out of range, urgent low, urgent low soon, and no readings. Dexcom ONE+ does not support urgent low, urgent low soon, rising fast, and falling fast."
     },
     {
       "name": "value",

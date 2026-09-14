@@ -24,7 +24,7 @@
                     "name": "systemTime",
                     "type": ["null", "double"],
                     "default": null,
-                    "doc": "System time in UTC epoch (s). Null if unknown."
+                    "doc": "Dexcom systemTime converted to seconds since the Unix epoch. Null if unknown."
                   },
                   {
                     "name": "displayTime",

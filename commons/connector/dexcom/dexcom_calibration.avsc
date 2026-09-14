@@ -12,7 +12,7 @@
     {
       "name": "time",
       "type": "double",
-      "doc": "System time of the calibration in UTC (s). Parsed from Dexcom ISO 8601 systemTime."
+      "doc": "Dexcom systemTime converted to seconds since the Unix epoch."
     },
     {
       "name": "displayTime",

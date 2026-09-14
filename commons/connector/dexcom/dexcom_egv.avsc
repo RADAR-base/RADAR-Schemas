@@ -12,7 +12,7 @@
     {
       "name": "time",
       "type": "double",
-      "doc": "System time of the EGV in UTC (s). Parsed from Dexcom ISO 8601 systemTime."
+      "doc": "Dexcom systemTime converted to seconds since the Unix epoch."
     },
     {
       "name": "displayTime",
@@ -22,8 +22,9 @@
     },
     {
       "name": "transmitterId",
-      "type": "string",
-      "doc": "A hashed and encrypted version of the unique identifier of the transmitter. This may be used to determine uniqueness of the transmitter or associate multiple records with the same transmitter, but it cannot be matched to the real transmitter identifier."
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "A hashed and encrypted version of the unique identifier of the transmitter. This may be used to determine uniqueness of the transmitter or associate multiple records with the same transmitter, but it cannot be matched to the real transmitter identifier. Null if unknown."
     }, 
     {
       "name": "transmitterTicks",
@@ -76,6 +77,12 @@
       ],
       "default": null,
       "doc": "General trend of estimated glucose value movement. Corresponds to trendRate. Double up is plus 3 to plus 8. Single up is plus 2 to less than plus 3. Forty-five up is plus 1 to less than plus 2. Flat is greater than minus 1 and less than plus 1. Forty-five down is greater than minus 2 to minus 1. Single down is greater than minus 3 to minus 2. Double down is greater than minus 8 to minus 3. None means no arrow. Not computable means the algorithm did not compute a trend. Rate out of range means the filtered rate was outside the arrow ranges."
+    },
+    {
+      "name": "trendRate",
+      "type": ["null", "double"],
+      "default": null,
+      "doc": "Rate at which the estimated glucose value is moving up or down, in milligrams per decilitre per minute. Null if unknown."
     }, 
     {
       "name": "unit",
