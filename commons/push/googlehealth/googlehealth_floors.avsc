@@ -1,0 +1,12 @@
+{
+  "namespace": "org.radarcns.push.googlehealth",
+  "type": "record",
+  "name": "GoogleHealthFloors",
+  "doc": "Google Health gained elevation measured in floors over the time interval.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s). Start of the interval the floors were gained in." },
+    { "name": "endTime", "type": "double", "doc": "End of the interval the floors were gained in, seconds since the Unix Epoch (s)." },
+    { "name": "timeReceived", "type": "double", "doc": "Time this record was collected by the push endpoint, seconds since the Unix Epoch." },
+    { "name": "floors", "type": "int", "doc": "Number of floors gained in this period." }
+  ]
+}
