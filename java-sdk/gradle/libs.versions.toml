@@ -12,8 +12,7 @@ radarCommons = "1.2.5"
 # radar-jersey release that points to radar-commons A release (see comment above).
 radarJersey = "0.12.7"
 avro = "1.12.1"
-# @pin Upgrade to 2.21.x requires kotlin v2 minimum
-jackson = "2.20.2"
+jackson = "2.21.4"
 argparse = "0.9.0"
 junit = "5.10.1"
 confluent = "7.6.0"
