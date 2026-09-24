@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiContinuousEcgDetail",
-  "doc": "Detailed ECG recording including raw voltage data, sampling frequency, detected arrhythmia type and result, and user-reported symptoms, as collected by the Huawei Health Kit continuous.ecg_detail data type.",
+  "doc": "Detailed ECG recording including raw voltage data, sampling frequency, detected arrhythmia type, and user-reported symptoms, as collected by the Huawei Health Kit continuous.ecg_detail data type.",
   "fields": [
     {
       "name": "time",
@@ -33,10 +33,19 @@
       "default": null
     },
     {
-      "name": "averageHeartRate",
+      "name": "ecgType",
       "type": [
         "null",
         "int"
+      ],
+      "doc": "ECG type code (ecg_type field from Huawei Health Kit).",
+      "default": null
+    },
+    {
+      "name": "averageHeartRate",
+      "type": [
+        "null",
+        "float"
       ],
       "doc": "Average heart rate during the ECG recording (bpm).",
       "default": null
@@ -51,21 +60,12 @@
       "default": null
     },
     {
-      "name": "ecgArrhythmiaResult",
-      "type": [
-        "null",
-        "int"
-      ],
-      "doc": "Arrhythmia analysis result code from the ECG.",
-      "default": null
-    },
-    {
       "name": "userSymptom",
       "type": [
         "null",
-        "string"
+        "long"
       ],
-      "doc": "User-reported symptoms during the ECG recording.",
+      "doc": "Bitmask of user-reported symptoms during the ECG recording.",
       "default": null
     },
     {
@@ -75,6 +75,42 @@
         "int"
       ],
       "doc": "ECG sampling frequency (Hz).",
+      "default": null
+    },
+    {
+      "name": "ecgAlgorithmVersion",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "Version of the ECG analysis algorithm used.",
+      "default": null
+    },
+    {
+      "name": "ecgDataSources",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Data source code for the ECG recording.",
+      "default": null
+    },
+    {
+      "name": "ecgDataLength",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Length of the ECG data in number of samples.",
+      "default": null
+    },
+    {
+      "name": "packageName",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "Package name of the app that collected the ECG data.",
       "default": null
     },
     {
