@@ -90,9 +90,9 @@
       "name": "ecgDataSources",
       "type": [
         "null",
-        "int"
+        "string"
       ],
-      "doc": "Data source code for the ECG recording.",
+      "doc": "Name of the device vendor that provided the ECG data.",
       "default": null
     },
     {
