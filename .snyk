@@ -33,4 +33,108 @@ ignore:
           when Kotlin is upgraded.
         expires: 2027-01-01T00:00:00.000Z
         created: 2026-07-13T00:00:00.000Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-18517159:
+    - '*':
+        reason: >
+          jackson-core/databind upgrade to 2.21.x is blocked by jackson-module-kotlin requiring
+          Kotlin v2, while this project is pinned to Kotlin 1.9.x. Tracked for resolution
+          when Kotlin is upgraded.
+        expires: 2027-01-01T00:00:00.000Z
+        created: 2026-09-24T00:00:00.000Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-19778370:
+    - '*':
+        reason: >
+          jackson-databind upgrade to 2.21.x is blocked by jackson-module-kotlin requiring
+          Kotlin v2, while this project is pinned to Kotlin 1.9.x. Tracked for resolution
+          when Kotlin is upgraded.
+        expires: 2027-01-01T00:00:00.000Z
+        created: 2026-09-24T00:00:00.000Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-20059179:
+    - '*':
+        reason: >
+          jackson-core upgrade to 2.21.x is blocked by jackson-module-kotlin requiring
+          Kotlin v2, while this project is pinned to Kotlin 1.9.x. Tracked for resolution
+          when Kotlin is upgraded.
+        expires: 2027-01-01T00:00:00.000Z
+        created: 2026-09-24T00:00:00.000Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-20059683:
+    - '*':
+        reason: >
+          jackson-databind upgrade to 2.21.x is blocked by jackson-module-kotlin requiring
+          Kotlin v2, while this project is pinned to Kotlin 1.9.x. Tracked for resolution
+          when Kotlin is upgraded.
+        expires: 2027-01-01T00:00:00.000Z
+        created: 2026-09-24T00:00:00.000Z
+  SNYK-JAVA-COMGITHUBLUBEN-19653585:
+    - '*':
+        reason: >
+          zstd-jni is a transitive dependency through io.confluent:kafka-clients@7.6.0-ccs.
+          Upgrading requires bumping the Confluent platform version which may introduce
+          breaking changes. Tracked for resolution when Confluent platform is upgraded.
+        expires: 2027-01-01T00:00:00.000Z
+        created: 2026-09-24T00:00:00.000Z
+  SNYK-JAVA-COMGITHUBLUBEN-19659571:
+    - '*':
+        reason: >
+          zstd-jni is a transitive dependency through io.confluent:kafka-clients@7.6.0-ccs.
+          Upgrading requires bumping the Confluent platform version which may introduce
+          breaking changes. Tracked for resolution when Confluent platform is upgraded.
+        expires: 2027-01-01T00:00:00.000Z
+        created: 2026-09-24T00:00:00.000Z
+  SNYK-JAVA-COMGITHUBLUBEN-19659584:
+    - '*':
+        reason: >
+          zstd-jni is a transitive dependency through io.confluent:kafka-clients@7.6.0-ccs.
+          Upgrading requires bumping the Confluent platform version which may introduce
+          breaking changes. Tracked for resolution when Confluent platform is upgraded.
+        expires: 2027-01-01T00:00:00.000Z
+        created: 2026-09-24T00:00:00.000Z
+  SNYK-JAVA-COMGITHUBLUBEN-19659603:
+    - '*':
+        reason: >
+          zstd-jni is a transitive dependency through io.confluent:kafka-clients@7.6.0-ccs.
+          Upgrading requires bumping the Confluent platform version which may introduce
+          breaking changes. Tracked for resolution when Confluent platform is upgraded.
+        expires: 2027-01-01T00:00:00.000Z
+        created: 2026-09-24T00:00:00.000Z
+  SNYK-JAVA-COMGITHUBLUBEN-19659617:
+    - '*':
+        reason: >
+          zstd-jni is a transitive dependency through io.confluent:kafka-clients@7.6.0-ccs.
+          Upgrading requires bumping the Confluent platform version which may introduce
+          breaking changes. Tracked for resolution when Confluent platform is upgraded.
+        expires: 2027-01-01T00:00:00.000Z
+        created: 2026-09-24T00:00:00.000Z
+  SNYK-JAVA-COMGITHUBLUBEN-19778368:
+    - '*':
+        reason: >
+          zstd-jni is a transitive dependency through io.confluent:kafka-clients@7.6.0-ccs.
+          Upgrading requires bumping the Confluent platform version which may introduce
+          breaking changes. Tracked for resolution when Confluent platform is upgraded.
+        expires: 2027-01-01T00:00:00.000Z
+        created: 2026-09-24T00:00:00.000Z
+  SNYK-JAVA-ORGXERIALSNAPPY-19778376:
+    - '*':
+        reason: >
+          snappy-java is a transitive dependency through io.confluent:kafka-clients@7.6.0-ccs.
+          Upgrading requires bumping the Confluent platform version which may introduce
+          breaking changes. Tracked for resolution when Confluent platform is upgraded.
+        expires: 2027-01-01T00:00:00.000Z
+        created: 2026-09-24T00:00:00.000Z
+  SNYK-JAVA-ORGXERIALSNAPPY-19964087:
+    - '*':
+        reason: >
+          snappy-java is a transitive dependency through io.confluent:kafka-clients@7.6.0-ccs.
+          Upgrading requires bumping the Confluent platform version which may introduce
+          breaking changes. Tracked for resolution when Confluent platform is upgraded.
+        expires: 2027-01-01T00:00:00.000Z
+        created: 2026-09-24T00:00:00.000Z
+  SNYK-JAVA-ATYAWKLZ4-18313068:
+    - '*':
+        reason: >
+          lz4-java is a transitive dependency through io.confluent:kafka-clients@7.6.0-ccs.
+          Upgrading requires bumping the Confluent platform version which may introduce
+          breaking changes. Tracked for resolution when Confluent platform is upgraded.
+        expires: 2027-01-01T00:00:00.000Z
+        created: 2026-09-24T00:00:00.000Z
 patch: {}
