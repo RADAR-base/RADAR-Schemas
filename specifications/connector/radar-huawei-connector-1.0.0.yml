@@ -49,6 +49,9 @@ data:
   - doc: "Huawei Health Kit data type continuous.body.temperature.statistics (unit: °C)."
     topic: connect_huawei_continuous_body_temperature_statistics
     value_schema: .connector.huawei.HuaweiStatistics
+  - doc: "Huawei Health Kit data type instantaneous.body.temperature (unit: °C)."
+    topic: connect_huawei_instantaneous_body_temperature
+    value_schema: .connector.huawei.HuaweiTemperature
   - doc: "Huawei Health Kit data type continuous.calories.bmr.statistics (unit: kcal)."
     topic: connect_huawei_continuous_calories_bmr_statistics
     value_schema: .connector.huawei.HuaweiStatistics
@@ -94,6 +97,9 @@ data:
   - doc: "Huawei Health Kit data type continuous.skin.temperature.statistics (unit: °C)."
     topic: connect_huawei_continuous_skin_temperature_statistics
     value_schema: .connector.huawei.HuaweiStatistics
+  - doc: "Huawei Health Kit data type instantaneous.skin.temperature (unit: °C)."
+    topic: connect_huawei_instantaneous_skin_temperature
+    value_schema: .connector.huawei.HuaweiTemperature
   - doc: Huawei Health Kit data type continuous.sleep.fragment.
     topic: connect_huawei_continuous_sleep_fragment
     value_schema: .connector.huawei.HuaweiContinuousSleepFragment
