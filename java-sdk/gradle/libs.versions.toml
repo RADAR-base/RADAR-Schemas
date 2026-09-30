@@ -2,7 +2,7 @@
 project = "0.9.2-SNAPSHOT"
 kotlin = "2.3.20"
 java = "17"
-gradle = "8.14"
+gradle = "9.6.0"
 avroGenerator = "1.9.1"
 # Because of the circular dependencies between radar-commons -> radar-jersey -> radar-schemas, we make
 # two almost identical releases of radar-commons, say A and B (i.e. 1.2.5 and 1.2.6). radar-jersey
