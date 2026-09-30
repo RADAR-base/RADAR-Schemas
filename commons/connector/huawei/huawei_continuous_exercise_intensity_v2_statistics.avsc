@@ -2,7 +2,7 @@
   "namespace": "org.radarcns.connector.huawei",
   "type": "record",
   "name": "HuaweiContinuousExerciseIntensityV2Statistics",
-  "doc": "Aggregated exercise intensity statistics (version 2) over a time window, including time spent in each of five heart rate zones, as collected by the Huawei Health Kit continuous.exercise_intensity.v2.statistics data type.",
+  "doc": "Aggregated exercise intensity statistics (version 2) over a time window, mapping each Huawei exercise type code to the total duration in minutes, as collected by the Huawei Health Kit continuous.exercise_intensity.v2.statistics data type.",
   "fields": [
     {
       "name": "time",
@@ -24,48 +24,15 @@
       "default": null
     },
     {
-      "name": "zone1Duration",
+      "name": "intensityMap",
       "type": [
         "null",
-        "int"
+        {
+          "type": "map",
+          "values": "int"
+        }
       ],
-      "doc": "Duration spent in zone 1 (warm-up, 50–60% max HR) during the session (s).",
-      "default": null
-    },
-    {
-      "name": "zone2Duration",
-      "type": [
-        "null",
-        "int"
-      ],
-      "doc": "Duration spent in zone 2 (easy aerobic, 60–70% max HR) during the session (s).",
-      "default": null
-    },
-    {
-      "name": "zone3Duration",
-      "type": [
-        "null",
-        "int"
-      ],
-      "doc": "Duration spent in zone 3 (aerobic, 70–80% max HR) during the session (s).",
-      "default": null
-    },
-    {
-      "name": "zone4Duration",
-      "type": [
-        "null",
-        "int"
-      ],
-      "doc": "Duration spent in zone 4 (threshold, 80–90% max HR) during the session (s).",
-      "default": null
-    },
-    {
-      "name": "zone5Duration",
-      "type": [
-        "null",
-        "int"
-      ],
-      "doc": "Duration spent in zone 5 (maximum effort, 90–100% max HR) during the session (s).",
+      "doc": "Map of Huawei exercise type code (as string) to duration in minutes for that activity type during the aggregation window.",
       "default": null
     }
   ]
