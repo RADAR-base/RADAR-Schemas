@@ -12,7 +12,7 @@ radarCommons = "1.2.7"
 # radar-jersey release that points to radar-commons A release (see comment above).
 radarJersey = "0.12.9"
 avro = "1.12.1"
-jackson = "2.21.4"
+jackson = "2.21.7"
 argparse = "0.9.0"
 junit = "5.10.1"
 confluent = "7.6.0"
@@ -20,9 +20,9 @@ okHttp = "4.12.0"
 ktor = "2.3.4"
 slf4j = "2.0.9"
 jakartaValidation = "3.0.2"
-log4j2 = "2.25.4"
+log4j2 = "2.25.5"
 apacheCommonsLang = "3.18.0"
-lz4 = "1.10.1"
+lz4 = "1.11.4"
 
 [libraries]
 
