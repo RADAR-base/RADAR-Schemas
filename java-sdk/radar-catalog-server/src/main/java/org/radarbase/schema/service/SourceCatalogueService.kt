@@ -40,6 +40,12 @@ class SourceCatalogueService(
     val connectorSources: SourceTypeResponse
         get() = SourceTypeResponse(connectorSources = sourceCatalogue.connectorSources)
 
+    /** Get all push sources from the source catalogue.  */
+    @get:Path("/push")
+    @get:GET
+    val pushSources: SourceTypeResponse
+        get() = SourceTypeResponse(pushSources = sourceCatalogue.pushSources)
+
     /** Get all sources from the source catalogue.  */
     @get:GET
     val allSourceTypes: SourceTypeResponse
@@ -48,5 +54,6 @@ class SourceCatalogueService(
             activeSources = sourceCatalogue.activeSources,
             monitorSources = sourceCatalogue.monitorSources,
             connectorSources = sourceCatalogue.connectorSources,
+            pushSources = sourceCatalogue.pushSources,
         )
 }
