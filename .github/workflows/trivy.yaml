@@ -3,7 +3,7 @@ name: Trivy dependency scan
 on:
   pull_request:
     branches:
-      - main
+      - master
       - dev
       - release-*
 
