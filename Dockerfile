@@ -1,4 +1,4 @@
-FROM --platform=$BUILDPLATFORM gradle:8.14-jdk17 as builder
+FROM --platform=$BUILDPLATFORM gradle:9.6.0-jdk17 as builder
 
 RUN mkdir -p /code/java-sdk
 WORKDIR /code/java-sdk
