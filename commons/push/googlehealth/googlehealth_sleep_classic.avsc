@@ -22,6 +22,8 @@
           },
           "doc": "Classic sleep level, from stages[].type.",
           "default": "UNKNOWN"
-      }
+      },
+    { "name": "time", "type": ["null", "double"], "doc": "Start time of this sleep level in seconds since January 1, 1970, 00:00:00 UTC (Unix timestamp).", "default": null },
+    { "name": "utcOffset", "type": ["null", "int"], "doc": "Offset of the local time of the device from UTC at the start of this sleep level, in seconds. Adding it to time gives the local time in dateTime.", "default": null }
   ]
 }
