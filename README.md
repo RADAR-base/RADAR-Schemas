@@ -109,6 +109,7 @@ In addition, schemas in the `commons` directory should follow the following guid
 - For fields that are inherent to a record, and will never be removed or renamed, no default value is needed. For all other fields:
   - if the type is an enum, use an `UNKNOWN` symbol as default value
   - otherwise, set the type to a union of `["null", <intended type>]` and set the default value to `null`.
+- Give the value schema of each active, monitor, passive, connector and push topic a `time` field of type `double`, holding the time of the measurement in seconds since the Unix Epoch (UTC). Sink connectors such as the Iceberg sink use it to partition the data by when it was measured.
 
 ### Validation phase
 
