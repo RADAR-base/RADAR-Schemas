@@ -21,7 +21,9 @@ import io.confluent.connect.avro.AvroDataConfig.Builder
 import io.confluent.connect.schema.AbstractDataConfig
 import org.apache.avro.Schema
 import org.apache.avro.Schema.Type.DOUBLE
+import org.apache.avro.Schema.Type.NULL
 import org.apache.avro.Schema.Type.RECORD
+import org.apache.avro.Schema.Type.UNION
 import org.apache.avro.SchemaFormatter
 import org.radarbase.schema.validation.ValidationContext
 
@@ -83,6 +85,25 @@ class SchemaRules(
         message = schemaErrorMessage("Any schema representing collected data must have a \"$TIME$WITH_TYPE_DOUBLE"),
     )
 
+    /**
+     * Like [hasTime], but also accepts a nullable time, a union of null and double. Push schemas
+     * can only add a time field later as nullable, to stay compatible with records already
+     * written without it, as in the Google Health sleep and daily schemas.
+     */
+    val hasNullableTime: Validator<Schema> = validator(
+        predicate = { schema ->
+            val time = schema.getField(TIME)?.schema()
+            time?.type == DOUBLE ||
+                (
+                    time?.type == UNION &&
+                        time.types.map { it.type }.toSet() == setOf(NULL, DOUBLE)
+                    )
+        },
+        message = schemaErrorMessage(
+            "Any push schema must have a \"$TIME\" field with type \"double\" or [\"null\", \"double\"].",
+        ),
+    )
+
     val hasTimeCompleted: Validator<Schema> = validator(
         predicate = { it.getField(TIME_COMPLETED)?.schema()?.type == DOUBLE },
         message = schemaErrorMessage("Any ACTIVE schema must have a \"$TIME_COMPLETED$WITH_TYPE_DOUBLE"),
@@ -134,6 +155,16 @@ class SchemaRules(
      */
     val isPassiveSourceValid: Validator<Schema>
 
+    /**
+     * Validates schemas of connector sources.
+     */
+    val isConnectorSourceValid: Validator<Schema>
+
+    /**
+     * Validates schemas of push sources.
+     */
+    val isPushSourceValid: Validator<Schema>
+
     init {
         fieldRules.schemaRules = this
 
@@ -151,6 +182,10 @@ class SchemaRules(
         isMonitorSourceValid = all(isRecordValid, hasTime)
 
         isPassiveSourceValid = all(isRecordValid, hasTime, hasTimeReceived, hasNoTimeCompleted)
+
+        isConnectorSourceValid = all(isRecordValid, hasTime)
+
+        isPushSourceValid = all(isRecordValid, hasNullableTime)
     }
 
     fun isFieldsValid(validator: Validator<SchemaField>): Validator<Schema> =

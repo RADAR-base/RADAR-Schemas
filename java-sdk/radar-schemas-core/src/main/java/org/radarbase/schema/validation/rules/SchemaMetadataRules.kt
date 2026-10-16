@@ -44,10 +44,20 @@ class SchemaMetadataRules(
             metadata.scope == Scope.ACTIVE -> schemaRules.isActiveSourceValid
             metadata.scope == Scope.MONITOR -> schemaRules.isMonitorSourceValid
             metadata.scope == Scope.PASSIVE -> schemaRules.isPassiveSourceValid
+            metadata.scope == Scope.CONNECTOR && !metadata.isWithoutTimeConnector() -> schemaRules.isConnectorSourceValid
+            metadata.scope == Scope.PUSH -> schemaRules.isPushSourceValid
             else -> schemaRules.isRecordValid
         }
         ruleset.launchValidation(metadata.schema)
     }
+
+    /**
+     * Fitbit and Altoida connector schemas are left out of the time rule and only get the general
+     * record rules. Several Fitbit topics have no time field, and the Fitbit API is retired in
+     * favour of the Google Health API. The Altoida assessment summary has only a start time.
+     */
+    private fun SchemaMetadata.isWithoutTimeConnector(): Boolean =
+        scope == Scope.CONNECTOR && path.any { it.toString() in CONNECTORS_WITHOUT_TIME }
 
     private fun isNamespaceSchemaLocationCorrect() = Validator<SchemaMetadata> { metadata ->
         try {
@@ -69,6 +79,11 @@ class SchemaMetadataRules(
         if (!expected.equals(metadata.schema.name, ignoreCase = true)) {
             raise(metadata, "Record name should match file name. Expected record name is \"$expected\".")
         }
+    }
+
+    companion object {
+        /** Connector schema folders whose topics are not checked for a time field. */
+        private val CONNECTORS_WITHOUT_TIME = setOf("fitbit", "altoida")
     }
 }
 
