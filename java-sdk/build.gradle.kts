@@ -1,3 +1,4 @@
+import org.jetbrains.dokka.gradle.DokkaExtension
 import org.radarbase.gradle.plugin.radarKotlin
 import org.radarbase.gradle.plugin.radarPublishing
 
@@ -80,6 +81,16 @@ configure(
 ) {
     apply(plugin = "java-library")
     apply(plugin = "org.radarbase.radar-publishing")
+
+
+    extensions.configure<DokkaExtension>("dokka") {
+        dokkaGeneratorIsolation.set(
+            ProcessIsolation {
+                maxHeapSize.set("2g")
+                jvmArgs.add("-Xss8m")
+            },
+        )
+    }
 
     // --- Vulnerability fixes start for libraries ---
     dependencies {
