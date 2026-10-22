@@ -6,6 +6,8 @@
   "fields": [
     { "name": "time", "type": "double", "doc": "Device timestamp in UTC (s)." },
     { "name": "timeReceived", "type": "double", "doc": "Time this record was collected by the push endpoint, seconds since the Unix Epoch." },
-    { "name": "rmssd", "type": "float", "doc": "Root mean square of successive differences between heartbeats, in milliseconds (from rootMeanSquareOfSuccessiveDifferencesMilliseconds)." }
+    { "name": "rmssd", "type": "float", "doc": "Root mean square of successive differences between heartbeats, in milliseconds (from rootMeanSquareOfSuccessiveDifferencesMilliseconds)." },
+    { "name": "highFrequency", "type": ["null", "float"], "doc": "The power in interbeat interval fluctuations within the high frequency band (0.15 Hz - 0.4 Hz), from metadata.highFrequencyPower. Null if unknown.", "default": null },
+    { "name": "lowFrequency", "type": ["null", "float"], "doc": "The power in interbeat interval fluctuations within the low frequency band (0.04 Hz - 0.15 Hz), from metadata.lowFrequencyPower. Null if unknown.", "default": null }
   ]
 }
