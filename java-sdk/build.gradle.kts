@@ -33,6 +33,17 @@ subprojects {
         sentryEnabled.set(false)
     }
 
+    plugins.withType<org.jetbrains.dokka.gradle.DokkaBasePlugin> {
+        configure<org.jetbrains.dokka.gradle.DokkaExtension> {
+            dokkaGeneratorIsolation.set(
+                ProcessIsolation {
+                    maxHeapSize.set("2g")
+                    jvmArgs.add("-Xss4m")
+                },
+            )
+        }
+    }
+
     // --- Vulnerability fixes start ---
     configurations.all {
         resolutionStrategy.dependencySubstitution {

@@ -14,6 +14,28 @@
     { "name": "leadNumber", "type": ["null", "int"], "doc": "Lead identifier of the reading (e.g. 1 = Lead I for a single-lead watch ECG). Null if unknown.", "default": null },
     { "name": "deviceModel", "type": ["null", "string"], "doc": "Model of the device that took the reading. Null if unknown.", "default": null },
     { "name": "firmwareVersion", "type": ["null", "string"], "doc": "Firmware version of the device. Null if unknown.", "default": null },
-    { "name": "featureVersion", "type": ["null", "string"], "doc": "Feature version running on the device. Null if unknown.", "default": null }
+    { "name": "featureVersion", "type": ["null", "string"], "doc": "Feature version running on the device. Null if unknown.", "default": null },
+    {
+      "name": "resultClassification",
+      "type": ["null", {
+        "name": "GoogleHealthElectrocardiogramResultClassification",
+        "type": "enum",
+        "symbols": [
+          "NORMAL_SINUS_RHYTHM",
+          "ATRIAL_FIBRILLATION",
+          "INCONCLUSIVE",
+          "INCONCLUSIVE_HIGH_HEART_RATE",
+          "INCONCLUSIVE_LOW_HEART_RATE",
+          "UNREADABLE",
+          "NOT_ANALYZED",
+          "RESULT_CLASSIFICATION_UNSPECIFIED",
+          "UNKNOWN"
+        ],
+        "doc": "Rhythm classification of an ECG reading. NORMAL_SINUS_RHYTHM: heart rhythm appears normal. ATRIAL_FIBRILLATION: signs of atrial fibrillation detected. INCONCLUSIVE: the reading could not be classified. INCONCLUSIVE_HIGH_HEART_RATE: the reading could not be classified because the heart rate is high (above 120 bpm). INCONCLUSIVE_LOW_HEART_RATE: the reading could not be classified because the heart rate is low (below 50 bpm). UNREADABLE: the reading is unreadable. NOT_ANALYZED: the reading was not analyzed. RESULT_CLASSIFICATION_UNSPECIFIED is Google's own value for a reading without a classification. UNKNOWN covers any other value Google may report that is not read here yet.",
+        "default": "UNKNOWN"
+      }],
+      "doc": "Rhythm classification of the reading, as computed by the device. Null if Google did not report one.",
+      "default": null
+    }
   ]
 }
