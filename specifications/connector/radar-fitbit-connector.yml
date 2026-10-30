@@ -6,40 +6,66 @@ doc: Spec for Radar fitbit connector. Schemas should be registered in the connec
 data:
   - doc: The intraday time series for heart rate.
     topic: connect_fitbit_intraday_heart_rate
+    scope:
+      - heartrate
     value_schema: .connector.fitbit.FitbitIntradayHeartRate
   - doc: The intraday time series for Steps.
     topic: connect_fitbit_intraday_steps
+    scope:
+      - activity
     value_schema: .connector.fitbit.FitbitIntradaySteps
   - doc: Sleep data with 60-second granularity. 'Sleep Pattern' levels include asleep, restless, and awake.
     topic: connect_fitbit_sleep_classic
+    scope:
+      - sleep
     value_schema: .connector.fitbit.FitbitSleepClassic
   - doc: Sleep data with 30-second granularity. 'Sleep Stages' levels include deep, light, rem, and wake.
     topic: connect_fitbit_sleep_stages
+    scope:
+      - sleep
     value_schema: .connector.fitbit.FitbitSleepStage
   - doc: User profile timezone.
     topic: connect_fitbit_time_zone
+    scope:
+      - profile
     value_schema: .connector.fitbit.FitbitTimeZone
   - doc: Aggregate activity log.
     topic: connect_fitbit_activity_log
+    scope:
+      - activity
     value_schema: .connector.fitbit.FitbitActivityLogRecord
   - doc: The intraday time series for Calories. Also includes Activity Level and METS.
     topic: connect_fitbit_intraday_calories
+    scope:
+      - activity
     value_schema: .connector.fitbit.FitbitIntradayCalories
   - doc: The Food Log for the day.
     topic: connect_fitbit_food_log
+    scope:
+      - nutrition
     value_schema: .connector.fitbit.FitbitFoodLog
   - doc: Intraday heart rate variability
     topic: connect_fitbit_intraday_heart_rate_variability
+    scope:
+      - heartrate
     value_schema: .connector.fitbit.FitbitIntradayHeartRateVariability
   - doc: Breathing rate
     topic: connect_fitbit_breathing_rate
+    scope:
+      - respiratory_rate
     value_schema: .connector.fitbit.FitbitBreathingRate
   - doc: Skin temperature
     topic: connect_fitbit_skin_temperature
+    scope:
+      - temperature
     value_schema: .connector.fitbit.FitbitSkinTemperature
   - doc: Spo2 or Blood oxygen saturation
     topic: connect_fitbit_intraday_spo2
+    scope:
+      - oxygen_saturation
     value_schema: .connector.fitbit.FitbitIntradaySpo2
   - doc: Resting heart rate
     topic: connect_fitbit_resting_heart_rate
+    scope:
+      - heartrate
     value_schema: .connector.fitbit.FitbitRestingHeartRate
