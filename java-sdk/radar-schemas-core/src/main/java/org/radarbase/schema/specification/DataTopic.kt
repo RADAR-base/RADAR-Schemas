@@ -46,6 +46,10 @@ class DataTopic : AvroTopicConfig() {
     @JsonProperty
     val fields: List<DataField>? = null
 
+    /** Scopes or permissions a participant grants to share the data of this topic.  */
+    @JsonProperty
+    val scope: List<String>? = null
+
     @get:JsonIgnore
     val topicNames: Stream<String>
         /** Get all topic names that are provided by the data.  */
@@ -129,6 +133,9 @@ class DataTopic : AvroTopicConfig() {
             }
             if (fields != null) {
                 map["fields"] = fields
+            }
+            if (scope != null) {
+                map["scope"] = scope
             }
         }
     }

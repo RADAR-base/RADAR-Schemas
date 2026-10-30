@@ -210,6 +210,7 @@ def normalize_data_entry(entry: dict[str, Any]) -> dict[str, Any]:
         "unit": entry.get("unit"),
         "processing_state": entry.get("processing_state"),
         "value_schema": entry.get("value_schema"),
+        "scope": entry.get("scope") or [],
         "questionnaire_definition_url": entry.get("questionnaire_definition_url"),
     }
 
@@ -341,6 +342,7 @@ class MeasurementRow:
     unit: str
     processing: str
     notes: str
+    scope: str = "—"
 
 
 def collect_specs(spec_root: Path, active_dir: Path) -> list[tuple[str, Path, dict[str, Any]]]:
@@ -400,6 +402,7 @@ def rows_for_spec(raw: dict[str, Any]) -> list[MeasurementRow]:
                 unit=str(n["unit"]) if n.get("unit") is not None else "—",
                 processing=str(n["processing_state"]) if n.get("processing_state") is not None else "—",
                 notes=detail_line(n),
+                scope="\n".join(str(s) for s in n["scope"]) or "—",
             )
         )
     return rows
@@ -453,6 +456,7 @@ def measurement_column_visibility(rows: list[MeasurementRow]) -> dict[str, bool]
             "measurement": True,
             "schema": True,
             "topics": True,
+            "scope": True,
             "sample_rate": True,
             "unit": True,
             "processing": True,
@@ -462,6 +466,7 @@ def measurement_column_visibility(rows: list[MeasurementRow]) -> dict[str, bool]
         "measurement": any(not is_blank_cell(r.measurement) for r in rows),
         "schema": any(not is_blank_cell(r.schema_short) for r in rows),
         "topics": any(not is_blank_cell(r.topics) for r in rows),
+        "scope": any(not is_blank_cell(r.scope) for r in rows),
         "sample_rate": any(not is_blank_cell(r.sample_rate) for r in rows),
         "unit": any(not is_blank_cell(r.unit) for r in rows),
         "processing": any(not is_blank_cell(r.processing) for r in rows),
@@ -517,6 +522,8 @@ def render_measurements_table(rows: list[MeasurementRow], spec_links: list[str])
         headers.append('<th class="col-schema">Value schema</th>')
     if vis["topics"]:
         headers.append('<th class="col-topics">Kafka / stream</th>')
+    if vis["scope"]:
+        headers.append('<th class="col-scope">Scope</th>')
     if vis["sample_rate"]:
         headers.append('<th class="col-sample-rate">Sampling</th>')
     if vis["unit"]:
@@ -542,6 +549,11 @@ def render_measurements_table(rows: list[MeasurementRow], spec_links: list[str])
             tds.append(
                 f'<td class="col-topics topics"><code>{html.escape(r.topics)}</code></td>'
             )
+        if vis["scope"]:
+            scope = "—" if is_blank_cell(r.scope) else "<br/>".join(
+                f"<code>{html.escape(s)}</code>" for s in r.scope.split("\n")
+            )
+            tds.append(f'<td class="col-scope">{scope}</td>')
         if vis["sample_rate"]:
             tds.append(f'<td class="col-sample-rate">{html.escape(r.sample_rate)}</td>')
         if vis["unit"]:
@@ -619,7 +631,7 @@ def generate_html(
         seen_m: set[tuple[str, ...]] = set()
         deduped_rows: list[MeasurementRow] = []
         for r in all_rows:
-            sig = (r.measurement, r.schema_full or "", r.topics, r.notes)
+            sig = (r.measurement, r.schema_full or "", r.topics, r.notes, r.scope)
             if sig in seen_m:
                 continue
             seen_m.add(sig)
@@ -638,7 +650,7 @@ def generate_html(
 
         search_text = " ".join(
             [title, key, search_extra]
-            + [r.measurement + r.notes + r.topics for r in deduped_rows]
+            + [r.measurement + r.notes + r.topics + r.scope for r in deduped_rows]
             + [t[0] + t[2] for t in merged_fields]
         ).lower()
 
@@ -816,6 +828,7 @@ def generate_html(
     table.measurements .col-measurement {{ width: 5.25rem; max-width: 7%; }}
     table.measurements .col-schema {{ width: 9%; min-width: 4.5rem; }}
     table.measurements .col-topics {{ width: 12%; min-width: 6rem; }}
+    table.measurements .col-scope {{ width: 20%; min-width: 8rem; }}
     table.measurements .col-sample-rate {{ width: 6.5rem; }}
     table.measurements .col-unit {{ width: 4rem; }}
     table.measurements .col-processing {{ width: 6.5rem; }}
