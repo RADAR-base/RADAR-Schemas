@@ -29,6 +29,7 @@ import org.radarbase.schema.Scope.CONNECTOR
 import org.radarbase.schema.Scope.KAFKA
 import org.radarbase.schema.Scope.MONITOR
 import org.radarbase.schema.Scope.PASSIVE
+import org.radarbase.schema.Scope.PUSH
 import org.radarbase.schema.specification.SourceCatalogue
 import org.radarbase.schema.specification.config.SchemaConfig
 import org.radarbase.schema.specification.config.SourceConfig
@@ -116,6 +117,18 @@ class SchemaValidatorTest {
     @Throws(IOException::class)
     fun connectorSpecifications() {
         testFromSpecification(CONNECTOR)
+    }
+
+    @Test
+    @Throws(IOException::class)
+    fun pushSchemas() {
+        testScope(PUSH)
+    }
+
+    @Test
+    @Throws(IOException::class)
+    fun pushSpecifications() {
+        testFromSpecification(PUSH)
     }
 
     @Throws(IOException::class)
