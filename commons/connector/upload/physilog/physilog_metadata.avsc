@@ -1,0 +1,29 @@
+{
+  "namespace": "org.radarcns.connector.upload.physilog",
+  "type": "record",
+  "name": "PhysilogMetadata",
+  "doc": "Metadata about the physilog recordings and study participant (Represents the info part of the report).",
+  "fields": [
+    {"name": "time", "type": "double", "doc": "Timestamp in unix time acquired locally from the device."},
+    {"name": "timeReceived", "type": "double", "doc": "Timestamp in unix time received from Physilog device."},
+    {"name": "age", "type": "int", "doc": "Age of the participant."},
+    {"name": "date", "type": "int", "doc": "Date of the recording."},
+    {"name": "gender", "type": "string", "doc": "Gender of the participant."},
+    {"name": "height", "type": "int", "doc": "Height of the participant in (cm)."},
+    {"name": "weight", "type": "double", "doc": "Weight of the participant in (kg)."},
+    {"name": "language", "type": "string", "doc": "Language used to generate report."},
+    {"name": "name", "type": "string", "doc": "Participant identifier or subject-id of the participant."},
+    {"name": "protocol", "type": "string", "doc": "Name of the study or protocol."},
+    {"name": "remark", "type": "string", "doc": "Remark or comments about the recording writing by the operator."},
+    {"name": "filenames", "type": {
+       "type": "array",
+       "items": "string"
+       }, "doc": "List of filenames of raw data analysed for this report."},
+    {"name": "discardInit", "type": "int", "doc": "The count of cycles that can ignored at the start and end of the recording for the analysis to analyze only steady state gait."},
+    {"name": "shoeSize", "type": "double", "doc": "Shoe size of the participant in (cm)s."},
+    {"name": "discardTurn", "type": "boolean", "doc": "Whether to discard turns from the recording in this analysis."},
+    {"name": "resultV", "type": "double", "doc": "ResultVersion. Version of the JSON file format."},
+    {"name": "softwareVersion", "type": "string", "doc": "Version of the Gait UP software used."},
+    {"name": "firmwareVersion", "type": "string", "doc": "Version of the Gait UP firmware used."}
+  ]
+}
