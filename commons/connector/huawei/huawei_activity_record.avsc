@@ -101,7 +101,16 @@
         "null",
         "int"
       ],
-      "doc": "Huawei device type code for the recording device.",
+      "doc": "Huawei device code of the recording device (deviceInfo.deviceCode).",
+      "default": null
+    },
+    {
+      "name": "deviceTypeName",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "Type of the recording device as named by Huawei (deviceInfo.devType), for example 'Smart watch'.",
       "default": null
     },
     {
