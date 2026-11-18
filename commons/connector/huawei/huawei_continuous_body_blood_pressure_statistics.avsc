@@ -51,6 +51,15 @@
       "default": null
     },
     {
+      "name": "systolicPressureLast",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Most recent systolic blood pressure in the period (mmHg).",
+      "default": null
+    },
+    {
       "name": "diastolicPressureAvg",
       "type": [
         "null",
@@ -75,6 +84,15 @@
         "double"
       ],
       "doc": "Minimum diastolic blood pressure over the period (mmHg).",
+      "default": null
+    },
+    {
+      "name": "diastolicPressureLast",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Most recent diastolic blood pressure in the period (mmHg).",
       "default": null
     },
     {
