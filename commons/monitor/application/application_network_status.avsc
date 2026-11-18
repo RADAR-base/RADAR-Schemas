@@ -1,0 +1,24 @@
+{
+    "namespace": "org.radarcns.monitor.application",
+    "type": "record",
+    "name": "ApplicationNetworkStatus",
+    "doc": "Represents the network connectivity status of an application, indicating whether it is connected to the internet and, if so, whether the connection is via Wi-Fi or cellular data. Data for this topic is not transmitted automatically; it is sent only after the user explicitly submits the metrics following their review in the application.",
+    "fields": [
+        {"name": "time", "type": "double", "doc": "Timestamp of the event recorded on the device, in UTC seconds."},
+        {"name": "connectionStatus",
+            "type": {
+                "name": "ConnectionStatus",
+                "type": "enum",
+                "doc": "Represents the application's network connectivity status.",
+                "symbols": [
+                    "DISCONNECTED",
+                    "CONNECTED_WIFI",
+                    "CONNECTED_CELLULAR",
+                    "UNKNOWN"
+                ]
+            },
+            "doc": "Current network connectivity state of the application. It indicates whether the application is disconnected, connected via Wi-Fi, connected via cellular data, or in an unknown state.",
+            "default": "UNKNOWN"
+        }
+    ]
+}
