@@ -20,7 +20,7 @@
         "null",
         "int"
       ],
-      "doc": "Bed occupancy state: indicates whether the user is in or out of bed.",
+      "doc": "Bed state: 1 = getting in bed, 2 = getting out of bed.",
       "default": null
     }
   ]

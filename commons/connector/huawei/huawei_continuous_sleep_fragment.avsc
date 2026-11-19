@@ -29,7 +29,7 @@
         "null",
         "int"
       ],
-      "doc": "Sleep stage: 1=awake, 2=REM, 3=light sleep, 4=deep sleep.",
+      "doc": "Sleep stage: 1=light sleep, 2=REM, 3=deep sleep, 4=awake.",
       "default": null
     }
   ]

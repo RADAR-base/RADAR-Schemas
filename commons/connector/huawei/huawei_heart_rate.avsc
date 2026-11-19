@@ -1,0 +1,27 @@
+{
+  "namespace": "org.radarcns.connector.huawei",
+  "type": "record",
+  "name": "HuaweiHeartRate",
+  "doc": "Single heart rate reading as collected by the Huawei Health Kit instantaneous.heart_rate data type.",
+  "fields": [
+    {
+      "name": "time",
+      "type": "double",
+      "doc": "Start time of the sample or record in UTC (s)."
+    },
+    {
+      "name": "timeReceived",
+      "type": "double",
+      "doc": "Time the connector received this record from the Huawei Health API (s)."
+    },
+    {
+      "name": "heartRate",
+      "type": [
+        "null",
+        "float"
+      ],
+      "doc": "Heart rate (beats per minute).",
+      "default": null
+    }
+  ]
+}

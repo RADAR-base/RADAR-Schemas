@@ -145,6 +145,12 @@ data:
   - doc: Huawei Health Kit data type health.record.sleep.
     topic: connect_huawei_health_record_sleep
     value_schema: .connector.huawei.HuaweiHealthRecordSleep
+  - doc: "Huawei Health Kit data type instantaneous.heart_rate (unit: bpm)."
+    topic: connect_huawei_instantaneous_heart_rate
+    value_schema: .connector.huawei.HuaweiHeartRate
+  - doc: "Huawei Health Kit data type instantaneous.spo2 (unit: %)."
+    topic: connect_huawei_instantaneous_spo2
+    value_schema: .connector.huawei.HuaweiSpo2
   - doc: "Huawei Health Kit data type heart_rate_variability (unit: ms RMSSD)."
     topic: connect_huawei_heart_rate_variability
     value_schema: .connector.huawei.HuaweiHeartRateVariability

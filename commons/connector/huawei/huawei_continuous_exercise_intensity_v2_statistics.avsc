@@ -34,6 +34,15 @@
       ],
       "doc": "Map of Huawei exercise type code (as string) to duration in minutes for that activity type during the aggregation window.",
       "default": null
+    },
+    {
+      "name": "totalIntensity",
+      "type": [
+        "null",
+        "int"
+      ],
+      "doc": "Total intensity minutes in the aggregation window as reported by Huawei (totalIntensity). Huawei computes it separately, so it need not equal the sum of intensityMap.",
+      "default": null
     }
   ]
 }
