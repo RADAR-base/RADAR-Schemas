@@ -47,7 +47,7 @@
         "null",
         "int"
       ],
-      "doc": "Light sleep duration (ms).",
+      "doc": "Light sleep duration (min).",
       "default": null
     },
     {
@@ -56,7 +56,7 @@
         "null",
         "int"
       ],
-      "doc": "Deep (slow-wave) sleep duration (ms).",
+      "doc": "Deep (slow-wave) sleep duration (min).",
       "default": null
     },
     {
@@ -65,7 +65,7 @@
         "null",
         "int"
       ],
-      "doc": "REM sleep duration (ms).",
+      "doc": "REM sleep duration (min).",
       "default": null
     },
     {
@@ -74,7 +74,7 @@
         "null",
         "int"
       ],
-      "doc": "Time spent awake after sleep onset (ms).",
+      "doc": "Time spent awake between falling asleep and waking up (min).",
       "default": null
     },
     {
@@ -83,7 +83,7 @@
         "null",
         "int"
       ],
-      "doc": "Total sleep duration (ms).",
+      "doc": "Total sleep duration, the sum of light, deep and REM sleep (min).",
       "default": null
     },
     {
