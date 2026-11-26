@@ -1,0 +1,16 @@
+{
+  "namespace": "org.radarcns.active.healthconnect",
+  "type": "record",
+  "name": "HealthConnectBloodGlucose",
+  "doc": "Health Connect BloodGlucoseRecord. A single blood glucose measurement.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Measurement timestamp in UTC (s)." },
+    { "name": "timeReceived", "type": "double", "doc": "Time this record was collected by the app, seconds since the Unix Epoch." },
+    { "name": "timeZoneOffset", "type": ["null", "int"], "doc": "Offset from UTC of the local time at measurement time (s). Null if unknown.", "default": null },
+    { "name": "level", "type": "float", "doc": "Blood glucose level in millimoles per liter (mmol/L)." },
+    { "name": "specimenSource", "type": ["null", "string"], "doc": "Specimen source (INTERSTITIAL_FLUID, CAPILLARY_BLOOD, PLASMA, SERUM, TEARS, WHOLE_BLOOD). Null if unknown.", "default": null },
+    { "name": "mealType", "type": ["null", "string"], "doc": "Type of meal (BREAKFAST, LUNCH, DINNER, SNACK, UNKNOWN). Null if not set.", "default": null },
+    { "name": "relationToMeal", "type": ["null", "string"], "doc": "Relation to meal (BEFORE_MEAL, AFTER_MEAL, FASTING, GENERAL). Null if unknown.", "default": null },
+    { "name": "sourcePackageName", "type": ["null", "string"], "doc": "Package name of the app that wrote this record to Health Connect.", "default": null }
+  ]
+}

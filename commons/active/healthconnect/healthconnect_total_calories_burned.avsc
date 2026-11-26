@@ -1,0 +1,14 @@
+{
+  "namespace": "org.radarcns.active.healthconnect",
+  "type": "record",
+  "name": "HealthConnectTotalCaloriesBurned",
+  "doc": "Health Connect TotalCaloriesBurnedRecord. Total energy expenditure over the time interval, including basal metabolic rate.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Start time of the interval in UTC (s)." },
+    { "name": "endTime", "type": "double", "doc": "End time of the interval in UTC (s)." },
+    { "name": "timeReceived", "type": "double", "doc": "Time this record was collected by the app, seconds since the Unix Epoch." },
+    { "name": "timeZoneOffset", "type": ["null", "int"], "doc": "Offset from UTC of the local time at measurement time (s). Null if unknown.", "default": null },
+    { "name": "energy", "type": "double", "doc": "Energy burned in kilocalories." },
+    { "name": "sourcePackageName", "type": ["null", "string"], "doc": "Package name of the app that wrote this record to Health Connect.", "default": null }
+  ]
+}

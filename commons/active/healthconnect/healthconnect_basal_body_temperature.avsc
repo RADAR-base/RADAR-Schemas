@@ -1,0 +1,14 @@
+{
+  "namespace": "org.radarcns.active.healthconnect",
+  "type": "record",
+  "name": "HealthConnectBasalBodyTemperature",
+  "doc": "Health Connect BasalBodyTemperatureRecord. Body temperature measured at rest, typically upon waking.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Measurement timestamp in UTC (s)." },
+    { "name": "timeReceived", "type": "double", "doc": "Time this record was collected by the app, seconds since the Unix Epoch." },
+    { "name": "timeZoneOffset", "type": ["null", "int"], "doc": "Offset from UTC of the local time at measurement time (s). Null if unknown.", "default": null },
+    { "name": "temperature", "type": "float", "doc": "Basal body temperature in degrees Celsius." },
+    { "name": "measurementLocation", "type": ["null", "string"], "doc": "Where the temperature was measured (ARMPIT, FINGER, FOREHEAD, MOUTH, RECTUM, TEMPORAL_ARTERY, TOE, EAR, WRIST, VAGINA). Null if unknown.", "default": null },
+    { "name": "sourcePackageName", "type": ["null", "string"], "doc": "Package name of the app that wrote this record to Health Connect.", "default": null }
+  ]
+}
