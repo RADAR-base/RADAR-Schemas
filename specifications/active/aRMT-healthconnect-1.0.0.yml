@@ -2,6 +2,7 @@ name: RADAR-HEALTHCONNECT
 vendor: RADAR
 model: radar-healthconnect
 version: 1.0.0
+assessment_type: APP
 doc: Spec for active data pull from Android Health Connect via the RADAR Active app. Topics map one-to-one to Health Connect record types.
 data:
   - doc: Health Connect StepsRecord. Step count per interval.
