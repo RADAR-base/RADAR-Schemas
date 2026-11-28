@@ -1,0 +1,16 @@
+{
+  "namespace": "org.radarcns.active.healthconnect",
+  "type": "record",
+  "name": "HealthConnectBloodPressure",
+  "doc": "Health Connect BloodPressureRecord. A single blood pressure reading.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Measurement timestamp in UTC (s)." },
+    { "name": "timeReceived", "type": "double", "doc": "Time this record was collected by the app, seconds since the Unix Epoch." },
+    { "name": "timeZoneOffset", "type": ["null", "int"], "doc": "Offset from UTC of the local time at measurement time (s). Null if unknown.", "default": null },
+    { "name": "systolic", "type": "float", "doc": "Systolic blood pressure in mmHg." },
+    { "name": "diastolic", "type": "float", "doc": "Diastolic blood pressure in mmHg." },
+    { "name": "bodyPosition", "type": ["null", "string"], "doc": "Body position during measurement (STANDING_UP, SITTING_DOWN, LYING_DOWN, RECLINING). Null if unknown.", "default": null },
+    { "name": "measurementLocation", "type": ["null", "string"], "doc": "Measurement location (LEFT_WRIST, RIGHT_WRIST, LEFT_UPPER_ARM, RIGHT_UPPER_ARM). Null if unknown.", "default": null },
+    { "name": "sourcePackageName", "type": ["null", "string"], "doc": "Package name of the app that wrote this record to Health Connect.", "default": null }
+  ]
+}

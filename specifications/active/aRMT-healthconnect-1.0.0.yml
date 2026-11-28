@@ -1,0 +1,100 @@
+name: RADAR-HEALTHCONNECT
+vendor: RADAR
+model: radar-healthconnect
+version: 1.0.0
+assessment_type: APP
+doc: Spec for active data pull from Android Health Connect via the RADAR Active app. Topics map one-to-one to Health Connect record types.
+data:
+  - doc: Health Connect StepsRecord. Step count per interval.
+    topic: active_healthconnect_steps
+    value_schema: .active.healthconnect.HealthConnectSteps
+  - doc: Health Connect HeartRateRecord. Instantaneous heart rate samples.
+    topic: active_healthconnect_heart_rate
+    value_schema: .active.healthconnect.HealthConnectHeartRate
+  - doc: Health Connect HeartRateVariabilityRmssdRecord. Heart rate variability (RMSSD).
+    topic: active_healthconnect_heart_rate_variability
+    value_schema: .active.healthconnect.HealthConnectHeartRateVariability
+  - doc: Health Connect SleepSessionRecord. One record per sleep session.
+    topic: active_healthconnect_sleep_session
+    value_schema: .active.healthconnect.HealthConnectSleepSession
+  - doc: Health Connect SleepSessionRecord stages. One record per sleep stage within a session.
+    topic: active_healthconnect_sleep_stage
+    value_schema: .active.healthconnect.HealthConnectSleepStage
+  - doc: Health Connect OxygenSaturationRecord. Blood oxygen saturation (SpO2).
+    topic: active_healthconnect_oxygen_saturation
+    value_schema: .active.healthconnect.HealthConnectOxygenSaturation
+  - doc: Health Connect BloodPressureRecord. Systolic and diastolic blood pressure.
+    topic: active_healthconnect_blood_pressure
+    value_schema: .active.healthconnect.HealthConnectBloodPressure
+  - doc: Health Connect ExerciseSessionRecord. One record per exercise session.
+    topic: active_healthconnect_exercise_session
+    value_schema: .active.healthconnect.HealthConnectExerciseSession
+  - doc: Health Connect DistanceRecord. Distance covered per interval.
+    topic: active_healthconnect_distance
+    value_schema: .active.healthconnect.HealthConnectDistance
+  - doc: Health Connect TotalCaloriesBurnedRecord. Total energy expenditure including BMR.
+    topic: active_healthconnect_total_calories_burned
+    value_schema: .active.healthconnect.HealthConnectTotalCaloriesBurned
+  - doc: Health Connect ActiveCaloriesBurnedRecord. Active energy expenditure excluding BMR.
+    topic: active_healthconnect_active_calories_burned
+    value_schema: .active.healthconnect.HealthConnectActiveCaloriesBurned
+  - doc: Health Connect RespiratoryRateRecord. Respiratory rate in breaths per minute.
+    topic: active_healthconnect_respiratory_rate
+    value_schema: .active.healthconnect.HealthConnectRespiratoryRate
+  - doc: Health Connect BodyTemperatureRecord. Body temperature measurement.
+    topic: active_healthconnect_body_temperature
+    value_schema: .active.healthconnect.HealthConnectBodyTemperature
+  - doc: Health Connect BloodGlucoseRecord. Blood glucose level.
+    topic: active_healthconnect_blood_glucose
+    value_schema: .active.healthconnect.HealthConnectBloodGlucose
+  - doc: Health Connect WeightRecord. Body weight measurement.
+    topic: active_healthconnect_weight
+    value_schema: .active.healthconnect.HealthConnectWeight
+  - doc: Health Connect HeightRecord. Body height measurement.
+    topic: active_healthconnect_height
+    value_schema: .active.healthconnect.HealthConnectHeight
+  - doc: Health Connect HydrationRecord. Fluid intake per interval.
+    topic: active_healthconnect_hydration
+    value_schema: .active.healthconnect.HealthConnectHydration
+  - doc: Health Connect FloorsClimbedRecord. Floors climbed per interval.
+    topic: active_healthconnect_floors_climbed
+    value_schema: .active.healthconnect.HealthConnectFloorsClimbed
+  - doc: Health Connect RestingHeartRateRecord. Resting heart rate measurement.
+    topic: active_healthconnect_resting_heart_rate
+    value_schema: .active.healthconnect.HealthConnectRestingHeartRate
+  - doc: Health Connect BasalBodyTemperatureRecord. Basal body temperature at rest.
+    topic: active_healthconnect_basal_body_temperature
+    value_schema: .active.healthconnect.HealthConnectBasalBodyTemperature
+  - doc: Health Connect SkinTemperatureRecord. Skin temperature from a wearable sensor.
+    topic: active_healthconnect_skin_temperature
+    value_schema: .active.healthconnect.HealthConnectSkinTemperature
+  - doc: Health Connect BasalMetabolicRateRecord. Basal metabolic rate at rest.
+    topic: active_healthconnect_basal_metabolic_rate
+    value_schema: .active.healthconnect.HealthConnectBasalMetabolicRate
+  - doc: Health Connect Vo2MaxRecord. Maximum oxygen consumption during exercise.
+    topic: active_healthconnect_vo2_max
+    value_schema: .active.healthconnect.HealthConnectVo2Max
+  - doc: Health Connect BodyFatRecord. Body fat percentage.
+    topic: active_healthconnect_body_fat
+    value_schema: .active.healthconnect.HealthConnectBodyFat
+  - doc: Health Connect LeanBodyMassRecord. Lean body mass.
+    topic: active_healthconnect_lean_body_mass
+    value_schema: .active.healthconnect.HealthConnectLeanBodyMass
+  - doc: Health Connect BoneMassRecord. Bone mass measurement.
+    topic: active_healthconnect_bone_mass
+    value_schema: .active.healthconnect.HealthConnectBoneMass
+  - doc: Health Connect BodyWaterMassRecord. Body water mass measurement.
+    topic: active_healthconnect_body_water_mass
+    value_schema: .active.healthconnect.HealthConnectBodyWaterMass
+  - doc: Health Connect MenstruationFlowRecord. Menstrual flow observation.
+    topic: active_healthconnect_menstruation_flow
+    value_schema: .active.healthconnect.HealthConnectMenstruationFlow
+  - doc: Health Connect MenstruationPeriodRecord. Menstruation period.
+    topic: active_healthconnect_menstruation_period
+    value_schema: .active.healthconnect.HealthConnectMenstruationPeriod
+  - doc: Health Connect OvulationTestRecord. Ovulation test result.
+    topic: active_healthconnect_ovulation_test
+    value_schema: .active.healthconnect.HealthConnectOvulationTest
+  - doc: Health Connect IntermenstrualBleedingRecord. Bleeding between menstrual periods.
+    topic: active_healthconnect_intermenstrual_bleeding
+    value_schema: .active.healthconnect.HealthConnectIntermenstrualBleeding

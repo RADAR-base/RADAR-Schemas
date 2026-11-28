@@ -1,0 +1,14 @@
+{
+  "namespace": "org.radarcns.active.healthconnect",
+  "type": "record",
+  "name": "HealthConnectSkinTemperature",
+  "doc": "Health Connect SkinTemperatureRecord. Skin temperature measurement, typically from a wearable sensor.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Measurement timestamp in UTC (s)." },
+    { "name": "timeReceived", "type": "double", "doc": "Time this record was collected by the app, seconds since the Unix Epoch." },
+    { "name": "timeZoneOffset", "type": ["null", "int"], "doc": "Offset from UTC of the local time at measurement time (s). Null if unknown.", "default": null },
+    { "name": "temperature", "type": "float", "doc": "Skin temperature in degrees Celsius." },
+    { "name": "measurementLocation", "type": ["null", "string"], "doc": "Where the temperature was measured (FINGER, TOE, WRIST). Null if unknown.", "default": null },
+    { "name": "sourcePackageName", "type": ["null", "string"], "doc": "Package name of the app that wrote this record to Health Connect.", "default": null }
+  ]
+}

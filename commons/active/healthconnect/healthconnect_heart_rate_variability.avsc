@@ -1,0 +1,13 @@
+{
+  "namespace": "org.radarcns.active.healthconnect",
+  "type": "record",
+  "name": "HealthConnectHeartRateVariability",
+  "doc": "Health Connect HeartRateVariabilityRmssdRecord. RMSSD of heart rate variability.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Measurement timestamp in UTC (s)." },
+    { "name": "timeReceived", "type": "double", "doc": "Time this record was collected by the app, seconds since the Unix Epoch." },
+    { "name": "timeZoneOffset", "type": ["null", "int"], "doc": "Offset from UTC of the local time at measurement time (s). Null if unknown.", "default": null },
+    { "name": "heartRateVariabilityMillis", "type": "double", "doc": "Heart rate variability (RMSSD) in milliseconds." },
+    { "name": "sourcePackageName", "type": ["null", "string"], "doc": "Package name of the app that wrote this record to Health Connect.", "default": null }
+  ]
+}

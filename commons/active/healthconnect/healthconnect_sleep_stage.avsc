@@ -1,0 +1,32 @@
+{
+  "namespace": "org.radarcns.active.healthconnect",
+  "type": "record",
+  "name": "HealthConnectSleepStage",
+  "doc": "Health Connect SleepSessionRecord stage. One record per sleep stage within a session.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Start time of this sleep stage in UTC (s)." },
+    { "name": "endTime", "type": "double", "doc": "End time of this sleep stage in UTC (s)." },
+    { "name": "timeReceived", "type": "double", "doc": "Time this record was collected by the app, seconds since the Unix Epoch." },
+    { "name": "timeZoneOffset", "type": ["null", "int"], "doc": "Offset from UTC of the local time at measurement time (s). Null if unknown.", "default": null },
+    {
+      "name": "stage",
+      "type": {
+        "name": "HealthConnectSleepStageType",
+        "type": "enum",
+        "symbols": [
+          "AWAKE",
+          "SLEEPING",
+          "OUT_OF_BED",
+          "LIGHT",
+          "DEEP",
+          "REM",
+          "UNKNOWN"
+        ],
+        "doc": "Sleep stage type as reported by Health Connect."
+      },
+      "doc": "Sleep stage type.",
+      "default": "UNKNOWN"
+    },
+    { "name": "sourcePackageName", "type": ["null", "string"], "doc": "Package name of the app that wrote this record to Health Connect.", "default": null }
+  ]
+}

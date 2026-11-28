@@ -1,0 +1,29 @@
+{
+  "namespace": "org.radarcns.active.healthconnect",
+  "type": "record",
+  "name": "HealthConnectOvulationTest",
+  "doc": "Health Connect OvulationTestRecord. Result of an ovulation test.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Test timestamp in UTC (s)." },
+    { "name": "timeReceived", "type": "double", "doc": "Time this record was collected by the app, seconds since the Unix Epoch." },
+    { "name": "timeZoneOffset", "type": ["null", "int"], "doc": "Offset from UTC of the local time at measurement time (s). Null if unknown.", "default": null },
+    {
+      "name": "result",
+      "type": {
+        "name": "HealthConnectOvulationTestResult",
+        "type": "enum",
+        "symbols": [
+          "POSITIVE",
+          "HIGH",
+          "NEGATIVE",
+          "INCONCLUSIVE",
+          "UNKNOWN"
+        ],
+        "doc": "Ovulation test result."
+      },
+      "doc": "Result of the ovulation test.",
+      "default": "UNKNOWN"
+    },
+    { "name": "sourcePackageName", "type": ["null", "string"], "doc": "Package name of the app that wrote this record to Health Connect.", "default": null }
+  ]
+}

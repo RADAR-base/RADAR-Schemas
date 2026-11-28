@@ -1,0 +1,14 @@
+{
+  "namespace": "org.radarcns.active.healthconnect",
+  "type": "record",
+  "name": "HealthConnectDistance",
+  "doc": "Health Connect DistanceRecord. Distance covered over the time interval.",
+  "fields": [
+    { "name": "time", "type": "double", "doc": "Start time of the interval in UTC (s)." },
+    { "name": "endTime", "type": "double", "doc": "End time of the interval in UTC (s)." },
+    { "name": "timeReceived", "type": "double", "doc": "Time this record was collected by the app, seconds since the Unix Epoch." },
+    { "name": "timeZoneOffset", "type": ["null", "int"], "doc": "Offset from UTC of the local time at measurement time (s). Null if unknown.", "default": null },
+    { "name": "distance", "type": "double", "doc": "Distance covered in meters." },
+    { "name": "sourcePackageName", "type": ["null", "string"], "doc": "Package name of the app that wrote this record to Health Connect.", "default": null }
+  ]
+}
